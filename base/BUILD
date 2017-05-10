@@ -12,5 +12,9 @@ docker_build(
 docker_build(
     name = "base",
     base = ":with_tmp",
-    debs = ["@glibc//file", "@libssl//file", "@openssl//file"],
+    debs = [
+        "@glibc//file",
+        "@libssl//file",
+        "@openssl//file",
+    ],
 )
