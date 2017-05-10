@@ -10,8 +10,14 @@ docker_build(
 )
 
 docker_build(
+    name = "with_passwd",
+    directory = "/etc",
+    files = [":passwd"]
+)
+
+docker_build(
     name = "base",
-    base = ":with_tmp",
+    base = ":with_passwd",
     debs = [
         "@glibc//file",
         "@libssl//file",
