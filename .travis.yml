@@ -1,0 +1,30 @@
+# trusty beta image has jdk8, gcc4.8.4
+dist: trusty
+sudo: required
+# Not technically required but suppresses 'Ruby' in Job status message.
+language: java
+os:
+  - linux
+
+jdk:
+  - oraclejdk8
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8'
+        key_url: 'https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg'
+    packages:
+      - bazel
+
+install:
+  - go get -u github.com/bazelbuild/buildifier/buildifier
+
+script:
+  - bazel clean && bazel build //...
+# We don't have any tests yet so this fails. Uncomment when we do.
+#  - bazel clean && bazel test --test_output=errors //...
+  - buildifier -mode=check $(find . -name BUILD -o -name '*.bzl' -type f)
+
+notifications:
+  email: false
