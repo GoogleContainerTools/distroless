@@ -24,7 +24,7 @@ script:
   - bazel clean && bazel build //...
 # We don't have any tests yet so this fails. Uncomment when we do.
 #  - bazel clean && bazel test --test_output=errors //...
-  - buildifier -mode=check $(find . -name BUILD -o -name '*.bzl' -type f)
+  - ./buildifier.sh
 
 notifications:
   email: false
