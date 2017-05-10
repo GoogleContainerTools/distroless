@@ -16,5 +16,6 @@ docker_build(
         "@glibc//file",
         "@libssl//file",
         "@openssl//file",
+        "@ca_certificates//file",
     ],
 )
