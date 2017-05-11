@@ -13,8 +13,8 @@ go_repositories()
 # For the glibc base image.
 http_file(
    name = "glibc",
-   url = "http://deb.debian.org/debian/pool/main/g/glibc/libc6_2.19-18+deb8u9_amd64.deb",
-   sha256 = "bdf12aa461f2960251292c9dbfa2702d65105555b12cb36c6ac9bf8bea10b382",
+   url = "http://deb.debian.org/debian/pool/main/g/glibc/libc6-udeb_2.19-18+deb8u9_amd64.udeb",
+   sha256 = "017146eb35bcc93e301e52e9fe9bf2093d17f40dcf65911bf206be4475bdbc1d",
 )
 
 http_file(
@@ -31,8 +31,8 @@ http_file(
 
 http_file(
     name = "libssl",
-    url = "http://deb.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb",
-    sha256 = "0fc777d9242fd93851eb49c4aafd22505048b7797c0178f20c909ff918320619",
+    url = "http://deb.debian.org/debian/pool/main/o/openssl/libssl1.1-udeb_1.1.0e-1_amd64.udeb",
+    sha256 = "d3819ceeb2becc96aea4b0fceda48f6e68f84193526bc67f6895c00796ee99d6",
 )
 
 # Docker rules.
