@@ -35,6 +35,37 @@ http_file(
     sha256 = "d3819ceeb2becc96aea4b0fceda48f6e68f84193526bc67f6895c00796ee99d6",
 )
 
+# For Java
+http_file(
+   name = "zlib",
+   url = "http://ftp.us.debian.org/debian/pool/main/z/zlib/zlib1g_1.2.8.dfsg-2+b1_amd64.deb",
+)
+
+http_file(
+   name = "openjdk_jre8",
+   url = "http://ftp.us.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-jre-headless_8u121-b13-1~bpo8+1_amd64.deb",
+)
+
+http_file(
+   name = "libfreetype",
+   url = "http://security.debian.org/debian-security/pool/updates/main/f/freetype/libfreetype6_2.5.2-3+deb8u2_amd64.deb",
+)
+
+http_file(
+   name = "libpng",
+   url = "http://ftp.us.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u3_amd64.deb",
+)
+
+http_file(
+   name = "libstdcpp6",
+   url = "http://ftp.us.debian.org/debian/pool/main/g/gcc-4.9/libstdc++6_4.9.2-10_amd64.deb",
+)
+
+http_file(
+   name = "libgcc1",
+   url = "http://ftp.us.debian.org/debian/pool/main/g/gcc-4.9/libgcc1_4.9.2-10_amd64.deb",
+)
+
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
