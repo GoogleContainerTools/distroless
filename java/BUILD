@@ -4,12 +4,10 @@ load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 
 docker_build(
     name = "java8",
-    base = "//base:base",
+    base = "//base:cc",
     debs = [
         "@zlib//file",
         "@openjdk_jre8//file",
-        "@libgcc1//file",
-        "@libstdcpp6//file",
     ],
     entrypoint = [
         "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
