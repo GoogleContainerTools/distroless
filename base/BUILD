@@ -1,6 +1,17 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
+load("@io_bazel_rules_docker//docker/contrib:passwd.bzl", "passwd_file")
+
+# Create a default passwd_file rule.
+
+passwd_file(
+    name = "base_passwd",
+    gid = 0,
+    info = "root",
+    uid = 0,
+    username = "root",
+)
 
 # Create /tmp, too many things assume it exists.
 docker_build(
@@ -17,6 +28,7 @@ docker_build(
         "@libssl//file",
         "@openssl//file",
     ],
+    tars = [":base_passwd.passwd.tar"],
 )
 
 # An intermediate image for Java and other "mostly statically compiled languages"

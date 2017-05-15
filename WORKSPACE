@@ -73,7 +73,7 @@ new_http_archive(
 git_repository(
     name = "io_bazel_rules_docker",
     remote = "https://github.com/bazelbuild/rules_docker.git",
-    commit = "cd0363f77182689303f3d5a871348fa8ab78491e",
+    commit = "c534c7c8859dd204e5fbdabde4c0092b78648247",
 )
 
 load(
