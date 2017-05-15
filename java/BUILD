@@ -7,8 +7,6 @@ docker_build(
     base = "//base:base",
     debs = [
         "@zlib//file",
-        "@libfreetype//file",
-        "@libpng//file",
         "@openjdk_jre8//file",
         "@libgcc1//file",
         "@libstdcpp6//file",
