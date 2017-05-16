@@ -42,7 +42,7 @@ genrule(
     name = "_busybox",
     srcs = ["@busybox//file"],
     outs = ["busybox"],
-    cmd = "mv $(<) $(@)",
+    cmd = "cp $(<) $(@)",
     visibility = ["//visibility:private"],
 )
 
@@ -54,4 +54,10 @@ docker_build(
     files = [
         ":busybox",
     ],
+)
+
+structure_test(
+    name = "debug_test",
+    config = "testdata/debug.yaml",
+    image = ":debug",
 )
