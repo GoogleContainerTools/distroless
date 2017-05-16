@@ -28,11 +28,3 @@ docker_build(
         "@libstdcpp6//file",
     ],
 )
-
-docker_build(
-    name = "debug",
-    base = ":cc",
-    files = [
-        "@busybox//file",
-    ],
-)

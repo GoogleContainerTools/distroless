@@ -35,13 +35,6 @@ http_file(
     sha256 = "d3819ceeb2becc96aea4b0fceda48f6e68f84193526bc67f6895c00796ee99d6",
 )
 
-# For the debug base image.
-http_file(
-    name = "busybox",
-    executable = True,
-    url = "https://busybox.net/downloads/binaries/1.21.1/busybox-x86_64"
-)
-
 # For Java
 http_file(
    name = "zlib",
@@ -71,6 +64,7 @@ http_file(
 http_file(
    name = "jetty",
    url = "http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.4.v20170414/jetty-distribution-9.4.4.v20170414.tar.gz",
+   sha256="ca93c7f88e842fcb1e7bd551c071b3302b7be1faf9cad3ce415af19c77d6cb74",
 )
 
 # Docker rules.

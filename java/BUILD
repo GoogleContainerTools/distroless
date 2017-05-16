@@ -32,5 +32,6 @@ docker_build(
     base = ":java8",
     cmd = ["/jetty/start.jar"],
     tars = [":_unpacked_jetty.tar.gz"],
-    workdir = "/jetty/demo-base/",
+    workdir = "/jetty",
+    # We expect users to add their WAR under /jetty/webapps.
 )
