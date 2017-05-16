@@ -17,21 +17,11 @@ docker_build(
     ],
 )
 
-# The default jetty tarball has a top-level versioned directory. We need to strip this directory
-# so that we can unpack directly into /jetty in our final image.
-genrule(
-    name = "unpacked_jetty",
-    srcs = ["@jetty//file"],
-    outs = ["_unpacked_jetty.tar.gz"],
-    cmd = "mkdir -p $(@D)/jetty && tar --strip-components=1 -xzf $(<) -C $(@D)/jetty && tar -czf $(@) -C $(@D) jetty  && rm -rf $(@D)/jetty",
-    visibility = ["//visibility:private"],
-)
-
 docker_build(
     name = "jetty",
     base = ":java8",
     cmd = ["/jetty/start.jar"],
-    tars = [":_unpacked_jetty.tar.gz"],
+    tars = ["@jetty//:tar"],
     workdir = "/jetty",
     # We expect users to add their WAR under /jetty/webapps.
 )

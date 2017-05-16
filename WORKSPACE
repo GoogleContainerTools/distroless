@@ -61,10 +61,12 @@ http_file(
 )
 
 # For Jetty
-http_file(
+new_http_archive(
    name = "jetty",
+   build_file = "BUILD.jetty",
    url = "http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.4.v20170414/jetty-distribution-9.4.4.v20170414.tar.gz",
-   sha256="ca93c7f88e842fcb1e7bd551c071b3302b7be1faf9cad3ce415af19c77d6cb74",
+   strip_prefix = "jetty-distribution-9.4.4.v20170414/",
+   type = "tgz",
 )
 
 # Docker rules.
