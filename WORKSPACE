@@ -99,6 +99,14 @@ new_http_archive(
     url = "https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.gz",
 )
 
+# For the debug image
+http_file(
+    name = "busybox",
+    executable = True,
+    sha256 = "8d7a4ac8629db62457447673fd5e3ae857bdf5c4bda46f6c2abc53b3315f4bf5",
+    url = "https://busybox.net/downloads/binaries/1.21.1/busybox-x86_64",
+)
+
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
