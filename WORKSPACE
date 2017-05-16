@@ -35,6 +35,13 @@ http_file(
     sha256 = "d3819ceeb2becc96aea4b0fceda48f6e68f84193526bc67f6895c00796ee99d6",
 )
 
+# For the debug image
+http_file(
+    name = "busybox",
+    executable = True,
+    url = "https://busybox.net/downloads/binaries/1.21.1/busybox-x86_64"
+)
+
 # For Java
 http_file(
    name = "zlib",
