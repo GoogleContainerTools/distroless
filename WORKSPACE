@@ -13,8 +13,8 @@ go_repositories()
 # For the glibc base image.
 http_file(
    name = "glibc",
-   url = "http://deb.debian.org/debian/pool/main/g/glibc/libc6-udeb_2.19-18+deb8u9_amd64.udeb",
-   sha256 = "017146eb35bcc93e301e52e9fe9bf2093d17f40dcf65911bf206be4475bdbc1d",
+   url = "http://deb.debian.org/debian/pool/main/g/glibc/libc6_2.19-18+deb8u9_amd64.deb",
+   sha256 = "bdf12aa461f2960251292c9dbfa2702d65105555b12cb36c6ac9bf8bea10b382",
 )
 
 http_file(
@@ -60,6 +60,15 @@ http_file(
    sha256 = "a1402290165e8d91b396a33d79580a4501041e92bdb62ef23929a0c207cd9af9",
 )
 
+# For Jetty
+new_http_archive(
+   name = "jetty",
+   build_file = "BUILD.jetty",
+   url = "http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.4.v20170414/jetty-distribution-9.4.4.v20170414.tar.gz",
+   strip_prefix = "jetty-distribution-9.4.4.v20170414/",
+   type = "tgz",
+)
+
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
@@ -71,4 +80,5 @@ load(
   "@io_bazel_rules_docker//docker:docker.bzl",
   "docker_repositories",
 )
+
 docker_repositories()

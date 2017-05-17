@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files=$(buildifier -mode=check $(find . -name BUILD -o -name '*.bzl' -type f))
+files=$(buildifier -mode=check $(find . -name 'BUILD*' -o -name '*.bzl' -type f))
 if [ $? -ne 0 ]; then
   exit 1
 fi
