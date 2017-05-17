@@ -28,3 +28,11 @@ docker_build(
         "@libstdcpp6//file",
     ],
 )
+
+load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+
+structure_test(
+    name = "base_test",
+    config = "testdata/base.yaml",
+    image = ":base",
+)

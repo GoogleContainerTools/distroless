@@ -16,3 +16,11 @@ docker_build(
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
     ],
 )
+
+load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+
+structure_test(
+    name = "java8_test",
+    config = "testdata/java.yaml",
+    image = ":java8",
+)

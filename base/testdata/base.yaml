@@ -1,0 +1,11 @@
+schemaVersion: "1.0.0"
+fileExistenceTests:
+# Basic FS sanity checks.
+- name: root
+  path: '/'
+  isDirectory: true
+  shouldExist: true
+- name: tmp
+  path: '/tmp'
+  isDirectory: true
+  shouldExist: true

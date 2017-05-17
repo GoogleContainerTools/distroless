@@ -82,3 +82,9 @@ load(
 )
 
 docker_repositories()
+
+git_repository(
+    name = "runtimes_common",
+    remote = "https://github.com/GoogleCloudPlatform/runtimes-common.git",
+    commit = "4e9b3b57efb237ba09b4a319bea42bcdd4eb91e3",
+)
