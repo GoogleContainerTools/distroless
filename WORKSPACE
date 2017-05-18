@@ -44,8 +44,8 @@ http_file(
 
 http_file(
    name = "openjdk_jre8",
-   url = "http://ftp.us.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-jre-headless_8u121-b13-1~bpo8+1_amd64.deb",
-   sha256 = "16c3846091ab2ba9ff5938a8ace017ef2b8aafa1585f2eed120da26d30d658a5",
+   url = "http://ftp.us.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-jdk-headless_8u131-b11-1~bpo8+1_amd64.deb",
+   sha256 = "b3f04e909020084479aabfb2dbc3dc3bd109ece84a112440c37e5a2cfd67a125",
 )
 
 http_file(
