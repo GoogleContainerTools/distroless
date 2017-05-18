@@ -35,6 +35,13 @@ http_file(
     sha256 = "d3819ceeb2becc96aea4b0fceda48f6e68f84193526bc67f6895c00796ee99d6",
 )
 
+# For the debug image
+http_file(
+    name = "busybox",
+    executable = True,
+    url = "https://busybox.net/downloads/binaries/1.21.1/busybox-x86_64"
+)
+
 # For Java
 http_file(
    name = "zlib",
@@ -44,8 +51,8 @@ http_file(
 
 http_file(
    name = "openjdk_jre8",
-   url = "http://ftp.us.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-jdk-headless_8u131-b11-1~bpo8+1_amd64.deb",
-   sha256 = "b3f04e909020084479aabfb2dbc3dc3bd109ece84a112440c37e5a2cfd67a125",
+   url = "http://ftp.us.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-jre-headless_8u131-b11-1~bpo8+1_amd64.deb",
+   sha256 = "11c592e237549d74bda30875979c2a937588667d10307c7c14047b8d03f5718a",
 )
 
 http_file(
@@ -82,3 +89,9 @@ load(
 )
 
 docker_repositories()
+
+git_repository(
+    name = "runtimes_common",
+    remote = "https://github.com/GoogleCloudPlatform/runtimes-common.git",
+    commit = "4e9b3b57efb237ba09b4a319bea42bcdd4eb91e3",
+)

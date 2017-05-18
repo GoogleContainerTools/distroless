@@ -28,3 +28,30 @@ docker_build(
         "@libstdcpp6//file",
     ],
 )
+
+load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+
+structure_test(
+    name = "base_test",
+    config = "testdata/base.yaml",
+    image = ":base",
+)
+
+# For convenience, rename busybox-x86_64 to busybox.
+genrule(
+    name = "_busybox",
+    srcs = ["@busybox//file"],
+    outs = ["busybox"],
+    cmd = "mv $(<) $(@)",
+    visibility = ["//visibility:private"],
+)
+
+# A debug image with busybox available.
+docker_build(
+    name = "debug",
+    base = ":cc",
+    entrypoint = ["/busybox"],
+    files = [
+        ":busybox",
+    ],
+)

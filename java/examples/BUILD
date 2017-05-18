@@ -13,3 +13,11 @@ docker_build(
     cmd = ["/HelloJava_deploy.jar"],
     files = [":HelloJava_deploy.jar"],
 )
+
+load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+
+structure_test(
+    name = "hello_test",
+    config = "testdata/hello.yaml",
+    image = ":hello",
+)
