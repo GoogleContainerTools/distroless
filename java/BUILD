@@ -16,12 +16,3 @@ docker_build(
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
     ],
 )
-
-docker_build(
-    name = "jetty",
-    base = ":java8",
-    cmd = ["/jetty/start.jar"],
-    tars = ["@jetty//:tar"],
-    workdir = "/jetty",
-    # We expect users to add their WAR under /jetty/webapps.
-)
