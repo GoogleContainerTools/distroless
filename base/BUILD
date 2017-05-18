@@ -28,3 +28,22 @@ docker_build(
         "@libstdcpp6//file",
     ],
 )
+
+# For convenience, rename busybox-x86_64 to busybox.
+genrule(
+    name = "_busybox",
+    srcs = ["@busybox//file"],
+    outs = ["busybox"],
+    cmd = "mv $(<) $(@)",
+    visibility = ["//visibility:private"],
+)
+
+# A debug image with busybox available.
+docker_build(
+    name = "debug",
+    base = ":cc",
+    entrypoint = ["/busybox"],
+    files = [
+        ":busybox",
+    ],
+)
