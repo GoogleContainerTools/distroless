@@ -5,6 +5,7 @@ load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 java_binary(
     name = "HelloJava",
     srcs = ["HelloJava.java"],
+    main_class = "examples.HelloJava",
 )
 
 docker_build(

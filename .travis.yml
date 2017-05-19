@@ -22,8 +22,6 @@ install:
 
 script:
   - bazel clean && bazel build //...
-# We don't have any tests yet so this fails. Uncomment when we do.
-  - bazel build //base:base.tar && docker load -i bazel-bin/base/base.tar && bazel run //base:base
   - bazel test --test_output=errors //...
   - ./buildifier.sh
 
