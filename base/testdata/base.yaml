@@ -9,3 +9,6 @@ fileExistenceTests:
   path: '/tmp'
   isDirectory: true
   shouldExist: true
+- name: passwd
+  path: '/etc/passwd'
+  shouldExist: true
