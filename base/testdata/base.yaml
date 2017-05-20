@@ -12,3 +12,6 @@ fileExistenceTests:
 - name: passwd
   path: '/etc/passwd'
   shouldExist: true
+- name: certs
+  path: '/etc/ssl/certs/ca-certificates.crt'
+  shouldExist: true

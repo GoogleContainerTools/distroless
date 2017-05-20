@@ -1,0 +1,6 @@
+schemaVersion: "1.0.0"
+commandTests:
+# Basic FS sanity checks.
+- name: certs
+  command: ["/check_certs"]
+  exitCode: 0
