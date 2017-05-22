@@ -88,9 +88,3 @@ git_repository(
     remote = "https://github.com/GoogleCloudPlatform/runtimes-common.git",
     commit = "4e9b3b57efb237ba09b4a319bea42bcdd4eb91e3",
 )
-
-git_repository(
-    name ="bazel",
-    remote = "https://github.com/bazelbuild/bazel.git",
-    commit = "2633a599532e73f8f66d346b40b6c06896bab0dd",
-)
