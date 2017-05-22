@@ -69,6 +69,19 @@ new_http_archive(
    type = "tgz",
 )
 
+# For Python
+http_file(
+   name = "libpython27",
+   url = "http://ftp.us.debian.org/debian/pool/main/p/python2.7/libpython2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
+   sha256 = "916e2c541aa954239cb8da45d1d7e4ecec232b24d3af8982e76bf43d3e1758f3",
+)
+
+http_file(
+   name = "python27",
+   url = "http://ftp.us.debian.org/debian/pool/main/p/python2.7/python2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
+   sha256 ="c89199f908d5a508d8d404efc0e1aef3d9db59ea23bd4532df9e59941643fcfb"
+)
+
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
