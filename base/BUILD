@@ -2,6 +2,7 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@io_bazel_rules_docker//docker/contrib:passwd.bzl", "passwd_file")
+load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 
 # Create a default passwd_file rule.
 
@@ -40,8 +41,6 @@ docker_build(
         "@libstdcpp6//file",
     ],
 )
-
-load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 
 structure_test(
     name = "base_test",
