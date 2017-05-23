@@ -23,12 +23,18 @@ CERTS_PATH=$2
 
 ar -x $DEB data.tar.xz
 tar -xf data.tar.xz ./usr/share/ca-certificates
+tar -xf data.tar.xz ./usr/share/doc/ca-certificates/copyright
 
 # Concat all the certs.
+CERT_FILE=./etc/ssl/certs/ca-certificates.crt
+mkdir -p $(dirname $CERT_FILE)
+
 CERTS=$(find usr/share/ca-certificates -type f | sort)
 for cert in $CERTS; do
-    cat $cert >> $2
+  cat $cert >> $CERT_FILE
 done
+
+tar -cf $2 etc/ssl/certs/ca-certificates.crt usr/share/doc/ca-certificates/copyright
 
 rm data.tar.xz
 rm -rf usr/share/ca-certificates

@@ -29,21 +29,17 @@ cacerts(
 )
 
 docker_build(
-    name = "with_certs",
-    base = ":with_tmp",
-    directory = "/etc/ssl/certs",
-    files = [":cacerts"],
-)
-
-docker_build(
     name = "base",
-    base = ":with_certs",
+    base = ":with_tmp",
     debs = [
         "@glibc//file",
         "@libssl//file",
         "@openssl//file",
     ],
-    tars = [":base_passwd.passwd.tar"],
+    tars = [
+        ":base_passwd.passwd.tar",
+        ":cacerts.tar",
+    ],
 )
 
 # An intermediate image for Java and other "mostly statically compiled languages"

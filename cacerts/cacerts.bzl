@@ -23,7 +23,7 @@ cacerts = rule(
     },
     executable = False,
     outputs = {
-        "out": "ca-certificates.crt",
+        "out": "%{name}.tar",
     },
     implementation = _impl,
 )
