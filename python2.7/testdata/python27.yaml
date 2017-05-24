@@ -6,3 +6,6 @@ commandTests:
   - name: version
     command: ["/usr/bin/python2.7", "--version"]
     expectedError: ["Python 2.7.9"]
+  - name: stdlib
+    command: ["/usr/bin/python2.7", "-c", "import argparse"]
+    exitCode: 0

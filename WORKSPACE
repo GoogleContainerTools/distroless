@@ -82,6 +82,12 @@ http_file(
    sha256 ="c89199f908d5a508d8d404efc0e1aef3d9db59ea23bd4532df9e59941643fcfb"
 )
 
+http_file(
+    name = "libpython27_stdlib",
+    url = "http://ftp.us.debian.org/debian/pool/main/p/python2.7/libpython2.7-stdlib_2.7.13-2_amd64.deb",
+    sha256 = "d997ef9edbccea4f1902a443a31c26c5c62cc5e2c9a679b3ace19909c8dc9f31"
+)
+
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
