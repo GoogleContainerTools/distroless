@@ -42,16 +42,6 @@ docker_build(
     ],
 )
 
-# An intermediate image for Java and other "mostly statically compiled languages"
-docker_build(
-    name = "cc",
-    base = ":base",
-    debs = [
-        "@libgcc1//file",
-        "@libstdcpp6//file",
-    ],
-)
-
 structure_test(
     name = "base_test",
     config = "testdata/base.yaml",
