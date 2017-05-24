@@ -1,13 +1,17 @@
-[![Build Status](https://travis-ci.org/GoogleCloudPlatform/distroless.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/distroless)
-
 # "Distroless" Docker Images
 
-"Distroless" images contain only your application and it's runtime dependencies.
+[![Build Status](https://travis-ci.org/GoogleCloudPlatform/distroless.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/distroless)
+
+"Distroless" images contain only your application and its runtime dependencies.
 They do not contain package managers, shells any other programs you would expect to find in a standard Linux distribution.
 
-For more information, see this talk.
+For more information, see this [talk](https://swampup2017.sched.com/event/A6CW/distroless-docker-containerizing-apps-not-vms?iframe=no&w=100%&sidebar=yes&bg=no).
 
 ## Why should I use distroless images?
+
+Restricting what's in your runtime to container to precisely what's necessary for your app is a best practice employed by Google
+and other tech giants that have used containers in production for many years.
+It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
 
 ## How do I use distroless images?
 
@@ -26,6 +30,8 @@ Follow these steps to get started:
     * [gcr.io/distroless/java/jetty](java/jetty/README/md)
     * [gcr.io/distroless/cc](cc/README.md)
 * Write a multi-stage docker file.
+  Note: This requires Docker 17.05 or higher.
+
   The basic idea is that you'll have one stage to build your application artifacts, and insert them into your runtime distroless image.
   If you'd like to learn more, please see the documentation on [multi-stage builds]().
 
@@ -47,17 +53,19 @@ Follow these steps to get started:
   ```
 
 ### Bazel
-<show docker_build usage>
+
+For full documentation on how to use bazel to generate Docker images, see the [bazelbuild/rules_docker](http://github.com/bazelbuild/rules_docker) repository.
+
+Examples can be found in this repository in the [examples/](examples/) directory.
 
 ## Examples
 
 We have some examples on how to run some common application stacks in the /examples directory.
 See here for:
 
-* [Java]()
-  * [Jetty]()
-* [Python]()
-* [Golang]()
+* [Java](examples/java/BUILD)
+* [Python](examples/python2.7/BUILD)
+* [Golang](examples/go/BUILD)
 
 See here for examples on how to complete some common tasks in your image:
 
