@@ -10,6 +10,7 @@ docker_build(
         "@zlib//file",
         "@python27//file",
         "@libpython27//file",
+        "@libpython27_stdlib//file",
     ],
     entrypoint = [
         "/usr/bin/python2.7",
