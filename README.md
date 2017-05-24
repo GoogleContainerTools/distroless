@@ -63,5 +63,6 @@ See here for examples on how to complete some common tasks in your image:
 
 * [Adding and running as a non-root user]()
 * [Including debian packages]()
+* [Including CA certificates]()
 
 See here for more information on how these images are [built and released]().
