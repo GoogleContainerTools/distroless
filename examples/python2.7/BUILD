@@ -7,6 +7,7 @@ par_binary(
     main = "hello.py",
 )
 
+# This example runs a python program that walks the filesystem under "/etc" and prints every filename.
 docker_build(
     name = "hello",
     base = "//python2.7:python27",
