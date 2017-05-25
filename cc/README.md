@@ -10,4 +10,4 @@ Specifically, the image contains everything in the [base image](../base/README.m
 
 ## Usage
 
-Users are expected to include their compiled application and set the correct cmd in their image.
+Users are expected to include their compiled application and set the correct CMD in their image.

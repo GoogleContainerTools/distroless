@@ -46,7 +46,7 @@ Follow these steps to get started:
   RUN go-wrapper download   # "go get -d -v ./..."
   RUN go-wrapper install
 
-  # Now copy it into our cc image.
+  # Now copy it into our base image.
   FROM gcr.io/distroless/base
   COPY --from=build /go/bin/app /
   CMD ["/app"]
@@ -56,7 +56,7 @@ Follow these steps to get started:
 
 For full documentation on how to use bazel to generate Docker images, see the [bazelbuild/rules_docker](http://github.com/bazelbuild/rules_docker) repository.
 
-Examples can be found in this repository in the [examples/](examples/) directory.
+Examples can be found in this repository in the [examples](examples/) directory.
 
 ## Examples
 
@@ -69,8 +69,8 @@ See here for:
 
 See here for examples on how to complete some common tasks in your image:
 
-* [Adding and running as a non-root user]()
-* [Including debian packages]()
-* [Including CA certificates]()
+* [Adding and running as a non-root user](examples/nonroot)
+* [Including debian packages](https://github.com/bazelbuild/rules_docker#docker_build-1)
+* [Including CA certificates](cacerts/)
 
-See here for more information on how these images are [built and released]().
+See here for more information on how these images are [built and released](RELEASES.md).
