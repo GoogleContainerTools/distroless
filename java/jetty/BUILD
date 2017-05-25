@@ -6,6 +6,7 @@ docker_build(
     name = "jetty",
     base = "//java:java8",
     cmd = ["/jetty/start.jar"],
+    ports = ["8080"],
     tars = ["@jetty//:tar"],
     workdir = "/jetty",
     # We expect users to add their WAR under /jetty/webapps.
