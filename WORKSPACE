@@ -88,6 +88,16 @@ http_file(
     url = "http://ftp.us.debian.org/debian/pool/main/p/python2.7/libpython2.7-stdlib_2.7.13-2_amd64.deb",
 )
 
+# Node
+new_http_archive(
+    name = "nodejs",
+    build_file = "BUILD.nodejs",
+    sha256 = "c6a60f823a4df31f1ed3a4044d250e322f2f2794d97798d47c6ee4af9376f927",
+    strip_prefix = "node-v6.10.3-linux-x64/",
+    type = "tgz",
+    url = "https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.gz",
+)
+
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",

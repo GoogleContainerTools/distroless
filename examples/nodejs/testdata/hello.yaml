@@ -1,0 +1,5 @@
+schemaVersion: "1.0.0"
+commandTests:
+  - name: hello
+    command: ["/nodejs/bin/node", "hello.js"]
+    expectedOutput: ['Hello World']

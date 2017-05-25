@@ -20,6 +20,11 @@ steps:
   args: ['tag', 'bazel/java/jetty:jetty', 'gcr.io/$PROJECT_ID/java/jetty:latest']
 
 - name: gcr.io/cloud-builders/bazel
+  args: ['run', '//nodejs:nodejs']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/nodejs:nodejs', 'gcr.io/$PROJECT_ID/nodejs:latest']
+
+- name: gcr.io/cloud-builders/bazel
   args: ['run', '//python2.7:python27']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/python2.7:python27', 'gcr.io/$PROJECT_ID/python2.7:latest']
@@ -30,5 +35,6 @@ images: [
   'gcr.io/$PROJECT_ID/cc:latest',
   'gcr.io/$PROJECT_ID/java:latest',
   'gcr.io/$PROJECT_ID/java/jetty:latest',
+  'gcr.io/$PROJECT_ID/nodejs:latest',
   'gcr.io/$PROJECT_ID/python2.7:latest'
 ]
