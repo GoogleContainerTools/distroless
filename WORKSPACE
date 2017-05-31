@@ -31,8 +31,8 @@ http_file(
 
 http_file(
     name = "libssl",
-    sha256 = "d3819ceeb2becc96aea4b0fceda48f6e68f84193526bc67f6895c00796ee99d6",
-    url = "http://deb.debian.org/debian/pool/main/o/openssl/libssl1.1-udeb_1.1.0e-1_amd64.udeb",
+    sha256 = "fa71445c144c7e2d09d1554d52771dfdfbdbe799f8aa678f6623ac3bbeebe093",
+    url = "http://deb.debian.org/debian/pool/main/o/openssl/libssl1.1-udeb_1.1.0e-2_amd64.udeb",
 )
 
 # For Java
