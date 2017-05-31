@@ -10,6 +10,6 @@ Specifically, the image contains everything in the [base image](../base/README.m
 
 ## Usage
 
-The entrypoint of this image is set to "node", so this image expects users to supply a path to a ..js file in the CMD.
+The entrypoint of this image is set to "node", so this image expects users to supply a path to a .js file in the CMD.
 
-See the Python [Hello World](../examples/nodejs/) directory for an example.
+See the Node.js [Hello World](../examples/nodejs/) directory for an example.
