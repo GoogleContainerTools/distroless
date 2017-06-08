@@ -39,25 +39,25 @@ http_file(
 http_file(
     name = "zlib",
     sha256 = "b75102f61ace79c14ea6f06fdd9509825ee2af694c6aa503253df4e6659d6772",
-    url = "http://ftp.us.debian.org/debian/pool/main/z/zlib/zlib1g_1.2.8.dfsg-2+b1_amd64.deb",
+    url = "http://deb.debian.org/debian/pool/main/z/zlib/zlib1g_1.2.8.dfsg-2+b1_amd64.deb",
 )
 
 http_file(
     name = "openjdk_jre8",
     sha256 = "11c592e237549d74bda30875979c2a937588667d10307c7c14047b8d03f5718a",
-    url = "http://ftp.us.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-jre-headless_8u131-b11-1~bpo8+1_amd64.deb",
+    url = "http://deb.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-jre-headless_8u131-b11-1~bpo8+1_amd64.deb",
 )
 
 http_file(
     name = "libstdcpp6",
     sha256 = "f1509bbabd78e89c861de16931aec5988e1215649688fd4f8dfe1af875a7fbef",
-    url = "http://ftp.us.debian.org/debian/pool/main/g/gcc-4.9/libstdc++6_4.9.2-10_amd64.deb",
+    url = "http://deb.debian.org/debian/pool/main/g/gcc-4.9/libstdc++6_4.9.2-10_amd64.deb",
 )
 
 http_file(
     name = "libgcc1",
     sha256 = "a1402290165e8d91b396a33d79580a4501041e92bdb62ef23929a0c207cd9af9",
-    url = "http://ftp.us.debian.org/debian/pool/main/g/gcc-4.9/libgcc1_4.9.2-10_amd64.deb",
+    url = "http://deb.debian.org/debian/pool/main/g/gcc-4.9/libgcc1_4.9.2-10_amd64.deb",
 )
 
 # For Jetty
@@ -74,19 +74,19 @@ new_http_archive(
 http_file(
     name = "libpython27",
     sha256 = "916e2c541aa954239cb8da45d1d7e4ecec232b24d3af8982e76bf43d3e1758f3",
-    url = "http://ftp.us.debian.org/debian/pool/main/p/python2.7/libpython2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
+    url = "http://deb.debian.org/debian/pool/main/p/python2.7/libpython2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
 )
 
 http_file(
     name = "python27",
     sha256 = "c89199f908d5a508d8d404efc0e1aef3d9db59ea23bd4532df9e59941643fcfb",
-    url = "http://ftp.us.debian.org/debian/pool/main/p/python2.7/python2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
+    url = "http://deb.debian.org/debian/pool/main/p/python2.7/python2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
 )
 
 http_file(
     name = "libpython27_stdlib",
     sha256 = "d997ef9edbccea4f1902a443a31c26c5c62cc5e2c9a679b3ace19909c8dc9f31",
-    url = "http://ftp.us.debian.org/debian/pool/main/p/python2.7/libpython2.7-stdlib_2.7.13-2_amd64.deb",
+    url = "http://deb.debian.org/debian/pool/main/p/python2.7/libpython2.7-stdlib_2.7.13-2_amd64.deb",
 )
 
 # Node
