@@ -10,42 +10,64 @@ load("@io_bazel_rules_go//go:def.bzl", "go_repositories")
 
 go_repositories()
 
+load(
+    "//package_manager:package_manager.bzl",
+    "package_manager_repositories",
+    "dpkg_src",
+    "dpkg",
+)
+
+package_manager_repositories()
+
+dpkg_src(
+    name = "debian_jessie",
+    arch = "amd64",
+    distro = "jessie",
+    url = "http://deb.debian.org",
+)
+
+dpkg_src(
+    name = "debian_jessie_backports",
+    arch = "amd64",
+    distro = "jessie-backports",
+    url = "http://deb.debian.org",
+)
+
 # For the glibc base image.
-http_file(
-    name = "glibc",
-    sha256 = "bdf12aa461f2960251292c9dbfa2702d65105555b12cb36c6ac9bf8bea10b382",
-    url = "http://deb.debian.org/debian/pool/main/g/glibc/libc6_2.19-18+deb8u9_amd64.deb",
+dpkg(
+    name = "libc6",
+    source = "@debian_jessie//file:Packages.json",
 )
 
-http_file(
-    name = "ca_certificates",
-    sha256 = "bd799f47f5ae3260b6402b1fe19fe2c37f2f4125afcd19327bf69a9cf436aeff",
-    url = "http://deb.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20141019+deb8u3_all.deb",
+dpkg(
+    name = "ca-certificates",
+    source = "@debian_jessie//file:Packages.json",
 )
 
-http_file(
+dpkg(
     name = "openssl",
-    sha256 = "41613658b4e93ffaa7de25060a4a1ab2f8dfa1ee15ed90aeac850a9bf5a134bb",
-    url = "http://deb.debian.org/debian/pool/main/o/openssl/openssl_1.0.1t-1+deb8u6_amd64.deb",
+    source = "@debian_jessie//file:Packages.json",
 )
 
-http_file(
-    name = "libssl",
-    sha256 = "9c8637febf6a32c300bebd1eaa8d78f3845dd6d87d8c5e56345e5fc5f3041034",
-    url = "http://deb.debian.org/debian/pool/main/o/openssl/libssl1.1-udeb_1.1.0f-3_amd64.udeb",
+dpkg(
+    name = "libssl1.0.0",
+    source = "@debian_jessie//file:Packages.json",
 )
 
 # For Java
-http_file(
-    name = "zlib",
-    sha256 = "b75102f61ace79c14ea6f06fdd9509825ee2af694c6aa503253df4e6659d6772",
-    url = "http://deb.debian.org/debian/pool/main/z/zlib/zlib1g_1.2.8.dfsg-2+b1_amd64.deb",
+dpkg(
+    name = "zlib1g",
+    source = "@debian_jessie//file:Packages.json",
 )
 
-http_file(
-    name = "openjdk_jre8",
-    sha256 = "11c592e237549d74bda30875979c2a937588667d10307c7c14047b8d03f5718a",
-    url = "http://deb.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-jre-headless_8u131-b11-1~bpo8+1_amd64.deb",
+dpkg(
+    name = "openjdk-8-jre-headless",
+    source = "@debian_jessie_backports//file:Packages.json",
+)
+
+dpkg(
+    name = "libgcc1",
+    source = "@debian_jessie//file:Packages.json",
 )
 
 http_file(
@@ -54,10 +76,20 @@ http_file(
     url = "http://deb.debian.org/debian/pool/main/g/gcc-4.9/libstdc++6_4.9.2-10_amd64.deb",
 )
 
-http_file(
-    name = "libgcc1",
-    sha256 = "a1402290165e8d91b396a33d79580a4501041e92bdb62ef23929a0c207cd9af9",
-    url = "http://deb.debian.org/debian/pool/main/g/gcc-4.9/libgcc1_4.9.2-10_amd64.deb",
+# For Python
+dpkg(
+    name = "libpython2.7-minimal",
+    source = "@debian_jessie//file:Packages.json",
+)
+
+dpkg(
+    name = "python2.7-minimal",
+    source = "@debian_jessie//file:Packages.json",
+)
+
+dpkg(
+    name = "libpython2.7-stdlib",
+    source = "@debian_jessie//file:Packages.json",
 )
 
 # For Jetty
@@ -68,25 +100,6 @@ new_http_archive(
     strip_prefix = "jetty-distribution-9.4.4.v20170414/",
     type = "tgz",
     url = "http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.4.v20170414/jetty-distribution-9.4.4.v20170414.tar.gz",
-)
-
-# For Python
-http_file(
-    name = "libpython27",
-    sha256 = "916e2c541aa954239cb8da45d1d7e4ecec232b24d3af8982e76bf43d3e1758f3",
-    url = "http://deb.debian.org/debian/pool/main/p/python2.7/libpython2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
-)
-
-http_file(
-    name = "python27",
-    sha256 = "c89199f908d5a508d8d404efc0e1aef3d9db59ea23bd4532df9e59941643fcfb",
-    url = "http://deb.debian.org/debian/pool/main/p/python2.7/python2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
-)
-
-http_file(
-    name = "libpython27_stdlib",
-    sha256 = "d997ef9edbccea4f1902a443a31c26c5c62cc5e2c9a679b3ace19909c8dc9f31",
-    url = "http://deb.debian.org/debian/pool/main/p/python2.7/libpython2.7-stdlib_2.7.13-2_amd64.deb",
 )
 
 # Node
