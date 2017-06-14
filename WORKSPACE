@@ -123,6 +123,6 @@ docker_repositories()
 
 git_repository(
     name = "runtimes_common",
-    commit = "4e9b3b57efb237ba09b4a319bea42bcdd4eb91e3",
+    commit = "b91f0dedf1ff6c53899b0f64d29993c3c65b73b4",
     remote = "https://github.com/GoogleCloudPlatform/runtimes-common.git",
 )
