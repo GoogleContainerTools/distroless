@@ -32,9 +32,9 @@ docker_build(
     name = "base",
     base = ":with_tmp",
     debs = [
-        "@glibc//file",
-        "@libssl//file",
-        "@openssl//file",
+        "@libc6//file:pkg.deb",
+        "@libssl1.0.0//file:pkg.deb",
+        "@openssl//file:pkg.deb",
     ],
     tars = [
         ":base_passwd.passwd.tar",

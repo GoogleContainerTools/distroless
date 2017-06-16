@@ -7,10 +7,10 @@ docker_build(
     name = "python27",
     base = "//base:base",
     debs = [
-        "@zlib//file",
-        "@python27//file",
-        "@libpython27//file",
-        "@libpython27_stdlib//file",
+        "@zlib1g//file:pkg.deb",
+        "@python2.7-minimal//file:pkg.deb",
+        "@libpython2.7-minimal//file:pkg.deb",
+        "@libpython2.7-stdlib//file:pkg.deb",
     ],
     entrypoint = [
         "/usr/bin/python2.7",
