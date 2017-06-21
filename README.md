@@ -34,7 +34,7 @@ Follow these steps to get started:
   Note: This requires Docker 17.05 or higher.
 
   The basic idea is that you'll have one stage to build your application artifacts, and insert them into your runtime distroless image.
-  If you'd like to learn more, please see the documentation on [multi-stage builds]().
+  If you'd like to learn more, please see the documentation on [multi-stage builds](https://docs.docker.com/engine/userguide/eng-image/multistage-build/).
 
   Here's a quick example.
   ```
