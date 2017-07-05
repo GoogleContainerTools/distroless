@@ -14,7 +14,7 @@ load(
     "//package_manager:package_manager.bzl",
     "package_manager_repositories",
     "dpkg_src",
-    "dpkg",
+    "dpkg_list",
 )
 
 package_manager_repositories()
@@ -23,73 +23,43 @@ dpkg_src(
     name = "debian_jessie",
     arch = "amd64",
     distro = "jessie",
-    url = "http://deb.debian.org",
+    sha256 = "8ff5e7a54d4e75bbbcd2f43ebc7cb4a082fbc5493bc9fb2dcdaaeacba6e76dee",
+    snapshot = "20170701T034145Z",
+    url = "http://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_jessie_backports",
     arch = "amd64",
     distro = "jessie-backports",
-    url = "http://deb.debian.org",
+    sha256 = "2a493443581bdb4be071359f7fb62122741f233d3596545d88239a4e4ec445e8",
+    snapshot = "20170701T034145Z",
+    url = "http://snapshot.debian.org/archive",
 )
 
-# For the glibc base image.
-dpkg(
-    name = "libc6",
-    source = "@debian_jessie//file:Packages.json",
-)
+dpkg_list(
+    name = "package_bundle",
+    packages = [
+        "libc6",
+        "ca-certificates",
+        "openssl",
+        "libssl1.0.0",
 
-dpkg(
-    name = "ca-certificates",
-    source = "@debian_jessie//file:Packages.json",
-)
+        #java
+        "zlib1g",
+        "libgcc1",
+        "libstdc++6",
+        "openjdk-8-jre-headless",
 
-dpkg(
-    name = "openssl",
-    source = "@debian_jessie//file:Packages.json",
-)
-
-dpkg(
-    name = "libssl1.0.0",
-    source = "@debian_jessie//file:Packages.json",
-)
-
-# For Java
-dpkg(
-    name = "zlib1g",
-    source = "@debian_jessie//file:Packages.json",
-)
-
-dpkg(
-    name = "openjdk-8-jre-headless",
-    source = "@debian_jessie_backports//file:Packages.json",
-)
-
-dpkg(
-    name = "libgcc1",
-    source = "@debian_jessie//file:Packages.json",
-)
-
-http_file(
-    name = "libstdcpp6",
-    sha256 = "f1509bbabd78e89c861de16931aec5988e1215649688fd4f8dfe1af875a7fbef",
-    url = "http://deb.debian.org/debian/pool/main/g/gcc-4.9/libstdc++6_4.9.2-10_amd64.deb",
-)
-
-# For Python
-dpkg(
-    name = "libpython2.7-minimal",
-    source = "@debian_jessie//file:Packages.json",
-)
-
-dpkg(
-    name = "python2.7-minimal",
-    source = "@debian_jessie//file:Packages.json",
-)
-
-dpkg(
-    name = "libpython2.7-stdlib",
-    source = "@debian_jessie//file:Packages.json",
+        #python
+        "libpython2.7-minimal",
+        "python2.7-minimal",
+        "libpython2.7-stdlib",
+    ],
+    sources = [
+        "@debian_jessie//file:Packages.json",
+        "@debian_jessie_backports//file:Packages.json",
+    ],
 )
 
 # For Jetty
