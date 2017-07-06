@@ -16,7 +16,6 @@
 
 import argparse
 import os
-import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument('root', type=str,
