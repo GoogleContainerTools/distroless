@@ -3,6 +3,8 @@ dist: trusty
 sudo: required
 # Not technically required but suppresses 'Ruby' in Job status message.
 language: java
+python:
+  - "2.7"
 os:
   - linux
 
@@ -19,11 +21,13 @@ addons:
 
 install:
   - go get -u github.com/bazelbuild/buildifier/buildifier
+  - pip install pylint
 
 script:
   - bazel clean && bazel build //...
   - bazel test --test_output=errors //...
   - ./buildifier.sh
+  - find . -iname "*.py" |xargs pylint --disable=R,C
 
 notifications:
   email: false

@@ -28,7 +28,7 @@ class TestParseMetadata(unittest.TestCase):
                              "newlib-source",
                              "newmail",
                              "zzuf",]
-        for pkg in expected_packages:
+        for _ in expected_packages:
             self.assertEqual(expected_packages.sort(), self.metadata.keys().sort())
 
     def test_multiline_key(self):
