@@ -15,6 +15,9 @@ docker_build(
     entrypoint = [
         "/usr/bin/python2.7",
     ],
+    symlinks = {
+        "/usr/bin/python": "/usr/bin/python2.7",
+    },
 )
 
 structure_test(
