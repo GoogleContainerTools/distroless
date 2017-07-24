@@ -14,25 +14,32 @@
 
 import argparse
 import gzip
-import io
 import urllib2
 import json
+import os
 
 
 from package_manager.parse_metadata import parse_package_metadata
+from package_manager import util
 
-PACKAGES_FILE_NAME = "file/Packages.json"
-DEB_FILE_NAME = "file/pkg.deb"
+OUT_FOLDER = "file"
+PACKAGES_FILE_NAME = os.path.join(OUT_FOLDER,"Packages.json")
+PACKAGE_MAP_FILE_NAME = os.path.join(OUT_FOLDER,"packages.bzl")
+DEB_FILE_NAME = os.path.join(OUT_FOLDER,"pkg.deb")
+
 FILENAME_KEY = "Filename"
+SHA256_KEY = "SHA256"
 
 parser = argparse.ArgumentParser(
     description="Downloads a deb package from a package source file"
 )
 
-parser.add_argument("--packages-file", action='store',
-                    help='The file path of the Packages.gz file')
-parser.add_argument("--package-name", action='store',
-                    help='The name of the package to search for and download')
+parser.add_argument("--package-files", action='store',
+                    help='A list of Packages.gz files to use')
+parser.add_argument("--packages", action='store',
+                    help='A comma delimited list of packages to search for and download')
+parser.add_argument("--workspace-name", action='store',
+                    help='The name of the current bazel workspace')
 
 parser.add_argument("--download-and-extract-only", action='store',
                     help='If True, download Packages.gz and make urls absolute from mirror url')
@@ -42,31 +49,49 @@ parser.add_argument("--arch", action='store',
                     help='The target architecture for the package list')
 parser.add_argument("--distro", action='store',
                     help='The target distribution for the package list')
+parser.add_argument("--snapshot", action='store',
+                    help='The snapshot date to download')
+parser.add_argument("--sha256", action='store',
+                    help='The sha256 checksum to validate for the Packages.gz file')
 
 def main():
     """ A tool for downloading debian packages and package metadata """
     args = parser.parse_args()
     if args.download_and_extract_only:
-        download_package_list(args.mirror_url, args.distro, args.arch)
+        download_package_list(args.mirror_url, args.distro, args.arch, args.snapshot, args.sha256)
     else:
-        download_dpkg(args.packages_file, args.package_name)
+        download_dpkg(args.package_files, args.packages, args.workspace_name)
 
 
-def download_dpkg(packages_file, package_name):
+def download_dpkg(package_files, packages, workspace_name):
     """ Using an unzipped, json package file with full urls,
      downloads a .deb package
 
     Uses the 'Filename' key to download the .deb package
     """
-    with open(packages_file, 'rb') as f:
-        metadata = json.load(f)
-    pkg = metadata[package_name]
-    buf = urllib2.urlopen(pkg[FILENAME_KEY])
-    with open(DEB_FILE_NAME, 'w') as f:
-        f.write(buf.read())
+    package_to_rule_map = {}
+    for pkg_name in packages.split(","):
+        for package_file in package_files.split(","):
+            with open(package_file, 'rb') as f:
+                metadata = json.load(f)
+            if pkg_name in metadata:
+                pkg = metadata[pkg_name]
+                buf = urllib2.urlopen(pkg[FILENAME_KEY])
+                package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
+                out_file = os.path.join("file", util.encode_package_name(pkg_name))
+                with open(out_file, 'w') as f:
+                    f.write(buf.read())
+                expected_checksum = util.sha256_checksum(out_file)
+                actual_checksum = pkg[SHA256_KEY]
+                if actual_checksum != expected_checksum:
+                    raise Exception("Wrong checksum for package %s.  Expected: %s, Actual: %s", pkg_name, expected_checksum, actual_checksum)
+                break
+        else:
+            raise Exception("Package %s not found in any of the sources" % pkg_name)
+    with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
+        f.write("packages = " + json.dumps(package_to_rule_map))
 
-
-def download_package_list(mirror_url, distro, arch):
+def download_package_list(mirror_url, distro, arch, snapshot, sha256):
     """Downloads a debian package list, expands the relative urls,
     and saves the metadata as a json file
 
@@ -96,17 +121,24 @@ SHA1: 869934a25a8bb3def0f17fef9221bed2d3a460f9
 SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
 
     """
-    url = "%s/debian/dists/%s/main/binary-%s/Packages.gz" % (
+    url = "%s/debian/%s/dists/%s/main/binary-%s/Packages.gz" % (
         mirror_url,
+        snapshot,
         distro,
         arch
     )
     buf = urllib2.urlopen(url)
-    f = gzip.GzipFile(fileobj=io.BytesIO(buf.read()))
-    data = f.read()
-    metadata = parse_package_metadata(data, mirror_url)
+    with open("Packages.gz", 'w') as f:
+        f.write(buf.read())
+    actual_sha256 = util.sha256_checksum("Packages.gz")
+    if sha256 != actual_sha256:
+        raise Exception("sha256 of Packages.gz don't match: Expected: %s, Actual:%s" %(sha256, actual_sha256))
+    with gzip.open("Packages.gz", 'rb') as f:
+        data = f.read()
+    metadata = parse_package_metadata(data, mirror_url, snapshot)
     with open(PACKAGES_FILE_NAME, 'w') as f:
         json.dump(metadata, f)
 
 if __name__ == "__main__":
     main()
+
