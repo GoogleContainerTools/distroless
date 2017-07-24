@@ -24,10 +24,7 @@ install:
   - pip install pylint
 
 script:
-  - bazel clean && bazel build //...
-  - bazel test --test_output=errors //...
-  - ./buildifier.sh
-  - find . -iname "*.py" |xargs pylint --disable=R,C
+  - ./test.sh
 
 notifications:
   email: false
