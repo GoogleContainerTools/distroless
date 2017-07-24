@@ -37,6 +37,7 @@ docker_build(
         packages["libc6"],
         packages["libssl1.0.0"],
         packages["openssl"],
+        packages["netbase"],
     ],
     tars = [
         ":base_passwd.passwd.tar",

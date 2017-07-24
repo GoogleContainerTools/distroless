@@ -18,3 +18,6 @@ fileExistenceTests:
 - name: certs_copyright
   path: '/usr/share/doc/ca-certificates/copyright'
   shouldExist: true
+- name: services
+  path: '/etc/services'
+  shouldExist: true
