@@ -44,6 +44,7 @@ dpkg_list(
         "ca-certificates",
         "openssl",
         "libssl1.0.0",
+        "netbase",
 
         #java
         "zlib1g",
