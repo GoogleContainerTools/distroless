@@ -15,13 +15,6 @@ passwd_file(
     username = "root",
 )
 
-# Create /tmp, too many things assume it exists.
-docker_build(
-    name = "with_tmp",
-    directory = "/tmp",
-    files = [":empty"],
-)
-
 load("//cacerts:cacerts.bzl", "cacerts")
 
 cacerts(
@@ -30,9 +23,12 @@ cacerts(
 
 load("@package_bundle//file:packages.bzl", "packages")
 
+# Create /tmp, too many things assume it exists.
+# tmp.tar has a /tmp with the correct permissions 01777
+# A tar is needed because at the moment there is no way to create a diretory with specific permissions
+
 docker_build(
     name = "base",
-    base = ":with_tmp",
     debs = [
         packages["libc6"],
         packages["libssl1.0.0"],
@@ -42,6 +38,7 @@ docker_build(
     tars = [
         ":base_passwd.passwd.tar",
         ":cacerts.tar",
+        ":tmp.tar",
     ],
 )
 
