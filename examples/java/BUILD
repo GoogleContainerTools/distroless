@@ -1,18 +1,12 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
+load("@io_bazel_rules_docker//docker/contrib/java:image.bzl", "java_image")
 
-java_binary(
-    name = "HelloJava",
-    srcs = ["HelloJava.java"],
-    main_class = "examples.HelloJava",
-)
-
-docker_build(
+java_image(
     name = "hello",
+    srcs = ["HelloJava.java"],
     base = "//java:java8",
-    cmd = ["/HelloJava_deploy.jar"],
-    files = [":HelloJava_deploy.jar"],
+    main_class = "examples.HelloJava",
 )
 
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")

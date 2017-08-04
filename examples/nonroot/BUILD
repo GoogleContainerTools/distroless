@@ -1,14 +1,7 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("@io_bazel_rules_docker//docker/contrib/go:image.bzl", "go_image")
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@io_bazel_rules_docker//docker/contrib:passwd.bzl", "passwd_file")
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
-
-# Simple go program to print out the username and uid.
-go_binary(
-    name = "user",
-    srcs = ["testdata/user.go"],
-    visibility = ["//visibility:private"],
-)
 
 # Create a passwd file with a nonroot user and uid.
 passwd_file(
@@ -22,9 +15,16 @@ passwd_file(
 docker_build(
     name = "passwd_image",
     base = "//base:base",
-    files = [":user"],
     tars = [":nonroot.passwd.tar"],
     user = "nonroot",
+    visibility = ["//visibility:private"],
+)
+
+# Simple go program to print out the username and uid.
+go_image(
+    name = "user",
+    srcs = ["testdata/user.go"],
+    base = ":passwd_image",
     visibility = ["//visibility:private"],
 )
 
@@ -32,6 +32,6 @@ docker_build(
 structure_test(
     name = "passwd_test",
     config = "testdata/user.yaml",
-    image = ":passwd_image",
+    image = ":user",
     visibility = ["//visibility:private"],
 )

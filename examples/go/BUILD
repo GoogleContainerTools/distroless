@@ -1,19 +1,10 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
-
 # Go boilerplate
-load("@io_bazel_rules_go//go:def.bzl", "go_binary")
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
+load("@io_bazel_rules_docker//docker/contrib/go:image.bzl", "go_image")
 
-go_binary(
-    name = "hello_go",
-    srcs = ["main.go"],
-)
-
-docker_build(
+go_image(
     name = "go_example",
+    srcs = ["main.go"],
     base = "//base:base",
-    cmd = ["./hello_go"],
-    files = [":hello_go"],
 )
