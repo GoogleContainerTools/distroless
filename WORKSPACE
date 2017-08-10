@@ -94,7 +94,7 @@ http_file(
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
-    commit = "79aa5de0eb7348876316c537f7cec26bae02cfab",
+    commit = "b65749d4ae364986ace9ce15d29708b266921d80",
     remote = "https://github.com/bazelbuild/rules_docker.git",
 )
 
@@ -104,6 +104,30 @@ load(
 )
 
 docker_repositories()
+
+# Have the py_image dependencies for testing.
+load(
+    "@io_bazel_rules_docker//docker/contrib/python:image.bzl",
+    _py_image_repos = "repositories",
+)
+
+_py_image_repos()
+
+# Have the java_image dependencies for testing.
+load(
+    "@io_bazel_rules_docker//docker/contrib/java:image.bzl",
+    _java_image_repos = "repositories",
+)
+
+_java_image_repos()
+
+# Have the go_image dependencies for testing.
+load(
+    "@io_bazel_rules_docker//docker/contrib/go:image.bzl",
+    _go_image_repos = "repositories",
+)
+
+_go_image_repos()
 
 git_repository(
     name = "runtimes_common",
