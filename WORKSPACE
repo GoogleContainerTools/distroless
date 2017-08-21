@@ -23,8 +23,8 @@ dpkg_src(
     name = "debian_jessie",
     arch = "amd64",
     distro = "jessie",
-    sha256 = "8ff5e7a54d4e75bbbcd2f43ebc7cb4a082fbc5493bc9fb2dcdaaeacba6e76dee",
-    snapshot = "20170701T034145Z",
+    sha256 = "142cceae78a1343e66a0d27f1b142c406243d7940f626972c2c39ef71499ce61",
+    snapshot = "20170821T035341Z",
     url = "http://snapshot.debian.org/archive",
 )
 
@@ -32,8 +32,8 @@ dpkg_src(
     name = "debian_jessie_backports",
     arch = "amd64",
     distro = "jessie-backports",
-    sha256 = "2a493443581bdb4be071359f7fb62122741f233d3596545d88239a4e4ec445e8",
-    snapshot = "20170701T034145Z",
+    sha256 = "eba769f0a0bcaffbb82a8b61d4a9c8a0a3299d5111a68daeaf7e50cc0f76e0ab",
+    snapshot = "20170821T035341Z",
     url = "http://snapshot.debian.org/archive",
 )
 
