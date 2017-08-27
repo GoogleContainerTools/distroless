@@ -70,6 +70,7 @@ See here for:
 * [Python](examples/python2.7/BUILD)
 * [Golang](examples/go/BUILD)
 * [Node.js](examples/nodejs/BUILD)
+* [dotnet](examples/dotnet/BUILD)
 
 See here for examples on how to complete some common tasks in your image:
 

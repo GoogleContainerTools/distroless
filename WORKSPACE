@@ -56,6 +56,15 @@ dpkg_list(
         "libpython2.7-minimal",
         "python2.7-minimal",
         "libpython2.7-stdlib",
+
+        #dotnet
+        "libcurl3",
+        "libgssapi-krb5-2",
+        "libicu52",
+        "liblttng-ust0",
+        "libunwind8",
+        "libuuid1",
+        "liblzma5",
     ],
     sources = [
         "@debian_jessie//file:Packages.json",
@@ -81,6 +90,15 @@ new_http_archive(
     strip_prefix = "node-v6.10.3-linux-x64/",
     type = "tgz",
     url = "https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.gz",
+)
+
+# dotnet
+new_http_archive(
+    name = "dotnet",
+    build_file = "BUILD.dotnet",
+    sha256 = "69ecad24bce4f2132e0db616b49e2c35487d13e3c379dabc3ec860662467b714",
+    type = "tgz",
+    url = "https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz",
 )
 
 # For the debug image
