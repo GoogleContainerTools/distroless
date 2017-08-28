@@ -131,6 +131,6 @@ _go_image_repos()
 
 git_repository(
     name = "runtimes_common",
-    tag = "v0.1.0",
     remote = "https://github.com/GoogleCloudPlatform/runtimes-common.git",
+    tag = "v0.1.0",
 )
