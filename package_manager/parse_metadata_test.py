@@ -11,14 +11,14 @@ class TestParseMetadata(unittest.TestCase):
         with open(filename) as f:
             data = f.read()
         self.data = data
-        self.mirror_url = "http://debian.org"
+        self.mirror_url = "http://http.us.debian.org/debian"
         self.metadata = parse_package_metadata(self.data, self.mirror_url, "20170701")
 
     def test_url_rewrite(self):
         """ Relative url should have gotten rewritten with absolute url """
         self.assertEqual(
             self.metadata["libnewlib-dev"]["Filename"],
-            self.mirror_url + "/debian/20170701/" + "pool/main/n/newlib/libnewlib-dev_2.1.0+git20140818.1a8323b-2_all.deb")
+            self.mirror_url + "/20170701/" + "pool/main/n/newlib/libnewlib-dev_2.1.0+git20140818.1a8323b-2_all.deb")
 
     def test_get_all_packages(self):
         """ Parser should identify all packages """
