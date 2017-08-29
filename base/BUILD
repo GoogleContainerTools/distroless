@@ -21,7 +21,7 @@ cacerts(
     name = "cacerts",
 )
 
-load("@package_bundle//file:packages.bzl", "packages")
+load("@debian_jessie_amd64//debs:deb_packages.bzl", "debian_jessie_amd64")
 
 # Create /tmp, too many things assume it exists.
 # tmp.tar has a /tmp with the correct permissions 01777
@@ -30,10 +30,10 @@ load("@package_bundle//file:packages.bzl", "packages")
 docker_build(
     name = "base",
     debs = [
-        packages["libc6"],
-        packages["libssl1.0.0"],
-        packages["openssl"],
-        packages["netbase"],
+        debian_jessie_amd64["libc6"],
+        debian_jessie_amd64["libssl1.0.0"],
+        debian_jessie_amd64["openssl"],
+        debian_jessie_amd64["netbase"],
     ],
     tars = [
         ":base_passwd.passwd.tar",

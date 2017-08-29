@@ -1,0 +1,29 @@
+# A cloud build config to release a PAR binary of
+# the deb_file_loader.par used for the deb_packages bazel rules
+
+# A cloudbuild is triggered by every commit and $COMMIT_SHA is a built-in
+# substitution
+
+steps:
+# Build the deb_helper PAR file
+# this binary is used by the deb_packages rules
+# to download debian packages
+- name: gcr.io/cloud-builders/bazel
+  args: [
+    '--output_base', '/workspace',
+    'build', '//deb_helper:deb_file_loader.par',
+    # TODO(r2d4): Remove once PAR compilation runs properly inside
+    # the Bazel sandbox on cloudbuild.
+    '--strategy', 'PythonCompile=standalone'
+  ]
+
+# Upload the deb_helper PAR file to a GCS bucket
+- name: gcr.io/cloud-builders/gsutil
+  args: [
+    'cp',
+    'bazel-bin/deb_helper/deb_file_loader.par',
+    'gs://distroless/package_manager_tools/$COMMIT_SHA/deb_file_loader.par'
+  ]
+
+# We produce no Docker images.
+images: []

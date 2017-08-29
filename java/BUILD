@@ -1,14 +1,15 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
-load("@package_bundle//file:packages.bzl", "packages")
+load("@debian_jessie_amd64//debs:deb_packages.bzl", "debian_jessie_amd64")
+load("@debian_jessie_backports_amd64//debs:deb_packages.bzl", "debian_jessie_backports_amd64")
 
 docker_build(
     name = "java8",
     base = "//cc:cc",
     debs = [
-        packages["zlib1g"],
-        packages["openjdk-8-jre-headless"],
+        debian_jessie_amd64["zlib1g"],
+        debian_jessie_backports_amd64["openjdk-8-jre-headless"],
     ],
     entrypoint = [
         "/usr/bin/java",

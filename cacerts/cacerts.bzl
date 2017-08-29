@@ -6,12 +6,12 @@ def _impl(ctx):
             inputs = [ctx.executable._extract, ctx.file.deb],
             outputs = [ctx.outputs.out])
 
-load("@package_bundle//file:packages.bzl", "packages")
+load("@debian_jessie_amd64//debs:deb_packages.bzl", "debian_jessie_amd64")
 
 cacerts = rule(
     attrs = {
         "deb": attr.label(
-            default = Label(packages["ca-certificates"]),
+            default = Label(debian_jessie_amd64["ca-certificates"]),
             allow_files = [".deb"],
             single_file = True,
         ),
