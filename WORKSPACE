@@ -10,58 +10,93 @@ load("@io_bazel_rules_go//go:def.bzl", "go_repositories")
 
 go_repositories()
 
+# To build the par file for the deb_file_loader helper program in deb_helper
+git_repository(
+    name = "subpar",
+    remote = "https://github.com/google/subpar",
+    tag = "1.0.0",
+)
+
+# An example of actually using the new rules of this project:
+
+# Load the rules
 load(
-    "//package_manager:package_manager.bzl",
-    "package_manager_repositories",
-    "dpkg_src",
-    "dpkg_list",
+    "//deb_helper:deb_helper.bzl",
+    "deb_loader",
+    "deb_packages",
 )
 
-package_manager_repositories()
+# Initialize the deb_loader which downloads the deb files in deb_packages rules
+deb_loader()
 
-dpkg_src(
-    name = "debian_jessie",
-    arch = "amd64",
+# For every source of deb packages create a deb_packages rule
+# The name does not have to be like the one here, but it helps to know which source is used in BUILD files
+deb_packages(
+    name = "debian_jessie_amd64",
+    architecture = "amd64",
     distro = "jessie",
-    sha256 = "142cceae78a1343e66a0d27f1b142c406243d7940f626972c2c39ef71499ce61",
-    snapshot = "20170821T035341Z",
-    url = "http://snapshot.debian.org/archive",
+    distro_type = "debian",
+    mirrors = [
+        "http://deb.debian.org",
+    ],
+    packages = {
+        "ca-certificates": "pool/main/c/ca-certificates/ca-certificates_20141019+deb8u3_all.deb",
+        "libc6": "pool/main/g/glibc/libc6_2.19-18+deb8u10_amd64.deb",
+        "libgcc1": "pool/main/g/gcc-4.9/libgcc1_4.9.2-10_amd64.deb",
+        "libjemalloc1": "pool/main/j/jemalloc/libjemalloc1_3.6.0-3_amd64.deb",
+        "libpython2.7-minimal": "pool/main/p/python2.7/libpython2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
+        "libpython2.7-stdlib": "pool/main/p/python2.7/libpython2.7-stdlib_2.7.9-2+deb8u1_amd64.deb",
+        "libssl1.0.0": "pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb",
+        "libstdc++6": "pool/main/g/gcc-4.9/libstdc++6_4.9.2-10_amd64.deb",
+        "netbase": "pool/main/n/netbase/netbase_5.3_all.deb",
+        "openssl": "pool/main/o/openssl/openssl_1.0.1t-1+deb8u6_amd64.deb",
+        "python2.7-minimal": "pool/main/p/python2.7/python2.7-minimal_2.7.9-2+deb8u1_amd64.deb",
+        "zlib1g": "pool/main/z/zlib/zlib1g_1.2.8.dfsg-2+b1_amd64.deb",
+    },
+    packages_sha256 = {
+        "ca-certificates": "bd799f47f5ae3260b6402b1fe19fe2c37f2f4125afcd19327bf69a9cf436aeff",
+        "libc6": "0a95ee1c5bff7f73c1279b2b78f32d40da9025a76f93cb67c03f2867a7133e61",
+        "libgcc1": "a1402290165e8d91b396a33d79580a4501041e92bdb62ef23929a0c207cd9af9",
+        "libjemalloc1": "caeeb8b60bee0b732de25b6091dae30d58f1cebcf7467900525d5d266d4360ba",
+        "libpython2.7-minimal": "916e2c541aa954239cb8da45d1d7e4ecec232b24d3af8982e76bf43d3e1758f3",
+        "libpython2.7-stdlib": "cf1c9dfc12d6cfd42bb14bfb46ee3cec0f6ebc720a1419f017396739953b12c5",
+        "libssl1.0.0": "0fc777d9242fd93851eb49c4aafd22505048b7797c0178f20c909ff918320619",
+        "libstdc++6": "f1509bbabd78e89c861de16931aec5988e1215649688fd4f8dfe1af875a7fbef",
+        "netbase": "3979bdd40c5666ef9bf71a5391ba01ad38e264f2ec96d289993f2a0805616dd3",
+        "openssl": "41613658b4e93ffaa7de25060a4a1ab2f8dfa1ee15ed90aeac850a9bf5a134bb",
+        "python2.7-minimal": "c89199f908d5a508d8d404efc0e1aef3d9db59ea23bd4532df9e59941643fcfb",
+        "zlib1g": "b75102f61ace79c14ea6f06fdd9509825ee2af694c6aa503253df4e6659d6772",
+    },
 )
 
-dpkg_src(
-    name = "debian_jessie_backports",
-    arch = "amd64",
+deb_packages(
+    name = "debian_jessie_backports_amd64",
+    architecture = "amd64",
     distro = "jessie-backports",
-    sha256 = "eba769f0a0bcaffbb82a8b61d4a9c8a0a3299d5111a68daeaf7e50cc0f76e0ab",
-    snapshot = "20170821T035341Z",
-    url = "http://snapshot.debian.org/archive",
+    distro_type = "debian",
+    mirrors = [
+        "http://deb.debian.org",
+    ],
+    packages = {
+        "openjdk-8-jre-headless": "pool/main/o/openjdk-8/openjdk-8-jre-headless_8u131-b11-1~bpo8+1_amd64.deb",
+        "redis-server": "pool/main/r/redis/redis-server_3.2.8-2~bpo8+1_amd64.deb",
+    },
+    packages_sha256 = {
+        "openjdk-8-jre-headless": "11c592e237549d74bda30875979c2a937588667d10307c7c14047b8d03f5718a",
+        "redis-server": "660fb0b07fad591fe6b44f547c0314b91f2fa1515375c51d7cf8be01072e1206",
+    },
 )
 
-dpkg_list(
-    name = "package_bundle",
-    packages = [
-        "libc6",
-        "ca-certificates",
-        "openssl",
-        "libssl1.0.0",
-        "netbase",
-
-        #java
-        "zlib1g",
-        "libgcc1",
-        "libstdc++6",
-        "openjdk-8-jre-headless",
-
-        #python
-        "libpython2.7-minimal",
-        "python2.7-minimal",
-        "libpython2.7-stdlib",
-    ],
-    sources = [
-        "@debian_jessie//file:Packages.json",
-        "@debian_jessie_backports//file:Packages.json",
-    ],
-)
+# In the BUILD file where you want to use this source, add a line like this (always @<rule_name>//debs:deb_packages.bzl):
+#
+# load("@debian_jessie_amd64//debs:deb_packages.bzl", "debian_jessie_amd64")
+#
+# and in the docker_build rule refer to packages like this:
+#
+# docker_build(
+#     debs = [
+#         debian_jessie_amd64["foo"],
+#         [...]
 
 # For Jetty
 new_http_archive(
