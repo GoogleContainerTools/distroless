@@ -9,7 +9,7 @@ For more information, see this [talk](https://swampup2017.sched.com/event/A6CW/d
 
 ## Why should I use distroless images?
 
-Restricting what's in your runtime to container to precisely what's necessary for your app is a best practice employed by Google
+Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google
 and other tech giants that have used containers in production for many years.
 It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
 
