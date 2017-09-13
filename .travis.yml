@@ -21,7 +21,7 @@ addons:
 
 install:
   - go get -u github.com/bazelbuild/buildifier/buildifier
-  - pip install pylint
+  - sudo pip install pylint
 
 script:
   - ./test.sh
