@@ -6,7 +6,8 @@ load("@package_bundle//file:packages.bzl", "packages")
 
 docker_build(
     name = "python27",
-    base = "//base:base",
+    # Based on //cc:cc so that C extensions work properly.
+    base = "//cc:cc",
     debs = [
         packages["zlib1g"],
         packages["python2.7-minimal"],
