@@ -39,6 +39,7 @@ docker_build(
         ":base_passwd.passwd.tar",
         ":cacerts.tar",
         ":tmp.tar",
+        "@debian_jessie//file:os_release.tar",
     ],
 )
 

@@ -34,7 +34,7 @@ _dpkg_list = repository_rule(
 def _dpkg_src_impl(repository_ctx):
   repository_ctx.file("file/BUILD", """
 package(default_visibility = ["//visibility:public"])
-exports_files(["Packages.json"])
+exports_files(["Packages.json", "os_release.tar"])
 """)
   args = [
       repository_ctx.path(repository_ctx.attr._dpkg_parser),

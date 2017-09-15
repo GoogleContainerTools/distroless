@@ -23,8 +23,11 @@ from package_manager.parse_metadata import parse_package_metadata
 from package_manager import util
 
 OUT_FOLDER = "file"
+OS_RELEASE_PATH = "etc"
 PACKAGES_FILE_NAME = os.path.join(OUT_FOLDER,"Packages.json")
 PACKAGE_MAP_FILE_NAME = os.path.join(OUT_FOLDER,"packages.bzl")
+OS_RELEASE_FILE_NAME = os.path.join(OS_RELEASE_PATH, "os-release")
+OS_RELEASE_TAR_FILE_NAME = os.path.join(OUT_FOLDER, "os_release.tar")
 DEB_FILE_NAME = os.path.join(OUT_FOLDER,"pkg.deb")
 
 FILENAME_KEY = "Filename"
@@ -60,9 +63,9 @@ def main():
     args = parser.parse_args()
     if args.download_and_extract_only:
         download_package_list(args.mirror_url, args.distro, args.arch, args.snapshot, args.sha256)
+        util.build_os_release_tar(args.distro, OS_RELEASE_FILE_NAME, OS_RELEASE_PATH, OS_RELEASE_TAR_FILE_NAME)
     else:
         download_dpkg(args.package_files, args.packages, args.workspace_name)
-
 
 def download_dpkg(package_files, packages, workspace_name):
     """ Using an unzipped, json package file with full urls,
