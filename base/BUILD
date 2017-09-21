@@ -34,6 +34,7 @@ docker_build(
         packages["libssl1.0.0"],
         packages["openssl"],
         packages["netbase"],
+        packages["tzdata"],
     ],
     tars = [
         ":base_passwd.passwd.tar",
