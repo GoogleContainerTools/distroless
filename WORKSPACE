@@ -45,6 +45,7 @@ dpkg_list(
         "openssl",
         "libssl1.0.0",
         "netbase",
+        "tzdata",
 
         #java
         "zlib1g",

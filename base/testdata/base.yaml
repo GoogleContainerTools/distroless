@@ -21,3 +21,6 @@ fileExistenceTests:
 - name: services
   path: '/etc/services'
   shouldExist: true
+- name: tzdata
+  path: '/usr/sbin/tzconfig'
+  shouldExist: true
