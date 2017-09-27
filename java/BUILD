@@ -2,6 +2,11 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@package_bundle//file:packages.bzl", "packages")
+load("//cacerts:java.bzl", "cacerts_java")
+
+cacerts_java(
+    name = "cacerts_java.tar",
+)
 
 docker_build(
     name = "java8",
@@ -19,6 +24,7 @@ docker_build(
     symlinks = {
         "/usr/bin/java": "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
     },
+    tars = [":cacerts_java.tar"],
 )
 
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
