@@ -1,6 +1,6 @@
-load("@io_bazel_rules_docker//docker/contrib/go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
-load("@io_bazel_rules_docker//docker/contrib:passwd.bzl", "passwd_file")
+load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_file")
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 
 # Create a passwd file with a nonroot user and uid.

@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
-load("@io_bazel_rules_docker//docker/contrib:passwd.bzl", "passwd_file")
+load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_file")
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 

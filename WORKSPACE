@@ -113,7 +113,7 @@ http_file(
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
-    commit = "b65749d4ae364986ace9ce15d29708b266921d80",
+    commit = "839a297d4e874216b4fd93f09dd35be5592dc10e",
     remote = "https://github.com/bazelbuild/rules_docker.git",
 )
 
@@ -126,7 +126,7 @@ docker_repositories()
 
 # Have the py_image dependencies for testing.
 load(
-    "@io_bazel_rules_docker//docker/contrib/python:image.bzl",
+    "@io_bazel_rules_docker//python:image.bzl",
     _py_image_repos = "repositories",
 )
 
@@ -134,7 +134,7 @@ _py_image_repos()
 
 # Have the java_image dependencies for testing.
 load(
-    "@io_bazel_rules_docker//docker/contrib/java:image.bzl",
+    "@io_bazel_rules_docker//java:image.bzl",
     _java_image_repos = "repositories",
 )
 
@@ -142,7 +142,7 @@ _java_image_repos()
 
 # Have the go_image dependencies for testing.
 load(
-    "@io_bazel_rules_docker//docker/contrib/go:image.bzl",
+    "@io_bazel_rules_docker//go:image.bzl",
     _go_image_repos = "repositories",
 )
 
