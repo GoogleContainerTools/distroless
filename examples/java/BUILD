@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker/contrib/java:image.bzl", "java_image")
+load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 
 java_image(
     name = "hello",

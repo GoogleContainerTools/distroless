@@ -1,4 +1,4 @@
-load("@io_bazel_rules_docker//docker/contrib/python:image.bzl", "py_image")
+load("@io_bazel_rules_docker//python:image.bzl", "py_image")
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 
 py_image(
