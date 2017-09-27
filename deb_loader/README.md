@@ -41,6 +41,8 @@ deb_packages(
         "python2.7-minimal": "c89199f908d5a508d8d404efc0e1aef3d9db59ea23bd4532df9e59941643fcfb",
         "zlib1g": "b75102f61ace79c14ea6f06fdd9509825ee2af694c6aa503253df4e6659d6772",
     },
+    pgp_keyid = "7638D0442B90D010",
+    pgp_keyurls = ["https://ftp-master.debian.org/keys/archive-key-8.asc"],
 )
 ```
 
@@ -120,6 +122,8 @@ deb_packages(
     packages_sha256 = {
         "libpython2.7-minimal": "916e2c541aa954239cb8da45d1d7e4ecec232b24d3af8982e76bf43d3e1758f3",
     },
+    pgp_keyid = "7638D0442B90D010",
+    pgp_keyurls = ["https://ftp-master.debian.org/keys/archive-key-8.asc"],
 )
 ```
 
@@ -143,6 +147,8 @@ deb_packages(
     ],
     packages = {},
     packages_sha256 = {},
+    pgp_keyid = "7638D0442B90D010",
+    pgp_keyurls = ["https://ftp-master.debian.org/keys/archive-key-8.asc"],
 )
 ```
 
@@ -169,7 +175,7 @@ docker_build(
 )
 ```
 
-Now run `python ./tools/update_workspace/update_workspace.py --add` and the helper tool will fetch the relevant files from the mirror(s), parse BUILD files for `docker_build` rules and add the data for missing packages at the respective `deb_packages` rule.
+Now run `bazel-bin/tools/update_workspace/update_workspace` and the helper tool will fetch the relevant files from the mirror(s), parse BUILD files for `docker_build` rules and add the data for missing packages at the respective `deb_packages` rule.
 It uses the `buildifier` and `buildozer` tools from [https://github.com/bazelbuild/buildtools](https://github.com/bazelbuild/buildtools), which need to be available on your $PATH.
 
 It will also update any existing packages to either the most recent version available on the mirror or a version you specified in the package name (`package=version`).
@@ -265,6 +271,22 @@ Every key name in the `packages` section must exactly match a key name in the `p
         <p><code>a dictionary mapping packagename to package_hash, required</code></p>
         <p>The deb file at package_path is expected to have this sha256 hash</p>
         <p>Keys need to be the same as in the <code>packages</code> dictionary</p>
+      </td>
+    </tr>
+    <tr>
+      <td><code>pgp_keyid</code></td>
+      <td>
+        <p><code>a string, containing the key ID of a PGP key, required</code></p>
+        <p>The PGP key with this ID must be one that signed the <code>Release</code> file, the signature of the <code>Release.gpg</code> file of the repository must verify with this key.</p>
+        <p>This is not checked when downloading individual deb packages, it is used by the helper tool to establish a chain of trusted inputs when updating file paths and hashes.</p>
+      </td>
+    </tr>
+    <tr>
+      <td><code>pgp_keyurls</code></td>
+      <td>
+        <p><code>a list of URLs that serve the armored public key file with the ID specified above, required</code></p>
+        <p>The file from these URLs must verify that the <code>Release.gpg</code> signature of the <code>Release</code> file of the mirror you are using is valid.</p>
+        <p>This is not checked when downloading individual deb packages, it is used by the helper tool to establish a chain of trusted inputs when updating file paths and hashes.</p>
       </td>
     </tr>
   </tbody>
