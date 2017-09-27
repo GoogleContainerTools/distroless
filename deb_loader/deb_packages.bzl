@@ -28,6 +28,8 @@ _deb_packages = repository_rule(
         "packages": attr.string_dict(),
         "packages_sha256": attr.string_dict(),
         "mirrors": attr.string_list(),
+        "pgp_keyid": attr.string(),
+        "pgp_keyurls": attr.string_list(),
         "_deb_file_loader": attr.label(
             executable = True,
             default = Label("@deb_file_loader//file:deb_file_loader.par"),
