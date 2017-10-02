@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@package_bundle//file:packages.bzl", "packages")
 load("//cacerts:java.bzl", "cacerts_java")
-load("@io_bazel_rules_docker//docker/contrib/java:image.bzl", "java_image")
+load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 
 cacerts_java(
     name = "cacerts_java",
