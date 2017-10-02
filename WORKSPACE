@@ -126,6 +126,7 @@ load(
 # Used to generate java ca certs.
 docker_pull(
     name = "debian8",
+    # From tag: 2017-09-11-115552
     digest = "sha256:6d381d0bf292e31291136cff03b3209eb40ef6342fb790483fa1b9d3af84ae46",
     registry = "gcr.io",
     repository = "google-appengine/debian8",
