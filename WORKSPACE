@@ -113,13 +113,23 @@ http_file(
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
-    commit = "839a297d4e874216b4fd93f09dd35be5592dc10e",
+    commit = "cdd259b3ba67fd4ef814c88070a2ebc7bec28dc5",
     remote = "https://github.com/bazelbuild/rules_docker.git",
 )
 
 load(
     "@io_bazel_rules_docker//docker:docker.bzl",
     "docker_repositories",
+    "docker_pull",
+)
+
+# Used to generate java ca certs.
+docker_pull(
+    name = "debian8",
+    # From tag: 2017-09-11-115552
+    digest = "sha256:6d381d0bf292e31291136cff03b3209eb40ef6342fb790483fa1b9d3af84ae46",
+    registry = "gcr.io",
+    repository = "google-appengine/debian8",
 )
 
 docker_repositories()
