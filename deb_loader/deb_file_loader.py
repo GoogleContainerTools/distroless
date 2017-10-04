@@ -110,13 +110,7 @@ def verify_deb(filename, sha256_hash, package_name):
 
 def main(args):
     """A tool for downloading deb packages"""
-    debian = False
-    ubuntu = False
-    if args.distro_type.lower() == "debian":
-        debian = True
-    elif args.distro_type.lower() == "ubuntu":
-        ubuntu = True
-    else:
+    if args.distro_type.lower() != "debian" or "ubuntu":
         # For now the distro_type is not used beyond this point.
         # There might be some other distributions with different layouts in the future.
         raise NotImplementedError(
