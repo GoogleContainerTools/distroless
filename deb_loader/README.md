@@ -6,7 +6,7 @@
 
 First, tell bazel to load these rules with a `load()` statement and then initialize the `deb_repositories()` rule to make sure the deb_file_loader tool is available during the build.
 
-```python
+```bzl
 load(
     "//deb_loader:deb_loader.bzl",
     "deb_packages",
@@ -15,11 +15,59 @@ load(
 deb_repositories()
 ```
 
+Next, create a http_file rule that points to a PGP armored public key.
+It is highly recommended to also specify the sha256 hash of the key file to make sure it is untampered.
+This key must be the one that signed the `Release` file for the distribution that you'll specify in the next step.
+
+This is necessary because the `update_workspace` helper tool verifies files according to https://wiki.debian.org/SecureApt
+
+Here is for example a list of keys for Debian: https://ftp-master.debian.org/keys.html (note the https - it is important that you are sure the fingerprints are directly from the Debian project)
+
+To verify that a key you downloaded has the correct fingerprint, you can download it locally and run `gpg --with-fingerprint keyfile.asc`.
+If no fingerprint is displayed, try again with `gpg2` instead of `gpg`.
+The fingerprint of the downloaded key must exactly match the fingerprint you obtained via a trusted channel.
+
+After verifying, you can run `sha256sum keyfile.asc` to get a hash that ensures that you'll receive the same file from now on.
+
+```
+# Look on https://ftp-master.debian.org/keys.html for the key and its fingerprint you want to use
+# Also verify the fingerprint is correct via a different source (mailing lists, other web sites, colleagues, different internet connections...)
+
+wget -q https://ftp-master.debian.org/keys/archive-key-8.asc
+
+gpg2 --with-fingerprint archive-key-8.asc
+pub  rsa4096/2B90D010 2014-11-21 [expires: 2022-11-19]
+      Key fingerprint = 126C 0D24 BD8A 2942 CC7D  F8AC 7638 D044 2B90 D010
+uid                   Debian Archive Automatic Signing Key (8/jessie) <ftpmaster@debian.org>
+
+# Manually verify that this is the correct fingerprint that you obtained before
+
+sha256sum archive-key-8.asc
+e42141a829b9fde8392ea2c0e329321bb29e5c0453b0b48e33c9f88bdc4873c5  archive-key-8.asc
+```
+
+Now enter this information in your `http_file` rule:
+
+```bzl
+http_file(
+    name = "jessie_archive_key",
+    sha256 = "e42141a829b9fde8392ea2c0e329321bb29e5c0453b0b48e33c9f88bdc4873c5",
+    urls = ["https://ftp-master.debian.org/keys/archive-key-8.asc"],
+)
+```
+
+You can of course also use the key your organization uses internally to sign their Debian style repositories instead of the ones used by the Debian project.
+
+Another good practice is to mirror this file, maybe at a location you control in case you are worried that the Debian project might not always be able to deliver this file to you.
+
+Also take note of the `urls` syntax instead of the deprecated single `url`
+
+
 Next, for every source of deb packages, create a `deb_packages` rule.
 You can define additional mirrors per package source, but it is assumed that all these mirrors will serve the exact same files.
 Hashes are checked after downloading files.
 
-```python
+```bzl
 deb_packages(
     name = "debian_jessie_amd64",
     arch = "amd64",
@@ -41,8 +89,7 @@ deb_packages(
         "python2.7-minimal": "c89199f908d5a508d8d404efc0e1aef3d9db59ea23bd4532df9e59941643fcfb",
         "zlib1g": "b75102f61ace79c14ea6f06fdd9509825ee2af694c6aa503253df4e6659d6772",
     },
-    pgp_keyid = "7638D0442B90D010",
-    pgp_keyurls = ["https://ftp-master.debian.org/keys/archive-key-8.asc"],
+    pgp_key = "jessie_archive_key",
 )
 ```
 
@@ -54,7 +101,7 @@ To actually use the `.deb` files in a BUILD file rule like `docker_build`, you f
 This is done with the `load("@your_rule_name//debs:deb_packages.bzl", "your_rule_name")` line.
 Then you can use the dictionary named the same as the `deb_packages` rule to refer to the packages you defined in the WORKSPACE file.
 
-```python
+```bzl
 load("@debian_jessie_amd64//debs:deb_packages.bzl", "debian_jessie_amd64")
 
 docker_build(
@@ -88,25 +135,35 @@ Download the `Release` and `Release.gpg` files in the distro's folder (in our ex
 Verify the file's signature: `gpg --verify Release.gpg Release`
 It **must** be signed with a vald signature by one of the keys on this site: https://ftp-master.debian.org/keys.html
 
+Also create a `http_file` rule that references this key and make sure to include a SHA256 hash, so it won't change later:
+
+```bzl
+http_file(
+    name = "jessie_archive_key",
+    sha256 = "e42141a829b9fde8392ea2c0e329321bb29e5c0453b0b48e33c9f88bdc4873c5",
+    urls = ["https://ftp-master.debian.org/keys/archive-key-8.asc"],
+)
+```
+
 This file contains the paths to various other files and their hashes.
 Scroll down to the SHA256 section and choose the path to the `Packages` file that you want to use (for example `main/binary-amd64/Packages.xz`) and also note down its hash.
 
-Append the Packages file path to your mirror URL + `/dists/yourdistro` (for example http://deb.debian.org/debian/dists/jessie/main/binary-amd64/Packages.xz) and download the resulting file.
+Append the `Packages` file path to your mirror URL + `/dists/yourdistro` (for example http://deb.debian.org/debian/dists/jessie/main/binary-amd64/Packages.xz) and download the resulting file.
 
-Verify the hash of the file you received (with the exception of the GPG keys site, all these downloads happen on insecure channels by design) with sha256sum:
+Verify the hash of the file you received (with the exception of the GPG keys site, all these downloads happen on insecure channels by design) with `sha256sum`:
 `sha256sum Packages.xz`
 
 Unpack the archive (if you downloaded the `Packages.gz` or `Packages.xz` file) and now you'll have a huge text file that contains hashes and paths to all Debian packages in that repository.
 
-Open this file and start looking for the package names you want to use in your BUILD files.
-You can do this for example in a text editor or using grep (the -A switch prints that many lines after each match): `grep -A 25 "Package: python2.7-minimal" Packages`
+Open this file and start looking for the package names you want to use in your `BUILD` files.
+You can do this for example in a text editor or using `grep` (the -A switch prints that many lines after each match): `grep -A 25 "Package: python2.7-minimal" Packages`
 
-Now you finally have the info that you must enter in the deb_packages rule:
+Now you finally have the info that you must enter in the `deb_packages` rule:
 The value at `Filename` is the path to the exact package to be used and the value at `SHA256` is the verified hash that this file will have.
 
 Now enter this information in the `WORKSPACE` file in a `deb_packages` rule:
 
-```python
+```bzl
 deb_packages(
     name = "my_new_manual_source",
     arch = "amd64",
@@ -122,20 +179,20 @@ deb_packages(
     packages_sha256 = {
         "libpython2.7-minimal": "916e2c541aa954239cb8da45d1d7e4ecec232b24d3af8982e76bf43d3e1758f3",
     },
-    pgp_keyid = "7638D0442B90D010",
-    pgp_keyurls = ["https://ftp-master.debian.org/keys/archive-key-8.asc"],
+    pgp_key = "jessie_archive_key",
 )
 ```
 
 #### Automatically using the `update_workspace` tool
 
 As you saw, most of the information is already available on mirrors anyways as soon as you know the distro, exact package name, architecture and version.
+If you enter the correct rule name for the `pgp_key` field, this also means that you can do this in a verified chain of trust.
 
 The `update_workspace` tool can help you with this.
 
-To use it, just create a rule in your WORKSPACE file without any packages defined:
+To use it, just create a `deb_packages` rule in your WORKSPACE file without any packages defined:
 
-```python
+```bzl
 deb_packages(
     name = "my_new_automatic_source",
     arch = "amd64",
@@ -147,14 +204,13 @@ deb_packages(
     ],
     packages = {},
     packages_sha256 = {},
-    pgp_keyid = "7638D0442B90D010",
-    pgp_keyurls = ["https://ftp-master.debian.org/keys/archive-key-8.asc"],
+    pgp_key = "jessie_archive_key",
 )
 ```
 
 Now use this rule in your `BUILD` files, as if the packages were already defined:
 
-```python
+```bzl
 load("@my_new_automatic_source//debs:deb_packages.bzl", "my_new_automatic_source")
 
 docker_build(
@@ -175,13 +231,11 @@ docker_build(
 )
 ```
 
-Now run `bazel-bin/tools/update_workspace/update_workspace` and the helper tool will fetch the relevant files from the mirror(s), parse BUILD files for `docker_build` rules and add the data for missing packages at the respective `deb_packages` rule.
+Now run `bazel run update_workspace` (similar to the `gazelle` tool used by the golang Bazel rules) and the helper tool will fetch the relevant files from the mirror(s), parse BUILD files for `docker_build` rules and add the data for missing packages at the respective `deb_packages` rule.
 It uses the `buildifier` and `buildozer` tools from [https://github.com/bazelbuild/buildtools](https://github.com/bazelbuild/buildtools), which need to be available on your $PATH.
 
 It will also update any existing packages to either the most recent version available on the mirror or a version you specified in the package name (`package=version`).
 The string `latest` is also supported if you want to use version pinning.
-
-In the future it'll also be possible to just run `bazel run //:update_workspace`, similar to the `gazelle` tool.
 
 # Reference
 
@@ -246,7 +300,7 @@ Every key name in the `packages` section must exactly match a key name in the `p
       <td><code>distro_type</code></td>
       <td>
         <p><code>the name of the distribution type, required</code></p>
-        <p>currently only <code>debian</code>, <code>debian_snapshot</code> and <code>ubuntu</code> are supported</p>
+        <p>currently only <code>debian</code> and <code>ubuntu</code> are supported</p>
       </td>
     </tr>
     <tr>
@@ -274,18 +328,10 @@ Every key name in the `packages` section must exactly match a key name in the `p
       </td>
     </tr>
     <tr>
-      <td><code>pgp_keyid</code></td>
+      <td><code>pgp_key</code></td>
       <td>
-        <p><code>a string, containing the key ID of a PGP key, required</code></p>
-        <p>The PGP key with this ID must be one that signed the <code>Release</code> file, the signature of the <code>Release.gpg</code> file of the repository must verify with this key.</p>
-        <p>This is not checked when downloading individual deb packages, it is used by the helper tool to establish a chain of trusted inputs when updating file paths and hashes.</p>
-      </td>
-    </tr>
-    <tr>
-      <td><code>pgp_keyurls</code></td>
-      <td>
-        <p><code>a list of URLs that serve the armored public key file with the ID specified above, required</code></p>
-        <p>The file from these URLs must verify that the <code>Release.gpg</code> signature of the <code>Release</code> file of the mirror you are using is valid.</p>
+        <p><code>the name of the http_file rule that points to a file containing an armored PGP key, required</code></p>
+        <p>This PGP key must be one that signed the <code>Release</code> file, meaning the signature of the <code>Release.gpg</code> file of the repository must verify with this key.</p>
         <p>This is not checked when downloading individual deb packages, it is used by the helper tool to establish a chain of trusted inputs when updating file paths and hashes.</p>
       </td>
     </tr>
