@@ -80,7 +80,7 @@ new_http_archive(
     sha256 = "ca93c7f88e842fcb1e7bd551c071b3302b7be1faf9cad3ce415af19c77d6cb74",
     strip_prefix = "jetty-distribution-9.4.4.v20170414/",
     type = "tgz",
-    url = "http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.4.v20170414/jetty-distribution-9.4.4.v20170414.tar.gz",
+    urls = ["http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.4.v20170414/jetty-distribution-9.4.4.v20170414.tar.gz"],
 )
 
 # Node
@@ -90,7 +90,7 @@ new_http_archive(
     sha256 = "c6a60f823a4df31f1ed3a4044d250e322f2f2794d97798d47c6ee4af9376f927",
     strip_prefix = "node-v6.10.3-linux-x64/",
     type = "tgz",
-    url = "https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.gz",
+    urls = ["https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.gz"],
 )
 
 # dotnet
@@ -99,7 +99,7 @@ new_http_archive(
     build_file = "BUILD.dotnet",
     sha256 = "69ecad24bce4f2132e0db616b49e2c35487d13e3c379dabc3ec860662467b714",
     type = "tgz",
-    url = "https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz",
+    urls = ["https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz"],
 )
 
 # For the debug image
@@ -107,7 +107,7 @@ http_file(
     name = "busybox",
     executable = True,
     sha256 = "b51b9328eb4e60748912e1c1867954a5cf7e9d5294781cae59ce225ed110523c",
-    url = "https://busybox.net/downloads/binaries/1.27.1-i686/busybox",
+    urls = ["https://busybox.net/downloads/binaries/1.27.1-i686/busybox"],
 )
 
 # Docker rules.
