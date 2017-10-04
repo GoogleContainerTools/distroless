@@ -4,7 +4,7 @@ def deb_repositories():
   # py_binary can't be used here, so use an external artifact storage for now
   native.http_file(
       name = "deb_file_loader",
-      url = ("http://localhost/deb_file_loader.par"),
+      urls = ["https://storage.googleapis.com/bazel-distroless-tools/v0.1/deb_file_loader.par"],
       executable = True,
-      sha256 = "41654c558cdaa38bddc6acc9ac4dc5aac050471ae563b8ecff5d35bb73b54891",
+      sha256 = "6a2a7073d577767b62390855561a9129ada60048d9ef70f0eb6e24282f5801ef",
   )
