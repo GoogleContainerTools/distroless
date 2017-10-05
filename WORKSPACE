@@ -10,13 +10,6 @@ load("@io_bazel_rules_go//go:def.bzl", "go_repositories")
 
 go_repositories()
 
-# To build the par files for the programs in deb_loader and tools
-git_repository(
-    name = "subpar",
-    remote = "https://github.com/google/subpar",
-    tag = "1.0.0",
-)
-
 load(
     "//package_manager:package_manager.bzl",
     "package_manager_repositories",

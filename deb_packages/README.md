@@ -2,17 +2,12 @@
 
 ### **Downloading minimal python library packages from a snapshot of `debian jessie`**.
 
-`deb_repositories` and `deb_packages` are repository rules, and therefore made to be used in the `WORKSPACE`.
+`deb_packages` is a repository rule, and therefore made to be used in the `WORKSPACE`.
 
-First, tell bazel to load these rules with a `load()` statement and then initialize the `deb_repositories()` rule to make sure the deb_file_loader tool is available during the build.
+First, tell bazel to load the rule with a `load()` statement.
 
 ```bzl
-load(
-    "//deb_loader:deb_loader.bzl",
-    "deb_packages",
-    "deb_repositories",
-)
-deb_repositories()
+load("//deb_packages:deb_packages.bzl", "deb_packages")
 ```
 
 Next, create a http_file rule that points to a PGP armored public key.
@@ -93,7 +88,7 @@ deb_packages(
 )
 ```
 
-Internally `.deb` files referenced here will be downloaded by the tool defined in `deb_repositories`, renamed to their SHA256 hash (not all characters used in file names are legal in bazel names) and made available in a dictionary named the same as the `deb_packages` rule.
+Internally `.deb` files referenced here will be downloaded by Bazel, renamed to their SHA256 hash (not all characters used in file names are legal in bazel names) and made available in a dictionary named the same as the `deb_packages` rule.
 This dictionary is made available in a file named `deb_packages.bzl` in the `debs` subfolder of this rule.
 You can find the generated and downloaded files in the `./bazel-distroless/external/your_rule_name/debs` folder after building the project if you're interested.
 
@@ -239,16 +234,6 @@ The string `latest` is also supported if you want to use version pinning.
 
 # Reference
 
-## deb_repositories
-
-```python
-deb_repositories()
-```
-
-Only used once in your WORKSPACE file to get the current version of the `deb_file_loader` tool which downloads and verifies `.deb` files.
-
-To be used after loading the two rules refered to here.
-
 ## deb_packages
 
 ```python
@@ -259,7 +244,7 @@ A rule that downloads `.deb` packages from a Debian style repository and makes t
 
 For a `deb_packages` rule named `foo_bar`, packages can be used by loading `load("@foo_bar//debs:deb_packages.bzl", "foo_bar")` into your `BUILD` file, then referencing the package with `foo_bar['packagename']`.
 
-The packagename is expected to be the exact package name as available upstream.
+The packagename is expected to be the exact package name as available upstream, with an optional version string appended.
 This is not enforced by bazel or these rules, but makes automatic parsing and updating much easier.
 If you use the `update_workspace` helper, version pinning with `packagename=version` is supported.
 
