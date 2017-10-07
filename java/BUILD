@@ -9,9 +9,9 @@ cacerts_java(
     name = "cacerts_java",
 )
 
-docker_build(
-    name = "java8",
-    base = "//cc:cc",
+[docker_build(
+    name = "java8" if not mode else mode[1:],
+    base = "//cc" + mode,
     debs = [
         packages["zlib1g"],
         packages["openjdk-8-jre-headless"],
@@ -26,7 +26,10 @@ docker_build(
         "/usr/bin/java": "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
     },
     tars = [":cacerts_java"],
-)
+) for mode in [
+    "",
+    ":debug",
+]]
 
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 
