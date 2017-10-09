@@ -8,7 +8,7 @@ genrule(
     srcs = ["@busybox//file"],
     outs = ["busybox.tar"],
     cmd = "mkdir busybox; cp $(<) busybox/busybox; cd busybox; \
-           for cmd in $$(busybox --list); do \
+           for cmd in $$(./busybox --list); do \
              ln -s busybox $$cmd; \
            done; \
            cd ..; \
