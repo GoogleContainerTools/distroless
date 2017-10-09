@@ -16,6 +16,7 @@ steps:
     # the Bazel sandbox on cloudbuild.
     '--strategy', 'PythonCompile=standalone'
   ]
+  env: ['PROJECT_ID=$PROJECT_ID']
 
 # Upload the dpkg_parser PAR file to a GCS bucket
 - name: gcr.io/cloud-builders/gsutil
