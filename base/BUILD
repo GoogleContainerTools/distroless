@@ -44,6 +44,22 @@ docker_build(
     ],
 )
 
+# A debug image with busybox available.
+docker_build(
+    name = "debug",
+    base = ":base",
+    directory = "/",
+    entrypoint = ["/busybox/sh"],
+    env = {"PATH": "/busybox"},
+    tars = ["//busybox:busybox.tar"],
+)
+
+structure_test(
+    name = "debug_test",
+    config = "testdata/debug.yaml",
+    image = ":debug",
+)
+
 structure_test(
     name = "base_test",
     config = "testdata/base.yaml",

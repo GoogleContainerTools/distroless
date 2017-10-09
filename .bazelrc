@@ -1,0 +1,3 @@
+build --workspace_status_command=./print-workspace-status.sh
+test --workspace_status_command=./print-workspace-status.sh
+run --workspace_status_command=./print-workspace-status.sh
