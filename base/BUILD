@@ -36,6 +36,7 @@ docker_build(
         packages["netbase"],
         packages["tzdata"],
     ],
+    env = {"PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"},
     tars = [
         ":base_passwd.passwd.tar",
         ":cacerts.tar",
@@ -50,7 +51,7 @@ docker_build(
     base = ":base",
     directory = "/",
     entrypoint = ["/busybox/sh"],
-    env = {"PATH": "/busybox"},
+    env = {"PATH": "$PATH:/busybox"},
     tars = ["//busybox:busybox.tar"],
 )
 
