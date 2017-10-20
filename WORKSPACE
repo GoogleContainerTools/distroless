@@ -47,10 +47,13 @@ dpkg_list(
         "netbase",
         "tzdata",
 
+        #c++
+        "libgcc1",
+        "libgomp1",
+        "libstdc++6",
+
         #java
         "zlib1g",
-        "libgcc1",
-        "libstdc++6",
         "openjdk-8-jre-headless",
 
         #python

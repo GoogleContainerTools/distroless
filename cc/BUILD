@@ -9,6 +9,7 @@ load("@package_bundle//file:packages.bzl", "packages")
     base = "//base" + mode,
     debs = [
         packages["libgcc1"],
+        packages["libgomp1"],
         packages["libstdc++6"],
     ],
 ) for mode in [
