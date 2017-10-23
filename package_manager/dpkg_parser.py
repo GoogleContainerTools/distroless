@@ -144,7 +144,7 @@ SHA1: 869934a25a8bb3def0f17fef9221bed2d3a460f9
 SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
 
     """
-    url = "%s/debian/%s/dists/%s/main/binary-%s/Packages.gz" % (
+    url = "%s/%s/dists/%s/main/binary-%s/Packages.gz" % (
         mirror_url,
         snapshot,
         distro,

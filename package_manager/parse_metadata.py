@@ -52,7 +52,10 @@ def parse_package_metadata(data, mirror_url, snapshot):
         parsed_entries[current_entry[INDEX_KEY]] = current_entry
     # The Filename Key is a relative url pointing to the .deb package
     # Here, we're rewriting the metadata with the absolute urls,
-    # which is a concatenation of the mirror + '/debian/' + relative_path
+    # which is a concatenation of the mirror (with '/debian' or equivalent)
+    # and relative_path
     for pkg_data in parsed_entries.itervalues():
-        pkg_data[FILENAME_KEY] = mirror_url + "/debian/" + snapshot + "/" + pkg_data[FILENAME_KEY]
+        pkg_data[FILENAME_KEY] = "/".join([mirror_url,
+                                           snapshot,
+                                           pkg_data[FILENAME_KEY]])
     return parsed_entries
