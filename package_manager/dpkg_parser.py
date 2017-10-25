@@ -67,7 +67,8 @@ def main():
     """ A tool for downloading debian packages and package metadata """
     args = parser.parse_args()
     if args.download_and_extract_only:
-        download_package_list(args.packages_gz_url, args.package_prefix, args.mirror_url, args.distro, args.arch, args.snapshot, args.sha256)
+        download_package_list(args.mirror_url,args.distro, args.arch, args.snapshot, args.sha256,
+                              args.packages_gz_url, args.package_prefix)
         util.build_os_release_tar(args.distro, OS_RELEASE_FILE_NAME, OS_RELEASE_PATH, OS_RELEASE_TAR_FILE_NAME)
     else:
         download_dpkg(args.package_files, args.packages, args.workspace_name)
@@ -119,7 +120,7 @@ def download_dpkg(package_files, packages, workspace_name):
     with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
         f.write("packages = " + json.dumps(package_to_rule_map))
 
-def download_package_list(packages_gz_url, package_prefix, mirror_url, distro, arch, snapshot, sha256):
+def download_package_list(mirror_url, distro, arch, snapshot, sha256, packages_gz_url, package_prefix):
     """Downloads a debian package list, expands the relative urls,
     and saves the metadata as a json file
 
@@ -150,17 +151,15 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
 
     """
 
-    if (not packages_gz_url) != (not package_prefix):
+    if bool(packages_gz_url) != bool(package_prefix):
         raise Exception("packages_gz_url and package_prefix must be specified or skipped at the same time.")
 
     if (not packages_gz_url) and (not mirror_url or not snapshot or not distro or not arch):
-        raise Exception("If packages_gz_url is not specified, all of mirror_url, snapshot, distro and arch must be specified.")
+        raise Exception("If packages_gz_url is not specified, all of mirror_url, snapshot, "
+                        "distro and arch must be specified.")
 
-    filename="Packages.gz"
     url = packages_gz_url
-    if url:
-        filename=url.rpartition('/')[2]
-    else:
+    if not url:
         url = "%s/debian/%s/dists/%s/main/binary-%s/Packages.gz" % (
             mirror_url,
             snapshot,
@@ -169,14 +168,14 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
         )
 
     buf = urllib2.urlopen(url)
-    with open(filename, 'w') as f:
+    with open("Packages.gz", 'w') as f:
         f.write(buf.read())
-    actual_sha256 = util.sha256_checksum(filename)
+    actual_sha256 = util.sha256_checksum("Packages.gz")
     if sha256 != actual_sha256:
-        raise Exception("sha256 of %s don't match: Expected: %s, Actual:%s" %(filename, sha256, actual_sha256))
-    with gzip.open(filename, 'rb') as f:
+        raise Exception("sha256 of Packages.gz don't match: Expected: %s, Actual:%s" %(sha256, actual_sha256))
+    with gzip.open("Packages.gz", 'rb') as f:
         data = f.read()
-    metadata = parse_package_metadata(data, package_prefix, mirror_url, snapshot)
+    metadata = parse_package_metadata(data, mirror_url, snapshot, package_prefix)
     with open(PACKAGES_FILE_NAME, 'w') as f:
         json.dump(metadata, f)
 

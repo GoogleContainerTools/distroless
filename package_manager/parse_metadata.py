@@ -17,7 +17,7 @@ INDEX_KEY = "Package"
 FILENAME_KEY = "Filename"
 SEPARATOR = ":"
 
-def parse_package_metadata(data, package_prefix, mirror_url, snapshot):
+def parse_package_metadata(data, mirror_url, snapshot, package_prefix):
     """ Takes a debian package list, changes the relative urls to absolute urls,
     and saves the resulting metadata as a json file """
     raw_entries = [line.rstrip() for line in data.splitlines()]
