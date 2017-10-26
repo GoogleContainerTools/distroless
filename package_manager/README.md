@@ -17,6 +17,20 @@ dpkg_src(
 )
 ```
 
+You can also set up the package source using the full url for the `Packages.gz` file. The `package_prefix` is used to
+prepend to the value of `Filename` in the `Packages.gz` file. In the following example, if the value of `Filename` is
+`pool/jdk1.8/b/bazel/bazel_0.7.0_amd64.deb`, then the `.deb` artifact will later be downloaded from
+`http://storage.googleapis.com/bazel-apt/pool/jdk1.8/b/bazel/bazel_0.7.0_amd64.deb`.
+
+```python
+dpkg_src(
+    name = "bazel_apt",
+    packages_gz_url = "http://storage.googleapis.com/bazel-apt/dists/stable/jdk1.8/binary-amd64/Packages.gz",
+    package_prefix = "http://storage.googleapis.com/bazel-apt/",
+    sha256 = "0fc4c6988ebf24705cfab0050cb5ad58e5b2aeb0e8cfb8921898a1809042416c",
+)
+```
+
 You can now reference this `dpkg_src` rule when downloading packages in the `dpkg_list` rule.  The `dpkg_src` rule will output a `packages` map in `file:packages.bzl` for you to access the `.deb` artifacts. 
 
 ```python
@@ -62,10 +76,14 @@ docker_build(
 ## dpkg_src
 
 ```python
-dpkg_src(name, url, arch, distro, snapshot, sha256, dpkg_parser)
+dpkg_src(name, url, arch, distro, snapshot, packages_gz_url, package_prefix, sha256, dpkg_parser)
 ```
 
-A rule that downloads a Packages.gz snapshot file and parses it into a readable format for `dpkg_list`.  It currently only supports snapshots from [http://snapshot.debian.org/](http://snapshot.debian.org/).  You can find out more about the format and sources available there.  
+A rule that downloads a `Packages.gz` snapshot file and parses it into a readable format for `dpkg_list`.
+It supports snapshots from [http://snapshot.debian.org/](http://snapshot.debian.org/). (You can find out more about the format and sources available there.)
+It also supports retrieving `Packages.gz` file from a given full url.
+
+Either a set of {`url`, `arch`, `distro`, `snapshot`} or a set of {`packages_gz_url`, `package_prefix`} must be set.
 
 <table class="table table-condensed table-bordered table-params">
   <colgroup>
@@ -87,29 +105,41 @@ A rule that downloads a Packages.gz snapshot file and parses it into a readable 
     <tr>
       <td><code>url</code></td>
       <td>
-        <p><code>the base url of the package repository, required</code></p>
+        <p><code>the base url of the package repository</code></p>
         <p>The url that hosts snapshots of Packages.gz files.</p>
       </td>
     </tr>
     <tr>
       <td><code>arch</code></td>
       <td>
-        <p><code>the target package architecture, required</code></p>
+        <p><code>the target package architecture</code></p>
       </td>
     </tr>
     <tr>
       <td><code>distro</code></td>
       <td>
-        <p><code>the name of the package distribution, required</code></p>
+        <p><code>the name of the package distribution</code></p>
         <p>Examples: wheezy, jessie, jessie-backports, etc.</p>
       </td>
     </tr>
     <tr>
       <td><code>snapshot</code></td>
       <td>
-        <p><code>the snapshot date of the Packages.gz, required</code></p>
+        <p><code>the snapshot date of the Packages.gz</code></p>
         <p>Format: YYYYMMDDTHHMMSSZ.  You can query a list of possible dates for snapshot.debian.org at <a href=
         'http://snapshot.debian.org/archive/debian/?year=2009;month=10'>http://snapshot.debian.org/archive/debian/?year=2009;month=10</a>
+      </td>
+    </tr>
+    <tr>
+      <td><code>packages_gz_url</code></td>
+      <td>
+        <p><code>the full url for the Packages.gz file</code></p>
+      </td>
+    </tr>
+    <tr>
+      <td><code>package_prefix</code></td>
+      <td>
+        <p><code>the prefix to prepend to the value of Filename in the Packages.gz file</code></p>
       </td>
     </tr>
     <tr>
