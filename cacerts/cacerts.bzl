@@ -6,14 +6,12 @@ def _impl(ctx):
             inputs = [ctx.executable._extract, ctx.file.deb],
             outputs = [ctx.outputs.out])
 
-load("@package_bundle//file:packages.bzl", "packages")
-
 cacerts = rule(
     attrs = {
         "deb": attr.label(
-            default = Label(packages["ca-certificates"]),
             allow_files = [".deb"],
             single_file = True,
+            mandatory = True,
         ),
         # Implicit dependencies.
         "_extract": attr.label(
