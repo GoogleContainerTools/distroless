@@ -16,7 +16,6 @@ passwd_file(
 )
 
 load("@package_bundle//file:packages.bzl", "packages")
-
 load("//cacerts:cacerts.bzl", "cacerts")
 
 cacerts(
