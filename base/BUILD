@@ -15,13 +15,13 @@ passwd_file(
     username = "root",
 )
 
+load("@package_bundle//file:packages.bzl", "packages")
 load("//cacerts:cacerts.bzl", "cacerts")
 
 cacerts(
     name = "cacerts",
+    deb = packages["ca-certificates"],
 )
-
-load("@package_bundle//file:packages.bzl", "packages")
 
 # Create /tmp, too many things assume it exists.
 # tmp.tar has a /tmp with the correct permissions 01777
