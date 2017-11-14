@@ -46,6 +46,7 @@ dpkg_list(
         "ca-certificates",
         "openssl",
         "libssl1.0.0",
+        "libexpat1",
         "netbase",
         "tzdata",
 
@@ -62,6 +63,11 @@ dpkg_list(
         "libpython2.7-minimal",
         "python2.7-minimal",
         "libpython2.7-stdlib",
+
+        #python3
+        "libpython3.4-minimal",
+        "python3.4-minimal",
+        "libpython3.4-stdlib",
 
         #dotnet
         "libcurl3",
