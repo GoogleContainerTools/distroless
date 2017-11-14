@@ -22,20 +22,20 @@ load(
 package_manager_repositories()
 
 dpkg_src(
-    name = "debian_jessie",
+    name = "debian_stretch",
     arch = "amd64",
-    distro = "jessie",
-    sha256 = "142cceae78a1343e66a0d27f1b142c406243d7940f626972c2c39ef71499ce61",
-    snapshot = "20170821T035341Z",
+    distro = "stretch",
+    sha256 = "9aea0e4c9ce210991c6edcb5370cb9b11e9e554a0f563e7754a4028a8fd0cb73",
+    snapshot = "20171101T160520Z",
     url = "http://snapshot.debian.org/archive",
 )
 
 dpkg_src(
-    name = "debian_jessie_backports",
+    name = "debian_stretch_backports",
     arch = "amd64",
-    distro = "jessie-backports",
-    sha256 = "eba769f0a0bcaffbb82a8b61d4a9c8a0a3299d5111a68daeaf7e50cc0f76e0ab",
-    snapshot = "20170821T035341Z",
+    distro = "stretch-backports",
+    sha256 = "ffd68ec4a687a6c8630f647ec32e2fd6dc29d9aa65a40a740b7882ffb6d35ae4",
+    snapshot = "20171101T160520Z",
     url = "http://snapshot.debian.org/archive",
 )
 
@@ -45,7 +45,7 @@ dpkg_list(
         "libc6",
         "ca-certificates",
         "openssl",
-        "libssl1.0.0",
+        "libssl1.0.2",
         "libexpat1",
         "netbase",
         "tzdata",
@@ -72,15 +72,15 @@ dpkg_list(
         #dotnet
         "libcurl3",
         "libgssapi-krb5-2",
-        "libicu52",
+        "libicu57",
         "liblttng-ust0",
         "libunwind8",
         "libuuid1",
         "liblzma5",
     ],
     sources = [
-        "@debian_jessie//file:Packages.json",
-        "@debian_jessie_backports//file:Packages.json",
+        "@debian_stretch//file:Packages.json",
+        "@debian_stretch_backports//file:Packages.json",
     ],
 )
 
