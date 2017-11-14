@@ -18,6 +18,8 @@ docker_bundle(
         "gcr.io/{PROJECT_ID}/java:debug": "//java:debug",
         "gcr.io/{PROJECT_ID}/java/jetty:latest": "//java/jetty",
         "gcr.io/{PROJECT_ID}/java/jetty:debug": "//java/jetty:debug",
+        "gcr.io/{PROJECT_ID}/python3:latest": "//python3:python3",
+        "gcr.io/{PROJECT_ID}/python3:debug": "//python3:debug",
         "gcr.io/{PROJECT_ID}/python2.7:latest": "//python2.7:python27",
         "gcr.io/{PROJECT_ID}/python2.7:debug": "//python2.7:debug",
         "gcr.io/{PROJECT_ID}/nodejs:latest": "//nodejs",
