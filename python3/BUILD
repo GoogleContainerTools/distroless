@@ -11,16 +11,16 @@ load("@package_bundle//file:packages.bzl", "packages")
     debs = [
         packages["zlib1g"],
         packages["libexpat1"],
-        packages["python3.4-minimal"],
-        packages["libpython3.4-minimal"],
-        packages["libpython3.4-stdlib"],
+        packages["python3.5-minimal"],
+        packages["libpython3.5-minimal"],
+        packages["libpython3.5-stdlib"],
     ],
     entrypoint = [
-        "/usr/bin/python3.4",
+        "/usr/bin/python3.5",
     ],
     symlinks = {
-        "/usr/bin/python": "/usr/bin/python3.4",
-        "/usr/bin/python3": "/usr/bin/python3.4",
+        "/usr/bin/python": "/usr/bin/python3.5",
+        "/usr/bin/python3": "/usr/bin/python3.5",
     },
 ) for mode in [
     "",

@@ -65,9 +65,9 @@ dpkg_list(
         "libpython2.7-stdlib",
 
         #python3
-        "libpython3.4-minimal",
-        "python3.4-minimal",
-        "libpython3.4-stdlib",
+        "libpython3.5-minimal",
+        "python3.5-minimal",
+        "libpython3.5-stdlib",
 
         #dotnet
         "libcurl3",
