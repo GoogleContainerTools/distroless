@@ -26,6 +26,7 @@ Follow these steps to get started:
   We publish the following distroless base images on `gcr.io`:
     * [gcr.io/distroless/base](base/README.md)
     * [gcr.io/distroless/python2.7](python2.7/README.md)
+    * [gcr.io/distroless/python3](python3/README.md)
     * [gcr.io/distroless/nodejs](nodejs/README.md)
     * [gcr.io/distroless/java](java/README.md)
     * [gcr.io/distroless/java/jetty](java/jetty/README/md)
@@ -68,6 +69,7 @@ See here for:
 
 * [Java](examples/java/BUILD)
 * [Python](examples/python2.7/BUILD)
+* [Python 3](examples/python3/BUILD)
 * [Golang](examples/go/BUILD)
 * [Node.js](examples/nodejs/BUILD)
 * [dotnet](examples/dotnet/BUILD)
