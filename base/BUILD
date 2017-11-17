@@ -25,13 +25,14 @@ cacerts(
 
 # Create /tmp, too many things assume it exists.
 # tmp.tar has a /tmp with the correct permissions 01777
-# A tar is needed because at the moment there is no way to create a diretory with specific permissions
+# A tar is needed because at the moment there is no way to create a
+# directory with specific permissions.
 
 docker_build(
     name = "base",
     debs = [
         packages["libc6"],
-        packages["libssl1.0.0"],
+        packages["libssl1.0.2"],
         packages["openssl"],
         packages["netbase"],
         packages["tzdata"],
@@ -41,7 +42,7 @@ docker_build(
         ":base_passwd.passwd.tar",
         ":cacerts.tar",
         ":tmp.tar",
-        "@debian_jessie//file:os_release.tar",
+        "@debian_stretch//file:os_release.tar",
     ],
 )
 

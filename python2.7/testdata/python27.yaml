@@ -5,7 +5,7 @@ commandTests:
     expectedOutput: ['Hello World']
   - name: version
     command: ["/usr/bin/python2.7", "--version"]
-    expectedError: ["Python 2.7.9"]
+    expectedError: ["Python 2.7.13"]
   - name: stdlib
     command: ["/usr/bin/python2.7", "-c", "import argparse"]
     exitCode: 0

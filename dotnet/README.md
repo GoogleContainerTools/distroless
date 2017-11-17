@@ -6,7 +6,7 @@ This image definition contains a minimal Linux, dotnet-based [coreCLR](https://g
 
 Specifically, the image contains everything in the [base image](../base/README.md), plus:
 
-* coreCLR 2.0.0 Runtime and its [dependencies](https://github.com/dotnet/dotnet-docker/blob/b108e6c5a582080ce343dbfc0c1576a5b2293291/2.0/runtime-deps/jessie/amd64/Dockerfile).
+* coreCLR 2.0.0 Runtime and its [dependencies](https://github.com/dotnet/dotnet-docker/blob/b108e6c5a582080ce343dbfc0c1576a5b2293291/2.0/runtime-deps/stretch/amd64/Dockerfile).
 
 and
 

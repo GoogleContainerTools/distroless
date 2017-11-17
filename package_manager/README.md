@@ -1,18 +1,18 @@
 # Examples
 
-### **Downloading minimal python library packages from a snapshot of `debian jessie`**.
+### **Downloading minimal python library packages from a snapshot of `debian stretch`**.
 
 `dpkg_src` and `dpkg_list` are repository rules, and therefore made to be used in the `WORKSPACE`.
 
-First, set up the package source with `dpkg_src` rule.  This example uses a snapshot of debian jessie from July 1st 2017.  The rule outputs a `file:Packages.json` which contains a parsed and formatted `Packages.gz` for `dpkg_list` to consume.
+First, set up the package source with `dpkg_src` rule.  This example uses a snapshot of debian stretch from November 1st 2017.  The rule outputs a `file:Packages.json` which contains a parsed and formatted `Packages.gz` for `dpkg_list` to consume.
 
 ```python
 dpkg_src(
-    name = "debian_jessie",
+    name = "debian_stretch",
     arch = "amd64",
-    distro = "jessie",
-    sha256 = "8ff5e7a54d4e75bbbcd2f43ebc7cb4a082fbc5493bc9fb2dcdaaeacba6e76dee",
-    snapshot = "20170701T034145Z",
+    distro = "stretch",
+    sha256 = "9aea0e4c9ce210991c6edcb5370cb9b11e9e554a0f563e7754a4028a8fd0cb73",
+    snapshot = "20171101T160520Z",
     url = "http://snapshot.debian.org/archive",
 )
 ```
@@ -43,7 +43,7 @@ dpkg_list(
         "zlib1g",
     ],
     sources = [
-        "@debian_jessie//file:Packages.json",
+        "@debian_stretch//file:Packages.json",
     ],
 )
 ```
@@ -119,7 +119,7 @@ Either a set of {`url`, `arch`, `distro`, `snapshot`} or a set of {`packages_gz_
       <td><code>distro</code></td>
       <td>
         <p><code>the name of the package distribution</code></p>
-        <p>Examples: wheezy, jessie, jessie-backports, etc.</p>
+        <p>Examples: wheezy, jessie, stretch-backports, etc.</p>
       </td>
     </tr>
     <tr>

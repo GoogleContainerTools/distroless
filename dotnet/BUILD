@@ -9,7 +9,7 @@ load("@package_bundle//file:packages.bzl", "packages")
     debs = [
         packages["libcurl3"],
         packages["libgssapi-krb5-2"],
-        packages["libicu52"],
+        packages["libicu57"],
         packages["liblttng-ust0"],
         packages["libunwind8"],
         packages["libuuid1"],

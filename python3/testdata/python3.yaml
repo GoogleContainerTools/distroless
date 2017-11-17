@@ -5,10 +5,10 @@ commandTests:
     expectedOutput: ['Hello World']
   - name: version
     command: ["/usr/bin/python3", "--version"]
-    expectedOutput: ["Python 3.4.2"]
+    expectedOutput: ["Python 3.5.3"]
   - name: stdlib
     command: ["/usr/bin/python3", "-c", "import argparse"]
     exitCode: 0
   - name: symlink 
     command: ["/usr/bin/python", "--version"]
-    expectedOutput: ["Python 3.4.2"]
+    expectedOutput: ["Python 3.5.3"]
