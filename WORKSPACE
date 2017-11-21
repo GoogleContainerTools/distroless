@@ -39,6 +39,15 @@ dpkg_src(
     url = "http://snapshot.debian.org/archive",
 )
 
+dpkg_src(
+    name = "debian_buster",
+    arch = "amd64",
+    distro = "buster",
+    sha256 = "5113371655f80a25a67982360f1b5e33383281bf884aa12ab556b7a3613f031b",
+    snapshot = "20171101T160520Z",
+    url = "http://snapshot.debian.org/archive",
+)
+
 dpkg_list(
     name = "package_bundle",
     packages = [
@@ -65,9 +74,9 @@ dpkg_list(
         "libpython2.7-stdlib",
 
         #python3
-        "libpython3.5-minimal",
-        "python3.5-minimal",
-        "libpython3.5-stdlib",
+        "libpython3.6-minimal",
+        "python3.6-minimal",
+        "libpython3.6-stdlib",
 
         #dotnet
         "libcurl3",
@@ -81,6 +90,7 @@ dpkg_list(
     sources = [
         "@debian_stretch//file:Packages.json",
         "@debian_stretch_backports//file:Packages.json",
+        "@debian_buster//file:Packages.json",
     ],
 )
 
