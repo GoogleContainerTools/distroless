@@ -10,6 +10,16 @@ load("@package_bundle//file:packages.bzl", "packages")
     base = "//cc" + mode,
     debs = [
         packages["zlib1g"],
+        packages["libbz2-1.0"],
+        packages["libncursesw5"],
+        packages["liblzma5"],
+        packages["libreadline7"],
+        packages["libtinfo5"],
+        packages["libsqlite3-0"],
+        # Different python packages have different transitive dependencies
+        # on the different libssl shared library versions.
+        packages["libssl1.0.2"],
+        packages["libssl1.1"],
         packages["libexpat1"],
         packages["python3.5-minimal"],
         packages["libpython3.5-minimal"],
