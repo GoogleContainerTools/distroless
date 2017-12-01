@@ -48,13 +48,17 @@ dpkg_list(
         "libssl1.0.2",
         "libssl1.1",
         "libbz2-1.0",
+        "libdb5.3",
+        "libffi6",
         "libncursesw5",
         "liblzma5",
         "libexpat1",
         "libreadline7",
         "libtinfo5",
         "libsqlite3-0",
+        "mime-support",
         "netbase",
+        "readline-common",
         "tzdata",
 
         #c++

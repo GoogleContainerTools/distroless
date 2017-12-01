@@ -9,6 +9,17 @@ load("@package_bundle//file:packages.bzl", "packages")
     # Based on //cc so that C extensions work properly.
     base = "//cc" + mode,
     debs = [
+        packages["libbz2-1.0"],
+        packages["libexpat1"],
+        packages["libdb5.3"],
+        packages["libffi6"],
+        packages["libncursesw5"],
+        packages["libreadline7"],
+        packages["libsqlite3-0"],
+        packages["libssl1.1"],
+        packages["libtinfo5"],
+        packages["mime-support"],
+        packages["readline-common"],
         packages["zlib1g"],
         packages["python2.7-minimal"],
         packages["libpython2.7-minimal"],
