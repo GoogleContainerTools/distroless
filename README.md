@@ -31,6 +31,7 @@ Follow these steps to get started:
     * [gcr.io/distroless/java](java/README.md)
     * [gcr.io/distroless/java/jetty](java/jetty/README/md)
     * [gcr.io/distroless/cc](cc/README.md)
+    * [gcr.io/distroless/dotnet](dotnet/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 

@@ -31,7 +31,54 @@ binary files is described below.
 
 The entrypoint of this image is left unset so this image expects users to supply a the full 'dotnet' and path to the generated .dll file in the CMD.
 
-See [examples/dotnet/BUILD](examples/dotnet/BUILD):
+
+## Example Hello World
+
+To build directly:
+
+```bash
+$ dotnet --version
+2.0.0
+
+$ docker --version
+Docker version 17.05.0-ce, build 89658be
+```
+
+then
+
+```bash
+$ mkdir console && cd console
+$ dotnet new console
+```
+
+create a Dockerfile
+
+```dockerfile
+FROM microsoft/dotnet:2.0.0-sdk AS build-env
+ADD . /app
+WORKDIR /app
+RUN dotnet restore
+RUN dotnet publish  -c Release
+
+FROM gcr.io/distroless/dotnet
+WORKDIR /app
+COPY --from=build-env /app /app/
+ENTRYPOINT ["dotnet", "bin/Release/netcoreapp2.0/console.dll"]
+```
+
+then
+```bash
+
+$ docker build -t myapp .
+
+$ docker run -t myapp
+Hello World!
+```
+
+
+## Example Hello World with bazel
+
+See the dotnet [Hello World](../examples/dotnet/) directory for an example and [examples/dotnet/BUILD](examples/dotnet/BUILD) using bazel:
 
 ```
 docker_build(
@@ -44,12 +91,6 @@ docker_build(
     files = [":bin"],
 )
 ```
-
-
-## Example Hello World
-
-See the dotnet [Hello World](../examples/dotnet/) directory for an example.
-
 
 ### Prerequsite
 
