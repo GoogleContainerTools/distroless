@@ -109,7 +109,7 @@ new_http_archive(
     build_file = "BUILD.jetty",
     sha256 = "ca93c7f88e842fcb1e7bd551c071b3302b7be1faf9cad3ce415af19c77d6cb74",
     strip_prefix = "jetty-distribution-9.4.4.v20170414/",
-    type = "tgz",
+    type = "tar.gz",
     urls = ["http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.4.v20170414/jetty-distribution-9.4.4.v20170414.tar.gz"],
 )
 
@@ -119,7 +119,7 @@ new_http_archive(
     build_file = "BUILD.nodejs",
     sha256 = "0e49da19cdf4c89b52656e858346775af21f1953c308efbc803b665d6069c15c",
     strip_prefix = "node-v8.9.1-linux-x64/",
-    type = "tgz",
+    type = "tar.gz",
     urls = ["https://nodejs.org/dist/v8.9.1/node-v8.9.1-linux-x64.tar.gz"],
 )
 
@@ -128,7 +128,7 @@ new_http_archive(
     name = "dotnet",
     build_file = "BUILD.dotnet",
     sha256 = "69ecad24bce4f2132e0db616b49e2c35487d13e3c379dabc3ec860662467b714",
-    type = "tgz",
+    type = "tar.gz",
     urls = ["https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz"],
 )
 
