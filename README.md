@@ -38,8 +38,11 @@ Follow these steps to get started:
   The basic idea is that you'll have one stage to build your application artifacts, and insert them into your runtime distroless image.
   If you'd like to learn more, please see the documentation on [multi-stage builds](https://docs.docker.com/engine/userguide/eng-image/multistage-build/).
 
-  Here's a quick example.
-  ```
+
+#### Examples with Docker
+  Here's a quick example for go:
+
+  ```dockerfile
   # Start by building the application.
   FROM golang:1.8 as build
 
@@ -55,6 +58,22 @@ Follow these steps to get started:
   CMD ["/app"]
   ```
 
+You can find other examples here:
+
+
+* [Java](examples/java/Dockerfile)
+* [Python](examples/python2.7/Dockerfile)
+* [Python 3](examples/python3/Dockerfile)
+* [Golang](examples/go/Dockerfile)
+* [Node.js](examples/nodejs/Dockerfile)
+* [dotnet](examples/dotnet/Dockerfile)
+
+To run any example, go the the directory for the language and run
+```
+docker build -t myapp .
+docker run -t myapp
+```
+
 ### Bazel
 
 For full documentation on how to use bazel to generate Docker images, see the [bazelbuild/rules_docker](http://github.com/bazelbuild/rules_docker) repository.
@@ -63,7 +82,7 @@ For documentation and examples on how to use the bazel package manager rules, se
 
 Examples can be found in this repository in the [examples](examples/) directory.
 
-## Examples
+#### Examples with Bazel
 
 We have some examples on how to run some common application stacks in the /examples directory.
 See here for:
