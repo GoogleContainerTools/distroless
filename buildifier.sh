@@ -16,6 +16,7 @@
 
 files=$(buildifier -mode=check $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f))
 if [ $? -ne 0 ]; then
+  echo "Run 'buildifier -mode fix \$(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)' to fix formatting"
   exit 1
 fi
 
