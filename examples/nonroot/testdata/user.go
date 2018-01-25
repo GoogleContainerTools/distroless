@@ -16,15 +16,31 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os/user"
+	"io/ioutil"
+	"os"
+	"strconv"
+	"strings"
 )
 
 func main() {
-	u, err := user.Current()
+	// We can't use user.Current here because it requires cgo.
+	uid := strconv.Itoa(os.Getuid())
+
+	passwd, err := ioutil.ReadFile("/etc/passwd")
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("Error reading /etc/passwd: %v", err)
+		return
 	}
-	fmt.Println("User:", u.Name)
-	fmt.Println("Uid:", u.Uid)
+	for _, line := range strings.Split(string(passwd), "\n") {
+		if len(line) == 0 {
+			continue
+		}
+		entries := strings.Split(line, ":")
+		name, id := entries[0], entries[2]
+		if id == uid {
+			fmt.Println("User:", name)
+			fmt.Println("Uid:", id)
+			return
+		}
+	}
 }
