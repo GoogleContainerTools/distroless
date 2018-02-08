@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/GoogleCloudPlatform/distroless.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/distroless)
 
 "Distroless" images contain only your application and its runtime dependencies.
-They do not contain package managers, shells any other programs you would expect to find in a standard Linux distribution.
+They do not contain package managers, shells or any other programs you would expect to find in a standard Linux distribution.
 
 For more information, see this [talk](https://swampup2017.sched.com/event/A6CW/distroless-docker-containerizing-apps-not-vms?iframe=no&w=100%&sidebar=yes&bg=no) ([video](https://www.youtube.com/watch?v=lviLZFciDv4)).
 
