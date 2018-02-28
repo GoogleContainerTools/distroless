@@ -39,6 +39,7 @@ load("@package_bundle//file:packages.bzl", "packages")
 
 structure_test(
     name = "python3_test",
+    size = "small",
     config = "testdata/python3.yaml",
     image = ":python3",
 )

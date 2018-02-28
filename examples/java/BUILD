@@ -13,6 +13,7 @@ load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 
 structure_test(
     name = "hello_test",
+    size = "small",
     config = "testdata/hello.yaml",
     image = ":hello",
 )
