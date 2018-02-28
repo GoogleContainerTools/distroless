@@ -2,11 +2,12 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_file")
+load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
-# Create a default passwd_file rule.
+# Create /etc/passwd with the root user
 passwd_entry(
     name = "root_user",
     gid = 0,
@@ -24,6 +25,27 @@ passwd_file(
 pkg_tar(
     name = "passwd_tar",
     srcs = [":passwd"],
+    mode = "0644",
+    package_dir = "etc",
+)
+
+# Create /etc/group with the root group
+group_entry(
+    name = "root_group",
+    gid = 0,
+    groupname = "root",
+)
+
+group_file(
+    name = "group",
+    entries = [
+        ":root_group",
+    ],
+)
+
+pkg_tar(
+    name = "group_tar",
+    srcs = [":group"],
     mode = "0644",
     package_dir = "etc",
 )
@@ -53,6 +75,7 @@ docker_build(
     env = {"PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"},
     tars = [
         ":passwd_tar",
+        ":group_tar",
         ":cacerts.tar",
         ":tmp.tar",
         "@debian_stretch//file:os_release.tar",
