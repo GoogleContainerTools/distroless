@@ -29,7 +29,7 @@ Follow these steps to get started:
     * [gcr.io/distroless/python3](python3/README.md)
     * [gcr.io/distroless/nodejs](nodejs/README.md)
     * [gcr.io/distroless/java](java/README.md)
-    * [gcr.io/distroless/java/jetty](java/jetty/README/md)
+    * [gcr.io/distroless/java/jetty](java/jetty/README.md)
     * [gcr.io/distroless/cc](cc/README.md)
     * [gcr.io/distroless/dotnet](dotnet/README.md)
 * Write a multi-stage docker file.
