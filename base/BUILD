@@ -67,7 +67,7 @@ docker_build(
     name = "base",
     debs = [
         packages["libc6"],
-        packages["libssl1.0.2"],
+        packages["libssl1.1"],
         packages["openssl"],
         packages["netbase"],
         packages["tzdata"],
