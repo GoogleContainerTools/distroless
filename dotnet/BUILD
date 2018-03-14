@@ -4,7 +4,7 @@ load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@package_bundle//file:packages.bzl", "packages")
 
 [docker_build(
-    name = "dotnet" if not mode else mode[1:],
+    name = "dotnet" if (not mode) else mode[1:],
     base = "//cc" + mode,
     debs = [
         packages["libcurl3"],

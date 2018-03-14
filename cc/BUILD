@@ -5,7 +5,7 @@ load("@package_bundle//file:packages.bzl", "packages")
 
 # An intermediate image for Java and other "mostly statically" compiled languages
 [docker_build(
-    name = "cc" if not mode else mode[1:],
+    name = "cc" if (not mode) else mode[1:],
     base = "//base" + mode,
     debs = [
         packages["libgcc1"],

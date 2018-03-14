@@ -10,7 +10,7 @@ cacerts_java(
 )
 
 [docker_build(
-    name = "java8" if not mode else mode[1:],
+    name = "java8" if (not mode) else mode[1:],
     base = "//cc" + mode,
     debs = [
         packages["zlib1g"],

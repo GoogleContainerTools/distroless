@@ -5,7 +5,7 @@ load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 load("@package_bundle//file:packages.bzl", "packages")
 
 [docker_build(
-    name = "python27" if not mode else mode[1:],
+    name = "python27" if (not mode) else mode[1:],
     # Based on //cc so that C extensions work properly.
     base = "//cc" + mode,
     debs = [
