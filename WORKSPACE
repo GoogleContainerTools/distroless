@@ -129,8 +129,6 @@ dpkg_list(
         "libpcre3",
         "libbz2-1.0",
         "liblzma5",
-
-
     ],
     sources = [
         "@debian_stretch//file:Packages.json",

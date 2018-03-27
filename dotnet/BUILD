@@ -48,7 +48,6 @@ load("@package_bundle//file:packages.bzl", "packages")
         packages["libpcre3"],
         packages["libbz2-1.0"],
         packages["liblzma5"],
-
     ],
     entrypoint = [
         #"/opt/dotnet/dotnet",
