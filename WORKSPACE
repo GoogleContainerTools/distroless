@@ -42,8 +42,8 @@ dpkg_src(
 dpkg_src(
     name = "debian_stretch_security",
     package_prefix = "http://snapshot.debian.org/archive/debian-security/20180130T144658Z",
-    packages_gz_url = "http://snapshot.debian.org/archive/debian-security/20180130T144658Z/dists/jessie/updates/main/binary-amd64/Packages.gz",
-    sha256 = "98505e4de175ce7d33b9751d1b9a54380da7dbe19605f4b4ddafd88c115bce9c",
+    packages_gz_url = "http://snapshot.debian.org/archive/debian-security/20180130T144658Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "517e8a015226f97e71640a9d68372e6f4a873be29fd63cf860d5add914df843f",
 )
 
 dpkg_list(
