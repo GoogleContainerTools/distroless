@@ -25,8 +25,8 @@ dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "186cb62b5b21c778637c0aac0e74c3fdefcdd5853065645ace65503232eab25a",
-    snapshot = "20180130T043019Z",
+    sha256 = "4cb2fac3e32292613b92d3162e99eb8a1ed7ce47d1b142852b0de3092b25910c",
+    snapshot = "20180406T095535Z",
     url = "http://snapshot.debian.org/archive",
 )
 
@@ -34,22 +34,24 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "bb4c9c16c4235376f71ea58b2e8c48428c10d5fd351d0caccd67cf1065bf9e52",
-    snapshot = "20180130T043019Z",
+    sha256 = "2863af9484d2d6b478ef225a8c740dac9a14015a594241a0872024c873123cdd",
+    snapshot = "20180406T095535Z",
     url = "http://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "http://snapshot.debian.org/archive/debian-security/20180130T144658Z",
-    packages_gz_url = "http://snapshot.debian.org/archive/debian-security/20180130T144658Z/dists/jessie/updates/main/binary-amd64/Packages.gz",
-    sha256 = "98505e4de175ce7d33b9751d1b9a54380da7dbe19605f4b4ddafd88c115bce9c",
+    package_prefix = "http://snapshot.debian.org/archive/debian-security/20180405T165926Z/",
+    packages_gz_url = "http://snapshot.debian.org/archive/debian-security/20180405T165926Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "a503fb4459eb9e862d080c7cf8135d7d395852e51cc7bfddf6c3d6cc4e11ee5f",
 )
 
 dpkg_list(
     name = "package_bundle",
     packages = [
-        "libc6",
+        # Version required to skip a security fix to the pre-release library
+        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
+        "libc6=2.24-11+deb9u3",
         "ca-certificates",
         "openssl",
         "libssl1.0.2",
@@ -96,10 +98,13 @@ dpkg_list(
         "libuuid1",
         "liblzma5",
     ],
+    # Takes the first package found: security updates should go first
+    # If there was a security fix to a package before the stable release, this will find
+    # the older security release. This happened for stretch libc6.
     sources = [
-        "@debian_stretch//file:Packages.json",
-        "@debian_stretch_backports//file:Packages.json",
         "@debian_stretch_security//file:Packages.json",
+        "@debian_stretch_backports//file:Packages.json",
+        "@debian_stretch//file:Packages.json",
     ],
 )
 
