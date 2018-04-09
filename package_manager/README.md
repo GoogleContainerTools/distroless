@@ -188,14 +188,14 @@ For a `dpkg_list` rule named `package_bundle`, packages can be used by loading `
       <td><code>packages</code></td>
       <td>
         <p><code>a string array of packages to download, required</code></p>
-        <p>The url that hosts snapshots of Packages.gz files.</p>
+        <p>The names of Debian packages that will be downloaded. You can optionally add <code>=version</code> to require a specific version.</p>
       </td>
     </tr>
     <tr>
       <td><code>sources</code></td>
       <td>
         <p><code>a list of outputs from dpkg_src, required</code></p>
-        <p>A list of snapshot sources that will be checked when downloading the package.  If a package is present in multiple sources, the first source in the list will be chosen.</p>
+        <p>A list of snapshot sources that will be checked when downloading the package.  If a package is present in multiple sources, the first source in the list will be chosen. This means security updates should be first.</p>
       </td>
     </tr>
   </tbody>
