@@ -101,3 +101,42 @@ See here for examples on how to complete some common tasks in your image:
 * [Including CA certificates](cacerts/)
 
 See here for more information on how these images are [built and released](RELEASES.md).
+
+### Debug Images
+
+Distroless images are minimal and lack shell access.  The ```:debug``` image set for each language provides a busybox shell to enter.
+
+For example:
+
+
+```
+cd examples/python2.7/
+```
+
+edit the ```Dockerfile``` to change the final image to ```:debug```:
+
+```dockerfile
+FROM python:2.7-slim AS build-env
+ADD . /app
+WORKDIR /app
+
+FROM gcr.io/distroless/python2.7:debug
+COPY --from=build-env /app /app
+WORKDIR /app
+CMD ["hello.py", "/etc"]
+```
+
+then build and launch with an shell entrypoint:
+
+```
+$ docker build -t my_debug_image .
+```
+
+```
+$ docker run --entrypoint=sh -ti my_debug_image
+
+/app # ls
+BUILD       Dockerfile  hello.py
+```
+
+> Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as its a shell script, you can copy it in or download it.
