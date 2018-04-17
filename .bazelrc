@@ -1,3 +1,3 @@
-build --workspace_status_command=./print-workspace-status.sh --cpu=k8
-test --workspace_status_command=./print-workspace-status.sh --cpu=k8
-run --workspace_status_command=./print-workspace-status.sh --cpu=k8
+build --workspace_status_command=./hack/print-workspace-status.sh --cpu=k8
+test --workspace_status_command=./hack/print-workspace-status.sh --cpu=k8
+run --workspace_status_command=./hack/print-workspace-status.sh --cpu=k8
