@@ -139,4 +139,4 @@ $ docker run --entrypoint=sh -ti my_debug_image
 BUILD       Dockerfile  hello.py
 ```
 
-> Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as its a shell script, you can copy it in or download it.
+> Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
