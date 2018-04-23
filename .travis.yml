@@ -2,11 +2,14 @@
 dist: trusty
 sudo: required
 # Not technically required but suppresses 'Ruby' in Job status message.
-language: java
+language: go
 python:
   - "2.7"
 os:
   - linux
+
+go:
+  - 1.10.x
 
 jdk:
   - oraclejdk8
