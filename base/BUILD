@@ -108,7 +108,7 @@ structure_test(
 go_binary(
     name = "check_certs",
     srcs = ["testdata/check_certs.go"],
-    pure="on",
+    pure = "on",
 )
 
 docker_build(

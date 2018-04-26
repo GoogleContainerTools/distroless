@@ -5,7 +5,6 @@ load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
-
 # Create a passwd file with a nonroot user and uid.
 passwd_entry(
     name = "nonroot_user",
@@ -41,7 +40,7 @@ docker_build(
 go_binary(
     name = "user",
     srcs = ["testdata/user.go"],
-    pure="on",
+    pure = "on",
 )
 
 docker_build(
