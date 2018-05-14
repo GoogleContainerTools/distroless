@@ -41,9 +41,9 @@ def generate_os_release(distro, os_release_file):
         ("ID", "debian"),
         ("VERSION_ID", ""),
         ("VERSION", ""),
-        ("HOME_URL", "https://github.com/GoogleCloudPlatform/distroless"),
-        ("SUPPORT_URL", "https://github.com/GoogleCloudPlatform/distroless/blob/master/README.md"),
-        ("BUG_REPORT_URL", "https://github.com/GoogleCloudPlatform/distroless/issues/new"),
+        ("HOME_URL", "https://github.com/GoogleContainerTools/distroless"),
+        ("SUPPORT_URL", "https://github.com/GoogleContainerTools/distroless/blob/master/README.md"),
+        ("BUG_REPORT_URL", "https://github.com/GoogleContainerTools/distroless/issues/new"),
     ])
     if distro in DEBIAN_RELEASES:
         os_release["VERSION_ID"] = DEBIAN_RELEASES[distro]
