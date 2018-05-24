@@ -17,6 +17,23 @@ It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of
 
 These images are built using the [bazel](https://bazel.build) tool, but they can also be used through other Docker image build tooling.
 
+### Entrypoints
+
+Note that distroless images by default do not contain a shell.
+That means the Dockerfile `ENTRYPOINT` command must be specified in `vector` form, to avoid the container runtime prefixing with a shell.
+
+This works:
+
+```
+ENTRYPOINT ['myapp']
+```
+
+But this does not work:
+
+```
+ENTRYPOINT 'myapp'
+```
+
 ### Docker
 
 Docker multi-stage builds make using distroless images easy.
