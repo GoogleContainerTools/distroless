@@ -27,3 +27,7 @@ fileExistenceTests:
 - name: tzdata
   path: '/usr/sbin/tzconfig'
   shouldExist: true
+- name: homedir
+  path: '/home'
+  isDirectory: true
+  shouldExist: true

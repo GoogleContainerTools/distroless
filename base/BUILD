@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
-load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_file")
+load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
@@ -15,18 +15,12 @@ passwd_entry(
     username = "root",
 )
 
-passwd_file(
+passwd_tar(
     name = "passwd",
     entries = [
         ":root_user",
     ],
-)
-
-pkg_tar(
-    name = "passwd_tar",
-    srcs = [":passwd"],
-    mode = "0644",
-    package_dir = "etc",
+    passwd_file_pkg_dir = "etc",
 )
 
 # Create /etc/group with the root group
@@ -74,7 +68,7 @@ docker_build(
     ],
     env = {"PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"},
     tars = [
-        ":passwd_tar",
+        ":passwd",
         ":group_tar",
         ":cacerts.tar",
         ":tmp.tar",

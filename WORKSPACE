@@ -6,7 +6,7 @@ git_repository(
     tag = "0.11.0",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -14,9 +14,9 @@ go_register_toolchains()
 
 load(
     "//package_manager:package_manager.bzl",
-    "package_manager_repositories",
-    "dpkg_src",
     "dpkg_list",
+    "dpkg_src",
+    "package_manager_repositories",
 )
 
 package_manager_repositories()
@@ -182,14 +182,14 @@ http_file(
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
+    commit = "74441f0d7000dde42ce02c30ce2d1bf6c0c1eebc",
     remote = "https://github.com/bazelbuild/rules_docker.git",
-    tag = "v0.4.0",
 )
 
 load(
     "@io_bazel_rules_docker//docker:docker.bzl",
-    "docker_repositories",
     "docker_pull",
+    "docker_repositories",
 )
 
 # Used to generate java ca certs.
