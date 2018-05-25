@@ -20,7 +20,7 @@ passwd_tar(
     entries = [
         ":root_user",
     ],
-    passwd_file_pkg_dir = "etc"
+    passwd_file_pkg_dir = "etc",
 )
 
 # Create /etc/group with the root group
