@@ -183,7 +183,7 @@ http_file(
 git_repository(
     name = "io_bazel_rules_docker",
     remote = "https://github.com/bazelbuild/rules_docker.git",
-    tag = "v0.4.0",
+    commit = "74441f0d7000dde42ce02c30ce2d1bf6c0c1eebc",
 )
 
 load(
