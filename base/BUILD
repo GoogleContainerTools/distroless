@@ -90,7 +90,7 @@ docker_build(
     directory = "/",
     entrypoint = ["/busybox/sh"],
     env = {"PATH": "$PATH:/busybox"},
-    tars = ["//busybox:busybox.tar"],
+    tars = ["//experimental/busybox:busybox.tar"],
 )
 
 structure_test(

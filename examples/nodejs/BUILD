@@ -6,14 +6,14 @@ load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 # https://howtonode.org/hello-node
 docker_build(
     name = "hello",
-    base = "//nodejs:nodejs",
+    base = "//experimental/nodejs:nodejs",
     cmd = ["hello.js"],
     files = [":hello.js"],
 )
 
 docker_build(
     name = "hello_http",
-    base = "//nodejs:nodejs",
+    base = "//experimental/nodejs:nodejs",
     cmd = ["hello_http.js"],
     files = [":hello_http.js"],
     ports = ["8000"],

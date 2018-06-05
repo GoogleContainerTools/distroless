@@ -4,7 +4,7 @@ load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 py_image(
     name = "hello_py",
     srcs = ["hello.py"],
-    base = "//python3:python3",
+    base = "//experimental/python3:python3",
     main = "hello.py",
 )
 
