@@ -1,6 +1,11 @@
 schemaVersion: "1.0.0"
 commandTests:
-# Basic FS sanity checks.
+# Check that Go programs can read the certificates
 - name: certs
   command: ["/check_certs"]
   exitCode: 0
+# Check that libssl finds the certificates
+- name: openssl verify google
+  command: ["openssl", "s_client", "-strict", "-verify_return_error", "-connect", "www.google.com:443"]
+  exitCode: 0
+  expectedOutput: ["Verification: OK"]
