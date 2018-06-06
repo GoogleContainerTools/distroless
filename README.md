@@ -42,13 +42,17 @@ Follow these steps to get started:
 * Pick the right base image for your application stack
   We publish the following distroless base images on `gcr.io`:
     * [gcr.io/distroless/base](base/README.md)
-    * [gcr.io/distroless/python2.7](python2.7/README.md)
-    * [gcr.io/distroless/python3](python3/README.md)
-    * [gcr.io/distroless/nodejs](nodejs/README.md)
+    * [gcr.io/distroless/java](java/README.md)
+    * [gcr.io/distroless/cc](cc/README.md)
+
+* The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
+    * [gcr.io/distroless/python2.7](experimental/python2.7/README.md)
+    * [gcr.io/distroless/python3](experimental/python3/README.md)
+    * [gcr.io/distroless/nodejs](experimental/nodejs/README.md)
     * [gcr.io/distroless/java](java/README.md)
     * [gcr.io/distroless/java/jetty](java/jetty/README.md)
     * [gcr.io/distroless/cc](cc/README.md)
-    * [gcr.io/distroless/dotnet](dotnet/README.md)
+    * [gcr.io/distroless/dotnet](experimental/dotnet/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 
@@ -76,7 +80,6 @@ Follow these steps to get started:
   ```
 
 You can find other examples here:
-
 
 * [Java](examples/java/Dockerfile)
 * [Python](examples/python2.7/Dockerfile)
