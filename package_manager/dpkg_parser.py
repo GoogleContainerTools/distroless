@@ -81,6 +81,7 @@ def download_dpkg(package_files, packages, workspace_name):
     """
     pkg_vals_to_package_file_and_sha256 = {}
     package_to_rule_map = {}
+    package_file_to_metadata = {}
     for pkg_vals in packages.split(","):
         pkg_split = pkg_vals.split("=")
         if len(pkg_split) != 2:
@@ -89,8 +90,10 @@ def download_dpkg(package_files, packages, workspace_name):
         else:
             pkg_name, pkg_version = pkg_split
         for package_file in package_files.split(","):
-            with open(package_file, 'rb') as f:
-                metadata = json.load(f)
+            if package_file not in package_file_to_metadata:
+                with open(package_file, 'rb') as f:
+                    package_file_to_metadata[package_file] = json.load(f)
+            metadata = package_file_to_metadata[package_file]
             if (pkg_name in metadata and
             (pkg_version == "" or
             pkg_version == metadata[pkg_name][VERSION_KEY])):
