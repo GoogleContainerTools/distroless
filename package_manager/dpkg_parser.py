@@ -82,7 +82,7 @@ def download_dpkg(package_files, packages, workspace_name):
     pkg_vals_to_package_file_and_sha256 = {}
     package_to_rule_map = {}
     package_file_to_metadata = {}
-    for pkg_vals in packages.split(","):
+    for pkg_vals in set(packages.split(",")):
         pkg_split = pkg_vals.split("=")
         if len(pkg_split) != 2:
             pkg_name = pkg_vals
