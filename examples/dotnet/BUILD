@@ -13,11 +13,11 @@ docker_build(
     files = [":bin"],
 )
 
-load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
-structure_test(
+container_test(
     name = "hello_test",
     size = "small",
-    config = "testdata/hello.yaml",
+    configs = ["testdata/hello.yaml"],
     image = ":hello",
 )

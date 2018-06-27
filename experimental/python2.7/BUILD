@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
-load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@package_bundle//file:packages.bzl", "packages")
 
 [docker_build(
@@ -36,8 +36,8 @@ load("@package_bundle//file:packages.bzl", "packages")
     ":debug",
 ]]
 
-structure_test(
+container_test(
     name = "python27_test",
-    config = "testdata/python27.yaml",
+    configs = ["testdata/python27.yaml"],
     image = ":python27",
 )
