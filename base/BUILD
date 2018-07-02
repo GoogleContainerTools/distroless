@@ -4,7 +4,7 @@ load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 # Create /etc/passwd with the root user
@@ -93,15 +93,15 @@ docker_build(
     tars = ["//experimental/busybox:busybox.tar"],
 )
 
-structure_test(
+container_test(
     name = "debug_test",
-    config = "testdata/debug.yaml",
+    configs = ["testdata/debug.yaml"],
     image = ":debug",
 )
 
-structure_test(
+container_test(
     name = "base_test",
-    config = "testdata/base.yaml",
+    configs = ["testdata/base.yaml"],
     image = ":base",
 )
 
@@ -118,8 +118,8 @@ docker_build(
     visibility = ["//visibility:private"],
 )
 
-structure_test(
+container_test(
     name = "certs_test",
-    config = "testdata/certs.yaml",
+    configs = ["testdata/certs.yaml"],
     image = ":check_certs_image",
 )

@@ -31,11 +31,11 @@ cacerts_java(
     ":debug",
 ]]
 
-load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
-structure_test(
+container_test(
     name = "java8_test",
-    config = "testdata/java.yaml",
+    configs = ["testdata/java.yaml"],
     image = ":java8",
 )
 
@@ -46,8 +46,8 @@ java_image(
     main_class = "testdata.CheckCerts",
 )
 
-structure_test(
+container_test(
     name = "check_certs_test",
-    config = "testdata/java.yaml",
+    configs = ["testdata/java.yaml"],
     image = ":java8",
 )

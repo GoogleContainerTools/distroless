@@ -182,7 +182,7 @@ http_file(
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
-    commit = "74441f0d7000dde42ce02c30ce2d1bf6c0c1eebc",
+    commit = "7401cb256222615c497c0dee5a4de5724a4f4cc7",
     remote = "https://github.com/bazelbuild/rules_docker.git",
 )
 
@@ -226,9 +226,3 @@ load(
 )
 
 _go_image_repos()
-
-git_repository(
-    name = "runtimes_common",
-    remote = "https://github.com/GoogleCloudPlatform/runtimes-common.git",
-    tag = "v0.1.0",
-)

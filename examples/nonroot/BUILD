@@ -2,7 +2,7 @@ load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_file")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 # Create a passwd file with a nonroot user and uid.
@@ -51,9 +51,9 @@ docker_build(
 )
 
 # Test to verify this works :)
-structure_test(
+container_test(
     name = "check_user_test",
-    config = "testdata/user.yaml",
+    configs = ["testdata/user.yaml"],
     image = ":check_user_image",
     visibility = ["//visibility:private"],
 )
