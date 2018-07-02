@@ -70,8 +70,8 @@ Follow these steps to get started:
   WORKDIR /go/src/app
   COPY . .
 
-  RUN go-wrapper download   # "go get -d -v ./..."
-  RUN go-wrapper install
+  RUN go get -d -v ./...
+  RUN go install -v ./...
 
   # Now copy it into our base image.
   FROM gcr.io/distroless/base
