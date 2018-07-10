@@ -122,6 +122,10 @@ See here for examples on how to complete some common tasks in your image:
 
 See here for more information on how these images are [built and released](RELEASES.md).
 
+### Jib
+
+For full documentation on how to use Jib to generate Docker images from Maven and Gradle, see the [GoogleContainerTools/jib](http://github.com/GoogleContainerTools/jib) repository.
+
 ### Debug Images
 
 Distroless images are minimal and lack shell access.  The ```:debug``` image set for each language provides a busybox shell to enter.
