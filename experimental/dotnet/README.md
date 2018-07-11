@@ -4,7 +4,7 @@
 
 This image definition contains a minimal Linux, dotnet-based [coreCLR](https://github.com/dotnet/core) runtime.
 
-Specifically, the image contains everything in the [/cc image](../cc/README.md), plus:
+Specifically, the image contains everything in the [/cc image](../../cc/README.md), plus:
 
 - coreCLR 2.0.0 Runtime and its [dependencies]
 
