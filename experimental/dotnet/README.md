@@ -4,7 +4,7 @@
 
 This image definition contains a minimal Linux, dotnet-based [coreCLR](https://github.com/dotnet/core) runtime.
 
-Specifically, the image contains everything in the [/cc image](../cc/README.md), plus:
+Specifically, the image contains everything in the [/cc image](../../cc/README.md), plus:
 
 - coreCLR 2.0.0 Runtime and its [dependencies]
 
@@ -120,7 +120,7 @@ Hello World!
 
 ## Example Hello World with bazel
 
-See the dotnet [Hello World](../examples/dotnet/) directory for an example and [examples/dotnet/BUILD](examples/dotnet/BUILD) using bazel:
+See the dotnet [Hello World](../../examples/dotnet/) directory for an example and [examples/dotnet/BUILD](../../examples/dotnet/BUILD) using bazel:
 
 ```
 docker_build(
@@ -182,7 +182,7 @@ The entrypoint is left unset because users can generate a platform-specific bina
 
 eg. if built on a linux workstation, edit:
 
-[examples/dotnet/hello.csproj](examples/dotnet/hello.csproj)
+[examples/dotnet/hello.csproj](../../examples/dotnet/hello.csproj)
 
 ```
 <Project Sdk="Microsoft.NET.Sdk">

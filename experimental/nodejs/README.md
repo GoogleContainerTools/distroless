@@ -4,7 +4,7 @@
 
 This image contains a minimal Linux, Node.js-based runtime.
 
-Specifically, the image contains everything in the [base image](../base/README.md), plus:
+Specifically, the image contains everything in the [base image](../../base/README.md), plus:
 
 * Node.js v8.9.1 and its dependencies.
 
