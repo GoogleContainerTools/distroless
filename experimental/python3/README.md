@@ -4,7 +4,7 @@
 
 This image contains a minimal Linux, Python-based runtime.
 
-Specifically, the image contains everything in the [base image](../base/README.md), plus:
+Specifically, the image contains everything in the [base image](../../base/README.md), plus:
 
 * Python 3 and its dependencies.
 
