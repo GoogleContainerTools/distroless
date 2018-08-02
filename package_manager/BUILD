@@ -1,4 +1,5 @@
 load("@subpar//:subpar.bzl", "par_binary")
+load("@python_deps//:requirements.bzl", "requirement")
 
 par_binary(
     name = "dpkg_parser",
