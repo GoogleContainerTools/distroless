@@ -14,10 +14,10 @@
 
 import argparse
 import gzip
-import urllib2
 import json
 import os
 
+from six.moves import urlopen
 
 from package_manager.parse_metadata import parse_package_metadata
 from package_manager import util
@@ -98,7 +98,7 @@ def download_dpkg(package_files, packages, workspace_name):
             (pkg_version == "" or
             pkg_version == metadata[pkg_name][VERSION_KEY])):
                 pkg = metadata[pkg_name]
-                buf = urllib2.urlopen(pkg[FILENAME_KEY])
+                buf = urlopen(pkg[FILENAME_KEY])
                 package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
                 out_file = os.path.join("file", util.encode_package_name(pkg_name))
                 with open(out_file, 'w') as f:
@@ -170,7 +170,7 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
             arch
         )
 
-    buf = urllib2.urlopen(url)
+    buf = urlopen(url)
     with open("Packages.gz", 'w') as f:
         f.write(buf.read())
     actual_sha256 = util.sha256_checksum("Packages.gz")
@@ -184,4 +184,3 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
 
 if __name__ == "__main__":
     main()
-
