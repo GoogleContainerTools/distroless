@@ -8,12 +8,14 @@ par_binary(
     deps = [
         ":parse_metadata",
         ":util",
+        "@bazel_tools//third_party/py/six",
     ],
 )
 
 py_library(
     name = "parse_metadata",
     srcs = ["parse_metadata.py"],
+    deps = ["@bazel_tools//third_party/py/six"],
 )
 
 py_library(
@@ -34,5 +36,8 @@ py_test(
     size = "small",
     srcs = ["util_test.py"],
     data = ["testdata/checksum.txt"],
-    deps = [":util"],
+    deps = [
+        ":util",
+        "@bazel_tools//third_party/py/six",
+    ],
 )
