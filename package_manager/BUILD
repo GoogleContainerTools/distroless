@@ -1,5 +1,4 @@
 load("@subpar//:subpar.bzl", "par_binary")
-load("@python_deps//:requirements.bzl", "requirement")
 
 par_binary(
     name = "dpkg_parser",
@@ -9,14 +8,14 @@ par_binary(
     deps = [
         ":parse_metadata",
         ":util",
-        requirement("six"),
+        "@bazel_tools//third_party/py/six",
     ],
 )
 
 py_library(
     name = "parse_metadata",
     srcs = ["parse_metadata.py"],
-    deps = [requirement("six")],
+    deps = ["@bazel_tools//third_party/py/six"],
 )
 
 py_library(
@@ -39,6 +38,6 @@ py_test(
     data = ["testdata/checksum.txt"],
     deps = [
         ":util",
-        requirement("six"),
+        "@bazel_tools//third_party/py/six",
     ],
 )
