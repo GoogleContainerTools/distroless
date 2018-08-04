@@ -9,6 +9,7 @@ load("@package_bundle//file:packages.bzl", "packages")
     # Based on //cc so that C extensions work properly.
     base = "//cc" + mode,
     debs = [
+        packages["dash"],
         packages["libbz2-1.0"],
         packages["libexpat1"],
         packages["libdb5.3"],

@@ -83,6 +83,7 @@ dpkg_list(
         "libpython2.7-minimal",
         "python2.7-minimal",
         "libpython2.7-stdlib",
+        "dash",
 
         #python3
         "libpython3.5-minimal",

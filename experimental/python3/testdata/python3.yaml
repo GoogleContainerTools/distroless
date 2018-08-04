@@ -12,6 +12,11 @@ commandTests:
   - name: symlink 
     command: ["/usr/bin/python", "--version"]
     expectedOutput: ["Python 3.5.3"]
+  # parts of the standard library assume /bin/sh exists via os.system and subprocess.Popen
+  - name: use_shell
+    command: ["/usr/bin/python3", "-c",
+      "import subprocess, sys; subprocess.check_call(sys.executable + ' -h', shell=True)"]
+    exitCode: 0
 
   - name: import_abc
     command: ["/usr/bin/python3", "-c", "import abc"]
