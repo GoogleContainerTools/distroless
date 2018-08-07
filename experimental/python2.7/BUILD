@@ -11,6 +11,7 @@ load("@package_bundle//file:packages.bzl", "packages")
     debs = [
         packages["dash"],
         packages["libbz2-1.0"],
+        packages["libc-bin"],
         packages["libexpat1"],
         packages["libdb5.3"],
         packages["libffi6"],
@@ -32,6 +33,9 @@ load("@package_bundle//file:packages.bzl", "packages")
     symlinks = {
         "/usr/bin/python": "/usr/bin/python2.7",
     },
+    tars = [
+        ":ld_so_cache.tar",
+    ],
 ) for mode in [
     "",
     ":debug",
@@ -41,4 +45,38 @@ container_test(
     name = "python27_test",
     configs = ["testdata/python27.yaml"],
     image = ":python27",
+)
+
+genrule(
+    name = "ld_so_cache_tar",
+    srcs = [":ld.so.cache"],
+    outs = ["ld_so_cache.tar"],
+    cmd = "$(location :make_ld_so_cache_tar.py) $(SRCS) $(OUTS)",
+    tools = [":make_ld_so_cache_tar.py"],
+)
+
+sh_binary(
+    name = "generate_ldconfig_cache",
+    srcs = ["generate_ldconfig_cache.py"],
+    data = [":python27"],
+)
+
+genrule(
+    name = "ld_so_cache_new",
+    outs = ["ld.so.cache.new"],
+    cmd = "$(location :generate_ldconfig_cache) $(OUTS)",
+    tools = [":generate_ldconfig_cache"],
+)
+
+sh_test(
+    name = "check_ld_so_cache",
+    srcs = ["check_ld_so_cache.py"],
+    args = [
+        "$(location :ld.so.cache)",
+        "$(location :ld.so.cache.new)",
+    ],
+    data = [
+        ":ld.so.cache",
+        ":ld.so.cache.new",
+    ],
 )
