@@ -16,6 +16,7 @@ import argparse
 import gzip
 import json
 import os
+import io
 
 from six.moves import urllib
 
@@ -92,7 +93,8 @@ def download_dpkg(package_files, packages, workspace_name):
         for package_file in package_files.split(","):
             if package_file not in package_file_to_metadata:
                 with open(package_file, 'rb') as f:
-                    package_file_to_metadata[package_file] = json.load(f)
+                    data = f.read()
+                    package_file_to_metadata[package_file] = json.loads(data.decode('utf-8'))
             metadata = package_file_to_metadata[package_file]
             if (pkg_name in metadata and
             (pkg_version == "" or
@@ -101,7 +103,7 @@ def download_dpkg(package_files, packages, workspace_name):
                 buf = urllib.request.urlopen(pkg[FILENAME_KEY])
                 package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
                 out_file = os.path.join("file", util.encode_package_name(pkg_name))
-                with open(out_file, 'w') as f:
+                with io.open(out_file, 'wb') as f:
                     f.write(buf.read())
                 expected_checksum = util.sha256_checksum(out_file)
                 actual_checksum = pkg[SHA256_KEY]
@@ -171,7 +173,7 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
         )
 
     buf = urllib.request.urlopen(url)
-    with open("Packages.gz", 'w') as f:
+    with io.open("Packages.gz", 'wb') as f:
         f.write(buf.read())
     actual_sha256 = util.sha256_checksum("Packages.gz")
     if sha256 != actual_sha256:
