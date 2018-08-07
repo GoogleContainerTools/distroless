@@ -84,6 +84,7 @@ dpkg_list(
         "python2.7-minimal",
         "libpython2.7-stdlib",
         "dash",
+        "libc-bin",
 
         #python3
         "libpython3.5-minimal",

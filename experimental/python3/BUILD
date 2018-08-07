@@ -12,6 +12,7 @@ load("@package_bundle//file:packages.bzl", "packages")
         packages["dash"],
         packages["zlib1g"],
         packages["libbz2-1.0"],
+        packages["libc-bin"],
         packages["libncursesw5"],
         packages["liblzma5"],
         packages["libreadline7"],
@@ -33,6 +34,9 @@ load("@package_bundle//file:packages.bzl", "packages")
         "/usr/bin/python": "/usr/bin/python3.5",
         "/usr/bin/python3": "/usr/bin/python3.5",
     },
+    tars = [
+        "//experimental/python2.7:ld_so_cache.tar",
+    ],
 ) for mode in [
     "",
     ":debug",
