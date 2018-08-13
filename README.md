@@ -49,7 +49,6 @@ Follow these steps to get started:
     * [gcr.io/distroless/python2.7](experimental/python2.7/README.md)
     * [gcr.io/distroless/python3](experimental/python3/README.md)
     * [gcr.io/distroless/nodejs](experimental/nodejs/README.md)
-    * [gcr.io/distroless/java](java/README.md)
     * [gcr.io/distroless/java/jetty](java/jetty/README.md)
     * [gcr.io/distroless/cc](cc/README.md)
     * [gcr.io/distroless/dotnet](experimental/dotnet/README.md)
