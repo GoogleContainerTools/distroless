@@ -1,4 +1,4 @@
-# Documentation for `gcr.io/distroless/python27`
+# Documentation for `gcr.io/distroless/python2.7`
 
 ## Image Contents
 
