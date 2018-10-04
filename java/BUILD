@@ -18,6 +18,10 @@ cacerts_java(
     ],
     entrypoint = [
         "/usr/bin/java",
+        "-XX:+UnlockExperimentalVMOptions",
+        "-XX:+UseCGroupMemoryLimitForHeap",
+        "-XX:MaxRAMFraction=1",
+        "-Djava.security.egd=file:/dev/./urandom",
         "-jar",
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
