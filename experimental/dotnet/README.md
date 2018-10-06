@@ -6,10 +6,10 @@ This image definition contains a minimal Linux, dotnet-based [coreCLR](https://g
 
 Specifically, the image contains everything in the [/cc image](../../cc/README.md), plus:
 
-- coreCLR 2.0.0 Runtime and its [dependencies]
+- coreCLR 2.1.0 Runtime and its [dependencies]
 
-  * [runtime-deps](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/amd64/Dockerfile)
-  * [runtime](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/amd64/Dockerfile)
+  * [runtime-deps](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+  * [runtime](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/amd64/Dockerfile)
 
 
 ```
@@ -24,7 +24,7 @@ Specifically, the image contains everything in the [/cc image](../../cc/README.m
         packages["libuuid1"],
         packages["zlib1g"],
         packages["curl"],
-        packages["libcomerr2"],
+        packages["libcom-err2"],
         packages["libidn2-0"],
         packages["libk5crypto3"],
         packages["libkrb5-3"],
@@ -80,7 +80,7 @@ To build directly:
 
 ```bash
 $ dotnet --version
-2.0.0
+2.1.0
 
 $ docker --version
 Docker version 17.05.0-ce, build 89658be
@@ -96,7 +96,7 @@ $ dotnet new console
 create a Dockerfile
 
 ```dockerfile
-FROM microsoft/dotnet:2.0.0-sdk AS build-env
+FROM microsoft/dotnet:2.1.0-sdk AS build-env
 ADD . /app
 WORKDIR /app
 RUN dotnet restore
@@ -105,7 +105,7 @@ RUN dotnet publish  -c Release
 FROM gcr.io/distroless/dotnet
 WORKDIR /app
 COPY --from=build-env /app /app/
-ENTRYPOINT ["dotnet", "bin/Release/netcoreapp2.0/console.dll"]
+ENTRYPOINT ["dotnet", "bin/Release/netcoreapp2.1/console.dll"]
 ```
 
 then
@@ -138,14 +138,14 @@ docker_build(
 
 Since the binary build happens outside of bazel, we need to build a binary out-of-band.
 
-Requires a local installation of dotnet 2.0.0: 
+Requires a local installation of dotnet 2.1.0: 
 
-- [dotnet 2.0.0](https://download.microsoft.com/download/1/B/4/1B4DE605-8378-47A5-B01B-2C79D6C55519/dotnet-sdk-2.0.0-linux-x64.tar.gz))
+- [dotnet 2.1.0](https://download.microsoft.com/download/1/B/4/1B4DE605-8378-47A5-B01B-2C79D6C55519/dotnet-sdk-2.0.0-linux-x64.tar.gz))
 
 
 ```
 dotnet --version
-2.0.0
+2.1.0
 ```
 
 ### Build and test dotnet locally
@@ -158,7 +158,7 @@ dotnet publish -c Release
 ```
 
 ```
-dotnet bin/Release/netcoreapp2.0/publish/hello.dll
+dotnet bin/Release/netcoreapp2.1/publish/hello.dll
 Hello World
 ```
 
@@ -188,8 +188,8 @@ eg. if built on a linux workstation, edit:
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RuntimeFrameworkVersion>2.0.0</RuntimeFrameworkVersion>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RuntimeFrameworkVersion>2.1.0</RuntimeFrameworkVersion>
     <RuntimeIdentifiers>ubuntu.14.04-x64;</RuntimeIdentifiers>    
   </PropertyGroup>
 </Project>
@@ -207,7 +207,7 @@ dotnet publish -c Release -r ubuntu.14.04-x64
 which will generate a contained binary:
 
 ```
-$ bin/Release/netcoreapp2.0/ubuntu.14.04-x64/publish/hello 
+$ bin/Release/netcoreapp2.1/ubuntu.14.04-x64/publish/hello 
 Hello World
 ```
 
@@ -218,7 +218,7 @@ docker_build(
     name = "hello",
     base = "//dotnet:dotnet",
     cmd = [
-        "/bin/Release/netcoreapp2.0/ubuntu.14.04-x64/publish/hello",
+        "/bin/Release/netcoreapp2.1/ubuntu.14.04-x64/publish/hello",
     ],
     files = [":bin"],
 )

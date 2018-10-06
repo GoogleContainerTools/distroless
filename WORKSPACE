@@ -101,7 +101,7 @@ dpkg_list(
         "libuuid1",
         "zlib1g",
         "curl",
-        "libcomerr2",
+        "libcom-err2",
         "libidn2-0",
         "libk5crypto3",
         "libkrb5-3",
@@ -168,9 +168,9 @@ new_http_archive(
 new_http_archive(
     name = "dotnet",
     build_file = "experimental/dotnet/BUILD.dotnet",
-    sha256 = "69ecad24bce4f2132e0db616b49e2c35487d13e3c379dabc3ec860662467b714",
+    sha256 = "fee8973feb7f964a20be8ed7ff8e277d343b7a9ee032af2f4deb90913e58f638",
     type = "tar.gz",
-    urls = ["https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz"],
+    urls = ["https://download.microsoft.com/download/9/1/7/917308D9-6C92-4DA5-B4B1-B4A19451E2D2/dotnet-runtime-2.1.0-linux-x64.tar.gz"],
 )
 
 # For the debug image

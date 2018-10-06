@@ -16,7 +16,7 @@ load("@package_bundle//file:packages.bzl", "packages")
         packages["libuuid1"],
         packages["zlib1g"],
         packages["curl"],
-        packages["libcomerr2"],
+        packages["libcom-err2"],
         packages["libidn2-0"],
         packages["libk5crypto3"],
         packages["libkrb5-3"],
