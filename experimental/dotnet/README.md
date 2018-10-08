@@ -51,16 +51,17 @@ $ dotnet new console
 create a Dockerfile
 
 ```dockerfile
-FROM microsoft/dotnet:2.1.0-sdk AS build-env
+FROM microsoft/dotnet:2.1-sdk AS build-env
 ADD . /app
 WORKDIR /app
-RUN dotnet restore
-RUN dotnet publish  -c Release
+RUN dotnet restore -r linux-x64
+RUN dotnet publish  -c Release -r linux-x64
 
 FROM gcr.io/distroless/dotnet
 WORKDIR /app
 COPY --from=build-env /app /app/
-ENTRYPOINT ["dotnet", "bin/Release/netcoreapp2.1/console.dll"]
+#CMD ["dotnet", "bin/Release/netcoreapp2.1/linux-x64/publish/console.dll"]
+CMD ["bin/Release/netcoreapp2.1/linux-x64/publish/console"]
 ```
 
 then
@@ -153,11 +154,11 @@ dotnet --version
 cd examples/dotnet
 
 dotnet restore
-dotnet publish -c Release
+dotnet publish
 ```
 
 ```
-dotnet bin/Release/netcoreapp2.1/publish/hello.dll
+dotnet bin/Release/netcoreapp2.1/hello.dll
 Hello World
 ```
 
@@ -189,7 +190,7 @@ eg. if built on a linux workstation, edit:
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RuntimeFrameworkVersion>2.1.0</RuntimeFrameworkVersion>
-    <RuntimeIdentifiers>ubuntu.14.04-x64;</RuntimeIdentifiers>    
+    <RuntimeIdentifiers>linux-x64;</RuntimeIdentifiers>    
   </PropertyGroup>
 </Project>
 ```
@@ -199,14 +200,14 @@ then
 ```
 cd examples/dotnet
 
-dotnet restore -r ubuntu.14.04-x64
-dotnet publish -c Release -r ubuntu.14.04-x64
+dotnet restore -r linux-x64
+dotnet publish  -c Release -r linux-x64
 ```
 
 which will generate a contained binary:
 
 ```
-$ bin/Release/netcoreapp2.1/ubuntu.14.04-x64/publish/hello
+$ bin/Release/netcoreapp2.1/linux-x64/publish/hello
 Hello World
 ```
 
@@ -217,7 +218,7 @@ docker_build(
     name = "hello",
     base = "//dotnet:dotnet",
     cmd = [
-        "/bin/Release/netcoreapp2.1/ubuntu.14.04-x64/publish/hello",
+        "/bin/Release/netcoreapp2.1/linux-x64/publish/hello",
     ],
     files = [":bin"],
 )
@@ -237,6 +238,6 @@ The files under the ```examples/dotnet/bin/``` folder is currently part of the r
 ```
 cd examples/dotnet
 
-dotnet restore
-dotnet publish -c Release
+dotnet restore -r linux-x64
+dotnet publish  -c Release -r linux-x64
 ```
