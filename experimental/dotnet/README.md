@@ -86,6 +86,29 @@ RUN dotnet restore -r linux-x64
 RUN dotnet publish  -c Release -r linux-x64 --self-contained
 RUN mkdir bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
     cp /usr/lib/x86_64-linux-gnu/libnghttp2.so.14 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libidn2.so.0 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/librtmp.so.1 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libssh2.so.1 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libpsl.so.5 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/liblber-2.4.so.2 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libldap_r-2.4.so.2 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libunistring.so.0 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libgnutls.so.30 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libhogweed.so.4 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libnettle.so.6 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libgmp.so.10 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libkrb5support.so.0 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libsasl2.so.2 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libk5crypto.so.3 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libp11-kit.so.0 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libtasn1.so.6 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /usr/lib/x86_64-linux-gnu/libffi.so.6 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /lib/x86_64-linux-gnu/libkeyutils.so.1 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /lib/x86_64-linux-gnu/libidn.so.11 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /lib/x86_64-linux-gnu/libcom_err.so.2 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
+    cp /lib/x86_64-linux-gnu/libgpg-error.so.0 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
     cp /lib/x86_64-linux-gnu/libgcrypt.so.20 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/
 
 FROM gcr.io/distroless/dotnet
