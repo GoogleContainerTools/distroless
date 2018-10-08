@@ -7,8 +7,8 @@ docker_build(
     name = "hello",
     base = "//experimental/dotnet:dotnet",
     cmd = [
-	"dotnet",
-    "/bin/Release/netcoreapp2.1/hello.dll",
+        "dotnet",
+        "/bin/Release/netcoreapp2.1/hello.dll",
     ],
     files = [":bin"],
 )
