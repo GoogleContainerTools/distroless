@@ -60,6 +60,7 @@ cacerts(
 docker_build(
     name = "base",
     debs = [
+        packages["base-files"],
         packages["libc6"],
         packages["libssl1.1"],
         packages["openssl"],
