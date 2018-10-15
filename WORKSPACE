@@ -52,6 +52,7 @@ dpkg_list(
         # Version required to skip a security fix to the pre-release library
         # TODO: Remove when there is a security fix or dpkg_list finds the recent version
         "libc6=2.24-11+deb9u3",
+        "base-files",
         "ca-certificates",
         "openssl",
         "libssl1.0.2",
