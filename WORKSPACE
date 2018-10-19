@@ -161,10 +161,10 @@ new_http_archive(
 new_http_archive(
     name = "nodejs",
     build_file = "experimental/nodejs/BUILD.nodejs",
-    sha256 = "0e49da19cdf4c89b52656e858346775af21f1953c308efbc803b665d6069c15c",
-    strip_prefix = "node-v8.9.1-linux-x64/",
+    sha256 = "3df19b748ee2b6dfe3a03448ebc6186a3a86aeab557018d77a0f7f3314594ef6",
+    strip_prefix = "node-v8.12.0-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v8.9.1/node-v8.9.1-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v8.12.0/node-v8.12.0-linux-x64.tar.gz"],
 )
 
 # dotnet
