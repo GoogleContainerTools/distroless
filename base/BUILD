@@ -66,6 +66,7 @@ docker_build(
         packages["openssl"],
         packages["netbase"],
         packages["tzdata"],
+        ":cacerts.deb",
     ],
     env = {
         "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -77,7 +78,6 @@ docker_build(
     tars = [
         ":passwd",
         ":group_tar",
-        ":cacerts.tar",
         ":tmp.tar",
         ":nsswitch.tar",
         "@debian_stretch//file:os_release.tar",
