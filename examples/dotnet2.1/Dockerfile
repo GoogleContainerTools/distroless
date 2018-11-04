@@ -1,0 +1,11 @@
+FROM microsoft/dotnet:2.1-sdk AS build-env
+ADD . /app
+WORKDIR /app
+RUN dotnet restore -r linux-x64
+RUN dotnet publish  -c Release -r linux-x64
+
+FROM gcr.io/distroless/dotnet2.1:latest
+WORKDIR /app
+COPY --from=build-env /app /app/
+#CMD ["dotnet", "bin/Release/netcoreapp2.1/linux-x64/publish/hello.dll"]
+CMD ["bin/Release/netcoreapp2.1/linux-x64/publish/hello"]

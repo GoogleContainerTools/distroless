@@ -26,6 +26,8 @@ docker_bundle(
         "gcr.io/{PROJECT_ID}/nodejs:debug": "//experimental/nodejs:debug",
         "gcr.io/{PROJECT_ID}/dotnet:latest": "//experimental/dotnet",
         "gcr.io/{PROJECT_ID}/dotnet:debug": "//experimental/dotnet:debug",
+        "gcr.io/{PROJECT_ID}/dotnet2.1:latest": "//experimental/dotnet2.1:dotnet21",
+        "gcr.io/{PROJECT_ID}/dotnet2.1:debug": "//experimental/dotnet2.1:debug",
     },
     stamp = True,
 )

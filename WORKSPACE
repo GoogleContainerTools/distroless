@@ -91,7 +91,7 @@ dpkg_list(
         "python3.5-minimal",
         "libpython3.5-stdlib",
 
-        #dotnet
+        #dotnet, dotnet2.1
         "libcurl3",
         "libkrb5-3",
         "libicu57",
@@ -133,6 +133,15 @@ new_http_archive(
 new_http_archive(
     name = "dotnet",
     build_file = "experimental/dotnet/BUILD.dotnet",
+    sha256 = "fee8973feb7f964a20be8ed7ff8e277d343b7a9ee032af2f4deb90913e58f638",
+    type = "tar.gz",
+    urls = ["https://download.microsoft.com/download/9/1/7/917308D9-6C92-4DA5-B4B1-B4A19451E2D2/dotnet-runtime-2.1.0-linux-x64.tar.gz"],
+)
+
+# dotnet2.1
+new_http_archive(
+    name = "dotnet21",
+    build_file = "experimental/dotnet2.1/BUILD.dotnet",
     sha256 = "fee8973feb7f964a20be8ed7ff8e277d343b7a9ee032af2f4deb90913e58f638",
     type = "tar.gz",
     urls = ["https://download.microsoft.com/download/9/1/7/917308D9-6C92-4DA5-B4B1-B4A19451E2D2/dotnet-runtime-2.1.0-linux-x64.tar.gz"],

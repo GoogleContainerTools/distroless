@@ -51,6 +51,7 @@ Follow these steps to get started:
     * [gcr.io/distroless/nodejs](experimental/nodejs/README.md)
     * [gcr.io/distroless/java/jetty](java/jetty/README.md)
     * [gcr.io/distroless/dotnet](experimental/dotnet/README.md)
+    * [gcr.io/distroless/dotnet21](experimental/dotnet2.1/README.md)    
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 
@@ -85,6 +86,7 @@ You can find other examples here:
 * [Golang](examples/go/Dockerfile)
 * [Node.js](examples/nodejs/Dockerfile)
 * [dotnet](examples/dotnet/Dockerfile)
+* [dotnet 2.1](examples/dotnet2.1/Dockerfile)
 
 To run any example, go the the directory for the language and run
 ```
@@ -111,6 +113,7 @@ See here for:
 * [Golang](examples/go/BUILD)
 * [Node.js](examples/nodejs/BUILD)
 * [dotnet](examples/dotnet/BUILD)
+* [dotnet21](examples/dotnet2.1/BUILD)
 
 See here for examples on how to complete some common tasks in your image:
 

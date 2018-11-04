@@ -1,4 +1,4 @@
-# Documentation for dotnet distroless build
+# Documentation for dotnet2.1 distroless build
 
 ## Image Contents
 
@@ -57,7 +57,7 @@ WORKDIR /app
 RUN dotnet restore -r linux-x64
 RUN dotnet publish  -c Release -r linux-x64
 
-FROM gcr.io/distroless/dotnet
+FROM gcr.io/distroless/dotnet2.1:latest
 WORKDIR /app
 COPY --from=build-env /app /app/
 #CMD ["dotnet", "bin/Release/netcoreapp2.1/linux-x64/publish/console.dll"]
@@ -112,7 +112,7 @@ RUN mkdir bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
     cp /lib/x86_64-linux-gnu/libgpg-error.so.0 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/ && \
     cp /lib/x86_64-linux-gnu/libgcrypt.so.20 bin/Release/netcoreapp2.1/linux-x64/publish/netcoredeps/
 
-FROM gcr.io/distroless/dotnet2.1
+FROM gcr.io/distroless/dotnet21:latest
 WORKDIR /app
 COPY --from=build-env /app /app/
 CMD ["bin/Release/netcoreapp2.1/linux-x64/publish/hello"]
