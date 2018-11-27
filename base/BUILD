@@ -58,12 +58,9 @@ cacerts(
 # directory with specific permissions.
 
 docker_build(
-    name = "base",
+    name = "static",
     debs = [
         packages["base-files"],
-        packages["libc6"],
-        packages["libssl1.1"],
-        packages["openssl"],
         packages["netbase"],
         packages["tzdata"],
         ":cacerts.deb",
@@ -81,6 +78,16 @@ docker_build(
         ":tmp.tar",
         ":nsswitch.tar",
         "@debian_stretch//file:os_release.tar",
+    ],
+)
+
+docker_build(
+    name = "base",
+    base = ":static",
+    debs = [
+        packages["libc6"],
+        packages["libssl1.1"],
+        packages["openssl"],
     ],
 )
 
