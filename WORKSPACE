@@ -1,9 +1,19 @@
 workspace(name = "distroless")
 
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+
+git_repository(
+    name = "subpar",
+    remote = "https://github.com/google/subpar",
+    tag = "1.0.0",
+)
+
 git_repository(
     name = "io_bazel_rules_go",
     remote = "https://github.com/bazelbuild/rules_go.git",
-    tag = "0.11.0",
+    tag = "0.16.3",
 )
 
 load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
@@ -148,9 +158,9 @@ dpkg_list(
 )
 
 # For Jetty
-new_http_archive(
+http_archive(
     name = "jetty",
-    build_file = "BUILD.jetty",
+    build_file = "//:BUILD.jetty",
     sha256 = "c66abd7323f6df5b28690e145d2ae829dbd12b8a2923266fa23ab5139a9303c5",
     strip_prefix = "jetty-distribution-9.4.14.v20181114/",
     type = "tar.gz",
@@ -158,9 +168,9 @@ new_http_archive(
 )
 
 # Node
-new_http_archive(
+http_archive(
     name = "nodejs",
-    build_file = "experimental/nodejs/BUILD.nodejs",
+    build_file = "//experimental/nodejs:BUILD.nodejs",
     sha256 = "3df19b748ee2b6dfe3a03448ebc6186a3a86aeab557018d77a0f7f3314594ef6",
     strip_prefix = "node-v8.12.0-linux-x64/",
     type = "tar.gz",
@@ -168,9 +178,9 @@ new_http_archive(
 )
 
 # dotnet
-new_http_archive(
+http_archive(
     name = "dotnet",
-    build_file = "experimental/dotnet/BUILD.dotnet",
+    build_file = "//experimental/dotnet:BUILD.dotnet",
     sha256 = "69ecad24bce4f2132e0db616b49e2c35487d13e3c379dabc3ec860662467b714",
     type = "tar.gz",
     urls = ["https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz"],
@@ -187,7 +197,7 @@ http_file(
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
-    commit = "7401cb256222615c497c0dee5a4de5724a4f4cc7",
+    commit = "5eb0728594013d746959c4bd21aa4b0c3e3848d8",
     remote = "https://github.com/bazelbuild/rules_docker.git",
 )
 
