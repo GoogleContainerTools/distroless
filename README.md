@@ -41,6 +41,7 @@ Follow these steps to get started:
 
 * Pick the right base image for your application stack.
   We publish the following distroless base images on `gcr.io`:
+    * [gcr.io/distroless/static](base/README.md)
     * [gcr.io/distroless/base](base/README.md)
     * [gcr.io/distroless/java](java/README.md)
     * [gcr.io/distroless/cc](cc/README.md)
