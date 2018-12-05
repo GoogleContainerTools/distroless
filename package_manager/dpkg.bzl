@@ -25,7 +25,7 @@ _dpkg_list = repository_rule(
         "packages": attr.string_list(),
         "_dpkg_parser": attr.label(
             executable = True,
-            default = Label("@dpkg_parser//file:dpkg_parser.par"),
+            default = Label("@dpkg_parser//file:downloaded"),
             cfg = "host",
         ),
     },
@@ -64,7 +64,7 @@ _dpkg_src = repository_rule(
         "sha256": attr.string(),
         "_dpkg_parser": attr.label(
             executable = True,
-            default = Label("@dpkg_parser//file:dpkg_parser.par"),
+            default = Label("@dpkg_parser//file:downloaded"),
             cfg = "host",
         ),
     },
