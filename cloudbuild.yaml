@@ -1,4 +1,55 @@
-steps:
+timeout: 1800s
+steps:  
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', ':publish']
-  env: ['PROJECT_ID=$PROJECT_ID']
+  args: ['run', '//base:static']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//base:base']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//base:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//cc']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//cc:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//java:java8']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//java:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//java/jetty']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//java/jetty:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//experimental/python3:python3']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//experimental/python3:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//experimental/python2.7:python27']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//experimental/python2.7:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//experimental/nodejs']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//experimental/nodejs:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//experimental/dotnet']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//experimental/dotnet:debug']
+
+images:
+  - 'gcr.io/$PROJECT_ID/go:latest'
+  - 'gcr.io/$PROJECT_ID/base:latest'
+  - 'gcr.io/$PROJECT_ID/base:debug'
+  - 'gcr.io/$PROJECT_ID/cc:latest'
+  - 'gcr.io/$PROJECT_ID/cc:debug'
+  - 'gcr.io/$PROJECT_ID/java:latest'
+  - 'gcr.io/$PROJECT_ID/java:debug'
+  - 'gcr.io/$PROJECT_ID/java/jetty:latest'
+  - 'gcr.io/$PROJECT_ID/java/jetty:debug'
+  - 'gcr.io/$PROJECT_ID/python3:latest'
+  - 'gcr.io/$PROJECT_ID/python3:debug'
+  - 'gcr.io/$PROJECT_ID/python2.7:latest'
+  - 'gcr.io/$PROJECT_ID/python2.7:debug'
+  - 'gcr.io/$PROJECT_ID/nodejs:latest'
+  - 'gcr.io/$PROJECT_ID/nodejs:debug'
+  - 'gcr.io/$PROJECT_ID/dotnet:latest'
+  - 'gcr.io/$PROJECT_ID/dotnet:debug'
