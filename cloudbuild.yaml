@@ -36,7 +36,7 @@ steps:
   args: ['run', '//experimental/dotnet:debug']
 
 images:
-  - 'gcr.io/$PROJECT_ID/go:latest'
+  - 'gcr.io/$PROJECT_ID/static:latest'
   - 'gcr.io/$PROJECT_ID/base:latest'
   - 'gcr.io/$PROJECT_ID/base:debug'
   - 'gcr.io/$PROJECT_ID/cc:latest'
