@@ -23,7 +23,7 @@ cacerts = rule(
             single_file = True,
             mandatory = True,
         ),
-        "certs": attr.label_key_string_dict(
+        "certs": attr.label_keyed_string_dict(
             allow_files = [".crt"],
         ),
         # Implicit dependencies.
