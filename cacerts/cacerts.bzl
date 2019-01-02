@@ -2,7 +2,6 @@
 
 def _impl(ctx):
     file_args = ' '.join([str(f.path) for f in ctx.files.certs[:]])
-    # file_args = ' '.join([str(_remap(remap_paths, dest_path(f, data_path)) for f in ctx.files.certs[:]])
     args = "%s %s %s %s \"%s\"" % (
 	ctx.executable._extract.path,
 	ctx.file.deb.path,
@@ -12,7 +11,7 @@ def _impl(ctx):
     )
 
     ctx.action(command = args,
-            inputs = [ctx.executable._extract, ctx.file.deb],
+            inputs = [ctx.executable._extract, ctx.file.deb] + ctx.files.certs,
             outputs = [ctx.outputs.tar, ctx.outputs.deb])
 
 cacerts = rule(
