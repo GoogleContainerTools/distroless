@@ -25,6 +25,7 @@ set -e
 DEB=$1
 OUT_TAR=$2
 OUT_DEB=$3
+CERTS_FILES=$4
 
 cp "$DEB" "$OUT_DEB"
 
@@ -44,6 +45,10 @@ mkdir -p $(dirname $CERT_FILE)
 
 CERTS=$(find usr/share/ca-certificates -type f | sort)
 for cert in $CERTS; do
+  cat $cert >> $CERT_FILE
+done
+
+for cert in $CERTS_FILES; do
   cat $cert >> $CERT_FILE
 done
 
