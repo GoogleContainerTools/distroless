@@ -48,6 +48,10 @@ for cert in $CERTS; do
   cat $cert >> $CERT_FILE
 done
 
+echo $DEB
+echo $CERTS_FILES
+echo $(pwd)
+
 for cert in $CERTS_FILES; do
   cat $cert >> $CERT_FILE
 done
