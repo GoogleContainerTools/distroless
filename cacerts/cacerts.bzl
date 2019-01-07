@@ -3,10 +3,10 @@
 def _impl(ctx):
     file_args = ' '.join([str(f.path) for f in ctx.files.certs[:]])
     args = "%s %s %s %s \"%s\"" % (
-	ctx.executable._extract.path,
-	ctx.file.deb.path,
-	ctx.outputs.tar.path,
-	ctx.outputs.deb.path,
+    ctx.executable._extract.path,
+    ctx.file.deb.path,
+    ctx.outputs.tar.path,
+    ctx.outputs.deb.path,
     file_args,
     )
 
