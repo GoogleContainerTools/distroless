@@ -1,17 +1,17 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
 # These examples are adapted from:
 # https://howtonode.org/hello-node
-docker_build(
+container_image(
     name = "hello",
     base = "//experimental/nodejs:nodejs",
     cmd = ["hello.js"],
     files = [":hello.js"],
 )
 
-docker_build(
+container_image(
     name = "hello_http",
     base = "//experimental/nodejs:nodejs",
     cmd = ["hello_http.js"],

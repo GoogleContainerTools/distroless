@@ -1,8 +1,8 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_bundle")
+load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
 
-docker_bundle(
+container_bundle(
     name = "all",
     images = {
         "gcr.io/{PROJECT_ID}/go:latest": "//base:static",
@@ -23,12 +23,12 @@ docker_bundle(
         "gcr.io/{PROJECT_ID}/dotnet:latest": "//experimental/dotnet",
         "gcr.io/{PROJECT_ID}/dotnet:debug": "//experimental/dotnet:debug",
     },
-    stamp = True,
 )
 
-load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
+load("@io_bazel_rules_docker//contrib:push-all.bzl", "container_push")
 
-docker_push(
+container_push(
     name = "publish",
+    format = "Docker",
     bundle = ":all",
 )

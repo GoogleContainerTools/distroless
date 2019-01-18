@@ -116,7 +116,7 @@ See here for:
 See here for examples on how to complete some common tasks in your image:
 
 * [Adding and running as a non-root user](examples/nonroot)
-* [Including debian packages](https://github.com/bazelbuild/rules_docker#docker_build-1)
+* [Including debian packages](https://github.com/bazelbuild/rules_docker#container_image-1)
 * [Including CA certificates](cacerts/)
 
 See here for more information on how these images are [built and released](RELEASES.md).
