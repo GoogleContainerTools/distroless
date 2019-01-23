@@ -3,7 +3,13 @@ commandTests:
   - name: java
     command: ["/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java", "-version"]
     expectedError: ['openjdk version "1\.8.*"']
+  - name: java-symlink
+    command: ["/usr/bin/java", "-version"]
+    expectedError: ['openjdk version "1\.8.*"']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
+    shouldExist: true
+  - name: busybox
+    path: "/busybox/sh"
     shouldExist: true

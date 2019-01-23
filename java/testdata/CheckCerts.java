@@ -1,31 +1,17 @@
 package testdata;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
-import java.security.cert.Certificate;
-import java.io.*;
-
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
-
-
 
 public class CheckCerts {
-    public static void main(String[] args) {
-        String https_url = "https://www.google.com/";
-        URL url;
-  
-        try {
-            url = new URL(https_url);
-            HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
-            con.connect();
 
-            Certificate[] certs = con.getServerCertificates();
-            System.out.println("Successfully connected");
+  public static void main(String[] args) throws IOException {
+    URL url = new URL("https://www.google.com/");
+    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+    conn.connect();
+    conn.getServerCertificates(); // succeeds if peer verified
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-
-    }
+    System.out.println("Successfully connected: " + conn.getResponseCode());
+  }
 }
