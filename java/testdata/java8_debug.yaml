@@ -13,3 +13,6 @@ fileExistenceTests:
   - name: busybox
     path: "/busybox/sh"
     shouldExist: true
+  - name: no-shell
+    path: "/bin/sh"
+    shouldExist: false
