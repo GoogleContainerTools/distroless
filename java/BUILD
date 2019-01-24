@@ -35,19 +35,25 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
 container_test(
     name = "java8_test",
-    configs = ["testdata/java.yaml"],
+    configs = ["testdata/java8.yaml"],
     image = ":java8",
 )
 
+container_test(
+    name = "java8_debug_test",
+    configs = ["testdata/java8_debug.yaml"],
+    image = ":debug",
+)
+
 java_image(
-    name = "check_certs",
+    name = "check_certs_java8",
     srcs = ["testdata/CheckCerts.java"],
     base = "//java:java8",
     main_class = "testdata.CheckCerts",
 )
 
 container_test(
-    name = "check_certs_test",
-    configs = ["testdata/java.yaml"],
-    image = ":java8",
+    name = "check_certs_java8_test",
+    configs = ["testdata/java8_certs.yaml"],
+    image = ":check_certs_java8",
 )
