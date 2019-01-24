@@ -4,7 +4,7 @@ load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 
 [docker_build(
     name = rule_name,
-    base = "//java:java8" if not ("debug" in rule_name) else "//java:java8_debug",
+    base = "//java:java8" if (not ("debug" in rule_name)) else "//java:java8_debug",
     cmd = ["/jetty/start.jar"],
     ports = ["8080"],
     tars = ["@jetty//:tar"],

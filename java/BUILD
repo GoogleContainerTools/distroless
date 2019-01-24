@@ -11,7 +11,7 @@ cacerts_java(
 
 [docker_build(
     name = rule_name,
-    base = "//cc" if not ("debug" in rule_name) else "//cc:debug",
+    base = "//cc" if (not ("debug" in rule_name)) else "//cc:debug",
     debs = [
         packages["zlib1g"],
         packages[jre_deb],
