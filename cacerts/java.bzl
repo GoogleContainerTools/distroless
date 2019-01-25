@@ -17,7 +17,7 @@
 def _impl(ctx):
     # Strip off the '.tar'
     image_name = ctx.attr._builder_image.label.name.split('.', 1)[0]
-    # docker_build rules always generate an image named 'bazel/$package:$name'.
+    # container_image rules always generate an image named 'bazel/$package:$name'.
     builder_image_name = "bazel/%s:%s" % (ctx.attr._builder_image.label.package,
                                           image_name)
 

@@ -1,8 +1,8 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
-[docker_build(
+[container_image(
     name = rule_name,
     base = "//java:java8" if (not ("debug" in rule_name)) else "//java:java8_debug",
     cmd = ["/jetty/start.jar"],
