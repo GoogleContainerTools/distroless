@@ -35,8 +35,8 @@ dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "a0c5a8906ac6ad010535cca152df43411d0e5db1790f6d0e4106bbdf96f3ef0f",
-    snapshot = "20190101T025954Z",
+    sha256 = "4b981bd2445d85cf1d93ea9f2d2dc235d20543ecdadd0d8065a10793b94eab9b",
+    snapshot = "20190125T092538Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -44,16 +44,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "22e8d03367be9c62b9e23481476332a31f1b51ac4d59983d04f29a706852fa39",
-    snapshot = "20190101T025954Z",
+    sha256 = "7148fc6995704c011ffeeaf3b2fbeae848aab101d3effa9dd7ceb33c24ca116f",
+    snapshot = "20190125T092538Z",
     url = "http://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190101T210121Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190101T210121Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "095ec59e0a68e9e0785d11140549bc5358b2aa7187aff6ee7161df3e10014ffe",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190125T092538Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190125T092538Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "0456053972f31b49f3975b878e3bfc4580daf6bf3d073e4f2da42282cae7d9fa",
 )
 
 dpkg_list(
@@ -89,7 +89,6 @@ dpkg_list(
         #java
         "zlib1g",
         "openjdk-8-jre-headless",
-        "openjdk-11-jre-headless",
 
         #python
         "libpython2.7-minimal",
