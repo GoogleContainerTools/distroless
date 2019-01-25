@@ -29,9 +29,6 @@ steps:
   args: ['run', '//java:java8']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java:java8', 'gcr.io/$PROJECT_ID/java:latest']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java:java8']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java:java8', 'gcr.io/$PROJECT_ID/java:8']
 
@@ -39,9 +36,6 @@ steps:
   args: ['run', '//java:java8_debug']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java:java8_debug', 'gcr.io/$PROJECT_ID/java:debug']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java:java8_debug']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java:java8_debug', 'gcr.io/$PROJECT_ID/java:8-debug']
 
@@ -59,9 +53,6 @@ steps:
   args: ['run', '//java/jetty:jetty_java8']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java/jetty:jetty_java8', 'gcr.io/$PROJECT_ID/java/jetty:latest']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java/jetty:jetty_java8']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java/jetty:jetty_java8', 'gcr.io/$PROJECT_ID/java/jetty:java8']
 
@@ -69,9 +60,6 @@ steps:
   args: ['run', '//java/jetty:jetty_java8_debug']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java/jetty:jetty_java8_debug', 'gcr.io/$PROJECT_ID/java/jetty:debug']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java/jetty:jetty_java8_debug']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java/jetty:jetty_java8_debug', 'gcr.io/$PROJECT_ID/java/jetty:java8-debug']
 
