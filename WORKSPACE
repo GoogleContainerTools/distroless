@@ -195,11 +195,13 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.7.0.tar.gz"],
 )
 
-load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
 load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
     container_repositories = "repositories",
 )
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
+container_repositories()
 
 # Used to generate java ca certs.
 container_pull(
@@ -209,8 +211,6 @@ container_pull(
     registry = "gcr.io",
     repository = "google-appengine/debian8",
 )
-
-container_repositories()
 
 # Have the py_image dependencies for testing.
 load(
