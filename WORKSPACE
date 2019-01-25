@@ -1,19 +1,12 @@
 workspace(name = "distroless")
 
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
-git_repository(
-    name = "subpar",
-    remote = "https://github.com/google/subpar",
-    tag = "1.0.0",
-)
-
-git_repository(
+http_archive(
     name = "io_bazel_rules_go",
-    remote = "https://github.com/bazelbuild/rules_go.git",
-    tag = "0.16.3",
+    sha256 = "7be7dc01f1e0afdba6c8eb2b43d2fa01c743be1b9273ab1eaf6c233df078d705",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.16.5/rules_go-0.16.5.tar.gz"],
 )
 
 load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
@@ -195,28 +188,30 @@ http_file(
 )
 
 # Docker rules.
-git_repository(
+http_archive(
     name = "io_bazel_rules_docker",
-    commit = "5eb0728594013d746959c4bd21aa4b0c3e3848d8",
-    remote = "https://github.com/bazelbuild/rules_docker.git",
+    sha256 = "aed1c249d4ec8f703edddf35cbe9dfaca0b5f5ea6e4cd9e83e99f3b0d1136c3d",
+    strip_prefix = "rules_docker-0.7.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.7.0.tar.gz"],
 )
 
 load(
-    "@io_bazel_rules_docker//docker:docker.bzl",
-    "docker_pull",
-    "docker_repositories",
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
 )
 
+container_repositories()
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
 # Used to generate java ca certs.
-docker_pull(
+container_pull(
     name = "debian8",
     # From tag: 2017-09-11-115552
     digest = "sha256:6d381d0bf292e31291136cff03b3209eb40ef6342fb790483fa1b9d3af84ae46",
     registry = "gcr.io",
     repository = "google-appengine/debian8",
 )
-
-docker_repositories()
 
 # Have the py_image dependencies for testing.
 load(

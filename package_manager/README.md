@@ -53,7 +53,7 @@ Finally, in a `BUILD` file, you can access the `.deb` files for rules that might
 ```python
 load("@package_bundle//file:packages.bzl", "packages")
 
-docker_build(
+container_image(
     name = "python27",
     base = "//base:base",
     debs = [

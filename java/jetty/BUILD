@@ -1,8 +1,8 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
-[docker_build(
+[container_image(
     name = "jetty" if (mode == ":java8") else mode[1:],
     base = "//java" + mode,
     cmd = ["/jetty/start.jar"],
