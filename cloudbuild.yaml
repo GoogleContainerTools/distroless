@@ -29,21 +29,39 @@ steps:
   args: ['run', '//java:java8']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/java:java8', 'gcr.io/$PROJECT_ID/java:latest']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/java:java8', 'gcr.io/$PROJECT_ID/java:8']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java:debug']
+  args: ['run', '//java:java8_debug']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:debug', 'gcr.io/$PROJECT_ID/java:debug']
+  args: ['tag', 'bazel/java:java8_debug', 'gcr.io/$PROJECT_ID/java:debug']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/java:java8_debug', 'gcr.io/$PROJECT_ID/java:8-debug']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java/jetty']
+  args: ['run', '//java:java11']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:jetty', 'gcr.io/$PROJECT_ID/java/jetty:latest']
+  args: ['tag', 'bazel/java:java11', 'gcr.io/$PROJECT_ID/java:11']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java/jetty:debug']
+  args: ['run', '//java:java11_debug']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:debug', 'gcr.io/$PROJECT_ID/java/jetty:debug']
+  args: ['tag', 'bazel/java:java11_debug', 'gcr.io/$PROJECT_ID/java:11-debug']
+
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//java/jetty:jetty_java8']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/java/jetty:jetty_java8', 'gcr.io/$PROJECT_ID/java/jetty:latest']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/java/jetty:jetty_java8', 'gcr.io/$PROJECT_ID/java/jetty:java8']
+
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//java/jetty:jetty_java8_debug']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/java/jetty:jetty_java8_debug', 'gcr.io/$PROJECT_ID/java/jetty:debug']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/java/jetty:jetty_java8_debug', 'gcr.io/$PROJECT_ID/java/jetty:java8-debug']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//experimental/python3:python3']
@@ -93,9 +111,15 @@ images:
   - 'gcr.io/$PROJECT_ID/cc:latest'
   - 'gcr.io/$PROJECT_ID/cc:debug'
   - 'gcr.io/$PROJECT_ID/java:latest'
+  - 'gcr.io/$PROJECT_ID/java:8'
   - 'gcr.io/$PROJECT_ID/java:debug'
+  - 'gcr.io/$PROJECT_ID/java:8-debug'
+  - 'gcr.io/$PROJECT_ID/java:11'
+  - 'gcr.io/$PROJECT_ID/java:11-debug'
   - 'gcr.io/$PROJECT_ID/java/jetty:latest'
+  - 'gcr.io/$PROJECT_ID/java/jetty:java8'
   - 'gcr.io/$PROJECT_ID/java/jetty:debug'
+  - 'gcr.io/$PROJECT_ID/java/jetty:java8-debug'
   - 'gcr.io/$PROJECT_ID/python3:latest'
   - 'gcr.io/$PROJECT_ID/python3:debug'
   - 'gcr.io/$PROJECT_ID/python2.7:latest'
