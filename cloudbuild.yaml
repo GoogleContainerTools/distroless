@@ -2,8 +2,6 @@ timeout: 1800s
 steps:
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:static']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:static', 'gcr.io/$PROJECT_ID/static:latest']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:base']
