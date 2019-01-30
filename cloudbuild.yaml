@@ -87,7 +87,7 @@ steps:
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//experimental/nodejs:debug']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/nodejs:debug', 'gcr.io/$PROJECT_ID/nodejs:debug']  
+  args: ['tag', 'bazel/experimental/nodejs:debug', 'gcr.io/$PROJECT_ID/nodejs:debug']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//experimental/dotnet']
@@ -101,7 +101,6 @@ steps:
 
 
 images:
-  - 'gcr.io/$PROJECT_ID/static:latest'
   - 'gcr.io/$PROJECT_ID/base:debug'
   - 'gcr.io/$PROJECT_ID/cc:debug'
   - 'gcr.io/$PROJECT_ID/java:latest'
