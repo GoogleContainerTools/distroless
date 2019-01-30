@@ -1,5 +1,7 @@
 timeout: 1800s
 steps:
+        
+# Publishing base, cc, and static as latest is handled in a separate release process
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:static']
 
