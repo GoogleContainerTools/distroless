@@ -5,10 +5,7 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
 container_bundle(
     name = "all",
     images = {
-        "gcr.io/{PROJECT_ID}/go:latest": "//base:static",
-        "gcr.io/{PROJECT_ID}/base:latest": "//base:base",
         "gcr.io/{PROJECT_ID}/base:debug": "//base:debug",
-        "gcr.io/{PROJECT_ID}/cc:latest": "//cc",
         "gcr.io/{PROJECT_ID}/cc:debug": "//cc:debug",
         "gcr.io/{PROJECT_ID}/java:latest": "//java:java8",
         "gcr.io/{PROJECT_ID}/java:8": "//java:java8",
