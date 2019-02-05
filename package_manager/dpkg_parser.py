@@ -82,6 +82,7 @@ def download_dpkg(package_files, packages, workspace_name):
     """
     pkg_vals_to_package_file_and_sha256 = {}
     package_to_rule_map = {}
+    package_to_version_map = {}
     package_file_to_metadata = {}
     for pkg_vals in set(packages.split(",")):
         pkg_split = pkg_vals.split("=")
@@ -102,6 +103,7 @@ def download_dpkg(package_files, packages, workspace_name):
                 pkg = metadata[pkg_name]
                 buf = urllib.request.urlopen(pkg[FILENAME_KEY])
                 package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
+                package_to_version_map[pkg_name] = metadata[pkg_name][VERSION_KEY]
                 out_file = os.path.join("file", util.encode_package_name(pkg_name))
                 with io.open(out_file, 'wb') as f:
                     f.write(buf.read())
@@ -124,6 +126,7 @@ def download_dpkg(package_files, packages, workspace_name):
             raise Exception("Package: %s, Version: %s not found in any of the sources" % (pkg_name, pkg_version))
     with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
         f.write("packages = " + json.dumps(package_to_rule_map))
+        f.write("\nversions = " + json.dumps(package_to_version_map))
 
 def download_package_list(mirror_url, distro, arch, snapshot, sha256, packages_gz_url, package_prefix):
     """Downloads a debian package list, expands the relative urls,
