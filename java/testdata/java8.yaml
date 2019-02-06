@@ -1,10 +1,12 @@
-schemaVersion: "1.0.0"
+schemaVersion: "2.0.0"
 commandTests:
   - name: java
-    command: ["/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java", "-version"]
+    command: "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
+    args: ["-version"]
     expectedError: ['openjdk version "1\.8.*"']
   - name: java-symlink
-    command: ["/usr/bin/java", "-version"]
+    command: "/usr/bin/java"
+    args: ["-version"]
     expectedError: ['openjdk version "1\.8.*"']
 fileExistenceTests:
   - name: certs
@@ -16,3 +18,17 @@ fileExistenceTests:
   - name: no-shell
     path: "/bin/sh"
     shouldExist: false
+metadataTest:
+  labels:
+    - key: 'jdk.vendor'
+      value: 'openjdk'
+    - key: 'jdk.version'
+      value: '8u181'
+    # isRegex requires container-structure-test v1.7.0
+    #- key: 'jdk.source'
+    #  value: 'openjdk-8-jre-headless 8u181-*'
+    #  isRegex: true
+  env:
+    - key: 'JAVA_VERSION'
+      value: '8u181'
+
