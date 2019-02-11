@@ -6,7 +6,7 @@ This image contains a minimal Linux, openjdk-based runtime.
 
 Specifically, the image contains everything in the [cc image](../cc/README.md), plus:
 
-* openjdk8 and its dependencies.
+* openjdk8/openjdk11 and its dependencies.
 
 ## Usage
 
