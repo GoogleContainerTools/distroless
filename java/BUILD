@@ -13,7 +13,6 @@ cacerts_java(
     name = rule_name,
     base = "//cc" if (not ("debug" in rule_name)) else "//cc:debug",
     debs = [
-        packages["zlib1g"],
         packages[jre_deb],
     ],
     entrypoint = [

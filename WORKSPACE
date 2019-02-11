@@ -78,9 +78,9 @@ dpkg_list(
         "libgcc1",
         "libgomp1",
         "libstdc++6",
+        "zlib1g",
 
         #java
-        "zlib1g",
         "openjdk-8-jre-headless",
         "openjdk-11-jre-headless",
 

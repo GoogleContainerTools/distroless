@@ -4,7 +4,7 @@
 
 This image contains a minimal Linux, openjdk-based runtime.
 
-Specifically, the image contains everything in the [base image](../base/README.md), plus:
+Specifically, the image contains everything in the [cc image](../cc/README.md), plus:
 
 * openjdk8 and its dependencies.
 

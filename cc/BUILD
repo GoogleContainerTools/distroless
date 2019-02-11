@@ -11,6 +11,7 @@ load("@package_bundle//file:packages.bzl", "packages")
         packages["libgcc1"],
         packages["libgomp1"],
         packages["libstdc++6"],
+        packages["zlib1g"],
     ],
 ) for mode in [
     "",
