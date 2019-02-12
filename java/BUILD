@@ -29,6 +29,7 @@ cacerts_java(
         "openjdk-8-jre-headless",
         "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
         [
+            # special container flags are unnecessary with 1.8.0_191 and beyond
             "-XX:+UnlockExperimentalVMOptions",
             "-XX:+UseCGroupMemoryLimitForHeap",
         ],
@@ -38,6 +39,7 @@ cacerts_java(
         "openjdk-8-jre-headless",
         "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
         [
+            # special container flags are unnecessary with 1.8.0_191 and beyond
             "-XX:+UnlockExperimentalVMOptions",
             "-XX:+UseCGroupMemoryLimitForHeap",
         ],
