@@ -106,7 +106,6 @@ dpkg_list(
         "libssl1.0.2",
         "libunwind8",
         "libuuid1",
-        "zlib1g",
         "curl",
         "libcomerr2",
         "libidn2-0",

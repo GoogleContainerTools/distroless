@@ -22,7 +22,6 @@ load("@package_bundle//file:packages.bzl", "packages")
         packages["libtinfo5"],
         packages["mime-support"],
         packages["readline-common"],
-        packages["zlib1g"],
         packages["python2.7-minimal"],
         packages["libpython2.7-minimal"],
         packages["libpython2.7-stdlib"],

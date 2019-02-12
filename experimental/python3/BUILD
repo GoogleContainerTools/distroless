@@ -10,7 +10,6 @@ load("@package_bundle//file:packages.bzl", "packages")
     base = "//cc" + mode,
     debs = [
         packages["dash"],
-        packages["zlib1g"],
         packages["libbz2-1.0"],
         packages["libc-bin"],
         packages["libncursesw5"],

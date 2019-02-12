@@ -22,7 +22,6 @@ Specifically, the image contains everything in the [/cc image](../../cc/README.m
         packages["libssl1.0.2"],
         packages["libunwind8"],
         packages["libuuid1"],
-        packages["zlib1g"],
         packages["curl"],
         packages["libcomerr2"],
         packages["libidn2-0"],
