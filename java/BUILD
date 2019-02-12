@@ -23,13 +23,13 @@ cacerts_java(
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
     ],
+    env = {
+        "JAVA_VERSION": jre_ver(versions[jre_deb]),
+    },
     labels = {
         "jdk.version": jre_ver(versions[jre_deb]),
         "jdk.vendor": "openjdk",
         "jdk.source": jre_deb + " " + versions[jre_deb],
-    },
-    env = {
-        "JAVA_VERSION": jre_ver(versions[jre_deb]),
     },
     symlinks = {
         "/usr/bin/java": java_executable_path,
