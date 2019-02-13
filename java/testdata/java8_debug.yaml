@@ -22,4 +22,3 @@ metadataTest:
   env:
     - key: 'JAVA_VERSION'
       value: '8u181'
-
