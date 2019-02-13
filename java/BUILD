@@ -26,11 +26,6 @@ cacerts_java(
     env = {
         "JAVA_VERSION": jre_ver(versions[jre_deb]),
     },
-    labels = {
-        "jdk.version": jre_ver(versions[jre_deb]),
-        "jdk.vendor": "openjdk",
-        "jdk.source": jre_deb + " " + versions[jre_deb],
-    },
     symlinks = {
         "/usr/bin/java": java_executable_path,
     },
