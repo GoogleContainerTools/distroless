@@ -121,3 +121,5 @@ images:
   - 'gcr.io/$PROJECT_ID/nodejs:debug'
   - 'gcr.io/$PROJECT_ID/dotnet:latest'
   - 'gcr.io/$PROJECT_ID/dotnet:debug'
+  - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
+
