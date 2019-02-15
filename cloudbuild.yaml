@@ -4,6 +4,8 @@ steps:
 # Publishing base, cc, and static as latest is handled in a separate release process
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:static']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:static', 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:base']
@@ -122,4 +124,3 @@ images:
   - 'gcr.io/$PROJECT_ID/dotnet:latest'
   - 'gcr.io/$PROJECT_ID/dotnet:debug'
   - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
-
