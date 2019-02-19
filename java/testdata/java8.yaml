@@ -19,6 +19,9 @@ fileExistenceTests:
     path: "/bin/sh"
     shouldExist: false
 metadataTest:
+  entrypoint: ["/usr/bin/java", "-jar"]
   env:
     - key: 'JAVA_VERSION'
       value: '8u181'
+    - key: '_JAVA_OPTIONS'
+      value: '-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap'
