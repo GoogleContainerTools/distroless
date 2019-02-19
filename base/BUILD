@@ -63,7 +63,6 @@ container_image(
         packages["base-files"],
         packages["netbase"],
         packages["tzdata"],
-        ":cacerts.deb",
     ],
     env = {
         "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -78,6 +77,7 @@ container_image(
         ":tmp.tar",
         ":nsswitch.tar",
         "@debian_stretch//file:os_release.tar",
+        ":cacerts.tar",
     ],
 )
 

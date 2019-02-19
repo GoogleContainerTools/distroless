@@ -48,7 +48,7 @@ for cert in $CERTS; do
 done
 
 tar -cf data.tar \
-  etc/ssl/certs/ca-certificates.crt \
+  etc/ \
   usr/share/doc/ca-certificates/copyright
 
 ar -r "$OUT_DEB" data.tar

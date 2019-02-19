@@ -4,7 +4,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 def package_manager_repositories():
   http_file(
       name = "dpkg_parser",
-      urls = [('https://storage.googleapis.com/distroless/package_manager_tools/b35d94bc3d9690d7fcb455a0e06d0e29fa39484b/dpkg_parser.par')],
+      urls = [('https://storage.googleapis.com/distroless/package_manager_tools/548be30ea343ebf1e3729e1334b8adca8957e0c1/dpkg_parser.par')],
       executable = True,
-      sha256 = "f3bf992f0deba05881599391bd851f90e82cbc4748150247b466863fe3639567",
+      sha256 = "2ca62e67ce4d79a3f4072908559beef9f9c15e1a0f8dbc72a92c046f7c0c9df6",
   )

@@ -2,8 +2,9 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("@package_bundle//file:packages.bzl", "packages")
+load("@package_bundle//file:packages.bzl", "packages", "versions")
 load("//cacerts:java.bzl", "cacerts_java")
+load("//java:jre_ver.bzl", "jre_ver")
 
 cacerts_java(
     name = "cacerts_java",
@@ -19,6 +20,9 @@ cacerts_java(
     entrypoint = ["/usr/bin/java"] + java_vm_args + ["-jar"],
     # We expect users to use:
     # cmd = ["/path/to/deploy.jar", "--option1", ...]
+    env = {
+        "JAVA_VERSION": jre_ver(versions[jre_deb]),
+    },
     symlinks = {
         "/usr/bin/java": java_executable_path,
     },
