@@ -28,8 +28,8 @@ dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "4b981bd2445d85cf1d93ea9f2d2dc235d20543ecdadd0d8065a10793b94eab9b",
-    snapshot = "20190125T092538Z",
+    sha256 = "79a66cd92ba9096fce679e15d0b5feb9effcf618b0a6d065eb32684dbffd0311",
+    snapshot = "20190219T104144Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -37,16 +37,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "7148fc6995704c011ffeeaf3b2fbeae848aab101d3effa9dd7ceb33c24ca116f",
-    snapshot = "20190125T092538Z",
-    url = "http://snapshot.debian.org/archive",
+    sha256 = "54fa2918d64cd694f8b912633c3353348d8f2afd5828245081e9f2a75dddc908",
+    snapshot = "20190219T104144Z",
+    url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190125T092538Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190125T092538Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "0456053972f31b49f3975b878e3bfc4580daf6bf3d073e4f2da42282cae7d9fa",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190219T104144Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190219T104144Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "429a01d38599715e5a8c53d9cdb2a172082ef53ed2accf53f59a58eba806f617",
 )
 
 dpkg_list(
@@ -54,7 +54,7 @@ dpkg_list(
     packages = [
         # Version required to skip a security fix to the pre-release library
         # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc6=2.24-11+deb9u3",
+        "libc6=2.24-11+deb9u4",
         "base-files",
         "ca-certificates",
         "openssl",
@@ -91,7 +91,7 @@ dpkg_list(
         "dash",
         # Version required to skip a security fix to the pre-release library
         # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc-bin=2.24-11+deb9u3",
+        "libc-bin=2.24-11+deb9u4",
 
         #python3
         "libpython3.5-minimal",
