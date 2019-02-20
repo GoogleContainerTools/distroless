@@ -15,6 +15,7 @@ cacerts_java(
     base = "//cc" if (not ("debug" in rule_name)) else "//cc:debug",
     debs = [
         packages["zlib1g"],
+        packages["libjpeg62-turbo"],
         packages[jre_deb],
     ],
     entrypoint = ["/usr/bin/java"] + java_vm_args + ["-jar"],
