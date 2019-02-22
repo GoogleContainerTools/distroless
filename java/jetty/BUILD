@@ -16,3 +16,29 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
     ("jetty_java11", "//java:java11"),
     ("jetty_java11_debug", "//java:java11_debug"),
 ]]
+
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
+
+container_test(
+    name = "jetty_java8_test",
+    configs = ["testdata/java8.yaml"],
+    image = ":jetty_java8",
+)
+
+container_test(
+    name = "jetty_java8_debug_test",
+    configs = ["testdata/java8_debug.yaml"],
+    image = ":jetty_java8_debug",
+)
+
+container_test(
+    name = "jetty_java11_test",
+    configs = ["testdata/java11.yaml"],
+    image = ":jetty_java11",
+)
+
+container_test(
+    name = "jetty_java11_debug_test",
+    configs = ["testdata/java11_debug.yaml"],
+    image = ":jetty_java11_debug",
+)
