@@ -22,4 +22,3 @@ fileExistenceTests:
   - name: no-shell
     path: "/bin/sh"
     shouldExist: false
-   
