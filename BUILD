@@ -17,6 +17,8 @@ container_bundle(
         "gcr.io/{PROJECT_ID}/java/jetty:java8": "//java/jetty:jetty_java8",
         "gcr.io/{PROJECT_ID}/java/jetty:debug": "//java/jetty:jetty_java8_debug",
         "gcr.io/{PROJECT_ID}/java/jetty:java8-debug": "//java/jetty:jetty_java8_debug",
+        "gcr.io/{PROJECT_ID}/java/jetty:java11": "//java/jetty:jetty_java11",
+        "gcr.io/{PROJECT_ID}/java/jetty:java11-debug": "//java/jetty:jetty_java11_debug",
         "gcr.io/{PROJECT_ID}/python3:latest": "//experimental/python3:python3",
         "gcr.io/{PROJECT_ID}/python3:debug": "//experimental/python3:debug",
         "gcr.io/{PROJECT_ID}/python2.7:latest": "//experimental/python2.7:python27",
