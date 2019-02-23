@@ -2,7 +2,7 @@ FROM python:3.6-stretch AS build-env
 ADD . /app
 WORKDIR /app
 RUN pip3 install --upgrade pip
-RUN pip3 install -r /requirements.txt
+RUN pip3 install -r requirements.txt
 
 # This is an example of how to install requirements, copy to the distroless
 # image and use them.
