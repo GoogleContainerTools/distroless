@@ -14,10 +14,11 @@
 
 import argparse
 import gzip
-import urllib2
 import json
 import os
+import io
 
+from six.moves import urllib
 
 from package_manager.parse_metadata import parse_package_metadata
 from package_manager import util
@@ -81,6 +82,7 @@ def download_dpkg(package_files, packages, workspace_name):
     """
     pkg_vals_to_package_file_and_sha256 = {}
     package_to_rule_map = {}
+    package_to_version_map = {}
     package_file_to_metadata = {}
     for pkg_vals in set(packages.split(",")):
         pkg_split = pkg_vals.split("=")
@@ -92,16 +94,18 @@ def download_dpkg(package_files, packages, workspace_name):
         for package_file in package_files.split(","):
             if package_file not in package_file_to_metadata:
                 with open(package_file, 'rb') as f:
-                    package_file_to_metadata[package_file] = json.load(f)
+                    data = f.read()
+                    package_file_to_metadata[package_file] = json.loads(data.decode('utf-8'))
             metadata = package_file_to_metadata[package_file]
             if (pkg_name in metadata and
             (pkg_version == "" or
             pkg_version == metadata[pkg_name][VERSION_KEY])):
                 pkg = metadata[pkg_name]
-                buf = urllib2.urlopen(pkg[FILENAME_KEY])
+                buf = urllib.request.urlopen(pkg[FILENAME_KEY])
                 package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
+                package_to_version_map[pkg_name] = metadata[pkg_name][VERSION_KEY]
                 out_file = os.path.join("file", util.encode_package_name(pkg_name))
-                with open(out_file, 'w') as f:
+                with io.open(out_file, 'wb') as f:
                     f.write(buf.read())
                 expected_checksum = util.sha256_checksum(out_file)
                 actual_checksum = pkg[SHA256_KEY]
@@ -122,6 +126,7 @@ def download_dpkg(package_files, packages, workspace_name):
             raise Exception("Package: %s, Version: %s not found in any of the sources" % (pkg_name, pkg_version))
     with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
         f.write("packages = " + json.dumps(package_to_rule_map))
+        f.write("\nversions = " + json.dumps(package_to_version_map))
 
 def download_package_list(mirror_url, distro, arch, snapshot, sha256, packages_gz_url, package_prefix):
     """Downloads a debian package list, expands the relative urls,
@@ -170,8 +175,8 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
             arch
         )
 
-    buf = urllib2.urlopen(url)
-    with open("Packages.gz", 'w') as f:
+    buf = urllib.request.urlopen(url)
+    with io.open("Packages.gz", 'wb') as f:
         f.write(buf.read())
     actual_sha256 = util.sha256_checksum("Packages.gz")
     if sha256 != actual_sha256:
@@ -184,4 +189,3 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
 
 if __name__ == "__main__":
     main()
-

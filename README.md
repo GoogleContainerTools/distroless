@@ -39,8 +39,9 @@ ENTRYPOINT 'myapp'
 Docker multi-stage builds make using distroless images easy.
 Follow these steps to get started:
 
-* Pick the right base image for your application stack
+* Pick the right base image for your application stack.
   We publish the following distroless base images on `gcr.io`:
+    * [gcr.io/distroless/static](base/README.md)
     * [gcr.io/distroless/base](base/README.md)
     * [gcr.io/distroless/java](java/README.md)
     * [gcr.io/distroless/cc](cc/README.md)
@@ -49,9 +50,7 @@ Follow these steps to get started:
     * [gcr.io/distroless/python2.7](experimental/python2.7/README.md)
     * [gcr.io/distroless/python3](experimental/python3/README.md)
     * [gcr.io/distroless/nodejs](experimental/nodejs/README.md)
-    * [gcr.io/distroless/java](java/README.md)
     * [gcr.io/distroless/java/jetty](java/jetty/README.md)
-    * [gcr.io/distroless/cc](cc/README.md)
     * [gcr.io/distroless/dotnet](experimental/dotnet/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
@@ -117,7 +116,7 @@ See here for:
 See here for examples on how to complete some common tasks in your image:
 
 * [Adding and running as a non-root user](examples/nonroot)
-* [Including debian packages](https://github.com/bazelbuild/rules_docker#docker_build-1)
+* [Including debian packages](https://github.com/bazelbuild/rules_docker#container_image-1)
 * [Including CA certificates](cacerts/)
 
 See here for more information on how these images are [built and released](RELEASES.md).

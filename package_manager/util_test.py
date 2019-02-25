@@ -1,6 +1,6 @@
 import unittest
 import os
-import StringIO
+from six import StringIO
 from package_manager import util
 
 
@@ -51,7 +51,7 @@ class TestUtil(unittest.TestCase):
 
     def test_generate_debian_os_release(self):
         for distro in ["jessie", "stretch", "???"]:
-            output_file = StringIO.StringIO()
+            output_file = StringIO()
             util.generate_os_release(distro, output_file)
             self.assertEqual(osReleaseForDistro[distro], output_file.getvalue())
 

@@ -1,10 +1,10 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
-load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 # Create /etc/passwd with the root user
@@ -57,12 +57,10 @@ cacerts(
 # A tar is needed because at the moment there is no way to create a
 # directory with specific permissions.
 
-docker_build(
-    name = "base",
+container_image(
+    name = "static",
     debs = [
-        packages["libc6"],
-        packages["libssl1.1"],
-        packages["openssl"],
+        packages["base-files"],
         packages["netbase"],
         packages["tzdata"],
     ],
@@ -76,15 +74,25 @@ docker_build(
     tars = [
         ":passwd",
         ":group_tar",
-        ":cacerts.tar",
         ":tmp.tar",
         ":nsswitch.tar",
         "@debian_stretch//file:os_release.tar",
+        ":cacerts.tar",
+    ],
+)
+
+container_image(
+    name = "base",
+    base = ":static",
+    debs = [
+        packages["libc6"],
+        packages["libssl1.1"],
+        packages["openssl"],
     ],
 )
 
 # A debug image with busybox available.
-docker_build(
+container_image(
     name = "debug",
     base = ":base",
     directory = "/",
@@ -111,7 +119,7 @@ go_binary(
     pure = "on",
 )
 
-docker_build(
+container_image(
     name = "check_certs_image",
     base = "//base:base",
     files = [":check_certs"],

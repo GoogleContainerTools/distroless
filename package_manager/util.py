@@ -15,7 +15,7 @@ def package_to_rule(workspace_name, s):
     return  "@" + workspace_name + "//file:" + encode_package_name(s)
 
 def encode_package_name(s):
-    return base64.urlsafe_b64encode(s) + ".deb"
+    return base64.urlsafe_b64encode(s.encode('utf-8')).decode('utf-8') + ".deb"
 
 DEBIAN_RELEASES = {
     "stretch": "9",

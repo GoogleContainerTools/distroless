@@ -36,7 +36,7 @@ class TestParseMetadata(unittest.TestCase):
                              "newmail",
                              "zzuf",]
         for _ in expected_packages:
-            self.assertEqual(expected_packages.sort(), self.debian_repo_metadata.keys().sort())
+            self.assertEqual(expected_packages.sort(), list(self.debian_repo_metadata.keys()).sort())
 
     def test_multiline_key(self):
         """ Multiline keys should be properly parsed """

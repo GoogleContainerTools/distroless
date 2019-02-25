@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Copyright 2017 Google Inc. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +20,23 @@
 # It would be nicer to do this in Python or Go, but neither of these languages have packages
 # that can extract .xz files in their stdlibs.
 
-DEB=$1
-CERTS_PATH=$2
+set -e
 
-ar -x $DEB data.tar.xz
-tar -xf data.tar.xz ./usr/share/ca-certificates
+DEB=$1
+OUT_TAR=$2
+OUT_DEB=$3
+
+cp "$DEB" "$OUT_DEB"
+
+ar -x "$DEB" data.tar.xz
+ar -d "$OUT_DEB" data.tar.xz
+
 tar -xf data.tar.xz ./usr/share/doc/ca-certificates/copyright
+tar -xf data.tar.xz ./usr/share/ca-certificates
+
+# We'll create a new data.tar.xz with flattened certs and
+# the copyright
+rm data.tar.xz
 
 # Concat all the certs.
 CERT_FILE=./etc/ssl/certs/ca-certificates.crt
@@ -34,7 +47,14 @@ for cert in $CERTS; do
   cat $cert >> $CERT_FILE
 done
 
-tar -cf $2 etc/ssl/certs/ca-certificates.crt usr/share/doc/ca-certificates/copyright
+tar -cf data.tar \
+  etc/ \
+  usr/share/doc/ca-certificates/copyright
 
-rm data.tar.xz
+ar -r "$OUT_DEB" data.tar
+
+mv data.tar "$OUT_TAR"
+
 rm -rf usr/share/ca-certificates
+rm -rf etc/ssl/certs/ca-certificate.crt
+

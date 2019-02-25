@@ -5,7 +5,7 @@ load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 java_image(
     name = "hello",
     srcs = ["HelloJava.java"],
-    base = "//java:java8",
+    base = "//java:java11",
     main_class = "examples.HelloJava",
 )
 

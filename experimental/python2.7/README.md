@@ -1,10 +1,10 @@
-# Documentation for `gcr.io/distroless/python27`
+# Documentation for `gcr.io/distroless/python2.7`
 
 ## Image Contents
 
 This image contains a minimal Linux, Python-based runtime.
 
-Specifically, the image contains everything in the [base image](../base/README.md), plus:
+Specifically, the image contains everything in the [base image](../../base/README.md), plus:
 
 * Python 2.7 and its dependencies.
 

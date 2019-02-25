@@ -3,11 +3,9 @@ fileExistenceTests:
 # Basic FS sanity checks.
 - name: root
   path: '/'
-  isDirectory: true
   shouldExist: true
 - name: tmp
   path: '/tmp'
-  isDirectory: true
   shouldExist: true
 - name: passwd
   path: '/etc/passwd'
@@ -29,5 +27,4 @@ fileExistenceTests:
   shouldExist: true
 - name: homedir
   path: '/home'
-  isDirectory: true
   shouldExist: true
