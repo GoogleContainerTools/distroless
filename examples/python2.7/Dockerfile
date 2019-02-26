@@ -1,31 +1,11 @@
-FROM python:2.7-slim AS build-env
-
-# Using standard Python image
-#  Add in the application code
-#  Byte-compile Python code to *.pyc
-
-ADD . /app
-WORKDIR /app
-RUN python -m compileall .
-
-# Copy the results into the distroless image.
-
-FROM gcr.io/distroless/python2.7
-COPY --from=build-env /app /app
-WORKDIR /app
-CMD ["hello.py", "/etc"]
-
 FROM python:2.7-slim AS bytecompile
-
 # Using standard Python image
 #  Add in the application code
 #  Byte-compile Python code to *.pyc
-
 ADD . /app
 WORKDIR /app
 RUN python -m compileall .
 
-# Copy the results into the distroless image.
 
 FROM gcr.io/distroless/python2.7 AS compiled
 COPY --from=bytecompile /app /app
