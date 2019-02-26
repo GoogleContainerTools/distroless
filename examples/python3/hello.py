@@ -20,6 +20,7 @@ import os
 try:
     import noop
     print("\nRequirements loaded!\n")
+    print(noop)
 except ImportError:
     print("\nRequirements not loaded!\n")
 
