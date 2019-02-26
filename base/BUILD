@@ -23,11 +23,16 @@ passwd_tar(
     passwd_file_pkg_dir = "etc",
 )
 
-# Create /etc/group with the root and staff groups
+# Create /etc/group with the root, tty, and staff groups
 group_entry(
     name = "root_group",
     gid = 0,
     groupname = "root",
+)
+group_entry(
+    name = "tty_group",
+    gid = 5,
+    groupname = "tty",
 )
 group_entry(
     name = "staff_group",
@@ -39,6 +44,7 @@ group_file(
     name = "group",
     entries = [
         ":root_group",
+        ":tty_group",
         ":staff_group",
     ],
 )
