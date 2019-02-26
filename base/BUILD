@@ -29,11 +29,13 @@ group_entry(
     gid = 0,
     groupname = "root",
 )
+
 group_entry(
     name = "tty_group",
     gid = 5,
     groupname = "tty",
 )
+
 group_entry(
     name = "staff_group",
     gid = 50,
