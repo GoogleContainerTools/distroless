@@ -125,6 +125,8 @@ images:
   - 'gcr.io/$PROJECT_ID/java/jetty:java8'
   - 'gcr.io/$PROJECT_ID/java/jetty:debug'
   - 'gcr.io/$PROJECT_ID/java/jetty:java8-debug'
+  - 'gcr.io/$PROJECT_ID/java/jetty:java11'
+  - 'gcr.io/$PROJECT_ID/java/jetty:java11-debug'
   - 'gcr.io/$PROJECT_ID/python3:latest'
   - 'gcr.io/$PROJECT_ID/python3:debug'
   - 'gcr.io/$PROJECT_ID/python2.7:latest'
