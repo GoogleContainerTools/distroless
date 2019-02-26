@@ -17,6 +17,13 @@
 import argparse
 import os
 
+try:
+    import noop
+    print("\nRequirements loaded!\n")
+    print(noop)
+except ImportError:
+    print("\nRequirements not loaded!\n")
+
 parser = argparse.ArgumentParser()
 parser.add_argument('root', type=str,
                     help='The root directory to walk.')
