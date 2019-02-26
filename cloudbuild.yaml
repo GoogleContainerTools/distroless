@@ -62,6 +62,16 @@ steps:
   args: ['tag', 'bazel/java/jetty:jetty_java8_debug', 'gcr.io/$PROJECT_ID/java/jetty:java8-debug']
 
 - name: gcr.io/cloud-builders/bazel
+  args: ['run', '//java/jetty:jetty_java11']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/java/jetty:jetty_java11', 'gcr.io/$PROJECT_ID/java/jetty:java11']
+
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//java/jetty:jetty_java11_debug']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/java/jetty:jetty_java11_debug', 'gcr.io/$PROJECT_ID/java/jetty:java11-debug']
+
+- name: gcr.io/cloud-builders/bazel
   args: ['run', '//experimental/python3:python3']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/experimental/python3:python3', 'gcr.io/$PROJECT_ID/python3:latest']
