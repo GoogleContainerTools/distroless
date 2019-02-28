@@ -9,6 +9,8 @@ steps:
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:base']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:base', 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:debug']
@@ -17,6 +19,8 @@ steps:
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//cc']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/cc:cc', 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//cc:debug']
@@ -136,3 +140,5 @@ images:
   - 'gcr.io/$PROJECT_ID/dotnet:latest'
   - 'gcr.io/$PROJECT_ID/dotnet:debug'
   - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}'
