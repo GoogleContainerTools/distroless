@@ -16,6 +16,8 @@ cacerts_java(
     debs = [
         packages["zlib1g"],
         packages["libjpeg62-turbo"],
+        packages["libfreetype6"],
+        packages["libpng16-16"],
         packages[jre_deb],
     ],
     entrypoint = ["/usr/bin/java"] + java_vm_args + ["-jar"],

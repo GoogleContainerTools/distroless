@@ -82,6 +82,8 @@ dpkg_list(
         #java
         "zlib1g",
         "libjpeg62-turbo",
+        "libfreetype6",
+        "libpng16-16",
         "openjdk-8-jre-headless",
         "openjdk-11-jre-headless",
 
