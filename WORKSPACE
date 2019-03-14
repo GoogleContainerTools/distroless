@@ -65,7 +65,6 @@ dpkg_list(
         "libffi6",
         "libncursesw5",
         "liblzma5",
-        "libexpat1",
         "libreadline7",
         "libtinfo5",
         "libsqlite3-0",
@@ -82,10 +81,12 @@ dpkg_list(
         #java
         "zlib1g",
         "libjpeg62-turbo",
-        "fontconfig-config",
-        "libfontconfig1",
-        "libfreetype6",
         "libpng16-16",
+        "libfreetype6",
+        "fonts-dejavu-core",
+        "fontconfig-config",
+        "libexpat1",
+        "libfontconfig1",
         "openjdk-8-jre-headless",
         "openjdk-11-jre-headless",
 
