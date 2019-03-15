@@ -82,6 +82,11 @@ dpkg_list(
         #java
         "zlib1g",
         "libjpeg62-turbo",
+        "libpng16-16",
+        "libfreetype6",
+        "fonts-dejavu-core",
+        "fontconfig-config",
+        "libfontconfig1",
         "openjdk-8-jre-headless",
         "openjdk-11-jre-headless",
 

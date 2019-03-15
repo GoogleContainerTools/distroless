@@ -16,6 +16,12 @@ cacerts_java(
     debs = [
         packages["zlib1g"],
         packages["libjpeg62-turbo"],
+        packages["libpng16-16"],
+        packages["libfreetype6"],
+        packages["fonts-dejavu-core"],
+        packages["fontconfig-config"],
+        packages["libexpat1"],
+        packages["libfontconfig1"],
         packages[jre_deb],
     ],
     entrypoint = ["/usr/bin/java"] + java_vm_args + ["-jar"],
