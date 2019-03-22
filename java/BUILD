@@ -17,6 +17,7 @@ cacerts_java(
         packages["zlib1g"],
         packages["libjpeg62-turbo"],
         packages["libpng16-16"],
+        packages["liblcms2-2"],
         packages["libfreetype6"],
         packages["fonts-dejavu-core"],
         packages["fontconfig-config"],
