@@ -22,4 +22,4 @@ metadataTest:
   entrypoint: ["/usr/bin/java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-jar"]
   env:
     - key: 'JAVA_VERSION'
-      value: '8u181'
+      value: '8u212'
