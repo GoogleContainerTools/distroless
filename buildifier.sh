@@ -16,8 +16,6 @@
 
 buildifier -mode=diff $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -type f)
 if [ $? -ne 0 ]; then
-  if [[ $files ]]; then
-    echo "Run 'buildifier -mode fix \$(find . -name 'BUILD*' -o -name 'WORKSPACE*' -type f)' to fix formatting"
-  fi
+  echo "Run 'buildifier -mode=fix \$(find . -name 'BUILD*' -o -name 'WORKSPACE*' -type f)' to fix formatting"
   exit 1
 fi
