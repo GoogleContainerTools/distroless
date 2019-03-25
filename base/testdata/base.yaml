@@ -34,7 +34,7 @@ fileExistenceTests:
 fileContentTests:
 - name: 'known users'
   path: '/etc/passwd'
-  expectedContents: ['^root:x:0:0:user:/home:/bin/bash\n$']
+  expectedContents: ['^root:x:0:0:user:/home:/bin/bash\nnobody:x:65534:65534:user:/home:/bin/bash\n$']
 - name: 'known groups'
   path: '/etc/group'
-  expectedContents: ['^root:x:0:\ntty:x:5:\nstaff:x:50:\n$']
+  expectedContents: ['^root:x:0:\nnobody:x:65534:\ntty:x:5:\nstaff:x:50:\n$']

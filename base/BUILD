@@ -15,10 +15,18 @@ passwd_entry(
     username = "root",
 )
 
+passwd_entry(
+    name = "nobody_user",
+    gid = 65534,
+    uid = 65534,
+    username = "nobody",
+)
+
 passwd_tar(
     name = "passwd",
     entries = [
         ":root_user",
+        ":nobody_user",
     ],
     passwd_file_pkg_dir = "etc",
 )
@@ -28,6 +36,12 @@ group_entry(
     name = "root_group",
     gid = 0,
     groupname = "root",
+)
+
+group_entry(
+    name = "nobody_group",
+    gid = 65534,
+    groupname = "nobody",
 )
 
 group_entry(
@@ -46,6 +60,7 @@ group_file(
     name = "group",
     entries = [
         ":root_group",
+        ":nobody_group",
         ":tty_group",
         ":staff_group",
     ],
