@@ -32,8 +32,4 @@ container_bundle(
 
 load("@io_bazel_rules_docker//contrib:push-all.bzl", "container_push")
 
-container_push(
-    name = "publish",
-    bundle = ":all",
-    format = "Docker",
-)
+container_push(name = "publish", bundle = ":all", format = "Docker")
