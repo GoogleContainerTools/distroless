@@ -26,7 +26,10 @@ cacerts_java(
     ],
     # We expect users to use:
     # cmd = ["/path/to/deploy.jar", "--option1", ...]
-    entrypoint = ["/usr/bin/java", "-jar"],
+    entrypoint = [
+        "/usr/bin/java",
+        "-jar",
+    ],
     env = {
         "JAVA_VERSION": jre_ver(versions[jre_deb]),
     },
