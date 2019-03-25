@@ -83,6 +83,7 @@ dpkg_list(
         "zlib1g",
         "libjpeg62-turbo",
         "libpng16-16",
+        "liblcms2-2",
         "libfreetype6",
         "fonts-dejavu-core",
         "fontconfig-config",
