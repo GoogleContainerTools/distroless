@@ -29,7 +29,7 @@ dpkg_src(
     arch = "amd64",
     distro = "stretch",
     sha256 = "79a66cd92ba9096fce679e15d0b5feb9effcf618b0a6d065eb32684dbffd0311",
-    snapshot = "20190227T154250Z",
+    snapshot = "20190322T151132Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -37,16 +37,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "c033a0e3c9a3e5d3c1370b37b8ad2f216c30a84aff14a4ed0c8f4bdfe3319fbf",
-    snapshot = "20190227T154250Z",
+    sha256 = "36b3c35b2c01d22476736b0c26e6037dddeccf1d7a775b3fbd5dd991b58cceab",
+    snapshot = "20190322T155353Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190227T200358Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190227T200358Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "4e99e75431dd58840d084a5fddb950ebc8b4c634becaddb717773b05e321bdf4",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190322T155353Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190322T155353Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "5dc5641648e7773dcd14e5ac2afd1803e8639b8b793ac5975793f8e98908d8ff",
 )
 
 dpkg_list(
