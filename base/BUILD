@@ -13,6 +13,8 @@ passwd_entry(
     gid = 0,
     uid = 0,
     username = "root",
+    home = "/root",
+    shell = "/sbin/nologin",
 )
 
 passwd_entry(
@@ -20,6 +22,10 @@ passwd_entry(
     gid = 65534,
     uid = 65534,
     username = "nobody",
+    # TODO: change it to /nonexistent and make sure it does not exist.
+    # https://github.com/GoogleContainerTools/distroless/issues/337
+    home = "/home/nobody",
+    shell = "/sbin/nologin",
 )
 
 passwd_tar(
