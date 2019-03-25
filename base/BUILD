@@ -11,21 +11,21 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 passwd_entry(
     name = "root_user",
     gid = 0,
-    uid = 0,
-    username = "root",
     home = "/root",
     shell = "/sbin/nologin",
+    uid = 0,
+    username = "root",
 )
 
 passwd_entry(
     name = "nobody_user",
     gid = 65534,
-    uid = 65534,
-    username = "nobody",
     # TODO: change it to /nonexistent and make sure it does not exist.
     # https://github.com/GoogleContainerTools/distroless/issues/337
     home = "/home/nobody",
     shell = "/sbin/nologin",
+    uid = 65534,
+    username = "nobody",
 )
 
 passwd_tar(
