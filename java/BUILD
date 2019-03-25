@@ -24,9 +24,9 @@ cacerts_java(
         packages["libfontconfig1"],
         packages[jre_deb],
     ],
-    entrypoint = ["/usr/bin/java"] + java_vm_args + ["-jar"],
     # We expect users to use:
     # cmd = ["/path/to/deploy.jar", "--option1", ...]
+    entrypoint = ["/usr/bin/java", "-jar"],
     env = {
         "JAVA_VERSION": jre_ver(versions[jre_deb]),
     },
@@ -34,29 +34,19 @@ cacerts_java(
         "/usr/bin/java": java_executable_path,
     },
     tars = [":cacerts_java"],
-) for (rule_name, jre_deb, java_executable_path, java_vm_args) in [
+) for (rule_name, jre_deb, java_executable_path) in [
     (
         "java8",
         "openjdk-8-jre-headless",
         "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
-        [
-            # special container flags are unnecessary with 1.8.0_191 and beyond
-            "-XX:+UnlockExperimentalVMOptions",
-            "-XX:+UseCGroupMemoryLimitForHeap",
-        ],
     ),
     (
         "java8_debug",
         "openjdk-8-jre-headless",
         "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
-        [
-            # special container flags are unnecessary with 1.8.0_191 and beyond
-            "-XX:+UnlockExperimentalVMOptions",
-            "-XX:+UseCGroupMemoryLimitForHeap",
-        ],
     ),
-    ("java11", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java", []),
-    ("java11_debug", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java", []),
+    ("java11", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
+    ("java11_debug", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
 ]]
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
