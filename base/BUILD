@@ -11,7 +11,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 passwd_entry(
     name = "root_user",
     gid = 0,
-    home = "/root",
+    home = "/home",
     shell = "/sbin/nologin",
     uid = 0,
     username = "root",
@@ -22,7 +22,7 @@ passwd_entry(
     gid = 65534,
     # TODO: change it to /nonexistent and make sure it does not exist.
     # https://github.com/GoogleContainerTools/distroless/issues/337
-    home = "/home/nobody",
+    home = "/usr/local/home/nobody",
     shell = "/sbin/nologin",
     uid = 65534,
     username = "nobody",

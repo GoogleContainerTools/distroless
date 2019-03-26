@@ -29,12 +29,12 @@ fileExistenceTests:
   path: '/usr/sbin/tzconfig'
   shouldExist: true
 - name: homedir
-  path: '/root'
+  path: '/home'
   shouldExist: true
 fileContentTests:
 - name: 'known users'
   path: '/etc/passwd'
-  expectedContents: ['^root:x:0:0:user:/root:/sbin/nologin\nnobody:x:65534:65534:user:/home/nobody:/sbin/nologin\n$']
+  expectedContents: ['^root:x:0:0:user:/home:/sbin/nologin\nnobody:x:65534:65534:user:/usr/local/home/nobody:/sbin/nologin\n$']
 - name: 'known groups'
   path: '/etc/group'
   expectedContents: ['^root:x:0:\nnobody:x:65534:\ntty:x:5:\nstaff:x:50:\n$']
