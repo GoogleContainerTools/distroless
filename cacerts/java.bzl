@@ -58,7 +58,7 @@ docker rm $cid
 cacerts_java = rule(
     attrs = {
         "_builder_image": attr.label(
-            default = Label("@debian8//image:image.tar"),
+            default = Label("@debian9//image:image.tar"),
             allow_files = True,
             single_file = True,
         ),
