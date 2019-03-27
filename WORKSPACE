@@ -214,11 +214,11 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
 
 # Used to generate java ca certs.
 container_pull(
-    name = "debian8",
-    # From tag: 2017-09-11-115552
-    digest = "sha256:6d381d0bf292e31291136cff03b3209eb40ef6342fb790483fa1b9d3af84ae46",
+    name = "debian9",
+    # From tag: 2019-02-27-130449
+    digest = "sha256:fd26dfa474b76ef931e439537daba90bbd90d6c5bbdd0252616e6d87251cd9cd",
     registry = "gcr.io",
-    repository = "google-appengine/debian8",
+    repository = "google-appengine/debian9",
 )
 
 # Have the py_image dependencies for testing.
