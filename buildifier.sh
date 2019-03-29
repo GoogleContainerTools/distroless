@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-buildifier -mode=diff $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -type f)
+buildifier -mode=diff -diff_command='diff -u' $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -type f)
 if [ $? -ne 0 ]; then
   echo "Run 'buildifier -mode=fix \$(find . -name 'BUILD*' -o -name 'WORKSPACE*' -type f)' to fix formatting"
   exit 1
