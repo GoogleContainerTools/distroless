@@ -11,13 +11,20 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 passwd_entry(
     name = "root_user",
     gid = 0,
+    home = "/home",
+    info = "root",
+    shell = "/sbin/nologin",
     uid = 0,
     username = "root",
 )
 
 passwd_entry(
     name = "nobody_user",
+    create_home = False,
     gid = 65534,
+    home = "/nonexistent",
+    info = "nobody",
+    shell = "/sbin/nologin",
     uid = 65534,
     username = "nobody",
 )
@@ -126,7 +133,7 @@ container_image(
     base = ":base",
     directory = "/",
     entrypoint = ["/busybox/sh"],
-    env = {"PATH": "$PATH:/busybox"},
+    env = {"PATH": "$$PATH:/busybox"},
     tars = ["//experimental/busybox:busybox.tar"],
 )
 
