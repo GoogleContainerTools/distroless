@@ -8,7 +8,7 @@ container_image(
     base = "//experimental/dotnet:dotnet",
     cmd = [
         "dotnet",
-        "/bin/Release/netcoreapp2.0/hello.dll",
+        "/bin/Release/netcoreapp2.1/hello.dll",
     ],
     files = [":bin"],
 )
