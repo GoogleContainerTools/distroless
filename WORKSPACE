@@ -28,8 +28,8 @@ dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "79a66cd92ba9096fce679e15d0b5feb9effcf618b0a6d065eb32684dbffd0311",
-    snapshot = "20190322T151132Z",
+    sha256 = "da378b113f0b1edcf5b1f2c3074fd5476c7fd6e6df3752f824aad22e7547e699",
+    snapshot = "20190510T144732Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -37,16 +37,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "36b3c35b2c01d22476736b0c26e6037dddeccf1d7a775b3fbd5dd991b58cceab",
-    snapshot = "20190322T155353Z",
+    sha256 = "6317cdf1aa80ce6bb0ec99f2043a7399f021babc2a83b9f5ad190b0cd424d699",
+    snapshot = "20190510T144732Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190322T155353Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190322T155353Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "5dc5641648e7773dcd14e5ac2afd1803e8639b8b793ac5975793f8e98908d8ff",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190510T162559Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190510T162559Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "0645e7edacb45fa8fec510aa8105bfca2bce155b2a08a4fe9628093dc7405326",
 )
 
 dpkg_list(
@@ -96,9 +96,7 @@ dpkg_list(
         "python2.7-minimal",
         "libpython2.7-stdlib",
         "dash",
-        # Version required to skip a security fix to the pre-release library
-        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc-bin=2.24-11+deb9u4",
+        "libc-bin",
 
         #python3
         "libpython3.5-minimal",
