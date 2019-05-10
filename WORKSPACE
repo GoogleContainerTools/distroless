@@ -96,7 +96,9 @@ dpkg_list(
         "python2.7-minimal",
         "libpython2.7-stdlib",
         "dash",
-        "libc-bin",
+        # Version required to skip a security fix to the pre-release library
+        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
+        "libc-bin=2.24-11+deb9u4",
 
         #python3
         "libpython3.5-minimal",
