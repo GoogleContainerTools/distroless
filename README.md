@@ -64,7 +64,7 @@ Follow these steps to get started:
 
   ```dockerfile
   # Start by building the application.
-  FROM golang:1.8 as build
+  FROM golang:1.12 as build
 
   WORKDIR /go/src/app
   COPY . .
