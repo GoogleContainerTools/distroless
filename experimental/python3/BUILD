@@ -23,16 +23,16 @@ load("@package_bundle//file:packages.bzl", "packages")
         packages["libssl1.0.2"],
         packages["libssl1.1"],
         packages["libexpat1"],
-        packages["python3.5-minimal"],
-        packages["libpython3.5-minimal"],
-        packages["libpython3.5-stdlib"],
+        packages["python3.7-minimal"],
+        packages["libpython3.7-minimal"],
+        packages["libpython3.7-stdlib"],
     ],
     entrypoint = [
-        "/usr/bin/python3.5",
+        "/usr/bin/python3",
     ],
     symlinks = {
-        "/usr/bin/python": "/usr/bin/python3.5",
-        "/usr/bin/python3": "/usr/bin/python3.5",
+        "/usr/bin/python": "/usr/bin/python3.7",
+        "/usr/bin/python3": "/usr/bin/python3.7",
     },
     tars = [
         "//experimental/python2.7:ld_so_cache.tar",
@@ -46,5 +46,5 @@ container_test(
     name = "python3_test",
     size = "medium",
     configs = ["testdata/python3.yaml"],
-    image = ":python3",
+    image = ":python3.7",
 )

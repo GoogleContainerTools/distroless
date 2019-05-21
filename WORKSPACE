@@ -45,6 +45,15 @@ dpkg_src(
     sha256 = "0645e7edacb45fa8fec510aa8105bfca2bce155b2a08a4fe9628093dc7405326",
 )
 
+dpkg_src(
+    name = "debian_buster",
+    arch = "amd64",
+    distro = "buster",
+    sha256 = "79c9a5c7ccb836bec3e3cd70efab0035bd0fe67eb76ad1a63916d74820453c20",
+    snapshot = "20190516T100846Z",
+    url = "http://snapshot.debian.org/archive",
+)
+
 dpkg_list(
     name = "package_bundle",
     packages = [
@@ -97,9 +106,9 @@ dpkg_list(
         "libc-bin=2.24-11+deb9u4",
 
         #python3
-        "libpython3.5-minimal",
-        "python3.5-minimal",
-        "libpython3.5-stdlib",
+        "libpython3.7-minimal",
+        "python3.7-minimal",
+        "libpython3.7-stdlib",
 
         #dotnet
         "libcurl3",
@@ -151,6 +160,7 @@ dpkg_list(
         "@debian_stretch_security//file:Packages.json",
         "@debian_stretch_backports//file:Packages.json",
         "@debian_stretch//file:Packages.json",
+        "@debian_buster//file:Packages.json",
     ],
 )
 
