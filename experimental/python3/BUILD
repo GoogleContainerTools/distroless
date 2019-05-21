@@ -46,5 +46,5 @@ container_test(
     name = "python3_test",
     size = "medium",
     configs = ["testdata/python3.yaml"],
-    image = ":python3.7",
+    image = ":python3",
 )
