@@ -8,3 +8,7 @@ def package_manager_repositories():
       executable = True,
       sha256 = "2ca62e67ce4d79a3f4072908559beef9f9c15e1a0f8dbc72a92c046f7c0c9df6",
   )
+  
+# Re-export symbols for compatibility with --incompatible_no_transitive_loads
+dpkg_list = _dpkg_list
+dpkg_src = _dpkg_src
