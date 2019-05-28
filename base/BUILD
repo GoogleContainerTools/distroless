@@ -11,7 +11,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 passwd_entry(
     name = "root_user",
     gid = 0,
-    home = "/home",
+    home = "/root",
     info = "root",
     shell = "/sbin/nologin",
     uid = 0,
@@ -29,11 +29,22 @@ passwd_entry(
     username = "nobody",
 )
 
+passwd_entry(
+    name = "nonroot_user",
+    gid = 65532,
+    home = "/home/nonroot",
+    info = "nonroot",
+    shell = "/sbin/nologin",
+    uid = 65532,
+    username = "nonroot",
+)
+
 passwd_tar(
     name = "passwd",
     entries = [
         ":root_user",
         ":nobody_user",
+        ":nonroot_user",
     ],
     passwd_file_pkg_dir = "etc",
 )
@@ -49,6 +60,12 @@ group_entry(
     name = "nobody_group",
     gid = 65534,
     groupname = "nobody",
+)
+
+group_entry(
+    name = "nonroot_group",
+    gid = 65532,
+    groupname = "nonroot",
 )
 
 group_entry(
@@ -70,6 +87,7 @@ group_file(
         ":nobody_group",
         ":tty_group",
         ":staff_group",
+        ":nonroot_group",
     ],
 )
 
@@ -135,6 +153,28 @@ container_image(
     entrypoint = ["/busybox/sh"],
     env = {"PATH": "$$PATH:/busybox"},
     tars = ["//experimental/busybox:busybox.tar"],
+)
+
+# Non-root base images
+container_image(
+    name = "static-nonroot",
+    base = ":static",
+    user = "nonroot",
+    workdir = "/home/nonroot",
+)
+
+container_image(
+    name = "base-nonroot",
+    base = ":base",
+    user = "nonroot",
+    workdir = "/home/nonroot",
+)
+
+container_image(
+    name = "debug-nonroot",
+    base = ":debug",
+    user = "nonroot",
+    workdir = "/home/nonroot",
 )
 
 container_test(

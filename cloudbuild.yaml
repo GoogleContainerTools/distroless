@@ -1,6 +1,6 @@
 timeout: 1800s
 steps:
-        
+
 # Publishing base, cc, and static as latest is handled in a separate release process
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:static']
@@ -8,14 +8,29 @@ steps:
   args: ['tag', 'bazel/base:static', 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}']
 
 - name: gcr.io/cloud-builders/bazel
+  args: ['run', '//base:static-nonroot']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:static-nonroot', 'gcr.io/$PROJECT_ID/static:nonroot']
+
+- name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:base']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/base:base', 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}']
 
 - name: gcr.io/cloud-builders/bazel
+  args: ['run', '//base:base-nonroot']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:base-nonroot', 'gcr.io/$PROJECT_ID/base:nonroot']
+
+- name: gcr.io/cloud-builders/bazel
   args: ['run', '//base:debug']
 - name: gcr.io/cloud-builders/docker
   args: ['tag', 'bazel/base:debug', 'gcr.io/$PROJECT_ID/base:debug']
+
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '//base:debug-nonroot']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:debug-nonroot', 'gcr.io/$PROJECT_ID/base:debug-nonroot']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '//cc']
@@ -117,7 +132,10 @@ steps:
 
 
 images:
+  - 'gcr.io/$PROJECT_ID/static:nonroot'
+  - 'gcr.io/$PROJECT_ID/base:nonroot'
   - 'gcr.io/$PROJECT_ID/base:debug'
+  - 'gcr.io/$PROJECT_ID/base:debug-nonroot'
   - 'gcr.io/$PROJECT_ID/cc:debug'
   - 'gcr.io/$PROJECT_ID/java:latest'
   - 'gcr.io/$PROJECT_ID/java:8'
