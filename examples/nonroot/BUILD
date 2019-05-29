@@ -40,6 +40,7 @@ container_image(
 go_binary(
     name = "user",
     srcs = ["testdata/user.go"],
+    goos = "linux",
     pure = "on",
 )
 
