@@ -26,11 +26,11 @@ go_test(
 go_binary(
     name = "jksutil",
     srcs = ["main.go"],
-    deps = [
-        ":go_default_library",
-    ],
     visibility = [
         "//visibility:public",
+    ],
+    deps = [
+        ":go_default_library",
     ],
 )
 

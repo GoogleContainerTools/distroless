@@ -8,7 +8,7 @@ load("//java:jre_ver.bzl", "jre_ver")
 
 cacerts_java(
     name = "cacerts_java",
-    cacerts_tar = "//base:cacerts.tar"
+    cacerts_tar = "//base:cacerts.tar",
 )
 
 [container_image(
