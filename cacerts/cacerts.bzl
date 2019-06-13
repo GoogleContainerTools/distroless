@@ -2,15 +2,17 @@
 
 def _impl(ctx):
     args = "%s %s %s %s" % (
-	ctx.executable._extract.path,
-	ctx.file.deb.path,
-	ctx.outputs.tar.path,
-	ctx.outputs.deb.path,
+        ctx.executable._extract.path,
+        ctx.file.deb.path,
+        ctx.outputs.tar.path,
+        ctx.outputs.deb.path,
     )
 
-    ctx.action(command = args,
-            inputs = [ctx.executable._extract, ctx.file.deb],
-            outputs = [ctx.outputs.tar, ctx.outputs.deb])
+    ctx.action(
+        command = args,
+        inputs = [ctx.executable._extract, ctx.file.deb],
+        outputs = [ctx.outputs.tar, ctx.outputs.deb],
+    )
 
 cacerts = rule(
     attrs = {
@@ -34,4 +36,3 @@ cacerts = rule(
     },
     implementation = _impl,
 )
-
