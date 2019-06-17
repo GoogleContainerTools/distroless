@@ -42,7 +42,7 @@ docker rm $cid
             builder_image_name,
             ctx.outputs.out.path)
     script = ctx.actions.declare_file("cacerts.build")
-    ctx.file_action(
+    ctx.actions.write(
         output=script,
         content=build_contents,
     )
@@ -60,8 +60,7 @@ cacerts_java = rule(
     attrs = {
         "_builder_image": attr.label(
             default = Label("@debian9//image:image.tar"),
-            allow_files = True,
-            single_file = True,
+            allow_single_file = True,
         ),
     },
     executable = False,
