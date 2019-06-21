@@ -7,14 +7,14 @@ exports_files(deb_files + ["packages.bzl"])
 
   args = [
       repository_ctx.path(repository_ctx.attr._dpkg_parser),
-      "--package-files", ",".join([repository_ctx.path(src_path) for src_path in repository_ctx.attr.sources]),
+      "--package-files", ",".join([str(repository_ctx.path(src_path)) for src_path in repository_ctx.attr.sources]),
       "--packages", ",".join(repository_ctx.attr.packages),
       "--workspace-name", repository_ctx.name,
   ]
 
   result = repository_ctx.execute(args)
   if result.return_code:
-    fail("dpkg_parser command failed: %s (%s)" % (result.stderr, " ".join(args)))
+    fail("dpkg_parser command failed: %s (%s)" % (result.stderr, " ".join([str(a) for a in args])))
 
 _dpkg_list = repository_rule(
     _dpkg_list_impl,
@@ -50,7 +50,7 @@ exports_files(["Packages.json", "os_release.tar"])
 
   result = repository_ctx.execute(args)
   if result.return_code:
-    fail("dpkg_parser command failed: %s (%s)" % (result.stderr, " ".join(args)))
+    fail("dpkg_parser command failed: %s (%s)" % (result.stderr, " ".join([str(a) for a in args])))
 
 _dpkg_src = repository_rule(
     _dpkg_src_impl,
