@@ -18,24 +18,28 @@ passwd_entry(
     username = "root",
 )
 
+NOBODY = 65534
+
+NONROOT = 65532
+
 passwd_entry(
     name = "nobody_user",
     create_home = False,
-    gid = 65534,
+    gid = NOBODY,
     home = "/nonexistent",
     info = "nobody",
     shell = "/sbin/nologin",
-    uid = 65534,
+    uid = NOBODY,
     username = "nobody",
 )
 
 passwd_entry(
     name = "nonroot_user",
-    gid = 65532,
+    gid = NONROOT,
     home = "/home/nonroot",
     info = "nonroot",
     shell = "/sbin/nologin",
-    uid = 65532,
+    uid = NONROOT,
     username = "nonroot",
 )
 
@@ -58,13 +62,13 @@ group_entry(
 
 group_entry(
     name = "nobody_group",
-    gid = 65534,
+    gid = NOBODY,
     groupname = "nobody",
 )
 
 group_entry(
     name = "nonroot_group",
-    gid = 65532,
+    gid = NONROOT,
     groupname = "nonroot",
 )
 
@@ -159,21 +163,21 @@ container_image(
 container_image(
     name = "static-nonroot",
     base = ":static",
-    user = "nonroot",
+    user = "%d" % NONROOT,
     workdir = "/home/nonroot",
 )
 
 container_image(
     name = "base-nonroot",
     base = ":base",
-    user = "nonroot",
+    user = "%d" % NONROOT,
     workdir = "/home/nonroot",
 )
 
 container_image(
     name = "debug-nonroot",
     base = ":debug",
-    user = "nonroot",
+    user = "%d" % NONROOT,
     workdir = "/home/nonroot",
 )
 
