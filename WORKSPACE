@@ -192,20 +192,11 @@ http_file(
 )
 
 # Docker rules.
-# TODO: substitute below for "git_repository()" once rules_docker makes a new release > 0.7.0.
-#http_archive(
-#    name = "io_bazel_rules_docker",
-#    sha256 = "...",
-#    strip_prefix = "rules_docker-0.x.x",
-#    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.x.x.tar.gz"],
-#)
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
-
-git_repository(
+http_archive(
     name = "io_bazel_rules_docker",
-    commit = "5edd38041535c2c07ca982218d184a5769e329c6",
-    remote = "https://github.com/bazelbuild/rules_docker.git",
-    shallow_since = "1553713324 -0400",
+    sha256 = "3556d4972571f288f8c43378295d84ed64fef5b1a875211ee1046f9f6b4258fa",
+    strip_prefix = "rules_docker-0.8.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.8.0.tar.gz"],
 )
 
 load(
