@@ -1,4 +1,4 @@
-package(default_visibility = ["//base:__subpackages__"])
+package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load(":commands.bzl", "BUSYBOX_COMMANDS")
