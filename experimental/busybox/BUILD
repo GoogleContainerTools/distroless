@@ -3,15 +3,13 @@ package(default_visibility = ["//base:__subpackages__"])
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load(":commands.bzl", "BUSYBOX_COMMANDS")
 
-# For convenience, rename busybox-x86_64 to busybox.
+# Generate links according to `busybox --list-full`.
 genrule(
     name = "busybox_tar",
-    srcs = ["@busybox//file:downloaded"],
     outs = ["busybox.tar"],
-    cmd = "mkdir busybox; cp $(<) busybox/busybox; cd busybox; \
+    cmd = "mkdir -p bin sbin usr/bin usr/sbin; \
            for cmd in %s; do \
-             ln -s busybox $$cmd; \
+             ln -s /bin/busybox $$cmd; \
            done; \
-           cd ..; \
-           tar -cf $@ busybox" % " ".join(BUSYBOX_COMMANDS),
+           tar -cf $@ bin sbin usr" % " ".join(BUSYBOX_COMMANDS),
 )

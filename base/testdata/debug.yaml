@@ -2,9 +2,9 @@ schemaVersion: "1.0.0"
 fileExistenceTests:
 # Basic FS sanity checks.
 - name: busybox
-  path: '/busybox'
+  path: '/bin/busybox'
   shouldExist: true
 commandTests:
   - name: busybox
-    command: ["/busybox/busybox"]
-    expectedOutput: ['BusyBox v1\.27\.1']
+    command: ["/bin/busybox"]
+    expectedOutput: ['BusyBox v1\.22\.1']

@@ -153,9 +153,11 @@ container_image(
 container_image(
     name = "debug",
     base = ":base",
+    debs = [
+        packages["busybox"],
+    ],
     directory = "/",
-    entrypoint = ["/busybox/sh"],
-    env = {"PATH": "$$PATH:/busybox"},
+    entrypoint = ["/bin/sh"],
     tars = ["//experimental/busybox:busybox.tar"],
 )
 

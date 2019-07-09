@@ -13,11 +13,11 @@ fileExistenceTests:
     path: "/etc/ssl/certs/java/cacerts"
     shouldExist: true
   - name: busybox
-    path: "/busybox/sh"
+    path: "/bin/busybox"
     shouldExist: true
-  - name: no-shell
+  - name: shell
     path: "/bin/sh"
-    shouldExist: false
+    shouldExist: true
 metadataTest:
   entrypoint: ["/usr/bin/java", "-jar"]
   env:

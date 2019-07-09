@@ -70,6 +70,9 @@ dpkg_list(
         "readline-common",
         "tzdata",
 
+        # For the debug image
+        "busybox",
+
         #c++
         "libgcc1",
         "libgomp1",
@@ -181,14 +184,6 @@ http_archive(
     sha256 = "69ecad24bce4f2132e0db616b49e2c35487d13e3c379dabc3ec860662467b714",
     type = "tar.gz",
     urls = ["https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz"],
-)
-
-# For the debug image
-http_file(
-    name = "busybox",
-    executable = True,
-    sha256 = "b51b9328eb4e60748912e1c1867954a5cf7e9d5294781cae59ce225ed110523c",
-    urls = ["https://busybox.net/downloads/binaries/1.27.1-i686/busybox"],
 )
 
 # Docker rules.

@@ -16,8 +16,8 @@ fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
     shouldExist: true
-  - name: busybox
-    path: "/busybox/sh"
+  - name: no-busybox
+    path: "/bin/busybox"
     shouldExist: false
   - name: no-shell
     path: "/bin/sh"
