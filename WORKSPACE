@@ -5,11 +5,14 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "7be7dc01f1e0afdba6c8eb2b43d2fa01c743be1b9273ab1eaf6c233df078d705",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.16.5/rules_go-0.16.5.tar.gz"],
+    sha256 = "8df59f11fb697743cbb3f26cfb8750395f30471e9eabde0d174c3aebc7a1cd39",
+    urls = [
+        "https://storage.googleapis.com/bazel-mirror/github.com/bazelbuild/rules_go/releases/download/0.19.1/rules_go-0.19.1.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/0.19.1/rules_go-0.19.1.tar.gz",
+    ],
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -25,7 +28,7 @@ dpkg_src(
     arch = "amd64",
     distro = "stretch",
     sha256 = "da378b113f0b1edcf5b1f2c3074fd5476c7fd6e6df3752f824aad22e7547e699",
-    snapshot = "20190708T153325Z",
+    snapshot = "20190723T211752Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -33,16 +36,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "6b0744c80fc27424251054254485956437bf1173c1d25f645f654774e16dfcf6",
-    snapshot = "20190708T153325Z",
+    sha256 = "d41121f03813c6116b7ff081f50eb5b17e84b764fe262289ca3a5e6a6247a14a",
+    snapshot = "20190723T211752Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190708T161017Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190708T161017Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "86aeac8a3102dd5b378f065152c134e4e4da4a3de4b8630303862b880af3d317",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190723T211752Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190723T211752Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "e5395d82be95254d51e1fe88552c8ea5e84312732cfbe36f53878ab7dea9a0d8",
 )
 
 dpkg_list(
@@ -194,9 +197,9 @@ http_file(
 # Docker rules.
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "3556d4972571f288f8c43378295d84ed64fef5b1a875211ee1046f9f6b4258fa",
-    strip_prefix = "rules_docker-0.8.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.8.0.tar.gz"],
+    sha256 = "87fc6a2b128147a0a3039a2fd0b53cc1f2ed5adb8716f50756544a572999ae9a",
+    strip_prefix = "rules_docker-0.8.1",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.8.1.tar.gz"],
 )
 
 load(
