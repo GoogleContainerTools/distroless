@@ -36,7 +36,7 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "e44bc8c84db44fa7fb5274fff7ad8fd80d4b6ef4f32e2c35c632c58d12ad45f",
+    sha256 = "e44bc8c84db44fa7fb5274fff7ad8fd80d4b6ef4f32e2c35c632c58d12ad45fc",
     snapshot = "20190725T145808Z",
     url = "https://snapshot.debian.org/archive",
 )
