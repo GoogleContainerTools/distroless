@@ -22,4 +22,4 @@ metadataTest:
   entrypoint: ["/usr/bin/java", "-jar"]
   env:
     - key: 'JAVA_VERSION'
-      value: '8u212'
+      value: '8u222'
