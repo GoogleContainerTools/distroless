@@ -22,7 +22,7 @@ SEPARATOR = ":"
 def parse_package_metadata(data, mirror_url, snapshot, package_prefix):
     """ Takes a debian package list, changes the relative urls to absolute urls,
     and saves the resulting metadata as a json file """
-    raw_entries = [line.decode('utf-8').rstrip() for line in data.splitlines()]
+    raw_entries = [line.rstrip() for line in data.splitlines()]
     parsed_entries = {}
     current_key = None
     current_entry = {}
