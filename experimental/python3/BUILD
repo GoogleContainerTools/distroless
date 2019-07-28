@@ -24,6 +24,7 @@ DISTRO_DEBS = {
         "python3.7-minimal",
         "libpython3.7-minimal",
         "libpython3.7-stdlib",
+        "libffi6",
     ]
 }
 
