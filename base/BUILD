@@ -161,14 +161,14 @@ cacerts(
 ) for distro_suffix in ("", "-debian10")]
 
 # A debug image with busybox available.
-container_image(
-    name = "debug",
+[container_image(
+    name = "debug" + distro_suffix,
     base = ":base",
     directory = "/",
     entrypoint = ["/busybox/sh"],
     env = {"PATH": "$$PATH:/busybox"},
     tars = ["//experimental/busybox:busybox.tar"],
-)
+) for distro_suffix in ("", "-debian10")]
 
 # Non-root base images
 container_image(
