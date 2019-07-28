@@ -7,6 +7,7 @@ load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
+
 # Create /etc/passwd with the root user
 passwd_entry(
     name = "root_user",
@@ -103,7 +104,18 @@ pkg_tar(
 )
 
 load("@package_bundle//file:packages.bzl", "packages")
+load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 load("//cacerts:cacerts.bzl", "cacerts")
+
+DISTRO_PACKAGES = {
+    '': packages,
+    '-debian10': packages_debian10,
+}
+
+DISTRO_REPOSITORY = {
+    '': "@debian_stretch",
+    '-debian10': "@debian10",
+}
 
 cacerts(
     name = "cacerts",
@@ -115,12 +127,12 @@ cacerts(
 # A tar is needed because at the moment there is no way to create a
 # directory with specific permissions.
 
-container_image(
-    name = "static",
+[container_image(
+    name = "static" + distro_suffix,
     debs = [
-        packages["base-files"],
-        packages["netbase"],
-        packages["tzdata"],
+        DISTRO_PACKAGES[distro_suffix]["base-files"],
+        DISTRO_PACKAGES[distro_suffix]["netbase"],
+        DISTRO_PACKAGES[distro_suffix]["tzdata"],
     ],
     env = {
         "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -134,20 +146,20 @@ container_image(
         ":group_tar",
         ":tmp.tar",
         ":nsswitch.tar",
-        "@debian_stretch//file:os_release.tar",
+        DISTRO_REPOSITORY[distro_suffix] + "//file:os_release.tar",
         ":cacerts.tar",
     ],
-)
+) for distro_suffix in ("", "-debian10")]
 
-container_image(
-    name = "base",
+[container_image(
+    name = "base" + distro_suffix,
     base = ":static",
     debs = [
-        packages["libc6"],
-        packages["libssl1.1"],
-        packages["openssl"],
+        DISTRO_PACKAGES[distro_suffix]["libc6"],
+        DISTRO_PACKAGES[distro_suffix]["libssl1.1"],
+        DISTRO_PACKAGES[distro_suffix]["openssl"],
     ],
-)
+) for distro_suffix in ("", "-debian10")]
 
 # A debug image with busybox available.
 container_image(
