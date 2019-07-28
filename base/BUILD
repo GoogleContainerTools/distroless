@@ -7,7 +7,6 @@ load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
-
 # Create /etc/passwd with the root user
 passwd_entry(
     name = "root_user",
@@ -108,13 +107,13 @@ load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "package
 load("//cacerts:cacerts.bzl", "cacerts")
 
 DISTRO_PACKAGES = {
-    '': packages,
-    '-debian10': packages_debian10,
+    "": packages,
+    "-debian10": packages_debian10,
 }
 
 DISTRO_REPOSITORY = {
-    '': "@debian_stretch",
-    '-debian10': "@debian10",
+    "": "@debian_stretch",
+    "-debian10": "@debian10",
 }
 
 cacerts(

@@ -5,8 +5,8 @@ load("@package_bundle//file:packages.bzl", "packages")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 
 DISTRO_PACKAGES = {
-    '': packages,
-    '-debian10': packages_debian10,
+    "": packages,
+    "-debian10": packages_debian10,
 }
 
 # An image for C/C++ programs

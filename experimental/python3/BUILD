@@ -6,13 +6,13 @@ load("@package_bundle//file:packages.bzl", "packages")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 
 DISTRO_PACKAGES = {
-    '': packages,
-    '-debian10': packages_debian10,
+    "": packages,
+    "-debian10": packages_debian10,
 }
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
-    '': [
+    "": [
         # Different python packages have different transitive dependencies
         # on the different libssl shared library versions.
         "libssl1.0.2",
@@ -20,17 +20,17 @@ DISTRO_DEBS = {
         "libpython3.5-minimal",
         "libpython3.5-stdlib",
     ],
-    '-debian10': [
+    "-debian10": [
         "python3.7-minimal",
         "libpython3.7-minimal",
         "libpython3.7-stdlib",
         "libffi6",
-    ]
+    ],
 }
 
 DISTRO_VERSION = {
-    '': '3.5',
-    '-debian10': '3.7',
+    "": "3.5",
+    "-debian10": "3.7",
 }
 
 [[container_image(
