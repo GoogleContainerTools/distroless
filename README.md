@@ -20,19 +20,21 @@ These images are built using the [bazel](https://bazel.build) tool, but they can
 ### Entrypoints
 
 Note that distroless images by default do not contain a shell.
-That means the Dockerfile `ENTRYPOINT` command must be specified in `vector` form, to avoid the container runtime prefixing with a shell.
+That means the Dockerfile `ENTRYPOINT` command, when defined, must be specified in `vector` form, to avoid the container runtime prefixing with a shell.
 
 This works:
 
 ```
-ENTRYPOINT ['myapp']
+ENTRYPOINT ["myapp"]
 ```
 
 But this does not work:
 
 ```
-ENTRYPOINT 'myapp'
+ENTRYPOINT "myapp"
 ```
+
+For the same reasons, if the entrypoint is left to the default empty vector, the CMD command should be specified in `vector` form (see examples below).
 
 ### Docker
 
