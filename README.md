@@ -128,6 +128,10 @@ See here for more information on how these images are [built and released](RELEA
 
 For full documentation on how to use Jib to generate Docker images from Maven and Gradle, see the [GoogleContainerTools/jib](http://github.com/GoogleContainerTools/jib) repository.
 
+### CVE and Patching
+
+Distroless tracks Debian stable (9 or Stretch currently) and stable-security. Check https://www.debian.org/security/ for any patches to address security issues and update. Check issues and PRs for the patch and update your builds.
+
 ### Debug Images
 
 Distroless images are minimal and lack shell access.  The ```:debug``` image set for each language provides a busybox shell to enter.
