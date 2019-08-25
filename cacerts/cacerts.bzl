@@ -6,7 +6,7 @@ def _impl(ctx):
         arguments = [
             ctx.file.deb.path,
             ctx.outputs.tar.path,
-            ctx.outputs.deb.path
+            ctx.outputs.deb.path,
         ],
         inputs = [ctx.file.deb],
         outputs = [ctx.outputs.tar, ctx.outputs.deb],
@@ -33,4 +33,3 @@ cacerts = rule(
     },
     implementation = _impl,
 )
-

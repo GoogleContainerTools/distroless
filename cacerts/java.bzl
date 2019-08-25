@@ -16,10 +16,13 @@
 
 def _impl(ctx):
     # Strip off the '.tar'
-    image_name = ctx.attr._builder_image.label.name.split('.', 1)[0]
+    image_name = ctx.attr._builder_image.label.name.split(".", 1)[0]
+
     # container_image rules always generate an image named 'bazel/$package:$name'.
-    builder_image_name = "bazel/%s:%s" % (ctx.attr._builder_image.label.package,
-                                          image_name)
+    builder_image_name = "bazel/%s:%s" % (
+        ctx.attr._builder_image.label.package,
+        image_name,
+    )
 
     # Generate a shell script to run the build.
     build_contents = """\
@@ -38,20 +41,22 @@ tar -cf {2} etc/
 
 # Cleanup
 docker rm $cid
- """.format(ctx.file._builder_image.path,
-            builder_image_name,
-            ctx.outputs.out.path)
+ """.format(
+        ctx.file._builder_image.path,
+        builder_image_name,
+        ctx.outputs.out.path,
+    )
     script = ctx.actions.declare_file("cacerts.build")
     ctx.actions.write(
-        output=script,
-        content=build_contents,
+        output = script,
+        content = build_contents,
     )
 
     ctx.actions.run(
-        outputs=[ctx.outputs.out],
-        inputs=ctx.attr._builder_image.files.to_list() +
-        ctx.attr._builder_image.data_runfiles.files.to_list() + ctx.attr._builder_image.default_runfiles.files.to_list(),
-        executable=script,
+        outputs = [ctx.outputs.out],
+        inputs = ctx.attr._builder_image.files.to_list() +
+                 ctx.attr._builder_image.data_runfiles.files.to_list() + ctx.attr._builder_image.default_runfiles.files.to_list(),
+        executable = script,
     )
 
     return struct()
