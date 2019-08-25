@@ -1,11 +1,13 @@
 package(default_visibility = ["//visibility:public"])
 
+load(":base.bzl", "NONROOT", "distro_components")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
+load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+
+NOBODY = 65534
 
 # Create /etc/passwd with the root user
 passwd_entry(
@@ -17,10 +19,6 @@ passwd_entry(
     uid = 0,
     username = "root",
 )
-
-NOBODY = 65534
-
-NONROOT = 65532
 
 passwd_entry(
     name = "nobody_user",
@@ -106,104 +104,6 @@ load("@package_bundle//file:packages.bzl", "packages")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 load("//cacerts:cacerts.bzl", "cacerts")
 
-DISTRO_PACKAGES = {
-    "": packages,
-    "-debian10": packages_debian10,
-}
-
-DISTRO_REPOSITORY = {
-    "": "@debian_stretch",
-    "-debian10": "@debian10",
-}
-
-cacerts(
-    name = "cacerts",
-    deb = packages["ca-certificates"],
-)
-
-# Create /tmp, too many things assume it exists.
-# tmp.tar has a /tmp with the correct permissions 01777
-# A tar is needed because at the moment there is no way to create a
-# directory with specific permissions.
-
-[container_image(
-    name = "static" + distro_suffix,
-    debs = [
-        DISTRO_PACKAGES[distro_suffix]["base-files"],
-        DISTRO_PACKAGES[distro_suffix]["netbase"],
-        DISTRO_PACKAGES[distro_suffix]["tzdata"],
-    ],
-    env = {
-        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        # allows openssl to find the certificates by default
-        # TODO: We should run update-ca-certifaces, but that requires "openssl rehash"
-        # which would probably need to be run inside the container
-        "SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt",
-    },
-    tars = [
-        ":passwd",
-        ":group_tar",
-        ":tmp.tar",
-        ":nsswitch.tar",
-        DISTRO_REPOSITORY[distro_suffix] + "//file:os_release.tar",
-        ":cacerts.tar",
-    ],
-) for distro_suffix in ("", "-debian10")]
-
-[container_image(
-    name = "base" + distro_suffix,
-    base = ":static",
-    debs = [
-        DISTRO_PACKAGES[distro_suffix]["libc6"],
-        DISTRO_PACKAGES[distro_suffix]["libssl1.1"],
-        DISTRO_PACKAGES[distro_suffix]["openssl"],
-    ],
-) for distro_suffix in ("", "-debian10")]
-
-# A debug image with busybox available.
-[container_image(
-    name = "debug" + distro_suffix,
-    base = ":base",
-    directory = "/",
-    entrypoint = ["/busybox/sh"],
-    env = {"PATH": "$$PATH:/busybox"},
-    tars = ["//experimental/busybox:busybox.tar"],
-) for distro_suffix in ("", "-debian10")]
-
-# Non-root base images
-container_image(
-    name = "static-nonroot",
-    base = ":static",
-    user = "%d" % NONROOT,
-    workdir = "/home/nonroot",
-)
-
-container_image(
-    name = "base-nonroot",
-    base = ":base",
-    user = "%d" % NONROOT,
-    workdir = "/home/nonroot",
-)
-
-container_image(
-    name = "debug-nonroot",
-    base = ":debug",
-    user = "%d" % NONROOT,
-    workdir = "/home/nonroot",
-)
-
-container_test(
-    name = "debug_test",
-    configs = ["testdata/debug.yaml"],
-    image = ":debug",
-)
-
-container_test(
-    name = "base_test",
-    configs = ["testdata/base.yaml"],
-    image = ":base",
-)
-
 go_binary(
     name = "check_certs",
     srcs = ["testdata/check_certs.go"],
@@ -212,15 +112,43 @@ go_binary(
     pure = "on",
 )
 
-container_image(
-    name = "check_certs_image",
-    base = "//base:base",
-    files = [":check_certs"],
-    visibility = ["//visibility:private"],
+# Replicate the containers and tests for debian9 and debian10
+distro_components("")  # debian9
+
+distro_components("-debian10")
+
+container_test(
+    name = "base_release_test-debian9",
+    configs = ["testdata/debian9.yaml"],
+    image = ":base",
 )
 
 container_test(
-    name = "certs_test",
-    configs = ["testdata/certs.yaml"],
-    image = ":check_certs_image",
+    name = "base_release_test-debian10",
+    configs = ["testdata/debian10.yaml"],
+    image = ":base-debian10",
+)
+
+container_test(
+    name = "debug_release_test-debian9",
+    configs = ["testdata/debian9.yaml"],
+    image = ":debug",
+)
+
+container_test(
+    name = "debug_release_test-debian10",
+    configs = ["testdata/debian10.yaml"],
+    image = ":debug-debian10",
+)
+
+container_test(
+    name = "static_release_test-debian9",
+    configs = ["testdata/debian9.yaml"],
+    image = ":static",
+)
+
+container_test(
+    name = "static_release_test-debian10",
+    configs = ["testdata/debian10.yaml"],
+    image = ":static-debian10",
 )
