@@ -1,0 +1,7 @@
+schemaVersion: "1.0.0"
+fileContentTests:
+- name: 'os-release contents'
+  path: '/etc/os-release'
+  # TODO: Update with newer release of dpkg_parser.par in package_manager.bzl
+  #expectedContents: ['.*\nVERSION="Debian GNU/Linux 10 (buster)"\n']
+  excludedContents: ['.*\nVERSION=']
