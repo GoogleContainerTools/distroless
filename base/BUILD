@@ -113,9 +113,40 @@ go_binary(
 )
 
 # Replicate the containers and tests for debian9 and debian10
-distro_components("")  # debian9
+distro_components("-debian9")
 
 distro_components("-debian10")
+
+# alias debian9 as the default images
+alias(
+    name = "static",
+    actual = ":static-debian9",
+)
+
+alias(
+    name = "static-nonroot",
+    actual = ":static-nonroot-debian9",
+)
+
+alias(
+    name = "base",
+    actual = ":base-debian9",
+)
+
+alias(
+    name = "base-nonroot",
+    actual = ":base-nonroot-debian9",
+)
+
+alias(
+    name = "debug",
+    actual = ":debug-debian9",
+)
+
+alias(
+    name = "debug-nonroot",
+    actual = ":debug-nonroot-debian9",
+)
 
 container_test(
     name = "base_release_test-debian9",

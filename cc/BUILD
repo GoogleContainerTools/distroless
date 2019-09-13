@@ -5,7 +5,7 @@ load("@package_bundle//file:packages.bzl", "packages")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 
 DISTRO_PACKAGES = {
-    "": packages,
+    "-debian9": packages,
     "-debian10": packages_debian10,
 }
 
@@ -21,4 +21,15 @@ DISTRO_PACKAGES = {
 ) for mode in [
     "",
     ":debug",
-]] for distro_suffix in ("", "-debian10")]
+]] for distro_suffix in ("-debian9", "-debian10")]
+
+# Provide aliases so the default images use debian9
+alias(
+    name = "cc",
+    actual = ":cc-debian9",
+)
+
+alias(
+    name = "debug",
+    actual = ":debug-debian9",
+)

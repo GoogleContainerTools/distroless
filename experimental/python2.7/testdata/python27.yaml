@@ -3,9 +3,6 @@ commandTests:
   - name: hello
     command: ["/usr/bin/python2.7", "-c", "print 'Hello World'"]
     expectedOutput: ['Hello World']
-  - name: version
-    command: ["/usr/bin/python2.7", "--version"]
-    expectedError: ["Python 2.7.13"]
   # parts of the standard library assume /bin/sh exists via os.system and subprocess.Popen
   - name: use_shell
     command: ["/usr/bin/python2.7", "-c",

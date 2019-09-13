@@ -11,7 +11,7 @@ import sys
 import tempfile
 
 
-CONTAINER_IMAGE_PATH = 'experimental/python2.7/python27'
+CONTAINER_IMAGE_PATH = 'experimental/python2.7/python27-debian9'
 
 
 def main():

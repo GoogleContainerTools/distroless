@@ -3,15 +3,6 @@ commandTests:
   - name: hello
     command: ["/usr/bin/python3", "-c", "print('Hello World')"]
     expectedOutput: ['Hello World']
-  - name: version
-    command: ["/usr/bin/python3", "--version"]
-    expectedOutput: ["Python 3.5.3"]
-  - name: stdlib
-    command: ["/usr/bin/python3", "-c", "import argparse"]
-    exitCode: 0
-  - name: symlink 
-    command: ["/usr/bin/python", "--version"]
-    expectedOutput: ["Python 3.5.3"]
   # parts of the standard library assume /bin/sh exists via os.system and subprocess.Popen
   - name: use_shell
     command: ["/usr/bin/python3", "-c",
@@ -135,8 +126,14 @@ commandTests:
   - name: import_datetime
     command: ["/usr/bin/python3", "-c", "import datetime"]
     exitCode: 0
+  - name: import_native_dbm
+    command: ["/usr/bin/python3", "-c", "import _dbm"]
+    exitCode: 0
   - name: import_dbm
     command: ["/usr/bin/python3", "-c", "import dbm"]
+    exitCode: 0
+  - name: import_native_decimal
+    command: ["/usr/bin/python3", "-c", "import _decimal"]
     exitCode: 0
   - name: import_decimal
     command: ["/usr/bin/python3", "-c", "import decimal"]
@@ -152,9 +149,6 @@ commandTests:
     exitCode: 0
   - name: import_doctest
     command: ["/usr/bin/python3", "-c", "import doctest"]
-    exitCode: 0
-  - name: import_dummy_threading
-    command: ["/usr/bin/python3", "-c", "import dummy_threading"]
     exitCode: 0
   - name: import_email
     command: ["/usr/bin/python3", "-c", "import email"]
@@ -231,9 +225,6 @@ commandTests:
   - name: import_http
     command: ["/usr/bin/python3", "-c", "import http"]
     exitCode: 0
-  - name: import_idlelib
-    command: ["/usr/bin/python3", "-c", "import idlelib"]
-    exitCode: 0
   - name: import_imaplib
     command: ["/usr/bin/python3", "-c", "import imaplib"]
     exitCode: 0
@@ -264,9 +255,6 @@ commandTests:
   - name: import_keyword
     command: ["/usr/bin/python3", "-c", "import keyword"]
     exitCode: 0
-  - name: import_lib2to3
-    command: ["/usr/bin/python3", "-c", "import lib2to3"]
-    exitCode: 0
   - name: import_linecache
     command: ["/usr/bin/python3", "-c", "import linecache"]
     exitCode: 0
@@ -281,9 +269,6 @@ commandTests:
     exitCode: 0
   - name: import_macpath
     command: ["/usr/bin/python3", "-c", "import macpath"]
-    exitCode: 0
-  - name: import_macurl2path
-    command: ["/usr/bin/python3", "-c", "import macurl2path"]
     exitCode: 0
   - name: import_mailbox
     command: ["/usr/bin/python3", "-c", "import mailbox"]
