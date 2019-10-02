@@ -1,0 +1,10 @@
+{
+  "name": "Distroless express",
+  "version": "1.0.0",
+  "description": "Distroless express node.js",
+  "dependencies": {
+    "express": "4.16.3"
+  },
+  "author": "Bryant Hagadorn",
+  "license": "ISC"
+}
