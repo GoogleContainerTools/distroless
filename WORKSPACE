@@ -100,9 +100,10 @@ dpkg_list(
         "libc-bin=2.24-11+deb9u4",
 
         #python3
+        "libmpdec2",
         "libpython3.5-minimal",
-        "python3.5-minimal",
         "libpython3.5-stdlib",
+        "python3.5-minimal",
 
         #dotnet
         "libcurl3",
@@ -137,7 +138,6 @@ dpkg_list(
         "libffi6",
         "libtasn1-6",
         "libsasl2-modules-db",
-        "libdb5.3",
         "libgcrypt20",
         "libgpg-error0",
         "libacl1",
@@ -264,11 +264,9 @@ dpkg_list(
         "libbz2-1.0",
         "libdb5.3",
         "libffi6",
-        "libncursesw5",
         "liblzma5",
         "libexpat1",
         "libreadline7",
-        "libtinfo5",
         "libsqlite3-0",
         "mime-support",
         "netbase",
@@ -293,18 +291,20 @@ dpkg_list(
         # "openjdk-11-jre-headless",
 
         #python
-        # "libpython2.7-minimal",
-        # "python2.7-minimal",
-        # "libpython2.7-stdlib",
         "dash",
-        # Version required to skip a security fix to the pre-release library
-        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
         "libc-bin",
+        "libpython2.7-minimal",
+        "libpython2.7-stdlib",
+        "python2.7-minimal",
 
         #python3
+        "libmpdec2",
         "libpython3.7-minimal",
-        "python3.7-minimal",
         "libpython3.7-stdlib",
+        "libtinfo6",
+        "libuuid1",
+        "libncursesw6",
+        "python3.7-minimal",
 
         #dotnet
         # "libcurl3",
@@ -339,7 +339,6 @@ dpkg_list(
         # "libffi6",
         # "libtasn1-6",
         # "libsasl2-modules-db",
-        # "libdb5.3",
         # "libgcrypt20",
         # "libgpg-error0",
         # "libacl1",

@@ -8,12 +8,12 @@ load("//cacerts:cacerts.bzl", "cacerts")
 NONROOT = 65532
 
 DISTRO_PACKAGES = {
-    "": packages,
+    "-debian9": packages,
     "-debian10": packages_debian10,
 }
 
 DISTRO_REPOSITORY = {
-    "": "@debian_stretch",
+    "-debian9": "@debian_stretch",
     "-debian10": "@debian10",
 }
 

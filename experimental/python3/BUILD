@@ -6,30 +6,32 @@ load("@package_bundle//file:packages.bzl", "packages")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 
 DISTRO_PACKAGES = {
-    "": packages,
+    "-debian9": packages,
     "-debian10": packages_debian10,
 }
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
-    "": [
-        # Different python packages have different transitive dependencies
-        # on the different libssl shared library versions.
-        "libssl1.0.2",
-        "python3.5-minimal",
+    "-debian9": [
+        "libncursesw5",
         "libpython3.5-minimal",
         "libpython3.5-stdlib",
+        "libtinfo5",
+        "python3.5-minimal",
     ],
     "-debian10": [
-        "python3.7-minimal",
+        "libffi6",
+        "libncursesw6",
         "libpython3.7-minimal",
         "libpython3.7-stdlib",
-        "libffi6",
+        "libtinfo6",
+        "libuuid1",
+        "python3.7-minimal",
     ],
 }
 
 DISTRO_VERSION = {
-    "": "3.5",
+    "-debian9": "3.5",
     "-debian10": "3.7",
 }
 
@@ -39,16 +41,16 @@ DISTRO_VERSION = {
     base = "//cc" + (mode if mode else ":cc") + distro_suffix,
     debs = [
         DISTRO_PACKAGES[distro_suffix]["dash"],
-        DISTRO_PACKAGES[distro_suffix]["zlib1g"],
         DISTRO_PACKAGES[distro_suffix]["libbz2-1.0"],
         DISTRO_PACKAGES[distro_suffix]["libc-bin"],
-        DISTRO_PACKAGES[distro_suffix]["libncursesw5"],
+        DISTRO_PACKAGES[distro_suffix]["libdb5.3"],
+        DISTRO_PACKAGES[distro_suffix]["libexpat1"],
         DISTRO_PACKAGES[distro_suffix]["liblzma5"],
+        DISTRO_PACKAGES[distro_suffix]["libmpdec2"],
         DISTRO_PACKAGES[distro_suffix]["libreadline7"],
-        DISTRO_PACKAGES[distro_suffix]["libtinfo5"],
         DISTRO_PACKAGES[distro_suffix]["libsqlite3-0"],
         DISTRO_PACKAGES[distro_suffix]["libssl1.1"],
-        DISTRO_PACKAGES[distro_suffix]["libexpat1"],
+        DISTRO_PACKAGES[distro_suffix]["zlib1g"],
     ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in DISTRO_DEBS[distro_suffix]],
     entrypoint = [
         "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
@@ -63,11 +65,37 @@ DISTRO_VERSION = {
 ) for mode in [
     "",
     ":debug",
-]] for distro_suffix in ("", "-debian10")]
+]] for distro_suffix in ("-debian9", "-debian10")]
 
-container_test(
-    name = "python3_test",
+[container_test(
+    name = "python3" + distro_suffix + "_test",
     size = "medium",
     configs = ["testdata/python3.yaml"],
-    image = ":python3",
+    image = ":python3" + distro_suffix,
+) for distro_suffix in ("-debian9", "-debian10")]
+
+# tests for version-specific things
+container_test(
+    name = "debian9_test",
+    size = "medium",
+    configs = ["testdata/debian9.yaml"],
+    image = ":python3-debian9",
+)
+
+container_test(
+    name = "debian10_test",
+    size = "medium",
+    configs = ["testdata/debian10.yaml"],
+    image = ":python3-debian10",
+)
+
+# Provide aliases so the default images use debian9
+alias(
+    name = "python3",
+    actual = ":python3-debian9",
+)
+
+alias(
+    name = "debug",
+    actual = ":debug-debian9",
 )
