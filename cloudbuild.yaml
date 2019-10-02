@@ -3,44 +3,92 @@ steps:
 
 # Publishing base, cc, and static as latest is handled in a separate release process
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//base:static']
+  args: ['run', '--host_force_python=PY2', '//base:static-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:static', 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}']
+  args: ['tag', 'bazel/base:static-debian9', 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}', 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//base:static-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:static-debian10', 'gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//base:static-nonroot']
+  args: ['run', '--host_force_python=PY2', '//base:static-nonroot-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:static-nonroot', 'gcr.io/$PROJECT_ID/static:nonroot']
+  args: ['tag', 'bazel/base:static-nonroot-debian9', 'gcr.io/$PROJECT_ID/static-debian9:nonroot']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/static-debian9:nonroot', 'gcr.io/$PROJECT_ID/static:nonroot']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//base:static-nonroot-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:static-nonroot-debian10', 'gcr.io/$PROJECT_ID/static-debian10:nonroot']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//base:base']
+  args: ['run', '--host_force_python=PY2', '//base:base-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:base', 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}']
+  args: ['tag', 'bazel/base:base-debian9', 'gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}', 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//base:base-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:base-debian10', 'gcr.io/$PROJECT_ID/base-debian10:${COMMIT_SHA}']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//base:base-nonroot']
+  args: ['run', '--host_force_python=PY2', '//base:base-nonroot-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:base-nonroot', 'gcr.io/$PROJECT_ID/base:nonroot']
+  args: ['tag', 'bazel/base:base-nonroot-debian9', 'gcr.io/$PROJECT_ID/base-debian9:nonroot']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/base-debian9:nonroot', 'gcr.io/$PROJECT_ID/base:nonroot']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//base:base-nonroot-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:base-nonroot-debian10', 'gcr.io/$PROJECT_ID/base-debian10:nonroot']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//base:debug']
+  args: ['run', '--host_force_python=PY2', '//base:debug-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:debug', 'gcr.io/$PROJECT_ID/base:debug']
+  args: ['tag', 'bazel/base:debug-debian9', 'gcr.io/$PROJECT_ID/base-debian9:debug']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/base-debian9:debug', 'gcr.io/$PROJECT_ID/base:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//base:debug-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:debug-debian10', 'gcr.io/$PROJECT_ID/base-debian10:debug']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//base:debug-nonroot']
+  args: ['run', '--host_force_python=PY2', '//base:debug-nonroot-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:debug-nonroot', 'gcr.io/$PROJECT_ID/base:debug-nonroot']
+  args: ['tag', 'bazel/base:debug-nonroot-debian9', 'gcr.io/$PROJECT_ID/base-debian9:debug-nonroot']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/base-debian9:debug-nonroot', 'gcr.io/$PROJECT_ID/base:debug-nonroot']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//base:debug-nonroot-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/base:debug-nonroot-debian10', 'gcr.io/$PROJECT_ID/base-debian10:debug-nonroot']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//cc']
+  args: ['run', '--host_force_python=PY2', '//cc:cc-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/cc:cc', 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}']
+  args: ['tag', 'bazel/cc:cc-debian9', 'gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}', 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//cc:cc-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/cc:cc-debian10', 'gcr.io/$PROJECT_ID/cc-debian10:${COMMIT_SHA}']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//cc:debug']
+  args: ['run', '--host_force_python=PY2', '//cc:debug-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/cc:debug', 'gcr.io/$PROJECT_ID/cc:debug']
+  args: ['tag', 'bazel/cc:debug-debian9', 'gcr.io/$PROJECT_ID/cc-debian9:debug']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/cc-debian9:debug', 'gcr.io/$PROJECT_ID/cc:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//cc:debug-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/cc:debug-debian10', 'gcr.io/$PROJECT_ID/cc-debian10:debug']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '--host_force_python=PY2', '//java:java8']
@@ -91,24 +139,48 @@ steps:
   args: ['tag', 'bazel/java/jetty:jetty_java11_debug', 'gcr.io/$PROJECT_ID/java/jetty:java11-debug']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//experimental/python3:python3']
+  args: ['run', '--host_force_python=PY2', '//experimental/python3:python3-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/python3:python3', 'gcr.io/$PROJECT_ID/python3:latest']
+  args: ['tag', 'bazel/experimental/python3:python3-debian9', 'gcr.io/$PROJECT_ID/python3-debian9:latest']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/python3-debian9:latest', 'gcr.io/$PROJECT_ID/python3:latest']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//experimental/python3:python3-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/experimental/python3:python3-debian10', 'gcr.io/$PROJECT_ID/python3-debian10:latest']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//experimental/python3:debug']
+  args: ['run', '--host_force_python=PY2', '//experimental/python3:debug-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/python3:debug', 'gcr.io/$PROJECT_ID/python3:debug']
+  args: ['tag', 'bazel/experimental/python3:debug-debian9', 'gcr.io/$PROJECT_ID/python3-debian9:debug']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/python3-debian9:debug', 'gcr.io/$PROJECT_ID/python3:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//experimental/python3:debug-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/experimental/python3:debug-debian10', 'gcr.io/$PROJECT_ID/python3-debian10:debug']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//experimental/python2.7:python27']
+  args: ['run', '--host_force_python=PY2', '//experimental/python2.7:python27-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/python2.7:python27', 'gcr.io/$PROJECT_ID/python2.7:latest']
+  args: ['tag', 'bazel/experimental/python2.7:python27-debian9', 'gcr.io/$PROJECT_ID/python2.7-debian9:latest']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/python2.7-debian9:latest', 'gcr.io/$PROJECT_ID/python2.7:latest']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//experimental/python2.7:python27-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/experimental/python2.7:python27-debian10', 'gcr.io/$PROJECT_ID/python2.7-debian10:latest']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//experimental/python2.7:debug']
+  args: ['run', '--host_force_python=PY2', '//experimental/python2.7:debug-debian9']
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/python2.7:debug', 'gcr.io/$PROJECT_ID/python2.7:debug']
+  args: ['tag', 'bazel/experimental/python2.7:debug-debian9', 'gcr.io/$PROJECT_ID/python2.7-debian9:debug']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'gcr.io/$PROJECT_ID/python2.7-debian9:debug', 'gcr.io/$PROJECT_ID/python2.7:debug']
+- name: gcr.io/cloud-builders/bazel
+  args: ['run', '--host_force_python=PY2', '//experimental/python2.7:debug-debian10']
+- name: gcr.io/cloud-builders/docker
+  args: ['tag', 'bazel/experimental/python2.7:debug-debian10', 'gcr.io/$PROJECT_ID/python2.7-debian10:debug']
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '--host_force_python=PY2', '//experimental/nodejs']
@@ -132,11 +204,30 @@ steps:
 
 
 images:
+  - 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/static-debian9:nonroot'
   - 'gcr.io/$PROJECT_ID/static:nonroot'
+  - 'gcr.io/$PROJECT_ID/static-debian10:nonroot'
+  - 'gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/base-debian10:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/base-debian9:nonroot'
   - 'gcr.io/$PROJECT_ID/base:nonroot'
+  - 'gcr.io/$PROJECT_ID/base-debian10:nonroot'
+  - 'gcr.io/$PROJECT_ID/base-debian9:debug'
   - 'gcr.io/$PROJECT_ID/base:debug'
+  - 'gcr.io/$PROJECT_ID/base-debian10:debug'
+  - 'gcr.io/$PROJECT_ID/base-debian9:debug-nonroot'
   - 'gcr.io/$PROJECT_ID/base:debug-nonroot'
+  - 'gcr.io/$PROJECT_ID/base-debian10:debug-nonroot'
+  - 'gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/cc-debian10:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/cc-debian9:debug'
   - 'gcr.io/$PROJECT_ID/cc:debug'
+  - 'gcr.io/$PROJECT_ID/cc-debian10:debug'
   - 'gcr.io/$PROJECT_ID/java:latest'
   - 'gcr.io/$PROJECT_ID/java:8'
   - 'gcr.io/$PROJECT_ID/java:debug'
@@ -149,14 +240,19 @@ images:
   - 'gcr.io/$PROJECT_ID/java/jetty:java8-debug'
   - 'gcr.io/$PROJECT_ID/java/jetty:java11'
   - 'gcr.io/$PROJECT_ID/java/jetty:java11-debug'
+  - 'gcr.io/$PROJECT_ID/python3-debian9:latest'
   - 'gcr.io/$PROJECT_ID/python3:latest'
+  - 'gcr.io/$PROJECT_ID/python3-debian10:latest'
+  - 'gcr.io/$PROJECT_ID/python3-debian9:debug'
   - 'gcr.io/$PROJECT_ID/python3:debug'
+  - 'gcr.io/$PROJECT_ID/python3-debian10:debug'
+  - 'gcr.io/$PROJECT_ID/python2.7-debian9:latest'
   - 'gcr.io/$PROJECT_ID/python2.7:latest'
+  - 'gcr.io/$PROJECT_ID/python2.7-debian10:latest'
+  - 'gcr.io/$PROJECT_ID/python2.7-debian9:debug'
   - 'gcr.io/$PROJECT_ID/python2.7:debug'
+  - 'gcr.io/$PROJECT_ID/python2.7-debian10:debug'
   - 'gcr.io/$PROJECT_ID/nodejs:latest'
   - 'gcr.io/$PROJECT_ID/nodejs:debug'
   - 'gcr.io/$PROJECT_ID/dotnet:latest'
   - 'gcr.io/$PROJECT_ID/dotnet:debug'
-  - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}'
