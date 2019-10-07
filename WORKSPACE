@@ -27,8 +27,8 @@ dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "da378b113f0b1edcf5b1f2c3074fd5476c7fd6e6df3752f824aad22e7547e699",
-    snapshot = "20190725T145808Z",
+    sha256 = "2b13362808b7bd90d24db2e0804c799288694ae44bd7e3d123becc191451fc67",
+    snapshot = "20191007T205138Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -36,16 +36,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "e44bc8c84db44fa7fb5274fff7ad8fd80d4b6ef4f32e2c35c632c58d12ad45fc",
-    snapshot = "20190725T145808Z",
+    sha256 = "bd6367868cc115619cdc97d2bdb33c913c3b114827074220df42214de542647f",
+    snapshot = "20191007T205138Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190725T145808Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190725T145808Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "860d677f5cfb1f7660f06394089a9665c0a68513c79c73cd8a62b615b9aa8e57",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191007T195307Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191007T195307Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "bf33fc3876b644e546ce595b60437b75b750842ae85a98a47b2c22dc1f78826e",
 )
 
 dpkg_list(
@@ -248,8 +248,8 @@ dpkg_src(
     name = "debian10",
     arch = "amd64",
     distro = "buster",
-    sha256 = "bd1bed6b19bf173d60ac130edee47087203e873f3b0981f5987f77a91a2cba85",
-    snapshot = "20190728T090012Z/",
+    sha256 = "ca19e4187523f4b087a2e7aaa2662c6a0b46dc81ff2f3dd44d9c5d95df0df212",
+    snapshot = "20191007T205138Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -352,24 +352,14 @@ dpkg_list(
     # If there was a security fix to a package before the stable release, this will find
     # the older security release. This happened for stretch libc6.
     sources = [
-        #"@debian_stretch_security//file:Packages.json",
-        #"@debian_stretch_backports//file:Packages.json",
+        "@debian10_security//file:Packages.json",
         "@debian10//file:Packages.json",
     ],
 )
 
-# dpkg_src(
-#     name = "debian_stretch_backports",
-#     arch = "amd64",
-#     distro = "stretch-backports",
-#     sha256 = "e44bc8c84db44fa7fb5274fff7ad8fd80d4b6ef4f32e2c35c632c58d12ad45fc",
-#     snapshot = "20190725T145808Z",
-#     url = "https://snapshot.debian.org/archive",
-# )
-
-# dpkg_src(
-#     name = "debian_stretch_security",
-#     package_prefix = "https://snapshot.debian.org/archive/debian-security/20190725T145808Z/",
-#     packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190725T145808Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-#     sha256 = "860d677f5cfb1f7660f06394089a9665c0a68513c79c73cd8a62b615b9aa8e57",
-# )
+dpkg_src(
+    name = "debian10_security",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191007T195307Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191007T195307Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "ddc8d3e9708f1a44a4329fd748dc2fe128e08743a3590cf31dfc0ed3d914ff9c",
+)
