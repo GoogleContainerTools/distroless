@@ -178,5 +178,6 @@ $ docker run --entrypoint=sh -ti my_debug_image
 /app # ls
 BUILD       Dockerfile  hello.py
 ```
+> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java:11`, use the tag `<existing tag>-debug` instead, for example `gcr.io/distroless/java:11-debug`.
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
