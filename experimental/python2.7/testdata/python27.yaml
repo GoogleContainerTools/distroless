@@ -12,6 +12,17 @@ commandTests:
     command: ["/usr/bin/python2.7", "-c", "import ctypes.util; ctypes.CDLL(ctypes.util.find_library('rt')).timer_create"]
     exitCode: 0
 
+  # file names are UTF-8: default for modern Linux systems
+  # The \xe9 backslash must be double-escaped to avoid YAML string parsing weirdness
+  - name: filesystem_utf8
+    command: ["/usr/bin/python2.7", "-c", "open(u'h\\xe9llo.txt', 'w'); import sys; print(sys.getfilesystemencoding())"]
+    expectedOutput: ['UTF-8']
+
+  # the print function should output UTF-8
+  - name: print_utf8
+    command: ["/usr/bin/python2.7", "-c", "print(u'h\\xe9llo.txt')"]
+    expectedOutput: ['h\xe9llo']
+
   - name: import_BaseHTTPServer
     command: ["/usr/bin/python2.7", "-c", "import BaseHTTPServer"]
     exitCode: 0

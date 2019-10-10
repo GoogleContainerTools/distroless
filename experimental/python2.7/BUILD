@@ -46,6 +46,11 @@ DISTRO_DEBS = {
     entrypoint = [
         "/usr/bin/python2.7",
     ],
+    # Use UTF-8 encoding for file system and stdout: match modern Linux
+    env = {
+        "LANG": "C.UTF-8",
+        "PYTHONIOENCODING": "UTF-8",
+    },
     symlinks = {
         "/usr/bin/python": "/usr/bin/python2.7",
     },

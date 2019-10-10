@@ -55,6 +55,8 @@ DISTRO_VERSION = {
     entrypoint = [
         "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
     ],
+    # Use UTF-8 encoding for file system: match modern Linux
+    env = {"LANG": "C.UTF-8"},
     symlinks = {
         "/usr/bin/python": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
         "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
