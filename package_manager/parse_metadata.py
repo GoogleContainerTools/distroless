@@ -13,7 +13,7 @@
 # limitations under the License.
 import re
 
-from six import itervalues
+import six
 
 INDEX_KEY = "Package"
 FILENAME_KEY = "Filename"
@@ -22,6 +22,11 @@ SEPARATOR = ":"
 def parse_package_metadata(data, mirror_url, snapshot, package_prefix):
     """ Takes a debian package list, changes the relative urls to absolute urls,
     and saves the resulting metadata as a json file """
+
+    # this is called with the output of gzip.open, but should be strings
+    if isinstance(data, six.binary_type):
+        data = data.decode('utf-8')
+
     raw_entries = [line.rstrip() for line in data.splitlines()]
     parsed_entries = {}
     current_key = None
@@ -55,7 +60,7 @@ def parse_package_metadata(data, mirror_url, snapshot, package_prefix):
     # The Filename Key is a relative url pointing to the .deb package
     # Here, we're rewriting the metadata with the absolute urls,
     # which is a concatenation of the mirror + '/debian/' + relative_path
-    for pkg_data in itervalues(parsed_entries):
+    for pkg_data in six.itervalues(parsed_entries):
         if package_prefix:
             pkg_data[FILENAME_KEY] = package_prefix + pkg_data[FILENAME_KEY]
         else:
