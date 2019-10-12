@@ -17,6 +17,18 @@ DISTRO_REPOSITORY = {
     "-debian10": "@debian10",
 }
 
+# debian9 defaults to root for backwards compatibility
+# debian10 defaults to nonroot for security (e.g. the runc escape CVE-2019-5736)
+DISTRO_USERS = {
+    "-debian9": 0,
+    "-debian10": NONROOT,
+}
+
+DISTRO_WORKDIRS = {
+    "-debian9": "/",
+    "-debian10": "/home/nonroot",
+}
+
 # Replicate everything for debian9 and debian10
 def distro_components(distro_suffix):
     cacerts(
@@ -51,6 +63,8 @@ def distro_components(distro_suffix):
             DISTRO_REPOSITORY[distro_suffix] + "//file:os_release.tar",
             ":cacerts" + distro_suffix + ".tar",
         ],
+        user = "%d" % DISTRO_USERS[distro_suffix],
+        workdir = DISTRO_WORKDIRS[distro_suffix],
     )
 
     container_image(

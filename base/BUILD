@@ -9,7 +9,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 NOBODY = 65534
 
-# Create /etc/passwd with the root user
+# Create /etc/passwd with root, nobody, and nonroot users
 passwd_entry(
     name = "root_user",
     gid = 0,
