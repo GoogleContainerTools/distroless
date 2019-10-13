@@ -15,7 +15,7 @@ container_bundle(
         "gcr.io/{PROJECT_ID}/static:debian10": "//base:static_debian10",
         "gcr.io/{PROJECT_ID}/static:latest": "//base:static",
         "gcr.io/{PROJECT_ID}/static:nonroot": "//base:static-nonroot",
-        "gcr.io/{PROJECT_ID}/static:nonroot_debian10": "//base:static-nonroot_debian10",
+        "gcr.io/{PROJECT_ID}/static:nonroot-debian10": "//base:static-nonroot_debian10",
         "gcr.io/{PROJECT_ID}/cc:debug": "//cc:debug",
         "gcr.io/{PROJECT_ID}/java:latest": "//java:java8",
         "gcr.io/{PROJECT_ID}/java:8": "//java:java8",
