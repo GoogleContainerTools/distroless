@@ -17,7 +17,7 @@ jdk:
 install:
   - export PATH=$PATH:$HOME/bin && mkdir -p $HOME/bin
   - wget https://github.com/bazelbuild/buildtools/releases/download/0.22.0/buildifier && chmod +x buildifier && mv buildifier $HOME/bin/
-  - wget https://github.com/bazelbuild/bazel/releases/download/0.28.1/bazel-0.28.1-linux-x86_64 && mv bazel-0.28.1-linux-x86_64 bazel && chmod +x bazel && mv bazel $HOME/bin/
+  - wget https://github.com/bazelbuild/bazel/releases/download/1.0.0/bazel-1.0.0-linux-x86_64 && mv bazel-1.0.0-linux-x86_64 bazel && chmod +x bazel && mv bazel $HOME/bin/
   - sudo pip install pylint
 
 script:
