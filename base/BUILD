@@ -113,73 +113,73 @@ go_binary(
 )
 
 # Replicate the containers and tests for debian9 and debian10
-distro_components("-debian9")
+distro_components("_debian9")
 
-distro_components("-debian10")
+distro_components("_debian10")
 
 # alias debian9 as the default images
 alias(
     name = "static",
-    actual = ":static-debian9",
+    actual = ":static_debian9",
 )
 
 alias(
     name = "static-nonroot",
-    actual = ":static-nonroot-debian9",
+    actual = ":static-nonroot_debian9",
 )
 
 alias(
     name = "base",
-    actual = ":base-debian9",
+    actual = ":base_debian9",
 )
 
 alias(
     name = "base-nonroot",
-    actual = ":base-nonroot-debian9",
+    actual = ":base-nonroot_debian9",
 )
 
 alias(
     name = "debug",
-    actual = ":debug-debian9",
+    actual = ":debug_debian9",
 )
 
 alias(
     name = "debug-nonroot",
-    actual = ":debug-nonroot-debian9",
+    actual = ":debug-nonroot_debian9",
 )
 
 container_test(
-    name = "base_release_test-debian9",
+    name = "base_release_test_debian9",
     configs = ["testdata/debian9.yaml"],
     image = ":base",
 )
 
 container_test(
-    name = "base_release_test-debian10",
+    name = "base_release_test_debian10",
     configs = ["testdata/debian10.yaml"],
-    image = ":base-debian10",
+    image = ":base_debian10",
 )
 
 container_test(
-    name = "debug_release_test-debian9",
+    name = "debug_release_test_debian9",
     configs = ["testdata/debian9.yaml"],
     image = ":debug",
 )
 
 container_test(
-    name = "debug_release_test-debian10",
+    name = "debug_release_test_debian10",
     configs = ["testdata/debian10.yaml"],
-    image = ":debug-debian10",
+    image = ":debug_debian10",
 )
 
 container_test(
-    name = "static_release_test-debian9",
+    name = "static_release_test_debian9",
     configs = ["testdata/debian9.yaml"],
     image = ":static",
 )
 
 container_test(
-    name = "static_release_test-debian10",
+    name = "static_release_test_debian10",
     configs = ["testdata/debian10.yaml"],
-    image = ":static-debian10",
+    image = ":static_debian10",
 )
