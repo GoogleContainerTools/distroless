@@ -119,3 +119,21 @@ def distro_components(distro_suffix):
         configs = ["testdata/certs.yaml"],
         image = ":check_certs_image" + distro_suffix,
     )
+
+    container_test(
+        name = "base_release" + distro_suffix + "_test",
+        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+        image = ":base" + distro_suffix,
+    )
+
+    container_test(
+        name = "debug_release" + distro_suffix + "_test",
+        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+        image = ":debug" + distro_suffix,
+    )
+
+    container_test(
+        name = "static_release" + distro_suffix + "_test",
+        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+        image = ":static" + distro_suffix,
+    )

@@ -147,39 +147,3 @@ alias(
     name = "debug-nonroot",
     actual = ":debug-nonroot_debian9",
 )
-
-container_test(
-    name = "base_release_test_debian9",
-    configs = ["testdata/debian9.yaml"],
-    image = ":base",
-)
-
-container_test(
-    name = "base_release_test_debian10",
-    configs = ["testdata/debian10.yaml"],
-    image = ":base_debian10",
-)
-
-container_test(
-    name = "debug_release_test_debian9",
-    configs = ["testdata/debian9.yaml"],
-    image = ":debug",
-)
-
-container_test(
-    name = "debug_release_test_debian10",
-    configs = ["testdata/debian10.yaml"],
-    image = ":debug_debian10",
-)
-
-container_test(
-    name = "static_release_test_debian9",
-    configs = ["testdata/debian9.yaml"],
-    image = ":static",
-)
-
-container_test(
-    name = "static_release_test_debian10",
-    configs = ["testdata/debian10.yaml"],
-    image = ":static_debian10",
-)
