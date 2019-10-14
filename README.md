@@ -43,16 +43,16 @@ Follow these steps to get started:
 
 * Pick the right base image for your application stack.
   We publish the following distroless base images on `gcr.io`:
-    * [gcr.io/distroless/static](base/README.md)
-    * [gcr.io/distroless/base](base/README.md)
-    * [gcr.io/distroless/java](java/README.md)
-    * [gcr.io/distroless/cc](cc/README.md)
+    * [gcr.io/distroless/static-debian10](base/README.md)
+    * [gcr.io/distroless/base-debian10](base/README.md)
+    * [gcr.io/distroless/java-debian10](java/README.md)
+    * [gcr.io/distroless/cc-debian10](cc/README.md)
 
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
-    * [gcr.io/distroless/python2.7](experimental/python2.7/README.md)
-    * [gcr.io/distroless/python3](experimental/python3/README.md)
+    * [gcr.io/distroless/python2.7-debian10](experimental/python2.7/README.md)
+    * [gcr.io/distroless/python3-debian10](experimental/python3/README.md)
     * [gcr.io/distroless/nodejs](experimental/nodejs/README.md)
-    * [gcr.io/distroless/java/jetty](java/jetty/README.md)
+    * [gcr.io/distroless/java/jetty-debian10](java/jetty/README.md)
     * [gcr.io/distroless/dotnet](experimental/dotnet/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
@@ -60,13 +60,12 @@ Follow these steps to get started:
   The basic idea is that you'll have one stage to build your application artifacts, and insert them into your runtime distroless image.
   If you'd like to learn more, please see the documentation on [multi-stage builds](https://docs.docker.com/engine/userguide/eng-image/multistage-build/).
 
-
 #### Examples with Docker
   Here's a quick example for go:
 
   ```dockerfile
   # Start by building the application.
-  FROM golang:1.12 as build
+  FROM golang:1.13-buster as build
 
   WORKDIR /go/src/app
   ADD . /go/src/app
@@ -76,7 +75,7 @@ Follow these steps to get started:
   RUN go build -o /go/bin/app
 
   # Now copy it into our base image.
-  FROM gcr.io/distroless/base
+  FROM gcr.io/distroless/base-debian10
   COPY --from=build /go/bin/app /
   CMD ["/app"]
   ```
@@ -138,9 +137,13 @@ See here for more information on how these images are [built and released](RELEA
 
 For full documentation on how to use Jib to generate Docker images from Maven and Gradle, see the [GoogleContainerTools/jib](http://github.com/GoogleContainerTools/jib) repository.
 
+### Base Operating System
+
+Originally these images were based on Debian 9 (stretch). We now also provide images based on Debian 10 (buster), and tag images with `-debian9` or `-debian10` suffixes. We recommend referencing the appropriate distribution explicitly, since otherwise your build will break when the next Debian version is released.
+
 ### CVE and Patching
 
-Distroless tracks Debian stable (9 or Stretch currently) and stable-security. Check https://www.debian.org/security/ for any patches to address security issues and update. Check issues and PRs for the patch and update your builds.
+Distroless tracks Debian 9 (stretch, oldstable currently) and Debian 10. A commit is needed in this repository to update the snapshot version when security fixes are release. Check https://www.debian.org/security/ for any patches to address security issues and update. Check issues and PRs for the patch and update your builds.
 
 ### Debug Images
 
@@ -156,12 +159,8 @@ cd examples/python2.7/
 edit the ```Dockerfile``` to change the final image to ```:debug```:
 
 ```dockerfile
-FROM python:2.7-slim AS build-env
-ADD . /app
-WORKDIR /app
-
 FROM gcr.io/distroless/python2.7:debug
-COPY --from=build-env /app /app
+COPY . /app
 WORKDIR /app
 CMD ["hello.py", "/etc"]
 ```
@@ -178,6 +177,6 @@ $ docker run --entrypoint=sh -ti my_debug_image
 /app # ls
 BUILD       Dockerfile  hello.py
 ```
-> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java:11`, use the tag `<existing tag>-debug` instead, for example `gcr.io/distroless/java:11-debug`.
+> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java-debian10:11`, use the tag `<existing tag>-debug` instead, for example `gcr.io/distroless/java-debian10:11-debug`.
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
