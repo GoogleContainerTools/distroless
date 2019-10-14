@@ -6,17 +6,17 @@ load("@package_bundle//file:packages.bzl", "packages")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 
 DISTRO_PACKAGES = {
-    "-debian9": packages,
-    "-debian10": packages_debian10,
+    "_debian9": packages,
+    "_debian10": packages_debian10,
 }
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
-    "-debian9": [
+    "_debian9": [
         "libncursesw5",
         "libtinfo5",
     ],
-    "-debian10": [
+    "_debian10": [
         "libncursesw6",
         "libtinfo6",
     ],
@@ -60,27 +60,27 @@ DISTRO_DEBS = {
 ) for mode in [
     "",
     ":debug",
-] for distro_suffix in ("-debian9", "-debian10")]
+] for distro_suffix in ("_debian9", "_debian10")]
 
 [container_test(
     name = "python27" + distro_suffix + "_test",
     configs = ["testdata/python27.yaml"],
     image = ":python27" + distro_suffix,
-) for distro_suffix in ("-debian9", "-debian10")]
+) for distro_suffix in ("_debian9", "_debian10")]
 
 # tests for version-specific things
 container_test(
     name = "debian9_test",
     size = "medium",
     configs = ["testdata/debian9.yaml"],
-    image = ":python27-debian9",
+    image = ":python27_debian9",
 )
 
 container_test(
     name = "debian10_test",
     size = "medium",
     configs = ["testdata/debian10.yaml"],
-    image = ":python27-debian10",
+    image = ":python27_debian10",
 )
 
 genrule(
@@ -94,12 +94,12 @@ genrule(
 sh_binary(
     name = "generate_ldconfig_cache",
     srcs = ["generate_ldconfig_cache.py"],
-    data = [":python27-debian9"],
+    data = [":python27_debian9"],
 )
 
 genrule(
     name = "ld_so_cache_new",
-    srcs = [":python27-debian9"],
+    srcs = [":python27_debian9"],
     outs = ["ld.so.cache.new"],
     cmd = "$(location :generate_ldconfig_cache) $(OUTS)",
     tools = [":generate_ldconfig_cache"],
@@ -121,10 +121,10 @@ sh_test(
 # Provide aliases so the default images use debian9
 alias(
     name = "python27",
-    actual = ":python27-debian9",
+    actual = ":python27_debian9",
 )
 
 alias(
     name = "debug",
-    actual = ":debug-debian9",
+    actual = ":debug_debian9",
 )

@@ -8,13 +8,13 @@ load("//cacerts:cacerts.bzl", "cacerts")
 NONROOT = 65532
 
 DISTRO_PACKAGES = {
-    "-debian9": packages,
-    "-debian10": packages_debian10,
+    "_debian9": packages,
+    "_debian10": packages_debian10,
 }
 
 DISTRO_REPOSITORY = {
-    "-debian9": "@debian_stretch",
-    "-debian10": "@debian10",
+    "_debian9": "@debian_stretch",
+    "_debian10": "@debian10",
 }
 
 # Replicate everything for debian9 and debian10
@@ -96,13 +96,13 @@ def distro_components(distro_suffix):
     )
 
     container_test(
-        name = "debug_test" + distro_suffix,
+        name = "debug" + distro_suffix + "_test",
         configs = ["testdata/debug.yaml"],
         image = ":debug" + distro_suffix,
     )
 
     container_test(
-        name = "base_test" + distro_suffix,
+        name = "base" + distro_suffix + "_test",
         configs = ["testdata/base.yaml"],
         image = ":base" + distro_suffix,
     )
@@ -115,7 +115,25 @@ def distro_components(distro_suffix):
     )
 
     container_test(
-        name = "certs_test" + distro_suffix,
+        name = "certs" + distro_suffix + "_test",
         configs = ["testdata/certs.yaml"],
         image = ":check_certs_image" + distro_suffix,
+    )
+
+    container_test(
+        name = "base_release" + distro_suffix + "_test",
+        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+        image = ":base" + distro_suffix,
+    )
+
+    container_test(
+        name = "debug_release" + distro_suffix + "_test",
+        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+        image = ":debug" + distro_suffix,
+    )
+
+    container_test(
+        name = "static_release" + distro_suffix + "_test",
+        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+        image = ":static" + distro_suffix,
     )
