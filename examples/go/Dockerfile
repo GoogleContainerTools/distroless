@@ -12,11 +12,11 @@ RUN go mod download
 ADD . /go/src/app
 
 # build our binary
-RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o /go/bin/app
+RUN CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags '-w -s -extldflags "-static"' -o /go/bin/app
 
 # ---
 
-FROM gcr.io/distroless/base
+FROM gcr.io/distroless/static
 
 # copy our built binary
 COPY --from=builder --chown=nonroot /go/bin/app /app
