@@ -28,7 +28,7 @@ dpkg_src(
     arch = "amd64",
     distro = "stretch",
     sha256 = "2b13362808b7bd90d24db2e0804c799288694ae44bd7e3d123becc191451fc67",
-    snapshot = "20191007T205138Z",
+    snapshot = "20191028T085816Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -36,16 +36,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "bd6367868cc115619cdc97d2bdb33c913c3b114827074220df42214de542647f",
-    snapshot = "20191007T205138Z",
+    sha256 = "e9170a8f37a1bbb8ce2df49e6ab557d65ef809d19bf607fd91bcf8ba6b85e3f6",
+    snapshot = "20191028T085816Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191007T195307Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191007T195307Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "bf33fc3876b644e546ce595b60437b75b750842ae85a98a47b2c22dc1f78826e",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191028T085816Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191028T085816Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "acea7d952d8ab84de3cd2c26934a1bcf5ad244d344ecdb7b2d0173712bbd9d7b",
 )
 
 dpkg_list(
@@ -161,10 +161,10 @@ dpkg_list(
 http_archive(
     name = "jetty",
     build_file = "//:BUILD.jetty",
-    sha256 = "c66abd7323f6df5b28690e145d2ae829dbd12b8a2923266fa23ab5139a9303c5",
-    strip_prefix = "jetty-distribution-9.4.14.v20181114/",
+    sha256 = "1b9ec532cd9b94550fad655e066a1f9cc2d350a1c79daea85d5c56fdbcd9aaa8",
+    strip_prefix = "jetty-distribution-9.4.22.v20191022/",
     type = "tar.gz",
-    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.14.v20181114/jetty-distribution-9.4.14.v20181114.tar.gz"],
+    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.22.v20191022/jetty-distribution-9.4.22.v20191022.tar.gz"],
 )
 
 # Node

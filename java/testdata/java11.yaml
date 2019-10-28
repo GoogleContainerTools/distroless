@@ -21,4 +21,4 @@ fileExistenceTests:
 metadataTest:
   env:
     - key: 'JAVA_VERSION'
-      value: '11.0.4'
+      value: '11.0.5'
