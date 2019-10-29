@@ -280,15 +280,14 @@ dpkg_list(
 
         #java
         "zlib1g",
-        # "libjpeg62-turbo",
-        # "libpng16-16",
-        # "liblcms2-2",
-        # "libfreetype6",
-        # "fonts-dejavu-core",
-        # "fontconfig-config",
-        # "libfontconfig1",
-        # "openjdk-8-jre-headless",
-        # "openjdk-11-jre-headless",
+        "libjpeg62-turbo",
+        "libpng16-16",
+        "liblcms2-2",
+        "libfreetype6",
+        "fonts-dejavu-core",
+        "fontconfig-config",
+        "libfontconfig1",
+        "openjdk-11-jre-headless",
 
         #python
         "dash",
