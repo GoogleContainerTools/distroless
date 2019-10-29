@@ -171,10 +171,10 @@ http_archive(
 http_archive(
     name = "nodejs",
     build_file = "//experimental/nodejs:BUILD.nodejs",
-    sha256 = "2f0397bb81c1d0c9901b9aff82a933257bf60f3992227b86107111a75b9030d9",
-    strip_prefix = "node-v10.16.3-linux-x64/",
+    sha256 = "417bdc5402f6510fe1a5a898a9cdf1d67bd0202b5f014051c382f05358999534",
+    strip_prefix = "node-v10.17.0-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v10.16.3/node-v10.16.3-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-x64.tar.gz"],
 )
 
 # dotnet
