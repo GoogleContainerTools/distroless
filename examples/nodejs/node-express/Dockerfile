@@ -1,6 +1,7 @@
-FROM node:8.15.0 AS build-env
+FROM node:10.17.0 AS build-env
 ADD . /app
 WORKDIR /app
+RUN npm install --production
 
 FROM gcr.io/distroless/nodejs
 COPY --from=build-env /app /app

@@ -1,7 +1,11 @@
 {
-  "name": "Distroless express",
+  "name": "distroless-express",
   "version": "1.0.0",
   "description": "Distroless express node.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleContainerTools/distroless.git"
+  },
   "dependencies": {
     "express": "4.16.3"
   },
