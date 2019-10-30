@@ -249,7 +249,7 @@ dpkg_src(
     arch = "amd64",
     distro = "buster",
     sha256 = "ca19e4187523f4b087a2e7aaa2662c6a0b46dc81ff2f3dd44d9c5d95df0df212",
-    snapshot = "20191007T205138Z",
+    snapshot = "20191028T085816Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -358,7 +358,7 @@ dpkg_list(
 
 dpkg_src(
     name = "debian10_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191007T195307Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191007T195307Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "ddc8d3e9708f1a44a4329fd748dc2fe128e08743a3590cf31dfc0ed3d914ff9c",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191028T085816Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191028T085816Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "dace61a2f1c4031f33dbc78e416a7211fad9946a3d997e96256561ed92b034be",
 )
