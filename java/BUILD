@@ -53,18 +53,8 @@ cacerts_java(
     },
     tars = [":cacerts_java"],
 ) for (distro_suffix, rule_name, jre_deb, java_executable_path) in [
-    (
-        "_debian9",
-        "java8",
-        "openjdk-8-jre-headless",
-        "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
-    ),
-    (
-        "_debian9",
-        "java8_debug",
-        "openjdk-8-jre-headless",
-        "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
-    ),
+    ("_debian9", "java8", "openjdk-8-jre-headless", "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"),
+    ("_debian9", "java8_debug", "openjdk-8-jre-headless", "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"),
     ("_debian9", "java11", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
     ("_debian9", "java11_debug", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
     ("_debian10", "java11", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
