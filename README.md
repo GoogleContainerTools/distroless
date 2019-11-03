@@ -7,6 +7,15 @@ They do not contain package managers, shells or any other programs you would exp
 
 For more information, see this [talk](https://swampup2017.sched.com/event/A6CW/distroless-docker-containerizing-apps-not-vms?iframe=no&w=100%&sidebar=yes&bg=no) ([video](https://www.youtube.com/watch?v=lviLZFciDv4)).
 
+## Community
+
+* On kubernetes.slack.com there is a channel by the name of `#distroless`
+* Mailinglist group at https://groups.google.com/g/distroless-users
+
+## Development
+
+Please see CONTRIBUTING.md for more information on contributing to the project.
+
 ## Why should I use distroless images?
 
 Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google
