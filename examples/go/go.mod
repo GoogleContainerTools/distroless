@@ -1,3 +1,3 @@
-module github.com/GoogleContainerTools/distroless/blob/master/examples/go
+module github.com/GoogleContainerTools/distroless/examples/go
 
 go 1.13
