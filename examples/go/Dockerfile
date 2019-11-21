@@ -18,11 +18,11 @@ RUN CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags '-w -s -extldflags "-s
 
 FROM gcr.io/distroless/static
 
-# copy our built binary
-COPY --from=builder --chown=nonroot /go/bin/app /app
-
 # run as unprivileged user
 USER nonroot
 
  # command / entrypoint of container
 CMD ["/app"]
+
+# copy our built binary (chown isn't strictly necessary since USER is already set)
+COPY --from=builder --chown=nonroot /go/bin/app /app
