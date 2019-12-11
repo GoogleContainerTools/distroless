@@ -151,7 +151,7 @@ dpkg_list(
     # If there was a security fix to a package before the stable release, this will find
     # the older security release. This happened for stretch libc6.
     sources = [
-        "@debian_stretch_security//file:PackNodeages.json",
+        "@debian_stretch_security//file:Packages.json",
         "@debian_stretch_backports//file:Packages.json",
         "@debian_stretch//file:Packages.json",
     ],
