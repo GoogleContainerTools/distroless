@@ -151,7 +151,7 @@ dpkg_list(
     # If there was a security fix to a package before the stable release, this will find
     # the older security release. This happened for stretch libc6.
     sources = [
-        "@debian_stretch_security//file:Packages.json",
+        "@debian_stretch_security//file:PackNodeages.json",
         "@debian_stretch_backports//file:Packages.json",
         "@debian_stretch//file:Packages.json",
     ],
@@ -172,7 +172,7 @@ http_archive(
     name = "nodejs",
     build_file = "//experimental/nodejs:BUILD.nodejs",
     sha256 = "074a6129da34b768b791f39e8b74c6e4ab3349d1296f1a303ef3547a7f9cf9be",
-    strip_prefix = "node-v12.113.1-linux-x64/",
+    strip_prefix = "node-v12.13.1-linux-x64/",
     type = "tar.gz",
     urls = ["https://nodejs.org/download/release/latest-v12.x/node-v12.13.1-linux-x64.tar.gz"],
 )
