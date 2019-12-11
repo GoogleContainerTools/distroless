@@ -1,4 +1,4 @@
-FROM node:10.17.0 AS build-env
+FROM node:12.13.1 AS build-env
 ADD . /app
 WORKDIR /app
 RUN npm install --production
