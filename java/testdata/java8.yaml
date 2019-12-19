@@ -18,6 +18,9 @@ fileExistenceTests:
   - name: no-shell
     path: "/bin/sh"
     shouldExist: false
+  - name: no-javac
+    path: "/usr/lib/jvm/java-8-openjdk-amd64/bin/javac"
+    shouldExist: false
 metadataTest:
   entrypoint: ["/usr/bin/java", "-jar"]
   env:
