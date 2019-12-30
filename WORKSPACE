@@ -306,6 +306,7 @@ dpkg_list(
         "libtinfo6",
         "libuuid1",
         "libncursesw6",
+        "python3-distutils",
         "python3.7-minimal",
 
         #dotnet
