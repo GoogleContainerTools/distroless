@@ -26,6 +26,7 @@ DISTRO_DEBS = {
         "libpython3.7-stdlib",
         "libtinfo6",
         "libuuid1",
+        "python3-distutils",
         "python3.7-minimal",
     ],
 }

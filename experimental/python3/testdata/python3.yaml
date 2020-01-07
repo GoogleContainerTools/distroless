@@ -12,6 +12,12 @@ commandTests:
     command: ["/usr/bin/python3", "-c", "import ctypes.util; ctypes.CDLL(ctypes.util.find_library('rt')).timer_create"]
     exitCode: 0
 
+  # debian's default python3 includes a partial version of distutils causing virtualenv to fail
+  # ensure we have the full version so virtualenvs work with distroless
+  - name: distutils_works
+    command: ["/usr/bin/python3", "-c", "import distutils.dist"]
+    exitCode: 0
+
   # file names are UTF-8: default for modern Linux systems
   # The \xe9 backslash must be double-escaped to avoid YAML string parsing weirdness
   - name: filesystem_utf8
