@@ -34,15 +34,14 @@ file with the JKS file at etc/ssl/certs/java/cacerts.
 """,
     attrs = {
         "cacerts_tar": attr.label(
-            allow_files = [".tar"],
-            single_file = True,
+            allow_single_file = [".tar"],
             mandatory = True,
         ),
         "_jksutil": attr.label(
             default = Label("//cacerts/jksutil:jksutil"),
             cfg = "host",
             executable = True,
-            single_file = True,
+            allow_single_file = True,
         ),
     },
     executable = False,
