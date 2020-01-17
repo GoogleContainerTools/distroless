@@ -3,15 +3,6 @@ commandTests:
   - name: hello
     command: ["/usr/bin/python3", "-c", "print('Hello World')"]
     expectedOutput: ['Hello World']
-  - name: version
-    command: ["/usr/bin/python3", "--version"]
-    expectedOutput: ["Python 3.5.3"]
-  - name: stdlib
-    command: ["/usr/bin/python3", "-c", "import argparse"]
-    exitCode: 0
-  - name: symlink 
-    command: ["/usr/bin/python", "--version"]
-    expectedOutput: ["Python 3.5.3"]
   # parts of the standard library assume /bin/sh exists via os.system and subprocess.Popen
   - name: use_shell
     command: ["/usr/bin/python3", "-c",
@@ -20,6 +11,23 @@ commandTests:
   - name: use_ctypes_glibc
     command: ["/usr/bin/python3", "-c", "import ctypes.util; ctypes.CDLL(ctypes.util.find_library('rt')).timer_create"]
     exitCode: 0
+
+  # debian's default python3 includes a partial version of distutils causing virtualenv to fail
+  # ensure we have the full version so virtualenvs work with distroless
+  - name: distutils_works
+    command: ["/usr/bin/python3", "-c", "import distutils.dist"]
+    exitCode: 0
+
+  # file names are UTF-8: default for modern Linux systems
+  # The \xe9 backslash must be double-escaped to avoid YAML string parsing weirdness
+  - name: filesystem_utf8
+    command: ["/usr/bin/python3", "-c", "open(u'h\\xe9llo', 'w'); import sys; print(sys.getfilesystemencoding())"]
+    expectedOutput: ['utf-8']
+
+  # the print function should output UTF-8
+  - name: print_utf8
+    command: ["/usr/bin/python3", "-c", "print(u'h\\xe9llo.txt')"]
+    expectedOutput: ['h\xe9llo']
 
   - name: import_abc
     command: ["/usr/bin/python3", "-c", "import abc"]
@@ -135,8 +143,14 @@ commandTests:
   - name: import_datetime
     command: ["/usr/bin/python3", "-c", "import datetime"]
     exitCode: 0
+  - name: import_native_dbm
+    command: ["/usr/bin/python3", "-c", "import _dbm"]
+    exitCode: 0
   - name: import_dbm
     command: ["/usr/bin/python3", "-c", "import dbm"]
+    exitCode: 0
+  - name: import_native_decimal
+    command: ["/usr/bin/python3", "-c", "import _decimal"]
     exitCode: 0
   - name: import_decimal
     command: ["/usr/bin/python3", "-c", "import decimal"]
@@ -152,9 +166,6 @@ commandTests:
     exitCode: 0
   - name: import_doctest
     command: ["/usr/bin/python3", "-c", "import doctest"]
-    exitCode: 0
-  - name: import_dummy_threading
-    command: ["/usr/bin/python3", "-c", "import dummy_threading"]
     exitCode: 0
   - name: import_email
     command: ["/usr/bin/python3", "-c", "import email"]
@@ -231,9 +242,6 @@ commandTests:
   - name: import_http
     command: ["/usr/bin/python3", "-c", "import http"]
     exitCode: 0
-  - name: import_idlelib
-    command: ["/usr/bin/python3", "-c", "import idlelib"]
-    exitCode: 0
   - name: import_imaplib
     command: ["/usr/bin/python3", "-c", "import imaplib"]
     exitCode: 0
@@ -264,9 +272,6 @@ commandTests:
   - name: import_keyword
     command: ["/usr/bin/python3", "-c", "import keyword"]
     exitCode: 0
-  - name: import_lib2to3
-    command: ["/usr/bin/python3", "-c", "import lib2to3"]
-    exitCode: 0
   - name: import_linecache
     command: ["/usr/bin/python3", "-c", "import linecache"]
     exitCode: 0
@@ -281,9 +286,6 @@ commandTests:
     exitCode: 0
   - name: import_macpath
     command: ["/usr/bin/python3", "-c", "import macpath"]
-    exitCode: 0
-  - name: import_macurl2path
-    command: ["/usr/bin/python3", "-c", "import macurl2path"]
     exitCode: 0
   - name: import_mailbox
     command: ["/usr/bin/python3", "-c", "import mailbox"]

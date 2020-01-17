@@ -1,24 +1,21 @@
 """A rule to unpack ca certificates from the debian package."""
 
 def _impl(ctx):
-    args = "%s %s %s %s" % (
-        ctx.executable._extract.path,
-        ctx.file.deb.path,
-        ctx.outputs.tar.path,
-        ctx.outputs.deb.path,
-    )
-
-    ctx.action(
-        command = args,
-        inputs = [ctx.executable._extract, ctx.file.deb],
+    ctx.actions.run(
+        executable = ctx.executable._extract,
+        arguments = [
+            ctx.file.deb.path,
+            ctx.outputs.tar.path,
+            ctx.outputs.deb.path,
+        ],
+        inputs = [ctx.file.deb],
         outputs = [ctx.outputs.tar, ctx.outputs.deb],
     )
 
 cacerts = rule(
     attrs = {
         "deb": attr.label(
-            allow_files = [".deb"],
-            single_file = True,
+            allow_single_file = [".deb"],
             mandatory = True,
         ),
         # Implicit dependencies.

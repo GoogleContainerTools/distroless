@@ -1,0 +1,12 @@
+schemaVersion: "1.0.0"
+commandTests:
+  - name: version
+    command: ["/usr/bin/python3", "--version"]
+    expectedOutput: ["Python 3.7.3"]
+  - name: symlink
+    command: ["/usr/bin/python", "--version"]
+    expectedOutput: ["Python 3.7.3"]
+  # Python3.7 depends on libuuid1, but the uuid module falls back to a slower mechanism
+  - name: import_native_uuid
+    command: ["/usr/bin/python3", "-c", "import _uuid"]
+    exitCode: 0

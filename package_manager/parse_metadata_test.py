@@ -8,7 +8,8 @@ class TestParseMetadata(unittest.TestCase):
     def setUp(self):
         current_dir = os.path.dirname(__file__)
         filename = os.path.join(current_dir, 'testdata', 'Packages.txt')
-        with open(filename) as f:
+        # parse_package_metadata is called on the binary output of gzip.open
+        with open(filename, 'rb') as f:
             data = f.read()
         self.data = data
         self.mirror_url = "http://debian.org"

@@ -1,17 +1,19 @@
 package(default_visibility = ["//visibility:public"])
 
+load(":base.bzl", "NONROOT", "distro_components")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
+load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+
+NOBODY = 65534
 
 # Create /etc/passwd with the root user
 passwd_entry(
     name = "root_user",
     gid = 0,
-    home = "/home",
+    home = "/root",
     info = "root",
     shell = "/sbin/nologin",
     uid = 0,
@@ -21,12 +23,22 @@ passwd_entry(
 passwd_entry(
     name = "nobody_user",
     create_home = False,
-    gid = 65534,
+    gid = NOBODY,
     home = "/nonexistent",
     info = "nobody",
     shell = "/sbin/nologin",
-    uid = 65534,
+    uid = NOBODY,
     username = "nobody",
+)
+
+passwd_entry(
+    name = "nonroot_user",
+    gid = NONROOT,
+    home = "/home/nonroot",
+    info = "nonroot",
+    shell = "/sbin/nologin",
+    uid = NONROOT,
+    username = "nonroot",
 )
 
 passwd_tar(
@@ -34,6 +46,7 @@ passwd_tar(
     entries = [
         ":root_user",
         ":nobody_user",
+        ":nonroot_user",
     ],
     passwd_file_pkg_dir = "etc",
 )
@@ -47,8 +60,14 @@ group_entry(
 
 group_entry(
     name = "nobody_group",
-    gid = 65534,
+    gid = NOBODY,
     groupname = "nobody",
+)
+
+group_entry(
+    name = "nonroot_group",
+    gid = NONROOT,
+    groupname = "nonroot",
 )
 
 group_entry(
@@ -70,6 +89,7 @@ group_file(
         ":nobody_group",
         ":tty_group",
         ":staff_group",
+        ":nonroot_group",
     ],
 )
 
@@ -81,73 +101,8 @@ pkg_tar(
 )
 
 load("@package_bundle//file:packages.bzl", "packages")
+load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 load("//cacerts:cacerts.bzl", "cacerts")
-
-cacerts(
-    name = "cacerts",
-    deb = packages["ca-certificates"],
-)
-
-# Create /tmp, too many things assume it exists.
-# tmp.tar has a /tmp with the correct permissions 01777
-# A tar is needed because at the moment there is no way to create a
-# directory with specific permissions.
-
-container_image(
-    name = "static",
-    debs = [
-        packages["base-files"],
-        packages["netbase"],
-        packages["tzdata"],
-    ],
-    env = {
-        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        # allows openssl to find the certificates by default
-        # TODO: We should run update-ca-certifaces, but that requires "openssl rehash"
-        # which would probably need to be run inside the container
-        "SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt",
-    },
-    tars = [
-        ":passwd",
-        ":group_tar",
-        ":tmp.tar",
-        ":nsswitch.tar",
-        "@debian_stretch//file:os_release.tar",
-        ":cacerts.tar",
-    ],
-)
-
-container_image(
-    name = "base",
-    base = ":static",
-    debs = [
-        packages["libc6"],
-        packages["libssl1.1"],
-        packages["openssl"],
-    ],
-)
-
-# A debug image with busybox available.
-container_image(
-    name = "debug",
-    base = ":base",
-    directory = "/",
-    entrypoint = ["/busybox/sh"],
-    env = {"PATH": "$$PATH:/busybox"},
-    tars = ["//experimental/busybox:busybox.tar"],
-)
-
-container_test(
-    name = "debug_test",
-    configs = ["testdata/debug.yaml"],
-    image = ":debug",
-)
-
-container_test(
-    name = "base_test",
-    configs = ["testdata/base.yaml"],
-    image = ":base",
-)
 
 go_binary(
     name = "check_certs",
@@ -157,15 +112,38 @@ go_binary(
     pure = "on",
 )
 
-container_image(
-    name = "check_certs_image",
-    base = "//base:base",
-    files = [":check_certs"],
-    visibility = ["//visibility:private"],
+# Replicate the containers and tests for debian9 and debian10
+distro_components("_debian9")
+
+distro_components("_debian10")
+
+# alias debian9 as the default images
+alias(
+    name = "static",
+    actual = ":static_debian9",
 )
 
-container_test(
-    name = "certs_test",
-    configs = ["testdata/certs.yaml"],
-    image = ":check_certs_image",
+alias(
+    name = "static-nonroot",
+    actual = ":static-nonroot_debian9",
+)
+
+alias(
+    name = "base",
+    actual = ":base_debian9",
+)
+
+alias(
+    name = "base-nonroot",
+    actual = ":base-nonroot_debian9",
+)
+
+alias(
+    name = "debug",
+    actual = ":debug_debian9",
+)
+
+alias(
+    name = "debug-nonroot",
+    actual = ":debug-nonroot_debian9",
 )

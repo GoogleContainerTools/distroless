@@ -18,7 +18,10 @@ fileExistenceTests:
   - name: no-shell
     path: "/bin/sh"
     shouldExist: false
+  - name: no-javac
+    path: "/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
+    shouldExist: false
 metadataTest:
   env:
     - key: 'JAVA_VERSION'
-      value: '11.0.3'
+      value: '11.0.5'

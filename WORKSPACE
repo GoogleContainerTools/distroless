@@ -5,11 +5,14 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "7be7dc01f1e0afdba6c8eb2b43d2fa01c743be1b9273ab1eaf6c233df078d705",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.16.5/rules_go-0.16.5.tar.gz"],
+    sha256 = "8df59f11fb697743cbb3f26cfb8750395f30471e9eabde0d174c3aebc7a1cd39",
+    urls = [
+        "https://storage.googleapis.com/bazel-mirror/github.com/bazelbuild/rules_go/releases/download/0.19.1/rules_go-0.19.1.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/0.19.1/rules_go-0.19.1.tar.gz",
+    ],
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -24,8 +27,8 @@ dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "da378b113f0b1edcf5b1f2c3074fd5476c7fd6e6df3752f824aad22e7547e699",
-    snapshot = "20190510T144732Z",
+    sha256 = "2b13362808b7bd90d24db2e0804c799288694ae44bd7e3d123becc191451fc67",
+    snapshot = "20191230T150135Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -33,16 +36,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "6317cdf1aa80ce6bb0ec99f2043a7399f021babc2a83b9f5ad190b0cd424d699",
-    snapshot = "20190510T144732Z",
+    sha256 = "ca26befa30c4cef5900e28ced7baf2f237b4d02550e00823e8c3967cb1615f8c",
+    snapshot = "20191230T150135Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20190510T162559Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20190510T162559Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "0645e7edacb45fa8fec510aa8105bfca2bce155b2a08a4fe9628093dc7405326",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191230T212302Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191230T212302Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "046a277f34b07c723f363f132eb6cb3485f25170ae426bc3ef146968b259f585",
 )
 
 dpkg_list(
@@ -85,7 +88,9 @@ dpkg_list(
         "fontconfig-config",
         "libfontconfig1",
         "openjdk-8-jre-headless",
+        "openjdk-8-jdk-headless",
         "openjdk-11-jre-headless",
+        "openjdk-11-jdk-headless",
 
         #python
         "libpython2.7-minimal",
@@ -97,9 +102,10 @@ dpkg_list(
         "libc-bin=2.24-11+deb9u4",
 
         #python3
+        "libmpdec2",
         "libpython3.5-minimal",
-        "python3.5-minimal",
         "libpython3.5-stdlib",
+        "python3.5-minimal",
 
         #dotnet
         "libcurl3",
@@ -134,7 +140,6 @@ dpkg_list(
         "libffi6",
         "libtasn1-6",
         "libsasl2-modules-db",
-        "libdb5.3",
         "libgcrypt20",
         "libgpg-error0",
         "libacl1",
@@ -158,20 +163,20 @@ dpkg_list(
 http_archive(
     name = "jetty",
     build_file = "//:BUILD.jetty",
-    sha256 = "c66abd7323f6df5b28690e145d2ae829dbd12b8a2923266fa23ab5139a9303c5",
-    strip_prefix = "jetty-distribution-9.4.14.v20181114/",
+    sha256 = "1b9ec532cd9b94550fad655e066a1f9cc2d350a1c79daea85d5c56fdbcd9aaa8",
+    strip_prefix = "jetty-distribution-9.4.22.v20191022/",
     type = "tar.gz",
-    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.14.v20181114/jetty-distribution-9.4.14.v20181114.tar.gz"],
+    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.22.v20191022/jetty-distribution-9.4.22.v20191022.tar.gz"],
 )
 
 # Node
 http_archive(
     name = "nodejs",
     build_file = "//experimental/nodejs:BUILD.nodejs",
-    sha256 = "dc004e5c0f39c6534232a73100c194bc1446f25e3a6a39b29e2000bb3d139d52",
-    strip_prefix = "node-v8.15.0-linux-x64/",
+    sha256 = "417bdc5402f6510fe1a5a898a9cdf1d67bd0202b5f014051c382f05358999534",
+    strip_prefix = "node-v10.17.0-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v8.15.0/node-v8.15.0-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-x64.tar.gz"],
 )
 
 # dotnet
@@ -187,25 +192,16 @@ http_archive(
 http_file(
     name = "busybox",
     executable = True,
-    sha256 = "b51b9328eb4e60748912e1c1867954a5cf7e9d5294781cae59ce225ed110523c",
-    urls = ["https://busybox.net/downloads/binaries/1.27.1-i686/busybox"],
+    sha256 = "d922ebe9067d8ed1b2b9cf326776de40a9b23d4518d674e28a3c14181549d28b",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-i686-uclibc/busybox"],
 )
 
 # Docker rules.
-# TODO: substitute below for "git_repository()" once rules_docker makes a new release > 0.7.0.
-#http_archive(
-#    name = "io_bazel_rules_docker",
-#    sha256 = "...",
-#    strip_prefix = "rules_docker-0.x.x",
-#    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.x.x.tar.gz"],
-#)
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
-
-git_repository(
+http_archive(
     name = "io_bazel_rules_docker",
-    commit = "5edd38041535c2c07ca982218d184a5769e329c6",
-    remote = "https://github.com/bazelbuild/rules_docker.git",
-    shallow_since = "1553713324 -0400",
+    sha256 = "413bb1ec0895a8d3249a01edf24b82fd06af3c8633c9fb833a0cb1d4b234d46d",
+    strip_prefix = "rules_docker-0.12.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.12.0.tar.gz"],
 )
 
 load(
@@ -238,3 +234,124 @@ load(
 )
 
 _go_image_repos()
+
+dpkg_src(
+    name = "debian10",
+    arch = "amd64",
+    distro = "buster",
+    sha256 = "6f21fb3369b618a55bac745bff10835ac96ec1a7d8ec709029c7e9f0fa44ad25",
+    snapshot = "20191230T150135Z",
+    url = "https://snapshot.debian.org/archive",
+)
+
+dpkg_list(
+    name = "package_bundle_debian10",
+    packages = [
+        "libc6",
+        "base-files",
+        "ca-certificates",
+        "openssl",
+        "libssl1.1",
+        "libbz2-1.0",
+        "libdb5.3",
+        "libffi6",
+        "liblzma5",
+        "libexpat1",
+        "libreadline7",
+        "libsqlite3-0",
+        "mime-support",
+        "netbase",
+        "readline-common",
+        "tzdata",
+
+        #c++
+        "libgcc1",
+        "libgomp1",
+        "libstdc++6",
+
+        #java
+        "zlib1g",
+        "libjpeg62-turbo",
+        "libpng16-16",
+        "liblcms2-2",
+        "libfreetype6",
+        "fonts-dejavu-core",
+        "fontconfig-config",
+        "libfontconfig1",
+        "openjdk-11-jre-headless",
+        "openjdk-11-jdk-headless",
+
+        #python
+        "dash",
+        "libc-bin",
+        "libpython2.7-minimal",
+        "libpython2.7-stdlib",
+        "python2.7-minimal",
+
+        #python3
+        "libmpdec2",
+        "libpython3.7-minimal",
+        "libpython3.7-stdlib",
+        "libtinfo6",
+        "libuuid1",
+        "libncursesw6",
+        "python3-distutils",
+        "python3.7-minimal",
+
+        #dotnet
+        # "libcurl3",
+        # "libgssapi-krb5-2",
+        # "libicu57",
+        # "liblttng-ust0",
+        # "libssl1.0.2",
+        # "libunwind8",
+        # "libuuid1",
+        # "zlib1g",
+        # "curl",
+        # "libcomerr2",
+        # "libidn2-0",
+        # "libk5crypto3",
+        # "libkrb5-3",
+        # "libldap-2.4-2",
+        # "libldap-common",
+        # "libsasl2-2",
+        # "libnghttp2-14",
+        # "libpsl5",
+        # "librtmp1",
+        # "libssh2-1",
+        # "libkeyutils1",
+        # "libkrb5support0",
+        # "libunistring0",
+        # "libgnutls30",
+        # "libgmp10",
+        # "libhogweed4",
+        # "libidn11",
+        # "libnettle6",
+        # "libp11-kit0",
+        # "libffi6",
+        # "libtasn1-6",
+        # "libsasl2-modules-db",
+        # "libgcrypt20",
+        # "libgpg-error0",
+        # "libacl1",
+        # "libattr1",
+        # "libselinux1",
+        # "libpcre3",
+        # "libbz2-1.0",
+        # "liblzma5",
+    ],
+    # Takes the first package found: security updates should go first
+    # If there was a security fix to a package before the stable release, this will find
+    # the older security release. This happened for stretch libc6.
+    sources = [
+        "@debian10_security//file:Packages.json",
+        "@debian10//file:Packages.json",
+    ],
+)
+
+dpkg_src(
+    name = "debian10_security",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191230T212302Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191230T212302Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "20299ed97c71f26e6c34d948a358e3ac9bb9f4709a90b6f38e6094b688f5270b",
+)
