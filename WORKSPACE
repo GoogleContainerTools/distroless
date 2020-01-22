@@ -211,6 +211,17 @@ load(
 
 container_repositories()
 
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
+# Used to generate java ca certs.
+container_pull(
+    name = "debian9",
+    # From tag: 2019-02-27-130449
+    digest = "sha256:fd26dfa474b76ef931e439537daba90bbd90d6c5bbdd0252616e6d87251cd9cd",
+    registry = "gcr.io",
+    repository = "google-appengine/debian9",
+)
+
 # Have the py_image dependencies for testing.
 load(
     "@io_bazel_rules_docker//python:image.bzl",

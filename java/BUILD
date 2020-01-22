@@ -20,13 +20,9 @@ DISTRO_VERSIONS = {
     "_debian10": versions_debian10,
 }
 
-[cacerts_java(
-    name = "cacerts_java" + distro_suffix,
-    cacerts_tar = "//base:cacerts" + distro_suffix + ".tar",
-) for distro_suffix in [
-    "_debian9",
-    "_debian10",
-]]
+cacerts_java(
+    name = "cacerts_java",
+)
 
 [container_image(
     name = rule_name + distro_suffix,
@@ -54,7 +50,7 @@ DISTRO_VERSIONS = {
     symlinks = {
         "/usr/bin/java": java_executable_path,
     },
-    tars = [":cacerts_java" + distro_suffix],
+    tars = [":cacerts_java"],
 ) for (distro_suffix, rule_name, java_debs, java_executable_path) in [
     (
         "_debian9",
