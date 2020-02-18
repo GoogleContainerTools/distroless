@@ -91,52 +91,65 @@ steps:
   args: ['tag', 'bazel/cc:debug_debian10', 'gcr.io/$PROJECT_ID/cc-debian10:debug']
 
 - name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//java:java8']
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+    bazel run --host_force_python=PY2 //java:java8_debian9
+    bazel run --host_force_python=PY2 //java:java8_debug_debian9
+    bazel run --host_force_python=PY2 //java:java11_debian9
+    bazel run --host_force_python=PY2 //java:java11_debug_debian9
+    bazel run --host_force_python=PY2 //java:java11_debian10
+    bazel run --host_force_python=PY2 //java:java11_debug_debian10
+    bazel run --host_force_python=PY2 //java/jetty:jetty_java8_debian9
+    bazel run --host_force_python=PY2 //java/jetty:jetty_java8_debug_debian9
+    bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debian9
+    bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debug_debian9
+    bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debian10
+    bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debug_debian10
 - name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:java8_debian9', 'gcr.io/$PROJECT_ID/java:latest']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:java8_debian9', 'gcr.io/$PROJECT_ID/java:8']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//java:java8_debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:java8_debug_debian9', 'gcr.io/$PROJECT_ID/java:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:java8_debug_debian9', 'gcr.io/$PROJECT_ID/java:8-debug']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//java:java11']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:java11_debian9', 'gcr.io/$PROJECT_ID/java:11']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//java:java11_debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:java11_debug_debian9', 'gcr.io/$PROJECT_ID/java:11-debug']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//java/jetty:jetty_java8']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:jetty_java8_debian9', 'gcr.io/$PROJECT_ID/java/jetty:latest']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:jetty_java8_debian9', 'gcr.io/$PROJECT_ID/java/jetty:java8']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//java/jetty:jetty_java8_debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:jetty_java8_debug_debian9', 'gcr.io/$PROJECT_ID/java/jetty:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:jetty_java8_debug_debian9', 'gcr.io/$PROJECT_ID/java/jetty:java8-debug']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//java/jetty:jetty_java11']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:jetty_java11_debian9', 'gcr.io/$PROJECT_ID/java/jetty:java11']
-
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '--host_force_python=PY2', '//java/jetty:jetty_java11_debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:jetty_java11_debug_debian9', 'gcr.io/$PROJECT_ID/java/jetty:java11-debug']
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+    docker tag bazel/java:java8_debian9 gcr.io/$PROJECT_ID/java:latest
+    docker tag bazel/java:java8_debian9 gcr.io/$PROJECT_ID/java:8
+    docker tag bazel/java:java8_debian9 gcr.io/$PROJECT_ID/java-debian9:latest
+    docker tag bazel/java:java8_debian9 gcr.io/$PROJECT_ID/java-debian9:8
+    docker tag bazel/java:java8_debug_debian9 gcr.io/$PROJECT_ID/java:debug
+    docker tag bazel/java:java8_debug_debian9 gcr.io/$PROJECT_ID/java:8-debug
+    docker tag bazel/java:java8_debug_debian9 gcr.io/$PROJECT_ID/java-debian9:debug
+    docker tag bazel/java:java8_debug_debian9 gcr.io/$PROJECT_ID/java-debian9:8-debug
+    docker tag bazel/java:java11_debian9 gcr.io/$PROJECT_ID/java:11
+    docker tag bazel/java:java11_debian9 gcr.io/$PROJECT_ID/java-debian9:11
+    docker tag bazel/java:java11_debug_debian9 gcr.io/$PROJECT_ID/java:11-debug
+    docker tag bazel/java:java11_debug_debian9 gcr.io/$PROJECT_ID/java-debian9:11-debug
+    docker tag bazel/java:java11_debian10 gcr.io/$PROJECT_ID/java-debian10:latest
+    docker tag bazel/java:java11_debian10 gcr.io/$PROJECT_ID/java-debian10:11
+    docker tag bazel/java:java11_debug_debian10 gcr.io/$PROJECT_ID/java-debian10:debug
+    docker tag bazel/java:java11_debug_debian10 gcr.io/$PROJECT_ID/java-debian10:11-debug
+    docker tag bazel/java/jetty:jetty_java8_debian9 gcr.io/$PROJECT_ID/java/jetty:latest
+    docker tag bazel/java/jetty:jetty_java8_debian9 gcr.io/$PROJECT_ID/java/jetty:java8
+    docker tag bazel/java/jetty:jetty_java8_debian9 gcr.io/$PROJECT_ID/java-debian9/jetty:latest
+    docker tag bazel/java/jetty:jetty_java8_debian9 gcr.io/$PROJECT_ID/java-debian9/jetty:java8
+    docker tag bazel/java/jetty:jetty_java8_debug_debian9 gcr.io/$PROJECT_ID/java/jetty:debug
+    docker tag bazel/java/jetty:jetty_java8_debug_debian9 gcr.io/$PROJECT_ID/java/jetty:java8-debug
+    docker tag bazel/java/jetty:jetty_java8_debug_debian9 gcr.io/$PROJECT_ID/java-debian9/jetty:debug
+    docker tag bazel/java/jetty:jetty_java8_debug_debian9 gcr.io/$PROJECT_ID/java-debian9/jetty:java8-debug
+    docker tag bazel/java/jetty:jetty_java11_debian9 gcr.io/$PROJECT_ID/java/jetty:java11
+    docker tag bazel/java/jetty:jetty_java11_debian9 gcr.io/$PROJECT_ID/java-debian9/jetty:java11
+    docker tag bazel/java/jetty:jetty_java11_debug_debian9 gcr.io/$PROJECT_ID/java/jetty:java11-debug
+    docker tag bazel/java/jetty:jetty_java11_debug_debian9 gcr.io/$PROJECT_ID/java-debian9/jetty:java11-debug
+    docker tag bazel/java/jetty:jetty_java11_debian10 gcr.io/$PROJECT_ID/java-debian10/jetty:latest
+    docker tag bazel/java/jetty:jetty_java11_debian10 gcr.io/$PROJECT_ID/java-debian10/jetty:java11
+    docker tag bazel/java/jetty:jetty_java11_debug_debian10 gcr.io/$PROJECT_ID/java-debian10/jetty:debug
+    docker tag bazel/java/jetty:jetty_java11_debug_debian10 gcr.io/$PROJECT_ID/java-debian10/jetty:java11-debug
 
 - name: gcr.io/cloud-builders/bazel
   args: ['run', '--host_force_python=PY2', '//experimental/python3:python3_debian9']
@@ -234,12 +247,32 @@ images:
   - 'gcr.io/$PROJECT_ID/java:8-debug'
   - 'gcr.io/$PROJECT_ID/java:11'
   - 'gcr.io/$PROJECT_ID/java:11-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9:latest'
+  - 'gcr.io/$PROJECT_ID/java-debian9:8'
+  - 'gcr.io/$PROJECT_ID/java-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9:8-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9:11'
+  - 'gcr.io/$PROJECT_ID/java-debian9:11-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian10:latest'
+  - 'gcr.io/$PROJECT_ID/java-debian10:11'
+  - 'gcr.io/$PROJECT_ID/java-debian10:debug'
+  - 'gcr.io/$PROJECT_ID/java-debian10:11-debug'
   - 'gcr.io/$PROJECT_ID/java/jetty:latest'
   - 'gcr.io/$PROJECT_ID/java/jetty:java8'
   - 'gcr.io/$PROJECT_ID/java/jetty:debug'
   - 'gcr.io/$PROJECT_ID/java/jetty:java8-debug'
   - 'gcr.io/$PROJECT_ID/java/jetty:java11'
   - 'gcr.io/$PROJECT_ID/java/jetty:java11-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9/jetty:latest'
+  - 'gcr.io/$PROJECT_ID/java-debian9/jetty:java8'
+  - 'gcr.io/$PROJECT_ID/java-debian9/jetty:debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9/jetty:java8-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9/jetty:java11'
+  - 'gcr.io/$PROJECT_ID/java-debian9/jetty:java11-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian10/jetty:latest'
+  - 'gcr.io/$PROJECT_ID/java-debian10/jetty:java11'
+  - 'gcr.io/$PROJECT_ID/java-debian10/jetty:debug'
+  - 'gcr.io/$PROJECT_ID/java-debian10/jetty:java11-debug'
   - 'gcr.io/$PROJECT_ID/python3-debian9:latest'
   - 'gcr.io/$PROJECT_ID/python3:latest'
   - 'gcr.io/$PROJECT_ID/python3-debian10:latest'
