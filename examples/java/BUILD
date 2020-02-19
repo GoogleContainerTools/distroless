@@ -1,3 +1,6 @@
+# Public notice: this file is for internal documentation, testing, and
+# reference only. Note that repo maintainers can freely change any part of the
+# repository code at any time.
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
