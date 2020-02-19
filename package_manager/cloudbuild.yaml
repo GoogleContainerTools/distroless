@@ -23,7 +23,7 @@ steps:
   args: [
     'cp',
     'bazel-bin/package_manager/dpkg_parser.par',
-    'gs://distroless/package_manager_tools/$COMMIT_SHA/dpkg_parser.par'
+    'gs://tmp-chanseok/package_manager_tools/$COMMIT_SHA/dpkg_parser.par'
   ]
 
 # We produce no Docker images.
