@@ -9,5 +9,5 @@ def package_manager_repositories():
         name = "dpkg_parser",
         urls = [("https://storage.googleapis.com/distroless/package_manager_tools/0e7095cc1ac3e084a1d76f86c36f8ec38483eb24/dpkg_parser.par")],
         executable = True,
-        sha256 = "4511b371e181d9b2b8479c180a751c1975a1ca7d329f7b6353d48c099a779c5a",
+        sha256 = "02aa2a062de01ce216fa795f470fe6bf2c90a7898c89df2941ab160c65119fc4",
     )
