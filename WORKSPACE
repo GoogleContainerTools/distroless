@@ -27,8 +27,8 @@ dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "2b13362808b7bd90d24db2e0804c799288694ae44bd7e3d123becc191451fc67",
-    snapshot = "20191230T150135Z",
+    sha256 = "56537cedf58e6f08bb3eafef514a20016fbfd227850ab810c43e5ffb00f57427",
+    snapshot = "20200219T150721Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -36,16 +36,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "ca26befa30c4cef5900e28ced7baf2f237b4d02550e00823e8c3967cb1615f8c",
-    snapshot = "20191230T150135Z",
+    sha256 = "e76dc8139979bd35c4f1c56eba1fdead249b969add88b146b64a19de87abbdcf",
+    snapshot = "20200219T150721Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191230T212302Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191230T212302Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "046a277f34b07c723f363f132eb6cb3485f25170ae426bc3ef146968b259f585",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200219T150721Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200219T150721Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "221c453ba67ed5eaea7ee896b183ab228c5a49ceab087ae007829e038d7ad531",
 )
 
 dpkg_list(
@@ -250,8 +250,8 @@ dpkg_src(
     name = "debian10",
     arch = "amd64",
     distro = "buster",
-    sha256 = "6f21fb3369b618a55bac745bff10835ac96ec1a7d8ec709029c7e9f0fa44ad25",
-    snapshot = "20191230T150135Z",
+    sha256 = "889681a6f709a3872833643a2ab28aa5bf4839ec5a8994cd4382f179a6521c63",
+    snapshot = "20200219T150721Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -362,7 +362,7 @@ dpkg_list(
 
 dpkg_src(
     name = "debian10_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20191230T212302Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20191230T212302Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "20299ed97c71f26e6c34d948a358e3ac9bb9f4709a90b6f38e6094b688f5270b",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200219T150721Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200219T150721Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "59e2ff24630ddb40d3b31c51890b8ae7efe861eec3f0af8f3b7fbc27d8f36dc2",
 )
