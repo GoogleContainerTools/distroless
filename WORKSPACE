@@ -32,7 +32,6 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-skylib/archive/1.0.0.tar.gz",
 )
 
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
