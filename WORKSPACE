@@ -32,19 +32,16 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-skylib/archive/1.0.0.tar.gz",
 )
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
-
-rust_repositories()
-
-load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
-
-bazel_version(name = "bazel_version")
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
+
+load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("//package_manager:package_manager.bzl", "package_manager_repositories")
