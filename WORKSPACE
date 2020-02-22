@@ -12,9 +12,6 @@ http_archive(
     ],
 )
 
-# rust
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 http_archive(
     name = "io_bazel_rules_rust",
     sha256 = "b6da34e057a31b8a85e343c732de4af92a762f804fc36b0baa6c001423a70ebc",
@@ -38,11 +35,6 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
-
-rust_repositories()
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("//package_manager:package_manager.bzl", "package_manager_repositories")
 load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
 
@@ -270,6 +262,16 @@ load(
 )
 
 _go_image_repos()
+
+# Rust repositories
+
+load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories()
+
+load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
+
+bazel_version(name = "bazel_version")
 
 dpkg_src(
     name = "debian10",
