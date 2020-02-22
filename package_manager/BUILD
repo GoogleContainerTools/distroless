@@ -4,7 +4,6 @@ par_binary(
     name = "dpkg_parser",
     srcs = glob(["**/*.py"]),
     main = "dpkg_parser.py",
-    visibility = ["//visibility:public"],
     deps = [
         ":parse_metadata",
         ":util",
