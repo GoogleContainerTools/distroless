@@ -5,7 +5,8 @@ package(default_visibility = ["//visibility:public"])
 
 # Rust
 load("@io_bazel_rules_docker//rust:image.bzl", "rust_image")
-
+# NOTE: Bazel Rust rules don't support cross-compilation yet, 
+# so at this time it's required that you build on the same platform as the image
 rust_image(
     name = "rust_example",
     srcs = ["src/main.rs"],
