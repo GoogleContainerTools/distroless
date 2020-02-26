@@ -11,7 +11,19 @@ Please fill out either the individual or corporate [Contributor License Agreemen
 
 Follow either of the two links above to access the appropriate CLA and instructions for how to sign and return it. Once we receive it, we'll be able to accept your pull requests.
 
-## Contributing A Patch
+## How to Build and Test
+
+Look into `./test.sh` to understand how. Minimally,
+
+1. Build `dpkg_parser.par` first, if not done so: `bazel build //package_manager:dpkg_parser.par` (You may need to provide `--host_force_python=PY2` as in `test.sh`.)
+   You don't have to repeat this step unless you cleaned your workspace or want to generate a new version of `dpkg_parser.par`.
+1. `bazel build //...`
+
+For running tests, do `bazel test //...`.
+
+For building and loading images to your local Docker engine, do `bazel run //...` (or, for example, `bazel run //java:java11_debian10` for a single image). After successful build, `docker images` will list images like `bazel/java:java8_debian10`.
+
+## Contributing a Patch
 
 1. Submit an issue describing your proposed change to the repo in question.
 1. The repo owner will respond to your issue promptly.
