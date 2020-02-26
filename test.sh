@@ -22,5 +22,6 @@ find . -name "*.py" | xargs pylint --disable=R,C
 
 # Bazel build and test
 bazel clean --host_force_python=PY2 --curses=no
+bazel build --host_force_python=PY2 --curses=no //package_manager:dpkg_parser.par
 bazel build --host_force_python=PY2 --curses=no //...
 bazel test --host_force_python=PY2 --curses=no --test_output=errors //...

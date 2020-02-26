@@ -18,10 +18,7 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-load("//package_manager:package_manager.bzl", "package_manager_repositories")
 load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
-
-package_manager_repositories()
 
 dpkg_src(
     name = "debian_stretch",
