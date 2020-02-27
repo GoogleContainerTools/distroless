@@ -88,6 +88,7 @@ You can find other examples here:
 * [Golang](examples/go/Dockerfile)
 * [Node.js](examples/nodejs/Dockerfile)
 * [dotnet](examples/dotnet/Dockerfile)
+* [Rust](examples/rust/Dockerfile)
 
 To run any example, go the the directory for the language and run
 ```
