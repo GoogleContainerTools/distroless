@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # Copyright 2017 Google Inc. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +18,7 @@ set -e
 # It would be nicer to do this in Python or Go, but neither of these languages have packages
 # that can extract .xz files in their stdlibs.
 
-set -e
+set -o errexit
 
 DEB=$1
 OUT_TAR=$2
