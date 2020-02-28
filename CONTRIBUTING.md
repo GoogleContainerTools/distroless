@@ -22,7 +22,7 @@ Look into `./test.sh` to understand how. Minimally,
 
 For running tests, do `bazel test //...`.
 
-For building and loading images to your local Docker engine, do `bazel run //java:java11_debian10` for example. After successful build, `docker images` will list images like `bazel/java:java8_debian10`.
+For building and loading images to your local Docker engine, do `bazel run //java:java11_debian10` for example. After successful build, `docker images` will list images like `bazel/java:java11_debian10`.
 
 ## Contributing a Patch
 
