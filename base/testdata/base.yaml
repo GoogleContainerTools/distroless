@@ -43,4 +43,4 @@ fileContentTests:
   expectedContents: ['^root:x:0:\nnobody:x:65534:\ntty:x:5:\nstaff:x:50:\nnonroot:x:65532:\n$']
 - name: 'os-release pretty name'
   path: '/etc/os-release'
-  expectedContents: ['^PRETTY_NAME="Distroless"$']
+  expectedContents: ['PRETTY_NAME="Distroless"']
