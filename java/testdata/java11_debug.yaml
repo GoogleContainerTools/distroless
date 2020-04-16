@@ -8,6 +8,10 @@ commandTests:
     command: "/usr/bin/java"
     args: ["-version"]
     expectedError: ['openjdk version "11\.*']
+  - name: javac
+    command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
+    args: ["-version"]
+    expectedOutput: ['javac 11\.*']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
@@ -21,4 +25,4 @@ fileExistenceTests:
 metadataTest:
   env:
     - key: 'JAVA_VERSION'
-      value: '11.0.5'
+      value: '11.0.6'

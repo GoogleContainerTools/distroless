@@ -88,6 +88,7 @@ You can find other examples here:
 * [Golang](examples/go/Dockerfile)
 * [Node.js](examples/nodejs/Dockerfile)
 * [dotnet](examples/dotnet/Dockerfile)
+* [Rust](examples/rust/Dockerfile)
 
 To run any example, go the the directory for the language and run
 ```
@@ -180,3 +181,9 @@ BUILD       Dockerfile  hello.py
 > Note: If the image you are using already has a tag, for example `gcr.io/distroless/java-debian10:11`, use the tag `<existing tag>-debug` instead, for example `gcr.io/distroless/java-debian10:11-debug`.
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
+
+
+# Community Discussion
+
+* [distroless-users Google Group](https://groups.google.com/forum/#!forum/distroless-users)
+* [Kubernetes slack #distroless channel](https://slack.k8s.io/)

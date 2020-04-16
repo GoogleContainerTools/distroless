@@ -3,8 +3,11 @@ load("@subpar//:subpar.bzl", "par_binary")
 par_binary(
     name = "dpkg_parser",
     srcs = glob(["**/*.py"]),
+    compiler_args = [
+        "--interpreter",
+        "/usr/bin/env python",
+    ],
     main = "dpkg_parser.py",
-    visibility = ["//visibility:public"],
     deps = [
         ":parse_metadata",
         ":util",

@@ -8,6 +8,10 @@ commandTests:
     command: "/usr/bin/java"
     args: ["-version"]
     expectedError: ['openjdk version "1\.8.*"']
+  - name: javac
+    command: "/usr/lib/jvm/java-8-openjdk-amd64/bin/javac"
+    args: ["-version"]
+    expectedError: ['javac 1\.8.*']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
@@ -22,4 +26,4 @@ metadataTest:
   entrypoint: ["/usr/bin/java", "-jar"]
   env:
     - key: 'JAVA_VERSION'
-      value: '8u232'
+      value: '8u242'

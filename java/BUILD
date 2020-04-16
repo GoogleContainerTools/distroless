@@ -20,9 +20,13 @@ DISTRO_VERSIONS = {
     "_debian10": versions_debian10,
 }
 
-cacerts_java(
-    name = "cacerts_java",
-)
+[cacerts_java(
+    name = "cacerts_java" + distro_suffix,
+    cacerts_tar = "//base:cacerts" + distro_suffix + ".tar",
+) for distro_suffix in [
+    "_debian9",
+    "_debian10",
+]]
 
 [container_image(
     name = rule_name + distro_suffix,
@@ -37,8 +41,7 @@ cacerts_java(
         DISTRO_PACKAGES[distro_suffix]["fontconfig-config"],
         DISTRO_PACKAGES[distro_suffix]["libexpat1"],
         DISTRO_PACKAGES[distro_suffix]["libfontconfig1"],
-        DISTRO_PACKAGES[distro_suffix][jre_deb],
-    ],
+    ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in java_debs],
     # We expect users to use:
     # cmd = ["/path/to/deploy.jar", "--option1", ...]
     entrypoint = [
@@ -46,29 +49,58 @@ cacerts_java(
         "-jar",
     ],
     env = {
-        "JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][jre_deb]),
+        "JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
     },
     symlinks = {
         "/usr/bin/java": java_executable_path,
     },
-    tars = [":cacerts_java"],
-) for (distro_suffix, rule_name, jre_deb, java_executable_path) in [
+    tars = [":cacerts_java" + distro_suffix],
+) for (distro_suffix, rule_name, java_debs, java_executable_path) in [
     (
         "_debian9",
         "java8",
-        "openjdk-8-jre-headless",
+        ["openjdk-8-jre-headless"],
         "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
     ),
     (
         "_debian9",
         "java8_debug",
-        "openjdk-8-jre-headless",
+        [
+            "openjdk-8-jre-headless",
+            "openjdk-8-jdk-headless",
+        ],
         "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
     ),
-    ("_debian9", "java11", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
-    ("_debian9", "java11_debug", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
-    ("_debian10", "java11", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
-    ("_debian10", "java11_debug", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
+    (
+        "_debian9",
+        "java11",
+        ["openjdk-11-jre-headless"],
+        "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+    ),
+    (
+        "_debian9",
+        "java11_debug",
+        [
+            "openjdk-11-jre-headless",
+            "openjdk-11-jdk-headless",
+        ],
+        "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+    ),
+    (
+        "_debian10",
+        "java11",
+        ["openjdk-11-jre-headless"],
+        "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+    ),
+    (
+        "_debian10",
+        "java11_debug",
+        [
+            "openjdk-11-jre-headless",
+            "openjdk-11-jdk-headless",
+        ],
+        "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+    ),
 ]]
 
 # Provide aliases so the default images use debian9
