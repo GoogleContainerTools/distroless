@@ -67,8 +67,12 @@ container_bundle(
         "gcr.io/{PROJECT_ID}/python2.7:debug": "//experimental/python2.7:debug",
         "gcr.io/{PROJECT_ID}/nodejs:latest": "//experimental/nodejs",
         "gcr.io/{PROJECT_ID}/nodejs:debug": "//experimental/nodejs:debug",
-        "gcr.io/{PROJECT_ID}/dotnet:latest": "//experimental/dotnet",
-        "gcr.io/{PROJECT_ID}/dotnet:debug": "//experimental/dotnet:debug",
+        "gcr.io/{PROJECT_ID}/dotnet:latest": "//experimental/dotnet:dotnet_debian9",
+        "gcr.io/{PROJECT_ID}/dotnet:debug": "//experimental/dotnet:debug_debian9",
+        "gcr.io/{PROJECT_ID}/dotnet-debian9:latest": "//experimental/dotnet:dotnet_debian9",
+        "gcr.io/{PROJECT_ID}/dotnet-debian9:debug": "//experimental/dotnet:debug_debian9",
+        "gcr.io/{PROJECT_ID}/dotnet-debian10:latest": "//experimental/dotnet:dotnet_debian10",
+        "gcr.io/{PROJECT_ID}/dotnet-debian10:debug": "//experimental/dotnet:debug_debian10",
     },
 )
 

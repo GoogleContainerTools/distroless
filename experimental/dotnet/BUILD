@@ -32,7 +32,7 @@ DISTRO_DEBS = {
     ],
 }
 
-[container_image(
+[[container_image(
     name = ("dotnet" if (not mode) else mode[1:]) + distro_suffix,
     base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + distro_suffix,
     debs = [
@@ -81,12 +81,10 @@ DISTRO_DEBS = {
         "/usr/bin/dotnet": "/opt/dotnet/dotnet",
     },
     tars = ["@dotnet//:tar"],
-) for (distro_suffix, mode) in [
-    ("_debian9", ""),
-    ("_debian9", ":debug"),
-    ("_debian10", ""),
-    ("_debian10", ":debug"),
-]]
+) for mode in [
+    "",
+    ":debug",
+]] for distro_suffix in DISTRO_SUFFIXES]
 
 # Provide aliases so the default images use debian9
 alias(
@@ -95,6 +93,6 @@ alias(
 )
 
 alias(
-    name = "dotnet_debug",
-    actual = ":dotnet_debian9",
+    name = "debug",
+    actual = ":debug_debian9",
 )
