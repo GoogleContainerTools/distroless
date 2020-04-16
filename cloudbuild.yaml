@@ -10,6 +10,8 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
+    bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
+
     bazel run --host_force_python=PY2 //base:static_debian9
     bazel run --host_force_python=PY2 //base:static_debian10
     bazel run --host_force_python=PY2 //base:static-nonroot_debian9
