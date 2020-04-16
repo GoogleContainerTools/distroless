@@ -326,6 +326,7 @@ dpkg_list(
         "libgssapi-krb5-2",
         "libicu63",
         "liblttng-ust0",
+        "libssl1.1",
         "libunwind8",
         "libuuid1",
         "zlib1g",
