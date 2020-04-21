@@ -145,8 +145,10 @@ steps:
     bazel run --host_force_python=PY2 //experimental/nodejs
     bazel run --host_force_python=PY2 //experimental/nodejs:debug
 
-    bazel run --host_force_python=PY2 //experimental/dotnet
-    bazel run --host_force_python=PY2 //experimental/dotnet:debug
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:debug_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian10
+    bazel run --host_force_python=PY2 //experimental/dotnet:debug_debian10
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
   args:
@@ -172,8 +174,12 @@ steps:
     docker tag bazel/experimental/nodejs:nodejs gcr.io/$PROJECT_ID/nodejs:latest
     docker tag bazel/experimental/nodejs:debug  gcr.io/$PROJECT_ID/nodejs:debug
 
-    docker tag bazel/experimental/dotnet:dotnet gcr.io/$PROJECT_ID/dotnet:latest
-    docker tag bazel/experimental/dotnet:debug  gcr.io/$PROJECT_ID/dotnet:debug
+    docker tag bazel/experimental/dotnet:dotnet_debian9  gcr.io/$PROJECT_ID/dotnet:latest
+    docker tag bazel/experimental/dotnet:dotnet_debian9  gcr.io/$PROJECT_ID/dotnet-debian9:latest
+    docker tag bazel/experimental/dotnet:dotnet_debian10 gcr.io/$PROJECT_ID/dotnet-debian10:latest
+    docker tag bazel/experimental/dotnet:debug_debian9   gcr.io/$PROJECT_ID/dotnet:debug
+    docker tag bazel/experimental/dotnet:debug_debian9   gcr.io/$PROJECT_ID/dotnet-debian9:debug
+    docker tag bazel/experimental/dotnet:debug_debian10  gcr.io/$PROJECT_ID/dotnet-debian10:debug
 
 
 images:
@@ -249,3 +255,7 @@ images:
   - 'gcr.io/$PROJECT_ID/nodejs:debug'
   - 'gcr.io/$PROJECT_ID/dotnet:latest'
   - 'gcr.io/$PROJECT_ID/dotnet:debug'
+  - 'gcr.io/$PROJECT_ID/dotnet-debian9:latest'
+  - 'gcr.io/$PROJECT_ID/dotnet-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/dotnet-debian10:latest'
+  - 'gcr.io/$PROJECT_ID/dotnet-debian10:debug'
