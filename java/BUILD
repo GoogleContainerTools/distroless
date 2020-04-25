@@ -138,13 +138,13 @@ container_test(
 
 [container_test(
     name = "java11" + distro_suffix + "_test",
-    configs = ["testdata/java11.yaml"],
+    configs = ["testdata/java11" + distro_suffix + ".yaml"],
     image = ":java11" + distro_suffix,
 ) for distro_suffix in DISTRO_SUFFIXES]
 
 [container_test(
     name = "java11_debug" + distro_suffix + "_test",
-    configs = ["testdata/java11_debug.yaml"],
+    configs = ["testdata/java11_debug" + distro_suffix + ".yaml"],
     image = ":java11_debug" + distro_suffix,
 ) for distro_suffix in DISTRO_SUFFIXES]
 
