@@ -374,7 +374,7 @@ dpkg_list(
 
 dpkg_src(
     name = "debian10_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200421T135239Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200421T135239Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "adec6c919667846a294870067fd66175ebe3b6700b6222441928392c4c71cac3",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200424T130133Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200424T130133Z//dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "65dab8d4b9c68d6d1726089092940e4c80a7e0d7151dacd9ec6b4cf6bd1f573b",
 )
