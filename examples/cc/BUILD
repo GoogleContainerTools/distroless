@@ -7,7 +7,7 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
 container_image(
     name = "hello",
-    base = "//cc:cc_debian9",
+    base = "//cc:cc",
     entrypoint = ["./hello"],
     files = [":bin/hello"],
 )
