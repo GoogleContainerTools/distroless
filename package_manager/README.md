@@ -1,8 +1,12 @@
+**This README is for internal documentation. The rules in this directory are part of an internal component and not for public consumption.**
+
+---
+
 # Examples
 
-### **Downloading minimal python library packages from a snapshot of `debian stretch`**.
+Minimal python library to download Debian packages from a snapshot of a Debian package archive.
 
-`dpkg_src` and `dpkg_list` are repository rules, and therefore made to be used in the `WORKSPACE`.
+`dpkg_src` and `dpkg_list` are [repository rules](https://docs.bazel.build/versions/master/skylark/repository_rules.html), and therefore made to be used in the `WORKSPACE`.
 
 First, set up the package source with `dpkg_src` rule.  This example uses a snapshot of debian stretch from November 1st 2017.  The rule outputs a `file:Packages.json` which contains a parsed and formatted `Packages.gz` for `dpkg_list` to consume.
 
