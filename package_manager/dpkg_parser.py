@@ -154,7 +154,7 @@ def download_and_save(pkg_key, url, out_file, retry_count=20):
             if remained_size == 0:
                 break
         if remained_size != 0:
-            raise Exception("Fail to downlod %s. Too many retry." % pkg_key)
+            raise Exception("Fail to download %s (%s). Too many Range request retries." %(pkg_key, url))
     with io.open(out_file, 'wb') as f:
         for content in contents:
             f.write(content)
