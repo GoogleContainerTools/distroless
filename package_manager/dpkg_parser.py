@@ -138,7 +138,7 @@ def download_and_save(pkg_key, url, out_file, retry_count=20):
     remained_size -= len(downloaded)
     if remained_size != 0:
         if not range_access_enabled:
-            raise Exception("Fail to downlod %s" % pkg_key)
+            raise Exception("Fail to download %s (%s). Server returned partial contents." %(pkg_key, url))
         offset += len(downloaded)
         while retry_count > 0:
             retry_count -= 1
