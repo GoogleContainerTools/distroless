@@ -128,36 +128,36 @@ def download_dpkg(package_files, packages, workspace_name):
 
 def download_and_save(pkg_key, url, out_file, retry_count=20):
     res = urllib.request.urlopen(url)
-    remained_size = int(res.info().getheader("Content-Length"))
-    range_access_enabled = "bytes" in res.info().getheader("Accept-Ranges")
-    etag = res.info().getheader("ETag")
-    offset = 0
-    contents = []
+    remaining_bytes = int(res.info().getheader("Content-Length"))
     downloaded = res.read()
+    contents = []
     contents.append(downloaded)
-    remained_size -= len(downloaded)
-    if remained_size != 0:
+    remaining_bytes -= len(downloaded)
+    offset = len(downloaded)
+
+    if remaining_bytes != 0:
+        range_access_enabled = "bytes" in res.info().getheader("Accept-Ranges")
+        etag = res.info().getheader("ETag")
         if not range_access_enabled:
             raise Exception("Fail to download %s (%s). Server returned partial contents." %(pkg_key, url))
-        offset += len(downloaded)
+
         while retry_count > 0:
             retry_count -= 1
             req = urllib.request.Request(url, headers={"Range": "bytes=%d-" % offset, "If-Range": etag})
             res = urllib.request.urlopen(req)
-            if res.getcode() == 200:
-                contents = []
-                offset = 0
-                remained_size = int(res.info().getheader("Content-Length"))
+            if res.getcode() != 206:
+                raise Exception("Fail to download %s (%s). Server did not return '206 Partial Content'" %(pkg_key, url))
             downloaded = res.read()
             contents.append(downloaded)
-            remained_size -= len(downloaded)
-            if remained_size == 0:
+            remaining_bytes -= len(downloaded)
+            offset += len(downloaded)
+            if remaining_bytes == 0:
                 break
-        if remained_size != 0:
+        if remaining_bytes != 0:
             raise Exception("Fail to download %s (%s). Too many Range request retries." %(pkg_key, url))
     with io.open(out_file, 'wb') as f:
-        for content in contents:
-            f.write(content)
+        for c in contents:
+            f.write(c)
 
 def download_package_list(mirror_url, distro, arch, snapshot, sha256, packages_gz_url, package_prefix):
     """Downloads a debian package list, expands the relative urls,
