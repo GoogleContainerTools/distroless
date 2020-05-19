@@ -149,28 +149,30 @@ container_test(
     image = ":java11_debug" + distro_suffix,
 ) for distro_suffix in DISTRO_SUFFIXES]
 
-java_image(
-    name = "check_certs_java8_debian9",
-    srcs = ["testdata/CheckCerts.java"],
-    base = "//java:java8_debian9",
-    main_class = "testdata.CheckCerts",
-)
+RULE_NAMES = ("java8_debian9", "java11_debian9", "java11_debian10")
 
 [java_image(
-    name = "check_certs_java11" + distro_suffix,
+    name = "check_certs_" + rule_name,
     srcs = ["testdata/CheckCerts.java"],
-    base = "//java:java11" + distro_suffix,
+    base = "//java:" + rule_name,
     main_class = "testdata.CheckCerts",
-) for distro_suffix in DISTRO_SUFFIXES]
-
-container_test(
-    name = "check_certs_java8_debian9_test",
-    configs = ["testdata/java8_certs.yaml"],
-    image = ":check_certs_java8_debian9",
-)
+) for rule_name in RULE_NAMES]
 
 [container_test(
-    name = "check_certs_java11" + distro_suffix + "_test",
-    configs = ["testdata/java11_certs" + distro_suffix + ".yaml"],
-    image = ":check_certs_java11" + distro_suffix,
-) for distro_suffix in DISTRO_SUFFIXES]
+    name = "check_certs_" + rule_name + "_test",
+    configs = ["testdata/" + rule_name + "_certs.yaml"],
+    image = ":check_certs_" + rule_name,
+) for rule_name in RULE_NAMES]
+
+[java_image(
+    name = "check_encoding_" + rule_name,
+    srcs = ["testdata/CheckEncoding.java"],
+    base = "//java:" + rule_name,
+    main_class = "testdata.CheckEncoding",
+) for rule_name in RULE_NAMES]
+
+[container_test(
+    name = "check_encoding_" + rule_name + "_test",
+    configs = ["testdata/" + rule_name + "_encoding.yaml"],
+    image = ":check_encoding_" + rule_name,
+) for rule_name in RULE_NAMES]
