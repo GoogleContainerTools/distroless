@@ -108,7 +108,7 @@ def download_dpkg(package_files, packages, workspace_name):
                 actual_checksum = util.sha256_checksum(out_file)
                 expected_checksum = pkg[SHA256_KEY]
                 if actual_checksum != expected_checksum:
-                    raise Exception("Wrong checksum for package %s. %s.  Expected: %s, Actual: %s" %(pkg_name, pkg[FILENAME_KEY], expected_checksum, actual_checksum))
+                    raise Exception("Wrong checksum for package %s (%s).  Expected: %s, Actual: %s" %(pkg_name, pkg[FILENAME_KEY], expected_checksum, actual_checksum))
                 if pkg_version == "":
                     break
                 if (pkg_vals in pkg_vals_to_package_file_and_sha256 and
