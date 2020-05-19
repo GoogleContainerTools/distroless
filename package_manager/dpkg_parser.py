@@ -143,7 +143,7 @@ def download_and_save(pkg_key, url, out_file, retry_count=20):
         while retry_count > 0:
             retry_count -= 1
             req = urllib.request.Request(url, headers={"Range": "bytes=%d-" % offset, "If-Range": etag})
-            res = urllib.request.urlopen(url)
+            res = urllib.request.urlopen(req)
             if res.getcode() == 200:
                 contents = []
                 offset = 0
