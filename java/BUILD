@@ -42,6 +42,7 @@ DISTRO_VERSIONS = {
         DISTRO_PACKAGES[distro_suffix]["libexpat1"],
         DISTRO_PACKAGES[distro_suffix]["libfontconfig1"],
         DISTRO_PACKAGES[distro_suffix]["libuuid1"],
+        DISTRO_PACKAGES[distro_suffix]["libc-bin"],
     ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in java_debs],
     # We expect users to use:
     # cmd = ["/path/to/deploy.jar", "--option1", ...]
