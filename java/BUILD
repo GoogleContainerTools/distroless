@@ -51,6 +51,7 @@ DISTRO_VERSIONS = {
         "-jar",
     ],
     env = {
+        "LANG": "C.UTF-8",
         "JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
     },
     symlinks = {

@@ -5,8 +5,8 @@ commandTests:
               "-cp",
               "/app/distroless/java/check_encoding_java11_debian10.binary.jar:/app/distroless/java/check_encoding_java11_debian10.binary",
               "testdata.CheckEncoding"]
-    expectedOutput: ['LANG=null',
-                     'Locale.getDefault\(\)=en_US',
-                     'Charset.defaultCharset\(\)=US-ASCII',
-                     'file.encoding=ANSI_X3.4-1968',
-                     'sun.jnu.encoding=ANSI_X3.4-1968']
+    expectedOutput: ['LANG=C.UTF-8',
+                     'Locale.getDefault\(\)=en',
+                     'Charset.defaultCharset\(\)=UTF-8',
+                     'file.encoding=UTF-8',
+                     'sun.jnu.encoding=UTF-8']
