@@ -190,8 +190,8 @@ http_archive(
 http_file(
     name = "busybox",
     executable = True,
-    sha256 = "d922ebe9067d8ed1b2b9cf326776de40a9b23d4518d674e28a3c14181549d28b",
-    urls = ["https://busybox.net/downloads/binaries/1.31.0-i686-uclibc/busybox"],
+    sha256 = "51fcb60efbdf3e579550e9ab893730df56b33d0cc928a2a6467bd846cdfef7d8",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-x86_64"],
 )
 
 # Docker rules.
