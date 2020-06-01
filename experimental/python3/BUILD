@@ -38,42 +38,44 @@ DISTRO_VERSION = {
     "_debian10": "3.7",
 }
 
-[[[container_image(
-    name = ("python3" if (not mode) else mode[1:]) + distro_suffix,
-    # Based on //cc so that C extensions work properly.
-    base = "//cc" + (mode if mode else ":cc") + distro_suffix,
-    debs = [
-        DISTRO_PACKAGES[distro_suffix]["dash"],
-        DISTRO_PACKAGES[distro_suffix]["libbz2-1.0"],
-        DISTRO_PACKAGES[distro_suffix]["libc-bin"],
-        DISTRO_PACKAGES[distro_suffix]["libdb5.3"],
-        DISTRO_PACKAGES[distro_suffix]["libexpat1"],
-        DISTRO_PACKAGES[distro_suffix]["liblzma5"],
-        DISTRO_PACKAGES[distro_suffix]["libmpdec2"],
-        DISTRO_PACKAGES[distro_suffix]["libreadline7"],
-        DISTRO_PACKAGES[distro_suffix]["libsqlite3-0"],
-        DISTRO_PACKAGES[distro_suffix]["libssl1.1"],
-        DISTRO_PACKAGES[distro_suffix]["zlib1g"],
-    ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in DISTRO_DEBS[distro_suffix]],
-    entrypoint = [
-        "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
-    ],
-    # Use UTF-8 encoding for file system: match modern Linux
-    env = {"LANG": "C.UTF-8"},
-    symlinks = {
-        "/usr/bin/python": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
-        "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
-    },
-    tars = [
-        "//experimental/python2.7:ld_so_cache.tar",
-    ],
-)
-container_image(
-    name = ("python3" if (not mode) else mode[1:]) + "-nonroot" + distro_suffix,
-    base = ("python3" if (not mode) else mode[1:]) + distro_suffix,
-    user = "%d" % NONROOT,
-    workdir = "/home/nonroot",
-)] for mode in [
+[[[
+    container_image(
+        name = ("python3" if (not mode) else mode[1:]) + distro_suffix,
+        # Based on //cc so that C extensions work properly.
+        base = "//cc" + (mode if mode else ":cc") + distro_suffix,
+        debs = [
+            DISTRO_PACKAGES[distro_suffix]["dash"],
+            DISTRO_PACKAGES[distro_suffix]["libbz2-1.0"],
+            DISTRO_PACKAGES[distro_suffix]["libc-bin"],
+            DISTRO_PACKAGES[distro_suffix]["libdb5.3"],
+            DISTRO_PACKAGES[distro_suffix]["libexpat1"],
+            DISTRO_PACKAGES[distro_suffix]["liblzma5"],
+            DISTRO_PACKAGES[distro_suffix]["libmpdec2"],
+            DISTRO_PACKAGES[distro_suffix]["libreadline7"],
+            DISTRO_PACKAGES[distro_suffix]["libsqlite3-0"],
+            DISTRO_PACKAGES[distro_suffix]["libssl1.1"],
+            DISTRO_PACKAGES[distro_suffix]["zlib1g"],
+        ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in DISTRO_DEBS[distro_suffix]],
+        entrypoint = [
+            "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
+        ],
+        # Use UTF-8 encoding for file system: match modern Linux
+        env = {"LANG": "C.UTF-8"},
+        symlinks = {
+            "/usr/bin/python": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
+            "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
+        },
+        tars = [
+            "//experimental/python2.7:ld_so_cache.tar",
+        ],
+    ),
+    container_image(
+        name = ("python3" if (not mode) else mode[1:]) + "-nonroot" + distro_suffix,
+        base = ("python3" if (not mode) else mode[1:]) + distro_suffix,
+        user = "%d" % NONROOT,
+        workdir = "/home/nonroot",
+    ),
+] for mode in [
     "",
     ":debug",
 ]] for distro_suffix in ("_debian9", "_debian10")]
@@ -86,22 +88,23 @@ container_image(
 ) for distro_suffix in ("_debian9", "_debian10")]
 
 # tests for version-specific things
-[container_test(
-    name = "debian9_test",
-    size = "medium",
-    configs = ["testdata/debian9.yaml"],
-    image = ":python3_debian9",
-)
-
-container_test(
-    name = "debian10" + user + "_test",
-    size = "medium",
-    configs = ["testdata/debian10.yaml"],
-    image = ":python3" + user + "_debian10",
-)] for user in [
+[[
+    container_test(
+        name = "debian9" + user + "_test",
+        size = "medium",
+        configs = ["testdata/debian9.yaml"],
+        image = ":python3" + user + "_debian9",
+    ),
+    container_test(
+        name = "debian10" + user + "_test",
+        size = "medium",
+        configs = ["testdata/debian10.yaml"],
+        image = ":python3" + user + "_debian10",
+    ),
+] for user in [
     "",
     "-nonroot",
-]
+]]
 
 # Provide aliases so the default images use debian9
 alias(
