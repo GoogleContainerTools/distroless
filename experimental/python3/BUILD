@@ -118,7 +118,7 @@ alias(
 )
 
 alias(
-    name = "nonroot",
+    name = "python3-nonroot",
     actual = ":python3-nonroot_debian9",
 )
 
