@@ -5,6 +5,8 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@package_bundle//file:packages.bzl", "packages")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 
+NONROOT = 65532
+
 DISTRO_PACKAGES = {
     "_debian9": packages,
     "_debian10": packages_debian10,
@@ -36,7 +38,7 @@ DISTRO_VERSION = {
     "_debian10": "3.7",
 }
 
-[[container_image(
+[[[container_image(
     name = ("python3" if (not mode) else mode[1:]) + distro_suffix,
     # Based on //cc so that C extensions work properly.
     base = "//cc" + (mode if mode else ":cc") + distro_suffix,
@@ -65,7 +67,13 @@ DISTRO_VERSION = {
     tars = [
         "//experimental/python2.7:ld_so_cache.tar",
     ],
-) for mode in [
+)
+container_image(
+    name = ("python3" if (not mode) else mode[1:]) + "-nonroot" + distro_suffix,
+    base = ("python3" if (not mode) else mode[1:]) + distro_suffix,
+    user = "%d" % NONROOT,
+    workdir = "/home/nonroot",
+)] for mode in [
     "",
     ":debug",
 ]] for distro_suffix in ("_debian9", "_debian10")]
@@ -78,7 +86,7 @@ DISTRO_VERSION = {
 ) for distro_suffix in ("_debian9", "_debian10")]
 
 # tests for version-specific things
-container_test(
+[container_test(
     name = "debian9_test",
     size = "medium",
     configs = ["testdata/debian9.yaml"],
@@ -86,11 +94,14 @@ container_test(
 )
 
 container_test(
-    name = "debian10_test",
+    name = "debian10" + user + "_test",
     size = "medium",
     configs = ["testdata/debian10.yaml"],
-    image = ":python3_debian10",
-)
+    image = ":python3" + user + "_debian10",
+)] for user in [
+    "",
+    "-nonroot",
+]
 
 # Provide aliases so the default images use debian9
 alias(
