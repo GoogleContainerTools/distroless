@@ -116,3 +116,13 @@ alias(
     name = "debug",
     actual = ":debug_debian9",
 )
+
+alias(
+    name = "nonroot",
+    actual = ":python3-nonroot_debian9",
+)
+
+alias(
+    name = "debug-nonroot",
+    actual = ":debug-nonroot_debian9",
+)
