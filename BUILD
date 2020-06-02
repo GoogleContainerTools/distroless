@@ -63,6 +63,8 @@ container_bundle(
         "gcr.io/{PROJECT_ID}/java-debian10/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian10",
         "gcr.io/{PROJECT_ID}/python3:latest": "//experimental/python3:python3",
         "gcr.io/{PROJECT_ID}/python3:debug": "//experimental/python3:debug",
+        "gcr.io/{PROJECT_ID}/python3:nonroot": "//experimental/python3:python3_nonroot",
+        "gcr.io/{PROJECT_ID}/python3:debug-nonroot": "//experimental/python3:debug_nonroot",
         "gcr.io/{PROJECT_ID}/python2.7:latest": "//experimental/python2.7:python27",
         "gcr.io/{PROJECT_ID}/python2.7:debug": "//experimental/python2.7:debug",
         "gcr.io/{PROJECT_ID}/nodejs:latest": "//experimental/nodejs",
