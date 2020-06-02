@@ -70,7 +70,7 @@ DISTRO_VERSION = {
         ],
     ),
     container_image(
-        name = ("python3" if (not mode) else mode[1:]) + "-nonroot" + distro_suffix,
+        name = ("python3" if (not mode) else mode[1:]) + "_nonroot" + distro_suffix,
         base = ("python3" if (not mode) else mode[1:]) + distro_suffix,
         user = "%d" % NONROOT,
         workdir = "/home/nonroot",
@@ -103,7 +103,7 @@ DISTRO_VERSION = {
     ),
 ] for user in [
     "",
-    "-nonroot",
+    "_nonroot",
 ]]
 
 # Provide aliases so the default images use debian9
@@ -118,11 +118,11 @@ alias(
 )
 
 alias(
-    name = "python3-nonroot",
-    actual = ":python3-nonroot_debian9",
+    name = "python3_nonroot",
+    actual = ":python3_nonroot_debian9",
 )
 
 alias(
-    name = "debug-nonroot",
-    actual = ":debug-nonroot_debian9",
+    name = "debug_nonroot",
+    actual = ":debug_nonroot_debian9",
 )

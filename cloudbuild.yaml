@@ -159,16 +159,16 @@ steps:
     set -o xtrace
     docker tag bazel/experimental/python3:python3_debian9          gcr.io/$PROJECT_ID/python3:latest
     docker tag bazel/experimental/python3:python3_debian9          gcr.io/$PROJECT_ID/python3-debian9:latest
-    docker tag bazel/experimental/python3:python3-nonroot_debian9  gcr.io/$PROJECT_ID/python3-debian9:nonroot
-    docker tag bazel/experimental/python3:python3-nonroot_debian9  gcr.io/$PROJECT_ID/python3:nonroot
+    docker tag bazel/experimental/python3:python3_nonroot_debian9  gcr.io/$PROJECT_ID/python3-debian9:nonroot
+    docker tag bazel/experimental/python3:python3_nonroot_debian9  gcr.io/$PROJECT_ID/python3:nonroot
     docker tag bazel/experimental/python3:python3_debian10         gcr.io/$PROJECT_ID/python3-debian10:latest
-    docker tag bazel/experimental/python3:python3-nonroot_debian10 gcr.io/$PROJECT_ID/python3-debian10:nonroot
+    docker tag bazel/experimental/python3:python3_nonroot_debian10 gcr.io/$PROJECT_ID/python3-debian10:nonroot
     docker tag bazel/experimental/python3:debug_debian9            gcr.io/$PROJECT_ID/python3:debug
-    docker tag bazel/experimental/python3:debug_debian9            gcr.io/$PROJECT_ID/python3:debug-nonroot
+    docker tag bazel/experimental/python3:debug_nonroot_debian9    gcr.io/$PROJECT_ID/python3:debug-nonroot
     docker tag bazel/experimental/python3:debug_debian9            gcr.io/$PROJECT_ID/python3-debian9:debug
-    docker tag bazel/experimental/python3:debug-nonroot_debian9    gcr.io/$PROJECT_ID/python3-debian9:debug-nonroot
+    docker tag bazel/experimental/python3:debug_nonroot_debian9    gcr.io/$PROJECT_ID/python3-debian9:debug-nonroot
     docker tag bazel/experimental/python3:debug_debian10           gcr.io/$PROJECT_ID/python3-debian10:debug
-    docker tag bazel/experimental/python3:debug-nonroot_debian10   gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot
+    docker tag bazel/experimental/python3:debug_nonroot_debian10   gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot
 
     docker tag bazel/experimental/python2.7:python27_debian9  gcr.io/$PROJECT_ID/python2.7:latest
     docker tag bazel/experimental/python2.7:python27_debian9  gcr.io/$PROJECT_ID/python2.7-debian9:latest
