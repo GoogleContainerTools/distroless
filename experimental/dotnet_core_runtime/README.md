@@ -4,7 +4,7 @@ This project defines a minimal Linux with [.NET Core](https://github.com/dotnet/
 
 Specifically, the image contains everything described in the [../../cc/README.md](../../cc/README.md), and includes following prerequisites.
 
-## NET Core 3.1 Runtime and its Dependencies
+## Microsoft .NET Core 3.1 Runtime and its Dependencies
 
 - [3.1/runtime-deps/buster-slim/amd64/Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/buster-slim/amd64/Dockerfile)
 - [3.1/runtime/buster-slim/amd64/Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime/buster-slim/amd64/Dockerfile)
