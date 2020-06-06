@@ -80,13 +80,13 @@ DISTRO_DEBS = {
     ":debug",
 ]] for distro_suffix in DISTRO_SUFFIXES]
 
-# Provide aliases so the default images use debian10
+# Provide aliases so the default images use debian9
 alias(
     name = "dotnet_core_sdk",
-    actual = ":dotnet_core_sdk_debian10",
+    actual = ":dotnet_core_sdk_debian9",
 )
 
 alias(
     name = "debug",
-    actual = ":debug_debian10",
+    actual = ":debug_debian9",
 )
