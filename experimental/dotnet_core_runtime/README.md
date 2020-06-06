@@ -2,7 +2,7 @@
 
 This project defines a minimal Linux with [.NET Core](https://github.com/dotnet/core).
 
-Specifically, the image contains everything described in the [../../cc/README.md](../../cc/README.md), and includes following prerequisites.
+Specifically, the image contains everything described in the [base image](../../cc/README.md), plus .NET Core and necessary dependencies.
 
 ## Microsoft .NET Core 3.1 Runtime and its Dependencies
 
