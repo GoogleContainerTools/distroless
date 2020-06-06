@@ -20,7 +20,7 @@ container_run_and_commit(
         "dotnet restore",
         "dotnet publish --configuration Release",
     ],
-    image = ":dotnet_publish.tar",
+    image = ":dotnet_core_base.tar",
 )
 
 container_image(
