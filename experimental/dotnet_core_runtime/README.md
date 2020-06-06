@@ -73,8 +73,6 @@ The `ENTRYPOINT` of this image is left unset, so this image expects users to sup
 
 See [../../examples/dotnet_core/Dockerfile](../../examples/dotnet_core/Dockerfile).
 
-See [../../local_build_dotnet_core_example.sh](../../local_build_dotnet_core_example.sh) script.
-
 ### Prerequisites
 
 We need to build a binary out-of-band since the binary build happens outside of Bazel.
@@ -82,7 +80,3 @@ We need to build a binary out-of-band since the binary build happens outside of 
 It requires a local installation of .NET Core runtime.
 
 See [.NET Core 3.1.4 - May 12, 2020](https://github.com/dotnet/core/blob/master/release-notes/3.1/3.1.4/3.1.4.md) release.
-
-### Build Locally with Bazel or Manually
-
-See [../../local_build_dotnet_core_example.sh](../../local_build_dotnet_core_example.sh) script.
