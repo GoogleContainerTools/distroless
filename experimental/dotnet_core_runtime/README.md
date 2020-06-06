@@ -63,12 +63,6 @@ apt-get install apt-rdepends
 apt-rdepends curl
 ```
 
-Bazel does _not_ support dotnet build rules yet. ~See [#39](https://github.com/bazelbuild/rules_dotnet/issues/39).~ Unlike other distroless rules in this repository, users will need to compile and generate your .NET binary outside of Bazel manually. Instructions to generate the default binary files is described below.
-
-## Usage
-
-The `ENTRYPOINT` of this image is left unset, so this image expects users to supply a the full `dotnet` and related path to the generated `*.dll` file in the `CMD`.
-
 ### Examples
 
 See [../../examples/dotnet_core/Dockerfile](../../examples/dotnet_core/Dockerfile).
