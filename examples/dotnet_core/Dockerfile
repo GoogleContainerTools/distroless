@@ -10,7 +10,7 @@ RUN dotnet restore \
     --runtime linux-x64
 
 
-FROM gcr.io/distroless/dotnet/core:3.1 as runtime
+FROM gcr.io/distroless/dotnet/core/runtime:3.1 as runtime
 
 WORKDIR /app
 COPY --from=build /app/out .
