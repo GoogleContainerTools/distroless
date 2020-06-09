@@ -156,7 +156,6 @@ steps:
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debug_debian9
-
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
   args:
