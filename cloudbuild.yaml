@@ -146,16 +146,16 @@ steps:
     bazel run --host_force_python=PY2 //experimental/nodejs:debug
 
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian10
-    bazel run --host_force_python=PY2 //experimental/dotnet:debug_debian10
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debiana9
 
-    bazel run --host_force_python=PY2 //experimental/dotnet_core_aspnet:dotnet_core_aspnet_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet_core_aspnet:debug_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet_core_runtime:dotnet_core_runtime_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet_core_runtime:debug_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet_core_sdk:dotnet_core_sdk_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet_core_sdk:debug_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debug_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debug_debian10
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debug_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debug_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debug_debian9
 
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
@@ -182,24 +182,12 @@ steps:
     docker tag bazel/experimental/nodejs:nodejs gcr.io/$PROJECT_ID/nodejs:latest
     docker tag bazel/experimental/nodejs:debug  gcr.io/$PROJECT_ID/nodejs:debug
 
-    docker tag bazel/experimental/dotnet:dotnet_debian9  gcr.io/$PROJECT_ID/dotnet:latest
-    docker tag bazel/experimental/dotnet:dotnet_debian9  gcr.io/$PROJECT_ID/dotnet-debian9:latest
-    docker tag bazel/experimental/dotnet:dotnet_debian10 gcr.io/$PROJECT_ID/dotnet-debian10:latest
-    docker tag bazel/experimental/dotnet:debug_debian9   gcr.io/$PROJECT_ID/dotnet:debug
-    docker tag bazel/experimental/dotnet:debug_debian9   gcr.io/$PROJECT_ID/dotnet-debian9:debug
-    docker tag bazel/experimental/dotnet:debug_debian10  gcr.io/$PROJECT_ID/dotnet-debian10:debug
-
-    docker tag bazel/experimental/dotnet_core_aspnet:dotnet_core_aspnet_debian9  gcr.io/$PROJECT_ID/dotnet/core/aspnet:latest
-    docker tag bazel/experimental/dotnet_core_aspnet:dotnet_core_aspnet_debian9  gcr.io/$PROJECT_ID/dotnet/core/aspnet:3.1
-    docker tag bazel/experimental/dotnet_core_aspnet:debug_debian9               gcr.io/$PROJECT_ID/dotnet/core/aspnet:debug
-
-    docker tag bazel/experimental/dotnet_core_runtime:dotnet_core_runtime_debian9  gcr.io/$PROJECT_ID/dotnet/core/runtime:latest
-    docker tag bazel/experimental/dotnet_core_runtime:dotnet_core_runtime_debian9  gcr.io/$PROJECT_ID/dotnet/core/runtime:3.1
-    docker tag bazel/experimental/dotnet_core_runtime:debug_debian9                gcr.io/$PROJECT_ID/dotnet/core/runtime:debug
-
-    docker tag bazel/experimental/dotnet_core_sdk:dotnet_core_sdk_debian9  gcr.io/$PROJECT_ID/dotnet/core/sdk:latest
-    docker tag bazel/experimental/dotnet_core_sdk:dotnet_core_sdk_debian9  gcr.io/$PROJECT_ID/dotnet/core/sdk:3.1
-    docker tag bazel/experimental/dotnet_core_sdk:debug_debian9            gcr.io/$PROJECT_ID/dotnet/core/sdk:debug
+    docker tag bazel/experimental/dotnet:dotnet_debian9               gcr.io/$PROJECT_ID/dotnet:latest
+    docker tag bazel/experimental/dotnet:dotnet_debian9               gcr.io/$PROJECT_ID/dotnet-debian9:latest
+    docker tag bazel/experimental/dotnet:dotnet_debian10              gcr.io/$PROJECT_ID/dotnet-debian10:latest
+    docker tag bazel/experimental/dotnet:debug_debian9                gcr.io/$PROJECT_ID/dotnet:debug
+    docker tag bazel/experimental/dotnet:debug_debian9                gcr.io/$PROJECT_ID/dotnet-debian9:debug
+    docker tag bazel/experimental/dotnet:debug_debian10               gcr.io/$PROJECT_ID/dotnet-debian10:debug
 
 images:
   - 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}'
@@ -278,12 +266,3 @@ images:
   - 'gcr.io/$PROJECT_ID/dotnet-debian9:debug'
   - 'gcr.io/$PROJECT_ID/dotnet-debian10:latest'
   - 'gcr.io/$PROJECT_ID/dotnet-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:3.1'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:3.1'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:3.1'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:debug'

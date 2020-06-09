@@ -9,23 +9,8 @@
 /.project
 /.settings
 /bazel.iml
-# Ignore outputs generated during Bazel bootstrapping.
-/output/
-*.tar.gz
-
-# ----------------------------------------------------------------------
-
-# Created by https://www.gitignore.io/api/bazel
-# Edit at https://www.gitignore.io/?templates=bazel
-
-### Bazel ###
-# gitignore template for Bazel build system
-# website: https://bazel.build/
-
 # Ignore all bazel-* symlinks. There is no full list since this can change
 # based on the name of the directory bazel is cloned into.
 /bazel-*
-
-# End of https://www.gitignore.io/api/bazel
-
-# ----------------------------------------------------------------------
+# Ignore outputs generated during Bazel bootstrapping.
+/output/
