@@ -188,6 +188,16 @@ steps:
     docker tag bazel/experimental/dotnet:debug_debian9                gcr.io/$PROJECT_ID/dotnet-debian9:debug
     docker tag bazel/experimental/dotnet:debug_debian10               gcr.io/$PROJECT_ID/dotnet-debian10:debug
 
+    docker tag bazel/experimental/dotnet_core_aspnet:dotnet_core_aspnet_debian9  gcr.io/$PROJECT_ID/dotnet/core/aspnet:latest
+    docker tag bazel/experimental/dotnet_core_aspnet:dotnet_core_aspnet_debian9  gcr.io/$PROJECT_ID/dotnet/core/aspnet:3.1
+    docker tag bazel/experimental/dotnet_core_aspnet:debug_debian9               gcr.io/$PROJECT_ID/dotnet/core/aspnet:debug
+    docker tag bazel/experimental/dotnet_core_runtime:dotnet_core_runtime_debian9  gcr.io/$PROJECT_ID/dotnet/core/runtime:latest
+    docker tag bazel/experimental/dotnet_core_runtime:dotnet_core_runtime_debian9  gcr.io/$PROJECT_ID/dotnet/core/runtime:3.1
+    docker tag bazel/experimental/dotnet_core_runtime:debug_debian9                gcr.io/$PROJECT_ID/dotnet/core/runtime:debug
+    docker tag bazel/experimental/dotnet_core_sdk:dotnet_core_sdk_debian9  gcr.io/$PROJECT_ID/dotnet/core/sdk:latest
+    docker tag bazel/experimental/dotnet_core_sdk:dotnet_core_sdk_debian9  gcr.io/$PROJECT_ID/dotnet/core/sdk:3.1
+    docker tag bazel/experimental/dotnet_core_sdk:debug_debian9            gcr.io/$PROJECT_ID/dotnet/core/sdk:debug
+
 images:
   - 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}'
   - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'

@@ -73,6 +73,16 @@ container_bundle(
         "gcr.io/{PROJECT_ID}/dotnet-debian9:debug": "//experimental/dotnet:dotnet_debug_debian9",
         "gcr.io/{PROJECT_ID}/dotnet-debian10:latest": "//experimental/dotnet:dotnet_debian10",
         "gcr.io/{PROJECT_ID}/dotnet-debian10:debug": "//experimental/dotnet:dotnet_debug_debian10",
+        "gcr.io/{PROJECT_ID}/dotnet-debian10:debug": "//experimental/dotnet:debug_debian10",
+        "gcr.io/{PROJECT_ID}/dotnet/core/aspnet:latest": "//experimental/dotnet_core_aspnet:dotnet_core_aspnet",
+        "gcr.io/{PROJECT_ID}/dotnet/core/aspnet:3.1": "//experimental/dotnet_core_aspnet:dotnet_core_aspnet",
+        "gcr.io/{PROJECT_ID}/dotnet/core/aspnet:debug": "//experimental/dotnet_core_aspnet:debug",
+        "gcr.io/{PROJECT_ID}/dotnet/core/runtime:latest": "//experimental/dotnet_core_runtime:dotnet_core_runtime",
+        "gcr.io/{PROJECT_ID}/dotnet/core/runtime:3.1": "//experimental/dotnet_core_runtime:dotnet_core_runtime",
+        "gcr.io/{PROJECT_ID}/dotnet/core/runtime:debug": "//experimental/dotnet_core_runtime:debug",
+        "gcr.io/{PROJECT_ID}/dotnet/core/sdk:latest": "//experimental/dotnet_core_sdk:dotnet_core_sdk",
+        "gcr.io/{PROJECT_ID}/dotnet/core/sdk:3.1": "//experimental/dotnet_core_sdk:dotnet_core_sdk",
+        "gcr.io/{PROJECT_ID}/dotnet/core/sdk:debug": "//experimental/dotnet_core_sdk:debug",
     },
 )
 
