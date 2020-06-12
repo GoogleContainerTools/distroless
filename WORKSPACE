@@ -268,6 +268,22 @@ dpkg_src(
     url = "https://snapshot.debian.org/archive",
 )
 
+dpkg_src(
+    name = "debian10_updates",
+    arch = "amd64",
+    distro = "buster-updates",
+    sha256 = "24b35fcd184d71f83c3f553a72e6636954552331adfbbc694f0f70bd33e1a2b4",
+    snapshot = "20200612T083553Z",
+    url = "https://snapshot.debian.org/archive",
+)
+
+dpkg_src(
+    name = "debian10_security",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "c0ae35609f2d445e73ca8d3c03dc843f5ddae50f474cee10e79c4c1284ce2a2d",
+)
+
 dpkg_list(
     name = "package_bundle_debian10",
     packages = [
@@ -286,7 +302,9 @@ dpkg_list(
         "mime-support",
         "netbase",
         "readline-common",
-        "tzdata",
+        # Version required to take the latest from "buster" instead of older version in "buster-updates"
+        # TODO: Remove when there is another update, or dpkg_list finds the recent version
+        "tzdata=2020a-0+deb10u1",
 
         #c++
         "libgcc1",
@@ -370,13 +388,7 @@ dpkg_list(
     # the older security release. This happened for stretch libc6.
     sources = [
         "@debian10_security//file:Packages.json",
+        "@debian10_updates//file:Packages.json",
         "@debian10//file:Packages.json",
     ],
-)
-
-dpkg_src(
-    name = "debian10_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "c0ae35609f2d445e73ca8d3c03dc843f5ddae50f474cee10e79c4c1284ce2a2d",
 )
