@@ -134,8 +134,12 @@ steps:
     set -o xtrace
     bazel run --host_force_python=PY2 //experimental/python3:python3_debian9
     bazel run --host_force_python=PY2 //experimental/python3:python3_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_debian10
     bazel run --host_force_python=PY2 //experimental/python3:debug_debian9
     bazel run --host_force_python=PY2 //experimental/python3:debug_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_debian10
 
     bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian9
     bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian10
