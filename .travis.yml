@@ -1,18 +1,5 @@
-# trusty beta image has jdk8, gcc4.8.4
 dist: bionic
 sudo: required
-# Not technically required but suppresses 'Ruby' in Job status message.
-language: go
-python:
-  - "2.7"
-os:
-  - linux
-
-go:
-  - 1.10.x
-
-jdk:
-  - oraclejdk8
 
 install:
   - export PATH=$PATH:$HOME/bin && mkdir -p $HOME/bin
