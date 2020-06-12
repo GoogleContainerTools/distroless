@@ -107,6 +107,7 @@ load("//cacerts:cacerts.bzl", "cacerts")
 go_binary(
     name = "check_certs",
     srcs = ["testdata/check_certs.go"],
+    goarch = "amd64",
     # Test image is linux based
     goos = "linux",
     pure = "on",
