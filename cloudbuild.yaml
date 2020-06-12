@@ -2,7 +2,7 @@ timeout: 1800s
 steps:
 
 # Publishing base, cc, and static as latest is handled in a separate release process
-- name: gcr.io/cloud-builders/bazel
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
   entrypoint: sh
   args:
   - -c
@@ -63,7 +63,7 @@ steps:
     docker tag bazel/cc:debug_debian9  gcr.io/$PROJECT_ID/cc-debian9:debug
     docker tag bazel/cc:debug_debian10 gcr.io/$PROJECT_ID/cc-debian10:debug
 
-- name: gcr.io/cloud-builders/bazel
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
   entrypoint: sh
   args:
   - -c
@@ -124,7 +124,7 @@ steps:
     docker tag bazel/java/jetty:jetty_java11_debug_debian10 gcr.io/$PROJECT_ID/java-debian10/jetty:debug
     docker tag bazel/java/jetty:jetty_java11_debug_debian10 gcr.io/$PROJECT_ID/java-debian10/jetty:java11-debug
 
-- name: gcr.io/cloud-builders/bazel
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
   entrypoint: sh
   args:
   - -c
