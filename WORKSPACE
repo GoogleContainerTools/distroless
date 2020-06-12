@@ -187,7 +187,7 @@ http_archive(
 
 http_archive(
     name = "dotnet_core_aspnet",
-    build_file = "//experimental/dotnet:BUILD.dotnet_core_aspnet",
+    build_file = "@//experimental/dotnet:BUILD.dotnet_core_aspnet",
     sha256 = "ca41ea778e93449c1b37dea3e50850ce170c3737fe367a39d02eb786d6fdf97e",
     type = "tar.gz",
     urls = ["https://download.visualstudio.microsoft.com/download/pr/a1ddc998-933c-47af-b8c7-dc2503e44e91/42d8cd08b2055df52c9457c993911f2e/aspnetcore-runtime-3.1.4-linux-x64.tar.gz"],
@@ -195,7 +195,7 @@ http_archive(
 
 http_archive(
     name = "dotnet_core_runtime",
-    build_file = "//experimental/dotnet:BUILD.dotnet_core_runtime",
+    build_file = "@//experimental/dotnet:BUILD.dotnet_core_runtime",
     sha256 = "cdc992eab0f35a12a2ef90867a87409f020e48f53cde8f49d24d141f51e65e2f",
     type = "tar.gz",
     urls = ["https://download.visualstudio.microsoft.com/download/pr/c3558096-9333-41fe-9195-0bd5558bde88/7a1ff566cbdab177d49fafcb66f4316b/dotnet-runtime-3.1.4-linux-x64.tar.gz"],
@@ -203,7 +203,7 @@ http_archive(
 
 http_archive(
     name = "dotnet_core_sdk",
-    build_file = "//experimental/dotnet:BUILD.dotnet_core_sdk",
+    build_file = "@//experimental/dotnet:BUILD.dotnet_core_sdk",
     sha256 = "afae21afbf12d255604531cf57ee1d020aee62875a418f498e1f1385dadb719e",
     type = "tar.gz",
     urls = ["https://download.visualstudio.microsoft.com/download/pr/c9c8cca6-2281-4ce8-980f-f49723057f09/06fef88edc9d38fbfefc315953e368ea/dotnet-sdk-3.1.104-linux-x64.tar.gz"],
