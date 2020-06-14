@@ -71,14 +71,12 @@ DISTRO_DEBS = {
 # tests for version-specific things
 container_test(
     name = "debian9_test",
-    size = "medium",
     configs = ["testdata/debian9.yaml"],
     image = ":python27_debian9",
 )
 
 container_test(
     name = "debian10_test",
-    size = "medium",
     configs = ["testdata/debian10.yaml"],
     image = ":python27_debian10",
 )

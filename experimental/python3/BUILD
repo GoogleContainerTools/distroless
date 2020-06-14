@@ -82,7 +82,6 @@ DISTRO_VERSION = {
 
 [container_test(
     name = "python3" + distro_suffix + "_test",
-    size = "medium",
     configs = ["testdata/python3.yaml"],
     image = ":python3" + distro_suffix,
 ) for distro_suffix in ("_debian9", "_debian10")]
@@ -91,13 +90,11 @@ DISTRO_VERSION = {
 [[
     container_test(
         name = "debian9" + user + "_test",
-        size = "medium",
         configs = ["testdata/debian9.yaml"],
         image = ":python3" + user + "_debian9",
     ),
     container_test(
         name = "debian10" + user + "_test",
-        size = "medium",
         configs = ["testdata/debian10.yaml"],
         image = ":python3" + user + "_debian10",
     ),
