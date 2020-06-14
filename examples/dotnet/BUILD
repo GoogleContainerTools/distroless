@@ -6,21 +6,21 @@ package(default_visibility = ["//visibility:public"])
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 
-container_image(
-    name = "hello",
-    base = "//experimental/dotnet:dotnet",
+[container_image(
+    name = "hello" + suffix,
+    base = "//experimental/dotnet:dotnet" + suffix,
     cmd = [
         "dotnet",
         "/bin/Release/netcoreapp2.0/hello.dll",
     ],
     files = [":bin"],
-)
+) for suffix in ("", "_core_aspnet_debian10", "_core_runtime_debian10", "_core_sdk_debian10")]
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
-container_test(
-    name = "hello_test",
+[container_test(
+    name = "hello" + suffix + "_test",
     size = "small",
-    configs = ["testdata/hello.yaml"],
-    image = ":hello",
-)
+    configs = ["testdata/hello" + suffix + ".yaml"],
+    image = ":hello" + suffix,
+) for suffix in ("", "_core_aspnet_debian10", "_core_runtime_debian10", "_core_sdk_debian10")]
