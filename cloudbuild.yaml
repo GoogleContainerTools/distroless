@@ -153,7 +153,7 @@ steps:
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian10
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debiana9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debian9
 
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debug_debian10
