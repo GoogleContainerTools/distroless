@@ -43,6 +43,7 @@ container_image(
 go_binary(
     name = "user",
     srcs = ["testdata/user.go"],
+    goarch = "amd64",
     # Test image is linux based
     goos = "linux",
     pure = "on",

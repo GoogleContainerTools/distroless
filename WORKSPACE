@@ -5,10 +5,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "8df59f11fb697743cbb3f26cfb8750395f30471e9eabde0d174c3aebc7a1cd39",
+    sha256 = "a8d6b1b354d371a646d2f7927319974e0f9e52f73a2452d2b3877118169eb6bb",
     urls = [
-        "https://storage.googleapis.com/bazel-mirror/github.com/bazelbuild/rules_go/releases/download/0.19.1/rules_go-0.19.1.tar.gz",
-        "https://github.com/bazelbuild/rules_go/releases/download/0.19.1/rules_go-0.19.1.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.23.3/rules_go-v0.23.3.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.23.3/rules_go-v0.23.3.tar.gz",
     ],
 )
 
@@ -25,7 +25,7 @@ dpkg_src(
     arch = "amd64",
     distro = "stretch",
     sha256 = "56537cedf58e6f08bb3eafef514a20016fbfd227850ab810c43e5ffb00f57427",
-    snapshot = "20200219T150721Z",
+    snapshot = "20200612T083553Z",
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -33,16 +33,16 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "e76dc8139979bd35c4f1c56eba1fdead249b969add88b146b64a19de87abbdcf",
-    snapshot = "20200219T150721Z",
+    sha256 = "1d20fb6f59379526a96857073588a7ad6860e78e0d7b37aa8eb5ec18fd0f67b8",
+    snapshot = "20200612T083553Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200219T150721Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200219T150721Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "221c453ba67ed5eaea7ee896b183ab228c5a49ceab087ae007829e038d7ad531",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "90372326b6160eea97b14423675a5558002adff593869b31742ca32102d2edf9",
 )
 
 dpkg_list(
@@ -220,9 +220,9 @@ http_file(
 # Docker rules.
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "413bb1ec0895a8d3249a01edf24b82fd06af3c8633c9fb833a0cb1d4b234d46d",
-    strip_prefix = "rules_docker-0.12.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.12.0.tar.gz"],
+    sha256 = "6287241e033d247e9da5ff705dd6ef526bac39ae82f3d17de1b69f8cb313f9cd",
+    strip_prefix = "rules_docker-0.14.3",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.14.3.tar.gz"],
 )
 
 load(
@@ -259,19 +259,12 @@ _go_image_repos()
 # Rust repositories
 http_archive(
     name = "io_bazel_rules_rust",
-    sha256 = "b6da34e057a31b8a85e343c732de4af92a762f804fc36b0baa6c001423a70ebc",
-    strip_prefix = "rules_rust-55f77017a7f5b08e525ebeab6e11d8896a4499d2",
+    sha256 = "e7632fb27da7b303e6a08e75a2cc0d5e954552a8a6637c633cedadb93c59c0dc",
+    strip_prefix = "rules_rust-c409198dcc26a276dfca8bb83c8941052c7dad5b",
     urls = [
-        # Master branch as of 2019-10-07
-        "https://github.com/bazelbuild/rules_rust/archive/55f77017a7f5b08e525ebeab6e11d8896a4499d2.tar.gz",
+        # Master branch as of 2020-06-12
+        "https://github.com/bazelbuild/rules_rust/archive/c409198dcc26a276dfca8bb83c8941052c7dad5b.tar.gz",
     ],
-)
-
-http_archive(
-    name = "bazel_skylib",
-    sha256 = "9a737999532daca978a158f94e77e9af6a6a169709c0cee274f0a4c3359519bd",
-    strip_prefix = "bazel-skylib-1.0.0",
-    url = "https://github.com/bazelbuild/bazel-skylib/archive/1.0.0.tar.gz",
 )
 
 load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
@@ -286,9 +279,25 @@ dpkg_src(
     name = "debian10",
     arch = "amd64",
     distro = "buster",
-    sha256 = "889681a6f709a3872833643a2ab28aa5bf4839ec5a8994cd4382f179a6521c63",
-    snapshot = "20200219T150721Z",
+    sha256 = "f251129edc5e5b31dadd7bb252e5ce88b3fdbd76de672bc0bbcda4f667d5f47f",
+    snapshot = "20200612T083553Z",
     url = "https://snapshot.debian.org/archive",
+)
+
+dpkg_src(
+    name = "debian10_updates",
+    arch = "amd64",
+    distro = "buster-updates",
+    sha256 = "24b35fcd184d71f83c3f553a72e6636954552331adfbbc694f0f70bd33e1a2b4",
+    snapshot = "20200612T083553Z",
+    url = "https://snapshot.debian.org/archive",
+)
+
+dpkg_src(
+    name = "debian10_security",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "c0ae35609f2d445e73ca8d3c03dc843f5ddae50f474cee10e79c4c1284ce2a2d",
 )
 
 dpkg_list(
@@ -309,7 +318,9 @@ dpkg_list(
         "mime-support",
         "netbase",
         "readline-common",
-        "tzdata",
+        # Version required to take the latest from "buster" instead of older version in "buster-updates"
+        # TODO: Remove when there is another update, or dpkg_list finds the recent version
+        "tzdata=2020a-0+deb10u1",
 
         #c++
         "libgcc1",
@@ -393,13 +404,7 @@ dpkg_list(
     # the older security release. This happened for stretch libc6.
     sources = [
         "@debian10_security//file:Packages.json",
+        "@debian10_updates//file:Packages.json",
         "@debian10//file:Packages.json",
     ],
-)
-
-dpkg_src(
-    name = "debian10_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200424T130133Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200424T130133Z//dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "65dab8d4b9c68d6d1726089092940e4c80a7e0d7151dacd9ec6b4cf6bd1f573b",
 )
