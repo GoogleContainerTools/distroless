@@ -191,12 +191,12 @@ steps:
     docker tag bazel/experimental/nodejs:nodejs gcr.io/$PROJECT_ID/nodejs:latest
     docker tag bazel/experimental/nodejs:debug  gcr.io/$PROJECT_ID/nodejs:debug
 
-    docker tag bazel/experimental/dotnet:dotnet_debian9               gcr.io/$PROJECT_ID/dotnet:latest
-    docker tag bazel/experimental/dotnet:dotnet_debian9               gcr.io/$PROJECT_ID/dotnet-debian9:latest
-    docker tag bazel/experimental/dotnet:dotnet_debian10              gcr.io/$PROJECT_ID/dotnet-debian10:latest
-    docker tag bazel/experimental/dotnet:debug_debian9                gcr.io/$PROJECT_ID/dotnet:debug
-    docker tag bazel/experimental/dotnet:debug_debian9                gcr.io/$PROJECT_ID/dotnet-debian9:debug
-    docker tag bazel/experimental/dotnet:debug_debian10               gcr.io/$PROJECT_ID/dotnet-debian10:debug
+    docker tag bazel/experimental/dotnet:dotnet_debian9                    gcr.io/$PROJECT_ID/dotnet:latest
+    docker tag bazel/experimental/dotnet:dotnet_debian9                    gcr.io/$PROJECT_ID/dotnet-debian9:latest
+    docker tag bazel/experimental/dotnet:dotnet_debian10                   gcr.io/$PROJECT_ID/dotnet-debian10:latest
+    docker tag bazel/experimental/dotnet:dotnet_debug_debian9              gcr.io/$PROJECT_ID/dotnet:debug
+    docker tag bazel/experimental/dotnet:dotnet_debug_debian9              gcr.io/$PROJECT_ID/dotnet-debian9:debug
+    docker tag bazel/experimental/dotnet:dotnet_debug_debian10             gcr.io/$PROJECT_ID/dotnet-debian10:debug
 
     docker tag bazel/experimental/dotnet:dotnet_core_aspnet_debian9        gcr.io/$PROJECT_ID/dotnet/core/aspnet:latest
     docker tag bazel/experimental/dotnet:dotnet_core_aspnet_debian9        gcr.io/$PROJECT_ID/dotnet/core/aspnet:3.1
