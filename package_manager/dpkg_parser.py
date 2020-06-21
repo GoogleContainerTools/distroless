@@ -45,6 +45,8 @@ parser.add_argument("--packages", action='store',
                     help='A comma delimited list of packages to search for and download')
 parser.add_argument("--workspace-name", action='store',
                     help='The name of the current bazel workspace')
+parser.add_argument("--versionsfile", action='store',
+                    help='The target path of the versions file')
 
 parser.add_argument("--download-and-extract-only", action='store',
                     help='If True, download Packages.gz and make urls absolute from mirror url')
@@ -72,9 +74,9 @@ def main():
                               args.packages_gz_url, args.package_prefix)
         util.build_os_release_tar(args.distro, OS_RELEASE_FILE_NAME, OS_RELEASE_PATH, OS_RELEASE_TAR_FILE_NAME)
     else:
-        download_dpkg(args.package_files, args.packages, args.workspace_name)
+        download_dpkg(args.package_files, args.packages, args.workspace_name, args.versionsfile)
 
-def download_dpkg(package_files, packages, workspace_name):
+def download_dpkg(package_files, packages, workspace_name, versionsfile):
     """ Using an unzipped, json package file with full urls,
      downloads a .deb package
 
@@ -125,6 +127,9 @@ def download_dpkg(package_files, packages, workspace_name):
     with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
         f.write("packages = " + json.dumps(package_to_rule_map))
         f.write("\nversions = " + json.dumps(package_to_version_map))
+    if versionsfile:
+        with open(versionsfile, 'w') as f:
+            f.write(json.dumps(package_to_version_map, sort_keys=True, indent=4, separators=(',', ': ')))
 
 def download_and_save(pkg_key, url, out_file, retry_count=20):
     res = urllib.request.urlopen(url)
