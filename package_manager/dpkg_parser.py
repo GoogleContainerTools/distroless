@@ -114,6 +114,7 @@ def download_dpkg(package_files, packages, workspace_name, versionsfile):
     if versionsfile:
         with open(versionsfile, 'w') as f:
             f.write(json.dumps(package_to_version_map, sort_keys=True, indent=4, separators=(',', ': ')))
+            f.write('\n')
 
 def download_and_save(pkg_key, url, out_file, retry_count=20):
     res = urllib.request.urlopen(url)
