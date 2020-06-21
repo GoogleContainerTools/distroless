@@ -39,6 +39,15 @@ dpkg_src(
 )
 
 dpkg_src(
+    name = "debian_stretch_updates",
+    arch = "amd64",
+    distro = "stretch-updates",
+    sha256 = "e4f466f88d3be205b4012bd903ab2ccd0afb119661746e552e4777374b45e949",
+    snapshot = "20200612T083553Z",
+    url = "https://snapshot.debian.org/archive",
+)
+
+dpkg_src(
     name = "debian_stretch_security",
     package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
     packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
@@ -145,6 +154,7 @@ dpkg_list(
     ],
     sources = [
         "@debian_stretch_security//file:Packages.json",
+        "@debian_stretch_updates//file:Packages.json",
         "@debian_stretch_backports//file:Packages.json",
         "@debian_stretch//file:Packages.json",
     ],
