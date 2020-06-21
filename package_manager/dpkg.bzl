@@ -15,7 +15,7 @@ exports_files(deb_files + ["packages.bzl"])
         "--workspace-name",
         repository_ctx.name,
         "--versionsfile",
-        str(repository_ctx.path(Label("//:WORKSPACE")).dirname) + "/" + repository_ctx.attr.name + ".versions"
+        str(repository_ctx.path(Label("//:WORKSPACE")).dirname) + "/" + repository_ctx.attr.name + ".versions",
     ]
 
     result = repository_ctx.execute(args)
