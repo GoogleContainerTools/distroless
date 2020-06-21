@@ -21,6 +21,7 @@ import io
 from six.moves import urllib
 
 from package_manager.parse_metadata import parse_package_metadata
+from package_manager.version_utils import compare_versions
 from package_manager import util
 
 OUT_FOLDER = "file"
@@ -93,6 +94,7 @@ def download_dpkg(package_files, packages, workspace_name, versionsfile):
             pkg_version = ""
         else:
             pkg_name, pkg_version = pkg_split
+        pkg = None
         for package_file in package_files.split(","):
             if package_file not in package_file_to_metadata:
                 with open(package_file, 'rb') as f:
@@ -100,30 +102,27 @@ def download_dpkg(package_files, packages, workspace_name, versionsfile):
                     package_file_to_metadata[package_file] = json.loads(data.decode('utf-8'))
             metadata = package_file_to_metadata[package_file]
             if (pkg_name in metadata and
-            (pkg_version == "" or
-            pkg_version == metadata[pkg_name][VERSION_KEY])):
+            (pkg is None or compare_versions(metadata[pkg_name][VERSION_KEY], pkg[VERSION_KEY]) > 0)):
                 pkg = metadata[pkg_name]
-                out_file = os.path.join("file", util.encode_package_name(pkg_name))
-                download_and_save(pkg_name, pkg[FILENAME_KEY], out_file)
-                package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
-                package_to_version_map[pkg_name] = metadata[pkg_name][VERSION_KEY]
-                actual_checksum = util.sha256_checksum(out_file)
-                expected_checksum = pkg[SHA256_KEY]
-                if actual_checksum != expected_checksum:
-                    raise Exception("Wrong checksum for package %s (%s).  Expected: %s, Actual: %s" %(pkg_name, pkg[FILENAME_KEY], expected_checksum, actual_checksum))
-                if pkg_version == "":
-                    break
-                if (pkg_vals in pkg_vals_to_package_file_and_sha256 and
-                pkg_vals_to_package_file_and_sha256[pkg_vals][1] != actual_checksum):
-                    raise Exception("Conflicting checksums for package %s, version %s.  Conflicting checksums: %s:%s, %s:%s" %
-                    (pkg_name, pkg_version,
-                     pkg_vals_to_package_file_and_sha256[pkg_vals][0], pkg_vals_to_package_file_and_sha256[pkg_vals][1],
-                     package_file, actual_checksum))
-                else:
-                    pkg_vals_to_package_file_and_sha256[pkg_vals] = [package_file, actual_checksum]
-                break
-        else:
+        if (pkg is None):
             raise Exception("Package: %s, Version: %s not found in any of the sources" % (pkg_name, pkg_version))
+        else:
+            out_file = os.path.join("file", util.encode_package_name(pkg_name))
+            download_and_save(pkg_name, pkg[FILENAME_KEY], out_file)
+            package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
+            package_to_version_map[pkg_name] = pkg[VERSION_KEY]
+            actual_checksum = util.sha256_checksum(out_file)
+            expected_checksum = pkg[SHA256_KEY]
+            if actual_checksum != expected_checksum:
+                raise Exception("Wrong checksum for package %s (%s).  Expected: %s, Actual: %s" %(pkg_name, pkg[FILENAME_KEY], expected_checksum, actual_checksum))
+            if (pkg_vals in pkg_vals_to_package_file_and_sha256 and
+            pkg_vals_to_package_file_and_sha256[pkg_vals][1] != actual_checksum):
+                raise Exception("Conflicting checksums for package %s, version %s.  Conflicting checksums: %s:%s, %s:%s" %
+                (pkg_name, pkg_version,
+                    pkg_vals_to_package_file_and_sha256[pkg_vals][0], pkg_vals_to_package_file_and_sha256[pkg_vals][1],
+                    package_file, actual_checksum))
+            else:
+                pkg_vals_to_package_file_and_sha256[pkg_vals] = [package_file, actual_checksum]
     with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
         f.write("packages = " + json.dumps(package_to_rule_map))
         f.write("\nversions = " + json.dumps(package_to_version_map))

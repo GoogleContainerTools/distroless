@@ -48,9 +48,7 @@ dpkg_src(
 dpkg_list(
     name = "package_bundle",
     packages = [
-        # Version required to skip a security fix to the pre-release library
-        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc6=2.24-11+deb9u4",
+        "libc6",
         "base-files",
         "ca-certificates",
         "openssl",
@@ -95,9 +93,7 @@ dpkg_list(
         "python2.7-minimal",
         "libpython2.7-stdlib",
         "dash",
-        # Version required to skip a security fix to the pre-release library
-        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc-bin=2.24-11+deb9u4",
+        "libc-bin",
 
         #python3
         "libmpdec2",
@@ -147,9 +143,6 @@ dpkg_list(
         "libbz2-1.0",
         "liblzma5",
     ],
-    # Takes the first package found: security updates should go first
-    # If there was a security fix to a package before the stable release, this will find
-    # the older security release. This happened for stretch libc6.
     sources = [
         "@debian_stretch_security//file:Packages.json",
         "@debian_stretch_backports//file:Packages.json",
@@ -318,9 +311,7 @@ dpkg_list(
         "mime-support",
         "netbase",
         "readline-common",
-        # Version required to take the latest from "buster" instead of older version in "buster-updates"
-        # TODO: Remove when there is another update, or dpkg_list finds the recent version
-        "tzdata=2020a-0+deb10u1",
+        "tzdata",
 
         #c++
         "libgcc1",
@@ -399,9 +390,6 @@ dpkg_list(
         "libbz2-1.0",
         "liblzma5",
     ],
-    # Takes the first package found: security updates should go first
-    # If there was a security fix to a package before the stable release, this will find
-    # the older security release. This happened for stretch libc6.
     sources = [
         "@debian10_security//file:Packages.json",
         "@debian10_updates//file:Packages.json",

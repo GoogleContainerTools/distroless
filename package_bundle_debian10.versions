@@ -10,7 +10,7 @@
     "libbz2-1.0": "1.0.6-9.2~deb10u1",
     "libc-bin": "2.28-10",
     "libc6": "2.28-10",
-    "libcomerr2": "1.44.5-1+deb10u2",
+    "libcomerr2": "1.44.5-1+deb10u3",
     "libcurl4": "7.64.0-4+deb10u1",
     "libdb5.3": "5.3.28+dfsg1-0.5",
     "libexpat1": "2.2.6-2+deb10u1",
