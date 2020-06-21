@@ -208,15 +208,3 @@ def compare_versions(ver1, ver2):
     # at this point, the versions are equal, but due to an interpolated
     # zero in either the epoch or the debian version
     return 0
-
-def compare_versions_key(x):
-    """Uses functools.cmp_to_key to convert the compare_versions()
-    function to a function suitable to passing to sorted() and friends
-    as a key."""
-    return cmp_to_key(compare_versions)(x)
-
-def dstringcmp_key(x):
-    """Uses functools.cmp_to_key to convert the dstringcmp()
-    function to a function suitable to passing to sorted() and friends
-    as a key."""
-    return cmp_to_key(dstringcmp)(x)

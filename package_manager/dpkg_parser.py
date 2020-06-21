@@ -83,18 +83,11 @@ def download_dpkg(package_files, packages, workspace_name, versionsfile):
 
     Uses the 'Filename' key to download the .deb package
     """
-    pkg_vals_to_package_file_and_sha256 = {}
     package_to_rule_map = {}
     package_to_version_map = {}
     package_file_to_metadata = {}
-    for pkg_vals in set(packages.split(",")):
-        pkg_split = pkg_vals.split("=")
-        if len(pkg_split) != 2:
-            pkg_name = pkg_vals
-            pkg_version = ""
-        else:
-            pkg_name, pkg_version = pkg_split
-        pkg = None
+    for pkg_name in set(packages.split(",")):
+        pkg = {}
         for package_file in package_files.split(","):
             if package_file not in package_file_to_metadata:
                 with open(package_file, 'rb') as f:
@@ -102,10 +95,10 @@ def download_dpkg(package_files, packages, workspace_name, versionsfile):
                     package_file_to_metadata[package_file] = json.loads(data.decode('utf-8'))
             metadata = package_file_to_metadata[package_file]
             if (pkg_name in metadata and
-            (pkg is None or compare_versions(metadata[pkg_name][VERSION_KEY], pkg[VERSION_KEY]) > 0)):
+            (not VERSION_KEY in pkg or compare_versions(metadata[pkg_name][VERSION_KEY], pkg[VERSION_KEY]) > 0)):
                 pkg = metadata[pkg_name]
-        if (pkg is None):
-            raise Exception("Package: %s, Version: %s not found in any of the sources" % (pkg_name, pkg_version))
+        if (not pkg):
+            raise Exception("Package: %s not found in any of the sources" % pkg_name)
         else:
             out_file = os.path.join("file", util.encode_package_name(pkg_name))
             download_and_save(pkg_name, pkg[FILENAME_KEY], out_file)
@@ -115,14 +108,6 @@ def download_dpkg(package_files, packages, workspace_name, versionsfile):
             expected_checksum = pkg[SHA256_KEY]
             if actual_checksum != expected_checksum:
                 raise Exception("Wrong checksum for package %s (%s).  Expected: %s, Actual: %s" %(pkg_name, pkg[FILENAME_KEY], expected_checksum, actual_checksum))
-            if (pkg_vals in pkg_vals_to_package_file_and_sha256 and
-            pkg_vals_to_package_file_and_sha256[pkg_vals][1] != actual_checksum):
-                raise Exception("Conflicting checksums for package %s, version %s.  Conflicting checksums: %s:%s, %s:%s" %
-                (pkg_name, pkg_version,
-                    pkg_vals_to_package_file_and_sha256[pkg_vals][0], pkg_vals_to_package_file_and_sha256[pkg_vals][1],
-                    package_file, actual_checksum))
-            else:
-                pkg_vals_to_package_file_and_sha256[pkg_vals] = [package_file, actual_checksum]
     with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
         f.write("packages = " + json.dumps(package_to_rule_map))
         f.write("\nversions = " + json.dumps(package_to_version_map))
