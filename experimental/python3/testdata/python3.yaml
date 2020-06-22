@@ -57,23 +57,24 @@ commandTests:
           # depends on things not installed by default on Debian
           'dbm.gnu',
           'lib2to3.pgen2.conv',
-          'tkinter',
-          '_tkinter',
-          'turtle',
         ))
 
-        def onerror(failed_module_name):
-          # ignore any errors from modules we are explicitly skipping (e.g. tkinter)
-          if failed_module_name in skip_modules:
-            return
+        # pass an error handler so the test fails if there are broken standard library packages
+        def walk_packages_onerror(failed_module_name):
+          if failed_module_name == 'tkinter': return
           raise Exception('failed to import module: {}'.format(repr(failed_module_name)))
-
-        for module_info in pkgutil.walk_packages(onerror=onerror):
+        for module_info in pkgutil.walk_packages(onerror=walk_packages_onerror):
           # TODO: use module_info.name when Debian9 support is dropped
           module_name = module_info[1]
           # idlelib on Python3.5 depends on tkinter which is not installed by default
           if module_name in skip_modules or module_name.endswith('.__main__') or module_name.startswith('idlelib.'):
             continue
 
-          __import__(module_name)
+          try:
+            __import__(module_name)
+          except ImportError as e:
+            # ignore tkinter errors: Python's Tcl/Tk support is not installed by default on Debian
+            if 'tkinter' in str(e):
+              continue
+            raise
           print('imported {}'.format(module_name))

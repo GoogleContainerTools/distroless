@@ -47,24 +47,20 @@ commandTests:
           '_MozillaCookieJar',
         ))
 
-        def onerror(failed_module_name):
-          # ignore any errors from modules we are explicitly skipping (e.g. tkinter)
-          if failed_module_name in skip_modules:
-            return
+        # pass an error handler so the test fails if there are broken standard library packages
+        def walk_packages_onerror(failed_module_name):
           raise Exception('failed to import module: {}'.format(repr(failed_module_name)))
-
-        for module_info in pkgutil.walk_packages(onerror=onerror):
+        for module_info in pkgutil.walk_packages(onerror=walk_packages_onerror):
           # TODO: use module_info.name when Debian9 support is dropped
           module_name = module_info[1]
-          # idlelib on Python3.5 depends on tkinter which is not installed by default
           if module_name in skip_modules or module_name.endswith('.__main__'):
             continue
 
           try:
             __import__(module_name)
           except ImportError as e:
-            # ignore tkinter import errors: there are so many
-            if 'No module named _tkinter' in str(e):
+            # ignore tkinter errors: Python's Tcl/Tk support is not installed by default on Debian
+            if 'tkinter' in str(e):
               continue
             raise
           print('imported {}'.format(module_name))
