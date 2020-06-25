@@ -3,6 +3,11 @@
 set -o errexit
 set -o xtrace
 
+if ! git diff-index --quiet HEAD WORKSPACE; then
+    echo "Pending changes to WORKSPACE, will not patch"
+    exit 1
+fi
+
 YEAR=`date +"%Y"`
 MONTH=`date +"%m"`
 
@@ -45,12 +50,12 @@ bazel build --host_force_python=PY2 @package_bundle_debian10//file:packages.bzl
 
 # Check if any of the version lock files are updated
 
-if git diff-index --quiet HEAD package_bundle.versions; then
+if ! git diff-index --quiet HEAD package_bundle.versions; then
     echo "Changes detected to package_bundle.versions"
     exit 0
 fi
 
-if git diff-index --quiet HEAD package_bundle_debian10.versions; then
+if ! git diff-index --quiet HEAD package_bundle_debian10.versions; then
     echo "Changes detected to package_bundle_debian10.versions"
     exit 0
 fi
