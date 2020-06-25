@@ -4,7 +4,7 @@ set -o errexit
 set -o xtrace
 
 if ! git diff-index --quiet HEAD WORKSPACE; then
-    echo "Pending changes to WORKSPACE, will not patch"
+    echo "Pending changes to WORKSPACE, will not patch."
     exit 1
 fi
 
@@ -55,10 +55,10 @@ bazel build --host_force_python=PY2 @package_bundle_debian10//file:packages.bzl
 # Check if any of the version lock files are updated
 
 if diff -w package_bundle.versions package_bundle.versions~ && diff -w package_bundle_debian10.versions package_bundle_debian10.versions~; then
-    echo "No changes detected to package_bundle versions"
+    echo "No changes detected to package_bundle versions."
     mv WORKSPACE~ WORKSPACE
+    mv package_bundle.versions~ package_bundle.versions
+    mv package_bundle_debian10.versions~ package_bundle_debian10.versions
 else
-    echo "Changes detected to package_bundle_debian10.versions"
+    echo "Changes detected to package_bundle version files. Please update snapshots."
 fi
-
-rm *~
