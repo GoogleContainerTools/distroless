@@ -42,7 +42,39 @@ DISTRO_VERSIONS = {
         DISTRO_PACKAGES[distro_suffix]["libexpat1"],
         DISTRO_PACKAGES[distro_suffix]["libfontconfig1"],
         DISTRO_PACKAGES[distro_suffix]["libuuid1"],
-    ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in java_debs],
+    ],
+    # We expect users to add JAVA_VERSION
+    # env = {
+    #    "JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
+    # },
+    # We expect users to symlink java executable to /usr/bin/java
+    # symlinks = {
+    #     "/usr/bin/java": java_executable_path,
+    # },
+    tars = [":cacerts_java" + distro_suffix],
+) for (distro_suffix, rule_name) in [
+    (
+        "_debian9",
+        "java_base",
+    ),
+    (
+        "_debian9",
+        "java_base_debug",
+    ),
+    (
+        "_debian10",
+        "java_base",
+    ),
+    (
+        "_debian10",
+        "java_base_debug",
+    ),
+]]
+
+[container_image(
+    name = rule_name + distro_suffix,
+    base = ("//java:java_base" if (not ("debug" in rule_name)) else "//java:java_base_debug") + distro_suffix,
+    debs = [DISTRO_PACKAGES[distro_suffix][deb] for deb in java_debs],
     # We expect users to use:
     # cmd = ["/path/to/deploy.jar", "--option1", ...]
     entrypoint = [
@@ -55,7 +87,6 @@ DISTRO_VERSIONS = {
     symlinks = {
         "/usr/bin/java": java_executable_path,
     },
-    tars = [":cacerts_java" + distro_suffix],
 ) for (distro_suffix, rule_name, java_debs, java_executable_path) in [
     (
         "_debian9",
