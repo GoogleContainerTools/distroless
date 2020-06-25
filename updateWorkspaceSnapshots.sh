@@ -11,9 +11,6 @@ MONTH=`date +"%m"`
 DEBIAN_SNAPSHOT=`curl -s "https://snapshot.debian.org/archive/debian/?year=$YEAR;month=$MONTH" 2>&1 | grep -oE "[0-9]+T[0-9]+Z" | tail -n1`
 DEBIAN_SECURITY_SNAPSHOT=`curl -s "https://snapshot.debian.org/archive/debian-security/?year=$YEAR;month=$MONTH" 2>&1 | grep -oE "[0-9]+T[0-9]+Z" | tail -n1`
 
-DEBIAN_SNAPSHOT="20200612T083553Z"
-DEBIAN_SECURITY_SNAPSHOT="20200612T105246Z"
-
 # Fetch appropriate SHA256 sums
 
 DEBIAN_STRETCH_SHA256=`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`
