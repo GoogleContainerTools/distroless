@@ -20,12 +20,30 @@ go_register_toolchains()
 
 load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
 
+DEBIAN_SNAPSHOT = "20200612T083553Z"
+
+DEBIAN_SECURITY_SNAPSHOT = "20200612T105246Z"
+
+DEBIAN_STRETCH_SHA256 = "56537cedf58e6f08bb3eafef514a20016fbfd227850ab810c43e5ffb00f57427"
+
+DEBIAN_STRETCH_BACKPORTS_SHA256 = "1d20fb6f59379526a96857073588a7ad6860e78e0d7b37aa8eb5ec18fd0f67b8"
+
+DEBIAN_STRETCH_UPDATES_SHA256 = "e4f466f88d3be205b4012bd903ab2ccd0afb119661746e552e4777374b45e949"
+
+DEBIAN_STRETCH_SECURITY_SHA256 = "90372326b6160eea97b14423675a5558002adff593869b31742ca32102d2edf9"
+
+DEBIAN_BUSTER_SHA256 = "f251129edc5e5b31dadd7bb252e5ce88b3fdbd76de672bc0bbcda4f667d5f47f"
+
+DEBIAN_BUSTER_UPDATES_SHA256 = "24b35fcd184d71f83c3f553a72e6636954552331adfbbc694f0f70bd33e1a2b4"
+
+DEBIAN_BUSTER_SECURITY_SHA256 = "c0ae35609f2d445e73ca8d3c03dc843f5ddae50f474cee10e79c4c1284ce2a2d"
+
 dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "56537cedf58e6f08bb3eafef514a20016fbfd227850ab810c43e5ffb00f57427",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_STRETCH_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -33,8 +51,8 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "1d20fb6f59379526a96857073588a7ad6860e78e0d7b37aa8eb5ec18fd0f67b8",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_STRETCH_BACKPORTS_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -42,16 +60,16 @@ dpkg_src(
     name = "debian_stretch_updates",
     arch = "amd64",
     distro = "stretch-updates",
-    sha256 = "e4f466f88d3be205b4012bd903ab2ccd0afb119661746e552e4777374b45e949",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_STRETCH_UPDATES_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "90372326b6160eea97b14423675a5558002adff593869b31742ca32102d2edf9",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/stretch/updates/main/binary-amd64/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT),
+    sha256 = DEBIAN_STRETCH_SECURITY_SHA256,
 )
 
 dpkg_list(
@@ -282,8 +300,8 @@ dpkg_src(
     name = "debian10",
     arch = "amd64",
     distro = "buster",
-    sha256 = "f251129edc5e5b31dadd7bb252e5ce88b3fdbd76de672bc0bbcda4f667d5f47f",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_BUSTER_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -291,16 +309,16 @@ dpkg_src(
     name = "debian10_updates",
     arch = "amd64",
     distro = "buster-updates",
-    sha256 = "24b35fcd184d71f83c3f553a72e6636954552331adfbbc694f0f70bd33e1a2b4",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_BUSTER_UPDATES_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian10_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "c0ae35609f2d445e73ca8d3c03dc843f5ddae50f474cee10e79c4c1284ce2a2d",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/buster/updates/main/binary-amd64/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT),
+    sha256 = DEBIAN_BUSTER_SECURITY_SHA256,
 )
 
 dpkg_list(
