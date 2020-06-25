@@ -42,3 +42,20 @@ bazel clean
 bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
 bazel build --host_force_python=PY2 @package_bundle//file:packages.bzl
 bazel build --host_force_python=PY2 @package_bundle_debian10//file:packages.bzl
+
+# Check if any of the version lock files are updated
+
+if git diff-index --quiet HEAD package_bundle.versions; then
+    echo "Changes detected to package_bundle.versions"
+    exit 0
+fi
+
+if git diff-index --quiet HEAD package_bundle_debian10.versions; then
+    echo "Changes detected to package_bundle_debian10.versions"
+    exit 0
+fi
+
+# No version updates required, revert changes to WORKSPACE
+
+echo "No changes detected to *.versions"
+git checkout -- WORKSPACE
