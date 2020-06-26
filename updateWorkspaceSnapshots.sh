@@ -3,11 +3,6 @@
 set -o errexit
 set -o xtrace
 
-if ! git diff-index --quiet HEAD WORKSPACE; then
-    echo "Pending changes to WORKSPACE, will not patch."
-    exit 1
-fi
-
 cp WORKSPACE WORKSPACE~
 cp package_bundle.versions package_bundle.versions~
 cp package_bundle_debian10.versions package_bundle_debian10.versions~
@@ -61,4 +56,5 @@ if diff -w package_bundle.versions package_bundle.versions~ && diff -w package_b
     mv package_bundle_debian10.versions~ package_bundle_debian10.versions
 else
     echo "Changes detected to package_bundle version files. Please update snapshots."
+    rm *~
 fi
