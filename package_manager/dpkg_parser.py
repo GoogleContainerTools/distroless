@@ -128,7 +128,7 @@ def download_dpkg(package_files, packages, workspace_name):
 
 def download_and_save(pkg_key, url, out_file, retry_count=20):
     res = urllib.request.urlopen(url)
-    remaining_bytes = int(res.info().getheader("Content-Length"))
+    remaining_bytes = int(res.info().get("Content-Length"))
     downloaded = res.read()
     contents = []
     contents.append(downloaded)
@@ -136,8 +136,8 @@ def download_and_save(pkg_key, url, out_file, retry_count=20):
     offset = len(downloaded)
 
     if remaining_bytes != 0:
-        range_access_enabled = "bytes" in res.info().getheader("Accept-Ranges")
-        etag = res.info().getheader("ETag")
+        range_access_enabled = "bytes" in res.info().get("Accept-Ranges")
+        etag = res.info().get("ETag")
         if not range_access_enabled:
             raise Exception("Fail to download %s (%s). Server returned partial contents." %(pkg_key, url))
 
