@@ -47,7 +47,7 @@ parser.add_argument("--packages", action='store',
 parser.add_argument("--workspace-name", action='store',
                     help='The name of the current bazel workspace')
 parser.add_argument("--versionsfile", action='store',
-                    help='The target path of the versions file')
+                    help='If set, the output path of the versions file to be generated')
 
 parser.add_argument("--download-and-extract-only", action='store',
                     help='If True, download Packages.gz and make urls absolute from mirror url')
