@@ -20,12 +20,30 @@ go_register_toolchains()
 
 load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
 
+DEBIAN_SNAPSHOT = "20200612T083553Z"
+
+DEBIAN_SECURITY_SNAPSHOT = "20200612T105246Z"
+
+DEBIAN_STRETCH_SHA256 = "56537cedf58e6f08bb3eafef514a20016fbfd227850ab810c43e5ffb00f57427"
+
+DEBIAN_STRETCH_BACKPORTS_SHA256 = "1d20fb6f59379526a96857073588a7ad6860e78e0d7b37aa8eb5ec18fd0f67b8"
+
+DEBIAN_STRETCH_UPDATES_SHA256 = "e4f466f88d3be205b4012bd903ab2ccd0afb119661746e552e4777374b45e949"
+
+DEBIAN_STRETCH_SECURITY_SHA256 = "90372326b6160eea97b14423675a5558002adff593869b31742ca32102d2edf9"
+
+DEBIAN_BUSTER_SHA256 = "f251129edc5e5b31dadd7bb252e5ce88b3fdbd76de672bc0bbcda4f667d5f47f"
+
+DEBIAN_BUSTER_UPDATES_SHA256 = "24b35fcd184d71f83c3f553a72e6636954552331adfbbc694f0f70bd33e1a2b4"
+
+DEBIAN_BUSTER_SECURITY_SHA256 = "c0ae35609f2d445e73ca8d3c03dc843f5ddae50f474cee10e79c4c1284ce2a2d"
+
 dpkg_src(
     name = "debian_stretch",
     arch = "amd64",
     distro = "stretch",
-    sha256 = "56537cedf58e6f08bb3eafef514a20016fbfd227850ab810c43e5ffb00f57427",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_STRETCH_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -33,24 +51,31 @@ dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
-    sha256 = "1d20fb6f59379526a96857073588a7ad6860e78e0d7b37aa8eb5ec18fd0f67b8",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_STRETCH_BACKPORTS_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
+    url = "https://snapshot.debian.org/archive",
+)
+
+dpkg_src(
+    name = "debian_stretch_updates",
+    arch = "amd64",
+    distro = "stretch-updates",
+    sha256 = DEBIAN_STRETCH_UPDATES_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "90372326b6160eea97b14423675a5558002adff593869b31742ca32102d2edf9",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/stretch/updates/main/binary-amd64/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT),
+    sha256 = DEBIAN_STRETCH_SECURITY_SHA256,
 )
 
 dpkg_list(
     name = "package_bundle",
     packages = [
-        # Version required to skip a security fix to the pre-release library
-        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc6=2.24-11+deb9u4",
+        "libc6",
         "base-files",
         "ca-certificates",
         "openssl",
@@ -95,9 +120,7 @@ dpkg_list(
         "python2.7-minimal",
         "libpython2.7-stdlib",
         "dash",
-        # Version required to skip a security fix to the pre-release library
-        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc-bin=2.24-11+deb9u4",
+        "libc-bin",
 
         #python3
         "libmpdec2",
@@ -147,11 +170,9 @@ dpkg_list(
         "libbz2-1.0",
         "liblzma5",
     ],
-    # Takes the first package found: security updates should go first
-    # If there was a security fix to a package before the stable release, this will find
-    # the older security release. This happened for stretch libc6.
     sources = [
         "@debian_stretch_security//file:Packages.json",
+        "@debian_stretch_updates//file:Packages.json",
         "@debian_stretch_backports//file:Packages.json",
         "@debian_stretch//file:Packages.json",
     ],
@@ -279,8 +300,8 @@ dpkg_src(
     name = "debian10",
     arch = "amd64",
     distro = "buster",
-    sha256 = "f251129edc5e5b31dadd7bb252e5ce88b3fdbd76de672bc0bbcda4f667d5f47f",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_BUSTER_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
@@ -288,16 +309,16 @@ dpkg_src(
     name = "debian10_updates",
     arch = "amd64",
     distro = "buster-updates",
-    sha256 = "24b35fcd184d71f83c3f553a72e6636954552331adfbbc694f0f70bd33e1a2b4",
-    snapshot = "20200612T083553Z",
+    sha256 = DEBIAN_BUSTER_UPDATES_SHA256,
+    snapshot = DEBIAN_SNAPSHOT,
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian10_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20200612T105246Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "c0ae35609f2d445e73ca8d3c03dc843f5ddae50f474cee10e79c4c1284ce2a2d",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/buster/updates/main/binary-amd64/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT),
+    sha256 = DEBIAN_BUSTER_SECURITY_SHA256,
 )
 
 dpkg_list(
@@ -318,9 +339,7 @@ dpkg_list(
         "mime-support",
         "netbase",
         "readline-common",
-        # Version required to take the latest from "buster" instead of older version in "buster-updates"
-        # TODO: Remove when there is another update, or dpkg_list finds the recent version
-        "tzdata=2020a-0+deb10u1",
+        "tzdata",
 
         #c++
         "libgcc1",
@@ -399,9 +418,6 @@ dpkg_list(
         "libbz2-1.0",
         "liblzma5",
     ],
-    # Takes the first package found: security updates should go first
-    # If there was a security fix to a package before the stable release, this will find
-    # the older security release. This happened for stretch libc6.
     sources = [
         "@debian10_security//file:Packages.json",
         "@debian10_updates//file:Packages.json",

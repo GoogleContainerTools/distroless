@@ -11,6 +11,7 @@ par_binary(
     deps = [
         ":parse_metadata",
         ":util",
+        ":version_utils",
         "@bazel_tools//third_party/py/six",
     ],
 )
@@ -24,6 +25,11 @@ py_library(
 py_library(
     name = "util",
     srcs = ["util.py"],
+)
+
+py_library(
+    name = "version_utils",
+    srcs = ["version_utils.py"],
 )
 
 py_test(
