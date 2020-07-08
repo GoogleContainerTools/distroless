@@ -1,7 +1,7 @@
 name: update-snapshots
 on:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '30 8 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
