@@ -249,6 +249,8 @@ images:
   - 'gcr.io/$PROJECT_ID/java:8-debug'
   - 'gcr.io/$PROJECT_ID/java:11'
   - 'gcr.io/$PROJECT_ID/java:11-debug'
+  - 'gcr.io/$PROJECT_ID/java:base'
+  - 'gcr.io/$PROJECT_ID/java:base-debug'
   - 'gcr.io/$PROJECT_ID/java-debian9:base'
   - 'gcr.io/$PROJECT_ID/java-debian9:base-debug'
   - 'gcr.io/$PROJECT_ID/java-debian9:latest'
