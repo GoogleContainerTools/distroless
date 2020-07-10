@@ -71,6 +71,10 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
+    bazel run --host_force_python=PY2 //java:java_base_debian9
+    bazel run --host_force_python=PY2 //java:java_base_debug_debian9
+    bazel run --host_force_python=PY2 //java:java_base_debian10
+    bazel run --host_force_python=PY2 //java:java_base_debug_debian10
     bazel run --host_force_python=PY2 //java:java8_debian9
     bazel run --host_force_python=PY2 //java:java8_debug_debian9
     bazel run --host_force_python=PY2 //java:java11_debian9

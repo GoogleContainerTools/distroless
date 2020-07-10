@@ -1,0 +1,14 @@
+schemaVersion: "2.0.0"
+fileExistenceTests:
+  - name: certs
+    path: "/etc/ssl/certs/java/cacerts"
+    shouldExist: true
+  - name: busybox
+    path: "/busybox/sh"
+    shouldExist: true
+  - name: no-shell
+    path: "/bin/sh"
+    shouldExist: false
+  - name: no-jvm
+    path: "/usr/lib/jvm"
+    shouldExist: false
