@@ -136,7 +136,7 @@ alias(
 
 [[container_test(
     name = "java_base" + mode + distro_suffix + "_test",
-    configs = ["testdata/java_base_debug.yaml" if ("debug" in mode) else "testdata/java_base.yaml"],
+    configs = ["testdata/java_base" + mode + ".yaml"],
     image = ":java_base" + mode + distro_suffix,
 ) for mode in [
     "",
