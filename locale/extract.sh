@@ -7,7 +7,7 @@ OUT_TAR=$2
 
 ar -x "$DEB" data.tar.xz
 
-tar -xf data.tar.xz ./usr/lib/locale
+tar -xf data.tar.xz ./usr/lib/locale ./usr/share/doc/libc-bin/copyright
 
 rm data.tar.xz
 
