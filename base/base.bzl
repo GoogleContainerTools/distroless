@@ -75,21 +75,21 @@ def distro_components(distro_suffix):
 
     # Non-root base images
     container_image(
-        name = "static-nonroot" + distro_suffix,
+        name = "static_nonroot" + distro_suffix,
         base = ":static" + distro_suffix,
         user = "%d" % NONROOT,
         workdir = "/home/nonroot",
     )
 
     container_image(
-        name = "base-nonroot" + distro_suffix,
+        name = "base_nonroot" + distro_suffix,
         base = ":base" + distro_suffix,
         user = "%d" % NONROOT,
         workdir = "/home/nonroot",
     )
 
     container_image(
-        name = "debug-nonroot" + distro_suffix,
+        name = "debug_nonroot" + distro_suffix,
         base = ":debug" + distro_suffix,
         user = "%d" % NONROOT,
         workdir = "/home/nonroot",

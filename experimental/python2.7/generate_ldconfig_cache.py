@@ -12,6 +12,7 @@ import tempfile
 
 
 CONTAINER_IMAGE_PATH = 'experimental/python2.7/python27_debian9'
+EXECUTABLE_SUFFIX = '.executable'
 
 
 def main():
@@ -21,16 +22,16 @@ def main():
     output_path = sys.argv[1]
 
     guess_runfiles = sys.argv[0] + '.runfiles'
-    container_path = CONTAINER_IMAGE_PATH
+    load_container_exe = CONTAINER_IMAGE_PATH + EXECUTABLE_SUFFIX
     if os.path.exists(guess_runfiles):
         # container_image script looks for this environment variable
         guess_runfiles = os.path.abspath(guess_runfiles)
         os.environ['PYTHON_RUNFILES'] = guess_runfiles
-        container_path = guess_runfiles + '/distroless/' + container_path
+        load_container_exe = guess_runfiles + '/distroless/' + load_container_exe
 
-    print('loading image {} ...'.format(container_path))
+    print('loading image {} ...'.format(load_container_exe))
     sys.stdout.flush()
-    subprocess.check_call((container_path, ), stderr=subprocess.STDOUT)
+    subprocess.check_call((load_container_exe, ), stderr=subprocess.STDOUT)
 
     # create a temporary directory to store the output
     tempdir = tempfile.mkdtemp()

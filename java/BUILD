@@ -28,9 +28,9 @@ DISTRO_VERSIONS = {
     "_debian10",
 ]]
 
-[container_image(
-    name = rule_name + distro_suffix,
-    base = ("//cc:cc" if (not ("debug" in rule_name)) else "//cc:debug") + distro_suffix,
+[[container_image(
+    name = "java_base" + mode + distro_suffix,
+    base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + distro_suffix,
     debs = [
         DISTRO_PACKAGES[distro_suffix]["zlib1g"],
         DISTRO_PACKAGES[distro_suffix]["libjpeg62-turbo"],
@@ -43,7 +43,20 @@ DISTRO_VERSIONS = {
         DISTRO_PACKAGES[distro_suffix]["libfontconfig1"],
         DISTRO_PACKAGES[distro_suffix]["libuuid1"],
         DISTRO_PACKAGES[distro_suffix]["libc-bin"],
-    ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in java_debs],
+    ],
+    env = {
+        "LANG": "C.UTF-8",
+    },
+    tars = [":cacerts_java" + distro_suffix],
+) for mode in [
+    "",
+    "_debug",
+]] for distro_suffix in DISTRO_SUFFIXES]
+
+[container_image(
+    name = rule_name + distro_suffix,
+    base = ":java_base" + ("_debug" if ("debug" in rule_name) else "") + distro_suffix,
+    debs = [DISTRO_PACKAGES[distro_suffix][deb] for deb in java_debs],
     # We expect users to use:
     # cmd = ["/path/to/deploy.jar", "--option1", ...]
     entrypoint = [
@@ -51,13 +64,11 @@ DISTRO_VERSIONS = {
         "-jar",
     ],
     env = {
-        "LANG": "C.UTF-8",
         "JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
     },
     symlinks = {
         "/usr/bin/java": java_executable_path,
     },
-    tars = [":cacerts_java" + distro_suffix],
 ) for (distro_suffix, rule_name, java_debs, java_executable_path) in [
     (
         "_debian9",
@@ -126,6 +137,15 @@ alias(
     name = "java11_debug",
     actual = ":java11_debug_debian9",
 )
+
+[[container_test(
+    name = "java_base" + mode + distro_suffix + "_test",
+    configs = ["testdata/java_base" + mode + ".yaml"],
+    image = ":java_base" + mode + distro_suffix,
+) for mode in [
+    "",
+    "_debug",
+]] for distro_suffix in DISTRO_SUFFIXES]
 
 container_test(
     name = "java8_debian9_test",

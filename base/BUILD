@@ -107,6 +107,7 @@ load("//cacerts:cacerts.bzl", "cacerts")
 go_binary(
     name = "check_certs",
     srcs = ["testdata/check_certs.go"],
+    goarch = "amd64",
     # Test image is linux based
     goos = "linux",
     pure = "on",
@@ -124,8 +125,8 @@ alias(
 )
 
 alias(
-    name = "static-nonroot",
-    actual = ":static-nonroot_debian9",
+    name = "static_nonroot",
+    actual = ":static_nonroot_debian9",
 )
 
 alias(
@@ -134,8 +135,8 @@ alias(
 )
 
 alias(
-    name = "base-nonroot",
-    actual = ":base-nonroot_debian9",
+    name = "base_nonroot",
+    actual = ":base_nonroot_debian9",
 )
 
 alias(
@@ -144,6 +145,6 @@ alias(
 )
 
 alias(
-    name = "debug-nonroot",
-    actual = ":debug-nonroot_debian9",
+    name = "debug_nonroot",
+    actual = ":debug_nonroot_debian9",
 )

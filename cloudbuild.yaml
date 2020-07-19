@@ -2,7 +2,7 @@ timeout: 1800s
 steps:
 
 # Publishing base, cc, and static as latest is handled in a separate release process
-- name: gcr.io/cloud-builders/bazel
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
   entrypoint: sh
   args:
   - -c
@@ -14,16 +14,16 @@ steps:
 
     bazel run --host_force_python=PY2 //base:static_debian9
     bazel run --host_force_python=PY2 //base:static_debian10
-    bazel run --host_force_python=PY2 //base:static-nonroot_debian9
-    bazel run --host_force_python=PY2 //base:static-nonroot_debian10
+    bazel run --host_force_python=PY2 //base:static_nonroot_debian9
+    bazel run --host_force_python=PY2 //base:static_nonroot_debian10
     bazel run --host_force_python=PY2 //base:base_debian9
     bazel run --host_force_python=PY2 //base:base_debian10
-    bazel run --host_force_python=PY2 //base:base-nonroot_debian9
-    bazel run --host_force_python=PY2 //base:base-nonroot_debian10
+    bazel run --host_force_python=PY2 //base:base_nonroot_debian9
+    bazel run --host_force_python=PY2 //base:base_nonroot_debian10
     bazel run --host_force_python=PY2 //base:debug_debian9
     bazel run --host_force_python=PY2 //base:debug_debian10
-    bazel run --host_force_python=PY2 //base:debug-nonroot_debian9
-    bazel run --host_force_python=PY2 //base:debug-nonroot_debian10
+    bazel run --host_force_python=PY2 //base:debug_nonroot_debian9
+    bazel run --host_force_python=PY2 //base:debug_nonroot_debian10
 
     bazel run --host_force_python=PY2 //cc:cc_debian9
     bazel run --host_force_python=PY2 //cc:cc_debian10
@@ -40,21 +40,21 @@ steps:
     docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static:${COMMIT_SHA}
     docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}
     docker tag bazel/base:static_debian10         gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}
-    docker tag bazel/base:static-nonroot_debian9  gcr.io/$PROJECT_ID/static:nonroot
-    docker tag bazel/base:static-nonroot_debian9  gcr.io/$PROJECT_ID/static-debian9:nonroot
-    docker tag bazel/base:static-nonroot_debian10 gcr.io/$PROJECT_ID/static-debian10:nonroot
+    docker tag bazel/base:static_nonroot_debian9  gcr.io/$PROJECT_ID/static:nonroot
+    docker tag bazel/base:static_nonroot_debian9  gcr.io/$PROJECT_ID/static-debian9:nonroot
+    docker tag bazel/base:static_nonroot_debian10 gcr.io/$PROJECT_ID/static-debian10:nonroot
     docker tag bazel/base:base_debian9            gcr.io/$PROJECT_ID/base:${COMMIT_SHA}
     docker tag bazel/base:base_debian9            gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}
     docker tag bazel/base:base_debian10           gcr.io/$PROJECT_ID/base-debian10:${COMMIT_SHA}
-    docker tag bazel/base:base-nonroot_debian9    gcr.io/$PROJECT_ID/base:nonroot
-    docker tag bazel/base:base-nonroot_debian9    gcr.io/$PROJECT_ID/base-debian9:nonroot
-    docker tag bazel/base:base-nonroot_debian10   gcr.io/$PROJECT_ID/base-debian10:nonroot
+    docker tag bazel/base:base_nonroot_debian9    gcr.io/$PROJECT_ID/base:nonroot
+    docker tag bazel/base:base_nonroot_debian9    gcr.io/$PROJECT_ID/base-debian9:nonroot
+    docker tag bazel/base:base_nonroot_debian10   gcr.io/$PROJECT_ID/base-debian10:nonroot
     docker tag bazel/base:debug_debian9           gcr.io/$PROJECT_ID/base:debug
     docker tag bazel/base:debug_debian9           gcr.io/$PROJECT_ID/base-debian9:debug
     docker tag bazel/base:debug_debian10          gcr.io/$PROJECT_ID/base-debian10:debug
-    docker tag bazel/base:debug-nonroot_debian9   gcr.io/$PROJECT_ID/base:debug-nonroot
-    docker tag bazel/base:debug-nonroot_debian9   gcr.io/$PROJECT_ID/base-debian9:debug-nonroot
-    docker tag bazel/base:debug-nonroot_debian10  gcr.io/$PROJECT_ID/base-debian10:debug-nonroot
+    docker tag bazel/base:debug_nonroot_debian9   gcr.io/$PROJECT_ID/base:debug-nonroot
+    docker tag bazel/base:debug_nonroot_debian9   gcr.io/$PROJECT_ID/base-debian9:debug-nonroot
+    docker tag bazel/base:debug_nonroot_debian10  gcr.io/$PROJECT_ID/base-debian10:debug-nonroot
 
     docker tag bazel/cc:cc_debian9     gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}
     docker tag bazel/cc:cc_debian9     gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}
@@ -63,7 +63,7 @@ steps:
     docker tag bazel/cc:debug_debian9  gcr.io/$PROJECT_ID/cc-debian9:debug
     docker tag bazel/cc:debug_debian10 gcr.io/$PROJECT_ID/cc-debian10:debug
 
-- name: gcr.io/cloud-builders/bazel
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
   entrypoint: sh
   args:
   - -c
@@ -71,6 +71,10 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
+    bazel run --host_force_python=PY2 //java:java_base_debian9
+    bazel run --host_force_python=PY2 //java:java_base_debug_debian9
+    bazel run --host_force_python=PY2 //java:java_base_debian10
+    bazel run --host_force_python=PY2 //java:java_base_debug_debian10
     bazel run --host_force_python=PY2 //java:java8_debian9
     bazel run --host_force_python=PY2 //java:java8_debug_debian9
     bazel run --host_force_python=PY2 //java:java11_debian9
@@ -91,6 +95,10 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
+    docker tag bazel/java:java_base_debian9                 gcr.io/$PROJECT_ID/java:base
+    docker tag bazel/java:java_base_debian9                 gcr.io/$PROJECT_ID/java-debian9:base
+    docker tag bazel/java:java_base_debug_debian9           gcr.io/$PROJECT_ID/java:base-debug
+    docker tag bazel/java:java_base_debug_debian9           gcr.io/$PROJECT_ID/java-debian9:base-debug
     docker tag bazel/java:java8_debian9                     gcr.io/$PROJECT_ID/java:latest
     docker tag bazel/java:java8_debian9                     gcr.io/$PROJECT_ID/java:8
     docker tag bazel/java:java8_debian9                     gcr.io/$PROJECT_ID/java-debian9:latest
@@ -103,6 +111,8 @@ steps:
     docker tag bazel/java:java11_debian9                    gcr.io/$PROJECT_ID/java-debian9:11
     docker tag bazel/java:java11_debug_debian9              gcr.io/$PROJECT_ID/java:11-debug
     docker tag bazel/java:java11_debug_debian9              gcr.io/$PROJECT_ID/java-debian9:11-debug
+    docker tag bazel/java:java_base_debian10                gcr.io/$PROJECT_ID/java-debian10:base
+    docker tag bazel/java:java_base_debug_debian10          gcr.io/$PROJECT_ID/java-debian10:base-debug
     docker tag bazel/java:java11_debian10                   gcr.io/$PROJECT_ID/java-debian10:latest
     docker tag bazel/java:java11_debian10                   gcr.io/$PROJECT_ID/java-debian10:11
     docker tag bazel/java:java11_debug_debian10             gcr.io/$PROJECT_ID/java-debian10:debug
@@ -124,7 +134,7 @@ steps:
     docker tag bazel/java/jetty:jetty_java11_debug_debian10 gcr.io/$PROJECT_ID/java-debian10/jetty:debug
     docker tag bazel/java/jetty:jetty_java11_debug_debian10 gcr.io/$PROJECT_ID/java-debian10/jetty:java11-debug
 
-- name: gcr.io/cloud-builders/bazel
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
   entrypoint: sh
   args:
   - -c
@@ -134,8 +144,12 @@ steps:
     set -o xtrace
     bazel run --host_force_python=PY2 //experimental/python3:python3_debian9
     bazel run --host_force_python=PY2 //experimental/python3:python3_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_debian10
     bazel run --host_force_python=PY2 //experimental/python3:debug_debian9
     bazel run --host_force_python=PY2 //experimental/python3:debug_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_debian10
 
     bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian9
     bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian10
@@ -146,9 +160,16 @@ steps:
     bazel run --host_force_python=PY2 //experimental/nodejs:debug
 
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian10
-    bazel run --host_force_python=PY2 //experimental/dotnet:debug_debian10
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debian9
+
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debug_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debug_debian10
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debug_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debug_debian9
+    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debug_debian9
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
   args:
@@ -157,12 +178,18 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    docker tag bazel/experimental/python3:python3_debian9  gcr.io/$PROJECT_ID/python3:latest
-    docker tag bazel/experimental/python3:python3_debian9  gcr.io/$PROJECT_ID/python3-debian9:latest
-    docker tag bazel/experimental/python3:python3_debian10 gcr.io/$PROJECT_ID/python3-debian10:latest
-    docker tag bazel/experimental/python3:debug_debian9    gcr.io/$PROJECT_ID/python3:debug
-    docker tag bazel/experimental/python3:debug_debian9    gcr.io/$PROJECT_ID/python3-debian9:debug
-    docker tag bazel/experimental/python3:debug_debian10   gcr.io/$PROJECT_ID/python3-debian10:debug
+    docker tag bazel/experimental/python3:python3_debian9          gcr.io/$PROJECT_ID/python3:latest
+    docker tag bazel/experimental/python3:python3_debian9          gcr.io/$PROJECT_ID/python3-debian9:latest
+    docker tag bazel/experimental/python3:python3_debian10         gcr.io/$PROJECT_ID/python3-debian10:latest
+    docker tag bazel/experimental/python3:python3_nonroot_debian9  gcr.io/$PROJECT_ID/python3:nonroot
+    docker tag bazel/experimental/python3:python3_nonroot_debian9  gcr.io/$PROJECT_ID/python3-debian9:nonroot
+    docker tag bazel/experimental/python3:python3_nonroot_debian10 gcr.io/$PROJECT_ID/python3-debian10:nonroot
+    docker tag bazel/experimental/python3:debug_debian9            gcr.io/$PROJECT_ID/python3:debug
+    docker tag bazel/experimental/python3:debug_debian9            gcr.io/$PROJECT_ID/python3-debian9:debug
+    docker tag bazel/experimental/python3:debug_debian10           gcr.io/$PROJECT_ID/python3-debian10:debug
+    docker tag bazel/experimental/python3:debug_nonroot_debian9    gcr.io/$PROJECT_ID/python3:debug-nonroot
+    docker tag bazel/experimental/python3:debug_nonroot_debian9    gcr.io/$PROJECT_ID/python3-debian9:debug-nonroot
+    docker tag bazel/experimental/python3:debug_nonroot_debian10   gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot
 
     docker tag bazel/experimental/python2.7:python27_debian9  gcr.io/$PROJECT_ID/python2.7:latest
     docker tag bazel/experimental/python2.7:python27_debian9  gcr.io/$PROJECT_ID/python2.7-debian9:latest
@@ -174,38 +201,47 @@ steps:
     docker tag bazel/experimental/nodejs:nodejs gcr.io/$PROJECT_ID/nodejs:latest
     docker tag bazel/experimental/nodejs:debug  gcr.io/$PROJECT_ID/nodejs:debug
 
-    docker tag bazel/experimental/dotnet:dotnet_debian9  gcr.io/$PROJECT_ID/dotnet:latest
-    docker tag bazel/experimental/dotnet:dotnet_debian9  gcr.io/$PROJECT_ID/dotnet-debian9:latest
-    docker tag bazel/experimental/dotnet:dotnet_debian10 gcr.io/$PROJECT_ID/dotnet-debian10:latest
-    docker tag bazel/experimental/dotnet:debug_debian9   gcr.io/$PROJECT_ID/dotnet:debug
-    docker tag bazel/experimental/dotnet:debug_debian9   gcr.io/$PROJECT_ID/dotnet-debian9:debug
-    docker tag bazel/experimental/dotnet:debug_debian10  gcr.io/$PROJECT_ID/dotnet-debian10:debug
+    docker tag bazel/experimental/dotnet:dotnet_debian9                    gcr.io/$PROJECT_ID/dotnet:latest
+    docker tag bazel/experimental/dotnet:dotnet_debian9                    gcr.io/$PROJECT_ID/dotnet-debian9:latest
+    docker tag bazel/experimental/dotnet:dotnet_debian10                   gcr.io/$PROJECT_ID/dotnet-debian10:latest
+    docker tag bazel/experimental/dotnet:dotnet_debug_debian9              gcr.io/$PROJECT_ID/dotnet:debug
+    docker tag bazel/experimental/dotnet:dotnet_debug_debian9              gcr.io/$PROJECT_ID/dotnet-debian9:debug
+    docker tag bazel/experimental/dotnet:dotnet_debug_debian10             gcr.io/$PROJECT_ID/dotnet-debian10:debug
 
+    docker tag bazel/experimental/dotnet:dotnet_core_aspnet_debian9        gcr.io/$PROJECT_ID/dotnet/core/aspnet:latest
+    docker tag bazel/experimental/dotnet:dotnet_core_aspnet_debian9        gcr.io/$PROJECT_ID/dotnet/core/aspnet:3.1
+    docker tag bazel/experimental/dotnet:dotnet_core_aspnet_debug_debian9  gcr.io/$PROJECT_ID/dotnet/core/aspnet:debug
+    docker tag bazel/experimental/dotnet:dotnet_core_runtime_debian9       gcr.io/$PROJECT_ID/dotnet/core/runtime:latest
+    docker tag bazel/experimental/dotnet:dotnet_core_runtime_debian9       gcr.io/$PROJECT_ID/dotnet/core/runtime:3.1
+    docker tag bazel/experimental/dotnet:dotnet_core_runtime_debug_debian9 gcr.io/$PROJECT_ID/dotnet/core/runtime:debug
+    docker tag bazel/experimental/dotnet:dotnet_core_sdk_debian9           gcr.io/$PROJECT_ID/dotnet/core/sdk:latest
+    docker tag bazel/experimental/dotnet:dotnet_core_sdk_debian9           gcr.io/$PROJECT_ID/dotnet/core/sdk:3.1
+    docker tag bazel/experimental/dotnet:dotnet_core_sdk_debug_debian9     gcr.io/$PROJECT_ID/dotnet/core/sdk:debug
 
 images:
-  - 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}'
   - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/static-debian9:nonroot'
   - 'gcr.io/$PROJECT_ID/static:nonroot'
+  - 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/static-debian9:nonroot'
+  - 'gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}'
   - 'gcr.io/$PROJECT_ID/static-debian10:nonroot'
-  - 'gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}'
   - 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/base-debian10:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/base-debian9:nonroot'
   - 'gcr.io/$PROJECT_ID/base:nonroot'
-  - 'gcr.io/$PROJECT_ID/base-debian10:nonroot'
-  - 'gcr.io/$PROJECT_ID/base-debian9:debug'
   - 'gcr.io/$PROJECT_ID/base:debug'
-  - 'gcr.io/$PROJECT_ID/base-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/base-debian9:debug-nonroot'
   - 'gcr.io/$PROJECT_ID/base:debug-nonroot'
+  - 'gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/base-debian9:nonroot'
+  - 'gcr.io/$PROJECT_ID/base-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/base-debian9:debug-nonroot'
+  - 'gcr.io/$PROJECT_ID/base-debian10:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/base-debian10:nonroot'
+  - 'gcr.io/$PROJECT_ID/base-debian10:debug'
   - 'gcr.io/$PROJECT_ID/base-debian10:debug-nonroot'
-  - 'gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}'
   - 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/cc-debian10:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/cc-debian9:debug'
   - 'gcr.io/$PROJECT_ID/cc:debug'
+  - 'gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}'
+  - 'gcr.io/$PROJECT_ID/cc-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/cc-debian10:${COMMIT_SHA}'
   - 'gcr.io/$PROJECT_ID/cc-debian10:debug'
   - 'gcr.io/$PROJECT_ID/java:latest'
   - 'gcr.io/$PROJECT_ID/java:8'
@@ -213,12 +249,18 @@ images:
   - 'gcr.io/$PROJECT_ID/java:8-debug'
   - 'gcr.io/$PROJECT_ID/java:11'
   - 'gcr.io/$PROJECT_ID/java:11-debug'
+  - 'gcr.io/$PROJECT_ID/java:base'
+  - 'gcr.io/$PROJECT_ID/java:base-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9:base'
+  - 'gcr.io/$PROJECT_ID/java-debian9:base-debug'
   - 'gcr.io/$PROJECT_ID/java-debian9:latest'
   - 'gcr.io/$PROJECT_ID/java-debian9:8'
   - 'gcr.io/$PROJECT_ID/java-debian9:debug'
   - 'gcr.io/$PROJECT_ID/java-debian9:8-debug'
   - 'gcr.io/$PROJECT_ID/java-debian9:11'
   - 'gcr.io/$PROJECT_ID/java-debian9:11-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian10:base'
+  - 'gcr.io/$PROJECT_ID/java-debian10:base-debug'
   - 'gcr.io/$PROJECT_ID/java-debian10:latest'
   - 'gcr.io/$PROJECT_ID/java-debian10:11'
   - 'gcr.io/$PROJECT_ID/java-debian10:debug'
@@ -239,17 +281,23 @@ images:
   - 'gcr.io/$PROJECT_ID/java-debian10/jetty:java11'
   - 'gcr.io/$PROJECT_ID/java-debian10/jetty:debug'
   - 'gcr.io/$PROJECT_ID/java-debian10/jetty:java11-debug'
-  - 'gcr.io/$PROJECT_ID/python3-debian9:latest'
   - 'gcr.io/$PROJECT_ID/python3:latest'
-  - 'gcr.io/$PROJECT_ID/python3-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/python3-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/python3:nonroot'
   - 'gcr.io/$PROJECT_ID/python3:debug'
+  - 'gcr.io/$PROJECT_ID/python3:debug-nonroot'
+  - 'gcr.io/$PROJECT_ID/python3-debian9:latest'
+  - 'gcr.io/$PROJECT_ID/python3-debian9:nonroot'
+  - 'gcr.io/$PROJECT_ID/python3-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/python3-debian9:debug-nonroot'
+  - 'gcr.io/$PROJECT_ID/python3-debian10:latest'
+  - 'gcr.io/$PROJECT_ID/python3-debian10:nonroot'
   - 'gcr.io/$PROJECT_ID/python3-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/python2.7-debian9:latest'
+  - 'gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot'
   - 'gcr.io/$PROJECT_ID/python2.7:latest'
-  - 'gcr.io/$PROJECT_ID/python2.7-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/python2.7-debian9:debug'
   - 'gcr.io/$PROJECT_ID/python2.7:debug'
+  - 'gcr.io/$PROJECT_ID/python2.7-debian9:latest'
+  - 'gcr.io/$PROJECT_ID/python2.7-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/python2.7-debian10:latest'
   - 'gcr.io/$PROJECT_ID/python2.7-debian10:debug'
   - 'gcr.io/$PROJECT_ID/nodejs:latest'
   - 'gcr.io/$PROJECT_ID/nodejs:debug'
@@ -259,3 +307,12 @@ images:
   - 'gcr.io/$PROJECT_ID/dotnet-debian9:debug'
   - 'gcr.io/$PROJECT_ID/dotnet-debian10:latest'
   - 'gcr.io/$PROJECT_ID/dotnet-debian10:debug'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:latest'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:3.1'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:debug'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:latest'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:3.1'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:debug'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:latest'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:3.1'
+  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:debug'

@@ -21,6 +21,7 @@ import io
 from six.moves import urllib
 
 from package_manager.parse_metadata import parse_package_metadata
+from package_manager.version_utils import compare_versions
 from package_manager import util
 
 OUT_FOLDER = "file"
@@ -45,6 +46,8 @@ parser.add_argument("--packages", action='store',
                     help='A comma delimited list of packages to search for and download')
 parser.add_argument("--workspace-name", action='store',
                     help='The name of the current bazel workspace')
+parser.add_argument("--versionsfile", action='store',
+                    help='If set, the output path of the versions file to be generated')
 
 parser.add_argument("--download-and-extract-only", action='store',
                     help='If True, download Packages.gz and make urls absolute from mirror url')
@@ -72,25 +75,19 @@ def main():
                               args.packages_gz_url, args.package_prefix)
         util.build_os_release_tar(args.distro, OS_RELEASE_FILE_NAME, OS_RELEASE_PATH, OS_RELEASE_TAR_FILE_NAME)
     else:
-        download_dpkg(args.package_files, args.packages, args.workspace_name)
+        download_dpkg(args.package_files, args.packages, args.workspace_name, args.versionsfile)
 
-def download_dpkg(package_files, packages, workspace_name):
+def download_dpkg(package_files, packages, workspace_name, versionsfile):
     """ Using an unzipped, json package file with full urls,
      downloads a .deb package
 
     Uses the 'Filename' key to download the .deb package
     """
-    pkg_vals_to_package_file_and_sha256 = {}
     package_to_rule_map = {}
     package_to_version_map = {}
     package_file_to_metadata = {}
-    for pkg_vals in set(packages.split(",")):
-        pkg_split = pkg_vals.split("=")
-        if len(pkg_split) != 2:
-            pkg_name = pkg_vals
-            pkg_version = ""
-        else:
-            pkg_name, pkg_version = pkg_split
+    for pkg_name in set(packages.split(",")):
+        pkg = {}
         for package_file in package_files.split(","):
             if package_file not in package_file_to_metadata:
                 with open(package_file, 'rb') as f:
@@ -98,37 +95,30 @@ def download_dpkg(package_files, packages, workspace_name):
                     package_file_to_metadata[package_file] = json.loads(data.decode('utf-8'))
             metadata = package_file_to_metadata[package_file]
             if (pkg_name in metadata and
-            (pkg_version == "" or
-            pkg_version == metadata[pkg_name][VERSION_KEY])):
+            (not VERSION_KEY in pkg or compare_versions(metadata[pkg_name][VERSION_KEY], pkg[VERSION_KEY]) > 0)):
                 pkg = metadata[pkg_name]
-                out_file = os.path.join("file", util.encode_package_name(pkg_name))
-                download_and_save(pkg_name, pkg[FILENAME_KEY], out_file)
-                package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
-                package_to_version_map[pkg_name] = metadata[pkg_name][VERSION_KEY]
-                actual_checksum = util.sha256_checksum(out_file)
-                expected_checksum = pkg[SHA256_KEY]
-                if actual_checksum != expected_checksum:
-                    raise Exception("Wrong checksum for package %s (%s).  Expected: %s, Actual: %s" %(pkg_name, pkg[FILENAME_KEY], expected_checksum, actual_checksum))
-                if pkg_version == "":
-                    break
-                if (pkg_vals in pkg_vals_to_package_file_and_sha256 and
-                pkg_vals_to_package_file_and_sha256[pkg_vals][1] != actual_checksum):
-                    raise Exception("Conflicting checksums for package %s, version %s.  Conflicting checksums: %s:%s, %s:%s" %
-                    (pkg_name, pkg_version,
-                     pkg_vals_to_package_file_and_sha256[pkg_vals][0], pkg_vals_to_package_file_and_sha256[pkg_vals][1],
-                     package_file, actual_checksum))
-                else:
-                    pkg_vals_to_package_file_and_sha256[pkg_vals] = [package_file, actual_checksum]
-                break
+        if (not pkg):
+            raise Exception("Package: %s not found in any of the sources" % pkg_name)
         else:
-            raise Exception("Package: %s, Version: %s not found in any of the sources" % (pkg_name, pkg_version))
+            out_file = os.path.join("file", util.encode_package_name(pkg_name))
+            download_and_save(pkg_name, pkg[FILENAME_KEY], out_file)
+            package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
+            package_to_version_map[pkg_name] = pkg[VERSION_KEY]
+            actual_checksum = util.sha256_checksum(out_file)
+            expected_checksum = pkg[SHA256_KEY]
+            if actual_checksum != expected_checksum:
+                raise Exception("Wrong checksum for package %s (%s).  Expected: %s, Actual: %s" %(pkg_name, pkg[FILENAME_KEY], expected_checksum, actual_checksum))
     with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
         f.write("packages = " + json.dumps(package_to_rule_map))
         f.write("\nversions = " + json.dumps(package_to_version_map))
+    if versionsfile:
+        with open(versionsfile, 'w') as f:
+            f.write(json.dumps(package_to_version_map, sort_keys=True, indent=4, separators=(',', ': ')))
+            f.write('\n')
 
 def download_and_save(pkg_key, url, out_file, retry_count=20):
     res = urllib.request.urlopen(url)
-    remaining_bytes = int(res.info().getheader("Content-Length"))
+    remaining_bytes = int(res.info().get("Content-Length"))
     downloaded = res.read()
     contents = []
     contents.append(downloaded)
@@ -136,8 +126,8 @@ def download_and_save(pkg_key, url, out_file, retry_count=20):
     offset = len(downloaded)
 
     if remaining_bytes != 0:
-        range_access_enabled = "bytes" in res.info().getheader("Accept-Ranges")
-        etag = res.info().getheader("ETag")
+        range_access_enabled = "bytes" in res.info().get("Accept-Ranges")
+        etag = res.info().get("ETag")
         if not range_access_enabled:
             raise Exception("Fail to download %s (%s). Server returned partial contents." %(pkg_key, url))
 
