@@ -11,7 +11,7 @@ tar -xf data.tar.xz ./usr/lib/locale
 
 rm data.tar.xz
 
-tar -cf locale.tar ./usr
+tar -c --owner=0 --group=0 -f locale.tar ./usr
 
 mv locale.tar "$OUT_TAR"
 
