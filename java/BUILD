@@ -24,18 +24,12 @@ DISTRO_VERSIONS = {
 [locale(
     name = "locale_java" + distro_suffix,
     deb = DISTRO_PACKAGES[distro_suffix]["libc-bin"],
-) for distro_suffix in [
-    "_debian9",
-    "_debian10",
-]]
+) for distro_suffix in DISTRO_SUFFIXES]
 
 [cacerts_java(
     name = "cacerts_java" + distro_suffix,
     cacerts_tar = "//base:cacerts" + distro_suffix + ".tar",
-) for distro_suffix in [
-    "_debian9",
-    "_debian10",
-]]
+) for distro_suffix in DISTRO_SUFFIXES]
 
 [[container_image(
     name = "java_base" + mode + distro_suffix,
