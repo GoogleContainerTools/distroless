@@ -114,6 +114,7 @@ dpkg_list(
         "openjdk-8-jdk-headless",
         "openjdk-11-jre-headless",
         "openjdk-11-jdk-headless",
+        "libc-bin",
 
         #python
         "libpython2.7-minimal",
@@ -358,6 +359,7 @@ dpkg_list(
         "libuuid1",
         "openjdk-11-jre-headless",
         "openjdk-11-jdk-headless",
+        "libc-bin",
 
         #python
         "dash",

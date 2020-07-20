@@ -6,6 +6,7 @@ load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 load("@package_bundle//file:packages.bzl", "packages", "versions")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages", versions_debian10 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
+load("//locale:locale.bzl", "locale")
 load("//java:jre_ver.bzl", "jre_ver")
 
 DISTRO_SUFFIXES = ("_debian9", "_debian10")
@@ -20,13 +21,15 @@ DISTRO_VERSIONS = {
     "_debian10": versions_debian10,
 }
 
+[locale(
+    name = "locale_java" + distro_suffix,
+    deb = DISTRO_PACKAGES[distro_suffix]["libc-bin"],
+) for distro_suffix in DISTRO_SUFFIXES]
+
 [cacerts_java(
     name = "cacerts_java" + distro_suffix,
     cacerts_tar = "//base:cacerts" + distro_suffix + ".tar",
-) for distro_suffix in [
-    "_debian9",
-    "_debian10",
-]]
+) for distro_suffix in DISTRO_SUFFIXES]
 
 [[container_image(
     name = "java_base" + mode + distro_suffix,
@@ -43,7 +46,13 @@ DISTRO_VERSIONS = {
         DISTRO_PACKAGES[distro_suffix]["libfontconfig1"],
         DISTRO_PACKAGES[distro_suffix]["libuuid1"],
     ],
-    tars = [":cacerts_java" + distro_suffix],
+    env = {
+        "LANG": "C.UTF-8",
+    },
+    tars = [
+        ":cacerts_java" + distro_suffix,
+        ":locale_java" + distro_suffix,
+    ],
 ) for mode in [
     "",
     "_debug",
@@ -167,28 +176,30 @@ container_test(
     image = ":java11_debug" + distro_suffix,
 ) for distro_suffix in DISTRO_SUFFIXES]
 
-java_image(
-    name = "check_certs_java8_debian9",
-    srcs = ["testdata/CheckCerts.java"],
-    base = "//java:java8_debian9",
-    main_class = "testdata.CheckCerts",
-)
+RULE_NAMES = ("java8_debian9", "java11_debian9", "java11_debian10")
 
 [java_image(
-    name = "check_certs_java11" + distro_suffix,
+    name = "check_certs_" + rule_name,
     srcs = ["testdata/CheckCerts.java"],
-    base = "//java:java11" + distro_suffix,
+    base = "//java:" + rule_name,
     main_class = "testdata.CheckCerts",
-) for distro_suffix in DISTRO_SUFFIXES]
-
-container_test(
-    name = "check_certs_java8_debian9_test",
-    configs = ["testdata/java8_certs.yaml"],
-    image = ":check_certs_java8_debian9",
-)
+) for rule_name in RULE_NAMES]
 
 [container_test(
-    name = "check_certs_java11" + distro_suffix + "_test",
-    configs = ["testdata/java11_certs" + distro_suffix + ".yaml"],
-    image = ":check_certs_java11" + distro_suffix,
-) for distro_suffix in DISTRO_SUFFIXES]
+    name = "check_certs_" + rule_name + "_test",
+    configs = ["testdata/" + rule_name + "_certs.yaml"],
+    image = ":check_certs_" + rule_name,
+) for rule_name in RULE_NAMES]
+
+[java_image(
+    name = "check_encoding_" + rule_name,
+    srcs = ["testdata/CheckEncoding.java"],
+    base = "//java:" + rule_name,
+    main_class = "testdata.CheckEncoding",
+) for rule_name in RULE_NAMES]
+
+[container_test(
+    name = "check_encoding_" + rule_name + "_test",
+    configs = ["testdata/" + rule_name + "_encoding.yaml"],
+    image = ":check_encoding_" + rule_name,
+) for rule_name in RULE_NAMES]
