@@ -2,7 +2,10 @@ load("@subpar//:subpar.bzl", "par_binary")
 
 par_binary(
     name = "dpkg_parser",
-    srcs = glob(["**/*.py"]),
+    srcs = [
+        "__init__.py",
+        "dpkg_parser.py",
+    ],
     compiler_args = [
         "--interpreter",
         "/usr/bin/env python",
