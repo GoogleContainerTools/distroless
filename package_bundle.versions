@@ -1,5 +1,5 @@
 {
-    "base-files": "9.9+deb9u12",
+    "base-files": "9.9+deb9u13",
     "ca-certificates": "20200601~deb9u1",
     "curl": "7.52.1-5+deb9u10",
     "dash": "0.5.8-2.4",
@@ -20,7 +20,7 @@
     "libgcc1": "1:6.3.0-18+deb9u1",
     "libgcrypt20": "1.7.6-2+deb9u3",
     "libgmp10": "2:6.1.2+dfsg-1",
-    "libgnutls30": "3.5.8-5+deb9u4",
+    "libgnutls30": "3.5.8-5+deb9u5",
     "libgomp1": "6.3.0-18+deb9u1",
     "libgpg-error0": "1.35-1~bpo9+1",
     "libgssapi-krb5-2": "1.15-1+deb9u1",
@@ -48,8 +48,8 @@
     "libpsl5": "0.17.0-3",
     "libpython2.7-minimal": "2.7.13-2+deb9u3",
     "libpython2.7-stdlib": "2.7.13-2+deb9u3",
-    "libpython3.5-minimal": "3.5.3-1+deb9u1",
-    "libpython3.5-stdlib": "3.5.3-1+deb9u1",
+    "libpython3.5-minimal": "3.5.3-1+deb9u2",
+    "libpython3.5-stdlib": "3.5.3-1+deb9u2",
     "libreadline7": "7.0-3",
     "librtmp1": "2.4+20151223.gitfa8646d.1-1+b1",
     "libsasl2-2": "2.1.27~101-g0780600+dfsg-3+deb9u1",
@@ -73,8 +73,8 @@
     "openjdk-8-jre-headless": "8u252-b09-1~deb9u1",
     "openssl": "1.1.0l-1~deb9u1",
     "python2.7-minimal": "2.7.13-2+deb9u3",
-    "python3.5-minimal": "3.5.3-1+deb9u1",
+    "python3.5-minimal": "3.5.3-1+deb9u2",
     "readline-common": "7.0-3",
-    "tzdata": "2019c-0+deb9u1",
+    "tzdata": "2020a-0+deb9u1",
     "zlib1g": "1:1.2.8.dfsg-5"
 }
