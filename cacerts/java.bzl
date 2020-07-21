@@ -18,11 +18,14 @@ def _impl(ctx):
         inputs = [ctx.file.cacerts_tar],
         tools = [ctx.file._jksutil] + ctx.files._tar,
         arguments = [ctx.file.cacerts_tar.path, ctx.outputs.out.path],
+        env = {
+            "CREATE_JKS": ctx.executable._jksutil.path,
+            "CREATE_TAR": ctx.executable._tar.path,
+        },
         command = """
         mkdir -p etc/ssl/certs/java
-        tar -xOf "$1" etc/ssl/certs/ca-certificates.crt |
-        """ + ctx.executable._jksutil.path + """ > etc/ssl/certs/java/cacerts
-        """ + ctx.executable._tar.path + """ --output "$2" etc/ssl
+        tar -xOf "$1" etc/ssl/certs/ca-certificates.crt | $CREATE_JKS > etc/ssl/certs/java/cacerts
+        $CREATE_TAR --output "$2" etc/ssl
         """,
     )
 
