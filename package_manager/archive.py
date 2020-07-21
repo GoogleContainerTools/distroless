@@ -13,7 +13,6 @@
 # limitations under the License.
 """Archive manipulation library for the Docker rules."""
 
-# pylint: disable=g-import-not-at-top
 import gzip
 import io
 import os
@@ -37,9 +36,6 @@ class SimpleArFile(object):
         nextFile = ar.next()
     Upon error, this class will raise a ArError exception.
     """
-
-    # TODO(dmarting): We should use a standard library instead but python 2.7
-    #   does not have AR reading library.
 
     class ArError(Exception):
         pass
@@ -73,6 +69,7 @@ class SimpleArFile(object):
 
     def __init__(self, filename):
         self.filename = filename
+        self.f = None
 
     def __enter__(self):
         self.f = open(self.filename, 'rb')
@@ -348,8 +345,6 @@ class TarFileWriter(object):
             # Note that we buffer the file in memory and it can have an important
             # memory footprint but it's probably fine as we don't use them for really
             # large files.
-            # TODO(dmarting): once our py3 support gets better, compile this tools
-            # with py3 for proper lzma support.
             if subprocess.call('which xzcat', shell=True, stdout=subprocess.PIPE):
                 raise self.Error('Cannot handle .xz and .lzma compression: '
                                  'xzcat not found.')
