@@ -10,25 +10,25 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
+    bazel build //package_manager:dpkg_parser.par
 
-    bazel run --host_force_python=PY2 //base:static_debian9
-    bazel run --host_force_python=PY2 //base:static_debian10
-    bazel run --host_force_python=PY2 //base:static_nonroot_debian9
-    bazel run --host_force_python=PY2 //base:static_nonroot_debian10
-    bazel run --host_force_python=PY2 //base:base_debian9
-    bazel run --host_force_python=PY2 //base:base_debian10
-    bazel run --host_force_python=PY2 //base:base_nonroot_debian9
-    bazel run --host_force_python=PY2 //base:base_nonroot_debian10
-    bazel run --host_force_python=PY2 //base:debug_debian9
-    bazel run --host_force_python=PY2 //base:debug_debian10
-    bazel run --host_force_python=PY2 //base:debug_nonroot_debian9
-    bazel run --host_force_python=PY2 //base:debug_nonroot_debian10
+    bazel run //base:static_debian9
+    bazel run //base:static_debian10
+    bazel run //base:static_nonroot_debian9
+    bazel run //base:static_nonroot_debian10
+    bazel run //base:base_debian9
+    bazel run //base:base_debian10
+    bazel run //base:base_nonroot_debian9
+    bazel run //base:base_nonroot_debian10
+    bazel run //base:debug_debian9
+    bazel run //base:debug_debian10
+    bazel run //base:debug_nonroot_debian9
+    bazel run //base:debug_nonroot_debian10
 
-    bazel run --host_force_python=PY2 //cc:cc_debian9
-    bazel run --host_force_python=PY2 //cc:cc_debian10
-    bazel run --host_force_python=PY2 //cc:debug_debian9
-    bazel run --host_force_python=PY2 //cc:debug_debian10
+    bazel run //cc:cc_debian9
+    bazel run //cc:cc_debian10
+    bazel run //cc:debug_debian9
+    bazel run //cc:debug_debian10
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
   args:
@@ -71,22 +71,22 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    bazel run --host_force_python=PY2 //java:java_base_debian9
-    bazel run --host_force_python=PY2 //java:java_base_debug_debian9
-    bazel run --host_force_python=PY2 //java:java_base_debian10
-    bazel run --host_force_python=PY2 //java:java_base_debug_debian10
-    bazel run --host_force_python=PY2 //java:java8_debian9
-    bazel run --host_force_python=PY2 //java:java8_debug_debian9
-    bazel run --host_force_python=PY2 //java:java11_debian9
-    bazel run --host_force_python=PY2 //java:java11_debug_debian9
-    bazel run --host_force_python=PY2 //java:java11_debian10
-    bazel run --host_force_python=PY2 //java:java11_debug_debian10
-    bazel run --host_force_python=PY2 //java/jetty:jetty_java8_debian9
-    bazel run --host_force_python=PY2 //java/jetty:jetty_java8_debug_debian9
-    bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debian9
-    bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debug_debian9
-    bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debian10
-    bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debug_debian10
+    bazel run //java:java_base_debian9
+    bazel run //java:java_base_debug_debian9
+    bazel run //java:java_base_debian10
+    bazel run //java:java_base_debug_debian10
+    bazel run //java:java8_debian9
+    bazel run //java:java8_debug_debian9
+    bazel run //java:java11_debian9
+    bazel run //java:java11_debug_debian9
+    bazel run //java:java11_debian10
+    bazel run //java:java11_debug_debian10
+    bazel run //java/jetty:jetty_java8_debian9
+    bazel run //java/jetty:jetty_java8_debug_debian9
+    bazel run //java/jetty:jetty_java11_debian9
+    bazel run //java/jetty:jetty_java11_debug_debian9
+    bazel run //java/jetty:jetty_java11_debian10
+    bazel run //java/jetty:jetty_java11_debug_debian10
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
   args:
@@ -142,34 +142,34 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    bazel run --host_force_python=PY2 //experimental/python3:python3_debian9
-    bazel run --host_force_python=PY2 //experimental/python3:python3_debian10
-    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_debian9
-    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_debian10
-    bazel run --host_force_python=PY2 //experimental/python3:debug_debian9
-    bazel run --host_force_python=PY2 //experimental/python3:debug_debian10
-    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_debian9
-    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_debian10
+    bazel run //experimental/python3:python3_debian9
+    bazel run //experimental/python3:python3_debian10
+    bazel run //experimental/python3:python3_nonroot_debian9
+    bazel run //experimental/python3:python3_nonroot_debian10
+    bazel run //experimental/python3:debug_debian9
+    bazel run //experimental/python3:debug_debian10
+    bazel run //experimental/python3:debug_nonroot_debian9
+    bazel run //experimental/python3:debug_nonroot_debian10
 
-    bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian9
-    bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian10
-    bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian9
-    bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian10
+    bazel run //experimental/python2.7:python27_debian9
+    bazel run //experimental/python2.7:python27_debian10
+    bazel run //experimental/python2.7:debug_debian9
+    bazel run //experimental/python2.7:debug_debian10
 
-    bazel run --host_force_python=PY2 //experimental/nodejs
-    bazel run --host_force_python=PY2 //experimental/nodejs:debug
+    bazel run //experimental/nodejs
+    bazel run //experimental/nodejs:debug
 
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian10
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debian9
+    bazel run //experimental/dotnet:dotnet_debian9
+    bazel run //experimental/dotnet:dotnet_debian10
+    bazel run //experimental/dotnet:dotnet_core_aspnet_debian9
+    bazel run //experimental/dotnet:dotnet_core_runtime_debian9
+    bazel run //experimental/dotnet:dotnet_core_sdk_debian9
 
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debug_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debug_debian10
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debug_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debug_debian9
-    bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debug_debian9
+    bazel run //experimental/dotnet:dotnet_debug_debian9
+    bazel run //experimental/dotnet:dotnet_debug_debian10
+    bazel run //experimental/dotnet:dotnet_core_aspnet_debug_debian9
+    bazel run //experimental/dotnet:dotnet_core_runtime_debug_debian9
+    bazel run //experimental/dotnet:dotnet_core_sdk_debug_debian9
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
   args:
