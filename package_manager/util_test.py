@@ -72,7 +72,7 @@ class TestUtil(unittest.TestCase):
         os.rmdir("etc")
         actual = util.sha256_checksum("release.tar")
         os.remove("release.tar")
-        self.assertEqual("d4aa5848abb75c8d8db7730c45cc2c49c118af3d3108d44e8077c62804dabd77", actual)
+        self.assertEqual("6704b75c85568649ce3d7079b1712f5e809cf0303d5902653883a4cf86857fd3", actual)
 
 if __name__ == '__main__':
     unittest.main()

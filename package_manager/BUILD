@@ -29,6 +29,7 @@ py_binary(
     name = "tar",
     srcs = [
         "__init__.py",
+        "archive.py",
         "tar.py",
     ],
     visibility = ["//:__subpackages__"],
@@ -43,7 +44,7 @@ py_library(
 py_library(
     name = "util",
     srcs = [
-        "tar.py",
+        "archive.py",
         "util.py",
     ],
 )
