@@ -14,6 +14,7 @@
 """This tool build tar files from a list of inputs."""
 
 import argparse
+import os
 import tarfile
 
 parser = argparse.ArgumentParser(
@@ -36,6 +37,7 @@ def reproducible_tar(tarinfo):
 class Tar(object):
     def __init__(self, output):
         self.tar = tarfile.open(output, "w")
+        self.members = set([])
 
     def __enter__(self):
         return self
@@ -46,8 +48,19 @@ class Tar(object):
     def close(self):
         self.tar.close()
 
-    def add(self, path):
-        self.tar.add(path, filter=reproducible_tar)
+    def add(self, path, name=None, depth=100):
+        if name is None:
+            name = path
+
+        if depth <= 0:
+            raise Exception('Recursion depth exceeded, probably in an infinite directory loop.')
+
+        if os.path.isdir(path):
+            self.tar.addfile(reproducible_tar(self.tar.gettarinfo(path, name)))
+            for f in sorted(os.listdir(path)):
+                self.add(os.path.join(path, f), os.path.join(name, f), depth - 1)
+        else:
+            self.tar.add(path, arcname=name, filter=reproducible_tar)
 
 
 def main():
@@ -55,7 +68,7 @@ def main():
     args = parser.parse_args()
     # Add objects to the tar file
     with Tar(args.output) as tar:
-        for f in args.args:
+        for f in sorted(args.args):
             tar.add(f)
 
 
