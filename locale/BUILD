@@ -15,8 +15,8 @@ DISTRO_SUFFIXES = ("_debian9", "_debian10")
     ],
     outs = ["locale" + distro_suffix + ".tar"],
     cmd = """
-        $(location //package_manager:dpkg_extract) $(SRCS) ./usr/lib/locale/C.UTF-8 ./usr/share/doc/libc-bin/copyright
-        $(location //package_manager:tar) --output $(OUTS) usr/lib/locale/C.UTF-8 usr/share/doc/libc-bin/copyright
+        $(location //package_manager:dpkg_extract) $(SRCS) ./usr/lib/locale/C.UTF-8
+        $(location //package_manager:tar) --output $(OUTS) usr/lib/locale
     """,
     tools = [
         "//package_manager:dpkg_extract",
