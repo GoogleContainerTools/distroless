@@ -24,7 +24,7 @@ def _impl(ctx):
               cat $cert >> $CERT_FILE
             done
 
-            $CREATE_TAR --output "$2" $CERT_FILE ./usr/share/doc/ca-certificates/copyright
+        $CREATE_TAR --output "$2" ./etc/ssl ./usr/share/doc/ca-certificates
         """,
     )
 

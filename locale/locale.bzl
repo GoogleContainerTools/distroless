@@ -15,7 +15,7 @@ def _impl(ctx):
         },
         command = """
             $EXTRACT_DEB "$1" ./usr/lib/locale/C.UTF-8
-            $CREATE_TAR --output "$2" ./usr/lib/locale/C.UTF-8
+            $CREATE_TAR --output "$2" ./usr/lib/locale
         """,
     )
 

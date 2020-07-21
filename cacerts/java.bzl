@@ -25,7 +25,7 @@ def _impl(ctx):
         command = """
         mkdir -p etc/ssl/certs/java
         tar -xOf "$1" ./etc/ssl/certs/ca-certificates.crt | $CREATE_JKS > etc/ssl/certs/java/cacerts
-        $CREATE_TAR --output "$2" ./etc/ssl/certs/java/cacerts
+        $CREATE_TAR --output "$2" ./etc/ssl
         """,
     )
 
