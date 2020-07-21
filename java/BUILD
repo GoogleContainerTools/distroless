@@ -20,11 +20,6 @@ DISTRO_VERSIONS = {
     "_debian10": versions_debian10,
 }
 
-[cacerts_java(
-    name = "cacerts_java" + distro_suffix,
-    cacerts_tar = "//base:cacerts" + distro_suffix + ".tar",
-) for distro_suffix in DISTRO_SUFFIXES]
-
 [[container_image(
     name = "java_base" + mode + distro_suffix,
     base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + distro_suffix,
@@ -44,7 +39,7 @@ DISTRO_VERSIONS = {
         "LANG": "C.UTF-8",
     },
     tars = [
-        ":cacerts_java" + distro_suffix,
+        "//cacerts:cacerts_java" + distro_suffix,
         "//locale:locale" + distro_suffix,
     ],
 ) for mode in [
