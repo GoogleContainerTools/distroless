@@ -60,4 +60,4 @@ def build_os_release_tar(distro, os_release_file, os_release_path, tar_file_name
     with open(os_release_file, 'w') as os_release:
         generate_os_release(distro, os_release)
     with TarFileWriter(name = tar_file_name, default_mtime=0, preserve_tar_mtimes=False) as tar:
-        tar.add_file(name=os_release_file, content=os_release_file)
+        tar.add_file(name=os_release_file, file_content=os_release_file)
