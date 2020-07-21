@@ -140,7 +140,7 @@ class TarFileWriter(object):
             # Instead, we manually re-implement gzopen from tarfile.py and set mtime.
             self.fileobj = gzip.GzipFile(
                 filename=name, mode='w', compresslevel=9, mtime=self.default_mtime)
-        self.tar = tarfile.open(name=name, mode=mode, fileobj=self.fileobj)
+        self.tar = tarfile.open(name=name, mode=mode, format=tarfile.GNU_FORMAT, fileobj=self.fileobj)
         self.members = set([])
         self.directories = set([])
 
