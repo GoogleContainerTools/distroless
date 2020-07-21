@@ -1,3 +1,5 @@
+package(default_visibility = ["//:__subpackages__"])
+
 load("@package_bundle//file:packages.bzl", "packages")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
 
@@ -22,5 +24,4 @@ DISTRO_SUFFIXES = ("_debian9", "_debian10")
         "//package_manager:dpkg_extract",
         "//package_manager:tar",
     ],
-    visibility = ["//:__subpackages__"],
 ) for distro_suffix in DISTRO_SUFFIXES]
