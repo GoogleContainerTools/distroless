@@ -1,8 +1,9 @@
 import hashlib
 import base64
 import collections
-import tarfile
 import os
+
+from package_manager.tar import Tar
 
 def sha256_checksum(filename, block_size=65536):
     sha256 = hashlib.sha256()
@@ -53,9 +54,10 @@ def generate_os_release(distro, os_release_file):
         if val:
             os_release_file.write('{0}=\"{1}\"\n'.format(k, val))
 
+
 def build_os_release_tar(distro, os_release_file, os_release_path, tar_file_name):
     os.makedirs(os_release_path)
     with open(os_release_file, 'w') as os_release:
         generate_os_release(distro, os_release)
-    with tarfile.open(tar_file_name, "w") as tar:
+    with Tar(tar_file_name) as tar:
         tar.add(os_release_file)

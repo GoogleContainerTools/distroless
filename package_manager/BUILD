@@ -19,6 +19,21 @@ par_binary(
     ],
 )
 
+sh_binary(
+    name = "dpkg_extract",
+    srcs = ["dpkg_extract.sh"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_binary(
+    name = "tar",
+    srcs = [
+        "__init__.py",
+        "tar.py",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
 py_library(
     name = "parse_metadata",
     srcs = ["parse_metadata.py"],
@@ -27,7 +42,10 @@ py_library(
 
 py_library(
     name = "util",
-    srcs = ["util.py"],
+    srcs = [
+        "tar.py",
+        "util.py",
+    ],
 )
 
 py_library(
