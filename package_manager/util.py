@@ -3,6 +3,8 @@ import base64
 import collections
 import os
 
+# Distroless's test.sh runs pylint on all python files, but this module will not exist
+# pylint: disable=import-error
 from build_tar import TarFile
 
 def sha256_checksum(filename, block_size=65536):
