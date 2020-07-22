@@ -7,3 +7,8 @@ DISTRO_PACKAGES = {
 }
 
 DISTRO_SUFFIXES = ("_debian9", "_debian10")
+
+DISTRO_REPOSITORY = {
+    "_debian9": "@debian_stretch",
+    "_debian10": "@debian10",
+}
