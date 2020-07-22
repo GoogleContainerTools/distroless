@@ -4,16 +4,19 @@ def _impl(ctx):
     ctx.actions.run_shell(
         inputs = [ctx.file.deb],
         outputs = [ctx.outputs.tar],
-        tools = [] + ctx.files._tar + ctx.files._dpkg_extract,
+        tools = [] + ctx.files._build_tar + ctx.files._dpkg_extract,
         arguments = [
             ctx.file.deb.path,
             ctx.outputs.tar.path,
         ],
         env = {
             "EXTRACT_DEB": ctx.executable._dpkg_extract.path,
-            "CREATE_TAR": ctx.executable._tar.path,
+            "BUILD_TAR": ctx.executable._build_tar.path,
         },
         command = """
+            set -o errexit
+            set -o xtrace
+
             $EXTRACT_DEB "$1" ./usr/share/ca-certificates ./usr/share/doc/ca-certificates/copyright
 
             CERT_FILE=./etc/ssl/certs/ca-certificates.crt
@@ -24,7 +27,9 @@ def _impl(ctx):
               cat $cert >> $CERT_FILE
             done
 
-        $CREATE_TAR --output "$2" $CERT_FILE ./usr/share/doc/ca-certificates/copyright
+            $BUILD_TAR  --output "$2" \
+                        --file "$CERT_FILE"="$CERT_FILE" \
+                        --file ./usr/share/doc/ca-certificates/copyright=./usr/share/doc/ca-certificates/copyright
         """,
     )
 
@@ -35,8 +40,8 @@ cacerts = rule(
             mandatory = True,
         ),
         # Implicit dependencies.
-        "_tar": attr.label(
-            default = Label("//package_manager:tar"),
+        "_build_tar": attr.label(
+            default = Label("@rules_pkg//:build_tar"),
             cfg = "host",
             executable = True,
         ),

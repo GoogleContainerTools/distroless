@@ -4,18 +4,20 @@ def _impl(ctx):
     ctx.actions.run_shell(
         inputs = [ctx.file.deb],
         outputs = [ctx.outputs.tar],
-        tools = [] + ctx.files._tar + ctx.files._dpkg_extract,
+        tools = [] + ctx.files._build_tar + ctx.files._dpkg_extract,
         arguments = [
             ctx.file.deb.path,
             ctx.outputs.tar.path,
         ],
         env = {
             "EXTRACT_DEB": ctx.executable._dpkg_extract.path,
-            "CREATE_TAR": ctx.executable._tar.path,
+            "BUILD_TAR": ctx.executable._build_tar.path,
         },
         command = """
             $EXTRACT_DEB "$1" ./usr/lib/locale/C.UTF-8
-            $CREATE_TAR --output "$2" ./usr/lib/locale
+
+            $BUILD_TAR  --output "$2" \
+                        --file ./usr/lib/locale/C.UTF-8=./usr/lib/locale/C.UTF-8
         """,
     )
 
@@ -26,8 +28,8 @@ locale = rule(
             mandatory = True,
         ),
         # Implicit dependencies.
-        "_tar": attr.label(
-            default = Label("//package_manager:tar"),
+        "_build_tar": attr.label(
+            default = Label("@rules_pkg//:build_tar"),
             cfg = "host",
             executable = True,
         ),

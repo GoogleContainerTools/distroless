@@ -66,13 +66,5 @@ class TestUtil(unittest.TestCase):
             util.generate_os_release(distro, output_file)
             self.assertEqual(expected_output, output_file.getvalue())
 
-    def test_build_os_release_tar(self):
-        util.build_os_release_tar("buster", "etc/os-release", "etc", "release.tar")
-        os.remove("etc/os-release")
-        os.rmdir("etc")
-        actual = util.sha256_checksum("release.tar")
-        os.remove("release.tar")
-        self.assertEqual("d97492bfae8cc6133676a650a296c251ec7c8a7c0acea4c4dc7f64b23be2185c", actual)
-
 if __name__ == '__main__':
     unittest.main()

@@ -25,16 +25,6 @@ sh_binary(
     visibility = ["//:__subpackages__"],
 )
 
-py_binary(
-    name = "tar",
-    srcs = [
-        "__init__.py",
-        "archive.py",
-        "tar.py",
-    ],
-    visibility = ["//:__subpackages__"],
-)
-
 py_library(
     name = "parse_metadata",
     srcs = ["parse_metadata.py"],
@@ -44,8 +34,8 @@ py_library(
 py_library(
     name = "util",
     srcs = [
-        "archive.py",
         "util.py",
+        "@rules_pkg//:build_tar",
     ],
 )
 
