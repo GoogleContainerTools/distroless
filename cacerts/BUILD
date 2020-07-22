@@ -1,6 +1,6 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("//:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load(":cacerts.bzl", "cacerts")
 load(":java.bzl", "cacerts_java")
 

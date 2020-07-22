@@ -1,6 +1,6 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("//:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load(":locale.bzl", "locale")
 
 [locale(
