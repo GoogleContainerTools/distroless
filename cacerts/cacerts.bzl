@@ -28,7 +28,7 @@ def _impl(ctx):
             done
 
             $BUILD_TAR  --output "$2" \
-                        --file "$CERT_FILE"="$CERT_FILE" \
+                        --file $CERT_FILE=$CERT_FILE \
                         --file ./usr/share/doc/ca-certificates/copyright=./usr/share/doc/ca-certificates/copyright
         """,
     )
