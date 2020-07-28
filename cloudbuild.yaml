@@ -156,8 +156,12 @@ steps:
     bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian9
     bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian10
 
-    bazel run --host_force_python=PY2 //experimental/nodejs
-    bazel run --host_force_python=PY2 //experimental/nodejs:debug
+    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs10
+    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs10_debug
+    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs12
+    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs12_debug
+    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs14
+    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs14_debug
 
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_debian10
@@ -198,8 +202,14 @@ steps:
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
     docker tag bazel/experimental/python2.7:debug_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
 
-    docker tag bazel/experimental/nodejs:nodejs gcr.io/$PROJECT_ID/nodejs:latest
-    docker tag bazel/experimental/nodejs:debug  gcr.io/$PROJECT_ID/nodejs:debug
+    docker tag bazel/experimental/nodejs:nodejs10 gcr.io/$PROJECT_ID/nodejs:latest
+    docker tag bazel/experimental/nodejs:nodejs10 gcr.io/$PROJECT_ID/nodejs:10
+    docker tag bazel/experimental/nodejs:nodejs12 gcr.io/$PROJECT_ID/nodejs:12
+    docker tag bazel/experimental/nodejs:nodejs14 gcr.io/$PROJECT_ID/nodejs:14
+    docker tag bazel/experimental/nodejs:nodejs10_debug gcr.io/$PROJECT_ID/nodejs:debug
+    docker tag bazel/experimental/nodejs:nodejs10_debug gcr.io/$PROJECT_ID/nodejs:10-debug
+    docker tag bazel/experimental/nodejs:nodejs12_debug gcr.io/$PROJECT_ID/nodejs:12-debug
+    docker tag bazel/experimental/nodejs:nodejs14_debug gcr.io/$PROJECT_ID/nodejs:14-debug
 
     docker tag bazel/experimental/dotnet:dotnet_debian9                    gcr.io/$PROJECT_ID/dotnet:latest
     docker tag bazel/experimental/dotnet:dotnet_debian9                    gcr.io/$PROJECT_ID/dotnet-debian9:latest
@@ -300,7 +310,13 @@ images:
   - 'gcr.io/$PROJECT_ID/python2.7-debian10:latest'
   - 'gcr.io/$PROJECT_ID/python2.7-debian10:debug'
   - 'gcr.io/$PROJECT_ID/nodejs:latest'
+  - 'gcr.io/$PROJECT_ID/nodejs:10'
+  - 'gcr.io/$PROJECT_ID/nodejs:12'
+  - 'gcr.io/$PROJECT_ID/nodejs:14'
   - 'gcr.io/$PROJECT_ID/nodejs:debug'
+  - 'gcr.io/$PROJECT_ID/nodejs:10-debug'
+  - 'gcr.io/$PROJECT_ID/nodejs:12-debug'
+  - 'gcr.io/$PROJECT_ID/nodejs:14-debug'
   - 'gcr.io/$PROJECT_ID/dotnet:latest'
   - 'gcr.io/$PROJECT_ID/dotnet:debug'
   - 'gcr.io/$PROJECT_ID/dotnet-debian9:latest'

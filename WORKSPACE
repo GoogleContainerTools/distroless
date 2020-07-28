@@ -189,14 +189,33 @@ http_archive(
     urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.22.v20191022/jetty-distribution-9.4.22.v20191022.tar.gz"],
 )
 
-# Node
+# Node (https://nodejs.org/en/about/releases/)
+# Follow Node's maintainence schedule and support all LTS versions that are not end of life
 http_archive(
-    name = "nodejs",
+    name = "nodejs10",
     build_file = "//experimental/nodejs:BUILD.nodejs",
-    sha256 = "417bdc5402f6510fe1a5a898a9cdf1d67bd0202b5f014051c382f05358999534",
-    strip_prefix = "node-v10.17.0-linux-x64/",
+    sha256 = "aa7e9e1d8abcc169119bf5c56ede515689f2644ccc4d40ca0fc33756a3deb1f7",
+    strip_prefix = "node-v10.22.0-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v10.22.0/node-v10.22.0-linux-x64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs12",
+    build_file = "//experimental/nodejs:BUILD.nodejs",
+    sha256 = "8cdacecc43c35bcfa5474c793b9e7a01835e4171264f7b13f3e57093371872e9",
+    strip_prefix = "node-v12.18.3-linux-x64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v12.18.3/node-v12.18.3-linux-x64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs14",
+    build_file = "//experimental/nodejs:BUILD.nodejs",
+    sha256 = "5e2c59200c86c37a0c800fe2cd2cfabc459f8a3ae3f83c3611483c485ad32e4f",
+    strip_prefix = "node-v14.6.0-linux-x64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v14.6.0/node-v14.6.0-linux-x64.tar.gz"],
 )
 
 http_archive(
