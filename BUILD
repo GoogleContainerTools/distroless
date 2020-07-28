@@ -71,7 +71,7 @@ container_bundle(
         "gcr.io/{PROJECT_ID}/nodejs:10": "//experimental/nodejs:nodejs10",
         "gcr.io/{PROJECT_ID}/nodejs:12": "//experimental/nodejs:nodejs12",
         "gcr.io/{PROJECT_ID}/nodejs:14": "//experimental/nodejs:nodejs14",
-        "gcr.io/{PROJECT_ID}/nodejs:debug": "//experimental/nodejs:nodej10_debug",
+        "gcr.io/{PROJECT_ID}/nodejs:debug": "//experimental/nodejs:nodejs10_debug",
         "gcr.io/{PROJECT_ID}/nodejs:10-debug": "//experimental/nodejs:nodejs10_debug",
         "gcr.io/{PROJECT_ID}/nodejs:12-debug": "//experimental/nodejs:nodejs12_debug",
         "gcr.io/{PROJECT_ID}/nodejs:14-debug": "//experimental/nodejs:nodejs14_debug",

@@ -203,10 +203,10 @@ http_archive(
 http_archive(
     name = "nodejs12",
     build_file = "//experimental/nodejs:BUILD.nodejs",
-    sha256 = "5488e9d9e860eb344726aabdc8f90d09e36602da38da3d16a7ee852fd9fbd91f",
-    strip_prefix = "node-v12.9.1-linux-x64/",
+    sha256 = "8cdacecc43c35bcfa5474c793b9e7a01835e4171264f7b13f3e57093371872e9",
+    strip_prefix = "node-v12.18.3-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v12.9.1/node-v12.9.1-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v12.18.3/node-v12.18.3-linux-x64.tar.gz"],
 )
 
 http_archive(
