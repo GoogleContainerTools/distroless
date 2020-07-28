@@ -4,9 +4,11 @@
 
 This image contains a minimal Linux, Node.js-based runtime.
 
-Specifically, the image contains everything in the [base image](../../base/README.md), plus:
+Specifically, the image contains everything in the [base image](../../base/README.md), plus one of:
 
-- Node.js v10.16.3 and its dependencies.
+- Node.js v10 (`gcr.io/distroless/nodejs:10`) and its dependencies.
+- Node.js v12 (`gcr.io/distroless/nodejs:12`) and its dependencies.
+- Node.js v14 (`gcr.io/distroless/nodejs:14`) and its dependencies.
 
 ## Usage
 
