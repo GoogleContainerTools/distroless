@@ -206,10 +206,10 @@ steps:
     docker tag bazel/experimental/nodejs:nodejs10 gcr.io/$PROJECT_ID/nodejs:10
     docker tag bazel/experimental/nodejs:nodejs12 gcr.io/$PROJECT_ID/nodejs:12
     docker tag bazel/experimental/nodejs:nodejs14 gcr.io/$PROJECT_ID/nodejs:14
-    docker tag bazel/experimental/nodejs:nodejs10 gcr.io/$PROJECT_ID/nodejs:debug
-    docker tag bazel/experimental/nodejs:nodejs10 gcr.io/$PROJECT_ID/nodejs:10-debug
-    docker tag bazel/experimental/nodejs:nodejs12 gcr.io/$PROJECT_ID/nodejs:12-debug
-    docker tag bazel/experimental/nodejs:nodejs14 gcr.io/$PROJECT_ID/nodejs:14-debug
+    docker tag bazel/experimental/nodejs:nodejs10_debug gcr.io/$PROJECT_ID/nodejs:debug
+    docker tag bazel/experimental/nodejs:nodejs10_debug gcr.io/$PROJECT_ID/nodejs:10-debug
+    docker tag bazel/experimental/nodejs:nodejs12_debug gcr.io/$PROJECT_ID/nodejs:12-debug
+    docker tag bazel/experimental/nodejs:nodejs14_debug gcr.io/$PROJECT_ID/nodejs:14-debug
 
     docker tag bazel/experimental/dotnet:dotnet_debian9                    gcr.io/$PROJECT_ID/dotnet:latest
     docker tag bazel/experimental/dotnet:dotnet_debian9                    gcr.io/$PROJECT_ID/dotnet-debian9:latest
