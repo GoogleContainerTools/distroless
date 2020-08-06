@@ -1,0 +1,38 @@
+schemaVersion: "1.0.0"
+commandTests:
+  - name: version
+    command: ["/usr/bin/php", "--version"]
+    expectedOutput: ["PHP 7.3.19"]
+  - name: extensions
+    command: ["/usr/bin/php", "-m"]
+    expectedOutput:
+      - 'calendar'
+      - 'ctype'
+      - 'dom'
+      - 'exif'
+      - 'fileinfo'
+      - 'ftp'
+      - 'gd'
+      - 'gettext'
+      - 'iconv'
+      - 'json'
+      - 'mbstring'
+      - 'mysqlnd'
+      - 'Zend OPcache'
+      - 'pdo_mysql'
+      - 'pdo'
+      - 'Phar'
+      - 'posix'
+      - 'readline'
+      - 'shmop'
+      - 'SimpleXML'
+      - 'sockets'
+      - 'sysvmsg'
+      - 'sysvsem'
+      - 'sysvshm'
+      - 'tokenizer'
+      - 'wddx'
+      - 'xml'
+      - 'xmlreader'
+      - 'xmlwriter'
+      - 'xsl'

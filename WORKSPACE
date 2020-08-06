@@ -438,6 +438,69 @@ dpkg_list(
         "libpcre3",
         "libbz2-1.0",
         "liblzma5",
+
+        #PHP
+
+        # PHP-CLI + json + opcache and common extensions
+        "libargon2-1",
+        "libbsd0",
+        "libedit2",
+        "libicu63",
+        "liblzma5",
+        "libmagic1",
+        "libmagic-mgc",
+        "libncurses6",
+        "libpcre2-8-0",
+        "libsodium23",
+        "libssl1.1",
+        "libtinfo6",
+        "libxml2",
+        "php7.3-cli",
+        "php7.3-common",
+        "php7.3-json",
+        "php7.3-opcache",
+        "php7.3-readline",
+        "zlib1g",
+
+        # PHP-FPM
+        "libapparmor1",
+        "libgcrypt20",
+        "libgpg-error0",
+        "liblz4-1",
+        "libsystemd0",
+        "mime-support",
+        "php7.3-fpm",
+
+        # PHP-MYSQL
+        "php7.3-mysql",
+
+        # PHP-GD
+        "libexpat1",
+        "libfontconfig1",
+        "libfreetype6",
+        "libgd3",
+        "libjbig0",
+        "libjpeg62-turbo",
+        "libpng16-16",
+        "libtiff5",
+        "libuuid1",
+        "libwebp6",
+        "libx11-6",
+        "libx11-data",
+        "libxau6",
+        "libxcb1",
+        "libxdmcp6",
+        "libxpm4",
+        "libzstd1",
+        "php7.3-gd",
+
+        # PHP-MBSTRING
+        "php7.3-mbstring",
+
+        # PHP-XML
+        "php7.3-xml",
+        "libxslt1.1",
+
     ],
     sources = [
         "@debian10_security//file:Packages.json",
