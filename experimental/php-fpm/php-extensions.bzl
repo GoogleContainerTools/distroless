@@ -16,7 +16,7 @@ def php_extensions(extensions, php_version):
     dest_path = "/etc/php/{version}/{php_variant}/conf.d/{prio}-{name}.ini"
     ext = {}
 
-    for (k,v) in extensions.items():
+    for (k, v) in extensions.items():
         for variant in php_ext_variants:
-           ext[dest_path.format(version=php_version, php_variant=variant, prio=v['prio'], name=k)] = v['path']
+            ext[dest_path.format(version = php_version, php_variant = variant, prio = v["prio"], name = k)] = v["path"]
     return ext

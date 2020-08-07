@@ -500,7 +500,6 @@ dpkg_list(
         # PHP-XML
         "php7.3-xml",
         "libxslt1.1",
-
     ],
     sources = [
         "@debian10_security//file:Packages.json",
