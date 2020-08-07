@@ -20,23 +20,23 @@ go_register_toolchains()
 
 load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
 
-DEBIAN_SNAPSHOT = "20200721T024628Z"
+DEBIAN_SNAPSHOT = "20200805T024503Z"
 
-DEBIAN_SECURITY_SNAPSHOT = "20200720T223250Z"
+DEBIAN_SECURITY_SNAPSHOT = "20200804T162312Z"
 
 DEBIAN_STRETCH_SHA256 = "90ff32c8226b57b879bf6b8c3cfda15e24f2b8c22de28426872f162db4e8d444"
 
-DEBIAN_STRETCH_BACKPORTS_SHA256 = "5a6f02acf26936ba5f13a28cc5b6c5e0ecda069415ede11b42418d3c64eaa9a6"
+DEBIAN_STRETCH_BACKPORTS_SHA256 = "c6aa4e13236c86b3ab0e1714ff10f1d31e0533d7fb0d05cf64e12a02accd981c"
 
 DEBIAN_STRETCH_UPDATES_SHA256 = "b702e0888f32074ee212accbf56c732beacf0d9f570ca082a9c859b23a2596e9"
 
-DEBIAN_STRETCH_SECURITY_SHA256 = "760330df6d9635244f1fff39cf66b0be7fdd9480af40bd5b6147cc098e1838fe"
+DEBIAN_STRETCH_SECURITY_SHA256 = "03c2b87d786024b61cab2a63c10aa36929ca4d6468a0ec34435235476fdd2c90"
 
-DEBIAN_BUSTER_SHA256 = "f251129edc5e5b31dadd7bb252e5ce88b3fdbd76de672bc0bbcda4f667d5f47f"
+DEBIAN_BUSTER_SHA256 = "a7f65cd4f022ad9c5cee5dace254d8d32d797887082437273223771ddbb8203f"
 
 DEBIAN_BUSTER_UPDATES_SHA256 = "80f0b86ca11476ea485625c3dff1505285f249f5603dd9458415707dacc5fb71"
 
-DEBIAN_BUSTER_SECURITY_SHA256 = "17541af61ed62d7cddf53c05d0a7b80930700c3d315ddb8b28db56b6596a5b25"
+DEBIAN_BUSTER_SECURITY_SHA256 = "17f9decd681a3eeed242a27e22c60bc32687aa6b64b229d11db426b7f878b323"
 
 dpkg_src(
     name = "debian_stretch",
@@ -189,14 +189,33 @@ http_archive(
     urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.22.v20191022/jetty-distribution-9.4.22.v20191022.tar.gz"],
 )
 
-# Node
+# Node (https://nodejs.org/en/about/releases/)
+# Follow Node's maintainence schedule and support all LTS versions that are not end of life
 http_archive(
-    name = "nodejs",
+    name = "nodejs10",
     build_file = "//experimental/nodejs:BUILD.nodejs",
-    sha256 = "417bdc5402f6510fe1a5a898a9cdf1d67bd0202b5f014051c382f05358999534",
-    strip_prefix = "node-v10.17.0-linux-x64/",
+    sha256 = "aa7e9e1d8abcc169119bf5c56ede515689f2644ccc4d40ca0fc33756a3deb1f7",
+    strip_prefix = "node-v10.22.0-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v10.22.0/node-v10.22.0-linux-x64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs12",
+    build_file = "//experimental/nodejs:BUILD.nodejs",
+    sha256 = "8cdacecc43c35bcfa5474c793b9e7a01835e4171264f7b13f3e57093371872e9",
+    strip_prefix = "node-v12.18.3-linux-x64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v12.18.3/node-v12.18.3-linux-x64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs14",
+    build_file = "//experimental/nodejs:BUILD.nodejs",
+    sha256 = "5e2c59200c86c37a0c800fe2cd2cfabc459f8a3ae3f83c3611483c485ad32e4f",
+    strip_prefix = "node-v14.6.0-linux-x64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v14.6.0/node-v14.6.0-linux-x64.tar.gz"],
 )
 
 http_archive(
