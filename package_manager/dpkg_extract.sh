@@ -3,8 +3,7 @@
 set -o errexit
 
 DEB=$1
-shift
-if [ -z ${DEB+x} ]; then
+if [ -z "$DEB" ]; then
   echo "Usage: dpkg_extract <deb file> [files to extract]"
   exit 1;
 fi
@@ -13,6 +12,8 @@ if ! [ -f "$DEB" ]; then
   echo "$DEB package was not found"
   exit 1;
 fi
+
+shift
 
 ar -x "$DEB" data.tar.xz
 
