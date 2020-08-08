@@ -61,4 +61,4 @@ def build_os_release_tar(distro, os_release_file, os_release_path, tar_file_name
     with open(os_release_file, 'w') as os_release:
         generate_os_release(distro, os_release)
     with TarFile(output=tar_file_name, directory=None, compression='', root_directory='./', default_mtime=0) as tar:
-        tar.add_file(os_release_path, os_release_path)
+        tar.add_file(os_release_path, os_release_path, mode=0o644)
