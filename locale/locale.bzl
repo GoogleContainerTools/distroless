@@ -14,9 +14,11 @@ def _impl(ctx):
             "BUILD_TAR": ctx.executable._build_tar.path,
         },
         command = """
-            $EXTRACT_DEB "$1" ./usr/lib/locale/C.UTF-8
+            $EXTRACT_DEB "$1" ./usr/lib/locale/C.UTF-8 ./usr/share/doc/libc-bin/copyright
 
             $BUILD_TAR  --output "$2" \
+                        --mode 0644 \
+                        --file ./usr/share/doc/libc-bin/copyright=./usr/share/doc/libc-bin/copyright \
                         --file ./usr/lib/locale/C.UTF-8=./usr/lib/locale/C.UTF-8
         """,
     )
