@@ -6,7 +6,6 @@ load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 load("@package_bundle//file:packages.bzl", "packages", "versions")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages", versions_debian10 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
-load("//locale:locale.bzl", "locale")
 load("//java:jre_ver.bzl", "jre_ver")
 
 DISTRO_SUFFIXES = ("_debian9", "_debian10")
@@ -20,16 +19,6 @@ DISTRO_VERSIONS = {
     "_debian9": versions,
     "_debian10": versions_debian10,
 }
-
-[locale(
-    name = "locale_java" + distro_suffix,
-    deb = DISTRO_PACKAGES[distro_suffix]["libc-bin"],
-) for distro_suffix in DISTRO_SUFFIXES]
-
-[cacerts_java(
-    name = "cacerts_java" + distro_suffix,
-    cacerts_tar = "//base:cacerts" + distro_suffix + ".tar",
-) for distro_suffix in DISTRO_SUFFIXES]
 
 [[container_image(
     name = "java_base" + mode + distro_suffix,
@@ -50,8 +39,8 @@ DISTRO_VERSIONS = {
         "LANG": "C.UTF-8",
     },
     tars = [
-        ":cacerts_java" + distro_suffix,
-        ":locale_java" + distro_suffix,
+        "//cacerts:cacerts_java" + distro_suffix,
+        "//locale:locale" + distro_suffix,
     ],
 ) for mode in [
     "",

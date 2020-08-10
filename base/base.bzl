@@ -1,21 +1,10 @@
 # defines a function to replicate the container images for different distributions
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@package_bundle//file:packages.bzl", "packages")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
+load(":distro.bzl", "DISTRO_PACKAGES", "DISTRO_REPOSITORY")
 load("//cacerts:cacerts.bzl", "cacerts")
 
 NONROOT = 65532
-
-DISTRO_PACKAGES = {
-    "_debian9": packages,
-    "_debian10": packages_debian10,
-}
-
-DISTRO_REPOSITORY = {
-    "_debian9": "@debian_stretch",
-    "_debian10": "@debian10",
-}
 
 # Replicate everything for debian9 and debian10
 def distro_components(distro_suffix):
