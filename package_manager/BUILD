@@ -2,7 +2,10 @@ load("@subpar//:subpar.bzl", "par_binary")
 
 par_binary(
     name = "dpkg_parser",
-    srcs = glob(["**/*.py"]),
+    srcs = [
+        "__init__.py",
+        "dpkg_parser.py",
+    ],
     compiler_args = [
         "--interpreter",
         "/usr/bin/env python",
@@ -16,6 +19,12 @@ par_binary(
     ],
 )
 
+sh_binary(
+    name = "dpkg_extract",
+    srcs = ["dpkg_extract.sh"],
+    visibility = ["//:__subpackages__"],
+)
+
 py_library(
     name = "parse_metadata",
     srcs = ["parse_metadata.py"],
@@ -24,7 +33,10 @@ py_library(
 
 py_library(
     name = "util",
-    srcs = ["util.py"],
+    srcs = [
+        "util.py",
+        "@rules_pkg//:build_tar",
+    ],
 )
 
 py_library(

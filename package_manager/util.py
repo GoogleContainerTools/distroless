@@ -1,8 +1,11 @@
 import hashlib
 import base64
 import collections
-import tarfile
 import os
+
+# Distroless's test.sh runs pylint on all python files, but this module will not exist
+# pylint: disable=import-error
+from build_tar import TarFile
 
 def sha256_checksum(filename, block_size=65536):
     sha256 = hashlib.sha256()
@@ -57,5 +60,5 @@ def build_os_release_tar(distro, os_release_file, os_release_path, tar_file_name
     os.makedirs(os_release_path)
     with open(os_release_file, 'w') as os_release:
         generate_os_release(distro, os_release)
-    with tarfile.open(tar_file_name, "w") as tar:
-        tar.add(os_release_file)
+    with TarFile(output=tar_file_name, directory=None, compression='', root_directory='./', default_mtime=0) as tar:
+        tar.add_file(os_release_path, os_release_path, mode=0o644)

@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load(":base.bzl", "NONROOT", "distro_components")
+load(":distro.bzl", "DISTRO_SUFFIXES")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
@@ -113,10 +114,7 @@ go_binary(
     pure = "on",
 )
 
-# Replicate the containers and tests for debian9 and debian10
-distro_components("_debian9")
-
-distro_components("_debian10")
+[distro_components(suffix) for suffix in DISTRO_SUFFIXES]
 
 # alias debian9 as the default images
 alias(

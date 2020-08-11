@@ -16,14 +16,22 @@ def _impl(ctx):
     ctx.actions.run_shell(
         outputs = [ctx.outputs.out],
         inputs = [ctx.file.cacerts_tar],
-        tools = [ctx.file._jksutil],
+        tools = [ctx.file._jksutil] + ctx.files._build_tar,
         arguments = [ctx.file.cacerts_tar.path, ctx.outputs.out.path],
+        env = {
+            "CREATE_JKS": ctx.executable._jksutil.path,
+            "BUILD_TAR": ctx.executable._build_tar.path,
+        },
         command = """
-mkdir -p etc/ssl/certs/java
-tar -xOf "$1" etc/ssl/certs/ca-certificates.crt |
-  """ + ctx.file._jksutil.path + """ > etc/ssl/certs/java/cacerts
-tar -cvf "$2" etc/ssl
-""",
+            set -o errexit
+            set -o xtrace
+
+            mkdir -p etc/ssl/certs/java
+            tar -xOf "$1" ./etc/ssl/certs/ca-certificates.crt | $CREATE_JKS > etc/ssl/certs/java/cacerts
+
+            $BUILD_TAR  --output "$2" \
+                        --file ./etc/ssl/certs/java/cacerts=./etc/ssl/certs/java/cacerts
+        """,
     )
 
 cacerts_java = rule(
@@ -41,6 +49,11 @@ file with the JKS file at etc/ssl/certs/java/cacerts.
             cfg = "host",
             executable = True,
             allow_single_file = True,
+        ),
+        "_build_tar": attr.label(
+            default = Label("@rules_pkg//:build_tar"),
+            cfg = "host",
+            executable = True,
         ),
     },
     executable = False,
