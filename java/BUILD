@@ -1,5 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
+load(":distro.bzl", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
@@ -7,8 +8,6 @@ load("@package_bundle//file:packages.bzl", "packages", "versions")
 load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages", versions_debian10 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
-
-DISTRO_SUFFIXES = ("_debian9", "_debian10")
 
 DISTRO_PACKAGES = {
     "_debian9": packages,

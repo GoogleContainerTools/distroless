@@ -1,9 +1,8 @@
 package(default_visibility = ["//visibility:public"])
 
+load(":distro.bzl", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-
-DISTRO_SUFFIXES = ("_debian9", "_debian10")
 
 [container_image(
     name = rule_name,
