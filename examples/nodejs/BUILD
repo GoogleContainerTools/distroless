@@ -9,14 +9,14 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 # https://howtonode.org/hello-node
 container_image(
     name = "hello",
-    base = "//experimental/nodejs:nodejs10",
+    base = "//experimental/nodejs:nodejs10_debian10",
     cmd = ["hello.js"],
     files = [":hello.js"],
 )
 
 container_image(
     name = "hello_http",
-    base = "//experimental/nodejs:nodejs10",
+    base = "//experimental/nodejs:nodejs10_debian10",
     cmd = ["hello_http.js"],
     files = [":hello_http.js"],
     ports = ["8000"],
