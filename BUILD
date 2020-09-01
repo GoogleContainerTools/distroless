@@ -79,7 +79,7 @@ container_bundle(
         "gcr.io/{PROJECT_ID}/nodejs-debian9:12": "//experimental/nodejs:nodejs12_debian9",
         "gcr.io/{PROJECT_ID}/nodejs-debian9:14": "//experimental/nodejs:nodejs14_debian9",
         "gcr.io/{PROJECT_ID}/nodejs-debian9:latest": "//experimental/nodejs:nodejs14_debian9",
-        "gcr.io/{PROJECT_ID}/nodejs-debian9:debug": "//experimental/nodejs:nodejs10_debug_debian9",
+        "gcr.io/{PROJECT_ID}/nodejs-debian9:debug": "//experimental/nodejs:nodejs14_debug_debian9",
         "gcr.io/{PROJECT_ID}/nodejs-debian9:10-debug": "//experimental/nodejs:nodejs10_debug_debian9",
         "gcr.io/{PROJECT_ID}/nodejs-debian9:12-debug": "//experimental/nodejs:nodejs12_debug_debian9",
         "gcr.io/{PROJECT_ID}/nodejs-debian9:14-debug": "//experimental/nodejs:nodejs14_debug_debian9",
