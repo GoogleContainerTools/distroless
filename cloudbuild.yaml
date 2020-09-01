@@ -134,15 +134,14 @@ steps:
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
     docker tag bazel/experimental/python2.7:debug_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
 
-    docker tag bazel/experimental/nodejs:nodejs10_debian9 gcr.io/$PROJECT_ID/nodejs:latest
+    docker tag bazel/experimental/nodejs:nodejs14_debian9 gcr.io/$PROJECT_ID/nodejs:latest
     docker tag bazel/experimental/nodejs:nodejs10_debian9 gcr.io/$PROJECT_ID/nodejs:10
     docker tag bazel/experimental/nodejs:nodejs12_debian9 gcr.io/$PROJECT_ID/nodejs:12
     docker tag bazel/experimental/nodejs:nodejs14_debian9 gcr.io/$PROJECT_ID/nodejs:14
-    docker tag bazel/experimental/nodejs:nodejs10_debug_debian9 gcr.io/$PROJECT_ID/nodejs:debug
+    docker tag bazel/experimental/nodejs:nodejs14_debug_debian9 gcr.io/$PROJECT_ID/nodejs:debug
     docker tag bazel/experimental/nodejs:nodejs10_debug_debian9 gcr.io/$PROJECT_ID/nodejs:10-debug
     docker tag bazel/experimental/nodejs:nodejs12_debug_debian9 gcr.io/$PROJECT_ID/nodejs:12-debug
     docker tag bazel/experimental/nodejs:nodejs14_debug_debian9 gcr.io/$PROJECT_ID/nodejs:14-debug
-
     docker tag bazel/experimental/nodejs:nodejs14_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:latest
     docker tag bazel/experimental/nodejs:nodejs10_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:10
     docker tag bazel/experimental/nodejs:nodejs12_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:12
@@ -151,7 +150,6 @@ steps:
     docker tag bazel/experimental/nodejs:nodejs10_debug_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:10-debug
     docker tag bazel/experimental/nodejs:nodejs12_debug_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:12-debug
     docker tag bazel/experimental/nodejs:nodejs14_debug_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:14-debug
-
     docker tag bazel/experimental/nodejs:nodejs14_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:latest
     docker tag bazel/experimental/nodejs:nodejs10_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:10
     docker tag bazel/experimental/nodejs:nodejs12_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:12
