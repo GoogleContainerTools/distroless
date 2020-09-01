@@ -134,14 +134,32 @@ steps:
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
     docker tag bazel/experimental/python2.7:debug_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
 
-    docker tag bazel/experimental/nodejs:nodejs10 gcr.io/$PROJECT_ID/nodejs:latest
-    docker tag bazel/experimental/nodejs:nodejs10 gcr.io/$PROJECT_ID/nodejs:10
-    docker tag bazel/experimental/nodejs:nodejs12 gcr.io/$PROJECT_ID/nodejs:12
-    docker tag bazel/experimental/nodejs:nodejs14 gcr.io/$PROJECT_ID/nodejs:14
-    docker tag bazel/experimental/nodejs:nodejs10_debug gcr.io/$PROJECT_ID/nodejs:debug
-    docker tag bazel/experimental/nodejs:nodejs10_debug gcr.io/$PROJECT_ID/nodejs:10-debug
-    docker tag bazel/experimental/nodejs:nodejs12_debug gcr.io/$PROJECT_ID/nodejs:12-debug
-    docker tag bazel/experimental/nodejs:nodejs14_debug gcr.io/$PROJECT_ID/nodejs:14-debug
+    docker tag bazel/experimental/nodejs:nodejs10_debian9 gcr.io/$PROJECT_ID/nodejs:latest
+    docker tag bazel/experimental/nodejs:nodejs10_debian9 gcr.io/$PROJECT_ID/nodejs:10
+    docker tag bazel/experimental/nodejs:nodejs12_debian9 gcr.io/$PROJECT_ID/nodejs:12
+    docker tag bazel/experimental/nodejs:nodejs14_debian9 gcr.io/$PROJECT_ID/nodejs:14
+    docker tag bazel/experimental/nodejs:nodejs10_debug_debian9 gcr.io/$PROJECT_ID/nodejs:debug
+    docker tag bazel/experimental/nodejs:nodejs10_debug_debian9 gcr.io/$PROJECT_ID/nodejs:10-debug
+    docker tag bazel/experimental/nodejs:nodejs12_debug_debian9 gcr.io/$PROJECT_ID/nodejs:12-debug
+    docker tag bazel/experimental/nodejs:nodejs14_debug_debian9 gcr.io/$PROJECT_ID/nodejs:14-debug
+
+    docker tag bazel/experimental/nodejs:nodejs14_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:latest
+    docker tag bazel/experimental/nodejs:nodejs10_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:10
+    docker tag bazel/experimental/nodejs:nodejs12_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:12
+    docker tag bazel/experimental/nodejs:nodejs14_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:14
+    docker tag bazel/experimental/nodejs:nodejs14_debug_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:debug
+    docker tag bazel/experimental/nodejs:nodejs10_debug_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:10-debug
+    docker tag bazel/experimental/nodejs:nodejs12_debug_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:12-debug
+    docker tag bazel/experimental/nodejs:nodejs14_debug_debian9 gcr.io/$PROJECT_ID/nodejs-debian9:14-debug
+
+    docker tag bazel/experimental/nodejs:nodejs14_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:latest
+    docker tag bazel/experimental/nodejs:nodejs10_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:10
+    docker tag bazel/experimental/nodejs:nodejs12_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:12
+    docker tag bazel/experimental/nodejs:nodejs14_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:14
+    docker tag bazel/experimental/nodejs:nodejs14_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:debug
+    docker tag bazel/experimental/nodejs:nodejs10_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:10-debug
+    docker tag bazel/experimental/nodejs:nodejs12_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:12-debug
+    docker tag bazel/experimental/nodejs:nodejs14_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:14-debug
 
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
   entrypoint: sh
@@ -247,6 +265,22 @@ images:
   - 'gcr.io/$PROJECT_ID/nodejs:10-debug'
   - 'gcr.io/$PROJECT_ID/nodejs:12-debug'
   - 'gcr.io/$PROJECT_ID/nodejs:14-debug'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian9:latest'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian9:10'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian9:12'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian9:14'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian9:10-debug'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian9:12-debug'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian9:14-debug'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian10:latest'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian10:10'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian10:12'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian10:14'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian10:debug'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian10:10-debug'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian10:12-debug'
+  - 'gcr.io/$PROJECT_ID/nodejs-debian10:14-debug'
   - 'gcr.io/$PROJECT_ID/dotnet:latest'
   - 'gcr.io/$PROJECT_ID/dotnet:debug'
   - 'gcr.io/$PROJECT_ID/dotnet-debian9:latest'
