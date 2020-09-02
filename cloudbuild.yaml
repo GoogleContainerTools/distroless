@@ -133,7 +133,14 @@ steps:
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7:debug
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
     docker tag bazel/experimental/python2.7:debug_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
-
+- name: gcr.io/cloud-builders/docker
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
     docker tag bazel/experimental/nodejs:nodejs14_debian9        gcr.io/$PROJECT_ID/nodejs:latest
     docker tag bazel/experimental/nodejs:nodejs10_debian9        gcr.io/$PROJECT_ID/nodejs:10
     docker tag bazel/experimental/nodejs:nodejs12_debian9        gcr.io/$PROJECT_ID/nodejs:12
@@ -158,7 +165,6 @@ steps:
     docker tag bazel/experimental/nodejs:nodejs10_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:10-debug
     docker tag bazel/experimental/nodejs:nodejs12_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:12-debug
     docker tag bazel/experimental/nodejs:nodejs14_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:14-debug
-
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
   entrypoint: sh
   args:
