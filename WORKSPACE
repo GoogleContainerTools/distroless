@@ -193,7 +193,7 @@ http_archive(
 # Follow Node's maintainence schedule and support all LTS versions that are not end of life
 http_archive(
     name = "nodejs10",
-    build_file = "//experimental/nodejs:BUILD.nodejs",
+    build_file = "//nodejs:BUILD.nodejs",
     sha256 = "aa7e9e1d8abcc169119bf5c56ede515689f2644ccc4d40ca0fc33756a3deb1f7",
     strip_prefix = "node-v10.22.0-linux-x64/",
     type = "tar.gz",
@@ -202,7 +202,7 @@ http_archive(
 
 http_archive(
     name = "nodejs12",
-    build_file = "//experimental/nodejs:BUILD.nodejs",
+    build_file = "//nodejs:BUILD.nodejs",
     sha256 = "8cdacecc43c35bcfa5474c793b9e7a01835e4171264f7b13f3e57093371872e9",
     strip_prefix = "node-v12.18.3-linux-x64/",
     type = "tar.gz",
@@ -211,7 +211,7 @@ http_archive(
 
 http_archive(
     name = "nodejs14",
-    build_file = "//experimental/nodejs:BUILD.nodejs",
+    build_file = "//nodejs:BUILD.nodejs",
     sha256 = "5e2c59200c86c37a0c800fe2cd2cfabc459f8a3ae3f83c3611483c485ad32e4f",
     strip_prefix = "node-v14.6.0-linux-x64/",
     type = "tar.gz",
