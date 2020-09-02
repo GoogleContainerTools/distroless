@@ -20,8 +20,8 @@ load("//base:distro.bzl", "DISTRO_SUFFIXES")
 
 [
     container_image(
-        name = "hello_http_" + distro_suffix,
-        base = "//experimental/nodejs:nodejs14_" + distro_suffix,
+        name = "hello_http" + distro_suffix,
+        base = "//experimental/nodejs:nodejs14" + distro_suffix,
         cmd = ["hello_http.js"],
         files = [":hello_http.js"],
         ports = ["8000"],
