@@ -99,13 +99,6 @@ steps:
     bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian10
     bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian9
     bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian10
-
-    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs10
-    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs10_debug
-    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs12
-    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs12_debug
-    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs14
-    bazel run --host_force_python=PY2 //experimental/nodejs:nodejs14_debug
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
   args:
@@ -133,6 +126,27 @@ steps:
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7:debug
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
     docker tag bazel/experimental/python2.7:debug_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
+
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+    bazel run //experimental/nodejs:nodejs10_debian9
+    bazel run //experimental/nodejs:nodejs10_debug_debian9
+    bazel run //experimental/nodejs:nodejs10_debian10
+    bazel run //experimental/nodejs:nodejs10_debug_debian10
+    bazel run //experimental/nodejs:nodejs12_debian9
+    bazel run //experimental/nodejs:nodejs12_debug_debian9
+    bazel run //experimental/nodejs:nodejs12_debian10
+    bazel run //experimental/nodejs:nodejs12_debug_debian10
+    bazel run //experimental/nodejs:nodejs14_debian9
+    bazel run //experimental/nodejs:nodejs14_debug_debian9
+    bazel run //experimental/nodejs:nodejs14_debian10
+    bazel run //experimental/nodejs:nodejs14_debug_debian10
 - name: gcr.io/cloud-builders/docker
   entrypoint: sh
   args:
