@@ -10,8 +10,8 @@ load("//base:distro.bzl", "DISTRO_SUFFIXES")
 # https://howtonode.org/hello-node
 [
     container_image(
-        name = "hello_" + distro_suffix,
-        base = "//experimental/nodejs:nodejs14_" + distro_suffix,
+        name = "hello" + distro_suffix,
+        base = "//experimental/nodejs:nodejs14" + distro_suffix,
         cmd = ["hello.js"],
         files = [":hello.js"],
     )
