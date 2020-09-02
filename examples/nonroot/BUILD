@@ -7,6 +7,7 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_file")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("//base:distro.bzl", "DISTRO_SUFFIXES")
 
 # Create a passwd file with a nonroot user and uid.
 passwd_entry(
@@ -49,17 +50,17 @@ go_binary(
     pure = "on",
 )
 
-container_image(
-    name = "check_user_image",
+[container_image(
+    name = "check_user_image" + distro_suffix,
     base = ":passwd_image",
     files = [":user"],
     visibility = ["//visibility:private"],
-)
+) for distro_suffix in DISTRO_SUFFIXES]
 
 # Test to verify this works :)
-container_test(
-    name = "check_user_test",
+[container_test(
+    name = "check_user" + distro_suffix + "_test",
     configs = ["testdata/user.yaml"],
-    image = ":check_user_image",
+    image = ":check_user_image" + distro_suffix,
     visibility = ["//visibility:private"],
-)
+) for distro_suffix in DISTRO_SUFFIXES]
