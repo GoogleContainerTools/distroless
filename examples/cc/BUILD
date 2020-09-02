@@ -4,19 +4,20 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("//base:distro.bzl", "DISTRO_SUFFIXES")
 
-container_image(
-    name = "hello",
-    base = "//cc:cc",
+[container_image(
+    name = "hello" + distro_suffix,
+    base = "//cc:cc" + distro_suffix,
     entrypoint = ["./hello"],
     files = [":bin/hello"],
-)
+) for distro_suffix in DISTRO_SUFFIXES]
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
-container_test(
-    name = "hello_test",
+[container_test(
+    name = "hello" + distro_suffix + "_test",
     size = "small",
     configs = ["testdata/hello.yaml"],
-    image = ":hello",
-)
+    image = ":hello" + distro_suffix,
+) for distro_suffix in DISTRO_SUFFIXES]
