@@ -31,8 +31,11 @@ load("//base:distro.bzl", "DISTRO_SUFFIXES")
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
-container_test(
-    name = "hello_test",
-    configs = ["testdata/hello.yaml"],
-    image = ":hello",
-)
+[
+    container_test(
+        name = "hello_test" + distro_suffix,
+        configs = ["testdata/hello.yaml"],
+        image = ":hello" + distro_suffix,
+    )
+    for distro_suffix in DISTRO_SUFFIXES
+]
