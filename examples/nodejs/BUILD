@@ -10,14 +10,14 @@ load("//base:distro.bzl", "DISTRO_SUFFIXES")
 # https://howtonode.org/hello-node
 [container_image(
     name = "hello" + distro_suffix,
-    base = "//experimental/nodejs:nodejs14" + distro_suffix,
+    base = "//nodejs:nodejs14" + distro_suffix,
     cmd = ["hello.js"],
     files = [":hello.js"],
 ) for distro_suffix in DISTRO_SUFFIXES]
 
 [container_image(
     name = "hello_http" + distro_suffix,
-    base = "//experimental/nodejs:nodejs14" + distro_suffix,
+    base = "//nodejs:nodejs14" + distro_suffix,
     cmd = ["hello_http.js"],
     files = [":hello_http.js"],
     ports = ["8000"],
