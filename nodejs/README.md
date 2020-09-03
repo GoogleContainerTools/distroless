@@ -16,4 +16,4 @@ Specifically, these images contain everything in the [base image](../../base/REA
 
 The entrypoint of this image is set to "node", so this image expects users to supply a path to a .js file in the CMD.
 
-See the Node.js [Hello World](../../examples/nodejs/) directory for an example.
+See the Node.js [Hello World](../examples/nodejs/) directory for an example.
