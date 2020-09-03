@@ -4,7 +4,7 @@
 
 These images contain a minimal Linux, Node.js-based runtime. The supported versions match the [Node.js LTS releases](https://nodejs.org/en/about/releases/).
 
-Specifically, these images contain everything in the [base image](../../base/README.md), plus one of:
+Specifically, these images contain everything in the [base image](../base/README.md), plus one of:
 
 - Node.js v10 (`gcr.io/distroless/nodejs:10`) and its dependencies.
 - Node.js v12 (`gcr.io/distroless/nodejs:12`) and its dependencies.
