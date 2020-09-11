@@ -47,11 +47,11 @@ Follow these steps to get started:
     * [gcr.io/distroless/base-debian10](base/README.md)
     * [gcr.io/distroless/java-debian10](java/README.md)
     * [gcr.io/distroless/cc-debian10](cc/README.md)
+    * [gcr.io/distroless/nodejs-debian10](nodejs/README.md)
 
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
     * [gcr.io/distroless/python2.7-debian10](experimental/python2.7/README.md)
     * [gcr.io/distroless/python3-debian10](experimental/python3/README.md)
-    * [gcr.io/distroless/nodejs](experimental/nodejs/README.md)
     * [gcr.io/distroless/java/jetty-debian10](java/jetty/README.md)
     * [gcr.io/distroless/dotnet](experimental/dotnet/README.md)
 * Write a multi-stage docker file.
