@@ -5,5 +5,5 @@ load(":locale.bzl", "locale")
 
 [locale(
     name = "locale" + distro_suffix,
-    deb = DISTRO_PACKAGES[distro_suffix]["libc-bin"],
+    deb = DISTRO_PACKAGES["amd64"][distro_suffix]["libc-bin"],
 ) for distro_suffix in DISTRO_SUFFIXES]

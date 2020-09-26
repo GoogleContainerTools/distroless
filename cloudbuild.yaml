@@ -18,10 +18,15 @@ steps:
     set -o xtrace
     bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
 
-    bazel run --host_force_python=PY2 //base:static_debian9
-    bazel run --host_force_python=PY2 //base:static_debian10
-    bazel run --host_force_python=PY2 //base:static_nonroot_debian9
-    bazel run --host_force_python=PY2 //base:static_nonroot_debian10
+    bazel run --host_force_python=PY2 //base:static_root_amd64_debian9
+    bazel run --host_force_python=PY2 //base:static_root_amd64_debian10
+    bazel run --host_force_python=PY2 //base:static_nonroot_amd64_debian9
+    bazel run --host_force_python=PY2 //base:static_nonroot_amd64_debian10
+    bazel run --host_force_python=PY2 //base:static_root_arm64_debian9
+    bazel run --host_force_python=PY2 //base:static_root_arm64_debian10
+    bazel run --host_force_python=PY2 //base:static_nonroot_arm64_debian9
+    bazel run --host_force_python=PY2 //base:static_nonroot_arm64_debian10
+
     bazel run --host_force_python=PY2 //base:base_debian9
     bazel run --host_force_python=PY2 //base:base_debian10
     bazel run --host_force_python=PY2 //base:base_nonroot_debian9
@@ -43,15 +48,20 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static:${COMMIT_SHA}
-    docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static:latest
-    docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}
-    docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static-debian9:latest
-    docker tag bazel/base:static_debian10         gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}
-    docker tag bazel/base:static_debian10         gcr.io/$PROJECT_ID/static-debian10:latest
-    docker tag bazel/base:static_nonroot_debian9  gcr.io/$PROJECT_ID/static:nonroot
-    docker tag bazel/base:static_nonroot_debian9  gcr.io/$PROJECT_ID/static-debian9:nonroot
-    docker tag bazel/base:static_nonroot_debian10 gcr.io/$PROJECT_ID/static-debian10:nonroot
+
+    docker tag bazel/base:static_root_amd64_debian9     gcr.io/$PROJECT_ID/static:${COMMIT_SHA}
+    docker tag bazel/base:static_root_amd64_debian9     gcr.io/$PROJECT_ID/static:latest
+    docker tag bazel/base:static_root_amd64_debian9     gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}
+    docker tag bazel/base:static_root_amd64_debian9     gcr.io/$PROJECT_ID/static-debian9:latest
+    docker tag bazel/base:static_root_amd64_debian10    gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}
+    docker tag bazel/base:static_root_amd64_debian10    gcr.io/$PROJECT_ID/static-debian10:latest
+    docker tag bazel/base:static_nonroot_amd64_debian9  gcr.io/$PROJECT_ID/static:nonroot
+    docker tag bazel/base:static_nonroot_amd64_debian9  gcr.io/$PROJECT_ID/static-debian9:nonroot
+    docker tag bazel/base:static_nonroot_amd64_debian10 gcr.io/$PROJECT_ID/static-debian10:nonroot
+
+    docker tag bazel/base:static_root_arm64_debian9     gcr.io/$PROJECT_ID/static:latest-arm64
+    docker tag bazel/base:static_nonroot_arm64_debian9  gcr.io/$PROJECT_ID/static:nonroot-arm64
+
     docker tag bazel/base:base_debian9            gcr.io/$PROJECT_ID/base:${COMMIT_SHA}
     docker tag bazel/base:base_debian9            gcr.io/$PROJECT_ID/base:latest
     docker tag bazel/base:base_debian9            gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}
@@ -227,6 +237,8 @@ images:
   - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
   - 'gcr.io/$PROJECT_ID/static:latest'
   - 'gcr.io/$PROJECT_ID/static:nonroot'
+  - 'gcr.io/$PROJECT_ID/static:latest-arm64'
+  - 'gcr.io/$PROJECT_ID/static:nonroot-arm64'
   - 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}'
   - 'gcr.io/$PROJECT_ID/static-debian9:latest'
   - 'gcr.io/$PROJECT_ID/static-debian9:nonroot'
