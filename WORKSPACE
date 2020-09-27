@@ -19,49 +19,14 @@ go_rules_dependencies()
 go_register_toolchains()
 
 load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
-
-DEBIAN_SNAPSHOT = "20200927T204254Z"
-
-DEBIAN_SECURITY_SNAPSHOT = "20200927T121505Z"
-
-AMD64_DEBIAN9_SHA256 = "90ff32c8226b57b879bf6b8c3cfda15e24f2b8c22de28426872f162db4e8d444"
-
-AMD64_DEBIAN9_BACKPORTS_SHA256 = "d974ef641167c420730833c1ffc7256f44eed36af787f5efdbbbc0d4c5b47a2e"
-
-AMD64_DEBIAN9_UPDATES_SHA256 = "b702e0888f32074ee212accbf56c732beacf0d9f570ca082a9c859b23a2596e9"
-
-AMD64_DEBIAN9_SECURITY_SHA256 = "152f4ee5e50c3829fc7982f103ec7afe0441d3b4072bc657cea6036a21063258"
-
-AMD64_DEBIAN10_SHA256 = "369d45f6c138af98d8ea8a598564dcabc1f6991ac777fb2d351e846f195cdc13"
-
-AMD64_DEBIAN10_UPDATES_SHA256 = "80f0b86ca11476ea485625c3dff1505285f249f5603dd9458415707dacc5fb71"
-
-AMD64_DEBIAN10_SECURITY_SHA256 = "65a7d953631a815794d64249070e9f8e163f2028ffdb8fccf2df11e7fc444089"
-
-ARCHITECTURES = ["amd64"]
-
-VERSIONS = [
-    ("debian9", "stretch"),
-    ("debian10", "buster"),
-]
-
-# TODO(https://github.com/GoogleContainerTools/distroless/issues/585): This should be pulled in from
-# a .bzl file produced by updateWorkspaceSnapshots.sh
-SHA256s = {
-    "amd64": {
-        "debian9": {
-            "main": AMD64_DEBIAN9_SHA256,
-            "backports": AMD64_DEBIAN9_BACKPORTS_SHA256,
-            "updates": AMD64_DEBIAN9_UPDATES_SHA256,
-            "security": AMD64_DEBIAN9_SECURITY_SHA256,
-        },
-        "debian10": {
-            "main": AMD64_DEBIAN10_SHA256,
-            "updates": AMD64_DEBIAN10_UPDATES_SHA256,
-            "security": AMD64_DEBIAN10_SECURITY_SHA256,
-        },
-    },
-}
+load(
+    "//:checksums.bzl",
+    "ARCHITECTURES",
+    "DEBIAN_SECURITY_SNAPSHOT",
+    "DEBIAN_SNAPSHOT",
+    "SHA256s",
+    "VERSIONS",
+)
 
 [
     dpkg_src(

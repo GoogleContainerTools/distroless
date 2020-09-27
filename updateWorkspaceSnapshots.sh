@@ -3,7 +3,7 @@
 set -o errexit
 set -o xtrace
 
-cp WORKSPACE WORKSPACE~
+cp checksums.bzl checksums.bzl~
 cp package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~
 cp package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~
 
@@ -27,30 +27,38 @@ then
     exit 0
 fi
 
-# Fetch appropriate SHA256 sums
+cat > checksums.bzl <<EOF
+# WARNING!!!
+# DO NOT MODIFY THIS FILE DIRECTLY.
+# TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
 
-AMD64_DEBIAN9_SHA256=`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`
-AMD64_DEBIAN9_BACKPORTS_SHA256=`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`
-AMD64_DEBIAN9_UPDATES_SHA256=`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`
-AMD64_DEBIAN9_SECURITY_SHA256=`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/stretch/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`
+ARCHITECTURES = ["amd64"]
 
-AMD64_DEBIAN10_SHA256=`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`
-AMD64_DEBIAN10_UPDATES_SHA256=`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`
-AMD64_DEBIAN10_SECURITY_SHA256=`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`
+VERSIONS = [
+    ("debian9", "stretch"),
+    ("debian10", "buster"),
+]
 
-# Patch workspace
+DEBIAN_SNAPSHOT = "$DEBIAN_SNAPSHOT"
 
-sed -i 's/DEBIAN_SNAPSHOT = "[^"][^"]*"/DEBIAN_SNAPSHOT = "'$DEBIAN_SNAPSHOT'"/' ./WORKSPACE
-sed -i 's/DEBIAN_SECURITY_SNAPSHOT = "[^"][^"]*"/DEBIAN_SECURITY_SNAPSHOT = "'$DEBIAN_SECURITY_SNAPSHOT'"/' ./WORKSPACE
+DEBIAN_SECURITY_SNAPSHOT = "$DEBIAN_SECURITY_SNAPSHOT"
 
-sed -i 's/AMD64_DEBIAN9_SHA256 = "[^"][^"]*"/AMD64_DEBIAN9_SHA256 = "'$AMD64_DEBIAN9_SHA256'"/' ./WORKSPACE
-sed -i 's/AMD64_DEBIAN9_BACKPORTS_SHA256 = "[^"][^"]*"/AMD64_DEBIAN9_BACKPORTS_SHA256 = "'$AMD64_DEBIAN9_BACKPORTS_SHA256'"/' ./WORKSPACE
-sed -i 's/AMD64_DEBIAN9_UPDATES_SHA256 = "[^"][^"]*"/AMD64_DEBIAN9_UPDATES_SHA256 = "'$AMD64_DEBIAN9_UPDATES_SHA256'"/' ./WORKSPACE
-sed -i 's/AMD64_DEBIAN9_SECURITY_SHA256 = "[^"][^"]*"/AMD64_DEBIAN9_SECURITY_SHA256 = "'$AMD64_DEBIAN9_SECURITY_SHA256'"/' ./WORKSPACE
-
-sed -i 's/AMD64_DEBIAN10_SHA256 = "[^"][^"]*"/AMD64_DEBIAN10_SHA256 = "'$AMD64_DEBIAN10_SHA256'"/' ./WORKSPACE
-sed -i 's/AMD64_DEBIAN10_UPDATES_SHA256 = "[^"][^"]*"/AMD64_DEBIAN10_UPDATES_SHA256 = "'$AMD64_DEBIAN10_UPDATES_SHA256'"/' ./WORKSPACE
-sed -i 's/AMD64_DEBIAN10_SECURITY_SHA256 = "[^"][^"]*"/AMD64_DEBIAN10_SECURITY_SHA256 = "'$AMD64_DEBIAN10_SECURITY_SHA256'"/' ./WORKSPACE
+SHA256s = {
+    "amd64": {
+        "debian9": {
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/stretch/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+        },
+        "debian10": {
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+        },
+    },
+}
+EOF
 
 # Rebuild package set
 
@@ -63,7 +71,7 @@ bazel build --host_force_python=PY2 @package_bundle_amd64_debian10//file:package
 
 if diff -w package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~ && diff -w package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~; then
     echo "No changes detected to package_bundle versions."
-    mv WORKSPACE~ WORKSPACE
+    mv checksums.bzl~ checksums.bzl
     mv package_bundle_amd64_debian9.versions~ package_bundle_amd64_debian9.versions
     mv package_bundle_amd64_debian10.versions~ package_bundle_amd64_debian10.versions
 else
