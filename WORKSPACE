@@ -24,53 +24,95 @@ DEBIAN_SNAPSHOT = "20200928T030607Z"
 
 DEBIAN_SECURITY_SNAPSHOT = "20200928T082436Z"
 
-DEBIAN_STRETCH_SHA256 = "90ff32c8226b57b879bf6b8c3cfda15e24f2b8c22de28426872f162db4e8d444"
+AMD64_DEBIAN9_SHA256 = "90ff32c8226b57b879bf6b8c3cfda15e24f2b8c22de28426872f162db4e8d444"
 
-DEBIAN_STRETCH_BACKPORTS_SHA256 = "d974ef641167c420730833c1ffc7256f44eed36af787f5efdbbbc0d4c5b47a2e"
+AMD64_DEBIAN9_BACKPORTS_SHA256 = "c6aa4e13236c86b3ab0e1714ff10f1d31e0533d7fb0d05cf64e12a02accd981c"
 
-DEBIAN_STRETCH_UPDATES_SHA256 = "b702e0888f32074ee212accbf56c732beacf0d9f570ca082a9c859b23a2596e9"
+AMD64_DEBIAN9_UPDATES_SHA256 = "b702e0888f32074ee212accbf56c732beacf0d9f570ca082a9c859b23a2596e9"
 
-DEBIAN_STRETCH_SECURITY_SHA256 = "681999b9870562d0bc380882e22ae7ac94e2717fd8e274cb025219ab48dd9bc4"
+AMD64_DEBIAN9_SECURITY_SHA256 = "0ea00acd24d163571d3dcf182a64e9b30af0020b28bd8e7af81066fde71ede55"
 
-DEBIAN_BUSTER_SHA256 = "369d45f6c138af98d8ea8a598564dcabc1f6991ac777fb2d351e846f195cdc13"
+AMD64_DEBIAN10_SHA256 = "a7f65cd4f022ad9c5cee5dace254d8d32d797887082437273223771ddbb8203f"
 
-DEBIAN_BUSTER_UPDATES_SHA256 = "80f0b86ca11476ea485625c3dff1505285f249f5603dd9458415707dacc5fb71"
+AMD64_DEBIAN10_UPDATES_SHA256 = "80f0b86ca11476ea485625c3dff1505285f249f5603dd9458415707dacc5fb71"
 
-DEBIAN_BUSTER_SECURITY_SHA256 = "65a7d953631a815794d64249070e9f8e163f2028ffdb8fccf2df11e7fc444089"
+AMD64_DEBIAN10_SECURITY_SHA256 = "4621f1101890984af6fe530d17c1e337b2b44fd0f0044d9321a1a3c86fbe170c"
 
-dpkg_src(
-    name = "debian9",
-    arch = "amd64",
-    distro = "stretch",
-    sha256 = DEBIAN_STRETCH_SHA256,
-    snapshot = DEBIAN_SNAPSHOT,
-    url = "https://snapshot.debian.org/archive",
-)
+ARCHITECTURES = ["amd64"]
 
-dpkg_src(
-    name = "debian9_backports",
-    arch = "amd64",
-    distro = "stretch-backports",
-    sha256 = DEBIAN_STRETCH_BACKPORTS_SHA256,
-    snapshot = DEBIAN_SNAPSHOT,
-    url = "https://snapshot.debian.org/archive",
-)
+VERSIONS = [
+    ("debian9", "stretch"),
+    ("debian10", "buster"),
+]
 
-dpkg_src(
-    name = "debian9_updates",
-    arch = "amd64",
-    distro = "stretch-updates",
-    sha256 = DEBIAN_STRETCH_UPDATES_SHA256,
-    snapshot = DEBIAN_SNAPSHOT,
-    url = "https://snapshot.debian.org/archive",
-)
+# TODO(https://github.com/GoogleContainerTools/distroless/issues/585): This should be pulled in from
+# a .bzl file produced by updateWorkspaceSnapshots.sh
+SHA256s = {
+    "amd64": {
+        "debian9": {
+            "main": AMD64_DEBIAN9_SHA256,
+            "backports": AMD64_DEBIAN9_BACKPORTS_SHA256,
+            "updates": AMD64_DEBIAN9_UPDATES_SHA256,
+            "security": AMD64_DEBIAN9_SECURITY_SHA256,
+        },
+        "debian10": {
+            "main": AMD64_DEBIAN10_SHA256,
+            "updates": AMD64_DEBIAN10_UPDATES_SHA256,
+            "security": AMD64_DEBIAN10_SECURITY_SHA256,
+        },
+    },
+}
 
-dpkg_src(
-    name = "debian9_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/stretch/updates/main/binary-amd64/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT),
-    sha256 = DEBIAN_STRETCH_SECURITY_SHA256,
-)
+[
+    dpkg_src(
+        name = arch + "_" + name,
+        arch = arch,
+        distro = distro,
+        sha256 = SHA256s[arch][name]["main"],
+        snapshot = DEBIAN_SNAPSHOT,
+        url = "https://snapshot.debian.org/archive",
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+]
+
+[
+    dpkg_src(
+        name = arch + "_" + name + "_updates",
+        arch = arch,
+        distro = distro + "-updates",
+        sha256 = SHA256s[arch][name]["updates"],
+        snapshot = DEBIAN_SNAPSHOT,
+        url = "https://snapshot.debian.org/archive",
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+]
+
+[
+    dpkg_src(
+        name = arch + "_" + name + "_security",
+        package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
+        packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/{}/updates/main/binary-{}/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT, distro, arch),
+        sha256 = SHA256s[arch][name]["security"],
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+]
+
+[
+    dpkg_src(
+        name = arch + "_" + name + "_backports",
+        arch = arch,
+        distro = distro + "-backports",
+        sha256 = SHA256s[arch][name]["backports"],
+        snapshot = DEBIAN_SNAPSHOT,
+        url = "https://snapshot.debian.org/archive",
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+    if "backports" in SHA256s[arch][name]
+]
 
 dpkg_list(
     name = "package_bundle_amd64_debian9",
@@ -172,10 +214,10 @@ dpkg_list(
         "liblzma5",
     ],
     sources = [
-        "@debian9_security//file:Packages.json",
-        "@debian9_updates//file:Packages.json",
-        "@debian9_backports//file:Packages.json",
-        "@debian9//file:Packages.json",
+        "@amd64_debian9_security//file:Packages.json",
+        "@amd64_debian9_updates//file:Packages.json",
+        "@amd64_debian9_backports//file:Packages.json",
+        "@amd64_debian9//file:Packages.json",
     ],
 )
 
@@ -316,31 +358,6 @@ load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
 
 bazel_version(name = "bazel_version")
 
-dpkg_src(
-    name = "debian10",
-    arch = "amd64",
-    distro = "buster",
-    sha256 = DEBIAN_BUSTER_SHA256,
-    snapshot = DEBIAN_SNAPSHOT,
-    url = "https://snapshot.debian.org/archive",
-)
-
-dpkg_src(
-    name = "debian10_updates",
-    arch = "amd64",
-    distro = "buster-updates",
-    sha256 = DEBIAN_BUSTER_UPDATES_SHA256,
-    snapshot = DEBIAN_SNAPSHOT,
-    url = "https://snapshot.debian.org/archive",
-)
-
-dpkg_src(
-    name = "debian10_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/buster/updates/main/binary-amd64/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT),
-    sha256 = DEBIAN_BUSTER_SECURITY_SHA256,
-)
-
 dpkg_list(
     name = "package_bundle_amd64_debian10",
     packages = [
@@ -440,8 +457,8 @@ dpkg_list(
         "liblzma5",
     ],
     sources = [
-        "@debian10_security//file:Packages.json",
-        "@debian10_updates//file:Packages.json",
-        "@debian10//file:Packages.json",
+        "@amd64_debian10_security//file:Packages.json",
+        "@amd64_debian10_updates//file:Packages.json",
+        "@amd64_debian10//file:Packages.json",
     ],
 )
