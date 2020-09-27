@@ -2,8 +2,8 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@package_bundle//file:packages.bzl", "packages")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
+load("@package_bundle_amd64_debian9//file:packages.bzl", "packages")
+load("@package_bundle_amd64_debian10//file:packages.bzl", packages_debian10 = "packages")
 
 NONROOT = 65532
 

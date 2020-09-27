@@ -56,8 +56,8 @@ sed -i 's/DEBIAN_BUSTER_SECURITY_SHA256 = "[^"][^"]*"/DEBIAN_BUSTER_SECURITY_SHA
 
 bazel clean
 bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
-bazel build --host_force_python=PY2 @package_bundle//file:packages.bzl
-bazel build --host_force_python=PY2 @package_bundle_debian10//file:packages.bzl
+bazel build --host_force_python=PY2 @package_bundle_amd64_debian9//file:packages.bzl
+bazel build --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
 
 # Check if any of the version lock files are updated
 

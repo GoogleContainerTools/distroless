@@ -39,7 +39,7 @@ DEBIAN_BUSTER_UPDATES_SHA256 = "80f0b86ca11476ea485625c3dff1505285f249f5603dd945
 DEBIAN_BUSTER_SECURITY_SHA256 = "65a7d953631a815794d64249070e9f8e163f2028ffdb8fccf2df11e7fc444089"
 
 dpkg_src(
-    name = "debian_stretch",
+    name = "debian9",
     arch = "amd64",
     distro = "stretch",
     sha256 = DEBIAN_STRETCH_SHA256,
@@ -48,7 +48,7 @@ dpkg_src(
 )
 
 dpkg_src(
-    name = "debian_stretch_backports",
+    name = "debian9_backports",
     arch = "amd64",
     distro = "stretch-backports",
     sha256 = DEBIAN_STRETCH_BACKPORTS_SHA256,
@@ -57,7 +57,7 @@ dpkg_src(
 )
 
 dpkg_src(
-    name = "debian_stretch_updates",
+    name = "debian9_updates",
     arch = "amd64",
     distro = "stretch-updates",
     sha256 = DEBIAN_STRETCH_UPDATES_SHA256,
@@ -66,14 +66,14 @@ dpkg_src(
 )
 
 dpkg_src(
-    name = "debian_stretch_security",
+    name = "debian9_security",
     package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
     packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/stretch/updates/main/binary-amd64/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT),
     sha256 = DEBIAN_STRETCH_SECURITY_SHA256,
 )
 
 dpkg_list(
-    name = "package_bundle",
+    name = "package_bundle_amd64_debian9",
     packages = [
         "libc6",
         "base-files",
@@ -172,10 +172,10 @@ dpkg_list(
         "liblzma5",
     ],
     sources = [
-        "@debian_stretch_security//file:Packages.json",
-        "@debian_stretch_updates//file:Packages.json",
-        "@debian_stretch_backports//file:Packages.json",
-        "@debian_stretch//file:Packages.json",
+        "@debian9_security//file:Packages.json",
+        "@debian9_updates//file:Packages.json",
+        "@debian9_backports//file:Packages.json",
+        "@debian9//file:Packages.json",
     ],
 )
 
@@ -342,7 +342,7 @@ dpkg_src(
 )
 
 dpkg_list(
-    name = "package_bundle_debian10",
+    name = "package_bundle_amd64_debian10",
     packages = [
         "libc6",
         "base-files",

@@ -1,5 +1,5 @@
-load("@package_bundle//file:packages.bzl", "packages")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
+load("@package_bundle_amd64_debian9//file:packages.bzl", "packages")
+load("@package_bundle_amd64_debian10//file:packages.bzl", packages_debian10 = "packages")
 
 DISTRO_PACKAGES = {
     "_debian9": packages,
@@ -9,6 +9,6 @@ DISTRO_PACKAGES = {
 DISTRO_SUFFIXES = ("_debian9", "_debian10")
 
 DISTRO_REPOSITORY = {
-    "_debian9": "@debian_stretch",
+    "_debian9": "@debian9",
     "_debian10": "@debian10",
 }
