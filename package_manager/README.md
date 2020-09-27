@@ -55,16 +55,16 @@ dpkg_list(
 Finally, in a `BUILD` file, you can access the `.deb` files for rules that might require them.  We reference the package map from the previous `dpkg_list` rule and access the packages.  
 
 ```python
-load("@package_bundle_amd64_debian9//file:packages.bzl", "packages")
+load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages")
 
 container_image(
     name = "python27",
     base = "//base:base",
     debs = [
-        packages["zlib1g"],
-        packages["python2.7-minimal"],
-        packages["libpython2.7-minimal"],
-        packages["libpython2.7-stdlib"],
+        packages_amd64_debian9["zlib1g"],
+        packages_amd64_debian9["python2.7-minimal"],
+        packages_amd64_debian9["libpython2.7-minimal"],
+        packages_amd64_debian9["libpython2.7-stdlib"],
     ],
     entrypoint = [
         "/usr/bin/python2.7",
