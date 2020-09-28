@@ -1,5 +1,5 @@
 {
-    "base-files": "10.3+deb10u5",
+    "base-files": "10.3+deb10u6",
     "ca-certificates": "20200601~deb10u1",
     "curl": "7.64.0-4+deb10u1",
     "dash": "0.5.10.2-5",
