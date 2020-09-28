@@ -22,14 +22,3 @@ DISTRO_PACKAGES = {
     "",
     ":debug",
 ]] for distro_suffix in ("_debian9", "_debian10")]
-
-# Provide aliases so the default images use debian9
-alias(
-    name = "cc",
-    actual = ":cc_debian9",
-)
-
-alias(
-    name = "debug",
-    actual = ":debug_debian9",
-)

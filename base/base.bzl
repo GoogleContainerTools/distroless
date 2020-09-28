@@ -48,25 +48,9 @@ def distro_components(distro_suffix):
                 workdir = workdir,
             )
 
-    for (user, uid, workdir) in [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]:
-        native.alias(
-            name = "static_" + user + distro_suffix,
-            actual = ":static_" + user + "_amd64" + distro_suffix,
-        )
-
-    native.alias(
-        name = "cacerts" + distro_suffix,
-        actual = ":cacerts_amd64" + distro_suffix,
-    )
-
-    native.alias(
-        name = "static" + distro_suffix,
-        actual = ":static_root_amd64" + distro_suffix,
-    )
-
     container_image(
         name = "base" + distro_suffix,
-        base = ":static" + distro_suffix,
+        base = ":static_root_amd64" + distro_suffix,
         debs = [
             DISTRO_PACKAGES["amd64"][distro_suffix]["libc6"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libssl1.1"],
@@ -138,5 +122,5 @@ def distro_components(distro_suffix):
     container_test(
         name = "static_release" + distro_suffix + "_test",
         configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
-        image = ":static" + distro_suffix,
+        image = ":static_root_amd64" + distro_suffix,
     )

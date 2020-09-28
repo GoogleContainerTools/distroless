@@ -39,8 +39,8 @@ DISTRO_VERSIONS = {
         "LANG": "C.UTF-8",
     },
     tars = [
-        "//cacerts:cacerts_java" + distro_suffix,
-        "//locale:locale" + distro_suffix,
+        "//cacerts:cacerts_java_amd64" + distro_suffix,
+        "//locale:locale_amd64" + distro_suffix,
     ],
 ) for mode in [
     "",
@@ -110,27 +110,6 @@ DISTRO_VERSIONS = {
         "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
     ),
 ]]
-
-# Provide aliases so the default images use debian9
-alias(
-    name = "java8",
-    actual = ":java8_debian9",
-)
-
-alias(
-    name = "java8_debug",
-    actual = ":java8_debug_debian9",
-)
-
-alias(
-    name = "java11",
-    actual = ":java11_debian9",
-)
-
-alias(
-    name = "java11_debug",
-    actual = ":java11_debug_debian9",
-)
 
 [[container_test(
     name = "java_base" + mode + distro_suffix + "_test",
