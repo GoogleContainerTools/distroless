@@ -35,7 +35,7 @@ steps:
     bazel run --host_force_python=PY2 //cc:cc_debian10
     bazel run --host_force_python=PY2 //cc:debug_debian9
     bazel run --host_force_python=PY2 //cc:debug_debian10
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
@@ -99,7 +99,7 @@ steps:
     bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian10
     bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian9
     bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian10
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
@@ -147,7 +147,7 @@ steps:
     bazel run //nodejs:nodejs14_debug_debian9
     bazel run //nodejs:nodejs14_debian10
     bazel run //nodejs:nodejs14_debug_debian10
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
@@ -198,7 +198,7 @@ steps:
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debug_debian9
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
