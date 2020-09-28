@@ -1,12 +1,12 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTRO_SUFFIXES")
 load(":cacerts.bzl", "cacerts")
 load(":java.bzl", "cacerts_java")
 
-[cacerts(
+[alias(
     name = "cacerts" + distro_suffix,
-    deb = DISTRO_PACKAGES[distro_suffix]["ca-certificates"],
+    actual = "//base:cacerts" + distro_suffix,
 ) for distro_suffix in DISTRO_SUFFIXES]
 
 [cacerts_java(
