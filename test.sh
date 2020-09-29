@@ -18,7 +18,6 @@ set -o errexit
 set -o xtrace
 
 # Linting
-./buildifier.sh
 find . -name "*.py" | xargs pylint --disable=R,C
 
 # Bazel build and test
