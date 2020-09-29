@@ -5,7 +5,7 @@ language: go
 install:
   - export PATH=$PATH:$HOME/bin && mkdir -p $HOME/bin
   # install bazelisk as bazel to install the appropriate bazel version
-  - wget https://github.com/bazelbuild/bazelisk/releases/download/v1.5.0/bazelisk-linux-amd64 && chmod +x bazelisk-linux-amd64 && mv bazelisk-linux-amd64 $HOME/bin/bazel
+  - wget https://github.com/bazelbuild/bazelisk/releases/download/v1.6.1/bazelisk-linux-amd64 && chmod +x bazelisk-linux-amd64 && mv bazelisk-linux-amd64 $HOME/bin/bazel
 
 script:
   - |

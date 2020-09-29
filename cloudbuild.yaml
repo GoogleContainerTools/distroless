@@ -8,7 +8,7 @@
 timeout: 1800s
 steps:
 
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -88,7 +88,7 @@ steps:
     docker tag bazel/cc:debug_debian9  gcr.io/$PROJECT_ID/cc-debian9:debug
     docker tag bazel/cc:debug_debian10 gcr.io/$PROJECT_ID/cc-debian10:debug
 
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -137,7 +137,7 @@ steps:
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
     docker tag bazel/experimental/python2.7:debug_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
 
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -189,7 +189,7 @@ steps:
     docker tag bazel/nodejs:nodejs10_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:10-debug
     docker tag bazel/nodejs:nodejs12_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:12-debug
     docker tag bazel/nodejs:nodejs14_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:14-debug
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
