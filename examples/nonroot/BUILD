@@ -34,7 +34,7 @@ pkg_tar(
 # Include it in our image as a tar.
 container_image(
     name = "passwd_image",
-    base = "//base:base_debian10",
+    base = "//base:base_root_amd64_debian10",
     tars = [":passwd_tar"],
     user = "nonroot",
     visibility = ["//visibility:private"],

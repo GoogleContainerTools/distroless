@@ -48,55 +48,43 @@ def distro_components(distro_suffix):
                 workdir = workdir,
             )
 
-    container_image(
-        name = "base" + distro_suffix,
-        base = ":static_root_amd64" + distro_suffix,
-        debs = [
-            DISTRO_PACKAGES["amd64"][distro_suffix]["libc6"],
-            DISTRO_PACKAGES["amd64"][distro_suffix]["libssl1.1"],
-            DISTRO_PACKAGES["amd64"][distro_suffix]["openssl"],
-        ],
-    )
+            container_image(
+                name = "base_" + user + "_" + arch + distro_suffix,
+                architecture = arch,
+                base = ":static_" + user + "_" + arch + distro_suffix,
+                debs = [
+                    DISTRO_PACKAGES[arch][distro_suffix]["libc6"],
+                    DISTRO_PACKAGES[arch][distro_suffix]["libssl1.1"],
+                    DISTRO_PACKAGES[arch][distro_suffix]["openssl"],
+                ],
+            )
 
-    # A debug image with busybox available.
-    container_image(
-        name = "debug" + distro_suffix,
-        base = ":base" + distro_suffix,
-        directory = "/",
-        entrypoint = ["/busybox/sh"],
-        env = {"PATH": "$$PATH:/busybox"},
-        tars = ["//experimental/busybox:busybox.tar"],
-    )
-
-    container_image(
-        name = "base_nonroot" + distro_suffix,
-        base = ":base" + distro_suffix,
-        user = "%d" % NONROOT,
-        workdir = "/home/nonroot",
-    )
-
-    container_image(
-        name = "debug_nonroot" + distro_suffix,
-        base = ":debug" + distro_suffix,
-        user = "%d" % NONROOT,
-        workdir = "/home/nonroot",
-    )
+            # A debug image with busybox available.
+            container_image(
+                name = "debug_" + user + "_" + arch + distro_suffix,
+                architecture = arch,
+                base = ":base_" + user + "_" + arch + distro_suffix,
+                directory = "/",
+                entrypoint = ["/busybox/sh"],
+                env = {"PATH": "$$PATH:/busybox"},
+                tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
+            )
 
     container_test(
         name = "debug" + distro_suffix + "_test",
         configs = ["testdata/debug.yaml"],
-        image = ":debug" + distro_suffix,
+        image = ":debug_root_amd64" + distro_suffix,
     )
 
     container_test(
         name = "base" + distro_suffix + "_test",
         configs = ["testdata/base.yaml"],
-        image = ":base" + distro_suffix,
+        image = ":base_root_amd64" + distro_suffix,
     )
 
     container_image(
         name = "check_certs_image" + distro_suffix,
-        base = "//base:base" + distro_suffix,
+        base = "//base:base_root_amd64" + distro_suffix,
         files = [":check_certs"],
         visibility = ["//visibility:private"],
     )
@@ -110,13 +98,13 @@ def distro_components(distro_suffix):
     container_test(
         name = "base_release" + distro_suffix + "_test",
         configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
-        image = ":base" + distro_suffix,
+        image = ":base_root_amd64" + distro_suffix,
     )
 
     container_test(
         name = "debug_release" + distro_suffix + "_test",
         configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
-        image = ":debug" + distro_suffix,
+        image = ":debug_root_amd64" + distro_suffix,
     )
 
     container_test(
