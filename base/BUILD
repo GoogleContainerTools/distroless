@@ -6,7 +6,6 @@ load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 NOBODY = 65534
 
@@ -99,15 +98,6 @@ pkg_tar(
     srcs = [":group"],
     mode = "0644",
     package_dir = "etc",
-)
-
-go_binary(
-    name = "check_certs",
-    srcs = ["testdata/check_certs.go"],
-    goarch = "amd64",
-    # Test image is linux based
-    goos = "linux",
-    pure = "on",
 )
 
 [distro_components(suffix) for suffix in DISTRO_SUFFIXES]

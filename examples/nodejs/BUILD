@@ -29,4 +29,8 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
     name = "hello" + distro_suffix + "_test",
     configs = ["testdata/hello.yaml"],
     image = ":hello" + distro_suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for distro_suffix in DISTRO_SUFFIXES]

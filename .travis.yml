@@ -1,18 +1,30 @@
 dist: bionic
 # Not technically required but suppresses 'Ruby' in Job status message.
+# This also lets us leverage GOARCH below.
 language: go
+jobs:
+  include:
+   - arch: amd64
+     env: CPU=k8
+   - arch: arm64
+     env: CPU=aarch64
 
 install:
   - export PATH=$PATH:$HOME/bin && mkdir -p $HOME/bin
+  - eval $(go env)
   # install bazelisk as bazel to install the appropriate bazel version
-  - wget https://github.com/bazelbuild/bazelisk/releases/download/v1.6.1/bazelisk-linux-amd64 && chmod +x bazelisk-linux-amd64 && mv bazelisk-linux-amd64 $HOME/bin/bazel
+  - wget https://github.com/bazelbuild/bazelisk/releases/download/v1.6.1/bazelisk-linux-${GOARCH} && chmod +x bazelisk-linux-${GOARCH} && mv bazelisk-linux-${GOARCH} $HOME/bin/bazel
 
 script:
-  - |
-    bazel clean --curses=no
-    bazel build --curses=no //package_manager:dpkg_parser.par
-    bazel build --curses=no //...
-    bazel test --curses=no --test_output=errors --test_timeout=900 //...
+  - bazel clean --curses=no
+  - bazel build --cpu=${CPU} --curses=no //package_manager:dpkg_parser.par
+  - bazel build --cpu=${CPU} --curses=no //...
+  # Build all targets tagged with our architecture:
+  - bazel build --cpu=${CPU} --curses=no $(bazel query 'attr("tags", "'${GOARCH}'", "//...")')
+  # Run all tests not tagged as "manual":
+  - bazel test  --cpu=${CPU} --curses=no --test_output=errors --test_timeout=900 //...
+  # Run all tests tagged with our architecture:
+  - bazel test  --cpu=${CPU} --curses=no --test_output=errors --test_timeout=900 $(bazel query 'attr("tags", "'${GOARCH}'", "//...")')
 
 notifications:
   email: false

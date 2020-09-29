@@ -62,5 +62,9 @@ go_binary(
     name = "check_user" + distro_suffix + "_test",
     configs = ["testdata/user.yaml"],
     image = ":check_user_image" + distro_suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
     visibility = ["//visibility:private"],
 ) for distro_suffix in DISTRO_SUFFIXES]
