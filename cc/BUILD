@@ -10,15 +10,19 @@ DISTRO_PACKAGES = {
 }
 
 # An image for C/C++ programs
-[[container_image(
-    name = ("cc" if (not mode) else mode[1:]) + distro_suffix,
-    base = "//base" + (mode if mode else ":base") + distro_suffix,
-    debs = [
-        DISTRO_PACKAGES[distro_suffix]["libgcc1"],
-        DISTRO_PACKAGES[distro_suffix]["libgomp1"],
-        DISTRO_PACKAGES[distro_suffix]["libstdc++6"],
-    ],
-) for mode in [
-    "",
-    ":debug",
-]] for distro_suffix in ("_debian9", "_debian10")]
+[
+    container_image(
+        name = ("cc" if (not mode) else mode[1:]) + distro_suffix,
+        base = "//base" + (mode if mode else ":base") + "_root_amd64" + distro_suffix,
+        debs = [
+            DISTRO_PACKAGES[distro_suffix]["libgcc1"],
+            DISTRO_PACKAGES[distro_suffix]["libgomp1"],
+            DISTRO_PACKAGES[distro_suffix]["libstdc++6"],
+        ],
+    )
+    for mode in [
+        "",
+        ":debug",
+    ]
+    for distro_suffix in ("_debian9", "_debian10")
+]
