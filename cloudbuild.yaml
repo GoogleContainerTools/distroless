@@ -44,10 +44,23 @@ steps:
     bazel run --host_force_python=PY2 //base:debug_nonroot_arm64_debian9
     bazel run --host_force_python=PY2 //base:debug_nonroot_arm64_debian10
 
-    bazel run --host_force_python=PY2 //cc:cc_debian9
-    bazel run --host_force_python=PY2 //cc:cc_debian10
-    bazel run --host_force_python=PY2 //cc:debug_debian9
-    bazel run --host_force_python=PY2 //cc:debug_debian10
+    bazel run --host_force_python=PY2 //cc:cc_root_amd64_debian9
+    bazel run --host_force_python=PY2 //cc:cc_root_amd64_debian10
+    bazel run --host_force_python=PY2 //cc:cc_nonroot_amd64_debian9
+    bazel run --host_force_python=PY2 //cc:cc_nonroot_amd64_debian10
+    bazel run --host_force_python=PY2 //cc:debug_root_amd64_debian9
+    bazel run --host_force_python=PY2 //cc:debug_root_amd64_debian10
+    bazel run --host_force_python=PY2 //cc:debug_nonroot_amd64_debian9
+    bazel run --host_force_python=PY2 //cc:debug_nonroot_amd64_debian10
+    bazel run --host_force_python=PY2 //cc:cc_root_arm64_debian9
+    bazel run --host_force_python=PY2 //cc:cc_root_arm64_debian10
+    bazel run --host_force_python=PY2 //cc:cc_nonroot_arm64_debian9
+    bazel run --host_force_python=PY2 //cc:cc_nonroot_arm64_debian10
+    bazel run --host_force_python=PY2 //cc:debug_root_arm64_debian9
+    bazel run --host_force_python=PY2 //cc:debug_root_arm64_debian10
+    bazel run --host_force_python=PY2 //cc:debug_nonroot_arm64_debian9
+    bazel run --host_force_python=PY2 //cc:debug_nonroot_arm64_debian10
+
 - name: docker
   entrypoint: sh
   args:
@@ -91,15 +104,18 @@ steps:
     docker tag bazel/base:debug_root_arm64_debian9       gcr.io/$PROJECT_ID/base:debug-arm64
     docker tag bazel/base:debug_nonroot_arm64_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-arm64
 
-    docker tag bazel/cc:cc_debian9     gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}
-    docker tag bazel/cc:cc_debian9     gcr.io/$PROJECT_ID/cc:latest
-    docker tag bazel/cc:cc_debian9     gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}
-    docker tag bazel/cc:cc_debian9     gcr.io/$PROJECT_ID/cc-debian9:latest
-    docker tag bazel/cc:cc_debian10    gcr.io/$PROJECT_ID/cc-debian10:${COMMIT_SHA}
-    docker tag bazel/cc:cc_debian10    gcr.io/$PROJECT_ID/cc-debian10:latest
-    docker tag bazel/cc:debug_debian9  gcr.io/$PROJECT_ID/cc:debug
-    docker tag bazel/cc:debug_debian9  gcr.io/$PROJECT_ID/cc-debian9:debug
-    docker tag bazel/cc:debug_debian10 gcr.io/$PROJECT_ID/cc-debian10:debug
+    docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}
+    docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc:latest-amd64
+    docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}
+    docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc-debian9:latest
+    docker tag bazel/cc:cc_root_amd64_debian10    gcr.io/$PROJECT_ID/cc-debian10:${COMMIT_SHA}
+    docker tag bazel/cc:cc_root_amd64_debian10    gcr.io/$PROJECT_ID/cc-debian10:latest
+    docker tag bazel/cc:debug_root_amd64_debian9  gcr.io/$PROJECT_ID/cc:debug-amd64
+    docker tag bazel/cc:debug_root_amd64_debian9  gcr.io/$PROJECT_ID/cc-debian9:debug
+    docker tag bazel/cc:debug_root_amd64_debian10 gcr.io/$PROJECT_ID/cc-debian10:debug
+
+    docker tag bazel/cc:cc_root_arm64_debian9     gcr.io/$PROJECT_ID/cc:latest-arm64
+    docker tag bazel/cc:debug_root_arm64_debian9  gcr.io/$PROJECT_ID/cc:debug-arm64
 
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
@@ -288,8 +304,10 @@ steps:
     docker push 'gcr.io/$PROJECT_ID/base-debian10:debug'
     docker push 'gcr.io/$PROJECT_ID/base-debian10:debug-nonroot'
     docker push 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}'
-    docker push 'gcr.io/$PROJECT_ID/cc:latest'
-    docker push 'gcr.io/$PROJECT_ID/cc:debug'
+    docker push 'gcr.io/$PROJECT_ID/cc:latest-amd64'
+    docker push 'gcr.io/$PROJECT_ID/cc:debug-amd64'
+    docker push 'gcr.io/$PROJECT_ID/cc:latest-arm64'
+    docker push 'gcr.io/$PROJECT_ID/cc:debug-arm64'
     docker push 'gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}'
     docker push 'gcr.io/$PROJECT_ID/cc-debian9:latest'
     docker push 'gcr.io/$PROJECT_ID/cc-debian9:debug'
@@ -412,3 +430,13 @@ steps:
        gcr.io/$PROJECT_ID/base:debug-amd64 \
        gcr.io/$PROJECT_ID/base:debug-arm64
     docker manifest push gcr.io/$PROJECT_ID/base:debug
+
+    docker manifest create gcr.io/$PROJECT_ID/cc:latest \
+       gcr.io/$PROJECT_ID/cc:latest-amd64 \
+       gcr.io/$PROJECT_ID/cc:latest-arm64
+    docker manifest push gcr.io/$PROJECT_ID/cc:latest
+
+    docker manifest create gcr.io/$PROJECT_ID/cc:debug \
+       gcr.io/$PROJECT_ID/cc:debug-amd64 \
+       gcr.io/$PROJECT_ID/cc:debug-arm64
+    docker manifest push gcr.io/$PROJECT_ID/cc:debug

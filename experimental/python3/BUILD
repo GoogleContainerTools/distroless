@@ -3,8 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-
-NONROOT = 65532
+load("//base:base.bzl", "NONROOT")
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
@@ -36,7 +35,7 @@ DISTRO_VERSION = {
     container_image(
         name = ("python3" if (not mode) else mode[1:]) + distro_suffix,
         # Based on //cc so that C extensions work properly.
-        base = "//cc" + (mode if mode else ":cc") + distro_suffix,
+        base = "//cc" + (mode if mode else ":cc") + "_root_amd64" + distro_suffix,
         debs = [
             DISTRO_PACKAGES["amd64"][distro_suffix]["dash"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libbz2-1.0"],
@@ -63,6 +62,7 @@ DISTRO_VERSION = {
             "//experimental/python2.7:ld_so_cache.tar",
         ],
     ),
+    # TODO(mattmoor): Base this on the //cc:nonroot varietals instead
     container_image(
         name = ("python3" if (not mode) else mode[1:]) + "_nonroot" + distro_suffix,
         base = ("python3" if (not mode) else mode[1:]) + distro_suffix,

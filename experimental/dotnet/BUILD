@@ -21,10 +21,10 @@ DISTRO_DEBS = {
     ],
 }
 
-[[
+[
     container_image(
         name = "dotnet" + dotnet_variant + ("" if (not mode) else mode) + distro_suffix,
-        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + distro_suffix,
+        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_root_amd64" + distro_suffix,
         debs = [
             DISTRO_PACKAGES["amd64"][distro_suffix]["libgssapi-krb5-2"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["liblttng-ust0"],
@@ -77,4 +77,5 @@ DISTRO_DEBS = {
         "_debug",
     ]
     for distro_suffix in DISTRO_SUFFIXES
-] for dotnet_variant in DOTNET_VARIANTS]
+    for dotnet_variant in DOTNET_VARIANTS
+]

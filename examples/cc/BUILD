@@ -8,7 +8,7 @@ load("//base:distro.bzl", "DISTRO_SUFFIXES")
 
 [container_image(
     name = "hello" + distro_suffix,
-    base = "//cc:cc" + distro_suffix,
+    base = "//cc:cc_root_amd64" + distro_suffix,
     entrypoint = ["./hello"],
     files = [":bin/hello"],
 ) for distro_suffix in DISTRO_SUFFIXES]
