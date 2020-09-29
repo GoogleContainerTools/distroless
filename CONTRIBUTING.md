@@ -13,7 +13,7 @@ Follow either of the two links above to access the appropriate CLA and instructi
 
 ## How to Build and Test
 
-Minimally,
+Look into `./test.sh` to understand how. Minimally,
 
 1. Build `dpkg_parser.par` first, if not done so: `bazel build //package_manager:dpkg_parser.par` (You may need to provide `--host_force_python=PY2` if you don't have a working version of Python 3.)
 
