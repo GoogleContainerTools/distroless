@@ -13,7 +13,7 @@ Follow either of the two links above to access the appropriate CLA and instructi
 
 ## How to Build and Test
 
-Look into `./test.sh` to understand how. Minimally,
+Minimally,
 
 1. Build `dpkg_parser.par` first, if not done so: `bazel build //package_manager:dpkg_parser.par` (You may need to provide `--host_force_python=PY2` if you don't have a working version of Python 3.)
 
@@ -34,11 +34,13 @@ GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@3.2.0
 buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
 ```
 
-For styling Python files, install and run `pylint` with:
+For styling Python files, [install](https://www.pylint.org/#install) and run `pylint` with:
 
 ```shell
 # Install pylint
 sudo pip install pylint
+# Or
+sudo apt-get install pylint
 
 # Identify python style issues.
 find . -name "*.py" | xargs pylint --disable=R,C
