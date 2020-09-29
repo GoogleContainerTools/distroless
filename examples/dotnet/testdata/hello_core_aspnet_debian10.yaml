@@ -4,6 +4,5 @@ commandTests:
     command: ['dotnet', '/bin/Release/netcoreapp2.0/hello.dll']
     expectedError:
       - 'The following frameworks were found:'
-      - '3\.1\.4 at \[/opt/dotnet/shared/Microsoft.NETCore.App\]'
+      - '3\.1\.8 at \[/opt/dotnet/shared/Microsoft.NETCore.App\]'
     exitCode: 150
-
