@@ -86,14 +86,3 @@ DISTRO_DEBS = {
     ]
     for distro_suffix in DISTRO_SUFFIXES
 ] for dotnet_variant in DOTNET_VARIANTS]
-
-# Provide aliases so the default images use debian9
-alias(
-    name = "dotnet",
-    actual = ":dotnet_debian9",
-)
-
-alias(
-    name = "debug",
-    actual = ":dotnet_debug_debian9",
-)

@@ -117,14 +117,3 @@ sh_test(
         ":ld.so.cache.new",
     ],
 )
-
-# Provide aliases so the default images use debian9
-alias(
-    name = "python27",
-    actual = ":python27_debian9",
-)
-
-alias(
-    name = "debug",
-    actual = ":debug_debian9",
-)

@@ -105,24 +105,3 @@ DISTRO_VERSION = {
     "",
     "_nonroot",
 ]]
-
-# Provide aliases so the default images use debian9
-alias(
-    name = "python3",
-    actual = ":python3_debian9",
-)
-
-alias(
-    name = "debug",
-    actual = ":debug_debian9",
-)
-
-alias(
-    name = "python3_nonroot",
-    actual = ":python3_nonroot_debian9",
-)
-
-alias(
-    name = "debug_nonroot",
-    actual = ":debug_nonroot_debian9",
-)
