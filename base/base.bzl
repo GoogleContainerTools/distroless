@@ -3,52 +3,74 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load(":distro.bzl", "DISTRO_PACKAGES", "DISTRO_REPOSITORY")
 load("//cacerts:cacerts.bzl", "cacerts")
+load("//:checksums.bzl", "ARCHITECTURES")
 
 NONROOT = 65532
 
 # Replicate everything for debian9 and debian10
 def distro_components(distro_suffix):
-    cacerts(
+    for arch in ARCHITECTURES:
+        cacerts(
+            name = "cacerts_" + arch + distro_suffix,
+            deb = DISTRO_PACKAGES[arch][distro_suffix]["ca-certificates"],
+        )
+
+        for (user, uid, workdir) in [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]:
+            container_image(
+                name = "static_" + user + "_" + arch + distro_suffix,
+                debs = [
+                    DISTRO_PACKAGES[arch][distro_suffix]["base-files"],
+                    DISTRO_PACKAGES[arch][distro_suffix]["netbase"],
+                    DISTRO_PACKAGES[arch][distro_suffix]["tzdata"],
+                ],
+                architecture = arch,
+                env = {
+                    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                    # allows openssl to find the certificates by default
+                    # TODO: We should run update-ca-certifaces, but that requires "openssl rehash"
+                    # which would probably need to be run inside the container
+                    "SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt",
+                },
+                tars = [
+                    ":passwd",
+                    ":group_tar",
+
+                    # Create /tmp, too many things assume it exists.
+                    # tmp.tar has a /tmp with the correct permissions 01777
+                    # A tar is needed because at the moment there is no way to create a
+                    # directory with specific permissions.
+                    ":tmp.tar",
+                    ":nsswitch.tar",
+                    DISTRO_REPOSITORY[arch][distro_suffix] + "//file:os_release.tar",
+                    ":cacerts_" + arch + distro_suffix + ".tar",
+                ],
+                user = "%d" % uid,
+                workdir = workdir,
+            )
+
+    for (user, uid, workdir) in [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]:
+        native.alias(
+            name = "static_" + user + distro_suffix,
+            actual = ":static_" + user + "_amd64" + distro_suffix,
+        )
+
+    native.alias(
         name = "cacerts" + distro_suffix,
-        deb = DISTRO_PACKAGES[distro_suffix]["ca-certificates"],
+        actual = ":cacerts_amd64" + distro_suffix,
     )
 
-    container_image(
+    native.alias(
         name = "static" + distro_suffix,
-        debs = [
-            DISTRO_PACKAGES[distro_suffix]["base-files"],
-            DISTRO_PACKAGES[distro_suffix]["netbase"],
-            DISTRO_PACKAGES[distro_suffix]["tzdata"],
-        ],
-        env = {
-            "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-            # allows openssl to find the certificates by default
-            # TODO: We should run update-ca-certifaces, but that requires "openssl rehash"
-            # which would probably need to be run inside the container
-            "SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt",
-        },
-        tars = [
-            ":passwd",
-            ":group_tar",
-
-            # Create /tmp, too many things assume it exists.
-            # tmp.tar has a /tmp with the correct permissions 01777
-            # A tar is needed because at the moment there is no way to create a
-            # directory with specific permissions.
-            ":tmp.tar",
-            ":nsswitch.tar",
-            DISTRO_REPOSITORY[distro_suffix] + "//file:os_release.tar",
-            ":cacerts" + distro_suffix + ".tar",
-        ],
+        actual = ":static_root_amd64" + distro_suffix,
     )
 
     container_image(
         name = "base" + distro_suffix,
         base = ":static" + distro_suffix,
         debs = [
-            DISTRO_PACKAGES[distro_suffix]["libc6"],
-            DISTRO_PACKAGES[distro_suffix]["libssl1.1"],
-            DISTRO_PACKAGES[distro_suffix]["openssl"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libc6"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libssl1.1"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["openssl"],
         ],
     )
 
@@ -60,14 +82,6 @@ def distro_components(distro_suffix):
         entrypoint = ["/busybox/sh"],
         env = {"PATH": "$$PATH:/busybox"},
         tars = ["//experimental/busybox:busybox.tar"],
-    )
-
-    # Non-root base images
-    container_image(
-        name = "static_nonroot" + distro_suffix,
-        base = ":static" + distro_suffix,
-        user = "%d" % NONROOT,
-        workdir = "/home/nonroot",
     )
 
     container_image(

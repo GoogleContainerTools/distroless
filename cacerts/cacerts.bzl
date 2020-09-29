@@ -15,7 +15,6 @@ def _impl(ctx):
         },
         command = """
             set -o errexit
-            set -o xtrace
 
             $EXTRACT_DEB "$1" ./usr/share/ca-certificates ./usr/share/doc/ca-certificates/copyright
 

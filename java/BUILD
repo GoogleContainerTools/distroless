@@ -3,21 +3,21 @@ package(default_visibility = ["//visibility:public"])
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("@package_bundle//file:packages.bzl", "packages", "versions")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages", versions_debian10 = "versions")
+load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages", versions_amd64_debian9 = "versions")
+load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages", versions_amd64_debian10 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 
 DISTRO_SUFFIXES = ("_debian9", "_debian10")
 
 DISTRO_PACKAGES = {
-    "_debian9": packages,
-    "_debian10": packages_debian10,
+    "_debian9": packages_amd64_debian9,
+    "_debian10": packages_amd64_debian10,
 }
 
 DISTRO_VERSIONS = {
-    "_debian9": versions,
-    "_debian10": versions_debian10,
+    "_debian9": versions_amd64_debian9,
+    "_debian10": versions_amd64_debian10,
 }
 
 [[container_image(

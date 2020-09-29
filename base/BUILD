@@ -101,10 +101,6 @@ pkg_tar(
     package_dir = "etc",
 )
 
-load("@package_bundle//file:packages.bzl", "packages")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
-load("//cacerts:cacerts.bzl", "cacerts")
-
 go_binary(
     name = "check_certs",
     srcs = ["testdata/check_certs.go"],

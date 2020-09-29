@@ -4,19 +4,20 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
+load("//base:distro.bzl", "DISTRO_SUFFIXES")
 
-java_image(
-    name = "hello",
+[java_image(
+    name = "hello" + distro_suffix,
     srcs = ["HelloJava.java"],
-    base = "//java:java11",
+    base = "//java:java11" + distro_suffix,
     main_class = "examples.HelloJava",
-)
+) for distro_suffix in DISTRO_SUFFIXES]
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
-container_test(
-    name = "hello_test",
+[container_test(
+    name = "hello" + distro_suffix + "_test",
     size = "small",
-    configs = ["testdata/hello.yaml"],
-    image = ":hello",
-)
+    configs = ["testdata/hello" + distro_suffix + ".yaml"],
+    image = ":hello" + distro_suffix,
+) for distro_suffix in DISTRO_SUFFIXES]
