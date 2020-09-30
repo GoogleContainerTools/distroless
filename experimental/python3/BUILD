@@ -1,16 +1,10 @@
 package(default_visibility = ["//visibility:public"])
 
+load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages")
-load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages")
 
 NONROOT = 65532
-
-DISTRO_PACKAGES = {
-    "_debian9": packages_amd64_debian9,
-    "_debian10": packages_amd64_debian10,
-}
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
@@ -44,18 +38,18 @@ DISTRO_VERSION = {
         # Based on //cc so that C extensions work properly.
         base = "//cc" + (mode if mode else ":cc") + distro_suffix,
         debs = [
-            DISTRO_PACKAGES[distro_suffix]["dash"],
-            DISTRO_PACKAGES[distro_suffix]["libbz2-1.0"],
-            DISTRO_PACKAGES[distro_suffix]["libc-bin"],
-            DISTRO_PACKAGES[distro_suffix]["libdb5.3"],
-            DISTRO_PACKAGES[distro_suffix]["libexpat1"],
-            DISTRO_PACKAGES[distro_suffix]["liblzma5"],
-            DISTRO_PACKAGES[distro_suffix]["libmpdec2"],
-            DISTRO_PACKAGES[distro_suffix]["libreadline7"],
-            DISTRO_PACKAGES[distro_suffix]["libsqlite3-0"],
-            DISTRO_PACKAGES[distro_suffix]["libssl1.1"],
-            DISTRO_PACKAGES[distro_suffix]["zlib1g"],
-        ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in DISTRO_DEBS[distro_suffix]],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["dash"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libbz2-1.0"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libc-bin"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libdb5.3"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libexpat1"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["liblzma5"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libmpdec2"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libreadline7"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libsqlite3-0"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libssl1.1"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["zlib1g"],
+        ] + [DISTRO_PACKAGES["amd64"][distro_suffix][deb] for deb in DISTRO_DEBS[distro_suffix]],
         entrypoint = [
             "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
         ],
@@ -78,14 +72,14 @@ DISTRO_VERSION = {
 ] for mode in [
     "",
     ":debug",
-]] for distro_suffix in ("_debian9", "_debian10")]
+]] for distro_suffix in DISTRO_SUFFIXES]
 
 [container_test(
     name = "python3" + distro_suffix + "_test",
     size = "medium",
     configs = ["testdata/python3.yaml"],
     image = ":python3" + distro_suffix,
-) for distro_suffix in ("_debian9", "_debian10")]
+) for distro_suffix in DISTRO_SUFFIXES]
 
 # tests for version-specific things
 [[

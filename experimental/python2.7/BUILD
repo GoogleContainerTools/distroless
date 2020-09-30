@@ -1,14 +1,8 @@
 package(default_visibility = ["//visibility:public"])
 
+load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages")
-load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages")
-
-DISTRO_PACKAGES = {
-    "_debian9": packages_amd64_debian9,
-    "_debian10": packages_amd64_debian10,
-}
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
@@ -27,22 +21,22 @@ DISTRO_DEBS = {
     # Based on //cc so that C extensions work properly.
     base = "//cc" + (mode if mode else ":cc") + distro_suffix,
     debs = [
-        DISTRO_PACKAGES[distro_suffix]["dash"],
-        DISTRO_PACKAGES[distro_suffix]["libbz2-1.0"],
-        DISTRO_PACKAGES[distro_suffix]["libc-bin"],
-        DISTRO_PACKAGES[distro_suffix]["libexpat1"],
-        DISTRO_PACKAGES[distro_suffix]["libdb5.3"],
-        DISTRO_PACKAGES[distro_suffix]["libffi6"],
-        DISTRO_PACKAGES[distro_suffix]["libreadline7"],
-        DISTRO_PACKAGES[distro_suffix]["libsqlite3-0"],
-        DISTRO_PACKAGES[distro_suffix]["libssl1.1"],
-        DISTRO_PACKAGES[distro_suffix]["mime-support"],
-        DISTRO_PACKAGES[distro_suffix]["readline-common"],
-        DISTRO_PACKAGES[distro_suffix]["zlib1g"],
-        DISTRO_PACKAGES[distro_suffix]["python2.7-minimal"],
-        DISTRO_PACKAGES[distro_suffix]["libpython2.7-minimal"],
-        DISTRO_PACKAGES[distro_suffix]["libpython2.7-stdlib"],
-    ] + [DISTRO_PACKAGES[distro_suffix][deb] for deb in DISTRO_DEBS[distro_suffix]],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["dash"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libbz2-1.0"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libc-bin"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libexpat1"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libdb5.3"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libffi6"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libreadline7"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libsqlite3-0"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libssl1.1"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["mime-support"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["readline-common"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["zlib1g"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["python2.7-minimal"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libpython2.7-minimal"],
+        DISTRO_PACKAGES["amd64"][distro_suffix]["libpython2.7-stdlib"],
+    ] + [DISTRO_PACKAGES["amd64"][distro_suffix][deb] for deb in DISTRO_DEBS[distro_suffix]],
     entrypoint = [
         "/usr/bin/python2.7",
     ],
@@ -60,13 +54,13 @@ DISTRO_DEBS = {
 ) for mode in [
     "",
     ":debug",
-] for distro_suffix in ("_debian9", "_debian10")]
+] for distro_suffix in DISTRO_SUFFIXES]
 
 [container_test(
     name = "python27" + distro_suffix + "_test",
     configs = ["testdata/python27.yaml"],
     image = ":python27" + distro_suffix,
-) for distro_suffix in ("_debian9", "_debian10")]
+) for distro_suffix in DISTRO_SUFFIXES]
 
 # tests for version-specific things
 container_test(
