@@ -379,9 +379,9 @@ http_file(
 # Docker rules.
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "4521794f0fba2e20f3bf15846ab5e01d5332e587e9ce81629c7f96c793bb7036",
-    strip_prefix = "rules_docker-0.14.4",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.14.4.tar.gz"],
+    sha256 = "fa0b98148659750224975193c0c671e4085e765b840183a1910897855e9032d4",
+    strip_prefix = "rules_docker-16eb2da775ebfbf72d94dada4a6820046768af76",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/16eb2da775ebfbf72d94dada4a6820046768af76.tar.gz"],
 )
 
 load(
