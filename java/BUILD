@@ -4,19 +4,19 @@ load(":distro.bzl", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("@package_bundle//file:packages.bzl", "packages", "versions")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages", versions_debian10 = "versions")
+load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages", versions_amd64_debian9 = "versions")
+load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages", versions_amd64_debian10 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 
 DISTRO_PACKAGES = {
-    "_debian9": packages,
-    "_debian10": packages_debian10,
+    "_debian9": packages_amd64_debian9,
+    "_debian10": packages_amd64_debian10,
 }
 
 DISTRO_VERSIONS = {
-    "_debian9": versions,
-    "_debian10": versions_debian10,
+    "_debian9": versions_amd64_debian9,
+    "_debian10": versions_amd64_debian10,
 }
 
 [[container_image(
@@ -38,8 +38,8 @@ DISTRO_VERSIONS = {
         "LANG": "C.UTF-8",
     },
     tars = [
-        "//cacerts:cacerts_java" + distro_suffix,
-        "//locale:locale" + distro_suffix,
+        "//cacerts:cacerts_java_amd64" + distro_suffix,
+        "//locale:locale_amd64" + distro_suffix,
     ],
 ) for mode in [
     "",
@@ -109,27 +109,6 @@ DISTRO_VERSIONS = {
         "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
     ),
 ]]
-
-# Provide aliases so the default images use debian9
-alias(
-    name = "java8",
-    actual = ":java8_debian9",
-)
-
-alias(
-    name = "java8_debug",
-    actual = ":java8_debug_debian9",
-)
-
-alias(
-    name = "java11",
-    actual = ":java11_debian9",
-)
-
-alias(
-    name = "java11_debug",
-    actual = ":java11_debug_debian9",
-)
 
 [[container_test(
     name = "java_base" + mode + distro_suffix + "_test",

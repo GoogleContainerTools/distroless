@@ -24,6 +24,28 @@ For running tests, do `bazel test //...`.
 
 For building and loading images to your local Docker engine, do `bazel run //java:java11_debian10` for example. After successful build, `docker images` will list images like `bazel/java:java11_debian10`.
 
+For styling Bazel files, install and run `buildifier` with:
+
+```shell
+# Install buildifier version 3.2.0
+GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@3.2.0
+
+# This will automatically fix files.
+buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
+```
+
+For styling Python files, [install](https://www.pylint.org/#install) and run `pylint` with:
+
+```shell
+# Install pylint
+sudo pip install pylint
+# Or
+sudo apt-get install pylint
+
+# Identify python style issues.
+find . -name "*.py" | xargs pylint --disable=R,C
+```
+
 ## Contributing a Patch
 
 1. Submit an issue describing your proposed change to the repo in question.

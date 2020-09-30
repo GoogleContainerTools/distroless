@@ -8,7 +8,7 @@
 timeout: 1800s
 steps:
 
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -18,10 +18,15 @@ steps:
     set -o xtrace
     bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
 
-    bazel run --host_force_python=PY2 //base:static_debian9
-    bazel run --host_force_python=PY2 //base:static_debian10
-    bazel run --host_force_python=PY2 //base:static_nonroot_debian9
-    bazel run --host_force_python=PY2 //base:static_nonroot_debian10
+    bazel run --host_force_python=PY2 //base:static_root_amd64_debian9
+    bazel run --host_force_python=PY2 //base:static_root_amd64_debian10
+    bazel run --host_force_python=PY2 //base:static_nonroot_amd64_debian9
+    bazel run --host_force_python=PY2 //base:static_nonroot_amd64_debian10
+    bazel run --host_force_python=PY2 //base:static_root_arm64_debian9
+    bazel run --host_force_python=PY2 //base:static_root_arm64_debian10
+    bazel run --host_force_python=PY2 //base:static_nonroot_arm64_debian9
+    bazel run --host_force_python=PY2 //base:static_nonroot_arm64_debian10
+
     bazel run --host_force_python=PY2 //base:base_debian9
     bazel run --host_force_python=PY2 //base:base_debian10
     bazel run --host_force_python=PY2 //base:base_nonroot_debian9
@@ -35,7 +40,7 @@ steps:
     bazel run --host_force_python=PY2 //cc:cc_debian10
     bazel run --host_force_python=PY2 //cc:debug_debian9
     bazel run --host_force_python=PY2 //cc:debug_debian10
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
@@ -43,15 +48,20 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static:${COMMIT_SHA}
-    docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static:latest
-    docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}
-    docker tag bazel/base:static_debian9          gcr.io/$PROJECT_ID/static-debian9:latest
-    docker tag bazel/base:static_debian10         gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}
-    docker tag bazel/base:static_debian10         gcr.io/$PROJECT_ID/static-debian10:latest
-    docker tag bazel/base:static_nonroot_debian9  gcr.io/$PROJECT_ID/static:nonroot
-    docker tag bazel/base:static_nonroot_debian9  gcr.io/$PROJECT_ID/static-debian9:nonroot
-    docker tag bazel/base:static_nonroot_debian10 gcr.io/$PROJECT_ID/static-debian10:nonroot
+
+    docker tag bazel/base:static_root_amd64_debian9     gcr.io/$PROJECT_ID/static:${COMMIT_SHA}
+    docker tag bazel/base:static_root_amd64_debian9     gcr.io/$PROJECT_ID/static:latest-amd64
+    docker tag bazel/base:static_root_amd64_debian9     gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}
+    docker tag bazel/base:static_root_amd64_debian9     gcr.io/$PROJECT_ID/static-debian9:latest
+    docker tag bazel/base:static_root_amd64_debian10    gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}
+    docker tag bazel/base:static_root_amd64_debian10    gcr.io/$PROJECT_ID/static-debian10:latest
+    docker tag bazel/base:static_nonroot_amd64_debian9  gcr.io/$PROJECT_ID/static:nonroot-amd64
+    docker tag bazel/base:static_nonroot_amd64_debian9  gcr.io/$PROJECT_ID/static-debian9:nonroot
+    docker tag bazel/base:static_nonroot_amd64_debian10 gcr.io/$PROJECT_ID/static-debian10:nonroot
+
+    docker tag bazel/base:static_root_arm64_debian9     gcr.io/$PROJECT_ID/static:latest-arm64
+    docker tag bazel/base:static_nonroot_arm64_debian9  gcr.io/$PROJECT_ID/static:nonroot-arm64
+
     docker tag bazel/base:base_debian9            gcr.io/$PROJECT_ID/base:${COMMIT_SHA}
     docker tag bazel/base:base_debian9            gcr.io/$PROJECT_ID/base:latest
     docker tag bazel/base:base_debian9            gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}
@@ -78,7 +88,7 @@ steps:
     docker tag bazel/cc:debug_debian9  gcr.io/$PROJECT_ID/cc-debian9:debug
     docker tag bazel/cc:debug_debian10 gcr.io/$PROJECT_ID/cc-debian10:debug
 
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -99,7 +109,7 @@ steps:
     bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian10
     bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian9
     bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian10
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
@@ -127,7 +137,7 @@ steps:
     docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
     docker tag bazel/experimental/python2.7:debug_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
 
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -147,7 +157,7 @@ steps:
     bazel run //nodejs:nodejs14_debug_debian9
     bazel run //nodejs:nodejs14_debian10
     bazel run //nodejs:nodejs14_debug_debian10
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
@@ -179,7 +189,7 @@ steps:
     docker tag bazel/nodejs:nodejs10_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:10-debug
     docker tag bazel/nodejs:nodejs12_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:12-debug
     docker tag bazel/nodejs:nodejs14_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:14-debug
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -198,7 +208,7 @@ steps:
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_aspnet_debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_runtime_debug_debian9
     bazel run --host_force_python=PY2 //experimental/dotnet:dotnet_core_sdk_debug_debian9
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
@@ -223,94 +233,145 @@ steps:
     docker tag bazel/experimental/dotnet:dotnet_core_sdk_debian9           gcr.io/$PROJECT_ID/dotnet/core/sdk:3.1
     docker tag bazel/experimental/dotnet:dotnet_core_sdk_debug_debian9     gcr.io/$PROJECT_ID/dotnet/core/sdk:debug
 
-images:
-  - 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/static:latest'
-  - 'gcr.io/$PROJECT_ID/static:nonroot'
-  - 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/static-debian9:latest'
-  - 'gcr.io/$PROJECT_ID/static-debian9:nonroot'
-  - 'gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/static-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/static-debian10:nonroot'
-  - 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/base:latest'
-  - 'gcr.io/$PROJECT_ID/base:nonroot'
-  - 'gcr.io/$PROJECT_ID/base:debug'
-  - 'gcr.io/$PROJECT_ID/base:debug-nonroot'
-  - 'gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/base-debian9:latest'
-  - 'gcr.io/$PROJECT_ID/base-debian9:nonroot'
-  - 'gcr.io/$PROJECT_ID/base-debian9:debug'
-  - 'gcr.io/$PROJECT_ID/base-debian9:debug-nonroot'
-  - 'gcr.io/$PROJECT_ID/base-debian10:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/base-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/base-debian10:nonroot'
-  - 'gcr.io/$PROJECT_ID/base-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/base-debian10:debug-nonroot'
-  - 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/cc:latest'
-  - 'gcr.io/$PROJECT_ID/cc:debug'
-  - 'gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/cc-debian9:latest'
-  - 'gcr.io/$PROJECT_ID/cc-debian9:debug'
-  - 'gcr.io/$PROJECT_ID/cc-debian10:${COMMIT_SHA}'
-  - 'gcr.io/$PROJECT_ID/cc-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/cc-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/python3:latest'
-  - 'gcr.io/$PROJECT_ID/python3:nonroot'
-  - 'gcr.io/$PROJECT_ID/python3:debug'
-  - 'gcr.io/$PROJECT_ID/python3:debug-nonroot'
-  - 'gcr.io/$PROJECT_ID/python3-debian9:latest'
-  - 'gcr.io/$PROJECT_ID/python3-debian9:nonroot'
-  - 'gcr.io/$PROJECT_ID/python3-debian9:debug'
-  - 'gcr.io/$PROJECT_ID/python3-debian9:debug-nonroot'
-  - 'gcr.io/$PROJECT_ID/python3-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/python3-debian10:nonroot'
-  - 'gcr.io/$PROJECT_ID/python3-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot'
-  - 'gcr.io/$PROJECT_ID/python2.7:latest'
-  - 'gcr.io/$PROJECT_ID/python2.7:debug'
-  - 'gcr.io/$PROJECT_ID/python2.7-debian9:latest'
-  - 'gcr.io/$PROJECT_ID/python2.7-debian9:debug'
-  - 'gcr.io/$PROJECT_ID/python2.7-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/python2.7-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/nodejs:latest'
-  - 'gcr.io/$PROJECT_ID/nodejs:10'
-  - 'gcr.io/$PROJECT_ID/nodejs:12'
-  - 'gcr.io/$PROJECT_ID/nodejs:14'
-  - 'gcr.io/$PROJECT_ID/nodejs:debug'
-  - 'gcr.io/$PROJECT_ID/nodejs:10-debug'
-  - 'gcr.io/$PROJECT_ID/nodejs:12-debug'
-  - 'gcr.io/$PROJECT_ID/nodejs:14-debug'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian9:latest'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian9:10'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian9:12'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian9:14'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian9:debug'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian9:10-debug'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian9:12-debug'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian9:14-debug'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian10:10'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian10:12'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian10:14'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian10:10-debug'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian10:12-debug'
-  - 'gcr.io/$PROJECT_ID/nodejs-debian10:14-debug'
-  - 'gcr.io/$PROJECT_ID/dotnet:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet-debian9:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet-debian9:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet-debian10:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet-debian10:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:3.1'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:3.1'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/runtime:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:3.1'
-  - 'gcr.io/$PROJECT_ID/dotnet/core/sdk:debug'
+- name: docker
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+
+    # First publish the individual container images, we do this manually because we
+    # want to publish manifest lists next, which GCB does not support.
+    docker push 'gcr.io/$PROJECT_ID/static:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/static:latest-amd64'
+    docker push 'gcr.io/$PROJECT_ID/static:nonroot-amd64'
+    docker push 'gcr.io/$PROJECT_ID/static:latest-arm64'
+    docker push 'gcr.io/$PROJECT_ID/static:nonroot-arm64'
+    docker push 'gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/static-debian9:latest'
+    docker push 'gcr.io/$PROJECT_ID/static-debian9:nonroot'
+    docker push 'gcr.io/$PROJECT_ID/static-debian10:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/static-debian10:latest'
+    docker push 'gcr.io/$PROJECT_ID/static-debian10:nonroot'
+    docker push 'gcr.io/$PROJECT_ID/base:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/base:latest'
+    docker push 'gcr.io/$PROJECT_ID/base:nonroot'
+    docker push 'gcr.io/$PROJECT_ID/base:debug'
+    docker push 'gcr.io/$PROJECT_ID/base:debug-nonroot'
+    docker push 'gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/base-debian9:latest'
+    docker push 'gcr.io/$PROJECT_ID/base-debian9:nonroot'
+    docker push 'gcr.io/$PROJECT_ID/base-debian9:debug'
+    docker push 'gcr.io/$PROJECT_ID/base-debian9:debug-nonroot'
+    docker push 'gcr.io/$PROJECT_ID/base-debian10:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/base-debian10:latest'
+    docker push 'gcr.io/$PROJECT_ID/base-debian10:nonroot'
+    docker push 'gcr.io/$PROJECT_ID/base-debian10:debug'
+    docker push 'gcr.io/$PROJECT_ID/base-debian10:debug-nonroot'
+    docker push 'gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/cc:latest'
+    docker push 'gcr.io/$PROJECT_ID/cc:debug'
+    docker push 'gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/cc-debian9:latest'
+    docker push 'gcr.io/$PROJECT_ID/cc-debian9:debug'
+    docker push 'gcr.io/$PROJECT_ID/cc-debian10:${COMMIT_SHA}'
+    docker push 'gcr.io/$PROJECT_ID/cc-debian10:latest'
+    docker push 'gcr.io/$PROJECT_ID/cc-debian10:debug'
+
+- name: docker
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+
+    # Break it up (see comment at the top)
+    docker push 'gcr.io/$PROJECT_ID/python3:latest'
+    docker push 'gcr.io/$PROJECT_ID/python3:nonroot'
+    docker push 'gcr.io/$PROJECT_ID/python3:debug'
+    docker push 'gcr.io/$PROJECT_ID/python3:debug-nonroot'
+    docker push 'gcr.io/$PROJECT_ID/python3-debian9:latest'
+    docker push 'gcr.io/$PROJECT_ID/python3-debian9:nonroot'
+    docker push 'gcr.io/$PROJECT_ID/python3-debian9:debug'
+    docker push 'gcr.io/$PROJECT_ID/python3-debian9:debug-nonroot'
+    docker push 'gcr.io/$PROJECT_ID/python3-debian10:latest'
+    docker push 'gcr.io/$PROJECT_ID/python3-debian10:nonroot'
+    docker push 'gcr.io/$PROJECT_ID/python3-debian10:debug'
+    docker push 'gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot'
+    docker push 'gcr.io/$PROJECT_ID/python2.7:latest'
+    docker push 'gcr.io/$PROJECT_ID/python2.7:debug'
+    docker push 'gcr.io/$PROJECT_ID/python2.7-debian9:latest'
+    docker push 'gcr.io/$PROJECT_ID/python2.7-debian9:debug'
+    docker push 'gcr.io/$PROJECT_ID/python2.7-debian10:latest'
+    docker push 'gcr.io/$PROJECT_ID/python2.7-debian10:debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:latest'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:10'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:12'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:14'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:10-debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:12-debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:14-debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian9:latest'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian9:10'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian9:12'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian9:14'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian9:debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian9:10-debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian9:12-debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian9:14-debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian10:latest'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian10:10'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian10:12'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian10:14'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian10:debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian10:10-debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian10:12-debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs-debian10:14-debug'
+    docker push 'gcr.io/$PROJECT_ID/dotnet:latest'
+    docker push 'gcr.io/$PROJECT_ID/dotnet:debug'
+    docker push 'gcr.io/$PROJECT_ID/dotnet-debian9:latest'
+    docker push 'gcr.io/$PROJECT_ID/dotnet-debian9:debug'
+    docker push 'gcr.io/$PROJECT_ID/dotnet-debian10:latest'
+    docker push 'gcr.io/$PROJECT_ID/dotnet-debian10:debug'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:latest'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:3.1'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/aspnet:debug'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/runtime:latest'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/runtime:3.1'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/runtime:debug'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/sdk:latest'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/sdk:3.1'
+    docker push 'gcr.io/$PROJECT_ID/dotnet/core/sdk:debug'
+
+- name: docker
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+
+    # Publish manifest lists second, after all of the binary material
+    # has been uploaded, so that it is fast.  We want fast because enabling
+    # the experimental features in docker changes ~/.docker/config.json, which
+    # GCB periodically tramples.
+    #
+    # Enable support for 'docker manifest create'
+    # https://docs.docker.com/engine/reference/commandline/manifest_create/
+    sed -i 's/^{/{"experimental": "enabled",/g' ~/.docker/config.json
+
+    docker manifest create gcr.io/$PROJECT_ID/static:nonroot \
+       gcr.io/$PROJECT_ID/static:nonroot-amd64 \
+       gcr.io/$PROJECT_ID/static:nonroot-arm64
+    docker manifest push gcr.io/$PROJECT_ID/static:nonroot
+
+    docker manifest create gcr.io/$PROJECT_ID/static:latest \
+       gcr.io/$PROJECT_ID/static:latest-amd64 \
+       gcr.io/$PROJECT_ID/static:latest-arm64
+    docker manifest push gcr.io/$PROJECT_ID/static:latest

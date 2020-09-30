@@ -18,7 +18,7 @@ set -o errexit
 set -o xtrace
 
 # Linting
-./buildifier.sh
+buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
 find . -name "*.py" | xargs pylint --disable=R,C
 
 # Bazel build and test

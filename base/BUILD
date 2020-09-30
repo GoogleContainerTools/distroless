@@ -101,10 +101,6 @@ pkg_tar(
     package_dir = "etc",
 )
 
-load("@package_bundle//file:packages.bzl", "packages")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
-load("//cacerts:cacerts.bzl", "cacerts")
-
 go_binary(
     name = "check_certs",
     srcs = ["testdata/check_certs.go"],
@@ -115,34 +111,3 @@ go_binary(
 )
 
 [distro_components(suffix) for suffix in DISTRO_SUFFIXES]
-
-# alias debian9 as the default images
-alias(
-    name = "static",
-    actual = ":static_debian9",
-)
-
-alias(
-    name = "static_nonroot",
-    actual = ":static_nonroot_debian9",
-)
-
-alias(
-    name = "base",
-    actual = ":base_debian9",
-)
-
-alias(
-    name = "base_nonroot",
-    actual = ":base_nonroot_debian9",
-)
-
-alias(
-    name = "debug",
-    actual = ":debug_debian9",
-)
-
-alias(
-    name = "debug_nonroot",
-    actual = ":debug_nonroot_debian9",
-)

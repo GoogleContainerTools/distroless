@@ -2,14 +2,14 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@package_bundle//file:packages.bzl", "packages")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
+load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages")
+load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages")
 
 NONROOT = 65532
 
 DISTRO_PACKAGES = {
-    "_debian9": packages,
-    "_debian10": packages_debian10,
+    "_debian9": packages_amd64_debian9,
+    "_debian10": packages_amd64_debian10,
 }
 
 # distribution-specific deb dependencies
@@ -105,24 +105,3 @@ DISTRO_VERSION = {
     "",
     "_nonroot",
 ]]
-
-# Provide aliases so the default images use debian9
-alias(
-    name = "python3",
-    actual = ":python3_debian9",
-)
-
-alias(
-    name = "debug",
-    actual = ":debug_debian9",
-)
-
-alias(
-    name = "python3_nonroot",
-    actual = ":python3_nonroot_debian9",
-)
-
-alias(
-    name = "debug_nonroot",
-    actual = ":debug_nonroot_debian9",
-)

@@ -2,12 +2,12 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("@package_bundle//file:packages.bzl", "packages")
-load("@package_bundle_debian10//file:packages.bzl", packages_debian10 = "packages")
+load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages")
+load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages")
 
 DISTRO_PACKAGES = {
-    "_debian9": packages,
-    "_debian10": packages_debian10,
+    "_debian9": packages_amd64_debian9,
+    "_debian10": packages_amd64_debian10,
 }
 
 # distribution-specific deb dependencies
@@ -116,15 +116,4 @@ sh_test(
         ":ld.so.cache",
         ":ld.so.cache.new",
     ],
-)
-
-# Provide aliases so the default images use debian9
-alias(
-    name = "python27",
-    actual = ":python27_debian9",
-)
-
-alias(
-    name = "debug",
-    actual = ":debug_debian9",
 )

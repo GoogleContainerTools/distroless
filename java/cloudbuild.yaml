@@ -4,7 +4,7 @@
 timeout: 1800s
 steps:
 
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -24,7 +24,7 @@ steps:
     bazel run --host_force_python=PY2 //java:java11_debug_debian9
     bazel run --host_force_python=PY2 //java:java11_debian10
     bazel run --host_force_python=PY2 //java:java11_debug_debian10
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.2.0
+- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
   - -c
@@ -39,7 +39,7 @@ steps:
     bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debug_debian9
     bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debian10
     bazel run --host_force_python=PY2 //java/jetty:jetty_java11_debug_debian10
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c
@@ -69,7 +69,7 @@ steps:
     docker tag bazel/java:java11_debian10                   gcr.io/$PROJECT_ID/java-debian10:11
     docker tag bazel/java:java11_debug_debian10             gcr.io/$PROJECT_ID/java-debian10:debug
     docker tag bazel/java:java11_debug_debian10             gcr.io/$PROJECT_ID/java-debian10:11-debug
-- name: gcr.io/cloud-builders/docker
+- name: docker
   entrypoint: sh
   args:
   - -c

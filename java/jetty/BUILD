@@ -21,27 +21,6 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
     ("jetty_java11_debug_debian10", "//java:java11_debug_debian10"),
 ]]
 
-# Provide aliases so the default images use debian9
-alias(
-    name = "jetty_java8",
-    actual = ":jetty_java8_debian9",
-)
-
-alias(
-    name = "jetty_java8_debug",
-    actual = ":jetty_java8_debug_debian9",
-)
-
-alias(
-    name = "jetty_java11",
-    actual = ":jetty_java11_debian9",
-)
-
-alias(
-    name = "jetty_java11_debug",
-    actual = ":jetty_java11_debug_debian9",
-)
-
 container_test(
     name = "jetty_java8_debian9_test",
     configs = ["testdata/java8.yaml"],
