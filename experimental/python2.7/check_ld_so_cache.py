@@ -5,6 +5,7 @@ the current base image. This avoids an extra container image layer, and
 users don't need Docker just to use the Python image.
 '''
 
+import base64
 import sys
 
 
@@ -19,7 +20,7 @@ def main():
     generated = open(generated_path, 'rb').read()
     if checked_in != generated:
         sys.stderr.write('Error: checked in file {} does not match generated file {}\n'.format(
-            checked_in, generated_path))
+            checked_in_path, base64.b64encode(generated)))
         sys.exit(1)
 
 

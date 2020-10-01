@@ -125,19 +125,31 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    bazel run --host_force_python=PY2 //experimental/python3:python3_debian9
-    bazel run --host_force_python=PY2 //experimental/python3:python3_debian10
-    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_debian9
-    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_debian10
-    bazel run --host_force_python=PY2 //experimental/python3:debug_debian9
-    bazel run --host_force_python=PY2 //experimental/python3:debug_debian10
-    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_debian9
-    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:python3_amd64_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:python3_amd64_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_amd64_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_amd64_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:debug_amd64_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:debug_amd64_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_amd64_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_amd64_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:python3_arm64_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:python3_arm64_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_arm64_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:python3_nonroot_arm64_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:debug_arm64_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:debug_arm64_debian10
+    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_arm64_debian9
+    bazel run --host_force_python=PY2 //experimental/python3:debug_nonroot_arm64_debian10
 
-    bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian9
-    bazel run --host_force_python=PY2 //experimental/python2.7:python27_debian10
-    bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian9
-    bazel run --host_force_python=PY2 //experimental/python2.7:debug_debian10
+    bazel run --host_force_python=PY2 //experimental/python2.7:python27_amd64_debian9
+    bazel run --host_force_python=PY2 //experimental/python2.7:python27_amd64_debian10
+    bazel run --host_force_python=PY2 //experimental/python2.7:debug_amd64_debian9
+    bazel run --host_force_python=PY2 //experimental/python2.7:debug_amd64_debian10
+    bazel run --host_force_python=PY2 //experimental/python2.7:python27_arm64_debian9
+    bazel run --host_force_python=PY2 //experimental/python2.7:python27_arm64_debian10
+    bazel run --host_force_python=PY2 //experimental/python2.7:debug_arm64_debian9
+    bazel run --host_force_python=PY2 //experimental/python2.7:debug_arm64_debian10
 - name: docker
   entrypoint: sh
   args:
@@ -146,25 +158,32 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    docker tag bazel/experimental/python3:python3_debian9          gcr.io/$PROJECT_ID/python3:latest
-    docker tag bazel/experimental/python3:python3_debian9          gcr.io/$PROJECT_ID/python3-debian9:latest
-    docker tag bazel/experimental/python3:python3_debian10         gcr.io/$PROJECT_ID/python3-debian10:latest
-    docker tag bazel/experimental/python3:python3_nonroot_debian9  gcr.io/$PROJECT_ID/python3:nonroot
-    docker tag bazel/experimental/python3:python3_nonroot_debian9  gcr.io/$PROJECT_ID/python3-debian9:nonroot
-    docker tag bazel/experimental/python3:python3_nonroot_debian10 gcr.io/$PROJECT_ID/python3-debian10:nonroot
-    docker tag bazel/experimental/python3:debug_debian9            gcr.io/$PROJECT_ID/python3:debug
-    docker tag bazel/experimental/python3:debug_debian9            gcr.io/$PROJECT_ID/python3-debian9:debug
-    docker tag bazel/experimental/python3:debug_debian10           gcr.io/$PROJECT_ID/python3-debian10:debug
-    docker tag bazel/experimental/python3:debug_nonroot_debian9    gcr.io/$PROJECT_ID/python3:debug-nonroot
-    docker tag bazel/experimental/python3:debug_nonroot_debian9    gcr.io/$PROJECT_ID/python3-debian9:debug-nonroot
-    docker tag bazel/experimental/python3:debug_nonroot_debian10   gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot
+    docker tag bazel/experimental/python3:python3_amd64_debian9          gcr.io/$PROJECT_ID/python3:latest-amd64
+    docker tag bazel/experimental/python3:python3_amd64_debian9          gcr.io/$PROJECT_ID/python3-debian9:latest
+    docker tag bazel/experimental/python3:python3_amd64_debian10         gcr.io/$PROJECT_ID/python3-debian10:latest
+    docker tag bazel/experimental/python3:python3_nonroot_amd64_debian9  gcr.io/$PROJECT_ID/python3:nonroot-amd64
+    docker tag bazel/experimental/python3:python3_nonroot_amd64_debian9  gcr.io/$PROJECT_ID/python3-debian9:nonroot
+    docker tag bazel/experimental/python3:python3_nonroot_amd64_debian10 gcr.io/$PROJECT_ID/python3-debian10:nonroot
+    docker tag bazel/experimental/python3:debug_amd64_debian9            gcr.io/$PROJECT_ID/python3:debug-amd64
+    docker tag bazel/experimental/python3:debug_amd64_debian9            gcr.io/$PROJECT_ID/python3-debian9:debug
+    docker tag bazel/experimental/python3:debug_amd64_debian10           gcr.io/$PROJECT_ID/python3-debian10:debug
+    docker tag bazel/experimental/python3:debug_nonroot_amd64_debian9    gcr.io/$PROJECT_ID/python3:debug-nonroot-amd64
+    docker tag bazel/experimental/python3:debug_nonroot_amd64_debian9    gcr.io/$PROJECT_ID/python3-debian9:debug-nonroot
+    docker tag bazel/experimental/python3:debug_nonroot_amd64_debian10   gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot
+    docker tag bazel/experimental/python3:python3_arm64_debian9          gcr.io/$PROJECT_ID/python3:latest-arm64
+    docker tag bazel/experimental/python3:python3_nonroot_arm64_debian9  gcr.io/$PROJECT_ID/python3:nonroot-arm64
+    docker tag bazel/experimental/python3:debug_arm64_debian9            gcr.io/$PROJECT_ID/python3:debug-arm64
+    docker tag bazel/experimental/python3:debug_nonroot_arm64_debian9    gcr.io/$PROJECT_ID/python3:debug-nonroot-arm64
 
-    docker tag bazel/experimental/python2.7:python27_debian9  gcr.io/$PROJECT_ID/python2.7:latest
-    docker tag bazel/experimental/python2.7:python27_debian9  gcr.io/$PROJECT_ID/python2.7-debian9:latest
-    docker tag bazel/experimental/python2.7:python27_debian10 gcr.io/$PROJECT_ID/python2.7-debian10:latest
-    docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7:debug
-    docker tag bazel/experimental/python2.7:debug_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
-    docker tag bazel/experimental/python2.7:debug_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
+
+    docker tag bazel/experimental/python2.7:python27_amd64_debian9  gcr.io/$PROJECT_ID/python2.7:latest-amd64
+    docker tag bazel/experimental/python2.7:python27_amd64_debian9  gcr.io/$PROJECT_ID/python2.7-debian9:latest
+    docker tag bazel/experimental/python2.7:python27_amd64_debian10 gcr.io/$PROJECT_ID/python2.7-debian10:latest
+    docker tag bazel/experimental/python2.7:debug_amd64_debian9     gcr.io/$PROJECT_ID/python2.7:debug-amd64
+    docker tag bazel/experimental/python2.7:debug_amd64_debian9     gcr.io/$PROJECT_ID/python2.7-debian9:debug
+    docker tag bazel/experimental/python2.7:debug_amd64_debian10    gcr.io/$PROJECT_ID/python2.7-debian10:debug
+    docker tag bazel/experimental/python2.7:python27_arm64_debian9  gcr.io/$PROJECT_ID/python2.7:latest-arm64
+    docker tag bazel/experimental/python2.7:debug_arm64_debian9     gcr.io/$PROJECT_ID/python2.7:debug-arm64
 
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
@@ -325,10 +344,14 @@ steps:
     set -o xtrace
 
     # Break it up (see comment at the top)
-    docker push 'gcr.io/$PROJECT_ID/python3:latest'
-    docker push 'gcr.io/$PROJECT_ID/python3:nonroot'
-    docker push 'gcr.io/$PROJECT_ID/python3:debug'
-    docker push 'gcr.io/$PROJECT_ID/python3:debug-nonroot'
+    docker push 'gcr.io/$PROJECT_ID/python3:latest-amd64'
+    docker push 'gcr.io/$PROJECT_ID/python3:nonroot-amd64'
+    docker push 'gcr.io/$PROJECT_ID/python3:debug-amd64'
+    docker push 'gcr.io/$PROJECT_ID/python3:debug-nonroot-amd64'
+    docker push 'gcr.io/$PROJECT_ID/python3:latest-arm64'
+    docker push 'gcr.io/$PROJECT_ID/python3:nonroot-arm64'
+    docker push 'gcr.io/$PROJECT_ID/python3:debug-arm64'
+    docker push 'gcr.io/$PROJECT_ID/python3:debug-nonroot-arm64'
     docker push 'gcr.io/$PROJECT_ID/python3-debian9:latest'
     docker push 'gcr.io/$PROJECT_ID/python3-debian9:nonroot'
     docker push 'gcr.io/$PROJECT_ID/python3-debian9:debug'
@@ -337,8 +360,10 @@ steps:
     docker push 'gcr.io/$PROJECT_ID/python3-debian10:nonroot'
     docker push 'gcr.io/$PROJECT_ID/python3-debian10:debug'
     docker push 'gcr.io/$PROJECT_ID/python3-debian10:debug-nonroot'
-    docker push 'gcr.io/$PROJECT_ID/python2.7:latest'
-    docker push 'gcr.io/$PROJECT_ID/python2.7:debug'
+    docker push 'gcr.io/$PROJECT_ID/python2.7:latest-amd64'
+    docker push 'gcr.io/$PROJECT_ID/python2.7:debug-amd64'
+    docker push 'gcr.io/$PROJECT_ID/python2.7:latest-arm64'
+    docker push 'gcr.io/$PROJECT_ID/python2.7:debug-arm64'
     docker push 'gcr.io/$PROJECT_ID/python2.7-debian9:latest'
     docker push 'gcr.io/$PROJECT_ID/python2.7-debian9:debug'
     docker push 'gcr.io/$PROJECT_ID/python2.7-debian10:latest'
@@ -440,3 +465,34 @@ steps:
        gcr.io/$PROJECT_ID/cc:debug-amd64 \
        gcr.io/$PROJECT_ID/cc:debug-arm64
     docker manifest push gcr.io/$PROJECT_ID/cc:debug
+
+
+    docker manifest create gcr.io/$PROJECT_ID/python3:nonroot \
+       gcr.io/$PROJECT_ID/python3:nonroot-amd64 \
+       gcr.io/$PROJECT_ID/python3:nonroot-arm64
+    docker manifest push gcr.io/$PROJECT_ID/python3:nonroot
+
+    docker manifest create gcr.io/$PROJECT_ID/python3:latest \
+       gcr.io/$PROJECT_ID/python3:latest-amd64 \
+       gcr.io/$PROJECT_ID/python3:latest-arm64
+    docker manifest push gcr.io/$PROJECT_ID/python3:latest
+
+    docker manifest create gcr.io/$PROJECT_ID/python3:debug-nonroot \
+       gcr.io/$PROJECT_ID/python3:debug-nonroot-amd64 \
+       gcr.io/$PROJECT_ID/python3:debug-nonroot-arm64
+    docker manifest push gcr.io/$PROJECT_ID/python3:debug-nonroot
+
+    docker manifest create gcr.io/$PROJECT_ID/python3:debug \
+       gcr.io/$PROJECT_ID/python3:debug-amd64 \
+       gcr.io/$PROJECT_ID/python3:debug-arm64
+    docker manifest push gcr.io/$PROJECT_ID/python3:debug
+
+    docker manifest create gcr.io/$PROJECT_ID/python2.7:latest \
+       gcr.io/$PROJECT_ID/python2.7:latest-amd64 \
+       gcr.io/$PROJECT_ID/python2.7:latest-arm64
+    docker manifest push gcr.io/$PROJECT_ID/python2.7:latest
+
+    docker manifest create gcr.io/$PROJECT_ID/python2.7:debug \
+       gcr.io/$PROJECT_ID/python2.7:debug-amd64 \
+       gcr.io/$PROJECT_ID/python2.7:debug-arm64
+    docker manifest push gcr.io/$PROJECT_ID/python2.7:debug

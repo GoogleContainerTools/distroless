@@ -11,18 +11,19 @@ import sys
 import tempfile
 
 
-CONTAINER_IMAGE_PATH = 'experimental/python2.7/python27_debian9'
+CONTAINER_IMAGE_PATH = 'experimental/python2.7/python27_{}_debian9'
 EXECUTABLE_SUFFIX = '.executable'
 
 
 def main():
-    if len(sys.argv) != 2:
-        sys.stderr.write('usage: generate_ldconfig_cache (output ld.so.cache path)\n')
+    if len(sys.argv) != 3:
+        sys.stderr.write('usage: generate_ldconfig_cache (arch) (output ld.so.cache path)\n')
         sys.exit(1)
-    output_path = sys.argv[1]
+    arch = sys.argv[1]
+    output_path = sys.argv[2]
 
     guess_runfiles = sys.argv[0] + '.runfiles'
-    load_container_exe = CONTAINER_IMAGE_PATH + EXECUTABLE_SUFFIX
+    load_container_exe = CONTAINER_IMAGE_PATH.format(arch) + EXECUTABLE_SUFFIX
     if os.path.exists(guess_runfiles):
         # container_image script looks for this environment variable
         guess_runfiles = os.path.abspath(guess_runfiles)
@@ -36,7 +37,7 @@ def main():
     # create a temporary directory to store the output
     tempdir = tempfile.mkdtemp()
     try:
-        docker_tag = 'bazel/' + re.sub(r'/([^/]+)$', r':\1', CONTAINER_IMAGE_PATH)
+        docker_tag = 'bazel/' + re.sub(r'/([^/]+)$', r':\1', CONTAINER_IMAGE_PATH.format(arch))
         print('running docker image {} ...'.format(docker_tag))
         sys.stdout.flush()
         # run with a read-only root file system, write to /output
