@@ -8,7 +8,7 @@ NODEJS_MAJOR_VERISONS = ("10", "12", "14")
 [
     container_image(
         name = "nodejs" + major_version + ("" if (not mode) else mode) + distro_suffix,
-        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + distro_suffix,
+        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_root_amd64" + distro_suffix,
         entrypoint = ["/nodejs/bin/node"],
         tars = ["@nodejs" + major_version + "//:tar"],
     )

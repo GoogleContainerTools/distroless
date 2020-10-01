@@ -19,7 +19,7 @@ DISTRO_DEBS = {
 [container_image(
     name = ("python27" if (not mode) else mode[1:]) + distro_suffix,
     # Based on //cc so that C extensions work properly.
-    base = "//cc" + (mode if mode else ":cc") + distro_suffix,
+    base = "//cc" + (mode if mode else ":cc") + "_root_amd64" + distro_suffix,
     debs = [
         DISTRO_PACKAGES["amd64"][distro_suffix]["dash"],
         DISTRO_PACKAGES["amd64"][distro_suffix]["libbz2-1.0"],

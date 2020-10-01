@@ -14,32 +14,36 @@ DISTRO_VERSIONS = {
     "_debian10": versions_amd64_debian10,
 }
 
-[[container_image(
-    name = "java_base" + mode + distro_suffix,
-    base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + distro_suffix,
-    debs = [
-        DISTRO_PACKAGES["amd64"][distro_suffix]["zlib1g"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["libjpeg62-turbo"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["libpng16-16"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["liblcms2-2"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["libfreetype6"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["fonts-dejavu-core"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["fontconfig-config"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["libexpat1"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["libfontconfig1"],
-        DISTRO_PACKAGES["amd64"][distro_suffix]["libuuid1"],
-    ],
-    env = {
-        "LANG": "C.UTF-8",
-    },
-    tars = [
-        "//cacerts:cacerts_java_amd64" + distro_suffix,
-        "//locale:locale_amd64" + distro_suffix,
-    ],
-) for mode in [
-    "",
-    "_debug",
-]] for distro_suffix in DISTRO_SUFFIXES]
+[
+    container_image(
+        name = "java_base" + mode + distro_suffix,
+        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_root_amd64" + distro_suffix,
+        debs = [
+            DISTRO_PACKAGES["amd64"][distro_suffix]["zlib1g"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libjpeg62-turbo"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libpng16-16"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["liblcms2-2"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libfreetype6"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["fonts-dejavu-core"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["fontconfig-config"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libexpat1"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libfontconfig1"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libuuid1"],
+        ],
+        env = {
+            "LANG": "C.UTF-8",
+        },
+        tars = [
+            "//cacerts:cacerts_java_amd64" + distro_suffix,
+            "//locale:locale_amd64" + distro_suffix,
+        ],
+    )
+    for mode in [
+        "",
+        "_debug",
+    ]
+    for distro_suffix in DISTRO_SUFFIXES
+]
 
 [container_image(
     name = rule_name + distro_suffix,
@@ -105,18 +109,22 @@ DISTRO_VERSIONS = {
     ),
 ]]
 
-[[container_test(
-    name = "java_base" + mode + distro_suffix + "_test",
-    configs = ["testdata/java_base" + mode + ".yaml"],
-    image = ":java_base" + mode + distro_suffix,
-    tags = [
-        "amd64",
-        "manual",
-    ],
-) for mode in [
-    "",
-    "_debug",
-]] for distro_suffix in DISTRO_SUFFIXES]
+[
+    container_test(
+        name = "java_base" + mode + distro_suffix + "_test",
+        configs = ["testdata/java_base" + mode + ".yaml"],
+        image = ":java_base" + mode + distro_suffix,
+        tags = [
+            "amd64",
+            "manual",
+        ],
+    )
+    for mode in [
+        "",
+        "_debug",
+    ]
+    for distro_suffix in DISTRO_SUFFIXES
+]
 
 container_test(
     name = "java8_debian9_test",
