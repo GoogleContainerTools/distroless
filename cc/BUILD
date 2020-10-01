@@ -18,5 +18,5 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
         "",
         ":debug",
     ]
-    for distro_suffix in ("_debian9", "_debian10")
+    for distro_suffix in DISTRO_SUFFIXES
 ]

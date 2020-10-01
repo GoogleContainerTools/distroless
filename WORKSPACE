@@ -388,7 +388,7 @@ http_archive(
     name = "io_bazel_rules_docker",
     sha256 = "cf53839c398e464b10ec2fbeb11aedb446f078c28e3b4ce372461bb105ef435c",
     strip_prefix = "rules_docker-f8478e57ab7457e403fda474f06ac0bb120d92a7",
-    urls = ["https://github.com/mattmoor/rules_docker/archive/f8478e57ab7457e403fda474f06ac0bb120d92a7.tar.gz"],
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/f8478e57ab7457e403fda474f06ac0bb120d92a7.tar.gz"],
 )
 
 load(

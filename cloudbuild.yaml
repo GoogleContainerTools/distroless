@@ -87,9 +87,9 @@ steps:
     docker tag bazel/base:debug_nonroot_amd64_debian10   gcr.io/$PROJECT_ID/base-debian10:debug-nonroot
 
     docker tag bazel/base:base_root_arm64_debian9        gcr.io/$PROJECT_ID/base:latest-arm64
-    docker tag bazel/base:base_root_arm64_debian9        gcr.io/$PROJECT_ID/base:nonroot-arm64
+    docker tag bazel/base:base_nonroot_arm64_debian9     gcr.io/$PROJECT_ID/base:nonroot-arm64
     docker tag bazel/base:debug_root_arm64_debian9       gcr.io/$PROJECT_ID/base:debug-arm64
-    docker tag bazel/base:debug_root_arm64_debian9       gcr.io/$PROJECT_ID/base:debug-nonroot-arm64
+    docker tag bazel/base:debug_nonroot_arm64_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-arm64
 
     docker tag bazel/cc:cc_debian9     gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}
     docker tag bazel/cc:cc_debian9     gcr.io/$PROJECT_ID/cc:latest
