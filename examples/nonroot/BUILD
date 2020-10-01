@@ -34,7 +34,7 @@ pkg_tar(
 # Include it in our image as a tar.
 container_image(
     name = "passwd_image",
-    base = "//base:base_debian10",
+    base = "//base:base_root_amd64_debian10",
     tars = [":passwd_tar"],
     user = "nonroot",
     visibility = ["//visibility:private"],
@@ -62,5 +62,9 @@ go_binary(
     name = "check_user" + distro_suffix + "_test",
     configs = ["testdata/user.yaml"],
     image = ":check_user_image" + distro_suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
     visibility = ["//visibility:private"],
 ) for distro_suffix in DISTRO_SUFFIXES]

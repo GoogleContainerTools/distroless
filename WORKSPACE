@@ -370,18 +370,25 @@ http_archive(
 
 # For the debug image
 http_file(
-    name = "busybox",
+    name = "busybox_amd64",
     executable = True,
     sha256 = "51fcb60efbdf3e579550e9ab893730df56b33d0cc928a2a6467bd846cdfef7d8",
     urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-x86_64"],
 )
 
+http_file(
+    name = "busybox_arm64",
+    executable = True,
+    sha256 = "141adb1b625a6f44c4b114f76b4387b4ea4f7ab802b88eb40e0d2f6adcccb1c3",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv8l"],
+)
+
 # Docker rules.
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "4521794f0fba2e20f3bf15846ab5e01d5332e587e9ce81629c7f96c793bb7036",
-    strip_prefix = "rules_docker-0.14.4",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.14.4.tar.gz"],
+    sha256 = "cf53839c398e464b10ec2fbeb11aedb446f078c28e3b4ce372461bb105ef435c",
+    strip_prefix = "rules_docker-f8478e57ab7457e403fda474f06ac0bb120d92a7",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/f8478e57ab7457e403fda474f06ac0bb120d92a7.tar.gz"],
 )
 
 load(

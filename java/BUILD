@@ -109,6 +109,10 @@ DISTRO_VERSIONS = {
     name = "java_base" + mode + distro_suffix + "_test",
     configs = ["testdata/java_base" + mode + ".yaml"],
     image = ":java_base" + mode + distro_suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for mode in [
     "",
     "_debug",
@@ -118,24 +122,40 @@ container_test(
     name = "java8_debian9_test",
     configs = ["testdata/java8.yaml"],
     image = ":java8_debian9",
+    tags = [
+        "amd64",
+        "manual",
+    ],
 )
 
 container_test(
     name = "java8_debug_debian9_test",
     configs = ["testdata/java8_debug.yaml"],
     image = ":java8_debug_debian9",
+    tags = [
+        "amd64",
+        "manual",
+    ],
 )
 
 [container_test(
     name = "java11" + distro_suffix + "_test",
     configs = ["testdata/java11" + distro_suffix + ".yaml"],
     image = ":java11" + distro_suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for distro_suffix in DISTRO_SUFFIXES]
 
 [container_test(
     name = "java11_debug" + distro_suffix + "_test",
     configs = ["testdata/java11_debug" + distro_suffix + ".yaml"],
     image = ":java11_debug" + distro_suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for distro_suffix in DISTRO_SUFFIXES]
 
 RULE_NAMES = ("java8_debian9", "java11_debian9", "java11_debian10")
@@ -151,6 +171,10 @@ RULE_NAMES = ("java8_debian9", "java11_debian9", "java11_debian10")
     name = "check_certs_" + rule_name + "_test",
     configs = ["testdata/" + rule_name + "_certs.yaml"],
     image = ":check_certs_" + rule_name,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for rule_name in RULE_NAMES]
 
 [java_image(
@@ -164,4 +188,8 @@ RULE_NAMES = ("java8_debian9", "java11_debian9", "java11_debian10")
     name = "check_encoding_" + rule_name + "_test",
     configs = ["testdata/" + rule_name + "_encoding.yaml"],
     image = ":check_encoding_" + rule_name,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for rule_name in RULE_NAMES]

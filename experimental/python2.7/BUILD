@@ -60,6 +60,10 @@ DISTRO_DEBS = {
     name = "python27" + distro_suffix + "_test",
     configs = ["testdata/python27.yaml"],
     image = ":python27" + distro_suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for distro_suffix in DISTRO_SUFFIXES]
 
 # tests for version-specific things
@@ -68,6 +72,10 @@ container_test(
     size = "medium",
     configs = ["testdata/debian9.yaml"],
     image = ":python27_debian9",
+    tags = [
+        "amd64",
+        "manual",
+    ],
 )
 
 container_test(
@@ -75,6 +83,10 @@ container_test(
     size = "medium",
     configs = ["testdata/debian10.yaml"],
     image = ":python27_debian10",
+    tags = [
+        "amd64",
+        "manual",
+    ],
 )
 
 genrule(
@@ -89,6 +101,10 @@ sh_binary(
     name = "generate_ldconfig_cache",
     srcs = ["generate_ldconfig_cache.py"],
     data = [":python27_debian9"],
+    tags = [
+        "amd64",
+        "manual",
+    ],
 )
 
 genrule(
@@ -96,6 +112,10 @@ genrule(
     srcs = [":python27_debian9"],
     outs = ["ld.so.cache.new"],
     cmd = "$(location :generate_ldconfig_cache) $(OUTS)",
+    tags = [
+        "amd64",
+        "manual",
+    ],
     tools = [":generate_ldconfig_cache"],
 )
 
@@ -109,5 +129,9 @@ sh_test(
     data = [
         ":ld.so.cache",
         ":ld.so.cache.new",
+    ],
+    tags = [
+        "amd64",
+        "manual",
     ],
 )

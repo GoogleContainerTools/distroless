@@ -23,4 +23,8 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
     size = "small",
     configs = ["testdata/hello" + suffix + ".yaml"],
     image = ":hello" + suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for suffix in ("_debian10", "_core_aspnet_debian10", "_core_runtime_debian10", "_core_sdk_debian10")]

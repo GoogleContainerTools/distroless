@@ -12,4 +12,8 @@ rust_image(
     name = "rust_example",
     srcs = ["src/main.rs"],
     base = "//cc:cc_debian10",
+    tags = [
+        "amd64",
+        "manual",
+    ],
 )

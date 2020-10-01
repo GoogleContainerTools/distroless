@@ -79,6 +79,10 @@ DISTRO_VERSION = {
     size = "medium",
     configs = ["testdata/python3.yaml"],
     image = ":python3" + distro_suffix,
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for distro_suffix in DISTRO_SUFFIXES]
 
 # tests for version-specific things
@@ -88,12 +92,20 @@ DISTRO_VERSION = {
         size = "medium",
         configs = ["testdata/debian9.yaml"],
         image = ":python3" + user + "_debian9",
+        tags = [
+            "amd64",
+            "manual",
+        ],
     ),
     container_test(
         name = "debian10" + user + "_test",
         size = "medium",
         configs = ["testdata/debian10.yaml"],
         image = ":python3" + user + "_debian10",
+        tags = [
+            "amd64",
+            "manual",
+        ],
     ),
 ] for user in [
     "",

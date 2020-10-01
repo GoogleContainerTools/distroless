@@ -4,6 +4,7 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load(":distro.bzl", "DISTRO_PACKAGES", "DISTRO_REPOSITORY")
 load("//cacerts:cacerts.bzl", "cacerts")
 load("//:checksums.bzl", "ARCHITECTURES")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 NONROOT = 65532
 
@@ -48,79 +49,107 @@ def distro_components(distro_suffix):
                 workdir = workdir,
             )
 
-    container_image(
-        name = "base" + distro_suffix,
-        base = ":static_root_amd64" + distro_suffix,
-        debs = [
-            DISTRO_PACKAGES["amd64"][distro_suffix]["libc6"],
-            DISTRO_PACKAGES["amd64"][distro_suffix]["libssl1.1"],
-            DISTRO_PACKAGES["amd64"][distro_suffix]["openssl"],
-        ],
-    )
+            container_image(
+                name = "base_" + user + "_" + arch + distro_suffix,
+                architecture = arch,
+                base = ":static_" + user + "_" + arch + distro_suffix,
+                debs = [
+                    DISTRO_PACKAGES[arch][distro_suffix]["libc6"],
+                    DISTRO_PACKAGES[arch][distro_suffix]["libssl1.1"],
+                    DISTRO_PACKAGES[arch][distro_suffix]["openssl"],
+                ],
+            )
 
-    # A debug image with busybox available.
-    container_image(
-        name = "debug" + distro_suffix,
-        base = ":base" + distro_suffix,
-        directory = "/",
-        entrypoint = ["/busybox/sh"],
-        env = {"PATH": "$$PATH:/busybox"},
-        tars = ["//experimental/busybox:busybox.tar"],
-    )
+            # A debug image with busybox available.
+            container_image(
+                name = "debug_" + user + "_" + arch + distro_suffix,
+                architecture = arch,
+                base = ":base_" + user + "_" + arch + distro_suffix,
+                directory = "/",
+                entrypoint = ["/busybox/sh"],
+                env = {"PATH": "$$PATH:/busybox"},
+                tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
+            )
 
-    container_image(
-        name = "base_nonroot" + distro_suffix,
-        base = ":base" + distro_suffix,
-        user = "%d" % NONROOT,
-        workdir = "/home/nonroot",
-    )
+        ##########################################################################################
+        # Check that we can overlay a pure Go binary on a static base to check certificates
+        ##########################################################################################
+        go_binary(
+            name = "check_certs_" + arch + distro_suffix,
+            srcs = ["testdata/check_certs.go"],
+            goarch = arch,
+            # Test image is linux based
+            goos = "linux",
+            pure = "on",
+        )
 
-    container_image(
-        name = "debug_nonroot" + distro_suffix,
-        base = ":debug" + distro_suffix,
-        user = "%d" % NONROOT,
-        workdir = "/home/nonroot",
-    )
+        container_image(
+            name = "check_certs_image_" + arch + distro_suffix,
+            base = "//base:static_root_" + arch + distro_suffix,
+            files = [":check_certs_" + arch + distro_suffix],
+            symlinks = {
+                "/check_certs": "check_certs_" + arch + distro_suffix,
+            },
+            visibility = ["//visibility:private"],
+        )
 
-    container_test(
-        name = "debug" + distro_suffix + "_test",
-        configs = ["testdata/debug.yaml"],
-        image = ":debug" + distro_suffix,
-    )
+        container_test(
+            name = "static_" + arch + distro_suffix + "_test",
+            configs = ["testdata/static.yaml"],
+            image = ":check_certs_image_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
 
-    container_test(
-        name = "base" + distro_suffix + "_test",
-        configs = ["testdata/base.yaml"],
-        image = ":base" + distro_suffix,
-    )
+        ##########################################################################################
+        # Check that we can invoke openssl in the base image to check certificates.
+        ##########################################################################################
+        container_test(
+            name = "openssl_" + arch + distro_suffix + "_test",
+            configs = ["testdata/certs.yaml"],
+            image = ":base_root_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
 
-    container_image(
-        name = "check_certs_image" + distro_suffix,
-        base = "//base:base" + distro_suffix,
-        files = [":check_certs"],
-        visibility = ["//visibility:private"],
-    )
+        ##########################################################################################
+        # Check for common base files.
+        ##########################################################################################
+        container_test(
+            name = "base_" + arch + distro_suffix + "_test",
+            configs = ["testdata/base.yaml"],
+            image = ":base_root_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
 
-    container_test(
-        name = "certs" + distro_suffix + "_test",
-        configs = ["testdata/certs.yaml"],
-        image = ":check_certs_image" + distro_suffix,
-    )
+        ##########################################################################################
+        # Check for busybox
+        ##########################################################################################
+        container_test(
+            name = "debug_" + arch + distro_suffix + "_test",
+            configs = ["testdata/debug.yaml"],
+            image = ":debug_root_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
 
-    container_test(
-        name = "base_release" + distro_suffix + "_test",
-        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
-        image = ":base" + distro_suffix,
-    )
+        ##########################################################################################
+        # Check the /etc/os-release contents.
+        ##########################################################################################
+        container_test(
+            name = "base_release_" + arch + distro_suffix + "_test",
+            configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+            image = ":base_root_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
 
-    container_test(
-        name = "debug_release" + distro_suffix + "_test",
-        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
-        image = ":debug" + distro_suffix,
-    )
+        container_test(
+            name = "debug_release_" + arch + distro_suffix + "_test",
+            configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+            image = ":debug_root_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
 
-    container_test(
-        name = "static_release" + distro_suffix + "_test",
-        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
-        image = ":static_root_amd64" + distro_suffix,
-    )
+        container_test(
+            name = "static_release_" + arch + distro_suffix + "_test",
+            configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+            image = ":static_root_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
