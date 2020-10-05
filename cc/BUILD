@@ -4,6 +4,8 @@ load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("//:checksums.bzl", "ARCHITECTURES")
 
+ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
+
 # An image for C/C++ programs
 [
     container_image(

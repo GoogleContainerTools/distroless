@@ -17,6 +17,8 @@ DISTRO_DEBS = {
     ],
 }
 
+ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
+
 [
     container_image(
         name = ("python27" if (not mode) else mode[1:]) + "_" + arch + distro_suffix,

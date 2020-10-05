@@ -6,6 +6,8 @@ load("//:checksums.bzl", "ARCHITECTURES")
 
 NODEJS_MAJOR_VERISONS = ("10", "12", "14")
 
+ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
+
 [
     container_image(
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + distro_suffix,

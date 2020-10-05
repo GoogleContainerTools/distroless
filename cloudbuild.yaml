@@ -26,6 +26,10 @@ steps:
     bazel run --host_force_python=PY2 //base:static_root_arm64_debian10
     bazel run --host_force_python=PY2 //base:static_nonroot_arm64_debian9
     bazel run --host_force_python=PY2 //base:static_nonroot_arm64_debian10
+    bazel run --host_force_python=PY2 //base:static_root_s390x_debian9
+    bazel run --host_force_python=PY2 //base:static_root_s390x_debian10
+    bazel run --host_force_python=PY2 //base:static_nonroot_s390x_debian9
+    bazel run --host_force_python=PY2 //base:static_nonroot_s390x_debian10
 
     bazel run --host_force_python=PY2 //base:base_root_amd64_debian9
     bazel run --host_force_python=PY2 //base:base_root_amd64_debian10
@@ -43,6 +47,14 @@ steps:
     bazel run --host_force_python=PY2 //base:debug_root_arm64_debian10
     bazel run --host_force_python=PY2 //base:debug_nonroot_arm64_debian9
     bazel run --host_force_python=PY2 //base:debug_nonroot_arm64_debian10
+    bazel run --host_force_python=PY2 //base:base_root_s390x_debian9
+    bazel run --host_force_python=PY2 //base:base_root_s390x_debian10
+    bazel run --host_force_python=PY2 //base:base_nonroot_s390x_debian9
+    bazel run --host_force_python=PY2 //base:base_nonroot_s390x_debian10
+    bazel run --host_force_python=PY2 //base:debug_root_s390x_debian9
+    bazel run --host_force_python=PY2 //base:debug_root_s390x_debian10
+    bazel run --host_force_python=PY2 //base:debug_nonroot_s390x_debian9
+    bazel run --host_force_python=PY2 //base:debug_nonroot_s390x_debian10
 
     bazel run --host_force_python=PY2 //cc:cc_root_amd64_debian9
     bazel run --host_force_python=PY2 //cc:cc_root_amd64_debian10
@@ -83,6 +95,9 @@ steps:
     docker tag bazel/base:static_root_arm64_debian9     gcr.io/$PROJECT_ID/static:latest-arm64
     docker tag bazel/base:static_nonroot_arm64_debian9  gcr.io/$PROJECT_ID/static:nonroot-arm64
 
+    docker tag bazel/base:static_root_s390x_debian9     gcr.io/$PROJECT_ID/static:latest-s390x
+    docker tag bazel/base:static_nonroot_s390x_debian9  gcr.io/$PROJECT_ID/static:nonroot-s390x
+
     docker tag bazel/base:base_root_amd64_debian9        gcr.io/$PROJECT_ID/base:${COMMIT_SHA}
     docker tag bazel/base:base_root_amd64_debian9        gcr.io/$PROJECT_ID/base:latest-amd64
     docker tag bazel/base:base_root_amd64_debian9        gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}
@@ -103,6 +118,11 @@ steps:
     docker tag bazel/base:base_nonroot_arm64_debian9     gcr.io/$PROJECT_ID/base:nonroot-arm64
     docker tag bazel/base:debug_root_arm64_debian9       gcr.io/$PROJECT_ID/base:debug-arm64
     docker tag bazel/base:debug_nonroot_arm64_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-arm64
+
+    docker tag bazel/base:base_root_s390x_debian9        gcr.io/$PROJECT_ID/base:latest-s390x
+    docker tag bazel/base:base_nonroot_s390x_debian9     gcr.io/$PROJECT_ID/base:nonroot-s390x
+    docker tag bazel/base:debug_root_s390x_debian9       gcr.io/$PROJECT_ID/base:debug-s390x
+    docker tag bazel/base:debug_nonroot_s390x_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-s390x
 
     docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}
     docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc:latest-amd64
@@ -447,32 +467,38 @@ steps:
 
     docker manifest create gcr.io/$PROJECT_ID/static:nonroot \
        gcr.io/$PROJECT_ID/static:nonroot-amd64 \
-       gcr.io/$PROJECT_ID/static:nonroot-arm64
+       gcr.io/$PROJECT_ID/static:nonroot-arm64 \
+       gcr.io/$PROJECT_ID/static:nonroot-s390x
     docker manifest push gcr.io/$PROJECT_ID/static:nonroot
 
     docker manifest create gcr.io/$PROJECT_ID/static:latest \
        gcr.io/$PROJECT_ID/static:latest-amd64 \
-       gcr.io/$PROJECT_ID/static:latest-arm64
+       gcr.io/$PROJECT_ID/static:latest-arm64 \
+       gcr.io/$PROJECT_ID/static:latest-s390x
     docker manifest push gcr.io/$PROJECT_ID/static:latest
 
     docker manifest create gcr.io/$PROJECT_ID/base:nonroot \
        gcr.io/$PROJECT_ID/base:nonroot-amd64 \
-       gcr.io/$PROJECT_ID/base:nonroot-arm64
+       gcr.io/$PROJECT_ID/base:nonroot-arm64 \
+       gcr.io/$PROJECT_ID/base:nonroot-s390x
     docker manifest push gcr.io/$PROJECT_ID/base:nonroot
 
     docker manifest create gcr.io/$PROJECT_ID/base:latest \
        gcr.io/$PROJECT_ID/base:latest-amd64 \
-       gcr.io/$PROJECT_ID/base:latest-arm64
+       gcr.io/$PROJECT_ID/base:latest-arm64 \
+       gcr.io/$PROJECT_ID/base:latest-s390x
     docker manifest push gcr.io/$PROJECT_ID/base:latest
 
     docker manifest create gcr.io/$PROJECT_ID/base:debug-nonroot \
        gcr.io/$PROJECT_ID/base:debug-nonroot-amd64 \
-       gcr.io/$PROJECT_ID/base:debug-nonroot-arm64
+       gcr.io/$PROJECT_ID/base:debug-nonroot-arm64 \
+       gcr.io/$PROJECT_ID/base:debug-nonroot-s390x
     docker manifest push gcr.io/$PROJECT_ID/base:debug-nonroot
 
     docker manifest create gcr.io/$PROJECT_ID/base:debug \
        gcr.io/$PROJECT_ID/base:debug-amd64 \
-       gcr.io/$PROJECT_ID/base:debug-arm64
+       gcr.io/$PROJECT_ID/base:debug-arm64 \
+       gcr.io/$PROJECT_ID/base:debug-s390x
     docker manifest push gcr.io/$PROJECT_ID/base:debug
 
     docker manifest create gcr.io/$PROJECT_ID/cc:latest \

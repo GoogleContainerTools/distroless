@@ -63,6 +63,7 @@ load(
     )
     for arch in ARCHITECTURES
     for (name, distro) in VERSIONS
+    if "security" in SHA256s[arch][name]
 ]
 
 [
@@ -79,106 +80,110 @@ load(
     if "backports" in SHA256s[arch][name]
 ]
 
+PACKAGES_DEBIAN9 = [
+    "libc6",
+    "base-files",
+    "ca-certificates",
+    "openssl",
+    "libssl1.0.2",
+    "libssl1.1",
+    "libbz2-1.0",
+    "libdb5.3",
+    "libffi6",
+    "libncursesw5",
+    "liblzma5",
+    "libexpat1",
+    "libreadline7",
+    "libtinfo5",
+    "libsqlite3-0",
+    "mime-support",
+    "netbase",
+    "readline-common",
+    "tzdata",
+
+    #c++
+    "libgcc1",
+    "libgomp1",
+    "libstdc++6",
+
+    #java
+    "zlib1g",
+    "libjpeg62-turbo",
+    "libpng16-16",
+    "liblcms2-2",
+    "libfreetype6",
+    "fonts-dejavu-core",
+    "fontconfig-config",
+    "libfontconfig1",
+    "libuuid1",
+    "openjdk-8-jre-headless",
+    "openjdk-8-jdk-headless",
+    "openjdk-11-jre-headless",
+    "openjdk-11-jdk-headless",
+    "libc-bin",
+
+    #python
+    "libpython2.7-minimal",
+    "python2.7-minimal",
+    "libpython2.7-stdlib",
+    "dash",
+    "libc-bin",
+
+    #python3
+    "libmpdec2",
+    "libpython3.5-minimal",
+    "libpython3.5-stdlib",
+    "python3.5-minimal",
+
+    #dotnet
+    "libcurl3",
+    "libgssapi-krb5-2",
+    "libicu57",
+    "liblttng-ust0",
+    "libssl1.0.2",
+    "libunwind8",
+    "libuuid1",
+    "zlib1g",
+    "curl",
+    "libcomerr2",
+    "libidn2-0",
+    "libk5crypto3",
+    "libkrb5-3",
+    "libldap-2.4-2",
+    "libldap-common",
+    "libsasl2-2",
+    "libnghttp2-14",
+    "libpsl5",
+    "librtmp1",
+    "libssh2-1",
+    "libkeyutils1",
+    "libkrb5support0",
+    "libunistring0",
+    "libgnutls30",
+    "libgmp10",
+    "libhogweed4",
+    "libidn11",
+    "libnettle6",
+    "libp11-kit0",
+    "libffi6",
+    "libtasn1-6",
+    "libsasl2-modules-db",
+    "libgcrypt20",
+    "libgpg-error0",
+    "libacl1",
+    "libattr1",
+    "libselinux1",
+    "libpcre3",
+    "libbz2-1.0",
+    "liblzma5",
+]
+
+PACKAGES_S390X_DEBIAN9 = [pkg for pkg in PACKAGES_DEBIAN9 if pkg != "libunwind8"]
+
 [
     dpkg_list(
         name = "package_bundle_" + arch + "_debian9",
-        packages = [
-            "libc6",
-            "base-files",
-            "ca-certificates",
-            "openssl",
-            "libssl1.0.2",
-            "libssl1.1",
-            "libbz2-1.0",
-            "libdb5.3",
-            "libffi6",
-            "libncursesw5",
-            "liblzma5",
-            "libexpat1",
-            "libreadline7",
-            "libtinfo5",
-            "libsqlite3-0",
-            "mime-support",
-            "netbase",
-            "readline-common",
-            "tzdata",
-
-            #c++
-            "libgcc1",
-            "libgomp1",
-            "libstdc++6",
-
-            #java
-            "zlib1g",
-            "libjpeg62-turbo",
-            "libpng16-16",
-            "liblcms2-2",
-            "libfreetype6",
-            "fonts-dejavu-core",
-            "fontconfig-config",
-            "libfontconfig1",
-            "libuuid1",
-            "openjdk-8-jre-headless",
-            "openjdk-8-jdk-headless",
-            "openjdk-11-jre-headless",
-            "openjdk-11-jdk-headless",
-            "libc-bin",
-
-            #python
-            "libpython2.7-minimal",
-            "python2.7-minimal",
-            "libpython2.7-stdlib",
-            "dash",
-            "libc-bin",
-
-            #python3
-            "libmpdec2",
-            "libpython3.5-minimal",
-            "libpython3.5-stdlib",
-            "python3.5-minimal",
-
-            #dotnet
-            "libcurl3",
-            "libgssapi-krb5-2",
-            "libicu57",
-            "liblttng-ust0",
-            "libssl1.0.2",
-            "libunwind8",
-            "libuuid1",
-            "zlib1g",
-            "curl",
-            "libcomerr2",
-            "libidn2-0",
-            "libk5crypto3",
-            "libkrb5-3",
-            "libldap-2.4-2",
-            "libldap-common",
-            "libsasl2-2",
-            "libnghttp2-14",
-            "libpsl5",
-            "librtmp1",
-            "libssh2-1",
-            "libkeyutils1",
-            "libkrb5support0",
-            "libunistring0",
-            "libgnutls30",
-            "libgmp10",
-            "libhogweed4",
-            "libidn11",
-            "libnettle6",
-            "libp11-kit0",
-            "libffi6",
-            "libtasn1-6",
-            "libsasl2-modules-db",
-            "libgcrypt20",
-            "libgpg-error0",
-            "libacl1",
-            "libattr1",
-            "libselinux1",
-            "libpcre3",
-            "libbz2-1.0",
-            "liblzma5",
-        ],
+        packages = PACKAGES_DEBIAN9,
         sources = [
             "@" + arch + "_debian9_security//file:Packages.json",
             "@" + arch + "_debian9_updates//file:Packages.json",
@@ -187,107 +192,126 @@ load(
         ],
     )
     for arch in ARCHITECTURES
+    if "s390x" != arch
 ]
 
 [
     dpkg_list(
-        name = "package_bundle_" + arch + "_debian10",
-        packages = [
-            "libc6",
-            "base-files",
-            "ca-certificates",
-            "openssl",
-            "libssl1.1",
-            "libbz2-1.0",
-            "libdb5.3",
-            "libffi6",
-            "liblzma5",
-            "libexpat1",
-            "libreadline7",
-            "libsqlite3-0",
-            "mime-support",
-            "netbase",
-            "readline-common",
-            "tzdata",
-
-            #c++
-            "libgcc1",
-            "libgomp1",
-            "libstdc++6",
-
-            #java
-            "zlib1g",
-            "libjpeg62-turbo",
-            "libpng16-16",
-            "liblcms2-2",
-            "libfreetype6",
-            "fonts-dejavu-core",
-            "fontconfig-config",
-            "libfontconfig1",
-            "libuuid1",
-            "openjdk-11-jre-headless",
-            "openjdk-11-jdk-headless",
-            "libc-bin",
-
-            #python
-            "dash",
-            "libc-bin",
-            "libpython2.7-minimal",
-            "libpython2.7-stdlib",
-            "python2.7-minimal",
-
-            #python3
-            "libmpdec2",
-            "libpython3.7-minimal",
-            "libpython3.7-stdlib",
-            "libtinfo6",
-            "libuuid1",
-            "libncursesw6",
-            "python3-distutils",
-            "python3.7-minimal",
-
-            #dotnet
-            "libcurl4",
-            "libgssapi-krb5-2",
-            "libicu63",
-            "liblttng-ust0",
-            "libssl1.1",
-            "libunwind8",
-            "libuuid1",
-            "zlib1g",
-            "curl",
-            "libcomerr2",
-            "libidn2-0",
-            "libk5crypto3",
-            "libkrb5-3",
-            "libldap-2.4-2",
-            "libldap-common",
-            "libsasl2-2",
-            "libnghttp2-14",
-            "libpsl5",
-            "librtmp1",
-            "libssh2-1",
-            "libkeyutils1",
-            "libkrb5support0",
-            "libunistring2",
-            "libgnutls30",
-            "libgmp10",
-            "libhogweed4",
-            "libidn11",
-            "libnettle6",
-            "libp11-kit0",
-            "libffi6",
-            "libtasn1-6",
-            "libsasl2-modules-db",
-            "libgcrypt20",
-            "libgpg-error0",
-            "libacl1",
-            "libattr1",
-            "libselinux1",
-            "libpcre3",
-            "libbz2-1.0",
-            "liblzma5",
+        name = "package_bundle_" + arch + "_debian9",
+        packages = PACKAGES_S390X_DEBIAN9,
+        sources = [
+            "@" + arch + "_debian9_updates//file:Packages.json",
+            "@" + arch + "_debian9_backports//file:Packages.json",
+            "@" + arch + "_debian9//file:Packages.json",
         ],
+    )
+    for arch in ARCHITECTURES
+    if "s390x" == arch
+]
+
+PACKAGES_DEBIAN10 = [
+    "libc6",
+    "base-files",
+    "ca-certificates",
+    "openssl",
+    "libssl1.1",
+    "libbz2-1.0",
+    "libdb5.3",
+    "libffi6",
+    "liblzma5",
+    "libexpat1",
+    "libreadline7",
+    "libsqlite3-0",
+    "mime-support",
+    "netbase",
+    "readline-common",
+    "tzdata",
+
+    #c++
+    "libgcc1",
+    "libgomp1",
+    "libstdc++6",
+
+    #java
+    "zlib1g",
+    "libjpeg62-turbo",
+    "libpng16-16",
+    "liblcms2-2",
+    "libfreetype6",
+    "fonts-dejavu-core",
+    "fontconfig-config",
+    "libfontconfig1",
+    "libuuid1",
+    "openjdk-11-jre-headless",
+    "openjdk-11-jdk-headless",
+    "libc-bin",
+
+    #python
+    "dash",
+    "libc-bin",
+    "libpython2.7-minimal",
+    "libpython2.7-stdlib",
+    "python2.7-minimal",
+
+    #python3
+    "libmpdec2",
+    "libpython3.7-minimal",
+    "libpython3.7-stdlib",
+    "libtinfo6",
+    "libuuid1",
+    "libncursesw6",
+    "python3-distutils",
+    "python3.7-minimal",
+
+    #dotnet
+    "libcurl4",
+    "libgssapi-krb5-2",
+    "libicu63",
+    "liblttng-ust0",
+    "libssl1.1",
+    "libunwind8",
+    "libuuid1",
+    "zlib1g",
+    "curl",
+    "libcomerr2",
+    "libidn2-0",
+    "libk5crypto3",
+    "libkrb5-3",
+    "libldap-2.4-2",
+    "libldap-common",
+    "libsasl2-2",
+    "libnghttp2-14",
+    "libpsl5",
+    "librtmp1",
+    "libssh2-1",
+    "libkeyutils1",
+    "libkrb5support0",
+    "libunistring2",
+    "libgnutls30",
+    "libgmp10",
+    "libhogweed4",
+    "libidn11",
+    "libnettle6",
+    "libp11-kit0",
+    "libffi6",
+    "libtasn1-6",
+    "libsasl2-modules-db",
+    "libgcrypt20",
+    "libgpg-error0",
+    "libacl1",
+    "libattr1",
+    "libselinux1",
+    "libpcre3",
+    "libbz2-1.0",
+    "liblzma5",
+]
+
+PACKAGES_S390X_DEBIAN10 = [pkg for pkg in PACKAGES_DEBIAN10 if pkg != "libunwind8"]
+
+[
+    dpkg_list(
+        name = "package_bundle_" + arch + "_debian10",
+        packages = PACKAGES_DEBIAN10,
         sources = [
             "@" + arch + "_debian10_security//file:Packages.json",
             "@" + arch + "_debian10_updates//file:Packages.json",
@@ -295,6 +319,21 @@ load(
         ],
     )
     for arch in ARCHITECTURES
+    if "s390x" != arch
+]
+
+[
+    dpkg_list(
+        name = "package_bundle_" + arch + "_debian10",
+        packages = PACKAGES_S390X_DEBIAN10,
+        sources = [
+            "@" + arch + "_debian10_security//file:Packages.json",
+            "@" + arch + "_debian10_updates//file:Packages.json",
+            "@" + arch + "_debian10//file:Packages.json",
+        ],
+    )
+    for arch in ARCHITECTURES
+    if "s390x" == arch
 ]
 
 # For Jetty
@@ -408,6 +447,13 @@ http_file(
     executable = True,
     sha256 = "141adb1b625a6f44c4b114f76b4387b4ea4f7ab802b88eb40e0d2f6adcccb1c3",
     urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv8l"],
+)
+
+http_file(
+    name = "busybox_s390x",
+    executable = True,
+    sha256 = "48d13ac057046b95ba58921958be639cc3a179ac888cdd65aacd7a69139aa857",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-s390x"],
 )
 
 # Docker rules.

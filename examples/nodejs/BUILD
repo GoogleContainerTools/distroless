@@ -7,6 +7,8 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("//base:distro.bzl", "DISTRO_SUFFIXES")
 load("//:checksums.bzl", "ARCHITECTURES")
 
+ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
+
 # These examples are adapted from:
 # https://howtonode.org/hello-node
 [

@@ -32,6 +32,8 @@ DISTRO_VERSION = {
     "_debian10": "3.7",
 }
 
+ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
+
 [
     container_image(
         name = ("python3" if (not mode) else mode[1:]) + "_" + arch + distro_suffix,
