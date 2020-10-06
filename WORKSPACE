@@ -310,7 +310,7 @@ http_archive(
 # Node (https://nodejs.org/en/about/releases/)
 # Follow Node's maintainence schedule and support all LTS versions that are not end of life
 http_archive(
-    name = "nodejs10",
+    name = "nodejs10_amd64",
     build_file = "//nodejs:BUILD.nodejs",
     sha256 = "aa7e9e1d8abcc169119bf5c56ede515689f2644ccc4d40ca0fc33756a3deb1f7",
     strip_prefix = "node-v10.22.0-linux-x64/",
@@ -319,7 +319,7 @@ http_archive(
 )
 
 http_archive(
-    name = "nodejs12",
+    name = "nodejs12_amd64",
     build_file = "//nodejs:BUILD.nodejs",
     sha256 = "8cdacecc43c35bcfa5474c793b9e7a01835e4171264f7b13f3e57093371872e9",
     strip_prefix = "node-v12.18.3-linux-x64/",
@@ -328,12 +328,39 @@ http_archive(
 )
 
 http_archive(
-    name = "nodejs14",
+    name = "nodejs14_amd64",
     build_file = "//nodejs:BUILD.nodejs",
     sha256 = "5e2c59200c86c37a0c800fe2cd2cfabc459f8a3ae3f83c3611483c485ad32e4f",
     strip_prefix = "node-v14.6.0-linux-x64/",
     type = "tar.gz",
     urls = ["https://nodejs.org/dist/v14.6.0/node-v14.6.0-linux-x64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs10_arm64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "8e59eb6865f704785a9aa53ccf9f4cb10412caaf778cee617241a0d0684e008d",
+    strip_prefix = "node-v10.22.0-linux-arm64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v10.22.0/node-v10.22.0-linux-arm64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs12_arm64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "f2b8b7f34966a03f03fcd89fa4924fb97ea680eae4c4e02ff1aafd9ea89ecad8",
+    strip_prefix = "node-v12.18.3-linux-arm64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v12.18.3/node-v12.18.3-linux-arm64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs14_arm64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "eb4f98efe22057a831415c2367416330878f0e1ad9a9bb5c25a6631031588075",
+    strip_prefix = "node-v14.6.0-linux-arm64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v14.6.0/node-v14.6.0-linux-arm64.tar.gz"],
 )
 
 http_archive(

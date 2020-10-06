@@ -193,18 +193,31 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    bazel run //nodejs:nodejs10_debian9
-    bazel run //nodejs:nodejs10_debug_debian9
-    bazel run //nodejs:nodejs10_debian10
-    bazel run //nodejs:nodejs10_debug_debian10
-    bazel run //nodejs:nodejs12_debian9
-    bazel run //nodejs:nodejs12_debug_debian9
-    bazel run //nodejs:nodejs12_debian10
-    bazel run //nodejs:nodejs12_debug_debian10
-    bazel run //nodejs:nodejs14_debian9
-    bazel run //nodejs:nodejs14_debug_debian9
-    bazel run //nodejs:nodejs14_debian10
-    bazel run //nodejs:nodejs14_debug_debian10
+    bazel run //nodejs:nodejs10_amd64_debian9
+    bazel run //nodejs:nodejs10_debug_amd64_debian9
+    bazel run //nodejs:nodejs10_amd64_debian10
+    bazel run //nodejs:nodejs10_debug_amd64_debian10
+    bazel run //nodejs:nodejs12_amd64_debian9
+    bazel run //nodejs:nodejs12_debug_amd64_debian9
+    bazel run //nodejs:nodejs12_amd64_debian10
+    bazel run //nodejs:nodejs12_debug_amd64_debian10
+    bazel run //nodejs:nodejs14_amd64_debian9
+    bazel run //nodejs:nodejs14_debug_amd64_debian9
+    bazel run //nodejs:nodejs14_amd64_debian10
+    bazel run //nodejs:nodejs14_debug_amd64_debian10
+
+    bazel run //nodejs:nodejs10_arm64_debian9
+    bazel run //nodejs:nodejs10_debug_arm64_debian9
+    bazel run //nodejs:nodejs10_arm64_debian10
+    bazel run //nodejs:nodejs10_debug_arm64_debian10
+    bazel run //nodejs:nodejs12_arm64_debian9
+    bazel run //nodejs:nodejs12_debug_arm64_debian9
+    bazel run //nodejs:nodejs12_arm64_debian10
+    bazel run //nodejs:nodejs12_debug_arm64_debian10
+    bazel run //nodejs:nodejs14_arm64_debian9
+    bazel run //nodejs:nodejs14_debug_arm64_debian9
+    bazel run //nodejs:nodejs14_arm64_debian10
+    bazel run //nodejs:nodejs14_debug_arm64_debian10
 - name: docker
   entrypoint: sh
   args:
@@ -213,30 +226,34 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    docker tag bazel/nodejs:nodejs14_debian9        gcr.io/$PROJECT_ID/nodejs:latest
-    docker tag bazel/nodejs:nodejs10_debian9        gcr.io/$PROJECT_ID/nodejs:10
-    docker tag bazel/nodejs:nodejs12_debian9        gcr.io/$PROJECT_ID/nodejs:12
-    docker tag bazel/nodejs:nodejs14_debian9        gcr.io/$PROJECT_ID/nodejs:14
-    docker tag bazel/nodejs:nodejs14_debug_debian9  gcr.io/$PROJECT_ID/nodejs:debug
-    docker tag bazel/nodejs:nodejs10_debug_debian9  gcr.io/$PROJECT_ID/nodejs:10-debug
-    docker tag bazel/nodejs:nodejs12_debug_debian9  gcr.io/$PROJECT_ID/nodejs:12-debug
-    docker tag bazel/nodejs:nodejs14_debug_debian9  gcr.io/$PROJECT_ID/nodejs:14-debug
-    docker tag bazel/nodejs:nodejs14_debian9        gcr.io/$PROJECT_ID/nodejs-debian9:latest
-    docker tag bazel/nodejs:nodejs10_debian9        gcr.io/$PROJECT_ID/nodejs-debian9:10
-    docker tag bazel/nodejs:nodejs12_debian9        gcr.io/$PROJECT_ID/nodejs-debian9:12
-    docker tag bazel/nodejs:nodejs14_debian9        gcr.io/$PROJECT_ID/nodejs-debian9:14
-    docker tag bazel/nodejs:nodejs14_debug_debian9  gcr.io/$PROJECT_ID/nodejs-debian9:debug
-    docker tag bazel/nodejs:nodejs10_debug_debian9  gcr.io/$PROJECT_ID/nodejs-debian9:10-debug
-    docker tag bazel/nodejs:nodejs12_debug_debian9  gcr.io/$PROJECT_ID/nodejs-debian9:12-debug
-    docker tag bazel/nodejs:nodejs14_debug_debian9  gcr.io/$PROJECT_ID/nodejs-debian9:14-debug
-    docker tag bazel/nodejs:nodejs14_debian10       gcr.io/$PROJECT_ID/nodejs-debian10:latest
-    docker tag bazel/nodejs:nodejs10_debian10       gcr.io/$PROJECT_ID/nodejs-debian10:10
-    docker tag bazel/nodejs:nodejs12_debian10       gcr.io/$PROJECT_ID/nodejs-debian10:12
-    docker tag bazel/nodejs:nodejs14_debian10       gcr.io/$PROJECT_ID/nodejs-debian10:14
-    docker tag bazel/nodejs:nodejs14_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:debug
-    docker tag bazel/nodejs:nodejs10_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:10-debug
-    docker tag bazel/nodejs:nodejs12_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:12-debug
-    docker tag bazel/nodejs:nodejs14_debug_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:14-debug
+    docker tag bazel/nodejs:nodejs14_amd64_debian9        gcr.io/$PROJECT_ID/nodejs:latest-amd64
+    docker tag bazel/nodejs:nodejs10_amd64_debian9        gcr.io/$PROJECT_ID/nodejs:10
+    docker tag bazel/nodejs:nodejs12_amd64_debian9        gcr.io/$PROJECT_ID/nodejs:12
+    docker tag bazel/nodejs:nodejs14_amd64_debian9        gcr.io/$PROJECT_ID/nodejs:14
+    docker tag bazel/nodejs:nodejs14_debug_amd64_debian9  gcr.io/$PROJECT_ID/nodejs:debug-amd64
+    docker tag bazel/nodejs:nodejs10_debug_amd64_debian9  gcr.io/$PROJECT_ID/nodejs:10-debug
+    docker tag bazel/nodejs:nodejs12_debug_amd64_debian9  gcr.io/$PROJECT_ID/nodejs:12-debug
+    docker tag bazel/nodejs:nodejs14_debug_amd64_debian9  gcr.io/$PROJECT_ID/nodejs:14-debug
+    docker tag bazel/nodejs:nodejs14_amd64_debian9        gcr.io/$PROJECT_ID/nodejs-debian9:latest
+    docker tag bazel/nodejs:nodejs10_amd64_debian9        gcr.io/$PROJECT_ID/nodejs-debian9:10
+    docker tag bazel/nodejs:nodejs12_amd64_debian9        gcr.io/$PROJECT_ID/nodejs-debian9:12
+    docker tag bazel/nodejs:nodejs14_amd64_debian9        gcr.io/$PROJECT_ID/nodejs-debian9:14
+    docker tag bazel/nodejs:nodejs14_debug_amd64_debian9  gcr.io/$PROJECT_ID/nodejs-debian9:debug
+    docker tag bazel/nodejs:nodejs10_debug_amd64_debian9  gcr.io/$PROJECT_ID/nodejs-debian9:10-debug
+    docker tag bazel/nodejs:nodejs12_debug_amd64_debian9  gcr.io/$PROJECT_ID/nodejs-debian9:12-debug
+    docker tag bazel/nodejs:nodejs14_debug_amd64_debian9  gcr.io/$PROJECT_ID/nodejs-debian9:14-debug
+    docker tag bazel/nodejs:nodejs14_amd64_debian10       gcr.io/$PROJECT_ID/nodejs-debian10:latest
+    docker tag bazel/nodejs:nodejs10_amd64_debian10       gcr.io/$PROJECT_ID/nodejs-debian10:10
+    docker tag bazel/nodejs:nodejs12_amd64_debian10       gcr.io/$PROJECT_ID/nodejs-debian10:12
+    docker tag bazel/nodejs:nodejs14_amd64_debian10       gcr.io/$PROJECT_ID/nodejs-debian10:14
+    docker tag bazel/nodejs:nodejs14_debug_amd64_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:debug
+    docker tag bazel/nodejs:nodejs10_debug_amd64_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:10-debug
+    docker tag bazel/nodejs:nodejs12_debug_amd64_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:12-debug
+    docker tag bazel/nodejs:nodejs14_debug_amd64_debian10 gcr.io/$PROJECT_ID/nodejs-debian10:14-debug
+
+    docker tag bazel/nodejs:nodejs14_arm64_debian9        gcr.io/$PROJECT_ID/nodejs:latest-arm64
+    docker tag bazel/nodejs:nodejs14_debug_arm64_debian9  gcr.io/$PROJECT_ID/nodejs:debug-arm64
+
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
@@ -368,11 +385,13 @@ steps:
     docker push 'gcr.io/$PROJECT_ID/python2.7-debian9:debug'
     docker push 'gcr.io/$PROJECT_ID/python2.7-debian10:latest'
     docker push 'gcr.io/$PROJECT_ID/python2.7-debian10:debug'
-    docker push 'gcr.io/$PROJECT_ID/nodejs:latest'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:latest-amd64'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:latest-arm64'
     docker push 'gcr.io/$PROJECT_ID/nodejs:10'
     docker push 'gcr.io/$PROJECT_ID/nodejs:12'
     docker push 'gcr.io/$PROJECT_ID/nodejs:14'
-    docker push 'gcr.io/$PROJECT_ID/nodejs:debug'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:debug-amd64'
+    docker push 'gcr.io/$PROJECT_ID/nodejs:debug-arm64'
     docker push 'gcr.io/$PROJECT_ID/nodejs:10-debug'
     docker push 'gcr.io/$PROJECT_ID/nodejs:12-debug'
     docker push 'gcr.io/$PROJECT_ID/nodejs:14-debug'
@@ -496,3 +515,13 @@ steps:
        gcr.io/$PROJECT_ID/python2.7:debug-amd64 \
        gcr.io/$PROJECT_ID/python2.7:debug-arm64
     docker manifest push gcr.io/$PROJECT_ID/python2.7:debug
+
+    docker manifest create gcr.io/$PROJECT_ID/nodejs:latest \
+       gcr.io/$PROJECT_ID/nodejs:latest-amd64 \
+       gcr.io/$PROJECT_ID/nodejs:latest-arm64
+    docker manifest push gcr.io/$PROJECT_ID/nodejs:latest
+
+    docker manifest create gcr.io/$PROJECT_ID/nodejs:debug \
+       gcr.io/$PROJECT_ID/nodejs:debug-amd64 \
+       gcr.io/$PROJECT_ID/nodejs:debug-arm64
+    docker manifest push gcr.io/$PROJECT_ID/nodejs:debug
