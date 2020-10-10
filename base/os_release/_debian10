@@ -1,0 +1,8 @@
+PRETTY_NAME="Distroless"
+NAME="Debian GNU/Linux"
+ID="debian"
+VERSION_ID="10"
+VERSION="Debian GNU/Linux 10 (buster)"
+HOME_URL="https://github.com/GoogleContainerTools/distroless"
+SUPPORT_URL="https://github.com/GoogleContainerTools/distroless/blob/master/README.md"
+BUG_REPORT_URL="https://github.com/GoogleContainerTools/distroless/issues/new"
