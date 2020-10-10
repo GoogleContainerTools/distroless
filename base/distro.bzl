@@ -1,7 +1,7 @@
-load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages")
-load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages")
-load("@package_bundle_arm64_debian9//file:packages.bzl", packages_arm64_debian9 = "packages")
-load("@package_bundle_arm64_debian10//file:packages.bzl", packages_arm64_debian10 = "packages")
+load("@packages_amd64_debian9//debs:deb_packages.bzl", "packages_amd64_debian9")
+load("@packages_arm64_debian9//debs:deb_packages.bzl", "packages_arm64_debian9")
+load("@packages_amd64_debian10//debs:deb_packages.bzl", "packages_amd64_debian10")
+load("@packages_arm64_debian10//debs:deb_packages.bzl", "packages_arm64_debian10")
 
 DISTRO_SUFFIXES = ("_debian9", "_debian10")
 

@@ -1,6 +1,17 @@
+load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
+load("@rules_deb_packages//:update_deb_packages.bzl", "update_deb_packages")
+
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
+update_deb_packages(
+    name = "update_deb_packages",
+    pgp_keys = [
+        "@debian10_archive_key//file",
+        "@debian10_security_archive_key//file",
+        "@debian9_archive_key//file",
+        "@debian9_security_archive_key//file",
+    ],
+)
 
 container_bundle(
     name = "all",
