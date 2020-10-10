@@ -1,6 +1,6 @@
 """ Packages from debian 9. 
 
-Run bazel run update_dep_dependencies to update versions
+Run bazel run update_deb_packages to update versions
 """
 
 load("@rules_deb_packages//:deb_packages.bzl", "deb_packages")
