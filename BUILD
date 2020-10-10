@@ -5,6 +5,12 @@ package(default_visibility = ["//visibility:public"])
 
 update_deb_packages(
     name = "update_deb_packages",
+    bzl_files = [
+        "packages_amd64_debian9.bzl",
+        "packages_arm64_debian9.bzl",
+        "packages_amd64_debian10.bzl",
+        "packages_arm64_debian10.bzl",
+    ],
     pgp_keys = [
         "@debian10_archive_key//file",
         "@debian10_security_archive_key//file",
