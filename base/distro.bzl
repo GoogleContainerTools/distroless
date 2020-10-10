@@ -7,6 +7,8 @@ load("@packages_arm64_debian9//debs:deb_upstream_versions.bzl", "packages_arm64_
 load("@packages_amd64_debian10//debs:deb_upstream_versions.bzl", "packages_amd64_debian10_upstream_versions")
 load("@packages_arm64_debian10//debs:deb_upstream_versions.bzl", "packages_arm64_debian10_upstream_versions")
 
+ARCHITECTURES = ["amd64", "arm64"]
+
 DISTRO_SUFFIXES = ("_debian9", "_debian10")
 
 DISTRO_PACKAGES = {
@@ -28,16 +30,5 @@ DISTRO_VERSIONS = {
     "arm64": {
         "_debian9": packages_arm64_debian9_upstream_versions,
         "_debian10": packages_arm64_debian10_upstream_versions,
-    },
-}
-
-DISTRO_REPOSITORY = {
-    "amd64": {
-        "_debian9": "@amd64_debian9",
-        "_debian10": "@amd64_debian10",
-    },
-    "arm64": {
-        "_debian9": "@arm64_debian9",
-        "_debian10": "@arm64_debian10",
     },
 }

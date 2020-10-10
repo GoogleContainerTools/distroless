@@ -3,99 +3,29 @@
 set -o errexit
 set -o xtrace
 
-cp checksums.bzl checksums.bzl~
-cp package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~
-cp package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~
-cp package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~
-cp package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~
-
-YEAR=`date +"%Y"`
-MONTH=`date +"%m"`
-
-# Fetch all the latest snapshot versions for the current month
-
-DEBIAN_SNAPSHOT=`curl -s "https://snapshot.debian.org/archive/debian/?year=$YEAR;month=$MONTH" 2>&1 | grep -oE "[0-9]+T[0-9]+Z" | tail -n1`
-DEBIAN_SECURITY_SNAPSHOT=`curl -s "https://snapshot.debian.org/archive/debian-security/?year=$YEAR;month=$MONTH" 2>&1 | grep -oE "[0-9]+T[0-9]+Z" | tail -n1`
-
-if [ -z "$DEBIAN_SNAPSHOT" ]
-then
-    echo "No debian snapshot version found"; 
-    exit 0
-fi
-
-if [ -z "$DEBIAN_SECURITY_SNAPSHOT" ]
-then
-    echo "No debian security snapshot version found"; 
-    exit 0
-fi
-
-cat > checksums.bzl <<EOF
-# WARNING!!!
-# DO NOT MODIFY THIS FILE DIRECTLY.
-# TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
-
-ARCHITECTURES = ["amd64", "arm64"]
-
-VERSIONS = [
-    ("debian9", "stretch"),
-    ("debian10", "buster"),
-]
-
-DEBIAN_SNAPSHOT = "$DEBIAN_SNAPSHOT"
-
-DEBIAN_SECURITY_SNAPSHOT = "$DEBIAN_SECURITY_SNAPSHOT"
-
-SHA256s = {
-    "amd64": {
-        "debian9": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/stretch/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
-        "debian10": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
-    },
-    "arm64": {
-        "debian9": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/stretch/updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
-        "debian10": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
-    },
-}
-EOF
+cp WORKSPACE WORKSPACE~
+cp packages_amd64_debian9.bzl packages_amd64_debian9.bzl~
+cp packages_amd64_debian10.bzl packages_amd64_debian10.bzl~
+cp packages_arm64_debian9.bzl packages_arm64_debian9.bzl~
+cp packages_arm64_debian10.bzl packages_arm64_debian10.bzl~
 
 # Rebuild package set
 
-bazel clean
-bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
-bazel build --host_force_python=PY2 @package_bundle_amd64_debian9//file:packages.bzl
-bazel build --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
-bazel build --host_force_python=PY2 @package_bundle_arm64_debian9//file:packages.bzl
-bazel build --host_force_python=PY2 @package_bundle_arm64_debian10//file:packages.bzl
+bazel run update_deb_packages
 
 # Check if any of the version lock files are updated
 
-if diff -w package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~ &&
-	diff -w package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~ &&
-	diff -w package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~ &&
-	diff -w package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~; then
+if diff -w WORKSPACE WORKSPACE~ &&
+    diff -w packages_amd64_debian9.bzl packages_amd64_debian9.bzl~ &&
+	diff -w packages_amd64_debian10.bzl packages_amd64_debian10.bzl~ &&
+	diff -w packages_arm64_debian9.bzl packages_arm64_debian9.bzl~ &&
+	diff -w packages_arm64_debian10.bzl packages_arm64_debian10.bzl~; then
     echo "No changes detected to package_bundle versions."
-    mv checksums.bzl~ checksums.bzl
-    mv package_bundle_amd64_debian9.versions~ package_bundle_amd64_debian9.versions
-    mv package_bundle_amd64_debian10.versions~ package_bundle_amd64_debian10.versions
-    mv package_bundle_arm64_debian9.versions~ package_bundle_arm64_debian9.versions
-    mv package_bundle_arm64_debian10.versions~ package_bundle_arm64_debian10.versions
+    mv WORKSPACE~ WORKSPACE
+    mv packages_amd64_debian9.bzl~ packages_amd64_debian9.bzl
+    mv packages_amd64_debian10.bzl~ packages_amd64_debian10.bzl
+    mv packages_arm64_debian9.bzl~ packages_arm64_debian9.bzl
+    mv packages_arm64_debian10.bzl~ packages_arm64_debian10.bzl
 else
     echo "Changes detected to package_bundle version files. Please update snapshots."
     rm *~

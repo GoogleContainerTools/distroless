@@ -1,8 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("//base:distro.bzl", "DISTRO_SUFFIXES")
-load("//:checksums.bzl", "ARCHITECTURES")
+load("//base:distro.bzl", "ARCHITECTURES", "DISTRO_SUFFIXES")
 
 NODEJS_MAJOR_VERISONS = ("10", "12", "14")
 

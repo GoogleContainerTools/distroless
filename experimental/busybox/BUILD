@@ -1,6 +1,6 @@
 package(default_visibility = ["//base:__subpackages__"])
 
-load("//:checksums.bzl", "ARCHITECTURES")
+load("//base:distro.bzl", "ARCHITECTURES")
 load(":commands.bzl", "BUSYBOX_COMMANDS")
 
 # This works for all architectures because it is just files.
