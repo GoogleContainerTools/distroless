@@ -4,15 +4,8 @@ load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("@package_bundle_amd64_debian9//file:packages.bzl", versions_amd64_debian9 = "versions")
-load("@package_bundle_amd64_debian10//file:packages.bzl", versions_amd64_debian10 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
-
-DISTRO_VERSIONS = {
-    "_debian9": versions_amd64_debian9,
-    "_debian10": versions_amd64_debian10,
-}
 
 [
     container_image(
@@ -56,7 +49,7 @@ DISTRO_VERSIONS = {
         "-jar",
     ],
     env = {
-        "JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
+        "JAVA_VERSION": "",  # FIXME PMY jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
     },
     symlinks = {
         "/usr/bin/java": java_executable_path,

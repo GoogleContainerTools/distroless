@@ -42,7 +42,7 @@ def distro_components(distro_suffix):
                     # directory with specific permissions.
                     ":tmp.tar",
                     ":nsswitch.tar",
-                    DISTRO_REPOSITORY[arch][distro_suffix] + "//file:os_release.tar",
+                    # DISTRO_REPOSITORY[arch][distro_suffix] + "//file:os_release.tar", FIXME PMY: this is strange....
                     ":cacerts_" + arch + distro_suffix + ".tar",
                 ],
                 user = "%d" % uid,
