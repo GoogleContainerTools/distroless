@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES", "DISTRO_VERSIONS")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
@@ -49,7 +49,7 @@ load("//java:jre_ver.bzl", "jre_ver")
         "-jar",
     ],
     env = {
-        "JAVA_VERSION": "",  # FIXME PMY jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
+        "JAVA_VERSION": jre_ver(DISTRO_VERSIONS["amd64"][distro_suffix][java_debs[0]]),
     },
     symlinks = {
         "/usr/bin/java": java_executable_path,
