@@ -12,7 +12,6 @@ steps:
     #!/bin/sh
     set -o errexit
     set -o xtrace
-    bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
 
     bazel run --host_force_python=PY2 //java:java_base_debian9
     bazel run --host_force_python=PY2 //java:java_base_debug_debian9

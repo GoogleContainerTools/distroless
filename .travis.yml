@@ -17,7 +17,6 @@ install:
 
 script:
   - bazel clean --curses=no
-  - bazel build --cpu=${CPU} --curses=no //package_manager:dpkg_parser.par
   - bazel build --cpu=${CPU} --curses=no //...
   # Build all targets tagged with our architecture:
   - bazel build --cpu=${CPU} --curses=no $(bazel query 'attr("tags", "'${GOARCH}'", "//...")')

@@ -23,6 +23,5 @@ find . -name "*.py" | xargs pylint --disable=R,C
 
 # Bazel build and test
 bazel clean --curses=no
-bazel build --curses=no //package_manager:dpkg_parser.par
 bazel build --curses=no //...
 bazel test --curses=no --test_output=errors --test_timeout=900 //...

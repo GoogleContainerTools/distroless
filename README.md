@@ -110,8 +110,6 @@ This should expose the Express application to your localhost:3000
 
 For full documentation on how to use bazel to generate Docker images, see the [bazelbuild/rules_docker](http://github.com/bazelbuild/rules_docker) repository.
 
-For documentation and examples on how to use the bazel package manager rules, see [./package_manager](./package_manager)
-
 Examples can be found in this repository in the [examples](examples/) directory.
 
 #### Examples with Bazel
