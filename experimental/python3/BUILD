@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("//:checksums.bzl", "ARCHITECTURES")
+load("//:checksums.bzl", "BASE_ARCHITECTURES")
 load("//base:base.bzl", "NONROOT")
 
 # distribution-specific deb dependencies
@@ -31,8 +31,6 @@ DISTRO_VERSION = {
     "_debian9": "3.5",
     "_debian10": "3.7",
 }
-
-ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
 
 [
     container_image(
@@ -70,7 +68,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
         "",
         ":debug",
     ]
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -87,7 +85,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
         "",
         ":debug",
     ]
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -102,7 +100,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -118,7 +116,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for user in [
         "",
         "_nonroot",
@@ -136,7 +134,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for user in [
         "",
         "_nonroot",

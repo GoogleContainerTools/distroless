@@ -3,15 +3,16 @@
 # TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
 
 ARCHITECTURES = ["amd64", "arm64", "s390x"]
+BASE_ARCHITECTURES = ["amd64", "arm64"]
 
 VERSIONS = [
     ("debian9", "stretch"),
     ("debian10", "buster"),
 ]
 
-DEBIAN_SNAPSHOT = "20201008T150049Z"
+DEBIAN_SNAPSHOT = "20201012T084255Z"
 
-DEBIAN_SECURITY_SNAPSHOT = "20201007T225255Z"
+DEBIAN_SECURITY_SNAPSHOT = "20201011T134029Z"
 
 SHA256s = {
     "amd64": {
@@ -19,12 +20,12 @@ SHA256s = {
             "main": "90ff32c8226b57b879bf6b8c3cfda15e24f2b8c22de28426872f162db4e8d444",
             "backports": "d974ef641167c420730833c1ffc7256f44eed36af787f5efdbbbc0d4c5b47a2e",
             "updates": "b702e0888f32074ee212accbf56c732beacf0d9f570ca082a9c859b23a2596e9",
-            "security": "315afa268050019ee0cf0eae6019c1631cfeb8806873a41ff8f3b4a13665dc0e",
+            "security": "f1c1986b3737835bb218a295572db155062e20ebeebd6bbf46b2d74e2b8bcea8",
         },
         "debian10": {
             "main": "369d45f6c138af98d8ea8a598564dcabc1f6991ac777fb2d351e846f195cdc13",
             "updates": "80f0b86ca11476ea485625c3dff1505285f249f5603dd9458415707dacc5fb71",
-            "security": "ae6fbe43ba4eadd06fb0e88427bcbf71fc8c3a0ad6da45eb53c6fbe8650eb645",
+            "security": "b9b739373933c5b244cd6b5b55a9ffd64b6b267f690013e5cea81acb9ead8524",
         },
     },
     "arm64": {
@@ -32,12 +33,12 @@ SHA256s = {
             "main": "881d279ca3536ce84dbe9073a150ec2dfba898cb4c5010cbd50d07ba54942b3e",
             "backports": "b88b2b870ea716776c817a887be8f1b3fcb33e33f017f01798d0328d75787d2a",
             "updates": "df9eadde7ef2ea7c7d3c07417e4924aece7bf3ccad8575e13ae68c71dcaa1d40",
-            "security": "7e5e8da91e183de098ec00ad702351b95e9f840b20551c9889a3f37c5ed83341",
+            "security": "61f5517bae9ec4af0eee105c785acb4413bec1058dcbb3402c4af0b440eed7d2",
         },
         "debian10": {
             "main": "62a7e0c34f45a2524024ef4871e48f061f8d57d54e6f9d75d2aa2bff55ca91b8",
             "updates": "dbaa8fd29f1fdd677468b6ec1dd6a0f68bcc037ae4a43f3550ef3435d3e651fd",
-            "security": "f066500368d61b69c0b0cb837f7c1756d376ad6c5ad5d9d79d383bf8feee8ac9",
+            "security": "ca58beb4004a640021b75e7cda710ff88ae0e7091d7f14d53521b75c01bc116a",
         },
     },
     "s390x": {

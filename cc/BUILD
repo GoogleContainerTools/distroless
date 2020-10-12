@@ -2,9 +2,7 @@ package(default_visibility = ["//visibility:public"])
 
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("//:checksums.bzl", "ARCHITECTURES")
-
-ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
+load("//:checksums.bzl", "BASE_ARCHITECTURES")
 
 # An image for C/C++ programs
 [
@@ -22,7 +20,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
         "",
         ":debug",
     ]
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for user in [
         "root",
         "nonroot",

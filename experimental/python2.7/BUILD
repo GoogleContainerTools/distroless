@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("//:checksums.bzl", "ARCHITECTURES")
+load("//:checksums.bzl", "BASE_ARCHITECTURES")
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
@@ -16,8 +16,6 @@ DISTRO_DEBS = {
         "libtinfo6",
     ],
 }
-
-ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
 
 [
     container_image(
@@ -57,7 +55,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             ":ld_so_" + arch + "_cache.tar",
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for mode in [
         "",
         ":debug",
@@ -75,7 +73,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -91,7 +89,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
 ]
 
 [
@@ -105,7 +103,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
 ]
 
 [
@@ -116,7 +114,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
         cmd = "$(location :make_ld_so_cache_tar.py) $(SRCS) $(OUTS)",
         tools = [":make_ld_so_cache_tar.py"],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
 ]
 
 [
@@ -129,7 +127,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
 ]
 
 [
@@ -144,7 +142,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
         ],
         tools = [":generate_ldconfig_" + arch + "_cache"],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
 ]
 
 [
@@ -164,5 +162,5 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
 ]

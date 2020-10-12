@@ -5,9 +5,7 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("//base:distro.bzl", "DISTRO_SUFFIXES")
-load("//:checksums.bzl", "ARCHITECTURES")
-
-ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
+load("//:checksums.bzl", "BASE_ARCHITECTURES")
 
 # These examples are adapted from:
 # https://howtonode.org/hello-node
@@ -19,7 +17,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
         cmd = ["hello.js"],
         files = [":hello.js"],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -32,7 +30,7 @@ ARCHITECTURES = [arch for arch in ARCHITECTURES if arch != "s390x"]
         files = [":hello_http.js"],
         ports = ["8000"],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -48,6 +46,6 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
             "manual",
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in BASE_ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]

@@ -22,6 +22,7 @@ load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
 load(
     "//:checksums.bzl",
     "ARCHITECTURES",
+    "BASE_ARCHITECTURES",
     "DEBIAN_SECURITY_SNAPSHOT",
     "DEBIAN_SNAPSHOT",
     "SHA256s",
@@ -191,8 +192,7 @@ PACKAGES_S390X_DEBIAN9 = [pkg for pkg in PACKAGES_DEBIAN9 if pkg != "libunwind8"
             "@" + arch + "_debian9//file:Packages.json",
         ],
     )
-    for arch in ARCHITECTURES
-    if "s390x" != arch
+    for arch in BASE_ARCHITECTURES
 ]
 
 [
@@ -205,8 +205,7 @@ PACKAGES_S390X_DEBIAN9 = [pkg for pkg in PACKAGES_DEBIAN9 if pkg != "libunwind8"
             "@" + arch + "_debian9//file:Packages.json",
         ],
     )
-    for arch in ARCHITECTURES
-    if "s390x" == arch
+    for arch in ["s390x"]
 ]
 
 PACKAGES_DEBIAN10 = [
@@ -318,8 +317,7 @@ PACKAGES_S390X_DEBIAN10 = [pkg for pkg in PACKAGES_DEBIAN10 if pkg != "libunwind
             "@" + arch + "_debian10//file:Packages.json",
         ],
     )
-    for arch in ARCHITECTURES
-    if "s390x" != arch
+    for arch in BASE_ARCHITECTURES
 ]
 
 [
@@ -332,8 +330,7 @@ PACKAGES_S390X_DEBIAN10 = [pkg for pkg in PACKAGES_DEBIAN10 if pkg != "libunwind
             "@" + arch + "_debian10//file:Packages.json",
         ],
     )
-    for arch in ARCHITECTURES
-    if "s390x" == arch
+    for arch in ["s390x"]
 ]
 
 # For Jetty
