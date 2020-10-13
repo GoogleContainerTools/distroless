@@ -106,9 +106,9 @@ bazel build --host_force_python=PY2 @package_bundle_s390x_debian10//file:package
 if diff -w package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~ &&
 	diff -w package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~ &&
 	diff -w package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~ &&
-	diff -w package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~
-  diff -w package_bundle_arm64_debian9.versions package_bundle_s390x_debian9.versions~ &&
-  diff -w package_bundle_arm64_debian10.versions package_bundle_s390x_debian10.versions~; then
+	diff -w package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~ &&
+	diff -w package_bundle_s390x_debian9.versions package_bundle_s390x_debian9.versions~ &&
+	diff -w package_bundle_s390x_debian10.versions package_bundle_s390x_debian10.versions~; then
     echo "No changes detected to package_bundle versions."
     mv checksums.bzl~ checksums.bzl
     mv package_bundle_amd64_debian9.versions~ package_bundle_amd64_debian9.versions
