@@ -15,24 +15,14 @@ DISTRO_VERSIONS = {
 }
 
 USERS = [
-    (
-        "",
-        "_root",
-        "0",
-        "/",
-    ),
-    (
-        "_nonroot",
-        "_nonroot",
-        "1002",
-        "/home/nonroot",
-    ),
+    "root",
+    "nonroot",
 ]
 
 [
     container_image(
-        name = "java_base" + mode + name + distro_suffix,
-        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + user + "_amd64" + distro_suffix,
+        name = "java_base" + mode + "_" + user + distro_suffix,
+        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_amd64" + distro_suffix,
         debs = [
             DISTRO_PACKAGES["amd64"][distro_suffix]["zlib1g"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libjpeg62-turbo"],
@@ -52,21 +42,19 @@ USERS = [
             "//cacerts:cacerts_java_amd64" + distro_suffix,
             "//locale:locale_amd64" + distro_suffix,
         ],
-        user = user,
-        workdir = workdir,
     )
     for mode in [
         "",
         "_debug",
     ]
-    for (name, user, uid, workdir) in USERS
+    for user in USERS
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
     container_image(
-        name = rule_name + name + distro_suffix,
-        base = ":java_base" + ("_debug" if ("debug" in rule_name) else "") + name + distro_suffix,
+        name = rule_name + "_" + user + distro_suffix,
+        base = ":java_base" + ("_debug" if ("debug" in rule_name) else "") + "_" + user + distro_suffix,
         debs = [DISTRO_PACKAGES["amd64"][distro_suffix][deb] for deb in java_debs],
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
@@ -80,8 +68,6 @@ USERS = [
         symlinks = {
             "/usr/bin/java": java_executable_path,
         },
-        user = user,
-        workdir = workdir,
     )
     for (distro_suffix, rule_name, java_debs, java_executable_path) in [
         (
@@ -130,14 +116,14 @@ USERS = [
             "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
         ),
     ]
-    for (name, user, uid, workdir) in USERS
+    for user in USERS
 ]
 
 [
     container_test(
-        name = "java_base" + mode + name + distro_suffix + "_test",
+        name = "java_base" + mode + "_" + user + distro_suffix + "_test",
         configs = ["testdata/java_base" + mode + ".yaml"],
-        image = ":java_base" + mode + name + distro_suffix,
+        image = ":java_base" + mode + "_" + user + distro_suffix,
         tags = [
             "amd64",
             "manual",
@@ -147,96 +133,115 @@ USERS = [
         "",
         "_debug",
     ]
-    for (name, user, uid, workdir) in USERS
+    for user in USERS
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
     container_test(
-        name = "java8_debian9" + name + "_test",
+        name = "java8_debian9_" + user + "_test",
         configs = ["testdata/java8.yaml"],
-        image = ":java8" + name + "_debian9",
+        image = ":java8_" + user + "_debian9",
         tags = [
             "amd64",
             "manual",
         ],
     )
-    for (name, user, uid, workdir) in USERS
+    for user in USERS
 ]
 
 [
     container_test(
-        name = "java8_debug" + name + "_debian9_test",
+        name = "java8_debug_" + user + "_debian9_test",
         configs = ["testdata/java8_debug.yaml"],
-        image = ":java8_debug" + name + "_debian9",
+        image = ":java8_debug_" + user + "_debian9",
         tags = [
             "amd64",
             "manual",
         ],
     )
-    for (name, user, uid, workdir) in USERS
+    for user in USERS
 ]
 
 [
     container_test(
-        name = "java11" + name + distro_suffix + "_test",
+        name = "java11_" + user + distro_suffix + "_test",
         configs = ["testdata/java11" + distro_suffix + ".yaml"],
-        image = ":java11" + name + distro_suffix,
+        image = ":java11_" + user + distro_suffix,
         tags = [
             "amd64",
             "manual",
         ],
     )
-    for (name, user, uid, workdir) in USERS
+    for user in USERS
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
     container_test(
-        name = "java11_debug" + name + distro_suffix + "_test",
+        name = "java11_debug_" + user + distro_suffix + "_test",
         configs = ["testdata/java11_debug" + distro_suffix + ".yaml"],
-        image = ":java11_debug" + name + distro_suffix,
+        image = ":java11_debug_" + user + distro_suffix,
         tags = [
             "amd64",
             "manual",
         ],
     )
-    for (name, user, uid, workdir) in USERS
+    for user in USERS
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
-RULE_NAMES = ("java8_debian9", "java11_debian9", "java11_debian10")
+RULE_NAMES = [
+    "java8_root_debian9",
+    "java8_nonroot_debian9",
+    "java11_root_debian9",
+    "java11_nonroot_debian9",
+    "java11_root_debian10",
+    "java11_nonroot_debian10",
+]
 
-[java_image(
-    name = "check_certs_" + rule_name,
-    srcs = ["testdata/CheckCerts.java"],
-    base = "//java:" + rule_name,
-    main_class = "testdata.CheckCerts",
-) for rule_name in RULE_NAMES]
+[
+    java_image(
+        name = "check_certs_" + rule_name,
+        srcs = ["testdata/CheckCerts.java"],
+        base = "//java:" + rule_name,
+        main_class = "testdata.CheckCerts",
+    )
+    for rule_name in RULE_NAMES
+]
 
-[container_test(
-    name = "check_certs_" + rule_name + "_test",
-    configs = ["testdata/" + rule_name + "_certs.yaml"],
-    image = ":check_certs_" + rule_name,
-    tags = [
-        "amd64",
-        "manual",
-    ],
-) for rule_name in RULE_NAMES]
+[
+    container_test(
+        name = "check_certs_" + rule_name + "_test",
+        configs = ["testdata/" + rule_name + "_certs.yaml"],
+        image = ":check_certs_" + rule_name,
+        tags = [
+            "amd64",
+            "manual",
+        ],
+    )
+    for rule_name in RULE_NAMES
+]
 
-[java_image(
-    name = "check_encoding_" + rule_name,
-    srcs = ["testdata/CheckEncoding.java"],
-    base = "//java:" + rule_name,
-    main_class = "testdata.CheckEncoding",
-) for rule_name in RULE_NAMES]
+[
+    java_image(
+        name = "check_encoding_" + rule_name,
+        srcs = ["testdata/CheckEncoding.java"],
+        base = "//java:" + rule_name,
+        main_class = "testdata.CheckEncoding",
+    )
+    for rule_name in RULE_NAMES
+]
 
-[container_test(
-    name = "check_encoding_" + rule_name + "_test",
-    configs = ["testdata/" + rule_name + "_encoding.yaml"],
-    image = ":check_encoding_" + rule_name,
-    tags = [
-        "amd64",
-        "manual",
-    ],
-) for rule_name in RULE_NAMES]
+[
+    container_test(
+        name = "check_encoding_" + rule_name + "_test",
+        configs = ["testdata/" + rule_name + "_encoding.yaml"],
+        image = ":check_encoding_" + rule_name,
+        tags = [
+            "amd64",
+            "manual",
+        ],
+    )
+    for rule_name in RULE_NAMES
+]
