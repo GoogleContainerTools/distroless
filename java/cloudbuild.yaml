@@ -15,15 +15,25 @@ steps:
     bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
 
     bazel run --host_force_python=PY2 //java:java_base_debian9
+    bazel run --host_force_python=PY2 //java:java_base_nonroot_debian9
     bazel run --host_force_python=PY2 //java:java_base_debug_debian9
+    bazel run --host_force_python=PY2 //java:java_base_debug_nonroot_debian9
     bazel run --host_force_python=PY2 //java:java_base_debian10
+    bazel run --host_force_python=PY2 //java:java_base_nonroot_debian10
     bazel run --host_force_python=PY2 //java:java_base_debug_debian10
+    bazel run --host_force_python=PY2 //java:java_base_debug_nonroot_debian10
     bazel run --host_force_python=PY2 //java:java8_debian9
+    bazel run --host_force_python=PY2 //java:java8_nonroot_debian9
     bazel run --host_force_python=PY2 //java:java8_debug_debian9
+    bazel run --host_force_python=PY2 //java:java8_debug_nonroot_debian9
     bazel run --host_force_python=PY2 //java:java11_debian9
+    bazel run --host_force_python=PY2 //java:java11_nonroot_debian9
     bazel run --host_force_python=PY2 //java:java11_debug_debian9
+    bazel run --host_force_python=PY2 //java:java11_debug_nonroot_debian9
     bazel run --host_force_python=PY2 //java:java11_debian10
+    bazel run --host_force_python=PY2 //java:java11_nonroot_debian10
     bazel run --host_force_python=PY2 //java:java11_debug_debian10
+    bazel run --host_force_python=PY2 //java:java11_debug_nonroot_debian10
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
   args:
@@ -48,27 +58,49 @@ steps:
     set -o errexit
     set -o xtrace
     docker tag bazel/java:java_base_debian9                 gcr.io/$PROJECT_ID/java:base
+    docker tag bazel/java:java_base_nonroot_debian9         gcr.io/$PROJECT_ID/java:base-nonroot
     docker tag bazel/java:java_base_debian9                 gcr.io/$PROJECT_ID/java-debian9:base
+    docker tag bazel/java:java_base_nonroot_debian9         gcr.io/$PROJECT_ID/java-debian9:base-nonroot
     docker tag bazel/java:java_base_debug_debian9           gcr.io/$PROJECT_ID/java:base-debug
+    docker tag bazel/java:java_base_debug_nonroot_debian9   gcr.io/$PROJECT_ID/java:base-debug-nonroot
     docker tag bazel/java:java_base_debug_debian9           gcr.io/$PROJECT_ID/java-debian9:base-debug
+    docker tag bazel/java:java_base_debug_nonroot_debian9   gcr.io/$PROJECT_ID/java-debian9:base-debug-nonroot
     docker tag bazel/java:java8_debian9                     gcr.io/$PROJECT_ID/java:latest
+    docker tag bazel/java:java8_nonroot_debian9             gcr.io/$PROJECT_ID/java:nonroot
     docker tag bazel/java:java8_debian9                     gcr.io/$PROJECT_ID/java:8
+    docker tag bazel/java:java8_nonroot_debian9             gcr.io/$PROJECT_ID/java:8-nonroot
     docker tag bazel/java:java8_debian9                     gcr.io/$PROJECT_ID/java-debian9:latest
+    docker tag bazel/java:java8_nonroot_debian9             gcr.io/$PROJECT_ID/java-debian9:nonroot
     docker tag bazel/java:java8_debian9                     gcr.io/$PROJECT_ID/java-debian9:8
+    docker tag bazel/java:java8_nonroot_debian9             gcr.io/$PROJECT_ID/java-debian9:8-nonroot
     docker tag bazel/java:java8_debug_debian9               gcr.io/$PROJECT_ID/java:debug
+    docker tag bazel/java:java8_debug_nonroot_debian9       gcr.io/$PROJECT_ID/java:debug-nonroot
     docker tag bazel/java:java8_debug_debian9               gcr.io/$PROJECT_ID/java:8-debug
+    docker tag bazel/java:java8_debug_nonroot_debian9       gcr.io/$PROJECT_ID/java:8-debug-nonroot
     docker tag bazel/java:java8_debug_debian9               gcr.io/$PROJECT_ID/java-debian9:debug
+    docker tag bazel/java:java8_debug_nonroot_debian9       gcr.io/$PROJECT_ID/java-debian9:debug-nonroot
     docker tag bazel/java:java8_debug_debian9               gcr.io/$PROJECT_ID/java-debian9:8-debug
+    docker tag bazel/java:java8_debug_nonroot_debian9       gcr.io/$PROJECT_ID/java-debian9:8-debug-nonroot
     docker tag bazel/java:java11_debian9                    gcr.io/$PROJECT_ID/java:11
+    docker tag bazel/java:java11_nonroot_debian9            gcr.io/$PROJECT_ID/java:11-nonroot
     docker tag bazel/java:java11_debian9                    gcr.io/$PROJECT_ID/java-debian9:11
+    docker tag bazel/java:java11_nonroot_debian9            gcr.io/$PROJECT_ID/java-debian9:11-nonroot
     docker tag bazel/java:java11_debug_debian9              gcr.io/$PROJECT_ID/java:11-debug
+    docker tag bazel/java:java11_debug_nonroot_debian9      gcr.io/$PROJECT_ID/java:11-debug-nonroot
     docker tag bazel/java:java11_debug_debian9              gcr.io/$PROJECT_ID/java-debian9:11-debug
+    docker tag bazel/java:java11_debug_nonroot_debian9      gcr.io/$PROJECT_ID/java-debian9:11-debug-nonroot
     docker tag bazel/java:java_base_debian10                gcr.io/$PROJECT_ID/java-debian10:base
+    docker tag bazel/java:java_base_nonroot_debian10        gcr.io/$PROJECT_ID/java-debian10:base-nonroot
     docker tag bazel/java:java_base_debug_debian10          gcr.io/$PROJECT_ID/java-debian10:base-debug
+    docker tag bazel/java:java_base_debug_nonroot_debian10  gcr.io/$PROJECT_ID/java-debian10:base-debug-nonroot
     docker tag bazel/java:java11_debian10                   gcr.io/$PROJECT_ID/java-debian10:latest
+    docker tag bazel/java:java11_nonroot_debian10           gcr.io/$PROJECT_ID/java-debian10:nonroot
     docker tag bazel/java:java11_debian10                   gcr.io/$PROJECT_ID/java-debian10:11
+    docker tag bazel/java:java11_nonroot_debian10           gcr.io/$PROJECT_ID/java-debian10:11-nonroot
     docker tag bazel/java:java11_debug_debian10             gcr.io/$PROJECT_ID/java-debian10:debug
+    docker tag bazel/java:java11_debug_nonroot_debian10     gcr.io/$PROJECT_ID/java-debian10:debug-nonroot
     docker tag bazel/java:java11_debug_debian10             gcr.io/$PROJECT_ID/java-debian10:11-debug
+    docker tag bazel/java:java11_debug_nonroot_debian10     gcr.io/$PROJECT_ID/java-debian10:11-debug-nonroot
 - name: docker
   entrypoint: sh
   args:
