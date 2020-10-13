@@ -22,7 +22,6 @@ load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
 load(
     "//:checksums.bzl",
     "ARCHITECTURES",
-    "BASE_ARCHITECTURES",
     "DEBIAN_SECURITY_SNAPSHOT",
     "DEBIAN_SNAPSHOT",
     "SHA256s",
@@ -64,7 +63,6 @@ load(
     )
     for arch in ARCHITECTURES
     for (name, distro) in VERSIONS
-    if "security" in SHA256s[arch][name]
 ]
 
 [
@@ -145,6 +143,7 @@ load(
             "libicu57",
             "liblttng-ust0",
             "libssl1.0.2",
+            "libunwind8",
             "libuuid1",
             "zlib1g",
             "curl",
@@ -179,12 +178,13 @@ load(
             "libpcre3",
             "libbz2-1.0",
             "liblzma5",
-        ] + (["libunwind8"] if arch in BASE_ARCHITECTURES else []),
+        ],
         sources = [
+            "@" + arch + "_debian9_security//file:Packages.json",
             "@" + arch + "_debian9_updates//file:Packages.json",
             "@" + arch + "_debian9_backports//file:Packages.json",
             "@" + arch + "_debian9//file:Packages.json",
-        ] + (["@" + arch + "_debian9_security//file:Packages.json"] if arch in BASE_ARCHITECTURES else []),
+        ],
     )
     for arch in ARCHITECTURES
 ]
@@ -252,6 +252,7 @@ load(
             "libicu63",
             "liblttng-ust0",
             "libssl1.1",
+            "libunwind8",
             "libuuid1",
             "zlib1g",
             "curl",
@@ -286,7 +287,7 @@ load(
             "libpcre3",
             "libbz2-1.0",
             "liblzma5",
-        ] + (["libunwind8"] if arch in BASE_ARCHITECTURES else []),
+        ],
         sources = [
             "@" + arch + "_debian10_security//file:Packages.json",
             "@" + arch + "_debian10_updates//file:Packages.json",
@@ -407,13 +408,6 @@ http_file(
     executable = True,
     sha256 = "141adb1b625a6f44c4b114f76b4387b4ea4f7ab802b88eb40e0d2f6adcccb1c3",
     urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv8l"],
-)
-
-http_file(
-    name = "busybox_s390x",
-    executable = True,
-    sha256 = "48d13ac057046b95ba58921958be639cc3a179ac888cdd65aacd7a69139aa857",
-    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-s390x"],
 )
 
 # Docker rules.

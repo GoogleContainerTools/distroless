@@ -2,7 +2,7 @@ package(default_visibility = ["//visibility:public"])
 
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//:checksums.bzl", "ARCHITECTURES")
 
 # An image for C/C++ programs
 [
