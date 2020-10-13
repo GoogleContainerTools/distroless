@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("//:checksums.bzl", "ARCHITECTURES")
+load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
