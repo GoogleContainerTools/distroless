@@ -2,7 +2,7 @@ package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("//base:distro.bzl", "DISTRO_SUFFIXES")
-load("//:checksums.bzl", "BASE_ARCHITECTURES")
+load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
 NODEJS_MAJOR_VERISONS = ("10", "12", "14")
 
@@ -19,6 +19,6 @@ NODEJS_MAJOR_VERISONS = ("10", "12", "14")
         "_debug",
     ]
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]

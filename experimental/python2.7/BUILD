@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("//:checksums.bzl", "BASE_ARCHITECTURES")
+load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
@@ -55,7 +55,7 @@ DISTRO_DEBS = {
             ":ld_so_" + arch + "_cache.tar",
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for mode in [
         "",
         ":debug",
@@ -73,7 +73,7 @@ DISTRO_DEBS = {
             arch,
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -89,7 +89,7 @@ DISTRO_DEBS = {
             arch,
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -103,7 +103,7 @@ DISTRO_DEBS = {
             arch,
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -114,7 +114,7 @@ DISTRO_DEBS = {
         cmd = "$(location :make_ld_so_cache_tar.py) $(SRCS) $(OUTS)",
         tools = [":make_ld_so_cache_tar.py"],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -127,7 +127,7 @@ DISTRO_DEBS = {
             arch,
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -142,7 +142,7 @@ DISTRO_DEBS = {
         ],
         tools = [":generate_ldconfig_" + arch + "_cache"],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -162,5 +162,5 @@ DISTRO_DEBS = {
             arch,
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
 ]

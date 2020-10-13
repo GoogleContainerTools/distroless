@@ -2,7 +2,7 @@ package(default_visibility = ["//visibility:public"])
 
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("//:checksums.bzl", "BASE_ARCHITECTURES")
+load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
 # An image for C/C++ programs
 [
@@ -20,7 +20,7 @@ load("//:checksums.bzl", "BASE_ARCHITECTURES")
         "",
         ":debug",
     ]
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for user in [
         "root",
         "nonroot",

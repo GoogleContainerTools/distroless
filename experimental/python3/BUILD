@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load("//:checksums.bzl", "BASE_ARCHITECTURES")
+load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//base:base.bzl", "NONROOT")
 
 # distribution-specific deb dependencies
@@ -68,7 +68,7 @@ DISTRO_VERSION = {
         "",
         ":debug",
     ]
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -85,7 +85,7 @@ DISTRO_VERSION = {
         "",
         ":debug",
     ]
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -100,7 +100,7 @@ DISTRO_VERSION = {
             arch,
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
@@ -116,7 +116,7 @@ DISTRO_VERSION = {
             arch,
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for user in [
         "",
         "_nonroot",
@@ -134,7 +134,7 @@ DISTRO_VERSION = {
             arch,
         ],
     )
-    for arch in BASE_ARCHITECTURES
+    for arch in ARCHITECTURES
     for user in [
         "",
         "_nonroot",
