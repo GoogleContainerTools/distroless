@@ -1,0 +1,57 @@
+name: publish-debug
+
+on:
+  push:
+    branches: [ 'master' ]
+    paths:
+      - .github/workflows/publish-debug.yaml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install bazelisk
+        run: |
+          curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.7.1/bazelisk-linux-amd64"
+          mkdir -p "${GITHUB_WORKSPACE}/bin/"
+          mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
+          chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
+
+      - name: login ghcr.io
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+
+      - name: setup
+        run: |
+          bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
+          sed -i 's/^{/{"experimental": "enabled",/g' ~/.docker/config.json
+
+      - name: build //base:*
+        env:
+          HUB: ghcr.io/${{ github.repository }}
+          LANG: base
+          USERS: root nonroot
+          DISTROS: debian9 debian10
+          TOPICS: base debug static
+          ARCHS: amd64 arm64 s390x
+        run: |
+          ./hack/bazel_run.sh
+          PUSH=1 MANIFEST=1 ./hack/docker_tag_or_push.sh
+
+      - name: build //cc:*
+        env:
+          HUB: ghcr.io/${{ github.repository }}
+          LANG: cc
+          USERS: root nonroot
+          DISTROS: debian9 debian10
+          TOPICS: cc debug
+          ARCHS: amd64 arm64
+        run: |
+          ./hack/bazel_run.sh
+          PUSH=1 MANIFEST=1 ./hack/docker_tag_or_push.sh
