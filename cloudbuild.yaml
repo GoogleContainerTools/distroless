@@ -95,9 +95,6 @@ steps:
     docker tag bazel/base:static_root_arm64_debian9     gcr.io/$PROJECT_ID/static:latest-arm64
     docker tag bazel/base:static_nonroot_arm64_debian9  gcr.io/$PROJECT_ID/static:nonroot-arm64
 
-    docker tag bazel/base:static_root_s390x_debian9     gcr.io/$PROJECT_ID/static:latest-s390x
-    docker tag bazel/base:static_nonroot_s390x_debian9  gcr.io/$PROJECT_ID/static:nonroot-s390x
-
     docker tag bazel/base:base_root_amd64_debian9        gcr.io/$PROJECT_ID/base:${COMMIT_SHA}
     docker tag bazel/base:base_root_amd64_debian9        gcr.io/$PROJECT_ID/base:latest-amd64
     docker tag bazel/base:base_root_amd64_debian9        gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}
@@ -119,11 +116,6 @@ steps:
     docker tag bazel/base:debug_root_arm64_debian9       gcr.io/$PROJECT_ID/base:debug-arm64
     docker tag bazel/base:debug_nonroot_arm64_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-arm64
 
-    docker tag bazel/base:base_root_s390x_debian9        gcr.io/$PROJECT_ID/base:latest-s390x
-    docker tag bazel/base:base_nonroot_s390x_debian9     gcr.io/$PROJECT_ID/base:nonroot-s390x
-    docker tag bazel/base:debug_root_s390x_debian9       gcr.io/$PROJECT_ID/base:debug-s390x
-    docker tag bazel/base:debug_nonroot_s390x_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-s390x
-
     docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc:${COMMIT_SHA}
     docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc:latest-amd64
     docker tag bazel/cc:cc_root_amd64_debian9     gcr.io/$PROJECT_ID/cc-debian9:${COMMIT_SHA}
@@ -136,6 +128,22 @@ steps:
 
     docker tag bazel/cc:cc_root_arm64_debian9     gcr.io/$PROJECT_ID/cc:latest-arm64
     docker tag bazel/cc:debug_root_arm64_debian9  gcr.io/$PROJECT_ID/cc:debug-arm64
+
+- name: docker
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+
+    docker tag bazel/base:static_root_s390x_debian9      gcr.io/$PROJECT_ID/static:latest-s390x
+    docker tag bazel/base:static_nonroot_s390x_debian9   gcr.io/$PROJECT_ID/static:nonroot-s390x
+    docker tag bazel/base:base_root_s390x_debian9        gcr.io/$PROJECT_ID/base:latest-s390x
+    docker tag bazel/base:base_nonroot_s390x_debian9     gcr.io/$PROJECT_ID/base:nonroot-s390x
+    docker tag bazel/base:debug_root_s390x_debian9       gcr.io/$PROJECT_ID/base:debug-s390x
+    docker tag bazel/base:debug_nonroot_s390x_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-s390x
 
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
   entrypoint: sh
@@ -506,6 +514,24 @@ steps:
        gcr.io/$PROJECT_ID/base:debug-arm64 \
        gcr.io/$PROJECT_ID/base:debug-s390x
     docker manifest push gcr.io/$PROJECT_ID/base:debug
+
+- name: docker
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+
+    # Publish manifest lists second, after all of the binary material
+    # has been uploaded, so that it is fast.  We want fast because enabling
+    # the experimental features in docker changes ~/.docker/config.json, which
+    # GCB periodically tramples.
+    #
+    # Enable support for 'docker manifest create'
+    # https://docs.docker.com/engine/reference/commandline/manifest_create/
+    sed -i 's/^{/{"experimental": "enabled",/g' ~/.docker/config.json
 
     docker manifest create gcr.io/$PROJECT_ID/cc:latest \
        gcr.io/$PROJECT_ID/cc:latest-amd64 \
