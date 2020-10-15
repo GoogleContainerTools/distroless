@@ -89,6 +89,14 @@ steps:
     docker tag bazel/java:java11_debug_nonroot_debian9      gcr.io/$PROJECT_ID/java:11-debug-nonroot
     docker tag bazel/java:java11_debug_root_debian9         gcr.io/$PROJECT_ID/java-debian9:11-debug
     docker tag bazel/java:java11_debug_nonroot_debian9      gcr.io/$PROJECT_ID/java-debian9:11-debug-nonroot
+- name: docker
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
     docker tag bazel/java:java_base_root_debian10           gcr.io/$PROJECT_ID/java-debian10:base
     docker tag bazel/java:java_base_nonroot_debian10        gcr.io/$PROJECT_ID/java-debian10:base-nonroot
     docker tag bazel/java:java_base_debug_root_debian10     gcr.io/$PROJECT_ID/java-debian10:base-debug
@@ -128,27 +136,49 @@ steps:
 
 images:
   - 'gcr.io/$PROJECT_ID/java:latest'
+  - 'gcr.io/$PROJECT_ID/java:nonroot'
   - 'gcr.io/$PROJECT_ID/java:8'
+  - 'gcr.io/$PROJECT_ID/java:8-nonroot'
   - 'gcr.io/$PROJECT_ID/java:debug'
+  - 'gcr.io/$PROJECT_ID/java:debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java:8-debug'
+  - 'gcr.io/$PROJECT_ID/java:8-debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java:11'
+  - 'gcr.io/$PROJECT_ID/java:11-nonroot'
   - 'gcr.io/$PROJECT_ID/java:11-debug'
+  - 'gcr.io/$PROJECT_ID/java:11-debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java:base'
+  - 'gcr.io/$PROJECT_ID/java:base-nonroot'
   - 'gcr.io/$PROJECT_ID/java:base-debug'
+  - 'gcr.io/$PROJECT_ID/java:base-debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian9:base'
+  - 'gcr.io/$PROJECT_ID/java-debian9:base-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian9:base-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9:base-debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian9:latest'
+  - 'gcr.io/$PROJECT_ID/java-debian9:nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian9:8'
+  - 'gcr.io/$PROJECT_ID/java-debian9:8-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian9:debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9:debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian9:8-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9:8-debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian9:11'
+  - 'gcr.io/$PROJECT_ID/java-debian9:11-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian9:11-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian9:11-debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian10:base'
+  - 'gcr.io/$PROJECT_ID/java-debian10:base-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian10:base-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian10:base-debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian10:latest'
+  - 'gcr.io/$PROJECT_ID/java-debian10:nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian10:11'
+  - 'gcr.io/$PROJECT_ID/java-debian10:11-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian10:debug'
+  - 'gcr.io/$PROJECT_ID/java-debian10:debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java-debian10:11-debug'
+  - 'gcr.io/$PROJECT_ID/java-debian10:11-debug-nonroot'
   - 'gcr.io/$PROJECT_ID/java/jetty:latest'
   - 'gcr.io/$PROJECT_ID/java/jetty:java8'
   - 'gcr.io/$PROJECT_ID/java/jetty:debug'
