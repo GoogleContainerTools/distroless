@@ -89,6 +89,14 @@ steps:
     docker tag bazel/java:java11_debug_nonroot_debian9      gcr.io/$PROJECT_ID/java:11-debug-nonroot
     docker tag bazel/java:java11_debug_root_debian9         gcr.io/$PROJECT_ID/java-debian9:11-debug
     docker tag bazel/java:java11_debug_nonroot_debian9      gcr.io/$PROJECT_ID/java-debian9:11-debug-nonroot
+- name: docker
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
     docker tag bazel/java:java_base_root_debian10           gcr.io/$PROJECT_ID/java-debian10:base
     docker tag bazel/java:java_base_nonroot_debian10        gcr.io/$PROJECT_ID/java-debian10:base-nonroot
     docker tag bazel/java:java_base_debug_root_debian10     gcr.io/$PROJECT_ID/java-debian10:base-debug
