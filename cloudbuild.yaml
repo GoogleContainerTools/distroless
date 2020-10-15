@@ -5,7 +5,7 @@
 #   Build 100-image limit.
 #   (https://github.com/GoogleContainerTools/distroless/issues/558)
 
-timeout: 1800s
+timeout: 2700s
 steps:
 
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
