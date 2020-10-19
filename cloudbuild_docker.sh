@@ -57,6 +57,13 @@ docker tag bazel/base:base_nonroot_s390x_debian9     gcr.io/$PROJECT_ID/base:non
 docker tag bazel/base:debug_root_s390x_debian9       gcr.io/$PROJECT_ID/base:debug-s390x
 docker tag bazel/base:debug_nonroot_s390x_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-s390x
 
+docker tag bazel/base:static_root_ppc64le_debian9      gcr.io/$PROJECT_ID/static:latest-ppc64le
+docker tag bazel/base:static_nonroot_ppc64le_debian9   gcr.io/$PROJECT_ID/static:nonroot-ppc64le
+docker tag bazel/base:base_root_ppc64le_debian9        gcr.io/$PROJECT_ID/base:latest-ppc64le
+docker tag bazel/base:base_nonroot_ppc64le_debian9     gcr.io/$PROJECT_ID/base:nonroot-ppc64le
+docker tag bazel/base:debug_root_ppc64le_debian9       gcr.io/$PROJECT_ID/base:debug-ppc64le
+docker tag bazel/base:debug_nonroot_ppc64le_debian9    gcr.io/$PROJECT_ID/base:debug-nonroot-ppc64le
+
 docker tag bazel/experimental/python3:python3_amd64_debian9          gcr.io/$PROJECT_ID/python3:latest-amd64
 docker tag bazel/experimental/python3:python3_amd64_debian9          gcr.io/$PROJECT_ID/python3-debian9:latest
 docker tag bazel/experimental/python3:python3_amd64_debian10         gcr.io/$PROJECT_ID/python3-debian10:latest
@@ -201,6 +208,8 @@ docker push gcr.io/$PROJECT_ID/static:latest-arm64
 docker push gcr.io/$PROJECT_ID/static:nonroot-arm64
 docker push gcr.io/$PROJECT_ID/static:latest-s390x
 docker push gcr.io/$PROJECT_ID/static:nonroot-s390x
+docker push gcr.io/$PROJECT_ID/static:latest-ppc64le
+docker push gcr.io/$PROJECT_ID/static:nonroot-ppc64le
 docker push gcr.io/$PROJECT_ID/static-debian9:${COMMIT_SHA}
 docker push gcr.io/$PROJECT_ID/static-debian9:latest
 docker push gcr.io/$PROJECT_ID/static-debian9:nonroot
@@ -220,6 +229,10 @@ docker push gcr.io/$PROJECT_ID/base:latest-s390x
 docker push gcr.io/$PROJECT_ID/base:nonroot-s390x
 docker push gcr.io/$PROJECT_ID/base:debug-s390x
 docker push gcr.io/$PROJECT_ID/base:debug-nonroot-s390x
+docker push gcr.io/$PROJECT_ID/base:latest-ppc64le
+docker push gcr.io/$PROJECT_ID/base:nonroot-ppc64le
+docker push gcr.io/$PROJECT_ID/base:debug-ppc64le
+docker push gcr.io/$PROJECT_ID/base:debug-nonroot-ppc64le
 docker push gcr.io/$PROJECT_ID/base-debian9:${COMMIT_SHA}
 docker push gcr.io/$PROJECT_ID/base-debian9:latest
 docker push gcr.io/$PROJECT_ID/base-debian9:nonroot
@@ -380,37 +393,43 @@ sed -i 's/^{/{"experimental": "enabled",/g' ~/.docker/config.json
 docker manifest create gcr.io/$PROJECT_ID/static:nonroot \
    gcr.io/$PROJECT_ID/static:nonroot-amd64 \
    gcr.io/$PROJECT_ID/static:nonroot-arm64 \
-   gcr.io/$PROJECT_ID/static:nonroot-s390x
+   gcr.io/$PROJECT_ID/static:nonroot-s390x \
+   gcr.io/$PROJECT_ID/static:nonroot-ppc64le
 docker manifest push gcr.io/$PROJECT_ID/static:nonroot
 
 docker manifest create gcr.io/$PROJECT_ID/static:latest \
    gcr.io/$PROJECT_ID/static:latest-amd64 \
    gcr.io/$PROJECT_ID/static:latest-arm64 \
-   gcr.io/$PROJECT_ID/static:latest-s390x
+   gcr.io/$PROJECT_ID/static:latest-s390x \
+   gcr.io/$PROJECT_ID/static:latest-ppc64le
 docker manifest push gcr.io/$PROJECT_ID/static:latest
 
 docker manifest create gcr.io/$PROJECT_ID/base:nonroot \
    gcr.io/$PROJECT_ID/base:nonroot-amd64 \
    gcr.io/$PROJECT_ID/base:nonroot-arm64 \
-   gcr.io/$PROJECT_ID/base:nonroot-s390x
+   gcr.io/$PROJECT_ID/base:nonroot-s390x \
+   gcr.io/$PROJECT_ID/base:nonroot-ppc64le
 docker manifest push gcr.io/$PROJECT_ID/base:nonroot
 
 docker manifest create gcr.io/$PROJECT_ID/base:latest \
    gcr.io/$PROJECT_ID/base:latest-amd64 \
    gcr.io/$PROJECT_ID/base:latest-arm64 \
-   gcr.io/$PROJECT_ID/base:latest-s390x
+   gcr.io/$PROJECT_ID/base:latest-s390x \
+   gcr.io/$PROJECT_ID/base:latest-ppc64le
 docker manifest push gcr.io/$PROJECT_ID/base:latest
 
 docker manifest create gcr.io/$PROJECT_ID/base:debug-nonroot \
    gcr.io/$PROJECT_ID/base:debug-nonroot-amd64 \
    gcr.io/$PROJECT_ID/base:debug-nonroot-arm64 \
-   gcr.io/$PROJECT_ID/base:debug-nonroot-s390x
+   gcr.io/$PROJECT_ID/base:debug-nonroot-s390x \
+   gcr.io/$PROJECT_ID/base:debug-nonroot-ppc64le
 docker manifest push gcr.io/$PROJECT_ID/base:debug-nonroot
 
 docker manifest create gcr.io/$PROJECT_ID/base:debug \
    gcr.io/$PROJECT_ID/base:debug-amd64 \
    gcr.io/$PROJECT_ID/base:debug-arm64 \
-   gcr.io/$PROJECT_ID/base:debug-s390x
+   gcr.io/$PROJECT_ID/base:debug-s390x \
+   gcr.io/$PROJECT_ID/base:debug-ppc64le
 docker manifest push gcr.io/$PROJECT_ID/base:debug
 
 docker manifest create gcr.io/$PROJECT_ID/cc:latest \

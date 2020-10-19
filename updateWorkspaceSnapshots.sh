@@ -10,6 +10,8 @@ cp package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~
 cp package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~
 cp package_bundle_s390x_debian9.versions package_bundle_s390x_debian9.versions~
 cp package_bundle_s390x_debian10.versions package_bundle_s390x_debian10.versions~
+cp package_bundle_ppc64le_debian9.versions package_bundle_ppc64le_debian9.versions~
+cp package_bundle_ppc64le_debian10.versions package_bundle_ppc64le_debian10.versions~
 
 YEAR=`date +"%Y"`
 MONTH=`date +"%m"`
@@ -37,7 +39,7 @@ cat > checksums.bzl <<EOF
 # TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
 
 BASE_ARCHITECTURES = ["amd64", "arm64"]
-ARCHITECTURES = BASE_ARCHITECTURES + ["s390x"]
+ARCHITECTURES = BASE_ARCHITECTURES + ["s390x", "ppc64le"]
 
 VERSIONS = [
     ("debian9", "stretch"),
@@ -87,6 +89,18 @@ SHA256s = {
             "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
         },
     },
+    "ppc64le": {
+        "debian9": {
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+        },
+        "debian10": {
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+        },
+    },
 }
 EOF
 
@@ -100,6 +114,8 @@ bazel build --host_force_python=PY2 @package_bundle_arm64_debian9//file:packages
 bazel build --host_force_python=PY2 @package_bundle_arm64_debian10//file:packages.bzl
 bazel build --host_force_python=PY2 @package_bundle_s390x_debian9//file:packages.bzl
 bazel build --host_force_python=PY2 @package_bundle_s390x_debian10//file:packages.bzl
+bazel build --host_force_python=PY2 @package_bundle_ppc64le_debian9//file:packages.bzl
+bazel build --host_force_python=PY2 @package_bundle_ppc64le_debian10//file:packages.bzl
 
 # Check if any of the version lock files are updated
 
@@ -108,7 +124,9 @@ if diff -w package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.ve
 	diff -w package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~ &&
 	diff -w package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~ &&
 	diff -w package_bundle_s390x_debian9.versions package_bundle_s390x_debian9.versions~ &&
-	diff -w package_bundle_s390x_debian10.versions package_bundle_s390x_debian10.versions~; then
+	diff -w package_bundle_s390x_debian10.versions package_bundle_s390x_debian10.versions~ &&
+	diff -w package_bundle_ppc64le_debian9.versions package_bundle_ppc64le_debian9.versions~ &&
+	diff -w package_bundle_ppc64le_debian10.versions package_bundle_ppc64le_debian10.versions~; then
     echo "No changes detected to package_bundle versions."
     mv checksums.bzl~ checksums.bzl
     mv package_bundle_amd64_debian9.versions~ package_bundle_amd64_debian9.versions
@@ -117,6 +135,8 @@ if diff -w package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.ve
     mv package_bundle_arm64_debian10.versions~ package_bundle_arm64_debian10.versions
     mv package_bundle_s390x_debian9.versions~ package_bundle_s390x_debian9.versions
     mv package_bundle_s390x_debian10.versions~ package_bundle_s390x_debian10.versions
+    mv package_bundle_ppc64le_debian9.versions~ package_bundle_ppc64le_debian9.versions
+    mv package_bundle_ppc64le_debian10.versions~ package_bundle_ppc64le_debian10.versions
 else
     echo "Changes detected to package_bundle version files. Please update snapshots."
     rm *~
