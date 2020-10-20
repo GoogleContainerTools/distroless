@@ -416,6 +416,13 @@ http_file(
     urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-s390x"],
 )
 
+http_file(
+    name = "busybox_ppc64le",
+    executable = True,
+    sha256 = "7f896a2560ef3e2d11438018fef2fbdf8c2a6a2e4b84b1bcbaacc669967532d4",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-powerpc64"],
+)
+
 # Docker rules.
 http_archive(
     name = "io_bazel_rules_docker",
