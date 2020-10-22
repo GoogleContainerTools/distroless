@@ -16,7 +16,7 @@
     "libexpat1": "2.2.6-2+deb10u1",
     "libffi6": "3.2.1-9",
     "libfontconfig1": "2.13.1-2",
-    "libfreetype6": "2.9.1-3+deb10u1",
+    "libfreetype6": "2.9.1-3+deb10u2",
     "libgcc1": "1:8.3.0-6",
     "libgcrypt20": "1.8.4-5",
     "libgmp10": "2:6.1.2+dfsg-4",
