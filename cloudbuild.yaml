@@ -1,9 +1,24 @@
 timeout: 2700s  # 45 minutes
 
+options:
+  machineType: N1_HIGHCPU_8
+
 steps:
 
 - name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
-  entrypoint: ./cloudbuild_bazel.sh
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+
+    bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
+    bazel run --host_force_python=PY2 //:publish
 
 - name: docker
   env:

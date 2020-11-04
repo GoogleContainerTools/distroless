@@ -426,9 +426,9 @@ http_file(
 # Docker rules.
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "cf53839c398e464b10ec2fbeb11aedb446f078c28e3b4ce372461bb105ef435c",
-    strip_prefix = "rules_docker-f8478e57ab7457e403fda474f06ac0bb120d92a7",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/f8478e57ab7457e403fda474f06ac0bb120d92a7.tar.gz"],
+    sha256 = "2dcf63f5c36c50def7091ef94ffcf94cce4056f3e0a968876f4ec41953a8fbfb",
+    strip_prefix = "rules_docker-feaaebdd3162fb643494af07698f56ca9aba1241",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/feaaebdd3162fb643494af07698f56ca9aba1241.tar.gz"],
 )
 
 load(
@@ -442,11 +442,13 @@ load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 
 container_deps()
 
-load("@io_bazel_rules_docker//repositories:pip_repositories.bzl", "pip_deps")
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
+)
 
-pip_deps()
+container_repositories()
 
-# Have the py_image dependencies for testing.
 load(
     "@io_bazel_rules_docker//python:image.bzl",
     _py_image_repos = "repositories",
