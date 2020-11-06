@@ -12,58 +12,31 @@ set -o xtrace
 # https://docs.docker.com/engine/reference/commandline/manifest_create/
 sed -i 's/^{/{"experimental": "enabled",/g' ~/.docker/config.json
 
-docker manifest create gcr.io/$PROJECT_ID/static:nonroot \
-   gcr.io/$PROJECT_ID/static:nonroot-amd64 \
-   gcr.io/$PROJECT_ID/static:nonroot-arm64 \
-   gcr.io/$PROJECT_ID/static:nonroot-s390x \
-   gcr.io/$PROJECT_ID/static:nonroot-ppc64le
-docker manifest push gcr.io/$PROJECT_ID/static:nonroot
+docker_manifest() {
+  _image=$1
+  _archs=$2
+  _from_images=""
 
-docker manifest create gcr.io/$PROJECT_ID/static:latest \
-   gcr.io/$PROJECT_ID/static:latest-amd64 \
-   gcr.io/$PROJECT_ID/static:latest-arm64 \
-   gcr.io/$PROJECT_ID/static:latest-s390x \
-   gcr.io/$PROJECT_ID/static:latest-ppc64le
-docker manifest push gcr.io/$PROJECT_ID/static:latest
+  for arch in $_archs; do
+    _from_images="$_from_images $_image-$arch"
+  done
 
-docker manifest create gcr.io/$PROJECT_ID/base:nonroot \
-   gcr.io/$PROJECT_ID/base:nonroot-amd64 \
-   gcr.io/$PROJECT_ID/base:nonroot-arm64 \
-   gcr.io/$PROJECT_ID/base:nonroot-s390x \
-   gcr.io/$PROJECT_ID/base:nonroot-ppc64le
-docker manifest push gcr.io/$PROJECT_ID/base:nonroot
+  docker manifest create $_image $_from_images
+  docker manifest push $_image
+}
 
-docker manifest create gcr.io/$PROJECT_ID/base:latest \
-   gcr.io/$PROJECT_ID/base:latest-amd64 \
-   gcr.io/$PROJECT_ID/base:latest-arm64 \
-   gcr.io/$PROJECT_ID/base:latest-s390x \
-   gcr.io/$PROJECT_ID/base:latest-ppc64le
-docker manifest push gcr.io/$PROJECT_ID/base:latest
+for distro_suffix in "" -debian9 -debian10; do
+  docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:nonroot "amd64 arm64 s390x ppc64le"
+  docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:latest "amd64 arm64 s390x ppc64le"
 
-docker manifest create gcr.io/$PROJECT_ID/base:debug-nonroot \
-   gcr.io/$PROJECT_ID/base:debug-nonroot-amd64 \
-   gcr.io/$PROJECT_ID/base:debug-nonroot-arm64 \
-   gcr.io/$PROJECT_ID/base:debug-nonroot-s390x \
-   gcr.io/$PROJECT_ID/base:debug-nonroot-ppc64le
-docker manifest push gcr.io/$PROJECT_ID/base:debug-nonroot
+  docker_manifest gcr.io/$PROJECT_ID/base${distro_suffix}:nonroot "amd64 arm64 s390x ppc64le"
+  docker_manifest gcr.io/$PROJECT_ID/base${distro_suffix}:latest "amd64 arm64 s390x ppc64le"
+  docker_manifest gcr.io/$PROJECT_ID/base${distro_suffix}:debug-nonroot "amd64 arm64 s390x ppc64le"
+  docker_manifest gcr.io/$PROJECT_ID/base${distro_suffix}:debug "amd64 arm64 s390x ppc64le"
 
-docker manifest create gcr.io/$PROJECT_ID/base:debug \
-   gcr.io/$PROJECT_ID/base:debug-amd64 \
-   gcr.io/$PROJECT_ID/base:debug-arm64 \
-   gcr.io/$PROJECT_ID/base:debug-s390x \
-   gcr.io/$PROJECT_ID/base:debug-ppc64le
-docker manifest push gcr.io/$PROJECT_ID/base:debug
-
-docker manifest create gcr.io/$PROJECT_ID/cc:latest \
-   gcr.io/$PROJECT_ID/cc:latest-amd64 \
-   gcr.io/$PROJECT_ID/cc:latest-arm64
-docker manifest push gcr.io/$PROJECT_ID/cc:latest
-
-docker manifest create gcr.io/$PROJECT_ID/cc:debug \
-   gcr.io/$PROJECT_ID/cc:debug-amd64 \
-   gcr.io/$PROJECT_ID/cc:debug-arm64
-docker manifest push gcr.io/$PROJECT_ID/cc:debug
-
+  docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:latest "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:debug "amd64 arm64"
+done
 
 docker manifest create gcr.io/$PROJECT_ID/python3:nonroot \
    gcr.io/$PROJECT_ID/python3:nonroot-amd64 \
