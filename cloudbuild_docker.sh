@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -o errexit
 set -o xtrace
@@ -13,16 +13,16 @@ set -o xtrace
 sed -i 's/^{/{"experimental": "enabled",/g' ~/.docker/config.json
 
 docker_manifest() {
-  local image=$1
-  local archs=$2
-  local from_images=""
+  _image=$1
+  _archs=$2
+  _from_images=""
 
-  for arch in $archs; do
-    from_images="$from_images $image-$arch"
+  for arch in $_archs; do
+    _from_images="$_from_images $_image-$arch"
   done
 
-  docker manifest create $image $from_images
-  docker manifest push $image
+  docker manifest create $_image $_from_images
+  docker manifest push $_image
 }
 
 for distro_suffix in "" -debian9 -debian10; do
