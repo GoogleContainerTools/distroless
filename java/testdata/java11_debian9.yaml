@@ -3,11 +3,11 @@ commandTests:
   - name: java
     command: "/usr/lib/jvm/openjdk-11/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "11\.*']
+    expectedError: ['openjdk version "11\.0\.9"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "11\.*']
+    expectedError: ['openjdk version "11\.0\.9"']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
