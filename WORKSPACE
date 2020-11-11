@@ -296,10 +296,86 @@ load(
     for arch in ARCHITECTURES
 ]
 
+# Zulu OpenJDK
+# When updating versions, sync with java_full_version in java/BUILD
+#http_archive(
+#    name = "zulu_openjdk_jre8_amd64",
+#    build_file = "//java:BUILD.jre8",
+#    sha256 = "",
+#    strip_prefix = "jdk8u272-b10-jre/",
+#    type = "tar.gz",
+#    urls = [""],
+#)
+
+#http_archive(
+#    name = "zulu_openjdk_jdk8_amd64",
+#    build_file = "//java:BUILD.jdk8",
+#    sha256 = "",
+#    strip_prefix = "jdk8u272-b10/",
+#    type = "tar.gz",
+#    urls = [""],
+#)
+
+#http_archive(
+#    name = "zulu_openjdk_jre11_amd64",
+#    build_file = "//java:BUILD.jre11",
+#    sha256 = "",
+#    strip_prefix = "jdk-11.0.9+11-jre/",
+#    type = "tar.gz",
+#    urls = [""],
+#)
+
+#http_archive(
+#    name = "zulu_openjdk_jdk11_amd64",
+#    build_file = "//java:BUILD.jdk11",
+#    sha256 = "",
+#    strip_prefix = "jdk-11.0.9+11/",
+#    type = "tar.gz",
+#    urls = [""],
+#)
+
+# AdoptOpenJDK (Adoptium)
+# When updating versions, sync with java_full_version in java/BUILD
+http_archive(
+    name = "adoptopenjdk_jre8_amd64",
+    build_file = "//java:BUILD.jre8",
+    sha256 = "e6894601a559c5226c6dc337308df263444d356a6430f4aabb66e02607c82956",
+    strip_prefix = "jdk8u272-b10-jre/",
+    type = "tar.gz",
+    urls = ["https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u272-b10/OpenJDK8U-jre_x64_linux_hotspot_8u272b10.tar.gz"],
+)
+
+http_archive(
+    name = "adoptopenjdk_jdk8_amd64",
+    build_file = "//java:BUILD.jdk8",
+    sha256 = "6f124b69d07d8d3edf39b9aa5c58473f63a380b686ddb73a5495e01d25c2939a",
+    strip_prefix = "jdk8u272-b10/",
+    type = "tar.gz",
+    urls = ["https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u272-b10/OpenJDK8U-jdk_x64_linux_hotspot_8u272b10.tar.gz"],
+)
+
+http_archive(
+    name = "adoptopenjdk_jre11_amd64",
+    build_file = "//java:BUILD.jre11",
+    sha256 = "2ed263b662afb8b5d2964d1c9941d20031d07e5af68679ebefdca35d40bb91b1",
+    strip_prefix = "jdk-11.0.9+11-jre/",
+    type = "tar.gz",
+    urls = ["https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.9%2B11.1/OpenJDK11U-jre_x64_linux_hotspot_11.0.9_11.tar.gz"],
+)
+
+http_archive(
+    name = "adoptopenjdk_jdk11_amd64",
+    build_file = "//java:BUILD.jdk11",
+    sha256 = "a3c52b73a76bed0f113604165eb4f2020b767e188704d8cc0bfc8bc4eb596712",
+    strip_prefix = "jdk-11.0.9+11/",
+    type = "tar.gz",
+    urls = ["https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.9%2B11.1/OpenJDK11U-jdk_x64_linux_hotspot_11.0.9_11.tar.gz"],
+)
+
 # For Jetty
 http_archive(
     name = "jetty",
-    build_file = "//:BUILD.jetty",
+    build_file = "//java:BUILD.jetty",
     sha256 = "1b9ec532cd9b94550fad655e066a1f9cc2d350a1c79daea85d5c56fdbcd9aaa8",
     strip_prefix = "jetty-distribution-9.4.22.v20191022/",
     type = "tar.gz",

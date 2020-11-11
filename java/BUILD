@@ -4,15 +4,7 @@ load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("@package_bundle_amd64_debian9//file:packages.bzl", versions_amd64_debian9 = "versions")
-load("@package_bundle_amd64_debian10//file:packages.bzl", versions_amd64_debian10 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
-load("//java:jre_ver.bzl", "jre_ver")
-
-DISTRO_VERSIONS = {
-    "_debian9": versions_amd64_debian9,
-    "_debian10": versions_amd64_debian10,
-}
 
 USERS = [
     "root",
@@ -35,9 +27,7 @@ USERS = [
             DISTRO_PACKAGES["amd64"][distro_suffix]["libfontconfig1"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libuuid1"],
         ],
-        env = {
-            "LANG": "C.UTF-8",
-        },
+        env = {"LANG": "C.UTF-8"},
         tars = [
             "//cacerts:cacerts_java_amd64" + distro_suffix,
             "//locale:locale_amd64" + distro_suffix,
@@ -53,70 +43,29 @@ USERS = [
 
 [
     container_image(
-        name = rule_name + "_" + user + distro_suffix,
-        base = ":java_base" + ("_debug" if ("debug" in rule_name) else "") + "_" + user + distro_suffix,
-        debs = [DISTRO_PACKAGES["amd64"][distro_suffix][deb] for deb in java_debs],
+        name = "java" + java_major_version + mode + "_" + user + distro_suffix,
+        base = ":java_base" + mode + "_" + user + distro_suffix,
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
         entrypoint = [
             "/usr/bin/java",
             "-jar",
         ],
-        env = {
-            "JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
-        },
-        symlinks = {
-            "/usr/bin/java": java_executable_path,
-        },
+        env = {"JAVA_VERSION": java_full_version},
+        symlinks = {"/usr/bin/java": "/usr/lib/jvm/openjdk-" + java_major_version + "/bin/java"},
+        #tars = ["@zulu_openjdk_" + ("jre" if (not mode) else "jdk") + java_major_version + "_amd64//:tar"],
+        tars = ["@adoptopenjdk_" + ("jre" if (not mode) else "jdk") + java_major_version + "_amd64//:tar"],
     )
-    for (distro_suffix, rule_name, java_debs, java_executable_path) in [
-        (
-            "_debian9",
-            "java8",
-            ["openjdk-8-jre-headless"],
-            "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
-        ),
-        (
-            "_debian9",
-            "java8_debug",
-            [
-                "openjdk-8-jre-headless",
-                "openjdk-8-jdk-headless",
-            ],
-            "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
-        ),
-        (
-            "_debian9",
-            "java11",
-            ["openjdk-11-jre-headless"],
-            "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
-        ),
-        (
-            "_debian9",
-            "java11_debug",
-            [
-                "openjdk-11-jre-headless",
-                "openjdk-11-jdk-headless",
-            ],
-            "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
-        ),
-        (
-            "_debian10",
-            "java11",
-            ["openjdk-11-jre-headless"],
-            "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
-        ),
-        (
-            "_debian10",
-            "java11_debug",
-            [
-                "openjdk-11-jre-headless",
-                "openjdk-11-jdk-headless",
-            ],
-            "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
-        ),
+    for (java_major_version, java_full_version) in [
+        ("8", "8u272"),
+        ("11", "11.0.9"),
+    ]
+    for mode in [
+        "",
+        "_debug",
     ]
     for user in USERS
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [

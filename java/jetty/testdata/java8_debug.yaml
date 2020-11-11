@@ -5,7 +5,7 @@ commandTests:
     args: ["-jar", "/jetty/start.jar", "--version"]
     expectedOutput: ['.*Jetty Server Classpath:.*']
   - name: java
-    command: "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
+    command: "/usr/lib/jvm/openjdk-8/bin/java"
     args: ["-version"]
     expectedError: ['openjdk version "1\.8.*"']
   - name: java-symlink
@@ -13,7 +13,7 @@ commandTests:
     args: ["-version"]
     expectedError: ['openjdk version "1\.8.*"']
   - name: javac
-    command: "/usr/lib/jvm/java-8-openjdk-amd64/bin/javac"
+    command: "/usr/lib/jvm/openjdk-8/bin/javac"
     args: ["-version"]
     expectedError: ['javac 1\.8.*']
 fileExistenceTests:

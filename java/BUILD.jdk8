@@ -1,0 +1,21 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+
+pkg_tar(
+    name = "tar",
+    srcs = glob(
+        ["**/*"],
+        exclude = [
+            "man/**",
+            "sample/**",
+            # The new_http_archive WORKSPACE rule leaves the original .tar.gz and bazel artifacts in the directory,
+            "WORKSPACE",
+            "*.tar.gz",
+            "BUILD.bazel",
+        ],
+    ),
+    package_dir = "/usr/lib/jvm/openjdk-8",
+    # See: https://github.com/bazelbuild/bazel/issues/2176
+    strip_prefix = ".",
+)
