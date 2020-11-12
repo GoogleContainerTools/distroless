@@ -35,9 +35,7 @@ USERS = [
             DISTRO_PACKAGES["amd64"][distro_suffix]["libfontconfig1"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libuuid1"],
         ],
-        env = {
-            "LANG": "C.UTF-8",
-        },
+        env = {"LANG": "C.UTF-8"},
         tars = [
             "//cacerts:cacerts_java_amd64" + distro_suffix,
             "//locale:locale_amd64" + distro_suffix,
@@ -62,12 +60,8 @@ USERS = [
             "/usr/bin/java",
             "-jar",
         ],
-        env = {
-            "JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]]),
-        },
-        symlinks = {
-            "/usr/bin/java": java_executable_path,
-        },
+        env = {"JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]])},
+        symlinks = {"/usr/bin/java": java_executable_path},
     )
     for (distro_suffix, rule_name, java_debs, java_executable_path) in [
         (

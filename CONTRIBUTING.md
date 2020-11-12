@@ -20,7 +20,7 @@ Look into `./test.sh` to understand how. Minimally,
    You don't have to repeat this step unless you cleaned your workspace or want to generate a new version of `dpkg_parser.par`.
 1. `bazel build //...`
 
-For running tests, do `bazel test //...`.
+For running tests, check `./test.sh`. (`bazel test //...` will NOT run all tests, as many tests are marked "manual".)
 
 For building and loading images to your local Docker engine, do `bazel run //java:java11_debian10` for example. After successful build, `docker images` will list images like `bazel/java:java11_debian10`.
 

@@ -25,4 +25,7 @@ find . -name "*.py" | xargs pylint --disable=R,C
 bazel clean --curses=no
 bazel build --curses=no //package_manager:dpkg_parser.par
 bazel build --curses=no //...
+# Run all tests not tagged as "manual"
 bazel test --curses=no --test_output=errors --test_timeout=900 //...
+# Run all tests tagged with "amd64"
+bazel test --curses=no --test_output=errors --test_timeout=900 $(bazel query 'attr("tags", "amd64", "//...")')

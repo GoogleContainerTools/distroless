@@ -3,15 +3,15 @@ commandTests:
   - name: java
     command: "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "1\.8.*"']
+    expectedError: ['openjdk version "1\.8\.0_272"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "1\.8.*"']
+    expectedError: ['openjdk version "1\.8\.0_272"']
   - name: javac
     command: "/usr/lib/jvm/java-8-openjdk-amd64/bin/javac"
     args: ["-version"]
-    expectedError: ['javac 1\.8.*']
+    expectedError: ['javac 1\.8\.0_272']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
