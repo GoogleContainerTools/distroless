@@ -299,7 +299,7 @@ load(
 # For Jetty
 http_archive(
     name = "jetty",
-    build_file = "//:BUILD.jetty",
+    build_file = "//java:BUILD.jetty",
     sha256 = "1b9ec532cd9b94550fad655e066a1f9cc2d350a1c79daea85d5c56fdbcd9aaa8",
     strip_prefix = "jetty-distribution-9.4.22.v20191022/",
     type = "tar.gz",
