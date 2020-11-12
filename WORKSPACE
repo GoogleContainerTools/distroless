@@ -120,10 +120,6 @@ load(
             "fontconfig-config",
             "libfontconfig1",
             "libuuid1",
-            "openjdk-8-jre-headless",
-            "openjdk-8-jdk-headless",
-            "openjdk-11-jre-headless",
-            "openjdk-11-jdk-headless",
             "libc-bin",
 
             #python
@@ -225,8 +221,6 @@ load(
             "fontconfig-config",
             "libfontconfig1",
             "libuuid1",
-            "openjdk-11-jre-headless",
-            "openjdk-11-jdk-headless",
             "libc-bin",
 
             #python
