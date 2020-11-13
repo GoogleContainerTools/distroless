@@ -6,6 +6,8 @@ set -o xtrace
 cp checksums.bzl checksums.bzl~
 cp package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~
 cp package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~
+cp package_bundle_arm_debian9.versions package_bundle_arm_debian9.versions~
+cp package_bundle_arm_debian10.versions package_bundle_arm_debian10.versions~
 cp package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~
 cp package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~
 cp package_bundle_s390x_debian9.versions package_bundle_s390x_debian9.versions~
@@ -38,7 +40,7 @@ cat > checksums.bzl <<EOF
 # DO NOT MODIFY THIS FILE DIRECTLY.
 # TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
 
-BASE_ARCHITECTURES = ["amd64", "arm64"]
+BASE_ARCHITECTURES = ["amd64", "arm", "arm64"]
 # Exceptions:
 # - s390x doesn't have libunwind8.
 #   https://github.com/GoogleContainerTools/distroless/pull/612#issue-500157699
@@ -67,6 +69,19 @@ SHA256s = {
             "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
             "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
             "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+        },
+    },
+    "arm": {
+        "debian9": {
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/stretch/updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+        },
+        "debian10": {
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
         },
     },
     "arm64": {
@@ -115,6 +130,8 @@ bazel clean
 bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
 bazel build --host_force_python=PY2 @package_bundle_amd64_debian9//file:packages.bzl
 bazel build --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
+bazel build --host_force_python=PY2 @package_bundle_arm_debian9//file:packages.bzl
+bazel build --host_force_python=PY2 @package_bundle_arm_debian10//file:packages.bzl
 bazel build --host_force_python=PY2 @package_bundle_arm64_debian9//file:packages.bzl
 bazel build --host_force_python=PY2 @package_bundle_arm64_debian10//file:packages.bzl
 bazel build --host_force_python=PY2 @package_bundle_s390x_debian9//file:packages.bzl
@@ -126,6 +143,8 @@ bazel build --host_force_python=PY2 @package_bundle_ppc64le_debian10//file:packa
 
 if diff -w package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~ &&
 	diff -w package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~ &&
+	diff -w package_bundle_arm_debian9.versions package_bundle_arm_debian9.versions~ &&
+	diff -w package_bundle_arm_debian10.versions package_bundle_arm_debian10.versions~ &&
 	diff -w package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~ &&
 	diff -w package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~ &&
 	diff -w package_bundle_s390x_debian9.versions package_bundle_s390x_debian9.versions~ &&
@@ -136,6 +155,8 @@ if diff -w package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.ve
     mv checksums.bzl~ checksums.bzl
     mv package_bundle_amd64_debian9.versions~ package_bundle_amd64_debian9.versions
     mv package_bundle_amd64_debian10.versions~ package_bundle_amd64_debian10.versions
+    mv package_bundle_arm_debian9.versions~ package_bundle_arm_debian9.versions
+    mv package_bundle_arm_debian10.versions~ package_bundle_arm_debian10.versions
     mv package_bundle_arm64_debian9.versions~ package_bundle_arm64_debian9.versions
     mv package_bundle_arm64_debian10.versions~ package_bundle_arm64_debian10.versions
     mv package_bundle_s390x_debian9.versions~ package_bundle_s390x_debian9.versions
