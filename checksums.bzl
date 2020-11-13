@@ -2,8 +2,8 @@
 # DO NOT MODIFY THIS FILE DIRECTLY.
 # TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
 
-BASE_ARCHITECTURES = ["amd64", "arm64"]
-ARCHITECTURES = BASE_ARCHITECTURES + ["s390x", "ppc64le"]
+BASE_ARCHITECTURES = ["amd64", "arm64", "ppc64le"]
+ARCHITECTURES = BASE_ARCHITECTURES + ["s390x"]
 
 VERSIONS = [
     ("debian9", "stretch"),
