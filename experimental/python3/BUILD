@@ -34,7 +34,7 @@ DISTRO_VERSION = {
 
 [
     container_image(
-        name = ("python3" if (not mode) else mode[1:]) + "_" + arch + distro_suffix,
+        name = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + distro_suffix,
         architecture = arch,
         # Based on //cc so that C extensions work properly.
         base = "//cc" + (mode if mode else ":cc") + "_root_" + arch + distro_suffix,
@@ -77,7 +77,7 @@ DISTRO_VERSION = {
     container_image(
         name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + distro_suffix,
         architecture = arch,
-        base = ("python3" if (not mode) else mode[1:]) + "_" + arch + distro_suffix,
+        base = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + distro_suffix,
         user = "%d" % NONROOT,
         workdir = "/home/nonroot",
     )
@@ -91,26 +91,30 @@ DISTRO_VERSION = {
 
 [
     container_test(
-        name = "python3_" + arch + distro_suffix + "_test",
+        name = "python3_" + user + "_" + arch + distro_suffix + "_test",
         size = "medium",
         configs = ["testdata/python3.yaml"],
-        image = ":python3_" + arch + distro_suffix,
+        image = ":python3_" + user + "_" + arch + distro_suffix,
         tags = [
             "manual",
             arch,
         ],
     )
     for arch in ARCHITECTURES
+    for user in [
+        "root",
+        "nonroot",
+    ]
     for distro_suffix in DISTRO_SUFFIXES
 ]
 
 # tests for version-specific things
 [
     container_test(
-        name = "debian9" + user + "_" + arch + "_test",
+        name = "debian9_" + user + "_" + arch + "_test",
         size = "medium",
         configs = ["testdata/debian9.yaml"],
-        image = ":python3" + user + "_" + arch + "_debian9",
+        image = ":python3_" + user + "_" + arch + "_debian9",
         tags = [
             "manual",
             arch,
@@ -118,17 +122,17 @@ DISTRO_VERSION = {
     )
     for arch in ARCHITECTURES
     for user in [
-        "",
-        "_nonroot",
+        "root",
+        "nonroot",
     ]
 ]
 
 [
     container_test(
-        name = "debian10" + user + "_" + arch + "_test",
+        name = "debian10_" + user + "_" + arch + "_test",
         size = "medium",
         configs = ["testdata/debian10.yaml"],
-        image = ":python3" + user + "_" + arch + "_debian10",
+        image = ":python3_" + user + "_" + arch + "_debian10",
         tags = [
             "manual",
             arch,
@@ -136,7 +140,7 @@ DISTRO_VERSION = {
     )
     for arch in ARCHITECTURES
     for user in [
-        "",
-        "_nonroot",
+        "root",
+        "nonroot",
     ]
 ]
