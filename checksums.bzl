@@ -3,6 +3,7 @@
 # TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
 
 BASE_ARCHITECTURES = ["amd64", "arm", "arm64"]
+
 # Exceptions:
 # - s390x doesn't have libunwind8.
 #   https://github.com/GoogleContainerTools/distroless/pull/612#issue-500157699
