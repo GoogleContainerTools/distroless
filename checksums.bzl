@@ -58,6 +58,7 @@ SHA256s = {
             "main": "34aef3b450ec40c36b23aa61e8b1d68ed40ee4b496d597364db10a9eadad590e",
             "backports": "37ddcb6e6e96e494f3afd409680dbb0c57ef278453599f5e2a6366b6ead6da63",
             "updates": "2ef877054f0dd43151aed073c66214f217c25cc4a31efa7004a5aafb2442e809",
+            "security": "18c384dc64731dd46dcb3537e7d1b34417392c5e37bf4ce563337bca305f60a4",
         },
         "debian10": {
             "main": "6a60359ca6e3421c2b1ea1a9003f2127cb9e4c8e702a87c0c1074ea212cf171e",
