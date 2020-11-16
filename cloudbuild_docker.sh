@@ -40,48 +40,40 @@ done
 
 docker manifest create gcr.io/$PROJECT_ID/python3:nonroot \
    gcr.io/$PROJECT_ID/python3:nonroot-amd64 \
-   gcr.io/$PROJECT_ID/python3:nonroot-arm \
    gcr.io/$PROJECT_ID/python3:nonroot-arm64
 docker manifest push gcr.io/$PROJECT_ID/python3:nonroot
 
 docker manifest create gcr.io/$PROJECT_ID/python3:latest \
    gcr.io/$PROJECT_ID/python3:latest-amd64 \
-   gcr.io/$PROJECT_ID/python3:latest-arm \
    gcr.io/$PROJECT_ID/python3:latest-arm64
 docker manifest push gcr.io/$PROJECT_ID/python3:latest
 
 docker manifest create gcr.io/$PROJECT_ID/python3:debug-nonroot \
    gcr.io/$PROJECT_ID/python3:debug-nonroot-amd64 \
-   gcr.io/$PROJECT_ID/python3:debug-nonroot-arm \
    gcr.io/$PROJECT_ID/python3:debug-nonroot-arm64
 docker manifest push gcr.io/$PROJECT_ID/python3:debug-nonroot
 
 docker manifest create gcr.io/$PROJECT_ID/python3:debug \
    gcr.io/$PROJECT_ID/python3:debug-amd64 \
-   gcr.io/$PROJECT_ID/python3:debug-arm \
    gcr.io/$PROJECT_ID/python3:debug-arm64
 docker manifest push gcr.io/$PROJECT_ID/python3:debug
 
 docker manifest create gcr.io/$PROJECT_ID/python2.7:latest \
    gcr.io/$PROJECT_ID/python2.7:latest-amd64 \
-   gcr.io/$PROJECT_ID/python2.7:latest-arm \
    gcr.io/$PROJECT_ID/python2.7:latest-arm64
 docker manifest push gcr.io/$PROJECT_ID/python2.7:latest
 
 docker manifest create gcr.io/$PROJECT_ID/python2.7:debug \
    gcr.io/$PROJECT_ID/python2.7:debug-amd64 \
-   gcr.io/$PROJECT_ID/python2.7:debug-arm \
    gcr.io/$PROJECT_ID/python2.7:debug-arm64
 docker manifest push gcr.io/$PROJECT_ID/python2.7:debug
 
 docker manifest create gcr.io/$PROJECT_ID/nodejs:latest \
    gcr.io/$PROJECT_ID/nodejs:latest-amd64 \
-   gcr.io/$PROJECT_ID/nodejs:latest-arm \
    gcr.io/$PROJECT_ID/nodejs:latest-arm64
 docker manifest push gcr.io/$PROJECT_ID/nodejs:latest
 
 docker manifest create gcr.io/$PROJECT_ID/nodejs:debug \
    gcr.io/$PROJECT_ID/nodejs:debug-amd64 \
-   gcr.io/$PROJECT_ID/nodejs:debug-arm \
    gcr.io/$PROJECT_ID/nodejs:debug-arm64
 docker manifest push gcr.io/$PROJECT_ID/nodejs:debug
