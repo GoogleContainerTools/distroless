@@ -403,6 +403,13 @@ http_file(
 )
 
 http_file(
+    name = "busybox_arm",
+    executable = True,
+    sha256 = "cd04052b8b6885f75f50b2a280bfcbf849d8710c8e61d369c533acf307eda064",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv7l"],
+)
+
+http_file(
     name = "busybox_arm64",
     executable = True,
     sha256 = "141adb1b625a6f44c4b114f76b4387b4ea4f7ab802b88eb40e0d2f6adcccb1c3",

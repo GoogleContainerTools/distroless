@@ -75,8 +75,12 @@ def main():
     # unfortunately debian uses "ppc64el" https://wiki.debian.org/ppc64el
     if args.arch == "ppc64le":
         args.arch = "ppc64el"
+    elif args.arch == "arm":
+        args.arch = "armhf"
     if args.packages_gz_url and 'ppc64le' in args.packages_gz_url:
         args.packages_gz_url = args.packages_gz_url.replace("ppc64le", "ppc64el")
+    elif args.packages_gz_url and '-arm/' in args.packages_gz_url:
+        args.packages_gz_url = args.packages_gz_url.replace("-arm/", "-armhf/")
 
     if args.download_and_extract_only:
         download_package_list(args.mirror_url,args.distro, args.arch, args.snapshot, args.sha256,
