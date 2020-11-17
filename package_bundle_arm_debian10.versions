@@ -62,7 +62,6 @@
     "libtasn1-6": "4.13-3",
     "libtinfo6": "6.1+20181013-2+deb10u2",
     "libunistring2": "0.9.10-1",
-    "libunwind8": "1.2.1-10~deb10u1",
     "libuuid1": "2.33.1-0.1",
     "mime-support": "3.62",
     "netbase": "5.6",

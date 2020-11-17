@@ -36,37 +36,15 @@ for distro_suffix in "" -debian9 -debian10; do
 
   docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:latest "amd64 arm arm64 s390x ppc64le"
   docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:debug "amd64 arm arm64 s390x ppc64le"
+
+  docker_manifest gcr.io/$PROJECT_ID/python2.7${distro_suffix}:latest "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/python2.7${distro_suffix}:debug "amd64 arm64"
+
+  docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:nonroot "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:latest "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:debug-nonroot "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:debug "amd64 arm64"
 done
-
-docker manifest create gcr.io/$PROJECT_ID/python3:nonroot \
-   gcr.io/$PROJECT_ID/python3:nonroot-amd64 \
-   gcr.io/$PROJECT_ID/python3:nonroot-arm64
-docker manifest push gcr.io/$PROJECT_ID/python3:nonroot
-
-docker manifest create gcr.io/$PROJECT_ID/python3:latest \
-   gcr.io/$PROJECT_ID/python3:latest-amd64 \
-   gcr.io/$PROJECT_ID/python3:latest-arm64
-docker manifest push gcr.io/$PROJECT_ID/python3:latest
-
-docker manifest create gcr.io/$PROJECT_ID/python3:debug-nonroot \
-   gcr.io/$PROJECT_ID/python3:debug-nonroot-amd64 \
-   gcr.io/$PROJECT_ID/python3:debug-nonroot-arm64
-docker manifest push gcr.io/$PROJECT_ID/python3:debug-nonroot
-
-docker manifest create gcr.io/$PROJECT_ID/python3:debug \
-   gcr.io/$PROJECT_ID/python3:debug-amd64 \
-   gcr.io/$PROJECT_ID/python3:debug-arm64
-docker manifest push gcr.io/$PROJECT_ID/python3:debug
-
-docker manifest create gcr.io/$PROJECT_ID/python2.7:latest \
-   gcr.io/$PROJECT_ID/python2.7:latest-amd64 \
-   gcr.io/$PROJECT_ID/python2.7:latest-arm64
-docker manifest push gcr.io/$PROJECT_ID/python2.7:latest
-
-docker manifest create gcr.io/$PROJECT_ID/python2.7:debug \
-   gcr.io/$PROJECT_ID/python2.7:debug-amd64 \
-   gcr.io/$PROJECT_ID/python2.7:debug-arm64
-docker manifest push gcr.io/$PROJECT_ID/python2.7:debug
 
 docker manifest create gcr.io/$PROJECT_ID/nodejs:latest \
    gcr.io/$PROJECT_ID/nodejs:latest-amd64 \

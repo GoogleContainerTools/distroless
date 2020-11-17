@@ -91,12 +91,6 @@ CC.update({
 })
 
 PYTHON3 = {
-    "gcr.io/{PROJECT_ID}/python3:{COMMIT_SHA}": "//experimental/python3:python3_root_amd64_debian9",
-    "gcr.io/{PROJECT_ID}/python3-debian9:{COMMIT_SHA}": "//experimental/python3:python3_root_amd64_debian9",
-    "gcr.io/{PROJECT_ID}/python3-debian10:{COMMIT_SHA}": "//experimental/python3:python3_root_amd64_debian10",
-}
-
-PYTHON3.update({
     "gcr.io/{PROJECT_ID}/python3:" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_debian9"
     for arch in BASE_ARCHITECTURES
     for (tag_base, label, user) in [
@@ -105,7 +99,7 @@ PYTHON3.update({
         ("debug", "debug", "root"),
         ("debug-nonroot", "debug", "nonroot"),
     ]
-})
+}
 
 PYTHON3.update({
     "gcr.io/{PROJECT_ID}/python3-" + distro + ":" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_" + distro
@@ -120,19 +114,13 @@ PYTHON3.update({
 })
 
 PYTHON27 = {
-    "gcr.io/{PROJECT_ID}/python2.7:{COMMIT_SHA}": "//experimental/python2.7:python27_amd64_debian9",
-    "gcr.io/{PROJECT_ID}/python2.7-debian9:{COMMIT_SHA}": "//experimental/python2.7:python27_amd64_debian9",
-    "gcr.io/{PROJECT_ID}/python2.7-debian10:{COMMIT_SHA}": "//experimental/python2.7:python27_amd64_debian10",
-}
-
-PYTHON27.update({
     "gcr.io/{PROJECT_ID}/python2.7:" + tag_base + "-" + arch: "//experimental/python2.7:" + label + "_" + arch + "_debian9"
     for arch in BASE_ARCHITECTURES
     for (tag_base, label) in [
         ("latest", "python27"),
         ("debug", "debug"),
     ]
-})
+}
 
 PYTHON27.update({
     "gcr.io/{PROJECT_ID}/python2.7-" + distro + ":" + tag_base + "-" + arch: "//experimental/python2.7:" + label + "_" + arch + "_" + distro
