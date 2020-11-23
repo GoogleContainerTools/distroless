@@ -18,6 +18,11 @@ steps:
     set -o xtrace
 
     bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
+
+    # Optional: trigger building a package bundle without concurrency to avoid
+    # flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
+    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
+
     bazel run --host_force_python=PY2 //:publish
 
 - name: docker

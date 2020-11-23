@@ -24,6 +24,11 @@ find . -name "*.py" | xargs pylint --disable=R,C
 # Bazel build and test
 bazel clean --curses=no
 bazel build --curses=no //package_manager:dpkg_parser.par
+
+# Optional: trigger building a package bundle without concurrency to avoid
+# flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
+bazel build --jobs=1 --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
+
 bazel build --curses=no //...
 # Run all tests not tagged as "manual"
 bazel test --curses=no --test_output=errors --test_timeout=900 //...
