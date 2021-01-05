@@ -42,7 +42,7 @@
     "libncursesw5": "6.0+20161126-1+deb9u2",
     "libnettle6": "3.3-1+b2",
     "libnghttp2-14": "1.18.1-1+deb9u1",
-    "libp11-kit0": "0.23.3-2",
+    "libp11-kit0": "0.23.3-2+deb9u1",
     "libpcre3": "2:8.39-3",
     "libpng16-16": "1.6.28-1+deb9u1",
     "libpsl5": "0.17.0-3",
@@ -75,6 +75,6 @@
     "python2.7-minimal": "2.7.13-2+deb9u4",
     "python3.5-minimal": "3.5.3-1+deb9u3",
     "readline-common": "7.0-3",
-    "tzdata": "2020d-0+deb9u1",
+    "tzdata": "2020e-0+deb9u1",
     "zlib1g": "1:1.2.8.dfsg-5"
 }

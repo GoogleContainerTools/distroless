@@ -42,7 +42,7 @@
     "libncursesw6": "6.1+20181013-2+deb10u2",
     "libnettle6": "3.4.1-1",
     "libnghttp2-14": "1.36.0-2+deb10u1",
-    "libp11-kit0": "0.23.15-2",
+    "libp11-kit0": "0.23.15-2+deb10u1",
     "libpcre3": "2:8.39-12",
     "libpng16-16": "1.6.36-6",
     "libpsl5": "0.20.2-2",
