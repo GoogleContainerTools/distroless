@@ -46,6 +46,37 @@ for distro_suffix in "" -debian9 -debian10; do
   docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:latest "amd64 arm64"
   docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:debug-nonroot "amd64 arm64"
   docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:debug "amd64 arm64"
+
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:base "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:base-nonroot "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:base-debug "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:base-debug-nonroot "amd64 arm64"
+
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:latest "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:nonroot "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:debug "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:debug-nonroot "amd64 arm64"
+
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:11 "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:11-nonroot "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:11-debug "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:11-debug-nonroot "amd64 arm64"
+
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:latest "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:debug "amd64 arm64"
+
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:java11 "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:java11-debug "amd64 arm64"
+done
+
+for distro_suffix in "" -debian9; do
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:8 "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:8-nonroot "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:8-debug "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:8-debug-nonroot "amd64 arm64"
+
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:java8 "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:java8-debug "amd64 arm64"
 done
 
 docker manifest create gcr.io/$PROJECT_ID/nodejs:latest \

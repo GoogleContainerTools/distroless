@@ -180,66 +180,250 @@ DOTNET = {
 }
 
 JAVA = {
-    "gcr.io/{PROJECT_ID}/java:base": "//java:java_base_root_debian9",
-    "gcr.io/{PROJECT_ID}/java:base-nonroot": "//java:java_base_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:base": "//java:java_base_root_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:base-nonroot": "//java:java_base_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java:base-debug": "//java:java_base_debug_root_debian9",
-    "gcr.io/{PROJECT_ID}/java:base-debug-nonroot": "//java:java_base_debug_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:base-debug": "//java:java_base_debug_root_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:base-debug-nonroot": "//java:java_base_debug_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java:latest": "//java:java8_root_debian9",
-    "gcr.io/{PROJECT_ID}/java:nonroot": "//java:java8_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java:8": "//java:java8_root_debian9",
-    "gcr.io/{PROJECT_ID}/java:8-nonroot": "//java:java8_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:latest": "//java:java8_root_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:nonroot": "//java:java8_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:8": "//java:java8_root_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:8-nonroot": "//java:java8_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java:debug": "//java:java8_debug_root_debian9",
-    "gcr.io/{PROJECT_ID}/java:debug-nonroot": "//java:java8_debug_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java:8-debug": "//java:java8_debug_root_debian9",
-    "gcr.io/{PROJECT_ID}/java:8-debug-nonroot": "//java:java8_debug_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:debug": "//java:java8_debug_root_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:debug-nonroot": "//java:java8_debug_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:8-debug": "//java:java8_debug_root_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:8-debug-nonroot": "//java:java8_debug_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java:11": "//java:java11_root_debian9",
-    "gcr.io/{PROJECT_ID}/java:11-nonroot": "//java:java11_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:11": "//java:java11_root_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:11-nonroot": "//java:java11_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java:11-debug": "//java:java11_debug_root_debian9",
-    "gcr.io/{PROJECT_ID}/java:11-debug-nonroot": "//java:java11_debug_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:11-debug": "//java:java11_debug_root_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9:11-debug-nonroot": "//java:java11_debug_nonroot_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian10:base": "//java:java_base_root_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:base-nonroot": "//java:java_base_nonroot_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:base-debug": "//java:java_base_debug_root_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:base-debug-nonroot": "//java:java_base_debug_nonroot_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:latest": "//java:java11_root_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:nonroot": "//java:java11_nonroot_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:11": "//java:java11_root_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:11-nonroot": "//java:java11_nonroot_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:debug": "//java:java11_debug_root_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:debug-nonroot": "//java:java11_debug_nonroot_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:11-debug": "//java:java11_debug_root_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10:11-debug-nonroot": "//java:java11_debug_nonroot_debian10",
-    "gcr.io/{PROJECT_ID}/java/jetty:latest": "//java/jetty:jetty_java8_debian9",
-    "gcr.io/{PROJECT_ID}/java/jetty:java8": "//java/jetty:jetty_java8_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9/jetty:latest": "//java/jetty:jetty_java8_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9/jetty:java8": "//java/jetty:jetty_java8_debian9",
-    "gcr.io/{PROJECT_ID}/java/jetty:debug": "//java/jetty:jetty_java8_debug_debian9",
-    "gcr.io/{PROJECT_ID}/java/jetty:java8-debug": "//java/jetty:jetty_java8_debug_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9/jetty:debug": "//java/jetty:jetty_java8_debug_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9/jetty:java8-debug": "//java/jetty:jetty_java8_debug_debian9",
-    "gcr.io/{PROJECT_ID}/java/jetty:java11": "//java/jetty:jetty_java11_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9/jetty:java11": "//java/jetty:jetty_java11_debian9",
-    "gcr.io/{PROJECT_ID}/java/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian9/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian9",
-    "gcr.io/{PROJECT_ID}/java-debian10/jetty:latest": "//java/jetty:jetty_java11_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10/jetty:java11": "//java/jetty:jetty_java11_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10/jetty:debug": "//java/jetty:jetty_java11_debug_debian10",
-    "gcr.io/{PROJECT_ID}/java-debian10/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian10",
+    label: image
+    for arch in BASE_ARCHITECTURES
+    for (label, image) in [
+        (
+            "gcr.io/{PROJECT_ID}/java:base-" + arch,
+            "//java:java_base_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:base-nonroot-" + arch,
+            "//java:java_base_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:base-" + arch,
+            "//java:java_base_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:base-nonroot-" + arch,
+            "//java:java_base_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:base-debug-" + arch,
+            "//java:java_base_debug_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:base-debug-nonroot-" + arch,
+            "//java:java_base_debug_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:base-debug-" + arch,
+            "//java:java_base_debug_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:base-debug-nonroot-" + arch,
+            "//java:java_base_debug_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:latest-" + arch,
+            "//java:java8_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:nonroot-" + arch,
+            "//java:java8_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:8-" + arch,
+            "//java:java8_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:8-nonroot-" + arch,
+            "//java:java8_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:latest-" + arch,
+            "//java:java8_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:nonroot-" + arch,
+            "//java:java8_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:8-" + arch,
+            "//java:java8_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:8-nonroot-" + arch,
+            "//java:java8_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:debug-" + arch,
+            "//java:java8_debug_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:debug-nonroot-" + arch,
+            "//java:java8_debug_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:8-debug-" + arch,
+            "//java:java8_debug_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:8-debug-nonroot-" + arch,
+            "//java:java8_debug_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:debug-" + arch,
+            "//java:java8_debug_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:debug-nonroot-" + arch,
+            "//java:java8_debug_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:8-debug-" + arch,
+            "//java:java8_debug_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:8-debug-nonroot-" + arch,
+            "//java:java8_debug_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:11-" + arch,
+            "//java:java11_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:11-nonroot-" + arch,
+            "//java:java11_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:11-" + arch,
+            "//java:java11_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:11-nonroot-" + arch,
+            "//java:java11_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:11-debug-" + arch,
+            "//java:java11_debug_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java:11-debug-nonroot-" + arch,
+            "//java:java11_debug_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:11-debug-" + arch,
+            "//java:java11_debug_root_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9:11-debug-nonroot-" + arch,
+            "//java:java11_debug_nonroot_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:base-" + arch,
+            "//java:java_base_root_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:base-nonroot-" + arch,
+            "//java:java_base_nonroot_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:base-debug-" + arch,
+            "//java:java_base_debug_root_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:base-debug-nonroot-" + arch,
+            "//java:java_base_debug_nonroot_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:latest-" + arch,
+            "//java:java11_root_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:nonroot-" + arch,
+            "//java:java11_nonroot_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:11-" + arch,
+            "//java:java11_root_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:11-nonroot-" + arch,
+            "//java:java11_nonroot_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:debug-" + arch,
+            "//java:java11_debug_root_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:debug-nonroot-" + arch,
+            "//java:java11_debug_nonroot_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:11-debug-" + arch,
+            "//java:java11_debug_root_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10:11-debug-nonroot-" + arch,
+            "//java:java11_debug_nonroot_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java/jetty:latest-" + arch,
+            "//java/jetty:jetty_java8_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java/jetty:java8-" + arch,
+            "//java/jetty:jetty_java8_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9/jetty:latest-" + arch,
+            "//java/jetty:jetty_java8_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9/jetty:java8-" + arch,
+            "//java/jetty:jetty_java8_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java/jetty:debug-" + arch,
+            "//java/jetty:jetty_java8_debug_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java/jetty:java8-debug-" + arch,
+            "//java/jetty:jetty_java8_debug_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9/jetty:debug-" + arch,
+            "//java/jetty:jetty_java8_debug_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9/jetty:java8-debug-" + arch,
+            "//java/jetty:jetty_java8_debug_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java/jetty:java11-" + arch,
+            "//java/jetty:jetty_java11_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9/jetty:java11-" + arch,
+            "//java/jetty:jetty_java11_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java/jetty:java11-debug-" + arch,
+            "//java/jetty:jetty_java11_debug_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian9/jetty:java11-debug-" + arch,
+            "//java/jetty:jetty_java11_debug_" + arch + "_debian9",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10/jetty:latest-" + arch,
+            "//java/jetty:jetty_java11_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10/jetty:java11-" + arch,
+            "//java/jetty:jetty_java11_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10/jetty:debug-" + arch,
+            "//java/jetty:jetty_java11_debug_" + arch + "_debian10",
+        ),
+        (
+            "gcr.io/{PROJECT_ID}/java-debian10/jetty:java11-debug-" + arch,
+            "//java/jetty:jetty_java11_debug_" + arch + "_debian10",
+        ),
+    ]
 }
 
 ALL = {}

@@ -5,7 +5,7 @@ commandTests:
     args: ["-jar", "/jetty/start.jar", "--version"]
     expectedOutput: ['.*Jetty Server Classpath:.*']
   - name: java
-    command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
+    command: "/usr/lib/jvm/openjdk/bin/java"
     args: ["-version"]
     expectedError: ['openjdk version "11\.*']
   - name: java-symlink
@@ -23,5 +23,5 @@ fileExistenceTests:
     path: "/bin/sh"
     shouldExist: false
   - name: no-javac
-    path: "/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
+    path: "/usr/lib/jvm/openjdk/bin/javac"
     shouldExist: false

@@ -10,7 +10,7 @@ load("//base:distro.bzl", "DISTRO_SUFFIXES")
     java_image(
         name = "hello_" + user + distro_suffix,
         srcs = ["HelloJava.java"],
-        base = "//java:java11_" + user + distro_suffix,
+        base = "//java:java11_" + user + "_amd64" + distro_suffix,
         main_class = "examples.HelloJava",
     )
     for user in [

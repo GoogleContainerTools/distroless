@@ -1,7 +1,7 @@
 schemaVersion: "2.0.0"
 commandTests:
   - name: java
-    command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
+    command: "/usr/lib/jvm/openjdk/bin/java"
     args: ["-version"]
     expectedError: ['openjdk version "11\.0\.9\.1"']
   - name: java-symlink
@@ -19,7 +19,7 @@ fileExistenceTests:
     path: "/bin/sh"
     shouldExist: false
   - name: no-javac
-    path: "/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
+    path: "/usr/lib/jvm/openjdk/bin/javac"
     shouldExist: false
 metadataTest:
   env:
