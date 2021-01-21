@@ -1,6 +1,7 @@
 {
     "base-files": "10.3+deb10u7",
     "ca-certificates": "20200601~deb10u1",
+    "coreutils": "8.30-3",
     "curl": "7.64.0-4+deb10u1",
     "dash": "0.5.10.2-5",
     "fontconfig-config": "2.13.1-2",
@@ -42,6 +43,7 @@
     "libncursesw6": "6.1+20181013-2+deb10u2",
     "libnettle6": "3.4.1-1",
     "libnghttp2-14": "1.36.0-2+deb10u1",
+    "libodbc1": "2.3.6-0.1",
     "libp11-kit0": "0.23.15-2+deb10u1",
     "libpcre3": "2:8.39-12",
     "libpng16-16": "1.6.36-6",
@@ -54,7 +56,9 @@
     "librtmp1": "2.4+20151223.gitfa8646d.1-2",
     "libsasl2-2": "2.1.27+dfsg-1+deb10u1",
     "libsasl2-modules-db": "2.1.27+dfsg-1+deb10u1",
+    "libsctp1": "1.0.18+dfsg-1",
     "libselinux1": "2.8-1+b1",
+    "libsodium23": "1.0.17-1",
     "libsqlite3-0": "3.27.2-3+deb10u1",
     "libssh2-1": "1.8.0-2.1",
     "libssl1.1": "1.1.1d-0+deb10u4",
@@ -72,6 +76,7 @@
     "python3-distutils": "3.7.3-1",
     "python3.7-minimal": "3.7.3-2+deb10u2",
     "readline-common": "7.0-5",
+    "sed": "4.7-1",
     "tzdata": "2020e-0+deb10u1",
     "zlib1g": "1:1.2.11.dfsg-1"
 }

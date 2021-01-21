@@ -25,6 +25,7 @@ load(
     "BASE_ARCHITECTURES",
     "DEBIAN_SECURITY_SNAPSHOT",
     "DEBIAN_SNAPSHOT",
+    "DEBIAN_SNAPSHOT_HOST",
     "SHA256s",
     "VERSIONS",
 )
@@ -36,7 +37,7 @@ load(
         distro = distro,
         sha256 = SHA256s[arch][name]["main"],
         snapshot = DEBIAN_SNAPSHOT,
-        url = "https://snapshot.debian.org/archive",
+        url = DEBIAN_SNAPSHOT_HOST + "/archive",
     )
     for arch in ARCHITECTURES
     for (name, distro) in VERSIONS
@@ -49,7 +50,7 @@ load(
         distro = distro + "-updates",
         sha256 = SHA256s[arch][name]["updates"],
         snapshot = DEBIAN_SNAPSHOT,
-        url = "https://snapshot.debian.org/archive",
+        url = DEBIAN_SNAPSHOT_HOST + "/archive",
     )
     for arch in ARCHITECTURES
     for (name, distro) in VERSIONS
@@ -58,8 +59,8 @@ load(
 [
     dpkg_src(
         name = arch + "_" + name + "_security",
-        package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
-        packages_gz_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/{}/updates/main/binary-{}/Packages.gz".format(DEBIAN_SECURITY_SNAPSHOT, distro, arch),
+        package_prefix = "{}/archive/debian-security/{}/".format(DEBIAN_SNAPSHOT_HOST, DEBIAN_SECURITY_SNAPSHOT),
+        packages_gz_url = "{}/archive/debian-security/{}/dists/{}/updates/main/binary-{}/Packages.gz".format(DEBIAN_SNAPSHOT_HOST, DEBIAN_SECURITY_SNAPSHOT, distro, arch),
         sha256 = SHA256s[arch][name]["security"],
     )
     for arch in ARCHITECTURES
@@ -74,7 +75,7 @@ load(
         distro = distro + "-backports",
         sha256 = SHA256s[arch][name]["backports"],
         snapshot = DEBIAN_SNAPSHOT,
-        url = "https://snapshot.debian.org/archive",
+        url = DEBIAN_SNAPSHOT_HOST + "/archive",
     )
     for arch in ARCHITECTURES
     for (name, distro) in VERSIONS
@@ -179,6 +180,13 @@ load(
             "libpcre3",
             "libbz2-1.0",
             "liblzma5",
+
+            # erlang
+            "libodbc1",
+            "libsctp1",
+            "sed",
+            "libsodium18",
+            "coreutils",
         ] + (["libunwind8"] if arch in BASE_ARCHITECTURES else []),
         sources = [
             "@" + arch + "_debian9_updates//file:Packages.json",
@@ -286,6 +294,13 @@ load(
             "libpcre3",
             "libbz2-1.0",
             "liblzma5",
+
+            # erlang
+            "libodbc1",
+            "libsctp1",
+            "sed",
+            "libsodium23",
+            "coreutils",
         ] + (["libunwind8"] if arch in BASE_ARCHITECTURES else []),
         sources = [
             "@" + arch + "_debian10_security//file:Packages.json",
