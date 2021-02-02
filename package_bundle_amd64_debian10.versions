@@ -1,6 +1,6 @@
 {
     "base-files": "10.3+deb10u7",
-    "ca-certificates": "20200601~deb10u1",
+    "ca-certificates": "20200601~deb10u2",
     "curl": "7.64.0-4+deb10u1",
     "dash": "0.5.10.2-5",
     "fontconfig-config": "2.13.1-2",
@@ -73,6 +73,6 @@
     "python3-distutils": "3.7.3-1",
     "python3.7-minimal": "3.7.3-2+deb10u2",
     "readline-common": "7.0-5",
-    "tzdata": "2020e-0+deb10u1",
+    "tzdata": "2021a-0+deb10u1",
     "zlib1g": "1:1.2.11.dfsg-1"
 }
