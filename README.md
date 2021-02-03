@@ -90,7 +90,7 @@ You can find other examples here:
 * [dotnet](examples/dotnet/Dockerfile)
 * [Rust](examples/rust/Dockerfile)
 
-To run any example, go the the directory for the language and run
+To run any example, go to the directory for the language and run
 ```
 docker build -t myapp .
 docker run -t myapp
