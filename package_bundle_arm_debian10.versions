@@ -1,5 +1,5 @@
 {
-    "base-files": "10.3+deb10u7",
+    "base-files": "10.3+deb10u8",
     "ca-certificates": "20200601~deb10u2",
     "curl": "7.64.0-4+deb10u1",
     "dash": "0.5.10.2-5",
@@ -20,7 +20,7 @@
     "libgcc1": "1:8.3.0-6",
     "libgcrypt20": "1.8.4-5",
     "libgmp10": "2:6.1.2+dfsg-4",
-    "libgnutls30": "3.6.7-4+deb10u5",
+    "libgnutls30": "3.6.7-4+deb10u6",
     "libgomp1": "8.3.0-6",
     "libgpg-error0": "1.35-1",
     "libgssapi-krb5-2": "1.17-3+deb10u1",
