@@ -18,9 +18,9 @@ VERSIONS = [
     ("debian10", "buster"),
 ]
 
-DEBIAN_SNAPSHOT = "20210208T033121Z"
+DEBIAN_SNAPSHOT = "20210218T023332Z"
 
-DEBIAN_SECURITY_SNAPSHOT = "20210208T083455Z"
+DEBIAN_SECURITY_SNAPSHOT = "20210217T222302Z"
 
 SHA256s = {
     "amd64": {
@@ -28,12 +28,12 @@ SHA256s = {
             "main": "90ff32c8226b57b879bf6b8c3cfda15e24f2b8c22de28426872f162db4e8d444",
             "backports": "531e9bf9e6c2b35d08e68fb803cb1ea7b211ce81a32c158e6bc5c5f6fab7e491",
             "updates": "b702e0888f32074ee212accbf56c732beacf0d9f570ca082a9c859b23a2596e9",
-            "security": "21534ed74941d81609b932ba57f0340e2fb5efa2b32282396c0ba83ea4e75e24",
+            "security": "466cf3adbfc38a6dabcb6a0d6c1fa775e0972c1bf92c750c44d6608dfc0206f7",
         },
         "debian10": {
             "main": "e096054471ae9a772fa67006cd0d9a0b125bb30443625fb6b66935e2a9331e98",
             "updates": "0c3115aeed29d5a8626633de68f2e409b2d182d7351521c46999634f62606de5",
-            "security": "368e95289ffdb0df644e6b5388f3e182d645a6e017ed0cf9f2b699eb6c1e6d89",
+            "security": "671cef6ec2e9e6701334883347f0eb500da8cbd7329ac468b8391b0dd09064cd",
         },
     },
     "arm": {
@@ -41,12 +41,12 @@ SHA256s = {
             "main": "36521cc720d75810da368854db057b68e0e389b8170611a141cfa4021d03259b",
             "backports": "fb57baff6ad1551e71b27c24f5ca048b635ce510ddbb1472c820e3b788174bf2",
             "updates": "469b19c81185621bb5e90401b508933d7921a6e0b8a10fd5e4b570ae0a83409e",
-            "security": "bca1646aa489d874827acf731f2ee689fdfcd86b4af11062b8844a55de817a39",
+            "security": "c4d4c479eded510c8038c44aef3c87d0e12adb8b2129311833176af4af981167",
         },
         "debian10": {
             "main": "e81faa925d91cd54c2bb0d75acf8b9f52e3563ce7d70db72e97a695659b990f2",
             "updates": "9228093a94ba940bc8a1647527f4599b14087392bd035f15fa1e27a0221aec75",
-            "security": "196b7500f3ffc12c93a45e3794b58cd79a6d67423505dc0668d67be248c02b3b",
+            "security": "dd064576d41702c6a72f6e9c1dfba4ac366bf7e6f695ae3b7c36040adb75230d",
         },
     },
     "arm64": {
@@ -54,12 +54,12 @@ SHA256s = {
             "main": "881d279ca3536ce84dbe9073a150ec2dfba898cb4c5010cbd50d07ba54942b3e",
             "backports": "328f3ec5675e605e7d5f46f6d3fc58a0c45cdeb4907fb3671c03bb9d68b2db51",
             "updates": "df9eadde7ef2ea7c7d3c07417e4924aece7bf3ccad8575e13ae68c71dcaa1d40",
-            "security": "547a49e5527dd1f2b377fc6d8f22d41ac42e3a768571c39bca61cb00b1bf7211",
+            "security": "1d6efadcab3f9f57faec90adf7d9119339e6b55ffaa57a1188dd7edeaffa5c2e",
         },
         "debian10": {
             "main": "06a831e6da011809e28563e1ececeb7b92ca27ac38a1471c8144af3604d231ac",
             "updates": "8717f0b3f827e84dff68f232b8f99e8a8f5893a989418cc838c6ced28d074902",
-            "security": "3b152284e26f000320d784d3e2b241dd184d9904032077bddef0e6e9c623ec7e",
+            "security": "3e1735be918797a50a8325cfe8190abb5da6c872976f44966aec8107b0ccb998",
         },
     },
     "s390x": {
@@ -71,7 +71,7 @@ SHA256s = {
         "debian10": {
             "main": "41ab076efe61b31f2bd7ec3b1337617917d56582e2902fdea87093d158d832ee",
             "updates": "bba671f1411a0237153ee9de0622ec04c829a72c55405a1a8eeb9f34f8972be3",
-            "security": "6e4bb1972a82d5aadaadd003538bec55f95fdf498aba071f56274b64448f87a5",
+            "security": "27ecafc4a5dc365a41394b51991f9078639edab1d7f0ce45fe8f4802109f85af",
         },
     },
     "ppc64le": {
@@ -83,7 +83,7 @@ SHA256s = {
         "debian10": {
             "main": "9b703573935b0e4bfaf492f4a074fd3c65e721fa93fb77a21b9f7bba7b77b8a1",
             "updates": "dfcf091e15376bfc8d1253461193b5a9985a79c5596f29cf7aa46e952894cc91",
-            "security": "c1e75c70bf85b9a07da7eee529bde3c749450584562f2fe0b5756bdb8e30c838",
+            "security": "912e432f5152e742ba8f436e2e4e8725651d57cb399145b0ca61c8394ea3c50a",
         },
     },
 }
