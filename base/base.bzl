@@ -71,6 +71,17 @@ def distro_components(distro_suffix):
                 tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
             )
 
+            # A static debug image with busybox available.
+            container_image(
+                name = "static_debug_" + user + "_" + arch + distro_suffix,
+                architecture = arch,
+                base = ":static_" + user + "_" + arch + distro_suffix,
+                directory = "/",
+                entrypoint = ["/busybox/sh"],
+                env = {"PATH": "$$PATH:/busybox"},
+                tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
+            )
+
         ##########################################################################################
         # Check that we can overlay a pure Go binary on a static base to check certificates
         ##########################################################################################
@@ -130,6 +141,13 @@ def distro_components(distro_suffix):
             tags = ["manual", arch],
         )
 
+        container_test(
+            name = "static_debug_" + arch + distro_suffix + "_test",
+            configs = ["testdata/debug.yaml"],
+            image = ":static_debug_root_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
+
         ##########################################################################################
         # Check the /etc/os-release contents.
         ##########################################################################################
@@ -151,5 +169,12 @@ def distro_components(distro_suffix):
             name = "static_release_" + arch + distro_suffix + "_test",
             configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
             image = ":static_root_" + arch + distro_suffix,
+            tags = ["manual", arch],
+        )
+
+        container_test(
+            name = "static_debug_release_" + arch + distro_suffix + "_test",
+            configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
+            image = ":static_debug_root_" + arch + distro_suffix,
             tags = ["manual", arch],
         )

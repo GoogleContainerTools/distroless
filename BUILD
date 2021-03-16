@@ -18,15 +18,25 @@ STATIC = dict({
 })
 
 STATIC.update({
-    "gcr.io/{PROJECT_ID}/static:" + label + "-" + arch: "//base:static_" + user + "_" + arch + "_debian10"
+    "gcr.io/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian10"
     for arch in ARCHITECTURES
-    for (label, user) in LABEL_USERS
+    for (tag_base, label, user) in [
+        ("latest", "static", "root"),
+        ("nonroot", "static", "nonroot"),
+        ("debug", "static_debug", "root"),
+        ("debug-nonroot", "static_debug", "nonroot"),
+    ]
 })
 
 STATIC.update({
-    "gcr.io/{PROJECT_ID}/static-" + distro + ":" + label + "-" + arch: "//base:static_" + user + "_" + arch + "_" + distro
+    "gcr.io/{PROJECT_ID}/static-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in ARCHITECTURES
-    for (label, user) in LABEL_USERS
+    for (tag_base, label, user) in [
+        ("latest", "static", "root"),
+        ("nonroot", "static", "nonroot"),
+        ("debug", "static_debug", "root"),
+        ("debug-nonroot", "static_debug", "nonroot"),
+    ]
     for distro in DISTROS
 })
 
