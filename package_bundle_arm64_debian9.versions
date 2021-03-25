@@ -1,6 +1,6 @@
 {
     "base-files": "9.9+deb9u13",
-    "ca-certificates": "20200601~deb9u1",
+    "ca-certificates": "20200601~deb9u2",
     "curl": "7.52.1-5+deb9u13",
     "dash": "0.5.8-2.4",
     "fontconfig-config": "2.11.0-6.7",
