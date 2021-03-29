@@ -1,5 +1,5 @@
 {
-    "base-files": "10.3+deb10u8",
+    "base-files": "10.3+deb10u9",
     "ca-certificates": "20200601~deb10u2",
     "curl": "7.64.0-4+deb10u1",
     "dash": "0.5.10.2-5",
@@ -48,8 +48,8 @@
     "libpsl5": "0.20.2-2",
     "libpython2.7-minimal": "2.7.16-2+deb10u1",
     "libpython2.7-stdlib": "2.7.16-2+deb10u1",
-    "libpython3.7-minimal": "3.7.3-2+deb10u2",
-    "libpython3.7-stdlib": "3.7.3-2+deb10u2",
+    "libpython3.7-minimal": "3.7.3-2+deb10u3",
+    "libpython3.7-stdlib": "3.7.3-2+deb10u3",
     "libreadline7": "7.0-5",
     "librtmp1": "2.4+20151223.gitfa8646d.1-2",
     "libsasl2-2": "2.1.27+dfsg-1+deb10u1",
@@ -71,7 +71,7 @@
     "openssl": "1.1.1d-0+deb10u6",
     "python2.7-minimal": "2.7.16-2+deb10u1",
     "python3-distutils": "3.7.3-1",
-    "python3.7-minimal": "3.7.3-2+deb10u2",
+    "python3.7-minimal": "3.7.3-2+deb10u3",
     "readline-common": "7.0-5",
     "tzdata": "2021a-0+deb10u1",
     "zlib1g": "1:1.2.11.dfsg-1"
