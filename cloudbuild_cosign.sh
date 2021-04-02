@@ -8,6 +8,7 @@ export KMS_VAL=gcpkms://projects/$PROJECT_ID/locations/global/keyRings/cosign/cr
 # TODO (priyawadhwa@): Store signatures in distroless repo once we are confident this works
 export COSIGN_REPOSITORY=gcr.io/distroless-signatures
 
+cosign version
 
 # Sign images with cosign
 for distro_suffix in "" -debian9 -debian10; do
