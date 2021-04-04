@@ -149,22 +149,6 @@ NODEJS = {
     "gcr.io/{PROJECT_ID}/nodejs-debian10:14-debug": "//nodejs:nodejs14_debug_amd64_debian10",
 }
 
-DOTNET = {
-    "gcr.io/{PROJECT_ID}/dotnet:latest": "//experimental/dotnet:dotnet_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet-debian10:latest": "//experimental/dotnet:dotnet_debian10",
-    "gcr.io/{PROJECT_ID}/dotnet:debug": "//experimental/dotnet:dotnet_debug_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet-debian10:debug": "//experimental/dotnet:dotnet_debug_debian10",
-    "gcr.io/{PROJECT_ID}/dotnet/core/aspnet:latest": "//experimental/dotnet:dotnet_core_aspnet_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet/core/aspnet:3.1": "//experimental/dotnet:dotnet_core_aspnet_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet/core/aspnet:debug": "//experimental/dotnet:dotnet_core_aspnet_debug_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet/core/runtime:latest": "//experimental/dotnet:dotnet_core_runtime_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet/core/runtime:3.1": "//experimental/dotnet:dotnet_core_runtime_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet/core/runtime:debug": "//experimental/dotnet:dotnet_core_runtime_debug_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet/core/sdk:latest": "//experimental/dotnet:dotnet_core_sdk_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet/core/sdk:3.1": "//experimental/dotnet:dotnet_core_sdk_debian9",
-    "gcr.io/{PROJECT_ID}/dotnet/core/sdk:debug": "//experimental/dotnet:dotnet_core_sdk_debug_debian9",
-}
-
 JAVA = {
     "gcr.io/{PROJECT_ID}/java:base": "//java:java_base_root_debian9",
     "gcr.io/{PROJECT_ID}/java:base-nonroot": "//java:java_base_nonroot_debian9",
@@ -219,8 +203,6 @@ ALL.update(PYTHON3)
 ALL.update(PYTHON27)
 
 ALL.update(NODEJS)
-
-ALL.update(DOTNET)
 
 ALL.update(JAVA)
 
