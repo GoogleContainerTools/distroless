@@ -11,7 +11,7 @@ export COSIGN_REPOSITORY=gcr.io/distroless-signatures
 cosign version
 
 # Sign images with cosign
-for distro_suffix in "" -debian9 -debian10; do
+for distro_suffix in "" -debian10; do
   cosign sign -kms $KMS_VAL gcr.io/$PROJECT_ID/static${distro_suffix}:nonroot
   cosign sign -kms $KMS_VAL gcr.io/$PROJECT_ID/static${distro_suffix}:latest
 
