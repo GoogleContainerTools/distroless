@@ -17,7 +17,6 @@ import gzip
 import json
 import os
 import subprocess
-import time
 
 from package_manager.parse_metadata import parse_package_metadata
 from package_manager.version_utils import compare_versions
@@ -129,10 +128,9 @@ def download_dpkg(package_files, packages, workspace_name, versionsfile):
 
 def download_and_save(url, out_file):
     try:
-        time.sleep(5)
-        subprocess.check_output(["curl", "--show-error", "--fail", "--retry", "20", "-L", url, "--output", out_file], stderr=subprocess.STDOUT)
+        subprocess.check_output(["wget", "--tries", "10", url, "-O", out_file], stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
-        print("error running curl: %s", e.output)
+        print("error running wget: %s", e.output)
         raise
 
 def download_package_list(mirror_url, distro, arch, snapshot, sha256, packages_gz_url, package_prefix):
