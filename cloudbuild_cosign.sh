@@ -35,4 +35,7 @@ for distro_suffix in "" -debian10; do
 done
 
 cosign sign -kms $KMS_VAL gcr.io/$PROJECT_ID/nodejs:latest
+
+# TODO (priyawadhwa@): remove once all signatures are stored in distroless
+unset COSIGN_REPOSITORY
 cosign sign -kms $KMS_VAL gcr.io/$PROJECT_ID/nodejs:debug
