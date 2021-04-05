@@ -4,13 +4,11 @@ load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("@package_bundle_amd64_debian9//file:packages.bzl", versions_amd64_debian9 = "versions")
 load("@package_bundle_amd64_debian10//file:packages.bzl", versions_amd64_debian10 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 
 DISTRO_VERSIONS = {
-    "_debian9": versions_amd64_debian9,
     "_debian10": versions_amd64_debian10,
 }
 
@@ -65,36 +63,6 @@ USERS = [
     )
     for (distro_suffix, rule_name, java_debs, java_executable_path) in [
         (
-            "_debian9",
-            "java8",
-            ["openjdk-8-jre-headless"],
-            "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
-        ),
-        (
-            "_debian9",
-            "java8_debug",
-            [
-                "openjdk-8-jre-headless",
-                "openjdk-8-jdk-headless",
-            ],
-            "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java",
-        ),
-        (
-            "_debian9",
-            "java11",
-            ["openjdk-11-jre-headless"],
-            "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
-        ),
-        (
-            "_debian9",
-            "java11_debug",
-            [
-                "openjdk-11-jre-headless",
-                "openjdk-11-jdk-headless",
-            ],
-            "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
-        ),
-        (
             "_debian10",
             "java11",
             ["openjdk-11-jre-headless"],
@@ -133,32 +101,6 @@ USERS = [
 
 [
     container_test(
-        name = "java8_debian9_" + user + "_test",
-        configs = ["testdata/java8.yaml"],
-        image = ":java8_" + user + "_debian9",
-        tags = [
-            "amd64",
-            "manual",
-        ],
-    )
-    for user in USERS
-]
-
-[
-    container_test(
-        name = "java8_debug_" + user + "_debian9_test",
-        configs = ["testdata/java8_debug.yaml"],
-        image = ":java8_debug_" + user + "_debian9",
-        tags = [
-            "amd64",
-            "manual",
-        ],
-    )
-    for user in USERS
-]
-
-[
-    container_test(
         name = "java11_" + user + distro_suffix + "_test",
         configs = ["testdata/java11" + distro_suffix + ".yaml"],
         image = ":java11_" + user + distro_suffix,
@@ -186,10 +128,6 @@ USERS = [
 ]
 
 RULE_NAMES = [
-    "java8_root_debian9",
-    "java8_nonroot_debian9",
-    "java11_root_debian9",
-    "java11_nonroot_debian9",
     "java11_root_debian10",
     "java11_nonroot_debian10",
 ]
