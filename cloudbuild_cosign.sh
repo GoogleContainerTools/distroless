@@ -5,8 +5,6 @@ set -o xtrace
 
 
 export KMS_VAL=gcpkms://projects/$PROJECT_ID/locations/global/keyRings/cosign/cryptoKeys/cosign
-# TODO (priyawadhwa@): Store signatures in distroless repo once we are confident this works
-export COSIGN_REPOSITORY=gcr.io/distroless-signatures
 
 cosign version
 
@@ -35,7 +33,4 @@ for distro_suffix in "" -debian10; do
 done
 
 cosign sign -kms $KMS_VAL gcr.io/$PROJECT_ID/nodejs:latest
-
-# TODO (priyawadhwa@): remove once all signatures are stored in distroless
-unset COSIGN_REPOSITORY
 cosign sign -kms $KMS_VAL gcr.io/$PROJECT_ID/nodejs:debug
