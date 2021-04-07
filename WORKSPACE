@@ -274,11 +274,15 @@ http_file(
     urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-s390x"],
 )
 
+# To update ppc64le busybox binary (#723)
+# Get the latest commit hash from dist-ppc64le branch of docker-library repo.
+# Substitute it in the link: https://github.com/docker-library/busybox/raw/<latest-commit-hash>/stable/musl/busybox.tar.xz
+# Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
 http_file(
     name = "busybox_ppc64le",
     executable = True,
-    sha256 = "7f896a2560ef3e2d11438018fef2fbdf8c2a6a2e4b84b1bcbaacc669967532d4",
-    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-powerpc64"],
+    sha256 = "469297ea9293df0dcb6c3f8d344eaf9f9b6ec1732696ffe86994f87c3600423b",
+    urls = ["https://github.com/docker-library/busybox/raw/c0125333c4c3dfa4b9e5fd9fe6fbb875242f3613/stable/musl/busybox.tar.xz"],
 )
 
 # Docker rules.
