@@ -19,22 +19,6 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
     for arch in ARCHITECTURES
     for (rule_name, base_image) in [
         (
-            "jetty_java8_" + arch + "_debian9",
-            "//java:java8_root_" + arch + "_debian9",
-        ),
-        (
-            "jetty_java8_debug_" + arch + "_debian9",
-            "//java:java8_debug_root_" + arch + "_debian9",
-        ),
-        (
-            "jetty_java11_" + arch + "_debian9",
-            "//java:java11_root_" + arch + "_debian9",
-        ),
-        (
-            "jetty_java11_debug_" + arch + "_debian9",
-            "//java:java11_debug_root_" + arch + "_debian9",
-        ),
-        (
             "jetty_java11_" + arch + "_debian10",
             "//java:java11_root_" + arch + "_debian10",
         ),
@@ -43,32 +27,6 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
             "//java:java11_debug_root_" + arch + "_debian10",
         ),
     ]
-]
-
-[
-    container_test(
-        name = "jetty_java8_" + arch + "_debian9_test",
-        configs = ["testdata/java8.yaml"],
-        image = ":jetty_java8_" + arch + "_debian9",
-        tags = [
-            arch,
-            "manual",
-        ],
-    )
-    for arch in ARCHITECTURES
-]
-
-[
-    container_test(
-        name = "jetty_java8_debug_" + arch + "_debian9_test",
-        configs = ["testdata/java8_debug.yaml"],
-        image = ":jetty_java8_debug_" + arch + "_debian9",
-        tags = [
-            arch,
-            "manual",
-        ],
-    )
-    for arch in ARCHITECTURES
 ]
 
 [

@@ -4,15 +4,10 @@ set -o errexit
 set -o xtrace
 
 cp checksums.bzl checksums.bzl~
-cp package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~
 cp package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~
-cp package_bundle_arm_debian9.versions package_bundle_arm_debian9.versions~
 cp package_bundle_arm_debian10.versions package_bundle_arm_debian10.versions~
-cp package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~
 cp package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~
-cp package_bundle_s390x_debian9.versions package_bundle_s390x_debian9.versions~
 cp package_bundle_s390x_debian10.versions package_bundle_s390x_debian10.versions~
-cp package_bundle_ppc64le_debian9.versions package_bundle_ppc64le_debian9.versions~
 cp package_bundle_ppc64le_debian10.versions package_bundle_ppc64le_debian10.versions~
 
 YEAR=`date +"%Y"`
@@ -52,7 +47,6 @@ BASE_ARCHITECTURES = ["amd64", "arm64"]
 ARCHITECTURES = BASE_ARCHITECTURES + ["arm", "s390x", "ppc64le"]
 
 VERSIONS = [
-    ("debian9", "stretch"),
     ("debian10", "buster"),
 ]
 
@@ -62,12 +56,6 @@ DEBIAN_SECURITY_SNAPSHOT = "$DEBIAN_SECURITY_SNAPSHOT"
 
 SHA256s = {
     "amd64": {
-        "debian9": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/stretch/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
         "debian10": {
             "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
             "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
@@ -75,12 +63,6 @@ SHA256s = {
         },
     },
     "arm": {
-        "debian9": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/stretch/updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
         "debian10": {
             "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
             "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
@@ -88,12 +70,6 @@ SHA256s = {
         },
     },
     "arm64": {
-        "debian9": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/stretch/updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
         "debian10": {
             "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
             "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
@@ -101,11 +77,6 @@ SHA256s = {
         },
     },
     "s390x": {
-        "debian9": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
         "debian10": {
             "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
             "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
@@ -113,11 +84,6 @@ SHA256s = {
         },
     },
     "ppc64le": {
-        "debian9": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "backports": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-backports/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/stretch-updates/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-        },
         "debian10": {
             "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
             "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
@@ -130,41 +96,26 @@ EOF
 # Rebuild package set
 
 bazel clean
-bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_amd64_debian9//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm_debian9//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm_debian10//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm64_debian9//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm64_debian10//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_s390x_debian9//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_s390x_debian10//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_ppc64le_debian9//file:packages.bzl
-bazel build --jobs=1 --host_force_python=PY2 @package_bundle_ppc64le_debian10//file:packages.bzl
+bazel build //package_manager:dpkg_parser.par
+bazel build @package_bundle_amd64_debian10//file:packages.bzl
+bazel build @package_bundle_arm_debian10//file:packages.bzl
+bazel build @package_bundle_arm64_debian10//file:packages.bzl
+bazel build @package_bundle_s390x_debian10//file:packages.bzl
+bazel build @package_bundle_ppc64le_debian10//file:packages.bzl
 
 # Check if any of the version lock files are updated
 
-if diff -w package_bundle_amd64_debian9.versions package_bundle_amd64_debian9.versions~ &&
-	diff -w package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~ &&
-	diff -w package_bundle_arm_debian9.versions package_bundle_arm_debian9.versions~ &&
+if diff -w package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~ &&
 	diff -w package_bundle_arm_debian10.versions package_bundle_arm_debian10.versions~ &&
-	diff -w package_bundle_arm64_debian9.versions package_bundle_arm64_debian9.versions~ &&
 	diff -w package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~ &&
-	diff -w package_bundle_s390x_debian9.versions package_bundle_s390x_debian9.versions~ &&
 	diff -w package_bundle_s390x_debian10.versions package_bundle_s390x_debian10.versions~ &&
-	diff -w package_bundle_ppc64le_debian9.versions package_bundle_ppc64le_debian9.versions~ &&
 	diff -w package_bundle_ppc64le_debian10.versions package_bundle_ppc64le_debian10.versions~; then
     echo "No changes detected to package_bundle versions."
     mv checksums.bzl~ checksums.bzl
-    mv package_bundle_amd64_debian9.versions~ package_bundle_amd64_debian9.versions
     mv package_bundle_amd64_debian10.versions~ package_bundle_amd64_debian10.versions
-    mv package_bundle_arm_debian9.versions~ package_bundle_arm_debian9.versions
     mv package_bundle_arm_debian10.versions~ package_bundle_arm_debian10.versions
-    mv package_bundle_arm64_debian9.versions~ package_bundle_arm64_debian9.versions
     mv package_bundle_arm64_debian10.versions~ package_bundle_arm64_debian10.versions
-    mv package_bundle_s390x_debian9.versions~ package_bundle_s390x_debian9.versions
     mv package_bundle_s390x_debian10.versions~ package_bundle_s390x_debian10.versions
-    mv package_bundle_ppc64le_debian9.versions~ package_bundle_ppc64le_debian9.versions
     mv package_bundle_ppc64le_debian10.versions~ package_bundle_ppc64le_debian10.versions
 else
     echo "Changes detected to package_bundle version files. Please update snapshots."

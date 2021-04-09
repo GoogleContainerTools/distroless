@@ -17,6 +17,24 @@ It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of
 
 These images are built using the [bazel](https://bazel.build) tool, but they can also be used through other Docker image build tooling.
 
+## How do I verify distroless images?
+
+All distroless images are signed by [cosign](https://github.com/sigstore/cosign).
+We recommend verifying any distroless image you use before building your image.
+
+Once you've installed cosign, you can use the [distroless public key](cosign.pub) to verify any distroless image with:
+
+```
+cat cosign.pub
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEWZzVzkb8A+DbgDpaJId/bOmV8n7Q
+OqxYbK0Iro6GzSmOzxkn+N2AKawLyXi84WSwJQBK//psATakCgAQKkNTAA==
+-----END PUBLIC KEY-----
+
+
+cosign verify -key cosign.pub $IMAGE_NAME
+```
+
 ### Entrypoints
 
 Note that distroless images by default do not contain a shell.

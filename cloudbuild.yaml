@@ -21,15 +21,10 @@ steps:
 
     # Optional: trigger building package bundles without concurrency to avoid
     # flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_amd64_debian9//file:packages.bzl
     bazel build --jobs=1 --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm_debian9//file:packages.bzl
     bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm64_debian9//file:packages.bzl
     bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm64_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_s390x_debian9//file:packages.bzl
     bazel build --jobs=1 --host_force_python=PY2 @package_bundle_s390x_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_ppc64le_debian9//file:packages.bzl
     bazel build --jobs=1 --host_force_python=PY2 @package_bundle_ppc64le_debian10//file:packages.bzl
 
     bazel run --host_force_python=PY2 //:publish
@@ -39,3 +34,10 @@ steps:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
   entrypoint: ./cloudbuild_docker.sh
+- name: gcr.io/projectsigstore/cosign/ci/cosign:v0.2.0@sha256:b9e72eb217dd93d2144b8143d8c9812e62b32903e790b325116641e89df03e5f
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  entrypoint: sh
+  args:
+  - ./cloudbuild_cosign.sh 
