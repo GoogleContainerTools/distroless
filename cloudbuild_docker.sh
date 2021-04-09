@@ -71,16 +71,6 @@ for distro_suffix in "" -debian10; do
   docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:java11-debug "amd64 arm64"
 done
 
-for distro_suffix in "" -debian9; do
-  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:8 "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:8-nonroot "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:8-debug "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}:8-debug-nonroot "amd64 arm64"
-
-  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:java8 "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/java${distro_suffix}/jetty:java8-debug "amd64 arm64"
-done
-
 docker manifest create gcr.io/$PROJECT_ID/nodejs:latest \
    gcr.io/$PROJECT_ID/nodejs:latest-amd64 \
    gcr.io/$PROJECT_ID/nodejs:latest-arm64
