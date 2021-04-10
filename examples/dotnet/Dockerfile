@@ -1,5 +1,5 @@
 FROM microsoft/dotnet:2.0.0-sdk AS build-env
-ADD . /app
+COPY . /app
 WORKDIR /app
 RUN dotnet restore -r linux-x64
 RUN dotnet publish  -c Release -r linux-x64
