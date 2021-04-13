@@ -208,7 +208,7 @@ ALL.update(PYTHON27)
 
 ALL.update(NODEJS)
 
-# ALL.update(JAVA)
+ALL.update(JAVA)
 
 container_bundle(
     name = "all",
