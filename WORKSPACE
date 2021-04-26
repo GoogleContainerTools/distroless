@@ -288,9 +288,9 @@ http_file(
 # Docker rules.
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "2dcf63f5c36c50def7091ef94ffcf94cce4056f3e0a968876f4ec41953a8fbfb",
-    strip_prefix = "rules_docker-feaaebdd3162fb643494af07698f56ca9aba1241",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/feaaebdd3162fb643494af07698f56ca9aba1241.tar.gz"],
+    sha256 = "198b31d184bbf5f108503a9b7df2a9e40228b63ca60f48a1e6d9959a08015d80",
+    strip_prefix = "rules_docker-afd552062f7cf6c53f636e68c3c011dfe990ebf6",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/afd552062f7cf6c53f636e68c3c011dfe990ebf6.tar.gz"],
 )
 
 load(
