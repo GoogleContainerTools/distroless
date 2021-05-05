@@ -34,7 +34,17 @@ steps:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
   entrypoint: ./cloudbuild_docker.sh
-- name: gcr.io/projectsigstore/cosign/ci/cosign:v0.2.0@sha256:b9e72eb217dd93d2144b8143d8c9812e62b32903e790b325116641e89df03e5f
+
+# We cosign images twice to support verification before and after v0.4.0
+- name: gcr.io/projectsigstore/cosign:v0.3.1@sha256:c581a4f0f6dd158220fa05d2351d8015f969b68de5c61d52c41478fae84e7064
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  entrypoint: sh
+  args:
+  - ./cloudbuild_cosign.sh
+
+- name: gcr.io/projectsigstore/cosign:v0.4.0@sha256:7e9a6ca62c3b502a125754fbeb4cde2d37d4261a9c905359585bfc0a63ff17f4
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
