@@ -274,19 +274,23 @@ http_file(
     urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-s390x"],
 )
 
+# To update ppc64le busybox binary (#723)
+# Get the latest commit hash from dist-ppc64le branch of docker-library repo.
+# Substitute it in the link: https://github.com/docker-library/busybox/raw/<latest-commit-hash>/stable/musl/busybox.tar.xz
+# Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
 http_file(
     name = "busybox_ppc64le",
     executable = True,
-    sha256 = "7f896a2560ef3e2d11438018fef2fbdf8c2a6a2e4b84b1bcbaacc669967532d4",
-    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-powerpc64"],
+    sha256 = "469297ea9293df0dcb6c3f8d344eaf9f9b6ec1732696ffe86994f87c3600423b",
+    urls = ["https://github.com/docker-library/busybox/raw/c0125333c4c3dfa4b9e5fd9fe6fbb875242f3613/stable/musl/busybox.tar.xz"],
 )
 
 # Docker rules.
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "2dcf63f5c36c50def7091ef94ffcf94cce4056f3e0a968876f4ec41953a8fbfb",
-    strip_prefix = "rules_docker-feaaebdd3162fb643494af07698f56ca9aba1241",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/feaaebdd3162fb643494af07698f56ca9aba1241.tar.gz"],
+    sha256 = "198b31d184bbf5f108503a9b7df2a9e40228b63ca60f48a1e6d9959a08015d80",
+    strip_prefix = "rules_docker-afd552062f7cf6c53f636e68c3c011dfe990ebf6",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/afd552062f7cf6c53f636e68c3c011dfe990ebf6.tar.gz"],
 )
 
 load(
