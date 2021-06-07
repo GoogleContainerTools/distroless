@@ -116,7 +116,7 @@ docker run -t myapp
 To run the Node.js Express app [node-express](examples/nodejs/node-express) and expose the container's ports:
 
 ```
-npm install #Install express and its transitive dependencies
+npm install # Install express and its transitive dependencies
 docker build -t myexpressapp . # Normal build command
 docker run -p 3000:3000 -t myexpressapp
 ```
