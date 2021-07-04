@@ -171,19 +171,19 @@ http_archive(
 http_archive(
     name = "nodejs12_amd64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "d315c5dea4d96658164cdb257bd8dbb5e44bdd2a7c1d747841f06515f23a0042",
-    strip_prefix = "node-v12.22.1-linux-x64/",
+    sha256 = "2898ac962602443fedeaaccf61b33f127c97f7c9d7b23fbe0d78a4d20b69db0b",
+    strip_prefix = "node-v12.22.2-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v12.22.1/node-v12.22.1-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v12.22.2/node-v12.22.2-linux-x64.tar.gz"],
 )
 
 http_archive(
     name = "nodejs14_amd64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "4781b162129b19bdb3a7010cab12d06fc7c89421ea3fda03346ed17f09ceacd6",
-    strip_prefix = "node-v14.17.1-linux-x64/",
+    sha256 = "48cc87b7adb13f479643166a16514861556d0936761b317a3b65f4fbbb265b4d",
+    strip_prefix = "node-v14.17.2-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v14.17.1/node-v14.17.1-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v14.17.2/node-v14.17.2-linux-x64.tar.gz"],
 )
 
 http_archive(
@@ -198,19 +198,19 @@ http_archive(
 http_archive(
     name = "nodejs12_arm64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "917c582b7f7ae5ff8b2d97e05d00598011f9fbfcc4f76952da3ed477405c9c1a",
-    strip_prefix = "node-v12.22.1-linux-arm64/",
+    sha256 = "40f4a6a887e3ab8675e71bdc544353e078775074ec9f7911cfe3827ad68007fb",
+    strip_prefix = "node-v12.22.2-linux-arm64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v12.22.1/node-v12.22.1-linux-arm64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v12.22.2/node-v12.22.2-linux-arm64.tar.gz"],
 )
 
 http_archive(
     name = "nodejs14_arm64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "04e25f5511408288913dd1955f6829431e5096911aa3e35c9cd0ca8b39e6c4c5",
-    strip_prefix = "node-v14.17.1-linux-arm64/",
+    sha256 = "05117e74f424fd4ab744c3013c77906c5fe4a19fa22ce624a21986ce152fd258",
+    strip_prefix = "node-v14.17.2-linux-arm64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v14.17.1/node-v14.17.1-linux-arm64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v14.17.2/node-v14.17.2-linux-arm64.tar.gz"],
 )
 
 http_archive(
