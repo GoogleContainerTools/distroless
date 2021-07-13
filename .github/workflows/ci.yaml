@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ 'master' ]
+  push:
+    branches: [ 'master' ]
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+    - uses: actions/checkout@v2
+
+    - name: Build and test
+      run: |
+        eval $(go env)
+        # install bazelisk as bazel to install the appropriate bazel version
+        wget https://github.com/bazelbuild/bazelisk/releases/download/v1.6.1/bazelisk-linux-${GOARCH} && chmod +x bazelisk-linux-${GOARCH} && mv bazelisk-linux-${GOARCH} $HOME/bin/bazel
+
+        CPU=k8
+        bazel clean --curses=no
+        bazel build --cpu=${CPU} --curses=no //package_manager:dpkg_parser.par
+        bazel build --cpu=${CPU} --curses=no //...
+        # Build all targets tagged with our architecture:
+        bazel build --cpu=${CPU} --curses=no $(bazel query 'attr("tags", "'${GOARCH}'", "//...")')
+        # Run all tests not tagged as "manual":
+        bazel test  --cpu=${CPU} --curses=no --test_output=errors --test_timeout=900 //...
+        # Run all tests tagged with our architecture:
+        bazel test  --cpu=${CPU} --curses=no --test_output=errors --test_timeout=900 $(bazel query 'attr("tags", "'${GOARCH}'", "//...")')
+
