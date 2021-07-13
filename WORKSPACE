@@ -55,6 +55,28 @@ load(
     for (name, distro) in VERSIONS
 ]
 
+dpkg_src(
+    name = "debian_sid",
+    arch = "amd64",
+    distro = "sid",
+    snapshot = "20210716T091727Z",
+    sha256 = "89b4c2a92d9f60442e27552189bb86ed01195a9f3c84ad1749c44f2d730fe784",
+    url = "https://snapshot.debian.org/archive"
+)
+
+dpkg_list(
+    name = "python3.9_package_bundle",
+    packages = [
+        "libpython3.9-minimal",
+        "python3.9-minimal",
+        "libpython3.9-stdlib",
+        "zlib1g",
+    ],
+    sources = [
+        "@debian_sid//file:Packages.json",
+    ],
+)
+
 [
     dpkg_src(
         name = arch + "_" + name + "_security",
@@ -130,18 +152,19 @@ load(
 
             #python3
             "libmpdec2",
-            "libpython3.7-minimal",
-            "libpython3.7-stdlib",
+            "libpython3.9-minimal",
+            "libpython3.9-stdlib",
             "libtinfo6",
             "libuuid1",
             "libncursesw6",
             "python3-distutils",
-            "python3.7-minimal",
+            "python3.9-minimal",
         ] + (["libunwind8"] if arch in BASE_ARCHITECTURES else []),
         sources = [
             "@" + arch + "_debian10_security//file:Packages.json",
             "@" + arch + "_debian10_updates//file:Packages.json",
             "@" + arch + "_debian10//file:Packages.json",
+            "@debian_sid//file:Packages.json",
         ],
     )
     for arch in ARCHITECTURES
@@ -308,6 +331,26 @@ load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
     container_repositories = "repositories",
 )
+
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
+)
+
+container_pull(
+    name = "bmdebian10",
+    registry = "index.docker.io",
+    repository = "debian",
+    tag = "latest"
+)
+
+container_pull(
+    name = "bmubuntu",
+    registry = "index.docker.io",
+    repository = "ubuntu",
+    tag = "20.04"
+)
+
 
 container_repositories()
 
