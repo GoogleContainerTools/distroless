@@ -1,0 +1,1 @@
+bazel run //experimental/python3:build_python3.9 --cpu=darwin

@@ -309,6 +309,26 @@ load(
     container_repositories = "repositories",
 )
 
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
+)
+
+container_pull(
+    name = "bmdebian10",
+    registry = "index.docker.io",
+    repository = "debian",
+    tag = "latest"
+)
+
+container_pull(
+    name = "bmubuntu",
+    registry = "index.docker.io",
+    repository = "ubuntu",
+    tag = "20.04"
+)
+
+
 container_repositories()
 
 load(
