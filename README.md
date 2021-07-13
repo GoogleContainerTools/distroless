@@ -1,6 +1,6 @@
 # "Distroless" Docker Images
 
-[![Build Status](https://travis-ci.org/GoogleContainerTools/distroless.svg?branch=master)](https://travis-ci.org/GoogleContainerTools/distroless)
+[![CI Build Status](https://github.com/GoogleContainerTools/distroless/actions/workflows/ci.yaml/badge.svg)](https://github.com/GoogleContainerTools/distroless/actions/workflows/ci.yaml)
 
 "Distroless" images contain only your application and its runtime dependencies.
 They do not contain package managers, shells or any other programs you would expect to find in a standard Linux distribution.
