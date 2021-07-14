@@ -213,38 +213,6 @@ http_archive(
     urls = ["https://nodejs.org/dist/v14.17.2/node-v14.17.2-linux-arm64.tar.gz"],
 )
 
-http_archive(
-    name = "dotnet",
-    build_file = "//experimental/dotnet:BUILD.dotnet",
-    sha256 = "69ecad24bce4f2132e0db616b49e2c35487d13e3c379dabc3ec860662467b714",
-    type = "tar.gz",
-    urls = ["https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz"],
-)
-
-http_archive(
-    name = "dotnet_core_aspnet",
-    build_file = "//experimental/dotnet:BUILD.dotnet",
-    sha256 = "823f8ea555fd56ab40d56d423748036204c4540c08baa61de4462978a0c35583",
-    type = "tar.gz",
-    urls = ["https://download.visualstudio.microsoft.com/download/pr/f7c8f82a-8c47-497d-875b-2ac210599ec5/e8aea0c195efed8a9aff2ba687db8c26/aspnetcore-runtime-3.1.8-linux-x64.tar.gz"],
-)
-
-http_archive(
-    name = "dotnet_core_runtime",
-    build_file = "//experimental/dotnet:BUILD.dotnet",
-    sha256 = "c50800e02cea23609ec6a009b1fbfe6b1f7ec4634c54bee089f918fca8fe2323",
-    type = "tar.gz",
-    urls = ["https://download.visualstudio.microsoft.com/download/pr/e4e47a0a-132e-416a-b8eb-f3373ad189d9/43af4412e27696c3c16e50f496f6c7af/dotnet-runtime-3.1.8-linux-x64.tar.gz"],
-)
-
-http_archive(
-    name = "dotnet_core_sdk",
-    build_file = "//experimental/dotnet:BUILD.dotnet",
-    sha256 = "2b6b172f9483e499141e37a6b932a547d9476bf03f3e71a0fefb76c52e01a9ee",
-    type = "tar.gz",
-    urls = ["https://download.visualstudio.microsoft.com/download/pr/f01e3d97-c1c3-4635-bc77-0c893be36820/6ec6acabc22468c6cc68b61625b14a7d/dotnet-sdk-3.1.402-linux-x64.tar.gz"],
-)
-
 # For the debug image
 http_file(
     name = "busybox_amd64",

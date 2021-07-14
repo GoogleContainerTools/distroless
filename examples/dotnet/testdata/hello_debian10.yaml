@@ -1,5 +1,0 @@
-schemaVersion: "1.0.0"
-commandTests:
-  - name: hello
-    command: ['dotnet', '/bin/Release/netcoreapp2.0/hello.dll']
-    expectedOutput: ['Hello World']

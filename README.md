@@ -71,7 +71,6 @@ Follow these steps to get started:
     * [gcr.io/distroless/python2.7-debian10](experimental/python2.7/README.md)
     * [gcr.io/distroless/python3-debian10](experimental/python3/README.md)
     * [gcr.io/distroless/java/jetty-debian10](java/jetty/README.md)
-    * [gcr.io/distroless/dotnet](experimental/dotnet/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 
@@ -105,7 +104,6 @@ You can find other examples here:
 * [Python 3](examples/python3/Dockerfile)
 * [Golang](examples/go/Dockerfile)
 * [Node.js](examples/nodejs/Dockerfile)
-* [dotnet](examples/dotnet/Dockerfile)
 * [Rust](examples/rust/Dockerfile)
 
 To run any example, go to the directory for the language and run
@@ -142,7 +140,6 @@ See here for:
 * [Python 3](examples/python3/BUILD)
 * [Golang](examples/go/BUILD)
 * [Node.js](examples/nodejs/BUILD)
-* [dotnet](examples/dotnet/BUILD)
 
 See here for examples on how to complete some common tasks in your image:
 
