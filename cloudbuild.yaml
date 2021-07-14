@@ -35,7 +35,7 @@ steps:
   - COMMIT_SHA=${COMMIT_SHA}
   entrypoint: ./cloudbuild_docker.sh
 
-- name: gcr.io/projectsigstore/cosign:v0.5.0@sha256:a09a8cbfd26976337926a455ccd0bf042149efe57705bc49d40b0869a1bd765c
+- name: gcr.io/projectsigstore/cosign:v0.6.0@sha256:2303322158802ec0452758578ac80801a3754ee9cb19c128fc5d1b2ec32fa2d2
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
