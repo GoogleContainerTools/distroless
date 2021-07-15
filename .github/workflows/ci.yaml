@@ -23,6 +23,7 @@ jobs:
 
     - name: Build and test
       run: |
+        set -ex
         bazel build --curses=no //package_manager:dpkg_parser.par
         bazel build --curses=no //...
         bazel test --curses=no --test_output=errors //...
