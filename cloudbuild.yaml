@@ -17,17 +17,22 @@ steps:
     set -o errexit
     set -o xtrace
 
-    bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
+    # Make sure python points to python3
+    # perhaps the gcr.io/cloud-marketplace-containers/google/bazel image
+    # should be doing this though
+    update-alternatives --install /usr/bin/python python /usr/bin/python3 0
+
+    bazel build //package_manager:dpkg_parser.par
 
     # Optional: trigger building package bundles without concurrency to avoid
     # flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm64_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_s390x_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_ppc64le_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_amd64_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm64_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_s390x_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_ppc64le_debian10//file:packages.bzl
 
-    bazel run --host_force_python=PY2 //:publish
+    bazel run //:publish
 
 - name: docker
   env:
