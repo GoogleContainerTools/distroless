@@ -70,7 +70,6 @@ Follow these steps to get started:
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
     * [gcr.io/distroless/python2.7-debian10](experimental/python2.7/README.md)
     * [gcr.io/distroless/python3-debian10](experimental/python3/README.md)
-    * [gcr.io/distroless/java/jetty-debian10](java/jetty/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 
