@@ -13,6 +13,14 @@ Restricting what's in your runtime container to precisely what's necessary for y
 and other tech giants that have used containers in production for many years.
 It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
 
+Distroless images are _very small_.
+The smallest distroless image, `gcr.io/distroless/static`, is around 650 kB.
+That's about 25% of the size of `alpine` (~2.5 MB), and less than 1.5% of the size of `debian` (50 MB).
+
+For example, `gcr.io/distroless/static` is a container image that's much smaller than [this image of a shipping container](https://unsplash.com/photos/bukjsECgmeU).
+It's about 1/3rd the size of all the resources on [this page you're reading right now](https://github.com/GoogleContainerTools/distroless).
+It's very small.
+
 ## How do I use distroless images?
 
 These images are built using the [bazel](https://bazel.build) tool, but they can also be used through other Docker image build tooling.
