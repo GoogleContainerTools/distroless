@@ -204,6 +204,13 @@ BUILD       Dockerfile  hello.py
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
 
+### Who uses Distroless?
+
+- [Kubernetes](https://github.com/kubernetes/enhancements/blob/master/keps/sig-release/1729-rebase-images-to-distroless/README.md), since v1.15
+- [Knative](https://knative.dev)
+- [Tekton](https://tekton.dev)
+
+If your project uses Distroless, send a PR to add your project here!
 
 # Community Discussion
 
