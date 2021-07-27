@@ -3,14 +3,18 @@
 # repository code at any time.
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@io_bazel_rules_docker//cc:image.bzl", "cc_image")
 load("//base:distro.bzl", "DISTRO_SUFFIXES")
 
-[container_image(
+cc_binary(
+    name = "hello",
+    srcs = ["hello.c"],
+)
+
+[cc_image(
     name = "hello" + distro_suffix,
     base = "//cc:cc_root_amd64" + distro_suffix,
-    entrypoint = ["./hello"],
-    files = [":bin/hello"],
+    binary = ":hello",
 ) for distro_suffix in DISTRO_SUFFIXES]
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
