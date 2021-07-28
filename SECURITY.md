@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Distroless currently tracks debian 10 ([buster](https://packages.debian.org/buster/)) for packages. Distroless is images are updated as debian packages are updated. No updates are created for earlier releases.
+Distroless currently tracks debian 10 ([buster](https://packages.debian.org/buster/)) for packages. Distroless images are updated as debian packages are updated. No updates are created for earlier releases.
 
 Debian tracking information at https://github.com/GoogleContainerTools/distroless/blob/main/checksums.bzl is updated daily
 
