@@ -162,11 +162,11 @@ For full documentation on how to use Jib to generate Docker images from Maven an
 
 ### Base Operating System
 
-Originally these images were based on Debian 9 (stretch). We now also provide images based on Debian 10 (buster), and tag images with `-debian9` or `-debian10` suffixes. We recommend referencing the appropriate distribution explicitly, since otherwise your build will break when the next Debian version is released.
+Distorless images are based on Debian 10 (buster). Originally these images were based on Debian 9 (stretch), but those images (anything tagged with `*-debian9`) are deprecated and no longer supported. Images are explicitly tagged with `-debian10` suffixes. Specifying an image without the distribution will currently select `-debian10` images, but that can change in the future to a newer version of Debian. It can be useful to reference the appropriate distribution explicitly, to prevent a breakage when the next Debian version is released.
 
 ### CVE and Patching
 
-Distroless tracks Debian 9 (stretch, oldstable currently) and Debian 10. A commit is needed in this repository to update the snapshot version when security fixes are release. Check https://www.debian.org/security/ for any patches to address security issues and update. Check issues and PRs for the patch and update your builds.
+Distroless tracks Debian 10. A commit is needed in this repository to update the snapshot version when security fixes are release. Check https://www.debian.org/security/ for any patches to address security issues and update. Check issues and PRs for the patch and update your builds.
 
 ### Debug Images
 

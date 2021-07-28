@@ -51,8 +51,7 @@ commandTests:
         def walk_packages_onerror(failed_module_name):
           raise Exception('failed to import module: {}'.format(repr(failed_module_name)))
         for module_info in pkgutil.walk_packages(onerror=walk_packages_onerror):
-          # TODO: use module_info.name when Debian9 support is dropped
-          module_name = module_info[1]
+          module_name = module_info.name
           if module_name in skip_modules or module_name.endswith('.__main__'):
             continue
 

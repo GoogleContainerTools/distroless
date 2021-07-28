@@ -64,8 +64,7 @@ commandTests:
           if failed_module_name == 'tkinter': return
           raise Exception('failed to import module: {}'.format(repr(failed_module_name)))
         for module_info in pkgutil.walk_packages(onerror=walk_packages_onerror):
-          # TODO: use module_info.name when Debian9 support is dropped
-          module_name = module_info[1]
+          module_name = module_info.name
           # idlelib on Python3.5 depends on tkinter which is not installed by default
           if module_name in skip_modules or module_name.endswith('.__main__') or module_name.startswith('idlelib.'):
             continue
