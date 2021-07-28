@@ -7,10 +7,6 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
-    "_debian9": [
-        "libncursesw5",
-        "libtinfo5",
-    ],
     "_debian10": [
         "libncursesw6",
         "libtinfo6",
@@ -80,20 +76,6 @@ DISTRO_DEBS = {
 # tests for version-specific things
 [
     container_test(
-        name = "debian9_" + arch + "_test",
-        size = "medium",
-        configs = ["testdata/debian9.yaml"],
-        image = ":python27_" + arch + "_debian9",
-        tags = [
-            "manual",
-            arch,
-        ],
-    )
-    for arch in ARCHITECTURES
-]
-
-[
-    container_test(
         name = "debian10_" + arch + "_test",
         size = "medium",
         configs = ["testdata/debian10.yaml"],
@@ -113,34 +95,6 @@ DISTRO_DEBS = {
         outs = ["ld_so_" + arch + "_cache.tar"],
         cmd = "$(location :make_ld_so_cache_tar.py) $(SRCS) $(OUTS)",
         tools = [":make_ld_so_cache_tar.py"],
-    )
-    for arch in ARCHITECTURES
-]
-
-[
-    sh_binary(
-        name = "generate_ldconfig_" + arch + "_cache",
-        srcs = ["generate_ldconfig_cache.py"],
-        data = [":python27_" + arch + "_debian9"],
-        tags = [
-            "manual",
-            arch,
-        ],
-    )
-    for arch in ARCHITECTURES
-]
-
-[
-    genrule(
-        name = "ld_so_cache_" + arch + "_new",
-        srcs = [":python27_" + arch + "_debian9"],
-        outs = ["ld.so.cache." + arch + ".new"],
-        cmd = "$(location :generate_ldconfig_" + arch + "_cache) " + arch + " $(OUTS)",
-        tags = [
-            "manual",
-            arch,
-        ],
-        tools = [":generate_ldconfig_" + arch + "_cache"],
     )
     for arch in ARCHITECTURES
 ]

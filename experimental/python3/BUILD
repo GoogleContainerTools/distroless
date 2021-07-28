@@ -8,13 +8,6 @@ load("//base:base.bzl", "NONROOT")
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
-    "_debian9": [
-        "libncursesw5",
-        "libpython3.5-minimal",
-        "libpython3.5-stdlib",
-        "libtinfo5",
-        "python3.5-minimal",
-    ],
     "_debian10": [
         "libffi6",
         "libncursesw6",
@@ -28,7 +21,6 @@ DISTRO_DEBS = {
 }
 
 DISTRO_VERSION = {
-    "_debian9": "3.5",
     "_debian10": "3.7",
 }
 
@@ -109,24 +101,6 @@ DISTRO_VERSION = {
 ]
 
 # tests for version-specific things
-[
-    container_test(
-        name = "debian9_" + user + "_" + arch + "_test",
-        size = "medium",
-        configs = ["testdata/debian9.yaml"],
-        image = ":python3_" + user + "_" + arch + "_debian9",
-        tags = [
-            "manual",
-            arch,
-        ],
-    )
-    for arch in ARCHITECTURES
-    for user in [
-        "root",
-        "nonroot",
-    ]
-]
-
 [
     container_test(
         name = "debian10_" + user + "_" + arch + "_test",

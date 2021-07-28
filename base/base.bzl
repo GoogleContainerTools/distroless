@@ -8,7 +8,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 NONROOT = 65532
 
-# Replicate everything for debian9 and debian10
+# Replicate everything for all distroless suffixes
 def distro_components(distro_suffix):
     for arch in ARCHITECTURES:
         cacerts(

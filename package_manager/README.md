@@ -55,16 +55,16 @@ dpkg_list(
 Finally, in a `BUILD` file, you can access the `.deb` files for rules that might require them.  We reference the package map from the previous `dpkg_list` rule and access the packages.  
 
 ```python
-load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages")
+load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages")
 
 container_image(
     name = "python27",
     base = "//base:base",
     debs = [
-        packages_amd64_debian9["zlib1g"],
-        packages_amd64_debian9["python2.7-minimal"],
-        packages_amd64_debian9["libpython2.7-minimal"],
-        packages_amd64_debian9["libpython2.7-stdlib"],
+        packages_amd64_debian10["zlib1g"],
+        packages_amd64_debian10["python2.7-minimal"],
+        packages_amd64_debian10["libpython2.7-minimal"],
+        packages_amd64_debian10["libpython2.7-stdlib"],
     ],
     entrypoint = [
         "/usr/bin/python2.7",
@@ -169,7 +169,7 @@ dpkg_list(name, packages, sources)
 
 A rule that downloads `.deb` packages and makes them available in the WORKSPACE.
 
-For a `dpkg_list` rule named `package_bundle`, packages can be used by loading `load("@package_bundle_amd64_debian9//file:packages.bzl", "packages")` into your `BUILD` file, then referencing the package with `packages['packagename']`
+For a `dpkg_list` rule named `package_bundle`, packages can be used by loading `load("@package_bundle_amd64_debian10//file:packages.bzl", "packages")` into your `BUILD` file, then referencing the package with `packages['packagename']`
 
 <table class="table table-condensed table-bordered table-params">
   <colgroup>

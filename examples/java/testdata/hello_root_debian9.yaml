@@ -1,5 +1,0 @@
-schemaVersion: "1.0.0"
-commandTests:
-  - name: hello
-    command: ['/usr/bin/java', '-cp', '/app/distroless/examples/java/hello_root_debian9.binary.jar', 'examples.HelloJava']
-    expectedOutput: ['Hello world']

@@ -17,26 +17,6 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
     ("jetty_java11_debug_debian10", "//java:java11_debug_root_debian10"),
 ]]
 
-container_test(
-    name = "jetty_java8_debian9_test",
-    configs = ["testdata/java8.yaml"],
-    image = ":jetty_java8_debian9",
-    tags = [
-        "amd64",
-        "manual",
-    ],
-)
-
-container_test(
-    name = "jetty_java8_debug_debian9_test",
-    configs = ["testdata/java8_debug.yaml"],
-    image = ":jetty_java8_debug_debian9",
-    tags = [
-        "amd64",
-        "manual",
-    ],
-)
-
 [container_test(
     name = "jetty_java11" + distro_suffix + "_test",
     configs = ["testdata/java11.yaml"],
