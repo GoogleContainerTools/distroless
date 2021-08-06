@@ -45,7 +45,7 @@ exports_files(["Packages.json", "os_release.tar"])
         "--arch=" + repository_ctx.attr.arch,
         "--distro=" + repository_ctx.attr.distro,
         "--snapshot=" + repository_ctx.attr.snapshot,
-        "--packages-gz-url=" + repository_ctx.attr.packages_gz_url,
+        "--packages-url=" + repository_ctx.attr.packages_url,
         "--package-prefix=" + repository_ctx.attr.package_prefix,
         "--sha256=" + repository_ctx.attr.sha256,
     ]
@@ -61,7 +61,7 @@ _dpkg_src = repository_rule(
         "arch": attr.string(),
         "distro": attr.string(),
         "snapshot": attr.string(),
-        "packages_gz_url": attr.string(),
+        "packages_url": attr.string(),
         "package_prefix": attr.string(),
         "sha256": attr.string(),
     },

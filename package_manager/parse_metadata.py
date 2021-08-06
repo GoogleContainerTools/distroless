@@ -23,7 +23,7 @@ def parse_package_metadata(data, mirror_url, snapshot, package_prefix):
     """ Takes a debian package list, changes the relative urls to absolute urls,
     and saves the resulting metadata as a json file """
 
-    # this is called with the output of gzip.open, but should be strings
+    # this is called with the output of lzma.open, but should be strings
     if isinstance(data, six.binary_type):
         data = data.decode('utf-8')
 
