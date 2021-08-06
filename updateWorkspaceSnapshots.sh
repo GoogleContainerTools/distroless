@@ -57,37 +57,37 @@ DEBIAN_SECURITY_SNAPSHOT = "$DEBIAN_SECURITY_SNAPSHOT"
 SHA256s = {
     "amd64": {
         "debian10": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-amd64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-amd64/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-amd64/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-amd64/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
         },
     },
     "arm": {
         "debian10": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-armhf/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-armhf/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-armhf/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-armhf/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
         },
     },
     "arm64": {
         "debian10": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-arm64/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-arm64/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-arm64/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-arm64/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
         },
     },
     "s390x": {
         "debian10": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-s390x/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-s390x/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-s390x/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-s390x/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
         },
     },
     "ppc64le": {
         "debian10": {
-            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
-            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-ppc64el/Packages.gz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "main": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster/main/binary-ppc64el/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "updates": "`curl -s https://snapshot.debian.org/archive/debian/$DEBIAN_SNAPSHOT/dists/buster-updates/main/binary-ppc64el/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
+            "security": "`curl -s https://snapshot.debian.org/archive/debian-security/$DEBIAN_SECURITY_SNAPSHOT/dists/buster/updates/main/binary-ppc64el/Packages.xz 2>&1 | sha256sum | cut -d " " -f 1`",
         },
     },
 }
