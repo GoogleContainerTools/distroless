@@ -1,0 +1,43 @@
+name: cache CI
+
+on:
+  workflow_dispatch: # Allow manual runs.
+  pull_request:
+    branches: [ 'main' ]
+  push:
+    branches: [ 'main' ]
+
+jobs:
+  build-and-test:
+    name: CI
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '1.16.0'
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+    - name: Build, test
+      run: |
+        cd gcscache
+        make sync test
+
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2.5.2
+        timeout-minutes: 5
+        with:
+          version: latest
+          working-directory: gcscache

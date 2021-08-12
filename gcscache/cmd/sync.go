@@ -41,7 +41,7 @@ func main() {
 	}
 	defer client.Close()
 
-	bucket := client.Bucket("test-distroless-cache-1")
+	bucket := client.Bucket("distroless-debian-cache")
 
 	srcs := dpkg.PackageIndexes()
 	pkgs := dpkg.PackageNames()
