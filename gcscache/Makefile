@@ -16,14 +16,11 @@
 .PHONY: sync format lint gosec test clean
 
 sync:
-	go build ./cmd/sync
+	go build ./cmd/sync.go
 
 format:
 	gofmt -s -w ./cmd/ ./internal/
 	goimports -w ./cmd/ ./internal/
-
-lint:
-	$(GOBIN)/golangci-lint run -v ./...
 
 gosec:
 	$(GOBIN)/gosec ./...

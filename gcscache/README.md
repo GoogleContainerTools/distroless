@@ -11,10 +11,10 @@
 The cache has 2 top level directories: `files` and `indexes`.
 
 #### `files`
-contains `.deb` files with their path defined in `Packages.xz`. For example an `openjdk11` deb might live at `https://storage.googleapis.com/test-distroless-cache-1/files/pool/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.11+9-1~deb10u1_amd64.deb`
+contains `.deb` files with their path defined in `Packages.xz`. For example an `openjdk11` deb might live at `https://storage.googleapis.com/distroless-debian-cache/files/pool/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.11+9-1~deb10u1_amd64.deb`
 
 #### `indexes` 
-contains all `Packages.xz` organized by version, architecture, channel and sha256 hash of the packge index. For example you could find a package index for buster updates on amd64 at `https://storage.googleapis.com/test-distroless-cache-1/indexes/buster-updates-amd64/24a6fcccd67c461bd38b093bbcd3742cdde7a9b4cfa1687f6b442f62cc42d216/Packages.xz`. In addition to the `Packages.xz` file, each permutation will contain a `latest` file pointing to the last `Packages.xz` uploaded like `https://storage.googleapis.com/test-distroless-cache-1/indexes/buster-updates-amd64/latest`
+contains all `Packages.xz` organized by version, architecture, channel and sha256 hash of the packge index. For example you could find a package index for buster updates on amd64 at `https://storage.googleapis.com/distroless-debian-cache/indexes/buster-updates-amd64/24a6fcccd67c461bd38b093bbcd3742cdde7a9b4cfa1687f6b442f62cc42d216/Packages.xz`. In addition to the `Packages.xz` file, each permutation will contain a `latest` file pointing to the last `Packages.xz` uploaded like `https://storage.googleapis.com/distroless-debian-cache/indexes/buster-updates-amd64/latest`
 
 ## What package indexes are copied
 
@@ -38,8 +38,8 @@ An action/check should be written to ensure all packages defined in WORKSPACE ar
 ```
 dpkg_src(
   name = "distroless-deb-cache",
-  package_prefix = "https://storage.googleapis.com/test-distroless-cache-1/files/",
-  packages_url = "https://storage.googleapis.com/test-distroless-cache-1/indexes/buster-updates-amd64/24a6fcccd67c461bd38b093bbcd3742cdde7a9b4cfa1687f6b442f62cc42d216/Packages.xz"
+  package_prefix = "https://storage.googleapis.com/distroless-debian-cache/files/",
+  packages_url = "https://storage.googleapis.com/distroless-debian-cache/indexes/buster-updates-amd64/24a6fcccd67c461bd38b093bbcd3742cdde7a9b4cfa1687f6b442f62cc42d216/Packages.xz"
   sha256 = 24a6fcccd67c461bd38b093bbcd3742cdde7a9b4cfa1687f6b442f62cc42d216,
 )
 ```
