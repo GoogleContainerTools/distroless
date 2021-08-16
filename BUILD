@@ -12,6 +12,12 @@ DISTROS = [
     "debian10",
 ]
 
+# temporarily variable used only in static/base, remove when all builds support debian11
+ALL_DISTROS = [
+    "debian10",
+    "debian11",
+]
+
 STATIC = dict({
     "gcr.io/{PROJECT_ID}/static:{COMMIT_SHA}": "//base:static_root_amd64_debian10",
     "gcr.io/{PROJECT_ID}/static-debian10:{COMMIT_SHA}": "//base:static_root_amd64_debian10",
@@ -37,7 +43,7 @@ STATIC.update({
         ("debug", "static_debug", "root"),
         ("debug-nonroot", "static_debug", "nonroot"),
     ]
-    for distro in DISTROS
+    for distro in ALL_DISTROS
 })
 
 BASE = {
@@ -65,7 +71,7 @@ BASE.update({
         ("debug", "debug", "root"),
         ("debug-nonroot", "debug", "nonroot"),
     ]
-    for distro in DISTROS
+    for distro in ALL_DISTROS
 })
 
 CC = {

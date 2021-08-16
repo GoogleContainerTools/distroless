@@ -100,4 +100,5 @@ pkg_tar(
     package_dir = "etc",
 )
 
-[distro_components(suffix) for suffix in DISTRO_SUFFIXES]
+# TODO once all builds use _debian11, remove this
+[distro_components(suffix) for suffix in (DISTRO_SUFFIXES + ["_debian11"])]
