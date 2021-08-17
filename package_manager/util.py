@@ -21,6 +21,7 @@ def encode_package_name(s):
     return base64.urlsafe_b64encode(s.encode('utf-8')).decode('utf-8') + ".deb"
 
 DEBIAN_RELEASES = {
+    "bullseye": "11",
     "buster": "10",
     "stretch": "9",
     "jessie": "8",
