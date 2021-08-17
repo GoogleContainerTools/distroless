@@ -64,6 +64,21 @@ load(
     )
     for arch in ARCHITECTURES
     for (name, distro) in VERSIONS
+    if "debian10" == name
+    if "security" in SHA256s[arch][name]
+]
+
+# debian11 has a slightly different structure for security on snapshots
+[
+    dpkg_src(
+        name = arch + "_" + name + "_security",
+        package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
+        packages_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/{}-security/main/binary-{}/Packages.xz".format(DEBIAN_SECURITY_SNAPSHOT, distro, arch),
+        sha256 = SHA256s[arch][name]["security"],
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+    if "debian11" == name
     if "security" in SHA256s[arch][name]
 ]
 
@@ -79,6 +94,28 @@ load(
     for arch in ARCHITECTURES
     for (name, distro) in VERSIONS
     if "backports" in SHA256s[arch][name]
+]
+
+[
+    dpkg_list(
+        name = "package_bundle_" + arch + "_debian11",
+        # only packages for static and base at the moment
+        packages = [
+            "base-files",
+            "ca-certificates",
+            "libc6",
+            "libssl1.1",
+            "netbase",
+            "openssl",
+            "tzdata",
+        ],
+        sources = [
+            "@" + arch + "_debian11_security//file:Packages.json",
+            "@" + arch + "_debian11_updates//file:Packages.json",
+            "@" + arch + "_debian11//file:Packages.json",
+        ],
+    )
+    for arch in ARCHITECTURES
 ]
 
 [

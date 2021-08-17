@@ -2,4 +2,4 @@ schemaVersion: "1.0.0"
 fileContentTests:
 - name: 'os-release contents'
   path: '/etc/os-release'
-  expectedContents: ['.*\nVERSION="Debian GNU/Linux 9 \(stretch\)"\n']
+  expectedContents: ['.*\nVERSION="Debian GNU/Linux 11 \(bullseye\)"\n']
