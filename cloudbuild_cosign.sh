@@ -9,15 +9,19 @@ export KMS_VAL=gcpkms://projects/$PROJECT_ID/locations/global/keyRings/cosign/cr
 cosign version
 
 # Sign images with cosign
-for distro_suffix in "" -debian10; do
+for distro_suffix in "" -debian10 -debian11; do
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/static${distro_suffix}:nonroot
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/static${distro_suffix}:latest
+  cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/static${distro_suffix}:debug-nonroot
+  cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/static${distro_suffix}:debug
 
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/base${distro_suffix}:nonroot
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/base${distro_suffix}:latest
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/base${distro_suffix}:debug-nonroot
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/base${distro_suffix}:debug
+done
 
+for distro_suffix in "" -debian10; do
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/cc${distro_suffix}:nonroot
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/cc${distro_suffix}:latest
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/cc${distro_suffix}:debug-nonroot
