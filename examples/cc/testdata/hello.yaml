@@ -2,4 +2,4 @@ schemaVersion: "1.0.0"
 commandTests:
   - name: hello
     command: ['/app/examples/cc/hello']
-    expectedOutput: ['Hello from distroless!']
+    expectedOutput: ['Hello from distroless C!']

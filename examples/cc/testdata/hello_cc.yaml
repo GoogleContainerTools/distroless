@@ -1,0 +1,5 @@
+schemaVersion: "1.0.0"
+commandTests:
+  - name: hello_cc
+    command: ['/app/examples/cc/hello_cc']
+    expectedOutput: ['Hello from distroless C\+\+!']
