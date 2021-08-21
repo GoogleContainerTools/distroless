@@ -7,7 +7,11 @@ commandTests:
   - name: use_shell
     command: ["/usr/bin/python3", "-c",
       "import subprocess, sys; subprocess.check_call(sys.executable + ' -h', shell=True)"]
+    exitCode: 0
+
   # libraries like gunicorn and monotonic call glibc functions using ctypes
+  # TODO: gunicorn removed its usage of ctypes, and monotonic is now part of the standard library.
+  # This could be removed, but it does work on standard Debian.
   - name: use_ctypes_glibc
     command: ["/usr/bin/python3", "-c", "import ctypes.util; ctypes.CDLL(ctypes.util.find_library('rt')).timer_create"]
     exitCode: 0
@@ -32,6 +36,7 @@ commandTests:
   # import every module installed with the Python package
   - name: import_everything
     exitCode: 0
+    expectedOutput: ['FINISHED ENTIRE SCRIPT']
     command:
       - "/usr/bin/python3"
       - "-c"
@@ -48,32 +53,35 @@ commandTests:
           'distutils._msvccompiler',
           'distutils.command.bdist_msi',
           'distutils.msvc9compiler',
-          'winreg',
           'encodings.cp65001',
           'encodings.mbcs',
           'encodings.oem',
           'multiprocessing.popen_spawn_win32',
+          'winreg',
+
+          # Python regression tests "for internal use by Python only"
+          'test',
+
+          # calls sys.exit
+          'unittest.__main__',
+          'venv.__main__',
 
           # depends on things not installed by default on Debian
           'dbm.gnu',
           'lib2to3.pgen2.conv',
+          'turtle',
         ))
 
         # pass an error handler so the test fails if there are broken standard library packages
         def walk_packages_onerror(failed_module_name):
-          if failed_module_name == 'tkinter': return
           raise Exception('failed to import module: {}'.format(repr(failed_module_name)))
         for module_info in pkgutil.walk_packages(onerror=walk_packages_onerror):
           module_name = module_info.name
-          # idlelib on Python3.5 depends on tkinter which is not installed by default
-          if module_name in skip_modules or module_name.endswith('.__main__') or module_name.startswith('idlelib.'):
+          if module_name in skip_modules or module_name.startswith('test.'):
             continue
 
-          try:
-            __import__(module_name)
-          except ImportError as e:
-            # ignore tkinter errors: Python's Tcl/Tk support is not installed by default on Debian
-            if 'tkinter' in str(e):
-              continue
-            raise
+          __import__(module_name)
           print('imported {}'.format(module_name))
+
+        # ensures some module does not exit early (e.g unittest.__main__)
+        print('FINISHED ENTIRE SCRIPT')
