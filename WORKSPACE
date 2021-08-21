@@ -108,6 +108,11 @@ load(
             "netbase",
             "openssl",
             "tzdata",
+
+            # c++
+            "libgcc-s1",
+            "libgomp1",
+            "libstdc++6",
         ],
         sources = [
             "@" + arch + "_debian11_security//file:Packages.json",
