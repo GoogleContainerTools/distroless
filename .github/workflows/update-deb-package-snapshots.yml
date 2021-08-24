@@ -1,5 +1,6 @@
 name: update-snapshots
 on:
+  # will send emails to last editor of file
   schedule:
     - cron:  '30 8 * * *'
 jobs:
