@@ -205,4 +205,3 @@ BUILD       Dockerfile  hello.py
 
 * [distroless-users Google Group](https://groups.google.com/forum/#!forum/distroless-users)
 * [Kubernetes slack #distroless channel](https://slack.k8s.io/)
-* 
