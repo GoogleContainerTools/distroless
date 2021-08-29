@@ -54,7 +54,11 @@ func main() {
 			log.Fatalf("InRelease:%q did not contain valid sha256:%q for PackagesXZ:%q", src.InRelease, pkgsHash, src.PackagesXZ)
 		}
 
-		pkgData, pkgBuf := parsePackageData(packagesXZ, src.PackagesXZ, pkgs)
+		pkgSet, ok := pkgs[src.Release]
+		if !ok {
+			log.Fatalf("No list of packages found for %q", src.Release)
+		}
+		pkgData, pkgBuf := parsePackageData(packagesXZ, src.PackagesXZ, pkgSet)
 		writeDebs(ctx, bucket, pkgData, src.PoolParent)
 		writePackagesFiles(ctx, bucket, pkgBuf, packagesXZ, inRelease, src)
 	}
@@ -64,7 +68,7 @@ func main() {
 func fetchRemote(remote string) (*bytes.Buffer, string) {
 	log.Println("Fetching: ", remote)
 	resp, err := http.Get(remote)
-	if err != nil {
+	if err != nil || resp.StatusCode != http.StatusOK {
 		log.Fatal("failed to fetch remote file: ", remote, err)
 	}
 	rc := resp.Body
