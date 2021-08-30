@@ -54,7 +54,7 @@ func security(release, arch string) PackageIndex {
 		Release:    release,
 		Arch:       arch,
 		PackagesXZ: fmt.Sprintf("https://security.debian.org/dists/%s/updates/main/binary-%s/Packages.xz", release, arch),
-		InRelease:  fmt.Sprintf("https://security.debian.org/dists/%s/InRelease", release),
+		InRelease:  fmt.Sprintf("https://security.debian.org/dists/%s/updates/InRelease", release),
 		PoolParent: "https://security.debian.org/debian-security/",
 	}
 }
