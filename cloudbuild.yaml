@@ -39,12 +39,16 @@ steps:
     bazel build --jobs=1 @package_bundle_ppc64le_debian11//file:packages.bzl
 
     bazel run //:publish
+    bazel build all.tar
 
 - name: docker
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
   entrypoint: ./cloudbuild_docker.sh
+
+- name: ubuntu
+  entrypoint: ./cloudbuild_jq.sh
 
 - name: gcr.io/projectsigstore/cosign:v0.6.0@sha256:2303322158802ec0452758578ac80801a3754ee9cb19c128fc5d1b2ec32fa2d2
   env:
