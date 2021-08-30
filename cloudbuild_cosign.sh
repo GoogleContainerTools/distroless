@@ -8,7 +8,13 @@ export KMS_VAL=gcpkms://projects/$PROJECT_ID/locations/global/keyRings/cosign/cr
 
 cosign version
 
-# Sign images with cosign
+# Get all images from 'images' file
+
+while IFS= read -r line; do
+  cosign sign -key $KMS_VAL $line
+done < images
+
+# Sign 'latest' images with cosign
 for distro_suffix in "" -debian10 -debian11; do
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/static${distro_suffix}:nonroot
   cosign sign -key $KMS_VAL gcr.io/$PROJECT_ID/static${distro_suffix}:latest
