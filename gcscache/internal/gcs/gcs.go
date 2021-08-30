@@ -67,14 +67,17 @@ func Write(ctx context.Context, bucket *storage.BucketHandle, r io.Reader, dest 
 	return nil
 }
 
-func Exists(ctx context.Context, bucket *storage.BucketHandle, dest string) (bool, error) {
-	obj := bucket.Object(dest)
+// returns true if all objects exist, false if any do not
+func Exists(ctx context.Context, bucket *storage.BucketHandle, dests ...string) (bool, error) {
+	for _, dest := range dests {
+		obj := bucket.Object(dest)
 
-	_, err := obj.Attrs(ctx)
-	if errors.Is(err, storage.ErrObjectNotExist) {
-		return false, nil
-	} else if err != nil {
-		return false, err
+		_, err := obj.Attrs(ctx)
+		if errors.Is(err, storage.ErrObjectNotExist) {
+			return false, nil
+		} else if err != nil {
+			return false, err
+		}
 	}
 
 	return true, nil

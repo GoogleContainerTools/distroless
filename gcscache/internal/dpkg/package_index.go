@@ -22,6 +22,7 @@ type PackageIndex struct {
 	Release    string // buster, bullseye, etc
 	Arch       string // amd64, arm64, etc
 	PackagesXZ string // url of packages.xz
+	InRelease  string // gpg signed release info
 	PoolParent string // url to the "pool" for example "https://deb.debian.org/debian/" which contains a pool directory
 }
 
@@ -31,6 +32,7 @@ func main(release, arch string) PackageIndex {
 		Release:    release,
 		Arch:       arch,
 		PackagesXZ: fmt.Sprintf("https://deb.debian.org/debian/dists/%s/main/binary-%s/Packages.xz", release, arch),
+		InRelease:  fmt.Sprintf("https://deb.debian.org/debian/dists/%s/InRelease", release),
 		PoolParent: "https://deb.debian.org/debian/",
 	}
 }
@@ -41,6 +43,7 @@ func updates(release, arch string) PackageIndex {
 		Release:    release,
 		Arch:       arch,
 		PackagesXZ: fmt.Sprintf("https://deb.debian.org/debian/dists/%s-updates/main/binary-%s/Packages.xz", release, arch),
+		InRelease:  fmt.Sprintf("https://deb.debian.org/debian/dists/%s-updates/InRelease", release),
 		PoolParent: "https://deb.debian.org/debian/",
 	}
 }
@@ -51,6 +54,7 @@ func security(release, arch string) PackageIndex {
 		Release:    release,
 		Arch:       arch,
 		PackagesXZ: fmt.Sprintf("https://security.debian.org/dists/%s/updates/main/binary-%s/Packages.xz", release, arch),
+		InRelease:  fmt.Sprintf("https://security.debian.org/dists/%s/InRelease", release),
 		PoolParent: "https://security.debian.org/debian-security/",
 	}
 }
