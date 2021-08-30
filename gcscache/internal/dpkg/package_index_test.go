@@ -41,7 +41,7 @@ func TestStructCreation(t *testing.T) {
 			Channel:    "security",
 			Release:    "testRel",
 			Arch:       "testArch",
-			InRelease:  "https://security.debian.org/dists/testRel/InRelease",
+			InRelease:  "https://security.debian.org/dists/testRel/updates/InRelease",
 			PackagesXZ: "https://security.debian.org/dists/testRel/updates/main/binary-testArch/Packages.xz",
 			PoolParent: "https://security.debian.org/debian-security/",
 		},
@@ -67,7 +67,7 @@ func TestStructCreation(t *testing.T) {
 	}
 }
 
-func TestPackageIndexesExist(t *testing.T) {
+func TestRemotePackageInfoExists(t *testing.T) {
 	ps := PackageIndexes()
 
 	for _, pi := range ps {
@@ -78,6 +78,16 @@ func TestPackageIndexesExist(t *testing.T) {
 			}
 			if resp.StatusCode != http.StatusOK {
 				t.Fatalf("Could not verify existence of remote packages index: %q", pi.PackagesXZ)
+			}
+		})
+
+		t.Run(pi.InRelease, func(t *testing.T) {
+			resp, err := http.Head(pi.InRelease)
+			if err != nil {
+				t.Fatalf("Could not verify existence of remote InRelease: %q", pi.InRelease)
+			}
+			if resp.StatusCode != http.StatusOK {
+				t.Fatalf("Could not verify existence of remote InRelease: %q", pi.InRelease)
 			}
 		})
 	}
