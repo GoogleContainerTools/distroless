@@ -34,6 +34,9 @@ fileExistenceTests:
 - name: nonroot-homedir
   path: '/home/nonroot'
   shouldExist: true
+- name: dpkg-status.d
+  path: '/var/lib/dpkg/status.d/libc6'
+  shouldExist: true
 fileContentTests:
 - name: 'known users'
   path: '/etc/passwd'
