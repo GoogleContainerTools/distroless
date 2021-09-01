@@ -16,4 +16,5 @@ fi
 cat <<EOF
 PROJECT_ID ${PROJECT_ID}
 COMMIT_SHA ${COMMIT_SHA:-no-commit-sha}
+REGISTRY ${REGISTRY:-gcr.io}
 EOF
