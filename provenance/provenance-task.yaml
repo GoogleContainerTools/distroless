@@ -3,6 +3,7 @@ kind: Task
 metadata:
   name: distroless-provenance
   annotations:
+    chains.tekton.dev/transparency-upload: "true"
     description: |
       Takes in the distroless repo as an input and builds & pushes distroless images.
 spec:
@@ -10,9 +11,12 @@ spec:
     - name: IMAGES
   params:
     - name: PROJECT_ID
+      type: string
       default: distroless
     - name: CHAINS-GIT_COMMIT
+      type: string
     - name: CHAINS-GIT_URL
+      type: string
       default: https://github.com/GoogleContainerTools/distroless
   steps:
     - name: bazel

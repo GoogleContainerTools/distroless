@@ -63,19 +63,20 @@ steps:
 
 # Start task in k8s to generate provenance
 - name: gcr.io/cloud-builders/gcloud
+  entrypoint: sh
   args:
-  - container
-  - clusters
-  - get-credentials
-  - provenance
-  - --zone=us-central1-c
-  - --project=distroless
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
 
-- name: gcr.io/tekton-releases/dogfooding/tkn@sha256:f69a02ef099d8915e9e4ea1b74e43b7a9309fc97cf23cb457ebf191e73491677
-  args:
-  - task
-  - start
-  - -f=provenance/provenance-task.yaml
-  - --param
-  - CHAINS-GIT_COMMIT=${COMMIT_SHA}
-  - --use-param-defaults
+    gcloud container clusters get-credentials provenance --zone=us-central1-c --project=distroless
+    
+    # Install tkn
+    curl -Lo tkn_0.20.0_Linux_arm64.tar.gz  https://github.com/tektoncd/cli/releases/download/v0.20.0/tkn_0.20.0_Linux_x86_64.tar.gz
+    tar -xvzf tkn_0.20.0_Linux_arm64.tar.gz -C /usr/local/bin/ tkn
+
+    # Start provenance task
+    tkn task start -f=provenance/provenance-task.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults
+
