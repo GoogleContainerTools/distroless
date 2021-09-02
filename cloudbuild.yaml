@@ -60,3 +60,22 @@ steps:
   entrypoint: sh
   args:
   - ./cloudbuild_cosign.sh 
+
+# Start task in k8s to generate provenance
+- name: gcr.io/cloud-builders/gcloud
+  args:
+  - container
+  - clusters
+  - get-credentials
+  - provenance
+  - --zone=us-central1-c
+  - --project=distroless
+
+- name: gcr.io/tekton-releases/dogfooding/tkn@sha256:f69a02ef099d8915e9e4ea1b74e43b7a9309fc97cf23cb457ebf191e73491677
+  args:
+  - task
+  - start
+  - -f=provenance/provenance-task.yaml
+  - --param
+  - CHAINS-GIT_COMMIT=${COMMIT_SHA}
+  - --use-param-defaults
