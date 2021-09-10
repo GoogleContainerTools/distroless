@@ -162,7 +162,11 @@ load(
             "openjdk-11-jre-headless",
             "openjdk-11-jdk-headless",
             "libc-bin",
-
+            "libgraphite2-3",
+            "libharfbuzz0b",
+            "libglib2.0-0",
+            "libpcre3",
+            
             #python
             "dash",
             "libc-bin",

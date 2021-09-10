@@ -32,6 +32,10 @@ USERS = [
             DISTRO_PACKAGES["amd64"][distro_suffix]["libexpat1"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libfontconfig1"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libuuid1"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libgraphite2-3"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libharfbuzz0b"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libglib2.0-0"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["libpcre3"],            
         ],
         env = {"LANG": "C.UTF-8"},
         tars = [
