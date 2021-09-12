@@ -57,6 +57,8 @@ steps:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
   - REGISTRY=gcr.io
+  - KMS_VAL=gcpkms://projects/${PROJECT_ID}/locations/global/keyRings/cosign/cryptoKeys/cosign
   entrypoint: sh
   args:
-  - ./cloudbuild_cosign.sh 
+  - -c
+  - ./cloudbuild_cosign.sh -key $KMS_VAL
