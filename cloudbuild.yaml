@@ -52,7 +52,7 @@ steps:
 - name: ubuntu
   entrypoint: ./cloudbuild_jq.sh
 
-- name: gcr.io/projectsigstore/cosign:v1.1.0@sha256:47bdf660ceadb5065aa05af62fd24b184db0fdcb34d5892247035dd0dd2d5c3f
+- name: gcr.io/projectsigstore/cosign/ci/cosign:3f83940d3f3d97075d606af1e0793051cc6fc19b@sha256:f2d226d35e0fc91bcb207ddffc2b0143b3c6377687a4bc474f2f30a849a7aef3
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
