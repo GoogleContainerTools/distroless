@@ -13,7 +13,7 @@
 // limitations under the License.ackage jksutil
 
 // package jksutil allows interactions with a version 2 java key store
-package jksutil
+package main
 
 import (
 	"crypto/sha1"

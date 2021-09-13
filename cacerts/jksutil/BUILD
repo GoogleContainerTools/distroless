@@ -25,7 +25,11 @@ go_test(
 
 go_binary(
     name = "jksutil",
-    srcs = ["main.go"],
+    srcs = [
+        "certificate.go",
+        "jks.go",
+        "main.go",
+    ],
     visibility = [
         "//visibility:public",
     ],
