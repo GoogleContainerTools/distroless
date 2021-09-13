@@ -28,7 +28,7 @@ const (
 	packageKey = "Package"
 )
 
-// Reads a debian package list, filters on packages (no filter if packages = nil)
+// Parse reads a debian package list, filters on packages (no filter if packages = nil)
 // will also write out the raw filtered data to a writer (if one is provided)
 func Parse(r io.Reader, packages map[string]bool, w io.Writer) ([]map[string]string, error) {
 	var allEntries []map[string]string
@@ -38,6 +38,11 @@ func Parse(r io.Reader, packages map[string]bool, w io.Writer) ([]map[string]str
 
 	continuation := regexp.MustCompile(`^\s`)
 	s := bufio.NewScanner(r)
+
+	// some Packages.xz lines are super big
+	maxCap := 1024 * 1024
+	megaBuffer := make([]byte, maxCap)
+	s.Buffer(megaBuffer, maxCap)
 
 	ln := 0
 	for s.Scan() {
@@ -76,7 +81,10 @@ func Parse(r io.Reader, packages map[string]bool, w io.Writer) ([]map[string]str
 			currentKey = ""
 		}
 	}
-	if len(currentEntry) != 0 {
+	if s.Err() != nil {
+		return nil, s.Err()
+	}
+	if len(currentEntry) != 0 && (packages == nil || packages[currentEntry[packageKey]]) {
 		allEntries = append(allEntries, currentEntry)
 		if w != nil {
 			if err := writeLines(w, currentLines); err != nil {
