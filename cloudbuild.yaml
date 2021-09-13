@@ -62,3 +62,24 @@ steps:
   args:
   - -c
   - ./cloudbuild_cosign.sh -key $KMS_VAL
+
+# Start task in k8s to generate provenance
+- name: gcr.io/cloud-builders/gcloud
+  env:
+  - TKN_VERSION=0.20.0
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+
+    gcloud container clusters get-credentials provenance --zone=us-central1-c --project=${PROJECT_ID}
+    
+    # Install tkn
+    curl -Lo tkn_${TKN_VERSION}_Linux_arm64.tar.gz  https://github.com/tektoncd/cli/releases/download/v${TKN_VERSION}/tkn_${TKN_VERSION}_Linux_x86_64.tar.gz
+    tar -xvzf tkn_${TKN_VERSION}_Linux_arm64.tar.gz -C /usr/local/bin/ tkn
+
+    # Start provenance task
+    tkn task start -f=provenance/provenance-task.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults
