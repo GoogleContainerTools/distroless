@@ -62,6 +62,18 @@ steps:
   - -c
   - ./cloudbuild_cosign.sh -key $_KMS_VAL
 
+- name: gcr.io/projectsigstore/cosign/ci/cosign:3f83940d3f3d97075d606af1e0793051cc6fc19b@sha256:f2d226d35e0fc91bcb207ddffc2b0143b3c6377687a4bc474f2f30a849a7aef3
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
+  - COSIGN_EXPERIMENTAL=true
+  - GOOGLE_SERVICE_ACCOUNT_NAME=keyless@${PROJECT_ID}.iam.gserviceaccount.com
+  entrypoint: sh
+  args:
+  - -c
+  - ./cloudbuild_cosign.sh
+
 # Start task in k8s to generate provenance
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: sh
