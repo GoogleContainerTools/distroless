@@ -18,6 +18,8 @@ package dpkg
 import (
 	"net/http"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestStructCreation(t *testing.T) {
@@ -41,11 +43,11 @@ func TestStructCreation(t *testing.T) {
 			Channel:    "security",
 			Release:    "testRel",
 			Arch:       "testArch",
-			InRelease:  "https://security.debian.org/dists/testRel/updates/InRelease",
-			PackagesXZ: "https://security.debian.org/dists/testRel/updates/main/binary-testArch/Packages.xz",
+			InRelease:  "https://security.debian.org/dists/testRel-security/updates/InRelease",
+			PackagesXZ: "https://security.debian.org/dists/testRel-security/updates/main/binary-testArch/Packages.xz",
 			PoolParent: "https://security.debian.org/debian-security/",
 		},
-		generated: security("testRel", "testArch"),
+		generated: security("testRel", "testRel-security", "testArch"),
 	}, {
 		expected: PackageIndex{
 			Channel:    "main",
@@ -90,5 +92,22 @@ func TestRemotePackageInfoExists(t *testing.T) {
 				t.Fatalf("Could not verify existence of remote InRelease: %q", pi.InRelease)
 			}
 		})
+	}
+}
+
+func TestPackageNames(t *testing.T) {
+	pkgMap := map[string][]string{
+		"release1": {"pkg1", "pkg2"},
+		"release2": {"pkg3", "pkg4"},
+	}
+
+	want := map[string]map[string]bool{
+		"release1": {"pkg1": true, "pkg2": true},
+		"release2": {"pkg3": true, "pkg4": true},
+	}
+
+	got := packageNames(pkgMap)
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("packageNames() mismatch (-want +got):\n%s", diff)
 	}
 }

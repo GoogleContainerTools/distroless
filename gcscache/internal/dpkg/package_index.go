@@ -18,11 +18,11 @@ package dpkg
 import "fmt"
 
 type PackageIndex struct {
-	Channel    string // main,security,etc
+	Channel    string // main, security,etc
 	Release    string // buster, bullseye, etc
 	Arch       string // amd64, arm64, etc
-	PackagesXZ string // url of packages.xz
-	InRelease  string // gpg signed release info
+	PackagesXZ string // url of Packages.xz
+	InRelease  string // url of InRelease (gpg signed release info)
 	PoolParent string // url to the "pool" for example "https://deb.debian.org/debian/" which contains a pool directory
 }
 
@@ -48,13 +48,14 @@ func updates(release, arch string) PackageIndex {
 	}
 }
 
-func security(release, arch string) PackageIndex {
+// secRelease is the name in the url (ex: bullseye -> bullseye-security)
+func security(release, secRelease, arch string) PackageIndex {
 	return PackageIndex{
 		Channel:    "security",
 		Release:    release,
 		Arch:       arch,
-		PackagesXZ: fmt.Sprintf("https://security.debian.org/dists/%s/updates/main/binary-%s/Packages.xz", release, arch),
-		InRelease:  fmt.Sprintf("https://security.debian.org/dists/%s/updates/InRelease", release),
+		PackagesXZ: fmt.Sprintf("https://security.debian.org/dists/%s/updates/main/binary-%s/Packages.xz", secRelease, arch),
+		InRelease:  fmt.Sprintf("https://security.debian.org/dists/%s/updates/InRelease", secRelease),
 		PoolParent: "https://security.debian.org/debian-security/",
 	}
 }
@@ -66,17 +67,27 @@ func PackageIndexes() []PackageIndex {
 		for _, arch := range archs {
 			urls[i] = main(release, arch)
 			urls[i+1] = updates(release, arch)
-			urls[i+2] = security(sec, arch)
+			urls[i+2] = security(release, sec, arch)
 			i += 3
 		}
 	}
 	return urls
 }
 
-func PackageNames() map[string]bool {
-	set := make(map[string]bool, len(packages))
-	for _, pkg := range packages {
-		set[pkg] = true
+// PackageNames converts packages from a map[string:list] to a map[string:set]
+func PackageNames() map[string]map[string]bool {
+	return packageNames(packages)
+}
+
+// internal for testing
+func packageNames(pkgMap map[string][]string) map[string]map[string]bool {
+	all := map[string]map[string]bool{}
+	for rel, relPkgs := range pkgMap {
+		set := make(map[string]bool, len(relPkgs))
+		for _, pkg := range relPkgs {
+			set[pkg] = true
+		}
+		all[rel] = set
 	}
-	return set
+	return all
 }
