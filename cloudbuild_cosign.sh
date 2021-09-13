@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/busybox/sh
 
 set -o errexit
 set -o xtrace
