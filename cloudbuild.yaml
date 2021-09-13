@@ -52,14 +52,16 @@ steps:
 - name: ubuntu
   entrypoint: ./cloudbuild_jq.sh
 
-- name: gcr.io/projectsigstore/cosign:v0.6.0@sha256:2303322158802ec0452758578ac80801a3754ee9cb19c128fc5d1b2ec32fa2d2
+- name: gcr.io/projectsigstore/cosign/ci/cosign:3f83940d3f3d97075d606af1e0793051cc6fc19b@sha256:f2d226d35e0fc91bcb207ddffc2b0143b3c6377687a4bc474f2f30a849a7aef3
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
   - REGISTRY=gcr.io
+  - KMS_VAL=gcpkms://projects/${PROJECT_ID}/locations/global/keyRings/cosign/cryptoKeys/cosign
   entrypoint: sh
   args:
-  - ./cloudbuild_cosign.sh 
+  - -c
+  - ./cloudbuild_cosign.sh -key $KMS_VAL
 
 # Start task in k8s to generate provenance
 - name: gcr.io/cloud-builders/gcloud
@@ -79,4 +81,3 @@ steps:
 
     # Start provenance task
     tkn task start -f=provenance/provenance-task.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults
-
