@@ -147,14 +147,18 @@ func writePackagesFiles(ctx context.Context, bucket *storage.BucketHandle, pkgBu
 	packagesWritten := writePackagesXZ(ctx, bucket, pkgBuf, pkgFile)
 	originInfoWritten := writeOriginInfo(ctx, bucket, origPkgBuf, origPkgFile, inReleaseBuf, inReleaseFile)
 
-	if packagesWritten || originInfoWritten {
-		// update latest file
-		latest := fmt.Sprintf("%s/latest", pkgRoot)
-		latestTgt := strings.NewReader(pkgFile)
-		if err := gcs.Write(ctx, bucket, latestTgt, latest); err != nil {
+	// update latest file
+	latest := fmt.Sprintf("%s/latest", pkgRoot)
+	latestSha := strings.NewReader(shaH)
+	latestExists, err := gcs.Exists(ctx, bucket, latest)
+	if err != nil {
+		log.Fatal("failed to check if latest exist on gcs ", latest, err)
+	}
+	if !latestExists || packagesWritten || originInfoWritten {
+		if err := gcs.Write(ctx, bucket, latestSha, latest); err != nil {
 			log.Fatal("failed to write latest to gcs", latest, err)
 		}
-		log.Printf("Updated latest %q to %q", latest, pkgFile)
+		log.Printf("Updated latest %q to %q", latest, shaH)
 	}
 }
 
