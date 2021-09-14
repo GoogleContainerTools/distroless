@@ -90,5 +90,6 @@ steps:
     curl -Lo tkn_${_TKN_VERSION}_Linux_arm64.tar.gz  https://github.com/tektoncd/cli/releases/download/v${_TKN_VERSION}/tkn_${_TKN_VERSION}_Linux_x86_64.tar.gz
     tar -xvzf tkn_${_TKN_VERSION}_Linux_arm64.tar.gz -C /usr/local/bin/ tkn
 
-    # Start provenance task
-    tkn task start -f=provenance/provenance-task.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults
+    # Start provenance pipeline
+    kubectl apply -f provenance
+    tkn pipeline start -f=provenance/provenance-pipeline.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults --workspace name=workarea,volumeClaimTemplateFile=provenance/tekton/workspace-template.yaml

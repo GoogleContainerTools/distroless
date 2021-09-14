@@ -18,8 +18,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-
-	"github.com/distroless/cacerts/jksutil"
 )
 
 func init() {
@@ -33,11 +31,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	certs, err := jksutil.ParsePEMCertificates(pemCerts)
+	certs, err := ParsePEMCertificates(pemCerts)
 	if err != nil {
 		panic(err)
 	}
-	keyStore, err := jksutil.WithDefaultPassword(certs)
+	keyStore, err := WithDefaultPassword(certs)
 	if err != nil {
 		panic(err)
 	}
