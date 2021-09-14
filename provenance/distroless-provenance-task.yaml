@@ -16,7 +16,7 @@ spec:
   - name: source
     mountPath: /go/src/github.com/GoogleContainerTools/distroless
   steps:
-    - name: crane
+    - name: provenance
       image: golang:1.16
       workingDir: $(workspaces.source.path)
       env:
