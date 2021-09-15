@@ -12,6 +12,10 @@ spec:
   params:
     - name: MANIFEST_SUBSECTION
       type: string
+    - name: CHAINS-GIT_COMMIT
+      type: string
+    - name: CHAINS-GIT_URL
+      type: string
   workspaces:
   - name: source
     mountPath: /go/src/github.com/GoogleContainerTools/distroless
