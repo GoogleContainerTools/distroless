@@ -6,11 +6,9 @@ set -o xtrace
 
 cosign version
 
-# Get all images from 'images' file
+# Sign all images from 'images' file
 
-while IFS= read -r line; do
-  cosign sign "$@" $line
-done < images
+cosign sign "$@" $(cat images)
 
 # Sign 'latest' images with cosign
 for distro_suffix in "" -debian10 -debian11; do
