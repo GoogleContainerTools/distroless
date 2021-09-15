@@ -12,9 +12,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        # https://github.com/puppetlabs/peter-evans-create-pull-request/blob/master/docs/concepts-guidelines.md#push-using-ssh-deploy-keys
-        ssh-key: ${{ secrets.ACTIONS_KEY }}
         
     - name: Setup Bazel
       uses: abhinavsingh/setup-bazel@1fe920bf5df3791aab606c06a3608f4bb600c4f2
@@ -27,6 +24,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@7380612b49221684fefa025244f2ef4008ae50ad
       with:
+        github_token: ${{ secrets.ACTIONS_TOKEN }}
         commit-message: "Bumping packages to latest stable versions"
         title: "Bumping packages to latest stable versions"
         body: "Bumping packages to latest stable versions"
