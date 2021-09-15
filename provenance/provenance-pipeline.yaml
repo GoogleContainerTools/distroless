@@ -50,6 +50,10 @@ spec:
     params:
     - name: MANIFEST_SUBSECTION
       value: "0"
+    - name: CHAINS-GIT_COMMIT
+      value: $(params.CHAINS-GIT_COMMIT)
+    - name: CHAINS-GIT_URL
+      value: $(params.CHAINS-GIT_URL)
     workspaces:
     - name: source
       workspace: workarea
@@ -61,6 +65,10 @@ spec:
     params:
     - name: MANIFEST_SUBSECTION
       value: "1"
+    - name: CHAINS-GIT_COMMIT
+      value: $(params.CHAINS-GIT_COMMIT)
+    - name: CHAINS-GIT_URL
+      value: $(params.CHAINS-GIT_URL)
     workspaces:
     - name: source
       workspace: workarea
@@ -72,6 +80,10 @@ spec:
     params:
     - name: MANIFEST_SUBSECTION
       value: "2"
+    - name: CHAINS-GIT_COMMIT
+      value: $(params.CHAINS-GIT_COMMIT)
+    - name: CHAINS-GIT_URL
+      value: $(params.CHAINS-GIT_URL)
     workspaces:
     - name: source
       workspace: workarea
@@ -83,6 +95,10 @@ spec:
     params:
     - name: MANIFEST_SUBSECTION
       value: "3"
+    - name: CHAINS-GIT_COMMIT
+      value: $(params.CHAINS-GIT_COMMIT)
+    - name: CHAINS-GIT_URL
+      value: $(params.CHAINS-GIT_URL)
     workspaces:
     - name: source
       workspace: workarea
@@ -94,6 +110,10 @@ spec:
     params:
     - name: MANIFEST_SUBSECTION
       value: "4"
+    - name: CHAINS-GIT_COMMIT
+      value: $(params.CHAINS-GIT_COMMIT)
+    - name: CHAINS-GIT_URL
+      value: $(params.CHAINS-GIT_URL)
     workspaces:
     - name: source
       workspace: workarea
@@ -105,6 +125,10 @@ spec:
     params:
     - name: MANIFEST_SUBSECTION
       value: "5"
+    - name: CHAINS-GIT_COMMIT
+      value: $(params.CHAINS-GIT_COMMIT)
+    - name: CHAINS-GIT_URL
+      value: $(params.CHAINS-GIT_URL)
     workspaces:
     - name: source
       workspace: workarea
@@ -116,6 +140,10 @@ spec:
     params:
     - name: MANIFEST_SUBSECTION
       value: "6"
+    - name: CHAINS-GIT_COMMIT
+      value: $(params.CHAINS-GIT_COMMIT)
+    - name: CHAINS-GIT_URL
+      value: $(params.CHAINS-GIT_URL)
     workspaces:
     - name: source
       workspace: workarea
@@ -127,6 +155,10 @@ spec:
     params:
     - name: MANIFEST_SUBSECTION
       value: "7"
+    - name: CHAINS-GIT_COMMIT
+      value: $(params.CHAINS-GIT_COMMIT)
+    - name: CHAINS-GIT_URL
+      value: $(params.CHAINS-GIT_URL)
     workspaces:
     - name: source
       workspace: workarea
