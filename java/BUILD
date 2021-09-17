@@ -181,3 +181,26 @@ RULE_NAMES = [
     )
     for rule_name in RULE_NAMES
 ]
+
+[
+    java_image(
+        name = "check_libharfbuzz_" + rule_name,
+        srcs = ["testdata/CheckLibharfbuzz.java"],
+        base = "//java:" + rule_name,
+        main_class = "testdata.CheckLibharfbuzz",
+    )
+    for rule_name in RULE_NAMES
+]
+
+[
+    container_test(
+        name = "check_libharfbuzz_" + rule_name + "_test",
+        configs = ["testdata/" + rule_name + "_libharfbuzz.yaml"],
+        image = ":check_libharfbuzz_" + rule_name,
+        tags = [
+            "amd64",
+            "manual",
+        ],
+    )
+    for rule_name in RULE_NAMES
+]
