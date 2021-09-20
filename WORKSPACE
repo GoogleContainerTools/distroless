@@ -206,15 +206,6 @@ http_archive(
 # Node (https://nodejs.org/en/about/releases/)
 # Follow Node's maintainence schedule and support all LTS versions that are not end of life
 http_archive(
-    name = "nodejs10_amd64",
-    build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "7a70083a73719a3c7846533923d5c4e955405c2b4ba1c1abd95ed21ae8b52775",
-    strip_prefix = "node-v10.24.1-linux-x64/",
-    type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v10.24.1/node-v10.24.1-linux-x64.tar.gz"],
-)
-
-http_archive(
     name = "nodejs12_amd64",
     build_file = "//nodejs:BUILD.nodejs",
     sha256 = "6e5ce9cc7dcd31b182730cd662b1813c201fa98089e1013db4abd141716852dc",
@@ -239,15 +230,6 @@ http_archive(
     strip_prefix = "node-v16.9.1-linux-x64/",
     type = "tar.gz",
     urls = ["https://nodejs.org/dist/v16.9.1/node-v16.9.1-linux-x64.tar.gz"],
-)
-
-http_archive(
-    name = "nodejs10_arm64",
-    build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "0ae4931d0ea779ecb237c1fc9f4a27271b0054b1efabc783863478913fe6caa6",
-    strip_prefix = "node-v10.24.1-linux-arm64/",
-    type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v10.24.1/node-v10.24.1-linux-arm64.tar.gz"],
 )
 
 http_archive(
