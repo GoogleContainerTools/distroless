@@ -10,7 +10,7 @@ BASE_ARCHITECTURES = ["amd64", "arm64"]
 # - ppc64le doesn't have stretch security-channel.
 #   https://github.com/GoogleContainerTools/distroless/pull/637#issuecomment-728139611
 # - arm needs someone with available hardware to generate:
-#   //experimental/python2.7/ld.so.arm.cache
+#   //experimental/python3/ld.so.arm.cache
 ARCHITECTURES = BASE_ARCHITECTURES + ["arm", "s390x", "ppc64le"]
 
 VERSIONS = [
@@ -20,7 +20,7 @@ VERSIONS = [
 
 DEBIAN_SNAPSHOT = "20210920T144924Z"
 
-DEBIAN_SECURITY_SNAPSHOT = "20210919T121416Z"
+DEBIAN_SECURITY_SNAPSHOT = "20210920T191155Z"
 
 SHA256s = {
     "amd64": {
@@ -32,7 +32,7 @@ SHA256s = {
         "debian11": {
             "main": "2dd487cd20eabf2aaecb3371d26543cfaec0cc7e7dd0846f2aee6b79574374ad",
             "updates": "9d9184580240eb92ae0af4929191c180d13364f2d3f5258d79ae48d9f5f9f9ae",
-            "security": "3a356284b209dfd2c16a5d50cb20329744844134d6cf4662039f26e9f44b3cec",
+            "security": "2272f2683c4b7212d4ca5a48c6e7bde30ffe97f83f364f88e67feacadc661044",
         },
     },
     "arm": {
@@ -44,7 +44,7 @@ SHA256s = {
         "debian11": {
             "main": "d9dc9d75483fccd9f6f47d6baf1cf3bae166eb8d706de87241fee649d165c0bd",
             "updates": "db4b24472c1ba2db9375a3f49e6421775483582a17d654db72eba3bf4d502f6c",
-            "security": "0f6fd5a86be85b4c9b023d61ab5b3d11da524e5917e46787f8b9dcd1cf7eaac4",
+            "security": "aa46fd9ebbede7f7bb38f70ea0920046f6786c29d77d0c19a449fc1f33093aaa",
         },
     },
     "arm64": {
@@ -56,7 +56,7 @@ SHA256s = {
         "debian11": {
             "main": "75d91cc94e87500c63d2808d440ec5197560ba45c5b80e5564c6d60e8ef95140",
             "updates": "5cfc5140dff68cf017e526d90ac8ec5144b0f6eef057c3d81164163326febd77",
-            "security": "4e7af4867a9af7dee9c8fae1a9ac875a93ce9580bd42175b3e7e740990e379fd",
+            "security": "6c6f37544c28620fb75261adb8463e6c061306b17f4c9c681286d0cc55e8f732",
         },
     },
     "s390x": {
@@ -68,7 +68,7 @@ SHA256s = {
         "debian11": {
             "main": "0d738ded499cb12ddda2055e225ddeec3f5ec4e002b90af367dd526f71d74716",
             "updates": "139b3cc7e0dd5ea3d7f9daf5e637553018f2f0a3d60a64697141d25ce8083c14",
-            "security": "73e2d17a771a2f121b3eaea6115428ba5cdbffbe58c49b9dcebd87d641cd6675",
+            "security": "a84d24fc75925e1a2e99e3fe391939225261b3780d98dff3026b67cce717b8fb",
         },
     },
     "ppc64le": {
@@ -80,7 +80,7 @@ SHA256s = {
         "debian11": {
             "main": "af2cfa07996e2e5fb8dbb6e904b7f0910fcca79aee7bc25eed21ee0485fd9188",
             "updates": "f8b507c08fd49cbaec15916d1de4edd139a28e57ad718143c8f3656b6b551192",
-            "security": "f18ace5e76e8f549c4546ffdcae73be768f0ca5e9f6fac1933da273af207ea90",
+            "security": "05165e7e63b4fc143fb533865c16def5662b316fbd1f9ffe8c1840a87aa17f83",
         },
     },
 }

@@ -53,7 +53,7 @@ DISTRO_VERSION = {
             "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
         },
         tars = [
-            "//experimental/python2.7:ld_so_" + arch + "_cache.tar",
+            "ld_so_" + arch + "_cache.tar",
         ],
     )
     for mode in [
@@ -79,6 +79,65 @@ DISTRO_VERSION = {
     ]
     for arch in ARCHITECTURES
     for distro_suffix in DISTRO_SUFFIXES
+]
+
+[
+    genrule(
+        name = "ld_so_cache_" + arch + "_tar",
+        srcs = [":ld.so." + arch + ".cache"],
+        outs = ["ld_so_" + arch + "_cache.tar"],
+        cmd = "$(location :make_ld_so_cache_tar.py) $(SRCS) $(OUTS)",
+        tools = [":make_ld_so_cache_tar.py"],
+    )
+    for arch in ARCHITECTURES
+]
+
+[
+    sh_binary(
+        name = "generate_ldconfig_" + arch + "_cache",
+        srcs = ["generate_ldconfig_cache.py"],
+        data = [":python3_root_" + arch + "_debian10"],
+        tags = [
+            "manual",
+            arch,
+        ],
+    )
+    for arch in ARCHITECTURES
+]
+
+[
+    genrule(
+        name = "ld_so_cache_" + arch + "_new",
+        srcs = [":python3_root_" + arch + "_debian10"],
+        outs = ["ld.so.cache." + arch + ".new"],
+        cmd = "$(location :generate_ldconfig_" + arch + "_cache) " + arch + " $(OUTS)",
+        tags = [
+            "manual",
+            arch,
+        ],
+        tools = [":generate_ldconfig_" + arch + "_cache"],
+    )
+    for arch in ARCHITECTURES
+]
+
+[
+    sh_test(
+        name = "check_ld_so_" + arch + "_cache",
+        srcs = ["check_ld_so_cache.py"],
+        args = [
+            "$(location :ld.so." + arch + ".cache)",
+            "$(location :ld.so.cache." + arch + ".new)",
+        ],
+        data = [
+            ":ld.so." + arch + ".cache",
+            ":ld.so.cache." + arch + ".new",
+        ],
+        tags = [
+            "manual",
+            arch,
+        ],
+    )
+    for arch in ARCHITECTURES
 ]
 
 [

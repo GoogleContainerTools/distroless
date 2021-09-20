@@ -125,25 +125,6 @@ PYTHON3.update({
     for distro in DISTROS
 })
 
-PYTHON27 = {
-    "{REGISTRY}/{PROJECT_ID}/python2.7:" + tag_base + "-" + arch: "//experimental/python2.7:" + label + "_" + arch + "_debian10"
-    for arch in BASE_ARCHITECTURES
-    for (tag_base, label) in [
-        ("latest", "python27"),
-        ("debug", "debug"),
-    ]
-}
-
-PYTHON27.update({
-    "{REGISTRY}/{PROJECT_ID}/python2.7-" + distro + ":" + tag_base + "-" + arch: "//experimental/python2.7:" + label + "_" + arch + "_" + distro
-    for arch in BASE_ARCHITECTURES
-    for (tag_base, label) in [
-        ("latest", "python27"),
-        ("debug", "debug"),
-    ]
-    for distro in DISTROS
-})
-
 NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs:latest-amd64": "//nodejs:nodejs14_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/nodejs:latest-arm64": "//nodejs:nodejs14_arm64_debian10",
@@ -225,8 +206,6 @@ ALL.update(BASE)
 ALL.update(CC)
 
 ALL.update(PYTHON3)
-
-ALL.update(PYTHON27)
 
 ALL.update(NODEJS)
 
