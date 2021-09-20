@@ -1,21 +1,17 @@
 schemaVersion: "2.0.0"
 commandTests:
-  - name: jetty
-    command: "/usr/bin/java"
-    args: ["-jar", "/jetty/start.jar", "--version"]
-    expectedOutput: ['.*Jetty Server Classpath:.*']
   - name: java
-    command: "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
+    command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "1\.8.*"']
+    expectedError: ['openjdk version "11\.0\.12"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "1\.8.*"']
+    expectedError: ['openjdk version "11\.0\.12"']
   - name: javac
-    command: "/usr/lib/jvm/java-8-openjdk-amd64/bin/javac"
+    command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
     args: ["-version"]
-    expectedError: ['javac 1\.8.*']
+    expectedOutput: ['javac 11\.0\.12']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
@@ -26,3 +22,7 @@ fileExistenceTests:
   - name: no-shell
     path: "/bin/sh"
     shouldExist: false
+metadataTest:
+  env:
+    - key: 'JAVA_VERSION'
+      value: '11.0.12'

@@ -113,6 +113,26 @@ load(
             "libgcc-s1",
             "libgomp1",
             "libstdc++6",
+
+            #java
+            "zlib1g",
+            "libjpeg62-turbo",
+            "libpng16-16",
+            "liblcms2-2",
+            "libexpat1",
+            "libfreetype6",
+            "fonts-dejavu-core",
+            "fontconfig-config",
+            "libfontconfig1",
+            "libuuid1",
+            "openjdk-11-jre-headless",
+            "openjdk-11-jdk-headless",
+            "libc-bin",
+            "libgraphite2-3",
+            "libharfbuzz0b",
+            "libglib2.0-0",
+            "libpcre3",
+            "libbrotli1",
         ],
         sources = [
             "@" + arch + "_debian11_security//file:Packages.json",
@@ -197,10 +217,10 @@ load(
 http_archive(
     name = "jetty",
     build_file = "//java:BUILD.jetty",
-    sha256 = "1b9ec532cd9b94550fad655e066a1f9cc2d350a1c79daea85d5c56fdbcd9aaa8",
-    strip_prefix = "jetty-distribution-9.4.22.v20191022/",
+    sha256 = "01fae654b09932e446019aa859e7af6e05e27dbade12b54cd7bae3249fc723d9",
+    strip_prefix = "jetty-distribution-9.4.43.v20210629/",
     type = "tar.gz",
-    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.22.v20191022/jetty-distribution-9.4.22.v20191022.tar.gz"],
+    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.43.v20210629/jetty-distribution-9.4.43.v20210629.tar.gz"],
 )
 
 # Node (https://nodejs.org/en/about/releases/)

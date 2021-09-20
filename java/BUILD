@@ -5,17 +5,28 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 load("@package_bundle_amd64_debian10//file:packages.bzl", versions_amd64_debian10 = "versions")
+load("@package_bundle_amd64_debian11//file:packages.bzl", versions_amd64_debian11 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 
 DISTRO_VERSIONS = {
     "_debian10": versions_amd64_debian10,
+    "_debian11": versions_amd64_debian11,
 }
 
 USERS = [
     "root",
     "nonroot",
 ]
+
+EXTRA_DEBS = {
+    "_debian10": [],
+    "_debian11": [
+        "libbrotli1",
+    ],
+}
+
+JAVA_DISTRO_SUFFIXES = DISTRO_SUFFIXES + ["_debian11"]
 
 [
     container_image(
@@ -36,7 +47,7 @@ USERS = [
             DISTRO_PACKAGES["amd64"][distro_suffix]["libharfbuzz0b"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libglib2.0-0"],
             DISTRO_PACKAGES["amd64"][distro_suffix]["libpcre3"],
-        ],
+        ] + [DISTRO_PACKAGES["amd64"][distro_suffix][deb] for deb in EXTRA_DEBS[distro_suffix]],
         env = {"LANG": "C.UTF-8"},
         tars = [
             "//cacerts:cacerts_java_amd64" + distro_suffix,
@@ -48,7 +59,7 @@ USERS = [
         "_debug",
     ]
     for user in USERS
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro_suffix in JAVA_DISTRO_SUFFIXES
 ]
 
 [
@@ -65,15 +76,13 @@ USERS = [
         env = {"JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]])},
         symlinks = {"/usr/bin/java": java_executable_path},
     )
-    for (distro_suffix, rule_name, java_debs, java_executable_path) in [
+    for (rule_name, java_debs, java_executable_path) in [
         (
-            "_debian10",
             "java11",
             ["openjdk-11-jre-headless"],
             "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
         ),
         (
-            "_debian10",
             "java11_debug",
             [
                 "openjdk-11-jre-headless",
@@ -83,6 +92,7 @@ USERS = [
         ),
     ]
     for user in USERS
+    for distro_suffix in JAVA_DISTRO_SUFFIXES
 ]
 
 [
@@ -100,7 +110,7 @@ USERS = [
         "_debug",
     ]
     for user in USERS
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro_suffix in JAVA_DISTRO_SUFFIXES
 ]
 
 [
@@ -114,7 +124,7 @@ USERS = [
         ],
     )
     for user in USERS
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro_suffix in JAVA_DISTRO_SUFFIXES
 ]
 
 [
@@ -128,12 +138,14 @@ USERS = [
         ],
     )
     for user in USERS
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro_suffix in JAVA_DISTRO_SUFFIXES
 ]
 
 RULE_NAMES = [
     "java11_root_debian10",
     "java11_nonroot_debian10",
+    "java11_root_debian11",
+    "java11_nonroot_debian11",
 ]
 
 [

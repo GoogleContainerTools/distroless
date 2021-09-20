@@ -15,6 +15,8 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 ) for (rule_name, base_image) in [
     ("jetty_java11_debian10", "//java:java11_root_debian10"),
     ("jetty_java11_debug_debian10", "//java:java11_debug_root_debian10"),
+    ("jetty_java11_debian11", "//java:java11_root_debian11"),
+    ("jetty_java11_debug_debian11", "//java:java11_debug_root_debian11"),
 ]]
 
 [container_test(
@@ -25,7 +27,7 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
         "amd64",
         "manual",
     ],
-) for distro_suffix in DISTRO_SUFFIXES]
+) for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]]
 
 [container_test(
     name = "jetty_java11_debug" + distro_suffix + "_test",
@@ -35,4 +37,4 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
         "amd64",
         "manual",
     ],
-) for distro_suffix in DISTRO_SUFFIXES]
+) for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]]
