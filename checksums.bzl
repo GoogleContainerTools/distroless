@@ -18,69 +18,69 @@ VERSIONS = [
     ("debian11", "bullseye"),
 ]
 
-DEBIAN_SNAPSHOT = "20210917T030649Z"
+DEBIAN_SNAPSHOT = "20210920T144924Z"
 
-DEBIAN_SECURITY_SNAPSHOT = "20210915T205341Z"
+DEBIAN_SECURITY_SNAPSHOT = "20210919T121416Z"
 
 SHA256s = {
     "amd64": {
         "debian10": {
             "main": "3530cbc6c78b6cadda80c10d949f511abd4a7f33d3492ed17d36a7ecc591a5fd",
-            "updates": "d9c9c7624856a0b66caabdc7596d7e1dd98c3795652728f72c153417fa1aa441",
-            "security": "105384496a5d64caf1da9f903c8ac79d8279373626eca55a8915b2ef56436b3a",
+            "updates": "6843a5d699f117b663d3f3264937902ca8d27f72c41a29158eea0f4e14a590c1",
+            "security": "b63d48c0ef1cd77644fa317eac4fe365834aa67e8d9ec1b29cf47bcf80747dc9",
         },
         "debian11": {
             "main": "2dd487cd20eabf2aaecb3371d26543cfaec0cc7e7dd0846f2aee6b79574374ad",
-            "updates": "0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275",
-            "security": "fa9f4ebda926a83241f590ec0e7362860c719d6ec7a3c8d3bf9f5f7d7d169823",
+            "updates": "9d9184580240eb92ae0af4929191c180d13364f2d3f5258d79ae48d9f5f9f9ae",
+            "security": "3a356284b209dfd2c16a5d50cb20329744844134d6cf4662039f26e9f44b3cec",
         },
     },
     "arm": {
         "debian10": {
             "main": "7f51ba4df1837b4f5b299aa46e533fd006e2dc1b07727e7b32fe87bea9a8be5d",
-            "updates": "aee652955e83b5aa1cd4a4b8c48c68f8fce8d22cc7ab07ea51c58e022a10c8a7",
-            "security": "a08435f58400351d572896886b85502179a32485abb77886d60cb1de08eb9e43",
+            "updates": "dc2f8892a23ff27125993d38eed9efecb2dfd8b77ddd3f82483b71a90db2719e",
+            "security": "ef25999e71aaa86c38ec7deffc765b023af8d10260709429f9ede363d4ba76cf",
         },
         "debian11": {
             "main": "d9dc9d75483fccd9f6f47d6baf1cf3bae166eb8d706de87241fee649d165c0bd",
-            "updates": "0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275",
-            "security": "f8a767584ef2a02604aaa7e07dd3b461a1c876b23cb9687f5eae7fafe953bcf8",
+            "updates": "db4b24472c1ba2db9375a3f49e6421775483582a17d654db72eba3bf4d502f6c",
+            "security": "0f6fd5a86be85b4c9b023d61ab5b3d11da524e5917e46787f8b9dcd1cf7eaac4",
         },
     },
     "arm64": {
         "debian10": {
             "main": "cf63979c9d3f7a411f30f62632626552436a583531a5bdcfc051d63fda8af8a3",
-            "updates": "c82c25bcec6b5f2d375e30b8afb8ccf98ef3a2a20dcce1b8e6fa80562bc8195a",
-            "security": "f9044cda7aa49928cc2ab6b486985707460fde2f2b5c1101c80036d7469f9ba8",
+            "updates": "9851dabc9903095a5631f1e6980da1fd88051a01c5408748ba4333b6267e239b",
+            "security": "8a0a3fc23c597d34942f98c91f6c804f35bde2aef4c4fe3bfa8ec4bbfab0e08c",
         },
         "debian11": {
             "main": "75d91cc94e87500c63d2808d440ec5197560ba45c5b80e5564c6d60e8ef95140",
-            "updates": "0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275",
-            "security": "d148281204b817c6e406fadb9395ed040418a616d62cc90215beaea73bd387b4",
+            "updates": "5cfc5140dff68cf017e526d90ac8ec5144b0f6eef057c3d81164163326febd77",
+            "security": "4e7af4867a9af7dee9c8fae1a9ac875a93ce9580bd42175b3e7e740990e379fd",
         },
     },
     "s390x": {
         "debian10": {
             "main": "449258775fd2d7f1a6b30cb5537c25ba9ef88b0b3a41269e61005de6d8a6fb5e",
-            "updates": "ab318a9532ec967f496284120c2450c27a15dfad97ea326c0c1698f39b9e80ad",
-            "security": "9c12ed8a00a8168d14ed58693a4aeb959f66742e2650c8f4ebc8c57a0e0b68b6",
+            "updates": "b2e58f71a61ff5aa01004edfe3a0488d8ffaedb7e40dfdf01d949adb16d6c26b",
+            "security": "4c46c4e0a14b3349102ded8a78a260084dfcb94b46cccc746cc2c41d6964c3d7",
         },
         "debian11": {
             "main": "0d738ded499cb12ddda2055e225ddeec3f5ec4e002b90af367dd526f71d74716",
-            "updates": "0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275",
-            "security": "1136a2ddde23535d8b9c233f2ab4d705c7c0317f940207988d51880acd3c1f65",
+            "updates": "139b3cc7e0dd5ea3d7f9daf5e637553018f2f0a3d60a64697141d25ce8083c14",
+            "security": "73e2d17a771a2f121b3eaea6115428ba5cdbffbe58c49b9dcebd87d641cd6675",
         },
     },
     "ppc64le": {
         "debian10": {
             "main": "2d4499fd08d0e2d73bee40c114198ac93098e8d14530e6f5e19a6838f5774b16",
-            "updates": "f3d29f5654fc1bfdc4f96f4cd02b8a4507b8869da7ee31a354ef856e227633e0",
-            "security": "c261562b72d79ab5a761b4f5c0d314e339c2dc8f03e7932d7dd3d806c689bce2",
+            "updates": "02527ab580bc2e3ea72be997a0b3034d0d26d715ac5c3851ffca0752082f38ad",
+            "security": "706a90b6d841d85e33e03d243de62a978bdae2c9e54a1befa992997390e7c0e4",
         },
         "debian11": {
             "main": "af2cfa07996e2e5fb8dbb6e904b7f0910fcca79aee7bc25eed21ee0485fd9188",
-            "updates": "0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275",
-            "security": "4942e7477efcc120af322668771d5357149a83eb6a79522fa2c41e4bfbb61414",
+            "updates": "f8b507c08fd49cbaec15916d1de4edd139a28e57ad718143c8f3656b6b551192",
+            "security": "f18ace5e76e8f549c4546ffdcae73be768f0ca5e9f6fac1933da273af207ea90",
         },
     },
 }

@@ -1,0 +1,12 @@
+schemaVersion: "1.0.0"
+commandTests:
+  - name: check_encoding
+    command: ["/usr/bin/java",
+              "-cp",
+              "/app/distroless/java/check_encoding_java11_nonroot_debian11.binary.jar:/app/distroless/java/check_encoding_java11_nonroot_debian10.binary",
+              "testdata.CheckEncoding"]
+    expectedOutput: ['LANG=C.UTF-8',
+                     'Locale.getDefault\(\)=en',
+                     'Charset.defaultCharset\(\)=UTF-8',
+                     'file.encoding=UTF-8',
+                     'sun.jnu.encoding=UTF-8']
