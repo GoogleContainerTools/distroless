@@ -1,0 +1,6 @@
+schemaVersion: "2.0.0"
+commandTests:
+  - name: nodejs
+    command: "/nodejs/bin/node" 
+    args: ["/check_certificate.js"]
+    expectedOutput: ['statusCode: 200']
