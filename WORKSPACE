@@ -221,15 +221,6 @@ http_archive(
 # Node (https://nodejs.org/en/about/releases/)
 # Follow Node's maintainence schedule and support all LTS versions that are not end of life
 http_archive(
-    name = "nodejs10_amd64",
-    build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "7a70083a73719a3c7846533923d5c4e955405c2b4ba1c1abd95ed21ae8b52775",
-    strip_prefix = "node-v10.24.1-linux-x64/",
-    type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v10.24.1/node-v10.24.1-linux-x64.tar.gz"],
-)
-
-http_archive(
     name = "nodejs12_amd64",
     build_file = "//nodejs:BUILD.nodejs",
     sha256 = "6e5ce9cc7dcd31b182730cd662b1813c201fa98089e1013db4abd141716852dc",
@@ -248,12 +239,12 @@ http_archive(
 )
 
 http_archive(
-    name = "nodejs10_arm64",
+    name = "nodejs16_amd64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "0ae4931d0ea779ecb237c1fc9f4a27271b0054b1efabc783863478913fe6caa6",
-    strip_prefix = "node-v10.24.1-linux-arm64/",
+    sha256 = "1d48c69e4141792f314d29f081501dc22218cfc22f9992c098f7e3f5e0531139",
+    strip_prefix = "node-v16.9.1-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v10.24.1/node-v10.24.1-linux-arm64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v16.9.1/node-v16.9.1-linux-x64.tar.gz"],
 )
 
 http_archive(
@@ -272,6 +263,15 @@ http_archive(
     strip_prefix = "node-v14.17.6-linux-arm64/",
     type = "tar.gz",
     urls = ["https://nodejs.org/dist/v14.17.6/node-v14.17.6-linux-arm64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs16_arm64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "efad8bf7b7f68addbd47a8268871a10011ff77c31ef33f9d2dadc2ba7939b723",
+    strip_prefix = "node-v16.9.1-linux-arm64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v16.9.1/node-v16.9.1-linux-arm64.tar.gz"],
 )
 
 # For the debug image
