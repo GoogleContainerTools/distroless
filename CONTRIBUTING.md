@@ -15,7 +15,10 @@ Follow either of the two links above to access the appropriate CLA and instructi
 
 Look into `./test.sh` to understand how. Minimally,
 
-1. Build `dpkg_parser.par` first, if not done so: `bazel build //package_manager:dpkg_parser.par` (You may need to provide `--host_force_python=PY2` if you don't have a working version of Python 3.)
+1. Build `dpkg_parser.par` first, if not done so: `bazel build //package_manager:dpkg_parser.par` 
+   - Your Python 3 executable should be called `python`, not `python3`.
+   - You may need to provide `--host_force_python=PY2` if you don't have a working version of Python 3.
+   - If you do not have a `~/.netrc`, you must create an empty `.netrc` file in your home directory.
 
    You don't have to repeat this step unless you cleaned your workspace or want to generate a new version of `dpkg_parser.par`.
 1. `bazel build //...`

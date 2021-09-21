@@ -8,7 +8,7 @@ Minimal python library to download Debian packages from a snapshot of a Debian p
 
 `dpkg_src` and `dpkg_list` are [repository rules](https://docs.bazel.build/versions/master/skylark/repository_rules.html), and therefore made to be used in the `WORKSPACE`.
 
-First, set up the package source with `dpkg_src` rule.  This example uses a snapshot of debian stretch from November 1st 2017.  The rule outputs a `file:Packages.json` which contains a parsed and formatted `Packages.gz` for `dpkg_list` to consume.
+First, set up the package source with `dpkg_src` rule.  This example uses a snapshot of debian stretch from November 1st 2017.  The rule outputs a `file:Packages.json` which contains a parsed and formatted `Packages.xz`(*not* `Packages.gz`) for `dpkg_list` to consume.
 
 ```python
 dpkg_src(
@@ -21,15 +21,15 @@ dpkg_src(
 )
 ```
 
-You can also set up the package source using the full url for the `Packages.gz` file. The `package_prefix` is used to
-prepend to the value of `Filename` in the `Packages.gz` file. In the following example, if the value of `Filename` is
-`pool/jdk1.8/b/bazel/bazel_0.7.0_amd64.deb`, then the `.deb` artifact will later be downloaded from
-`http://storage.googleapis.com/bazel-apt/pool/jdk1.8/b/bazel/bazel_0.7.0_amd64.deb`.
+You can also set up the package source using the full url for the `Packages.xz` or `Packages.gz` file.
+The `package_prefix` is used to prepend to the value of `Filename` in the archive. In the following
+example, if the value of `Filename` is `pool/jdk1.8/b/bazel/bazel_0.7.0_amd64.deb`, then the `.deb` artifact
+will later be downloaded from `http://storage.googleapis.com/bazel-apt/pool/jdk1.8/b/bazel/bazel_0.7.0_amd64.deb`.
 
 ```python
 dpkg_src(
     name = "bazel_apt",
-    packages_gz_url = "http://storage.googleapis.com/bazel-apt/dists/stable/jdk1.8/binary-amd64/Packages.gz",
+    packages_url = "http://storage.googleapis.com/bazel-apt/dists/stable/jdk1.8/binary-amd64/Packages.gz",
     package_prefix = "http://storage.googleapis.com/bazel-apt/",
     sha256 = "0fc4c6988ebf24705cfab0050cb5ad58e5b2aeb0e8cfb8921898a1809042416c",
 )
@@ -55,16 +55,16 @@ dpkg_list(
 Finally, in a `BUILD` file, you can access the `.deb` files for rules that might require them.  We reference the package map from the previous `dpkg_list` rule and access the packages.  
 
 ```python
-load("@package_bundle_amd64_debian9//file:packages.bzl", packages_amd64_debian9 = "packages")
+load("@package_bundle_amd64_debian10//file:packages.bzl", packages_amd64_debian10 = "packages")
 
 container_image(
     name = "python27",
     base = "//base:base",
     debs = [
-        packages_amd64_debian9["zlib1g"],
-        packages_amd64_debian9["python2.7-minimal"],
-        packages_amd64_debian9["libpython2.7-minimal"],
-        packages_amd64_debian9["libpython2.7-stdlib"],
+        packages_amd64_debian10["zlib1g"],
+        packages_amd64_debian10["python2.7-minimal"],
+        packages_amd64_debian10["libpython2.7-minimal"],
+        packages_amd64_debian10["libpython2.7-stdlib"],
     ],
     entrypoint = [
         "/usr/bin/python2.7",
@@ -77,17 +77,17 @@ container_image(
 
 # Reference
 
-## dpkg_src
+## `dpkg_src`
 
 ```python
-dpkg_src(name, url, arch, distro, snapshot, packages_gz_url, package_prefix, sha256, dpkg_parser)
+dpkg_src(name, url, arch, distro, snapshot, packages_url, package_prefix, sha256, dpkg_parser)
 ```
 
-A rule that downloads a `Packages.gz` snapshot file and parses it into a readable format for `dpkg_list`.
-It supports snapshots from [http://snapshot.debian.org/](http://snapshot.debian.org/). (You can find out more about the format and sources available there.)
-It also supports retrieving `Packages.gz` file from a given full url.
+A rule that downloads a `Packages.xz` snapshot file and parses it into a readable format for `dpkg_list`.
+It supports snapshots from [http://snapshot.debian.org/](http://snapshot.debian.org/) using `Packages.xz`. (You can find out more about the format and sources available there.)
+It also supports retrieving `Packages.xz` or `Packages.gz` file from a given full url.
 
-Either a set of {`url`, `arch`, `distro`, `snapshot`} or a set of {`packages_gz_url`, `package_prefix`} must be set.
+Either a set of {`url`, `arch`, `distro`, `snapshot`} or a set of {`packages_url`, `package_prefix`} must be set.
 
 <table class="table table-condensed table-bordered table-params">
   <colgroup>
@@ -110,7 +110,7 @@ Either a set of {`url`, `arch`, `distro`, `snapshot`} or a set of {`packages_gz_
       <td><code>url</code></td>
       <td>
         <p><code>the base url of the package repository</code></p>
-        <p>The url that hosts snapshots of Packages.gz files.</p>
+        <p>The url that hosts snapshots of Packages.xz files.</p>
       </td>
     </tr>
     <tr>
@@ -129,33 +129,33 @@ Either a set of {`url`, `arch`, `distro`, `snapshot`} or a set of {`packages_gz_
     <tr>
       <td><code>snapshot</code></td>
       <td>
-        <p><code>the snapshot date of the Packages.gz</code></p>
+        <p><code>the snapshot date of the Packages.xz</code></p>
         <p>Format: YYYYMMDDTHHMMSSZ.  You can query a list of possible dates for snapshot.debian.org at <a href=
         'http://snapshot.debian.org/archive/debian/?year=2009;month=10'>http://snapshot.debian.org/archive/debian/?year=2009;month=10</a>
       </td>
     </tr>
     <tr>
-      <td><code>packages_gz_url</code></td>
+      <td><code>packages_url</code></td>
       <td>
-        <p><code>the full url for the Packages.gz file</code></p>
+        <p><code>the full url for the Packages.xz or Packages.gz file</code></p>
       </td>
     </tr>
     <tr>
       <td><code>package_prefix</code></td>
       <td>
-        <p><code>the prefix to prepend to the value of Filename in the Packages.gz file</code></p>
+        <p><code>the prefix to prepend to the value of Filename in the Packages file</code></p>
       </td>
     </tr>
     <tr>
       <td><code>sha256</code></td>
       <td>
-        <p><code>the sha256 of the Packages.gz file, required</code></p>
+        <p><code>the sha256 of the Packages file, required</code></p>
       </td>
     </tr>
     <tr>
       <td><code>dpkg_parser</code></td>
       <td>
-        <p><code>A binary that translates a Packages.gz file into a format readable by dpkg_list, required</code></p>
+        <p><code>A binary that translates a Packages file into a format readable by dpkg_list, required</code></p>
       </td>
     </tr>
   </tbody>
@@ -169,7 +169,7 @@ dpkg_list(name, packages, sources)
 
 A rule that downloads `.deb` packages and makes them available in the WORKSPACE.
 
-For a `dpkg_list` rule named `package_bundle`, packages can be used by loading `load("@package_bundle_amd64_debian9//file:packages.bzl", "packages")` into your `BUILD` file, then referencing the package with `packages['packagename']`
+For a `dpkg_list` rule named `package_bundle`, packages can be used by loading `load("@package_bundle_amd64_debian10//file:packages.bzl", "packages")` into your `BUILD` file, then referencing the package with `packages['packagename']`
 
 <table class="table table-condensed table-bordered table-params">
   <colgroup>

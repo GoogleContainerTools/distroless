@@ -1,5 +1,6 @@
 load("@subpar//:subpar.bzl", "par_binary")
 
+# Requires python3 for lzma system library
 par_binary(
     name = "dpkg_parser",
     srcs = [
@@ -8,9 +9,10 @@ par_binary(
     ],
     compiler_args = [
         "--interpreter",
-        "/usr/bin/env python",
+        "/usr/bin/env python3",
     ],
     main = "dpkg_parser.py",
+    python_version = "PY3",
     deps = [
         ":parse_metadata",
         ":util",

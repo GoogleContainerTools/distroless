@@ -1,5 +1,0 @@
-schemaVersion: "1.0.0"
-commandTests:
-  - name: version
-    command: ["/usr/bin/python2.7", "--version"]
-    expectedError: ["Python 2.7.13"]

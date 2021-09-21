@@ -9,6 +9,7 @@ steps:
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
   entrypoint: sh
   args:
   - -c
@@ -17,27 +18,78 @@ steps:
     set -o errexit
     set -o xtrace
 
-    bazel build --host_force_python=PY2 //package_manager:dpkg_parser.par
+    # Make sure python points to python3
+    # perhaps the gcr.io/cloud-marketplace-containers/google/bazel image
+    # should be doing this though
+    update-alternatives --install /usr/bin/python python /usr/bin/python3 0
+
+    bazel build //package_manager:dpkg_parser.par
 
     # Optional: trigger building package bundles without concurrency to avoid
     # flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_amd64_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_arm64_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_s390x_debian10//file:packages.bzl
-    bazel build --jobs=1 --host_force_python=PY2 @package_bundle_ppc64le_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_amd64_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm64_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_s390x_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_ppc64le_debian10//file:packages.bzl
 
-    bazel run --host_force_python=PY2 //:publish
+    bazel build --jobs=1 @package_bundle_amd64_debian11//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm_debian11//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm64_debian11//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_s390x_debian11//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_ppc64le_debian11//file:packages.bzl
+
+    bazel run //:publish
+    bazel build all.tar
 
 - name: docker
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
   entrypoint: ./cloudbuild_docker.sh
-- name: gcr.io/projectsigstore/cosign/ci/cosign:v0.2.0@sha256:b9e72eb217dd93d2144b8143d8c9812e62b32903e790b325116641e89df03e5f
+
+- name: ubuntu
+  entrypoint: ./cloudbuild_jq.sh
+
+- name: gcr.io/projectsigstore/cosign/ci/cosign:3f83940d3f3d97075d606af1e0793051cc6fc19b@sha256:f2d226d35e0fc91bcb207ddffc2b0143b3c6377687a4bc474f2f30a849a7aef3
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
   entrypoint: sh
   args:
-  - ./cloudbuild_cosign.sh 
+  - -c
+  - ./cloudbuild_cosign.sh -key $_KMS_VAL
+
+- name: gcr.io/projectsigstore/cosign/ci/cosign:3f83940d3f3d97075d606af1e0793051cc6fc19b@sha256:f2d226d35e0fc91bcb207ddffc2b0143b3c6377687a4bc474f2f30a849a7aef3
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
+  - COSIGN_EXPERIMENTAL=true
+  - GOOGLE_SERVICE_ACCOUNT_NAME=keyless@${PROJECT_ID}.iam.gserviceaccount.com
+  entrypoint: sh
+  args:
+  - -c
+  - ./cloudbuild_cosign.sh
+
+# Start task in k8s to generate provenance
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
+
+    gcloud container clusters get-credentials provenance --zone=us-central1-c --project=${PROJECT_ID}
+    
+    # Install tkn
+    curl -Lo tkn_${_TKN_VERSION}_Linux_arm64.tar.gz  https://github.com/tektoncd/cli/releases/download/v${_TKN_VERSION}/tkn_${_TKN_VERSION}_Linux_x86_64.tar.gz
+    tar -xvzf tkn_${_TKN_VERSION}_Linux_arm64.tar.gz -C /usr/local/bin/ tkn
+
+    # Start provenance pipeline
+    kubectl apply -f provenance
+    tkn pipeline start -f=provenance/provenance-pipeline.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults --workspace name=workarea,volumeClaimTemplateFile=provenance/tekton/workspace-template.yaml

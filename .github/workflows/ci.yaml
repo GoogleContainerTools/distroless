@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  workflow_dispatch: # Allow manual runs.
+  pull_request:
+    branches: [ 'main' ]
+  push:
+    branches: [ 'main' ]
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: bazelbuild/setup-bazelisk@v1
+    - name: Mount bazel cache
+      uses: actions/cache@v2
+      with:
+        path: "~/.cache/bazel"
+        key: bazel
+
+    - name: Build and test
+      run: |
+        set -ex
+        bazel build --curses=no //package_manager:dpkg_parser.par
+        bazel build --curses=no //...
+        bazel test --curses=no --test_output=errors //...
+        # Ignore java8 and experimental targets, which might not pass.
+        # TODO: Fix or remove these exceptions.
+        targets=$(bazel query 'attr("tags", "'amd64'", "//...")' | grep -v java8 | grep -v experimental)
+        bazel build --curses=no ${targets}
+        bazel test --curses=no --test_output=errors ${targets}

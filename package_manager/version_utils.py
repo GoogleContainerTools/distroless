@@ -27,11 +27,11 @@ def get_epoch(version_str):
 
     try:
         epoch = int(version_str[0:e_index])
-    except ValueError:
+    except ValueError as value_error:
         raise Exception(
             'Corrupt dpkg version %s: epochs can only be ints, and '
             'epochless versions cannot use the colon character.' %
-            version_str)
+            version_str) from value_error
 
     return epoch, version_str[e_index + 1:]
 

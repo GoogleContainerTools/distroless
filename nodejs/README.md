@@ -6,9 +6,9 @@ These images contain a minimal Linux, Node.js-based runtime. The supported versi
 
 Specifically, these images contain everything in the [base image](../base/README.md), plus one of:
 
-- Node.js v10 (`gcr.io/distroless/nodejs:10`) and its dependencies.
 - Node.js v12 (`gcr.io/distroless/nodejs:12`) and its dependencies.
 - Node.js v14 (`gcr.io/distroless/nodejs:14`) and its dependencies.
+- Node.js v16 (`gcr.io/distroless/nodejs:16`) and its dependencies.
 
 **Note:** the `latest` tag maps to Node.js v14 to follow the official node docker images. However we recommend that users of these images should explicitly set the LTS version tag they wish to use.
 

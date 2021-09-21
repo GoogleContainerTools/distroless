@@ -1,6 +1,6 @@
 # "Distroless" Docker Images
 
-[![Build Status](https://travis-ci.org/GoogleContainerTools/distroless.svg?branch=master)](https://travis-ci.org/GoogleContainerTools/distroless)
+[![CI Build Status](https://github.com/GoogleContainerTools/distroless/actions/workflows/ci.yaml/badge.svg)](https://github.com/GoogleContainerTools/distroless/actions/workflows/ci.yaml)
 
 "Distroless" images contain only your application and its runtime dependencies.
 They do not contain package managers, shells or any other programs you would expect to find in a standard Linux distribution.
@@ -12,6 +12,14 @@ For more information, see this [talk](https://swampup2017.sched.com/event/A6CW/d
 Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google
 and other tech giants that have used containers in production for many years.
 It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
+
+Distroless images are _very small_.
+The smallest distroless image, `gcr.io/distroless/static`, is around 650 kB.
+That's about 25% of the size of `alpine` (~2.5 MB), and less than 1.5% of the size of `debian` (50 MB).
+
+For example, `gcr.io/distroless/static` is a container image that's much smaller than [this image of a shipping container](https://unsplash.com/photos/bukjsECgmeU).
+It's about 1/3rd the size of all the resources on [this page you're reading right now](https://github.com/GoogleContainerTools/distroless).
+It's very small.
 
 ## How do I use distroless images?
 
@@ -68,10 +76,7 @@ Follow these steps to get started:
     * [gcr.io/distroless/nodejs-debian10](nodejs/README.md)
 
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
-    * [gcr.io/distroless/python2.7-debian10](experimental/python2.7/README.md)
     * [gcr.io/distroless/python3-debian10](experimental/python3/README.md)
-    * [gcr.io/distroless/java/jetty-debian10](java/jetty/README.md)
-    * [gcr.io/distroless/dotnet](experimental/dotnet/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 
@@ -101,11 +106,9 @@ Follow these steps to get started:
 You can find other examples here:
 
 * [Java](examples/java/Dockerfile)
-* [Python](examples/python2.7/Dockerfile)
 * [Python 3](examples/python3/Dockerfile)
 * [Golang](examples/go/Dockerfile)
 * [Node.js](examples/nodejs/Dockerfile)
-* [dotnet](examples/dotnet/Dockerfile)
 * [Rust](examples/rust/Dockerfile)
 
 To run any example, go to the directory for the language and run
@@ -116,7 +119,7 @@ docker run -t myapp
 To run the Node.js Express app [node-express](examples/nodejs/node-express) and expose the container's ports:
 
 ```
-npm install #Install express and its transitive dependencies
+npm install # Install express and its transitive dependencies
 docker build -t myexpressapp . # Normal build command
 docker run -p 3000:3000 -t myexpressapp
 ```
@@ -138,11 +141,9 @@ We have some examples on how to run some common application stacks in the /examp
 See here for:
 
 * [Java](examples/java/BUILD)
-* [Python](examples/python2.7/BUILD)
 * [Python 3](examples/python3/BUILD)
 * [Golang](examples/go/BUILD)
 * [Node.js](examples/nodejs/BUILD)
-* [dotnet](examples/dotnet/BUILD)
 
 See here for examples on how to complete some common tasks in your image:
 
@@ -158,11 +159,11 @@ For full documentation on how to use Jib to generate Docker images from Maven an
 
 ### Base Operating System
 
-Originally these images were based on Debian 9 (stretch). We now also provide images based on Debian 10 (buster), and tag images with `-debian9` or `-debian10` suffixes. We recommend referencing the appropriate distribution explicitly, since otherwise your build will break when the next Debian version is released.
+Distroless images are based on Debian 10 (buster). Originally these images were based on Debian 9 (stretch), but those images (anything tagged with `*-debian9`) are deprecated and no longer supported. Images are explicitly tagged with `-debian10` suffixes. Specifying an image without the distribution will currently select `-debian10` images, but that can change in the future to a newer version of Debian. It can be useful to reference the appropriate distribution explicitly, to prevent a breakage when the next Debian version is released.
 
 ### CVE and Patching
 
-Distroless tracks Debian 9 (stretch, oldstable currently) and Debian 10. A commit is needed in this repository to update the snapshot version when security fixes are release. Check https://www.debian.org/security/ for any patches to address security issues and update. Check issues and PRs for the patch and update your builds.
+Distroless tracks Debian 10. A commit is needed in this repository to update the snapshot version when security fixes are release. Check https://www.debian.org/security/ for any patches to address security issues and update. Check issues and PRs for the patch and update your builds.
 
 ### Debug Images
 
@@ -172,13 +173,13 @@ For example:
 
 
 ```
-cd examples/python2.7/
+cd examples/python3/
 ```
 
 edit the ```Dockerfile``` to change the final image to ```:debug```:
 
 ```dockerfile
-FROM gcr.io/distroless/python2.7:debug
+FROM gcr.io/distroless/python3:debug
 COPY . /app
 WORKDIR /app
 CMD ["hello.py", "/etc"]
@@ -200,6 +201,13 @@ BUILD       Dockerfile  hello.py
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
 
+### Who uses Distroless?
+
+- [Kubernetes](https://github.com/kubernetes/enhancements/blob/master/keps/sig-release/1729-rebase-images-to-distroless/README.md), since v1.15
+- [Knative](https://knative.dev)
+- [Tekton](https://tekton.dev)
+
+If your project uses Distroless, send a PR to add your project here!
 
 # Community Discussion
 

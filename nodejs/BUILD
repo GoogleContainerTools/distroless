@@ -4,7 +4,7 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("//base:distro.bzl", "DISTRO_SUFFIXES")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
-NODEJS_MAJOR_VERISONS = ("10", "12", "14")
+NODEJS_MAJOR_VERISONS = ("12", "14", "16")
 
 [
     container_image(
