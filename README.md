@@ -76,7 +76,6 @@ Follow these steps to get started:
     * [gcr.io/distroless/nodejs-debian10](nodejs/README.md)
 
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
-    * [gcr.io/distroless/python2.7-debian10](experimental/python2.7/README.md)
     * [gcr.io/distroless/python3-debian10](experimental/python3/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
@@ -107,7 +106,6 @@ Follow these steps to get started:
 You can find other examples here:
 
 * [Java](examples/java/Dockerfile)
-* [Python](examples/python2.7/Dockerfile)
 * [Python 3](examples/python3/Dockerfile)
 * [Golang](examples/go/Dockerfile)
 * [Node.js](examples/nodejs/Dockerfile)
@@ -143,7 +141,6 @@ We have some examples on how to run some common application stacks in the /examp
 See here for:
 
 * [Java](examples/java/BUILD)
-* [Python](examples/python2.7/BUILD)
 * [Python 3](examples/python3/BUILD)
 * [Golang](examples/go/BUILD)
 * [Node.js](examples/nodejs/BUILD)
@@ -176,13 +173,13 @@ For example:
 
 
 ```
-cd examples/python2.7/
+cd examples/python3/
 ```
 
 edit the ```Dockerfile``` to change the final image to ```:debug```:
 
 ```dockerfile
-FROM gcr.io/distroless/python2.7:debug
+FROM gcr.io/distroless/python3:debug
 COPY . /app
 WORKDIR /app
 CMD ["hello.py", "/etc"]

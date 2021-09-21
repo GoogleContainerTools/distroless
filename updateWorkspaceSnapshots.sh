@@ -49,7 +49,7 @@ BASE_ARCHITECTURES = ["amd64", "arm64"]
 # - ppc64le doesn't have stretch security-channel.
 #   https://github.com/GoogleContainerTools/distroless/pull/637#issuecomment-728139611
 # - arm needs someone with available hardware to generate:
-#   //experimental/python2.7/ld.so.arm.cache
+#   //experimental/python3/ld.so.arm.cache
 ARCHITECTURES = BASE_ARCHITECTURES + ["arm", "s390x", "ppc64le"]
 
 VERSIONS = [

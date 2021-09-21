@@ -187,14 +187,9 @@ load(
             "libglib2.0-0",
             "libpcre3",
 
-            #python
+            #python3
             "dash",
             "libc-bin",
-            "libpython2.7-minimal",
-            "libpython2.7-stdlib",
-            "python2.7-minimal",
-
-            #python3
             "libmpdec2",
             "libpython3.7-minimal",
             "libpython3.7-stdlib",
