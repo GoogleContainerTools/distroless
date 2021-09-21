@@ -144,6 +144,14 @@ NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian10:12-debug": "//nodejs:nodejs12_debug_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian10:14-debug": "//nodejs:nodejs14_debug_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian10:16-debug": "//nodejs:nodejs16_debug_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:latest": "//nodejs:nodejs14_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:debug": "//nodejs:nodejs14_debug_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:12": "//nodejs:nodejs12_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14": "//nodejs:nodejs14_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:16": "//nodejs:nodejs16_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:12-debug": "//nodejs:nodejs12_debug_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14-debug": "//nodejs:nodejs14_debug_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:16-debug": "//nodejs:nodejs16_debug_amd64_debian11",
 }
 
 JAVA = {
