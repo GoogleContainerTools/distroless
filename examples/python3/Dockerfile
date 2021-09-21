@@ -1,5 +1,5 @@
 FROM python:3-slim AS build-env
-ADD . /app
+COPY . /app
 WORKDIR /app
 
 FROM gcr.io/distroless/python3

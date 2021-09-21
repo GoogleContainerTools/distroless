@@ -1,5 +1,5 @@
 FROM node:16 AS build-env
-ADD . /app
+COPY . /app
 WORKDIR /app
 
 RUN npm ci --only=production

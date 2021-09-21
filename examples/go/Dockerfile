@@ -1,7 +1,7 @@
 FROM golang:1.12 as build-env
 
 WORKDIR /go/src/app
-ADD . /go/src/app
+COPY . /go/src/app
 
 RUN go get -d -v ./...
 
