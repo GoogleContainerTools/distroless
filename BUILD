@@ -12,7 +12,7 @@ DISTROS = [
     "debian10",
 ]
 
-# temporarily variable used only in static/base, remove when all builds support debian11
+# temporarily variable used only in static/base/cc, remove when all builds support debian11
 ALL_DISTROS = [
     "debian10",
     "debian11",
@@ -99,7 +99,7 @@ CC.update({
         ("debug", "debug", "root"),
         ("debug-nonroot", "debug", "nonroot"),
     ]
-    for distro in DISTROS
+    for distro in ALL_DISTROS
 })
 
 PYTHON3 = {
