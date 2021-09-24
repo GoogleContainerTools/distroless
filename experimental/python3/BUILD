@@ -6,9 +6,6 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//base:base.bzl", "NONROOT")
 
-# TODO: Use DISTRO_SUFFIXES when debian11 is enabled for all
-PY_DISTRO_SUFFIXES = DISTRO_SUFFIXES + ["_debian11"]
-
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
     "_debian10": [
@@ -81,7 +78,7 @@ DISTRO_VERSION = {
         ":debug",
     ]
     for arch in ARCHITECTURES
-    for distro_suffix in PY_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
@@ -98,7 +95,7 @@ DISTRO_VERSION = {
         ":debug",
     ]
     for arch in ARCHITECTURES
-    for distro_suffix in PY_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
@@ -176,7 +173,7 @@ DISTRO_VERSION = {
         "root",
         "nonroot",
     ]
-    for distro_suffix in PY_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 # tests for version-specific things
@@ -196,5 +193,5 @@ DISTRO_VERSION = {
         "root",
         "nonroot",
     ]
-    for distro_suffix in PY_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]

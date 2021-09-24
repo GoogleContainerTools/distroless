@@ -21,21 +21,21 @@ for distro_suffix in "" -debian10 -debian11; do
   cosign sign "$@" gcr.io/$PROJECT_ID/base${distro_suffix}:latest
   cosign sign "$@" gcr.io/$PROJECT_ID/base${distro_suffix}:debug-nonroot
   cosign sign "$@" gcr.io/$PROJECT_ID/base${distro_suffix}:debug
-done
 
-for distro_suffix in "" -debian10; do
   cosign sign "$@" gcr.io/$PROJECT_ID/cc${distro_suffix}:nonroot
   cosign sign "$@" gcr.io/$PROJECT_ID/cc${distro_suffix}:latest
   cosign sign "$@" gcr.io/$PROJECT_ID/cc${distro_suffix}:debug-nonroot
   cosign sign "$@" gcr.io/$PROJECT_ID/cc${distro_suffix}:debug
 
-  cosign sign "$@" gcr.io/$PROJECT_ID/python2.7${distro_suffix}:latest
-  cosign sign "$@" gcr.io/$PROJECT_ID/python2.7${distro_suffix}:debug
-
   cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffix}:nonroot
   cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffix}:latest
   cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffix}:debug-nonroot
   cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffix}:debug
+
+  cosign sign "$@" gcr.io/$PROJECT_ID/java${distro_suffix}:nonroot
+  cosign sign "$@" gcr.io/$PROJECT_ID/java${distro_suffix}:latest
+  cosign sign "$@" gcr.io/$PROJECT_ID/java${distro_suffix}:debug-nonroot
+  cosign sign "$@" gcr.io/$PROJECT_ID/java${distro_suffix}:debug
 done
 
 cosign sign "$@" gcr.io/$PROJECT_ID/nodejs:latest

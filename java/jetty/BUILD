@@ -27,7 +27,7 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
         "amd64",
         "manual",
     ],
-) for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]]
+) for distro_suffix in DISTRO_SUFFIXES]
 
 [container_test(
     name = "jetty_java11_debug" + distro_suffix + "_test",
@@ -37,4 +37,4 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
         "amd64",
         "manual",
     ],
-) for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]]
+) for distro_suffix in DISTRO_SUFFIXES]

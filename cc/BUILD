@@ -34,5 +34,5 @@ DISTRO_DEBS = {
         "root",
         "nonroot",
     ]
-    for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]
+    for distro_suffix in DISTRO_SUFFIXES
 ]

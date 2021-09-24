@@ -10,11 +10,6 @@ LABEL_USERS = [
 
 DISTROS = [
     "debian10",
-]
-
-# temporarily variable used only in static/base/cc, remove when all builds support debian11
-ALL_DISTROS = [
-    "debian10",
     "debian11",
 ]
 
@@ -43,7 +38,7 @@ STATIC.update({
         ("debug", "static_debug", "root"),
         ("debug-nonroot", "static_debug", "nonroot"),
     ]
-    for distro in ALL_DISTROS
+    for distro in DISTROS
 })
 
 BASE = {
@@ -71,7 +66,7 @@ BASE.update({
         ("debug", "debug", "root"),
         ("debug-nonroot", "debug", "nonroot"),
     ]
-    for distro in ALL_DISTROS
+    for distro in DISTROS
 })
 
 CC = {
@@ -99,7 +94,7 @@ CC.update({
         ("debug", "debug", "root"),
         ("debug-nonroot", "debug", "nonroot"),
     ]
-    for distro in ALL_DISTROS
+    for distro in DISTROS
 })
 
 PYTHON3 = {
