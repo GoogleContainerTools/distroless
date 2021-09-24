@@ -26,8 +26,6 @@ EXTRA_DEBS = {
     ],
 }
 
-JAVA_DISTRO_SUFFIXES = DISTRO_SUFFIXES + ["_debian11"]
-
 [
     container_image(
         name = "java_base" + mode + "_" + user + distro_suffix,
@@ -59,7 +57,7 @@ JAVA_DISTRO_SUFFIXES = DISTRO_SUFFIXES + ["_debian11"]
         "_debug",
     ]
     for user in USERS
-    for distro_suffix in JAVA_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
@@ -92,7 +90,7 @@ JAVA_DISTRO_SUFFIXES = DISTRO_SUFFIXES + ["_debian11"]
         ),
     ]
     for user in USERS
-    for distro_suffix in JAVA_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
@@ -110,7 +108,7 @@ JAVA_DISTRO_SUFFIXES = DISTRO_SUFFIXES + ["_debian11"]
         "_debug",
     ]
     for user in USERS
-    for distro_suffix in JAVA_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
@@ -124,7 +122,7 @@ JAVA_DISTRO_SUFFIXES = DISTRO_SUFFIXES + ["_debian11"]
         ],
     )
     for user in USERS
-    for distro_suffix in JAVA_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
@@ -138,7 +136,7 @@ JAVA_DISTRO_SUFFIXES = DISTRO_SUFFIXES + ["_debian11"]
         ],
     )
     for user in USERS
-    for distro_suffix in JAVA_DISTRO_SUFFIXES
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 RULE_NAMES = [

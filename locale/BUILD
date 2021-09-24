@@ -10,5 +10,5 @@ load(":locale.bzl", "locale")
         deb = DISTRO_PACKAGES[arch][distro_suffix]["libc-bin"],
     )
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]
+    for distro_suffix in DISTRO_SUFFIXES
 ]

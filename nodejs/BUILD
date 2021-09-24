@@ -21,7 +21,7 @@ NODEJS_MAJOR_VERISONS = ("12", "14", "16")
     ]
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
@@ -40,7 +40,7 @@ NODEJS_MAJOR_VERISONS = ("12", "14", "16")
     ]
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 exports_files([
@@ -59,7 +59,7 @@ exports_files([
     ]
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]
+    for distro_suffix in DISTRO_SUFFIXES
 ]
 
 [
@@ -78,5 +78,5 @@ exports_files([
     ]
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]
+    for distro_suffix in DISTRO_SUFFIXES
 ]

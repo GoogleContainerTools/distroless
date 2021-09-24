@@ -11,5 +11,5 @@ load(":java.bzl", "cacerts_java")
         cacerts_tar = "//base:cacerts_" + arch + distro_suffix,
     )
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES + ["_debian11"]
+    for distro_suffix in DISTRO_SUFFIXES
 ]
