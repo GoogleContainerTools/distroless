@@ -14,12 +14,13 @@ DISTROS = [
 ]
 
 STATIC = dict({
-    "{REGISTRY}/{PROJECT_ID}/static:{COMMIT_SHA}": "//base:static_root_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/static:{COMMIT_SHA}": "//base:static_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/static-debian11:{COMMIT_SHA}": "//base:static_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/static-debian10:{COMMIT_SHA}": "//base:static_root_amd64_debian10",
 })
 
 STATIC.update({
-    "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian10"
+    "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
     for arch in ARCHITECTURES
     for (tag_base, label, user) in [
         ("latest", "static", "root"),
@@ -42,12 +43,13 @@ STATIC.update({
 })
 
 BASE = {
-    "{REGISTRY}/{PROJECT_ID}/base:{COMMIT_SHA}": "//base:base_root_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/base:{COMMIT_SHA}": "//base:base_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/base-debian11:{COMMIT_SHA}": "//base:base_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/base-debian10:{COMMIT_SHA}": "//base:base_root_amd64_debian10",
 }
 
 BASE.update({
-    "{REGISTRY}/{PROJECT_ID}/base:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian10"
+    "{REGISTRY}/{PROJECT_ID}/base:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
     for arch in ARCHITECTURES
     for (tag_base, label, user) in [
         ("latest", "base", "root"),
@@ -70,12 +72,13 @@ BASE.update({
 })
 
 CC = {
-    "{REGISTRY}/{PROJECT_ID}/cc:{COMMIT_SHA}": "//cc:cc_root_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/cc:{COMMIT_SHA}": "//cc:cc_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/cc-debian11:{COMMIT_SHA}": "//cc:cc_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/cc-debian10:{COMMIT_SHA}": "//cc:cc_root_amd64_debian10",
 }
 
 CC.update({
-    "{REGISTRY}/{PROJECT_ID}/cc:" + tag_base + "-" + arch: "//cc:" + label + "_" + user + "_" + arch + "_debian10"
+    "{REGISTRY}/{PROJECT_ID}/cc:" + tag_base + "-" + arch: "//cc:" + label + "_" + user + "_" + arch + "_debian11"
     for arch in ARCHITECTURES
     for (tag_base, label, user) in [
         ("latest", "cc", "root"),
@@ -98,7 +101,7 @@ CC.update({
 })
 
 PYTHON3 = {
-    "{REGISTRY}/{PROJECT_ID}/python3:" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_debian10"
+    "{REGISTRY}/{PROJECT_ID}/python3:" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_debian11"
     for arch in BASE_ARCHITECTURES
     for (tag_base, label, user) in [
         ("latest", "python3", "root"),
@@ -121,18 +124,18 @@ PYTHON3.update({
 })
 
 NODEJS = {
-    "{REGISTRY}/{PROJECT_ID}/nodejs:latest-amd64": "//nodejs:nodejs14_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:latest-arm64": "//nodejs:nodejs14_arm64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:debug-amd64": "//nodejs:nodejs14_debug_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:debug-arm64": "//nodejs:nodejs14_debug_arm64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:latest-amd64": "//nodejs:nodejs14_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:latest-arm64": "//nodejs:nodejs14_arm64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:debug-amd64": "//nodejs:nodejs14_debug_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:debug-arm64": "//nodejs:nodejs14_debug_arm64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian10:latest": "//nodejs:nodejs14_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian10:debug": "//nodejs:nodejs14_debug_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:12": "//nodejs:nodejs12_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:14": "//nodejs:nodejs14_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:16": "//nodejs:nodejs16_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:12-debug": "//nodejs:nodejs12_debug_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:14-debug": "//nodejs:nodejs14_debug_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:16-debug": "//nodejs:nodejs16_debug_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:12": "//nodejs:nodejs12_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:14": "//nodejs:nodejs14_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:16": "//nodejs:nodejs16_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:12-debug": "//nodejs:nodejs12_debug_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:14-debug": "//nodejs:nodejs14_debug_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:16-debug": "//nodejs:nodejs16_debug_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian10:12": "//nodejs:nodejs12_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian10:14": "//nodejs:nodejs14_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian10:16": "//nodejs:nodejs16_amd64_debian10",
@@ -150,18 +153,18 @@ NODEJS = {
 }
 
 JAVA = {
-    "{REGISTRY}/{PROJECT_ID}/java:base": "//java:java_base_root_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:base-nonroot": "//java:java_base_nonroot_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:base-debug": "//java:java_base_debug_root_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:base-debug-nonroot": "//java:java_base_debug_nonroot_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:latest": "//java:java11_root_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:nonroot": "//java:java11_nonroot_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:debug": "//java:java11_debug_root_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:debug-nonroot": "//java:java11_debug_nonroot_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:11": "//java:java11_root_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:11-nonroot": "//java:java11_nonroot_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:11-debug": "//java:java11_debug_root_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java:11-debug-nonroot": "//java:java11_debug_nonroot_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java:base": "//java:java_base_root_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:base-nonroot": "//java:java_base_nonroot_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:base-debug": "//java:java_base_debug_root_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:base-debug-nonroot": "//java:java_base_debug_nonroot_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:latest": "//java:java11_root_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:nonroot": "//java:java11_nonroot_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:debug": "//java:java11_debug_root_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:debug-nonroot": "//java:java11_debug_nonroot_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:11": "//java:java11_root_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:11-nonroot": "//java:java11_nonroot_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:11-debug": "//java:java11_debug_root_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java:11-debug-nonroot": "//java:java11_debug_nonroot_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:base": "//java:java_base_root_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:base-nonroot": "//java:java_base_nonroot_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:base-debug": "//java:java_base_debug_root_debian10",
@@ -186,10 +189,10 @@ JAVA = {
     "{REGISTRY}/{PROJECT_ID}/java-debian11:debug-nonroot": "//java:java11_debug_nonroot_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian11:11-debug": "//java:java11_debug_root_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian11:11-debug-nonroot": "//java:java11_debug_nonroot_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java/jetty:latest": "//java/jetty:jetty_java11_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java/jetty:debug": "//java/jetty:jetty_java11_debug_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java/jetty:java11": "//java/jetty:jetty_java11_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java/jetty:latest": "//java/jetty:jetty_java11_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java/jetty:debug": "//java/jetty:jetty_java11_debug_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java/jetty:java11": "//java/jetty:jetty_java11_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian10/jetty:latest": "//java/jetty:jetty_java11_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10/jetty:java11": "//java/jetty:jetty_java11_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10/jetty:debug": "//java/jetty:jetty_java11_debug_debian10",
