@@ -19,6 +19,12 @@ USERS = [
     "nonroot",
 ]
 
+VERSION_PAIRS = [
+    ("11", "_debian10"),
+    ("11", "_debian11"),
+    ("17", "_debian11"),
+]
+
 EXTRA_DEBS = {
     "_debian10": [],
     "_debian11": [
@@ -62,35 +68,41 @@ EXTRA_DEBS = {
 
 [
     container_image(
-        name = rule_name + "_" + user + distro_suffix,
-        base = ":java_base" + ("_debug" if ("debug" in rule_name) else "") + "_" + user + distro_suffix,
-        debs = [DISTRO_PACKAGES["amd64"][distro_suffix][deb] for deb in java_debs],
+        name = "java" + java_version + "_" + user + distro_suffix,
+        base = ":java_base_" + user + distro_suffix,
+        debs = [DISTRO_PACKAGES["amd64"][distro_suffix]["openjdk-" + java_version + "-jre-headless"]],
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
         entrypoint = [
             "/usr/bin/java",
             "-jar",
         ],
-        env = {"JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix][java_debs[0]])},
-        symlinks = {"/usr/bin/java": java_executable_path},
+        env = {"JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix]["openjdk-" + java_version + "-jre-headless"])},
+        symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-amd64/bin/java"},
     )
-    for (rule_name, java_debs, java_executable_path) in [
-        (
-            "java11",
-            ["openjdk-11-jre-headless"],
-            "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
-        ),
-        (
-            "java11_debug",
-            [
-                "openjdk-11-jre-headless",
-                "openjdk-11-jdk-headless",
-            ],
-            "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
-        ),
-    ]
+    for (java_version, distro_suffix) in VERSION_PAIRS
     for user in USERS
-    for distro_suffix in DISTRO_SUFFIXES
+]
+
+[
+    container_image(
+        name = "java" + java_version + "_debug_" + user + distro_suffix,
+        base = ":java_base_debug_" + user + distro_suffix,
+        debs = [
+            DISTRO_PACKAGES["amd64"][distro_suffix]["openjdk-" + java_version + "-jre-headless"],
+            DISTRO_PACKAGES["amd64"][distro_suffix]["openjdk-" + java_version + "-jdk-headless"],
+        ],
+        # We expect users to use:
+        # cmd = ["/path/to/deploy.jar", "--option1", ...]
+        entrypoint = [
+            "/usr/bin/java",
+            "-jar",
+        ],
+        env = {"JAVA_VERSION": jre_ver(DISTRO_VERSIONS[distro_suffix]["openjdk-" + java_version + "-jre-headless"])},
+        symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-amd64/bin/java"},
+    )
+    for (java_version, distro_suffix) in VERSION_PAIRS
+    for user in USERS
 ]
 
 [
@@ -113,30 +125,30 @@ EXTRA_DEBS = {
 
 [
     container_test(
-        name = "java11_" + user + distro_suffix + "_test",
-        configs = ["testdata/java11" + distro_suffix + ".yaml"],
-        image = ":java11_" + user + distro_suffix,
+        name = "java" + java_version + "_" + user + distro_suffix + "_test",
+        configs = ["testdata/java" + java_version + distro_suffix + ".yaml"],
+        image = ":java" + java_version + "_" + user + distro_suffix,
         tags = [
             "amd64",
             "manual",
         ],
     )
     for user in USERS
-    for distro_suffix in DISTRO_SUFFIXES
+    for (java_version, distro_suffix) in VERSION_PAIRS
 ]
 
 [
     container_test(
-        name = "java11_debug_" + user + distro_suffix + "_test",
-        configs = ["testdata/java11_debug" + distro_suffix + ".yaml"],
-        image = ":java11_debug_" + user + distro_suffix,
+        name = "java" + java_version + "_debug_" + user + distro_suffix + "_test",
+        configs = ["testdata/java" + java_version + "_debug" + distro_suffix + ".yaml"],
+        image = ":java" + java_version + "_debug_" + user + distro_suffix,
         tags = [
             "amd64",
             "manual",
         ],
     )
     for user in USERS
-    for distro_suffix in DISTRO_SUFFIXES
+    for (java_version, distro_suffix) in VERSION_PAIRS
 ]
 
 RULE_NAMES = [
@@ -144,6 +156,8 @@ RULE_NAMES = [
     "java11_nonroot_debian10",
     "java11_root_debian11",
     "java11_nonroot_debian11",
+    "java17_root_debian11",
+    "java17_nonroot_debian11",
 ]
 
 [

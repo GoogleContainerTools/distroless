@@ -27,8 +27,8 @@ jobs:
         bazel build --curses=no //package_manager:dpkg_parser.par
         bazel build --curses=no //...
         bazel test --curses=no --test_output=errors //...
-        # Ignore java8 and experimental targets, which might not pass.
+        # Ignore experimental targets, which might not pass.
         # TODO: Fix or remove these exceptions.
-        targets=$(bazel query 'attr("tags", "'amd64'", "//...")' | grep -v java8 | grep -v experimental)
+        targets=$(bazel query 'attr("tags", "'amd64'", "//...")' | grep -v experimental)
         bazel build --curses=no ${targets}
         bazel test --curses=no --test_output=errors ${targets}

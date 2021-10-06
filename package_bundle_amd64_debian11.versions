@@ -45,6 +45,8 @@
     "netbase": "6.3",
     "openjdk-11-jdk-headless": "11.0.12+7-2",
     "openjdk-11-jre-headless": "11.0.12+7-2",
+    "openjdk-17-jdk-headless": "17~19-1",
+    "openjdk-17-jre-headless": "17~19-1",
     "openssl": "1.1.1k-1+deb11u1",
     "python3-distutils": "3.9.2-1",
     "python3.9-minimal": "3.9.2-1",

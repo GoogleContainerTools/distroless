@@ -233,3 +233,16 @@ container_push(
     # https://github.com/bazelbuild/rules_docker/issues/525
     sequential = True,
 )
+
+# do not publish these until java 17 is out of preview, leave them here for preview testing
+JAVA17 = {
+    "distroless/java:17": "//java:java17_root_debian11",
+    "distroless/java:17-nonroot": "//java:java17_nonroot_debian11",
+    "distroless/java:17-debug": "//java:java17_debug_root_debian11",
+    "distroless/java:17-debug-nonroot": "//java:java17_debug_nonroot_debian11",
+}
+
+container_bundle(
+    name = "java17_preview",
+    images = JAVA17,
+)

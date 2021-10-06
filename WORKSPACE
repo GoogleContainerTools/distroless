@@ -132,6 +132,8 @@ load(
             "libuuid1",
             "openjdk-11-jdk-headless",
             "openjdk-11-jre-headless",
+            "openjdk-17-jdk-headless",  # 11 and 17 should share the same "base"
+            "openjdk-17-jre-headless",
             "zlib1g",
 
             # python
