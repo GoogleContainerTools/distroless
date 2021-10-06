@@ -99,11 +99,11 @@ load(
 [
     dpkg_list(
         name = "package_bundle_" + arch + "_debian11",
-        # only packages for static and base at the moment
         packages = [
             "base-files",
             "ca-certificates",
             "libc6",
+            "libc-bin",
             "libssl1.1",
             "netbase",
             "openssl",
@@ -113,35 +113,14 @@ load(
             "libgcc-s1",
             "libgomp1",
             "libstdc++6",
-
-            #java
-            "fontconfig-config",
-            "fonts-dejavu-core",
-            "libbrotli1",
-            "libc-bin",
-            "libexpat1",
-            "libfontconfig1",
-            "libfreetype6",
-            "libglib2.0-0",
-            "libgraphite2-3",
-            "libharfbuzz0b",
-            "libjpeg62-turbo",
-            "liblcms2-2",
-            "libpcre3",
-            "libpng16-16",
-            "libuuid1",
-            "openjdk-11-jdk-headless",
-            "openjdk-11-jre-headless",
-            "openjdk-17-jdk-headless",  # 11 and 17 should share the same "base"
-            "openjdk-17-jre-headless",
-            "zlib1g",
-
-            # python
+        ] + ([
+            # python only builds on amd64/arm64
             "dash",
             "libbz2-1.0",
             "libcom-err2",
             "libcrypt1",  # TODO: glibc library for -lcrypt; maybe should be in cc?
             "libdb5.3",
+            "libexpat1",
             "libffi7",
             "libgssapi-krb5-2",
             "libk5crypto3",
@@ -158,9 +137,32 @@ load(
             "libsqlite3-0",
             "libtinfo6",
             "libtirpc3",
+            "libuuid1",
             "python3-distutils",
             "python3.9-minimal",
-        ],
+            "zlib1g",
+        ] if arch in BASE_ARCHITECTURES else []) + ([
+            # java only builds on amd64
+            "fontconfig-config",
+            "fonts-dejavu-core",
+            "libbrotli1",
+            "libexpat1",
+            "libfontconfig1",
+            "libfreetype6",
+            "libglib2.0-0",
+            "libgraphite2-3",
+            "libharfbuzz0b",
+            "libjpeg62-turbo",
+            "liblcms2-2",
+            "libpcre3",
+            "libpng16-16",
+            "libuuid1",
+            "openjdk-11-jdk-headless",
+            "openjdk-11-jre-headless",
+            "openjdk-17-jdk-headless",  # 11 and 17 should share the same "base"
+            "openjdk-17-jre-headless",
+            "zlib1g",
+        ] if arch == "amd64" else []),
         sources = [
             "@" + arch + "_debian11_security//file:Packages.json",
             "@" + arch + "_debian11_updates//file:Packages.json",
@@ -175,6 +177,7 @@ load(
         name = "package_bundle_" + arch + "_debian10",
         packages = [
             "libc6",
+            "libc-bin",
             "base-files",
             "ca-certificates",
             "openssl",
@@ -183,7 +186,6 @@ load(
             "libdb5.3",
             "libffi6",
             "liblzma5",
-            "libexpat1",
             "libreadline7",
             "libsqlite3-0",
             "mime-support",
@@ -195,10 +197,24 @@ load(
             "libgcc1",
             "libgomp1",
             "libstdc++6",
-
-            #java
+        ] + ([
+            # python3 only builds on amd64/arm64
+            "dash",
+            "libexpat1",
+            "libmpdec2",
+            "libpython3.7-minimal",
+            "libpython3.7-stdlib",
+            "libtinfo6",
+            "libuuid1",
+            "libncursesw6",
+            "python3-distutils",
+            "python3.7-minimal",
+            "zlib1g",
+        ] if arch in BASE_ARCHITECTURES else []) + ([
+            # java only builds on amd64
             "zlib1g",
             "libjpeg62-turbo",
+            "libexpat1",
             "libpng16-16",
             "liblcms2-2",
             "libfreetype6",
@@ -208,24 +224,12 @@ load(
             "libuuid1",
             "openjdk-11-jre-headless",
             "openjdk-11-jdk-headless",
-            "libc-bin",
             "libgraphite2-3",
             "libharfbuzz0b",
             "libglib2.0-0",
             "libpcre3",
-
-            #python3
-            "dash",
-            "libc-bin",
-            "libmpdec2",
-            "libpython3.7-minimal",
-            "libpython3.7-stdlib",
-            "libtinfo6",
-            "libuuid1",
-            "libncursesw6",
-            "python3-distutils",
-            "python3.7-minimal",
-        ] + (["libunwind8"] if arch in BASE_ARCHITECTURES else []),
+            "zlib1g",
+        ] if arch == "amd64" else []),
         sources = [
             "@" + arch + "_debian10_security//file:Packages.json",
             "@" + arch + "_debian10_updates//file:Packages.json",

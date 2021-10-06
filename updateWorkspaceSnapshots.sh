@@ -20,9 +20,11 @@ YEAR=`date +"%Y"`
 MONTH=`date +"%m"`
 
 # Fetch all the latest snapshot versions for the current month
+# sometimes latest is partially unreachable and breaks the build,
+# so use "n-1" latest, which is usually only 6 hours behind
 
-DEBIAN_SNAPSHOT=`curl -s "https://snapshot.debian.org/archive/debian/?year=$YEAR;month=$MONTH" 2>&1 | grep -oE "[0-9]+T[0-9]+Z" | tail -n1`
-DEBIAN_SECURITY_SNAPSHOT=`curl -s "https://snapshot.debian.org/archive/debian-security/?year=$YEAR;month=$MONTH" 2>&1 | grep -oE "[0-9]+T[0-9]+Z" | tail -n1`
+DEBIAN_SNAPSHOT=`curl -s "https://snapshot.debian.org/archive/debian/?year=$YEAR;month=$MONTH" 2>&1 | grep -oE "[0-9]+T[0-9]+Z" | tail -n2 | head -n1`
+DEBIAN_SECURITY_SNAPSHOT=`curl -s "https://snapshot.debian.org/archive/debian-security/?year=$YEAR;month=$MONTH" 2>&1 | grep -oE "[0-9]+T[0-9]+Z" | tail -n2 | head -n1`
 
 if [ -z "$DEBIAN_SNAPSHOT" ]
 then

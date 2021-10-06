@@ -31,7 +31,6 @@
     "libssl1.1": "1.1.1d-0+deb10u7",
     "libstdc++6": "8.3.0-6",
     "libtinfo6": "6.1+20181013-2+deb10u2",
-    "libunwind8": "1.2.1-10~deb10u1",
     "libuuid1": "2.33.1-0.1",
     "mime-support": "3.62",
     "netbase": "5.6",
