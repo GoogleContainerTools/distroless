@@ -1,0 +1,9 @@
+schemaVersion: "1.0.0"
+commandTests:
+  - name: connect_to_https_google_com
+    # This is a bit ugly because structure tests can't test the default entrypoint yet.
+    command: ["/usr/bin/java",
+              "-cp",
+              "/app/distroless/java/check_certs_java17_nonroot_debian11.binary.jar:/app/distroless/java/check_certs_java17_nonroot_debian10.binary",
+              "testdata.CheckCerts"]
+    expectedOutput: ['Successfully connected: 200']
