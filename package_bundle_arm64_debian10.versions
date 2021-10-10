@@ -1,5 +1,5 @@
 {
-    "base-files": "10.3+deb10u10",
+    "base-files": "10.3+deb10u11",
     "ca-certificates": "20200601~deb10u2",
     "dash": "0.5.10.2-5",
     "libbz2-1.0": "1.0.6-9.2~deb10u1",

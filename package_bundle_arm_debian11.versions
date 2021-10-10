@@ -1,8 +1,8 @@
 {
-    "base-files": "11.1",
+    "base-files": "11.1+deb11u1",
     "ca-certificates": "20210119",
-    "libc-bin": "2.31-13",
-    "libc6": "2.31-13",
+    "libc-bin": "2.31-13+deb11u2",
+    "libc6": "2.31-13+deb11u2",
     "libgcc-s1": "10.2.1-6",
     "libgomp1": "10.2.1-6",
     "libssl1.1": "1.1.1k-1+deb11u1",
