@@ -1,5 +1,5 @@
 {
-    "base-files": "10.3+deb10u10",
+    "base-files": "10.3+deb10u11",
     "ca-certificates": "20200601~deb10u2",
     "dash": "0.5.10.2-5",
     "fontconfig-config": "2.13.1-2",
