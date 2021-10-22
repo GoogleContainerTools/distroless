@@ -5,7 +5,17 @@ options:
 
 steps:
 
-- name: gcr.io/cloud-marketplace-containers/google/bazel:3.4.1
+# Unfortunately gcr.io/cloud-marketplace-containers/google/bazel is
+# no longer maintained. The cloud-build project is, but does not tag
+# images with bazel versions. The SHA hash was found manually and
+# verified with:
+#
+#   docker pull gcr.io/cloud-builders/bazel
+#   docker run --rm -ti gcr.io/cloud-builders/bazel version
+#   docker image inspect gcr.io/cloud-builders/bazel --format '{{.Id}}'
+#
+# See: https://github.com/GoogleCloudPlatform/cloud-builders/issues/667
+- name: gcr.io/cloud-builders/bazel@sha256:4a785d36e568d3e75eb20be84b80f6e658e21b92bae12d23d1c1da60f5833bf4
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}

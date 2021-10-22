@@ -16,7 +16,7 @@ jobs:
     - name: Setup Bazel
       uses: abhinavsingh/setup-bazel@1fe920bf5df3791aab606c06a3608f4bb600c4f2
       with:
-        version: 3.4.1
+        version: 4.2.1
 
     - name: Run update script
       run: ./updateWorkspaceSnapshots.sh
