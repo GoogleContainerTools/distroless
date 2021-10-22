@@ -14,16 +14,12 @@ and other tech giants that have used containers in production for many years.
 It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
 
 Distroless images are _very small_.
-The smallest distroless image, `gcr.io/distroless/static`, is around 650 kB.
-That's about 25% of the size of `alpine` (~2.5 MB), and less than 1.5% of the size of `debian` (50 MB).
-
-For example, `gcr.io/distroless/static` is a container image that's much smaller than [this image of a shipping container](https://unsplash.com/photos/bukjsECgmeU).
-It's about 1/3rd the size of all the resources on [this page you're reading right now](https://github.com/GoogleContainerTools/distroless).
-It's very small.
+The smallest distroless image, `gcr.io/distroless/static-debian11`, is around 2 MiB.
+That's about 50% of the size of `alpine` (~5 MiB), and less than 2% of the size of `debian` (124 MiB).
 
 ## How do I use distroless images?
 
-These images are built using the [bazel](https://bazel.build) tool, but they can also be used through other Docker image build tooling.
+These images are built using [bazel](https://bazel.build), but they can also be used through other Docker image build tooling.
 
 ## How do I verify distroless images?
 
@@ -69,14 +65,14 @@ Follow these steps to get started:
 
 * Pick the right base image for your application stack.
   We publish the following distroless base images on `gcr.io`:
-    * [gcr.io/distroless/static-debian10](base/README.md)
-    * [gcr.io/distroless/base-debian10](base/README.md)
-    * [gcr.io/distroless/java-debian10](java/README.md)
-    * [gcr.io/distroless/cc-debian10](cc/README.md)
-    * [gcr.io/distroless/nodejs-debian10](nodejs/README.md)
+    * [gcr.io/distroless/static-debian11](base/README.md)
+    * [gcr.io/distroless/base-debian11](base/README.md)
+    * [gcr.io/distroless/java-debian11](java/README.md)
+    * [gcr.io/distroless/cc-debian11](cc/README.md)
+    * [gcr.io/distroless/nodejs-debian11](nodejs/README.md)
 
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
-    * [gcr.io/distroless/python3-debian10](experimental/python3/README.md)
+    * [gcr.io/distroless/python3-debian11](experimental/python3/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 
@@ -88,7 +84,7 @@ Follow these steps to get started:
 
   ```dockerfile
   # Start by building the application.
-  FROM golang:1.13-buster as build
+  FROM golang:1.17-bullseye as build
 
   WORKDIR /go/src/app
   ADD . /go/src/app
@@ -98,7 +94,7 @@ Follow these steps to get started:
   RUN go build -o /go/bin/app
 
   # Now copy it into our base image.
-  FROM gcr.io/distroless/base-debian10
+  FROM gcr.io/distroless/base-debian11
   COPY --from=build /go/bin/app /
   CMD ["/app"]
   ```
@@ -107,7 +103,7 @@ You can find other examples here:
 
 * [Java](examples/java/Dockerfile)
 * [Python 3](examples/python3/Dockerfile)
-* [Golang](examples/go/Dockerfile)
+* [Go](examples/go/Dockerfile)
 * [Node.js](examples/nodejs/Dockerfile)
 * [Rust](examples/rust/Dockerfile)
 
@@ -159,11 +155,11 @@ For full documentation on how to use Jib to generate Docker images from Maven an
 
 ### Base Operating System
 
-Distroless images are based on Debian 10 (buster). Originally these images were based on Debian 9 (stretch), but those images (anything tagged with `*-debian9`) are deprecated and no longer supported. Images are explicitly tagged with `-debian10` suffixes. Specifying an image without the distribution will currently select `-debian10` images, but that can change in the future to a newer version of Debian. It can be useful to reference the appropriate distribution explicitly, to prevent a breakage when the next Debian version is released.
+Distroless images are based on Debian 11 (bullseye). Images are explicitly tagged with Debian version suffixes (e.g. `-debian10` or `-debian11`). Specifying an image without the distribution will currently select `-debian11` images, but that will change in the future to a newer version of Debian. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
 
-### CVE and Patching
+### Operating System Updates for Security Fixes and CVEs
 
-Distroless tracks Debian 10. A commit is needed in this repository to update the snapshot version when security fixes are release. Check https://www.debian.org/security/ for any patches to address security issues and update. Check issues and PRs for the patch and update your builds.
+Distroless tracks the upstream Debian releases, using [Github actions to automatically generate a pull request when there are updates](https://github.com/GoogleContainerTools/distroless/blob/main/.github/workflows/update-deb-package-snapshots.yml).
 
 ### Debug Images
 
@@ -179,7 +175,7 @@ cd examples/python3/
 edit the ```Dockerfile``` to change the final image to ```:debug```:
 
 ```dockerfile
-FROM gcr.io/distroless/python3:debug
+FROM gcr.io/distroless/python3-debian11:debug
 COPY . /app
 WORKDIR /app
 CMD ["hello.py", "/etc"]
