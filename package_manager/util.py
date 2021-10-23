@@ -35,9 +35,11 @@ DEBIAN_RELEASES = {
 }
 
 def generate_os_release(distro, os_release_file):
-    """ Generates an /etc/os-release like file with information about the
-    package distribution.  VERSION and VERSION_ID are left unset if the package
-    source is from an unknown debian release.
+    """ Generates an os-release like file with information about the
+    package distribution. Original file is written to /usr/lib/os-release,
+    a symlink to /etc/os-release already exists. VERSION and VERSION_ID are
+    left unset if the package source is from an unknown debian release. See:
+    https://manpages.debian.org/systemd/os-release.5.en.html
     """
 
     os_release = collections.OrderedDict([

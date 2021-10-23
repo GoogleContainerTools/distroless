@@ -24,7 +24,7 @@ from package_manager.version_utils import compare_versions
 from package_manager import util
 
 OUT_FOLDER = "file"
-OS_RELEASE_PATH = "etc"
+OS_RELEASE_PATH = "usr/lib"
 PACKAGES_FILE_NAME = os.path.join(OUT_FOLDER,"Packages.json")
 PACKAGE_MAP_FILE_NAME = os.path.join(OUT_FOLDER,"packages.bzl")
 OS_RELEASE_FILE_NAME = os.path.join(OS_RELEASE_PATH, "os-release")
@@ -181,7 +181,7 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
             arch
         )
 
-    
+
     packages_copy = url.split('/')[-1]
     download_and_save(url, packages_copy)
     actual_sha256 = util.sha256_checksum(packages_copy)

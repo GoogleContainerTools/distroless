@@ -44,6 +44,10 @@ fileContentTests:
 - name: 'known groups'
   path: '/etc/group'
   expectedContents: ['^root:x:0:\nnobody:x:65534:\ntty:x:5:\nstaff:x:50:\nnonroot:x:65532:\n$']
-- name: 'os-release pretty name'
+- name: '/usr/lib/os-release pretty name'
+  path: '/usr/lib/os-release'
+  expectedContents: ['PRETTY_NAME="Distroless"']
+# /etc/os-release is a symlink to /usr/lib/os-release, make sure they match.
+- name: '/etc/os-release pretty name'
   path: '/etc/os-release'
   expectedContents: ['PRETTY_NAME="Distroless"']
