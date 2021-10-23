@@ -29,8 +29,6 @@ steps:
     set -o xtrace
 
     # Make sure python points to python3
-    # perhaps the gcr.io/cloud-marketplace-containers/google/bazel image
-    # should be doing this though
     update-alternatives --install /usr/bin/python python /usr/bin/python3 0
 
     bazel build //package_manager:dpkg_parser.par
