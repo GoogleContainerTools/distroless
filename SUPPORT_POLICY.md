@@ -4,12 +4,12 @@ The current estimation of EOL of images
 
 | Image       |  Support    | Debian 10 EOL | Debian 11 EOL   |
 | ----------- | ----------- | ------------- | --------------- |
-| static      | standard    | aug 2021      | debian 12 + 1yr |
-| base        | standard    | aug 2021      | debian 12 + 1yr |
-| cc          | standard    | aug 2021      | debian 12 + 1yr |
-| java        | standard    | aug 2021      | debian 12 + 1yr |
-| node        | standard    | aug 2021      | debian 12 + 1yr |
-| python      | standard    | aug 2021      | debian 12 + 1yr |
+| static      | standard    | aug 2022      | debian 12 + 1yr |
+| base        | standard    | aug 2022      | debian 12 + 1yr |
+| cc          | standard    | aug 2022      | debian 12 + 1yr |
+| java        | standard    | aug 2022      | debian 12 + 1yr |
+| node        | standard    | aug 2022      | debian 12 + 1yr |
+| python      | standard    | aug 2022      | debian 12 + 1yr |
 
 
 Java
@@ -20,3 +20,6 @@ Node version support is for even numbered releases (12, 14, etc) that are curren
 
 Python
 Python support is experimental, and this project does not make any guarantees about the version of python in images.
+
+
+Images no longer supported (TBD)
