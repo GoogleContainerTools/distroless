@@ -289,10 +289,10 @@ http_archive(
 http_archive(
     name = "nodejs16_amd64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "1f41d5b68ca39eb2e76dad4e5beb8de8b0a1498773e3e53b80c03e42202969fb",
+    sha256 = "589b7e7eb22f8358797a2c14a0bd865459d0b44458b8f05d2721294dacc7f734",
     strip_prefix = "node-v16.12.0-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v16.12.0/node-v16.12.0-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v16.13.0/node-v16.13.0-linux-x64.tar.gz"],
 )
 
 http_archive(
@@ -316,10 +316,10 @@ http_archive(
 http_archive(
     name = "nodejs16_arm64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "2abb224a6d9880d459ed64a02876b5843ca891978b072e7516431b15142a472c",
+    sha256 = "46e3857f5552abd36d9548380d795b043a3ceec2504e69fe1a754fa76012daaf",
     strip_prefix = "node-v16.12.0-linux-arm64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v16.12.0/node-v16.12.0-linux-arm64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v16.13.0/node-v16.13.0-linux-arm64.tar.gz"],
 )
 
 # For the debug image
