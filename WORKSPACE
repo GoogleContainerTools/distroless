@@ -289,10 +289,10 @@ http_archive(
 http_archive(
     name = "nodejs16_amd64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "48fba5e9d60e12e777994dafba7b04449c3d0cd004340970fd674220e572a39e",
-    strip_prefix = "node-v16.11.1-linux-x64/",
+    sha256 = "1f41d5b68ca39eb2e76dad4e5beb8de8b0a1498773e3e53b80c03e42202969fb",
+    strip_prefix = "node-v16.12.0-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v16.11.1/node-v16.11.1-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v16.12.0/node-v16.12.0-linux-x64.tar.gz"],
 )
 
 http_archive(
@@ -316,10 +316,10 @@ http_archive(
 http_archive(
     name = "nodejs16_arm64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "d51b372477287ee41e5bf2d90972868ed28b5c5465bc2df14e86c398926916c1",
-    strip_prefix = "node-v16.11.1-linux-arm64/",
+    sha256 = "2abb224a6d9880d459ed64a02876b5843ca891978b072e7516431b15142a472c",
+    strip_prefix = "node-v16.12.0-linux-arm64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v16.11.1/node-v16.11.1-linux-arm64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v16.12.0/node-v16.12.0-linux-arm64.tar.gz"],
 )
 
 # For the debug image
