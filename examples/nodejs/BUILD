@@ -13,7 +13,7 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
     container_image(
         name = "hello_" + arch + distro_suffix,
         architecture = arch,
-        base = "//nodejs:nodejs14_" + arch + distro_suffix,
+        base = "//nodejs:nodejs16_" + arch + distro_suffix,
         cmd = ["hello.js"],
         files = [":hello.js"],
     )
@@ -25,7 +25,7 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
     container_image(
         name = "hello_http_" + arch + distro_suffix,
         architecture = arch,
-        base = "//nodejs:nodejs14_" + arch + distro_suffix,
+        base = "//nodejs:nodejs16_" + arch + distro_suffix,
         cmd = ["hello_http.js"],
         files = [":hello_http.js"],
         ports = ["8000"],
