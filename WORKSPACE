@@ -158,8 +158,7 @@ load(
             "python3-distutils",
             "python3.9-minimal",
             "zlib1g",
-        ] if arch in BASE_ARCHITECTURES else []) + ([
-            # java only builds on amd64
+            # java only builds on amd64/arm64
             "fontconfig-config",
             "fonts-dejavu-core",
             "libbrotli1",
@@ -179,7 +178,7 @@ load(
             "openjdk-17-jdk-headless",  # 11 and 17 should share the same "base"
             "openjdk-17-jre-headless",
             "zlib1g",
-        ] if arch == "amd64" else []),
+        ] if arch in BASE_ARCHITECTURES else []),
         sources = [
             "@" + arch + "_debian11_security//file:Packages.json",
             "@" + arch + "_debian11_updates//file:Packages.json",
