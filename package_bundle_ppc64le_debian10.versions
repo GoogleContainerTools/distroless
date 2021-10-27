@@ -17,5 +17,5 @@
     "netbase": "5.6",
     "openssl": "1.1.1d-0+deb10u7",
     "readline-common": "7.0-5",
-    "tzdata": "2021a-0+deb10u2"
+    "tzdata": "2021a-0+deb10u3"
 }
