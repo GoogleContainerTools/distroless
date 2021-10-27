@@ -28,6 +28,9 @@ steps:
     set -o errexit
     set -o xtrace
 
+    # package manager needs wget
+    apt-get install wget
+
     # Make sure python points to python3
     update-alternatives --install /usr/bin/python python /usr/bin/python3 0
 
