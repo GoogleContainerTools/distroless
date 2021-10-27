@@ -290,7 +290,7 @@ http_archive(
     name = "nodejs16_amd64",
     build_file = "//nodejs:BUILD.nodejs",
     sha256 = "589b7e7eb22f8358797a2c14a0bd865459d0b44458b8f05d2721294dacc7f734",
-    strip_prefix = "node-v16.12.0-linux-x64/",
+    strip_prefix = "node-v16.13.0-linux-x64/",
     type = "tar.gz",
     urls = ["https://nodejs.org/dist/v16.13.0/node-v16.13.0-linux-x64.tar.gz"],
 )
@@ -317,7 +317,7 @@ http_archive(
     name = "nodejs16_arm64",
     build_file = "//nodejs:BUILD.nodejs",
     sha256 = "46e3857f5552abd36d9548380d795b043a3ceec2504e69fe1a754fa76012daaf",
-    strip_prefix = "node-v16.12.0-linux-arm64/",
+    strip_prefix = "node-v16.13.0-linux-arm64/",
     type = "tar.gz",
     urls = ["https://nodejs.org/dist/v16.13.0/node-v16.13.0-linux-arm64.tar.gz"],
 )
