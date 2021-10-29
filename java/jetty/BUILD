@@ -13,10 +13,10 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
     workdir = "/jetty",
     # We expect users to add their WAR under /jetty/webapps.
 ) for (rule_name, base_image) in [
-    ("jetty_java11_debian10", "//java:java11_root_debian10"),
-    ("jetty_java11_debug_debian10", "//java:java11_debug_root_debian10"),
-    ("jetty_java11_debian11", "//java:java11_root_debian11"),
-    ("jetty_java11_debug_debian11", "//java:java11_debug_root_debian11"),
+    ("jetty_java11_debian10", "//java:java11_root_amd64_debian10"),
+    ("jetty_java11_debug_debian10", "//java:java11_debug_root_amd64_debian10"),
+    ("jetty_java11_debian11", "//java:java11_root_amd64_debian11"),
+    ("jetty_java11_debug_debian11", "//java:java11_debug_root_amd64_debian11"),
 ]]
 
 [container_test(
