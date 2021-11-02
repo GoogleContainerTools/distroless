@@ -203,6 +203,17 @@ JAVA = {
     "{REGISTRY}/{PROJECT_ID}/java-debian11/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian11",
 }
 
+JAVA.update({
+    "{REGISTRY}/{PROJECT_ID}/java-debian11:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
+    for arch in ARCHITECTURES
+    for (tag_base, label, user) in [
+        ("latest", "base", "root"),
+        ("nonroot", "base", "nonroot"),
+        ("debug", "debug", "root"),
+        ("debug-nonroot", "debug", "nonroot"),
+    ]
+})
+
 ALL = {}
 
 ALL.update(STATIC)

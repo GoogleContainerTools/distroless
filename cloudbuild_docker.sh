@@ -57,4 +57,7 @@ docker manifest create gcr.io/$PROJECT_ID/nodejs:debug \
    gcr.io/$PROJECT_ID/nodejs:debug-arm64
 docker manifest push gcr.io/$PROJECT_ID/nodejs:debug
 
-# No Java? Only available on amd64, we do not need to generate a manifest list
+docker_manifest gcr.io/$PROJECT_ID/java:11-debian11:nonroot "amd64 arm64"
+docker_manifest gcr.io/$PROJECT_ID/java:11-debian11:latest "amd64 arm64"
+docker_manifest gcr.io/$PROJECT_ID/java:11-debian11:debug-nonroot "amd64 arm64"
+docker_manifest gcr.io/$PROJECT_ID/java:11-debian11:debug "amd64 arm64"
