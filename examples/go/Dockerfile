@@ -1,7 +1,7 @@
 FROM golang:latest as build-env
 
 WORKDIR /go/src/app
-COPY main.go .
+COPY *.go .
 
 RUN go mod init
 RUN go get -d -v ./...
