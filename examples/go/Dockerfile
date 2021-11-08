@@ -1,8 +1,5 @@
 FROM golang:latest as build-env
 
-LABEL NAME distroless-go-example
-LABEL VERSION 0.0.1
-
 WORKDIR /go/src/app
 COPY main.go .
 
