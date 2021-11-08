@@ -6,7 +6,7 @@ COPY main.go .
 RUN go mod init
 RUN go get -d -v ./...
 
-# Detaails on when to utilize cgo: 
+# Details on when to utilize cgo: 
 #   https://pkg.go.dev/cmd/cgo  
 RUN CGO_ENABLED=0 go build -o /go/bin/app
 
