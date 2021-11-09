@@ -5,6 +5,8 @@ COPY *.go .
 
 RUN go mod init
 RUN go get -d -v ./...
+RUN go vet -v
+RUN go test -v
 
 # Details on when to utilize cgo: 
 #   https://pkg.go.dev/cmd/cgo  
