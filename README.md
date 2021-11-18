@@ -36,7 +36,7 @@ OqxYbK0Iro6GzSmOzxkn+N2AKawLyXi84WSwJQBK//psATakCgAQKkNTAA==
 -----END PUBLIC KEY-----
 
 
-cosign verify -key cosign.pub $IMAGE_NAME
+cosign verify --key cosign.pub $IMAGE_NAME
 ```
 
 ### Entrypoints
