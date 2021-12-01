@@ -7,9 +7,9 @@ The current estimation of EOL of images
 | static      | standard    | aug 2022      | debian 12 + 1yr |
 | base        | standard    | aug 2022      | debian 12 + 1yr |
 | cc          | standard    | aug 2022      | debian 12 + 1yr |
-| java        | standard    | aug 2022      | debian 12 + 1yr |
-| node        | standard    | aug 2022      | debian 12 + 1yr |
-| python      | standard    | aug 2022      | debian 12 + 1yr |
+| java        | standard    | jan 2022      | debian 12 + 3mo |
+| node        | standard    | jan 2022      | debian 12 + 3mo |
+| python      | standard    | jan 2022      | debian 12 + 3mo |
 
 
 Java
