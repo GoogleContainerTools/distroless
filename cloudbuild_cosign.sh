@@ -40,3 +40,10 @@ done
 
 cosign sign "$@" gcr.io/$PROJECT_ID/nodejs:latest
 cosign sign "$@" gcr.io/$PROJECT_ID/nodejs:debug
+
+for java_version in -base 11 17; do
+  cosign sign "$@" gcr.io/$PROJECT_ID/java${java_version}-debian11:latest
+  cosign sign "$@" gcr.io/$PROJECT_ID/java${java_version}-debian11:nonroot
+  cosign sign "$@" gcr.io/$PROJECT_ID/java${java_version}-debian11:debug
+  cosign sign "$@" gcr.io/$PROJECT_ID/java${java_version}-debian11:debug-nonroot
+done

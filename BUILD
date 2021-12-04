@@ -152,23 +152,84 @@ NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:16-debug": "//nodejs:nodejs16_debug_amd64_debian11",
 }
 
-JAVA = {
+JAVA_BASE = {
+    "{REGISTRY}/{PROJECT_ID}/java-base:latest": "//java:java_base_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-base:nonroot": "//java:java_base_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-base:debug": "//java:java_base_debug_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-base:debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian10:latest": "//java:java_base_root_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian10:nonroot": "//java:java_base_nonroot_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian10:debug": "//java:java_base_debug_root_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian10:debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian10",
+}
+
+JAVA_BASE.update({
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian11:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian11"
+    for arch in BASE_ARCHITECTURES
+    for (tag_base, label) in [
+        ("latest", "root"),
+        ("nonroot", "nonroot"),
+        ("debug", "debug_root"),
+        ("debug-nonroot", "debug_nonroot"),
+    ]
+})
+
+JAVA11 = {
+    "{REGISTRY}/{PROJECT_ID}/java11:latest": "//java:java11_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java11:nonroot": "//java:java11_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java11:debug": "//java:java11_debug_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java11:debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
+
+    # java11-debian10 is not multi arch
+    "{REGISTRY}/{PROJECT_ID}/java11-debian10:latest": "//java:java11_root_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java11-debian10:nonroot": "//java:java11_nonroot_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java11-debian10:debug": "//java:java11_debug_root_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java11-debian10:debug-nonroot": "//java:java11_debug_nonroot_amd64_debian10",
+}
+
+JAVA11.update({
+    "{REGISTRY}/{PROJECT_ID}/java11-debian11:" + tag_base + "-" + arch: "//java:java11_" + label + "_" + arch + "_debian11"
+    for (tag_base, label) in [
+        ("latest", "root"),
+        ("nonroot", "nonroot"),
+        ("debug", "debug_root"),
+        ("debug-nonroot", "debug_nonroot"),
+    ]
+    for arch in BASE_ARCHITECTURES
+})
+
+JAVA17 = {
+    "{REGISTRY}/{PROJECT_ID}/java17:latest": "//java:java17_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java17:nonroot": "//java:java17_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java17:debug": "//java:java17_debug_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java17:debug-nonroot": "//java:java17_debug_nonroot_amd64_debian11",
+}
+
+JAVA17.update({
+    "{REGISTRY}/{PROJECT_ID}/java17-debian11:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian11"
+    for (tag_base, label) in [
+        ("latest", "root"),
+        ("nonroot", "nonroot"),
+        ("debug", "debug_root"),
+        ("debug-nonroot", "debug_nonroot"),
+    ]
+    for arch in BASE_ARCHITECTURES
+})
+
+# these are existing legacy tags that are scheduled to be removed
+LEGACY_JAVA_TAGS = {
     "{REGISTRY}/{PROJECT_ID}/java:base": "//java:java_base_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java:base-nonroot": "//java:java_base_nonroot_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java:base-debug": "//java:java_base_debug_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java:base-debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:latest": "//java:java11_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:nonroot": "//java:java11_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:debug": "//java:java11_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:11": "//java:java11_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:11-nonroot": "//java:java11_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:11-debug": "//java:java11_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:11-debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:base": "//java:java_base_root_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:base-nonroot": "//java:java_base_nonroot_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:base-debug": "//java:java_base_debug_root_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:base-debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian10",
+    "{REGISTRY}/{PROJECT_ID}/java-debian11:base": "//java:java_base_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-nonroot": "//java:java_base_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-debug": "//java:java_base_debug_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:latest": "//java:java11_root_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:nonroot": "//java:java11_nonroot_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:11": "//java:java11_root_amd64_debian10",
@@ -177,10 +238,6 @@ JAVA = {
     "{REGISTRY}/{PROJECT_ID}/java-debian10:debug-nonroot": "//java:java11_debug_nonroot_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:11-debug": "//java:java11_debug_root_amd64_debian10",
     "{REGISTRY}/{PROJECT_ID}/java-debian10:11-debug-nonroot": "//java:java11_debug_nonroot_amd64_debian10",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:base": "//java:java_base_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-nonroot": "//java:java_base_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-debug": "//java:java_base_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian11:latest": "//java:java11_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian11:nonroot": "//java:java11_nonroot_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian11:11": "//java:java11_root_amd64_debian11",
@@ -189,6 +246,9 @@ JAVA = {
     "{REGISTRY}/{PROJECT_ID}/java-debian11:debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian11:11-debug": "//java:java11_debug_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-debian11:11-debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
+}
+
+JETTY = {
     "{REGISTRY}/{PROJECT_ID}/java/jetty:latest": "//java/jetty:jetty_java11_debian11",
     "{REGISTRY}/{PROJECT_ID}/java/jetty:debug": "//java/jetty:jetty_java11_debug_debian11",
     "{REGISTRY}/{PROJECT_ID}/java/jetty:java11": "//java/jetty:jetty_java11_debian11",
@@ -215,7 +275,15 @@ ALL.update(PYTHON3)
 
 ALL.update(NODEJS)
 
-ALL.update(JAVA)
+ALL.update(JAVA_BASE)
+
+ALL.update(JAVA11)
+
+ALL.update(JAVA17)
+
+ALL.update(LEGACY_JAVA_TAGS)
+
+ALL.update(JETTY)
 
 container_bundle(
     name = "all",
@@ -232,21 +300,4 @@ container_push(
     # pushing many images in parallel.
     # https://github.com/bazelbuild/rules_docker/issues/525
     sequential = True,
-)
-
-# do not publish these until java 17 is out of preview, leave them here for preview testing
-JAVA17 = {
-    "distroless/java:17": "//java:java17_root_amd64_debian11",
-    "distroless/java:17-nonroot": "//java:java17_nonroot_amd64_debian11",
-    "distroless/java:17-debug": "//java:java17_debug_root_amd64_debian11",
-    "distroless/java:17-debug-nonroot": "//java:java17_debug_nonroot_amd64_debian11",
-    "distroless/java:17-arm64": "//java:java17_root_arm64_debian11",
-    "distroless/java:17-nonroot-arm64": "//java:java17_nonroot_arm64_debian11",
-    "distroless/java:17-debug-arm64": "//java:java17_debug_root_arm64_debian11",
-    "distroless/java:17-debug-nonroot-arm64": "//java:java17_debug_nonroot_arm64_debian11",
-}
-
-container_bundle(
-    name = "java17_preview",
-    images = JAVA17,
 )
