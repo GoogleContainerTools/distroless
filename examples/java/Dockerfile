@@ -4,7 +4,7 @@ WORKDIR /app
 RUN javac examples/*.java
 RUN jar cfe main.jar examples.HelloJava examples/*.class 
 
-FROM gcr.io/distroless/java11-debian11:latest
+FROM gcr.io/distroless/java11-debian11
 COPY --from=build-env /app /app
 WORKDIR /app
 CMD ["main.jar"]
