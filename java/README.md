@@ -6,7 +6,9 @@ This image contains a minimal Linux, OpenJDK-based runtime.
 
 Specifically, the image contains everything in the [base image](../base/README.md), plus:
 
-* OpenJDK 11 (`gcr.io/distroless/java-debian10:11`) and its dependencies.
+* OpenJDK 11 (`gcr.io/distroless/java11-debian11`) and its dependencies.
+* OpenJDK 17 (`gcr.io/distroless/java17-debian11`) and its dependencies.
+
 
 ## Usage
 
