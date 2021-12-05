@@ -67,7 +67,8 @@ Follow these steps to get started:
   We publish the following distroless base images on `gcr.io`:
     * [gcr.io/distroless/static-debian11](base/README.md)
     * [gcr.io/distroless/base-debian11](base/README.md)
-    * [gcr.io/distroless/java-debian11](java/README.md)
+    * [gcr.io/distroless/java11-debian11](java/README.md)
+    * [gcr.io/distroless/java17-debian11](java/README.md)
     * [gcr.io/distroless/cc-debian11](cc/README.md)
     * [gcr.io/distroless/nodejs-debian11](nodejs/README.md)
 
@@ -193,7 +194,7 @@ $ docker run --entrypoint=sh -ti my_debug_image
 /app # ls
 BUILD       Dockerfile  hello.py
 ```
-> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java-debian10:11`, use the tag `<existing tag>-debug` instead, for example `gcr.io/distroless/java-debian10:11-debug`.
+> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java17-debian11:nonroot`, use the tag `<existing tag>-debug` instead, for example `gcr.io/distroless/java17-debian11:nonroot-debug`.
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
 
