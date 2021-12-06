@@ -114,7 +114,7 @@ EXTRA_DEBS = {
             "-jar",
         ],
         env = {"JAVA_VERSION": jre_ver(DISTRO_VERSIONS[arch][distro_suffix]["openjdk-" + java_version + "-jre-headless"])},
-        symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-amd64/bin/java"},
+        symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"},
     )
     for (java_version, arch, distro_suffix) in VERSION_PAIRS
     for user in USERS
