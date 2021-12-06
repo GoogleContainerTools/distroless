@@ -2,14 +2,14 @@ Distroless is designed to follow debian on their [standard support timeline](htt
 
 The current estimation of EOL of images
 
-| Image       |  Support    | Debian 10 EOL | Debian 11 EOL   |
-| ----------- | ----------- | ------------- | --------------- |
-| static      | standard    | aug 2022      | debian 12 + 1yr |
-| base        | standard    | aug 2022      | debian 12 + 1yr |
-| cc          | standard    | aug 2022      | debian 12 + 1yr |
-| java*       | standard    | jan 2022      | debian 12 + 3mo |
-| node*       | standard    | jan 2022      | debian 12 + 3mo |
-| python*     | standard    | jan 2022      | debian 12 + 3mo |
+| Image       | Debian 10 EOL | Debian 11 EOL   |
+| ----------- | ------------- | --------------- |
+| static      | aug 2022      | debian 12 + 1yr |
+| base        | aug 2022      | debian 12 + 1yr |
+| cc          | aug 2022      | debian 12 + 1yr |
+| java*       | jan 2022      | debian 12 + 3mo |
+| node*       | jan 2022      | debian 12 + 3mo |
+| python*     | jan 2022      | debian 12 + 3mo |
 
 \* see below for language specific runtime notes
 
