@@ -1,6 +1,6 @@
-Distroless is currently tracks debian on their [standard support timeline](https://wiki.debian.org/DebianReleases#Production_Releases).
+Distroless currently tracks Debian on their [standard support timeline](https://wiki.debian.org/DebianReleases#Production_Releases).
 
-The current estimation of EOL of images with the pattern 
+The current estimation of end of life for images with the pattern 
 
 `gcr.io/distroless/<image>-debian<version>:(latest|nonroot|debug|debug-nonroot)`
 
