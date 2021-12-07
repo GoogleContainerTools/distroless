@@ -1,4 +1,4 @@
-Distroless is designed to follow debian on their [standard support timeline](https://wiki.debian.org/DebianReleases#Production_Releases).
+Distroless is currently tracks debian on their [standard support timeline](https://wiki.debian.org/DebianReleases#Production_Releases).
 
 The current estimation of EOL of images
 
