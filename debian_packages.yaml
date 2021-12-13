@@ -1,0 +1,127 @@
+# debian 10
+- distros: ["debian10"]
+  archs: ["amd64", "arm64", "arm", "s390x", "ppc64le"]
+  packages:
+    - "libc6"
+    - "libc-bin"
+    - "base-files"
+    - "ca-certificates"
+    - "openssl"
+    - "libssl1.1"
+    - "libbz2-1.0"
+    - "libdb5.3"
+    - "libffi6"
+    - "liblzma5"
+    - "libreadline7"
+    - "libsqlite3-0"
+    - "mime-support"
+    - "netbase"
+    - "readline-common"
+    - "tzdata"
+    #c++
+    - "libgcc1"
+    - "libgomp1"
+    - "libstdc++6"
+
+# python and java only build on a subset of architectures
+- distros: ["debian10"]
+  archs: ["amd64", "arm64"]
+  packages:
+  # python
+    - "dash"
+    - "libexpat1"
+    - "libmpdec2"
+    - "libpython3.7-minimal"
+    - "libpython3.7-stdlib"
+    - "libtinfo6"
+    - "libuuid1"
+    - "libncursesw6"
+    - "python3-distutils"
+    - "python3.7-minimal"
+    - "zlib1g"
+  # java
+    - "libjpeg62-turbo"
+    - "libexpat1"
+    - "libpng16-16"
+    - "liblcms2-2"
+    - "libfreetype6"
+    - "fonts-dejavu-core"
+    - "fontconfig-config"
+    - "libfontconfig1"
+    - "libuuid1"
+    - "openjdk-11-jre-headless"
+    - "openjdk-11-jdk-headless"
+    - "libgraphite2-3"
+    - "libharfbuzz0b"
+    - "libglib2.0-0"
+    - "libpcre3"
+    - "zlib1g"
+
+# debian 11
+- distros: ["debian11"]
+  archs: ["amd64","arm64","arm","s390x","ppc64le"]
+  packages:
+    - "base-files"
+    - "ca-certificates"
+    - "libc6"
+    - "libc-bin"
+    - "libssl1.1"
+    - "netbase"
+    - "openssl"
+    - "tzdata"
+    # c++
+    - "libgcc-s1"
+    - "libgomp1"
+    - "libstdc++6"
+
+# python and java only build on a subset of architectures
+- distros: ["debian11"]
+  archs: ["amd64","arm64"]
+  packages:
+  # python
+    - "dash"
+    - "libbz2-1.0"
+    - "libcom-err2"
+    - "libcrypt1"  # TODO: glibc library for -lcrypt; maybe should be in cc?
+    - "libdb5.3"
+    - "libexpat1"
+    - "libffi7"
+    - "libgssapi-krb5-2"
+    - "libk5crypto3"
+    - "libkeyutils1"
+    - "libkrb5-3"
+    - "libkrb5support0"
+    - "liblzma5"
+    - "libmpdec3"
+    - "libncursesw6"
+    - "libnsl2"
+    - "libpython3.9-minimal"
+    - "libpython3.9-stdlib"
+    - "libreadline8"
+    - "libsqlite3-0"
+    - "libtinfo6"
+    - "libtirpc3"
+    - "libuuid1"
+    - "python3-distutils"
+    - "python3.9-minimal"
+    - "zlib1g"
+  # java
+    - "fontconfig-config"
+    - "fonts-dejavu-core"
+    - "libbrotli1"
+    - "libexpat1"
+    - "libfontconfig1"
+    - "libfreetype6"
+    - "libglib2.0-0"
+    - "libgraphite2-3"
+    - "libharfbuzz0b"
+    - "libjpeg62-turbo"
+    - "liblcms2-2"
+    - "libpcre3"
+    - "libpng16-16"
+    - "libuuid1"
+    - "openjdk-11-jdk-headless"
+    - "openjdk-11-jre-headless"
+    - "openjdk-17-jdk-headless"
+    - "openjdk-17-jre-headless"
+    - "zlib1g"

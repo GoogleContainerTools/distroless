@@ -34,22 +34,6 @@ steps:
     # Make sure python points to python3
     update-alternatives --install /usr/bin/python python /usr/bin/python3 0
 
-    bazel build //package_manager:dpkg_parser.par
-
-    # Optional: trigger building package bundles without concurrency to avoid
-    # flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
-    bazel build --jobs=1 @package_bundle_amd64_debian10//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_arm_debian10//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_arm64_debian10//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_s390x_debian10//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_ppc64le_debian10//file:packages.bzl
-
-    bazel build --jobs=1 @package_bundle_amd64_debian11//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_arm_debian11//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_arm64_debian11//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_s390x_debian11//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_ppc64le_debian11//file:packages.bzl
-
     bazel run //:publish
     bazel build all.tar
 

@@ -14,8 +14,8 @@ BASE_ARCHITECTURES = ["amd64", "arm64"]
 ARCHITECTURES = BASE_ARCHITECTURES + ["arm", "s390x", "ppc64le"]
 
 VERSIONS = [
-    ("debian10", "buster"),
-    ("debian11", "bullseye"),
+    ("debian10", "buster", "10"),
+    ("debian11", "bullseye", "11"),
 ]
 
 DEBIAN_SNAPSHOT = "20211224T032400Z"
