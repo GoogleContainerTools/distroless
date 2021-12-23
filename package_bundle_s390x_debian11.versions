@@ -1,5 +1,5 @@
 {
-    "base-files": "11.1+deb11u1",
+    "base-files": "11.1+deb11u2",
     "ca-certificates": "20210119",
     "libc-bin": "2.31-13+deb11u2",
     "libc6": "2.31-13+deb11u2",
