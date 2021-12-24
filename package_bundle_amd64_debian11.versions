@@ -1,5 +1,5 @@
 {
-    "base-files": "11.1+deb11u1",
+    "base-files": "11.1+deb11u2",
     "ca-certificates": "20210119",
     "dash": "0.5.11+git20200708+dd9ef66-5",
     "fontconfig-config": "2.13.1-4.2",
