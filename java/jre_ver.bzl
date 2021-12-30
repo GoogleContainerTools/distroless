@@ -7,7 +7,6 @@ def jre_ver(version):
     if version.startswith("11."):
         return version.split("+")[0]
 
-    # TODO switch to "+" when version changes to 17+35-1, update comment above
     if version.startswith("17"):
-        return version.split("~")[0]
+        return version.split("+")[0]
     fail("unrecognized openjdk package version: " + version)
