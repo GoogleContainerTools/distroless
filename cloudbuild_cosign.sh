@@ -3,10 +3,6 @@
 set -o errexit
 set -o xtrace
 
-# Temporary workaround for: https://github.com/GoogleContainerTools/distroless/issues/914
-export TUF_ROOT=/workspace/tmp/.sigstore/root
-mkdir -p $TUF_ROOT
-
 cosign version
 
 # Sign all images from 'images' file
