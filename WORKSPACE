@@ -270,10 +270,10 @@ http_archive(
 http_archive(
     name = "nodejs12_amd64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "0c650e494a0ce293fb1220cc81ab5b6b819c249439c392b5ee2e8b812eec5592",
-    strip_prefix = "node-v12.22.7-linux-x64/",
+    sha256 = "860c481f0e7963cbe5afa669d9e5deefa773fb67da571823945ac79a3ea76d3c",
+    strip_prefix = "node-v12.22.9-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v12.22.7/node-v12.22.7-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v12.22.9/node-v12.22.9-linux-x64.tar.gz"],
 )
 
 http_archive(
@@ -297,10 +297,10 @@ http_archive(
 http_archive(
     name = "nodejs12_arm64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "76fa99531cc57982e9a469babb03a7bd1c47d9392cb6d4b0d55f55858c4ed5a0",
-    strip_prefix = "node-v12.22.7-linux-arm64/",
+    sha256 = "307aa26c68600e2f73d699e58a15c59ea06928e4a348cd5a216278d9f2ee0d6c",
+    strip_prefix = "node-v12.22.9-linux-arm64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v12.22.7/node-v12.22.7-linux-arm64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v12.22.9/node-v12.22.9-linux-arm64.tar.gz"],
 )
 
 http_archive(
