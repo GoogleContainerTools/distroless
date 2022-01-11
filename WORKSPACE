@@ -279,10 +279,10 @@ http_archive(
 http_archive(
     name = "nodejs14_amd64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "83fa18a0e3642235446b66653eb27c169224ae9c1a15a32d6c3d9ddefb154ed4",
-    strip_prefix = "node-v14.18.2-linux-x64/",
+    sha256 = "bd96f88e054801d1368787f7eaf77b49cd052b9543c56bd6bc0bfc90310e2756",
+    strip_prefix = "node-v14.18.3-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v14.18.2/node-v14.18.2-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v14.18.3/node-v14.18.3-linux-x64.tar.gz"],
 )
 
 http_archive(
@@ -306,10 +306,10 @@ http_archive(
 http_archive(
     name = "nodejs14_arm64",
     build_file = "//nodejs:BUILD.nodejs",
-    sha256 = "e78e18e01a08b2459d738fc5fec6bd79f2b3dccf85e5122cd646b3385964bc1e",
-    strip_prefix = "node-v14.18.2-linux-arm64/",
+    sha256 = "2d071ca1bc1d0ea1eb259e79b81ebb4387237b2f77b3cf616806534e0030eaa8",
+    strip_prefix = "node-v14.18.3-linux-arm64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v14.18.2/node-v14.18.2-linux-arm64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v14.18.3/node-v14.18.3-linux-arm64.tar.gz"],
 )
 
 http_archive(
