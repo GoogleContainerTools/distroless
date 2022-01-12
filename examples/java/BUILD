@@ -4,30 +4,30 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("//base:distro.bzl", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTROS")
 
 [
     java_image(
-        name = "hello_" + user + distro_suffix,
+        name = "hello_" + user + "_" + distro,
         srcs = ["HelloJava.java"],
-        base = "//java:java11_" + user + "_amd64" + distro_suffix,
+        base = "//java:java11_" + user + "_amd64" + "_" + distro,
         main_class = "examples.HelloJava",
     )
     for user in [
         "root",
         "nonroot",
     ]
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro in DISTROS
 ]
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
 [
     container_test(
-        name = "hello_" + user + distro_suffix + "_test",
+        name = "hello_" + user + "_" + distro + "_test",
         size = "small",
-        configs = ["testdata/hello_" + user + distro_suffix + ".yaml"],
-        image = ":hello_" + user + distro_suffix,
+        configs = ["testdata/hello_" + user + "_" + distro + ".yaml"],
+        image = ":hello_" + user + "_" + distro,
         tags = [
             "amd64",
             "manual",
@@ -37,5 +37,5 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
         "root",
         "nonroot",
     ]
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro in DISTROS
 ]
