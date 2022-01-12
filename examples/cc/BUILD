@@ -3,7 +3,7 @@
 # repository code at any time.
 package(default_visibility = ["//visibility:public"])
 
-load("//base:distro.bzl", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTROS")
 load("@io_bazel_rules_docker//cc:image.bzl", "cc_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
@@ -18,35 +18,35 @@ cc_binary(
 )
 
 [cc_image(
-    name = "hello" + distro_suffix,
-    base = "//cc:cc_root_amd64" + distro_suffix,
+    name = "hello_" + distro,
+    base = "//cc:cc_root_amd64_" + distro,
     binary = ":hello",
-) for distro_suffix in DISTRO_SUFFIXES]
+) for distro in DISTROS]
 
 [cc_image(
-    name = "hello_cc" + distro_suffix,
-    base = "//cc:cc_root_amd64" + distro_suffix,
+    name = "hello_cc_" + distro,
+    base = "//cc:cc_root_amd64_" + distro,
     binary = ":hello_cc",
-) for distro_suffix in DISTRO_SUFFIXES]
+) for distro in DISTROS]
 
 [container_test(
-    name = "hello" + distro_suffix + "_test",
+    name = "hello_" + distro + "_test",
     size = "small",
     configs = ["testdata/hello.yaml"],
-    image = ":hello" + distro_suffix,
+    image = ":hello_" + distro,
     tags = [
         "amd64",
         "manual",
     ],
-) for distro_suffix in DISTRO_SUFFIXES]
+) for distro in DISTROS]
 
 [container_test(
-    name = "hello_cc" + distro_suffix + "_test",
+    name = "hello_cc_" + distro + "_test",
     size = "small",
     configs = ["testdata/hello_cc.yaml"],
-    image = ":hello_cc" + distro_suffix,
+    image = ":hello_cc_" + distro,
     tags = [
         "amd64",
         "manual",
     ],
-) for distro_suffix in DISTRO_SUFFIXES]
+) for distro in DISTROS]

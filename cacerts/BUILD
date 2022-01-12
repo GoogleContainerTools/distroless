@@ -1,15 +1,15 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("//base:distro.bzl", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTROS")
 load("//:checksums.bzl", "ARCHITECTURES")
 load(":cacerts.bzl", "cacerts")
 load(":java.bzl", "cacerts_java")
 
 [
     cacerts_java(
-        name = "cacerts_java_" + arch + distro_suffix,
-        cacerts_tar = "//base:cacerts_" + arch + distro_suffix,
+        name = "cacerts_java_" + arch + "_" + distro,
+        cacerts_tar = "//base:cacerts_" + arch + "_" + distro,
     )
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro in DISTROS
 ]

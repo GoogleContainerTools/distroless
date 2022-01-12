@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load(":base.bzl", "NONROOT", "distro_components")
-load(":distro.bzl", "DISTRO_SUFFIXES")
+load(":distro.bzl", "DISTROS")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
@@ -100,4 +100,4 @@ pkg_tar(
     package_dir = "etc",
 )
 
-[distro_components(suffix) for suffix in DISTRO_SUFFIXES]
+[distro_components(distro) for distro in DISTROS]

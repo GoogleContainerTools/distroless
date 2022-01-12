@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTROS", "DISTRO_PACKAGES")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
@@ -8,7 +8,7 @@ load("//base:base.bzl", "NONROOT")
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
-    "_debian10": [
+    "debian10": [
         "libffi6",
         "libmpdec2",
         "libpython3.7-minimal",
@@ -16,7 +16,7 @@ DISTRO_DEBS = {
         "libreadline7",
         "python3.7-minimal",
     ],
-    "_debian11": [
+    "debian11": [
         "libcom-err2",
         "libcrypt1",
         "libffi7",
@@ -36,38 +36,38 @@ DISTRO_DEBS = {
 }
 
 DISTRO_VERSION = {
-    "_debian10": "3.7",
-    "_debian11": "3.9",
+    "debian10": "3.7",
+    "debian11": "3.9",
 }
 
 [
     container_image(
-        name = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + distro_suffix,
+        name = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro,
         architecture = arch,
         # Based on //cc so that C extensions work properly.
-        base = "//cc" + (mode if mode else ":cc") + "_root_" + arch + distro_suffix,
+        base = "//cc" + (mode if mode else ":cc") + "_root_" + arch + "_" + distro,
         debs = [
-            DISTRO_PACKAGES[arch][distro_suffix]["dash"],
-            DISTRO_PACKAGES[arch][distro_suffix]["libbz2-1.0"],
-            DISTRO_PACKAGES[arch][distro_suffix]["libc-bin"],  # for ctypes.find_library
-            DISTRO_PACKAGES[arch][distro_suffix]["libdb5.3"],
-            DISTRO_PACKAGES[arch][distro_suffix]["libexpat1"],
-            DISTRO_PACKAGES[arch][distro_suffix]["liblzma5"],
-            DISTRO_PACKAGES[arch][distro_suffix]["libsqlite3-0"],
-            DISTRO_PACKAGES[arch][distro_suffix]["libuuid1"],
-            DISTRO_PACKAGES[arch][distro_suffix]["libncursesw6"],
-            DISTRO_PACKAGES[arch][distro_suffix]["libtinfo6"],
-            DISTRO_PACKAGES[arch][distro_suffix]["python3-distutils"],
-            DISTRO_PACKAGES[arch][distro_suffix]["zlib1g"],
-        ] + [DISTRO_PACKAGES[arch][distro_suffix][deb] for deb in DISTRO_DEBS[distro_suffix]],
+            DISTRO_PACKAGES[arch][distro]["dash"],
+            DISTRO_PACKAGES[arch][distro]["libbz2-1.0"],
+            DISTRO_PACKAGES[arch][distro]["libc-bin"],  # for ctypes.find_library
+            DISTRO_PACKAGES[arch][distro]["libdb5.3"],
+            DISTRO_PACKAGES[arch][distro]["libexpat1"],
+            DISTRO_PACKAGES[arch][distro]["liblzma5"],
+            DISTRO_PACKAGES[arch][distro]["libsqlite3-0"],
+            DISTRO_PACKAGES[arch][distro]["libuuid1"],
+            DISTRO_PACKAGES[arch][distro]["libncursesw6"],
+            DISTRO_PACKAGES[arch][distro]["libtinfo6"],
+            DISTRO_PACKAGES[arch][distro]["python3-distutils"],
+            DISTRO_PACKAGES[arch][distro]["zlib1g"],
+        ] + [DISTRO_PACKAGES[arch][distro][deb] for deb in DISTRO_DEBS[distro]],
         entrypoint = [
-            "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
+            "/usr/bin/python" + DISTRO_VERSION[distro],
         ],
         # Use UTF-8 encoding for file system: match modern Linux
         env = {"LANG": "C.UTF-8"},
         symlinks = {
-            "/usr/bin/python": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
-            "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro_suffix],
+            "/usr/bin/python": "/usr/bin/python" + DISTRO_VERSION[distro],
+            "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro],
         },
         tars = [
             "ld_so_" + arch + "_cache.tar",
@@ -78,15 +78,15 @@ DISTRO_VERSION = {
         ":debug",
     ]
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro in DISTROS
 ]
 
 [
     # TODO(mattmoor): Base this on the //cc:nonroot varietals instead
     container_image(
-        name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + distro_suffix,
+        name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + "_" + distro,
         architecture = arch,
-        base = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + distro_suffix,
+        base = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro,
         user = "%d" % NONROOT,
         workdir = "/home/nonroot",
     )
@@ -95,7 +95,7 @@ DISTRO_VERSION = {
         ":debug",
     ]
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro in DISTROS
 ]
 
 [
@@ -159,10 +159,10 @@ DISTRO_VERSION = {
 
 [
     container_test(
-        name = "python3_" + user + "_" + arch + distro_suffix + "_test",
+        name = "python3_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
         configs = ["testdata/python3.yaml"],
-        image = ":python3_" + user + "_" + arch + distro_suffix,
+        image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",
             arch,
@@ -173,16 +173,16 @@ DISTRO_VERSION = {
         "root",
         "nonroot",
     ]
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro in DISTROS
 ]
 
 # tests for version-specific things
 [
     container_test(
-        name = "version_specific_" + user + "_" + arch + distro_suffix + "_test",
+        name = "version_specific_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
-        configs = ["testdata/" + distro_suffix[1:] + ".yaml"],
-        image = ":python3_" + user + "_" + arch + distro_suffix,
+        configs = ["testdata/" + distro + ".yaml"],
+        image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",
             arch,
@@ -193,5 +193,5 @@ DISTRO_VERSION = {
         "root",
         "nonroot",
     ]
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro in DISTROS
 ]

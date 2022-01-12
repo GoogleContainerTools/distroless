@@ -1,14 +1,14 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("//base:distro.bzl", "DISTRO_PACKAGES", "DISTRO_SUFFIXES")
+load("//base:distro.bzl", "DISTROS", "DISTRO_PACKAGES")
 load("//:checksums.bzl", "ARCHITECTURES")
 load(":locale.bzl", "locale")
 
 [
     locale(
-        name = "locale_" + arch + distro_suffix,
-        deb = DISTRO_PACKAGES[arch][distro_suffix]["libc-bin"],
+        name = "locale_" + arch + "_" + distro,
+        deb = DISTRO_PACKAGES[arch][distro]["libc-bin"],
     )
     for arch in ARCHITECTURES
-    for distro_suffix in DISTRO_SUFFIXES
+    for distro in DISTROS
 ]
