@@ -1,224 +1,392 @@
 workspace(name = "distroless")
 
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-git_repository(
-    name = "subpar",
-    remote = "https://github.com/google/subpar",
-    tag = "1.0.0",
-)
-
-git_repository(
+http_archive(
     name = "io_bazel_rules_go",
-    remote = "https://github.com/bazelbuild/rules_go.git",
-    tag = "0.16.3",
+    sha256 = "e0015762cdeb5a2a9c48f96fb079c6a98e001d44ec23ad4fa2ca27208c5be4fb",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.14/rules_go-v0.24.14.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.14/rules_go-v0.24.14.tar.gz",
+    ],
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
 
+# bazel_gazelle is used by rules_docker, and needs to be updated to override the very old version
+# used in that workspace. We must use a version compatible with our version of rules_go. See:
+# https://github.com/bazelbuild/bazel-gazelle#compatibility-with-rules-go
+http_archive(
+    name = "bazel_gazelle",
+    sha256 = "222e49f034ca7a1d1231422cdb67066b885819885c356673cb1f72f748a3c9d4",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.22.3/bazel-gazelle-v0.22.3.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.22.3/bazel-gazelle-v0.22.3.tar.gz",
+    ],
+)
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+gazelle_dependencies()
+
+load("//package_manager:dpkg.bzl", "dpkg_list", "dpkg_src")
 load(
-    "//package_manager:package_manager.bzl",
-    "dpkg_list",
-    "dpkg_src",
-    "package_manager_repositories",
+    "//:checksums.bzl",
+    "ARCHITECTURES",
+    "BASE_ARCHITECTURES",
+    "DEBIAN_SECURITY_SNAPSHOT",
+    "DEBIAN_SNAPSHOT",
+    "SHA256s",
+    "VERSIONS",
 )
 
-package_manager_repositories()
+[
+    dpkg_src(
+        name = arch + "_" + name,
+        arch = arch,
+        distro = distro,
+        sha256 = SHA256s[arch][name]["main"],
+        snapshot = DEBIAN_SNAPSHOT,
+        url = "https://snapshot.debian.org/archive",
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+]
 
-dpkg_src(
-    name = "debian_stretch",
-    arch = "amd64",
-    distro = "stretch",
-    sha256 = "a0c5a8906ac6ad010535cca152df43411d0e5db1790f6d0e4106bbdf96f3ef0f",
-    snapshot = "20181210T092708Z",
-    url = "https://snapshot.debian.org/archive",
-)
+[
+    dpkg_src(
+        name = arch + "_" + name + "_updates",
+        arch = arch,
+        distro = distro + "-updates",
+        sha256 = SHA256s[arch][name]["updates"],
+        snapshot = DEBIAN_SNAPSHOT,
+        url = "https://snapshot.debian.org/archive",
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+]
 
-dpkg_src(
-    name = "debian_stretch_backports",
-    arch = "amd64",
-    distro = "stretch-backports",
-    sha256 = "a0f3402ab589998648fca6c7362b31974d2667d37ed57fe468cfa3cb018db303",
-    snapshot = "20181210T092708Z",
-    url = "http://snapshot.debian.org/archive",
-)
+[
+    dpkg_src(
+        name = arch + "_" + name + "_security",
+        package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
+        packages_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/{}/updates/main/binary-{}/Packages.xz".format(DEBIAN_SECURITY_SNAPSHOT, distro, arch),
+        sha256 = SHA256s[arch][name]["security"],
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+    if "debian10" == name
+    if "security" in SHA256s[arch][name]
+]
 
-dpkg_src(
-    name = "debian_stretch_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20181210T102358Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20181210T102358Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "755ac2ac3f235f3929ad01baf04f596740f038ea1873fe55013bbfe727b4194b",
-)
+# debian11 has a slightly different structure for security on snapshots
+[
+    dpkg_src(
+        name = arch + "_" + name + "_security",
+        package_prefix = "https://snapshot.debian.org/archive/debian-security/{}/".format(DEBIAN_SECURITY_SNAPSHOT),
+        packages_url = "https://snapshot.debian.org/archive/debian-security/{}/dists/{}-security/main/binary-{}/Packages.xz".format(DEBIAN_SECURITY_SNAPSHOT, distro, arch),
+        sha256 = SHA256s[arch][name]["security"],
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+    if "debian11" == name
+    if "security" in SHA256s[arch][name]
+]
 
-dpkg_list(
-    name = "package_bundle",
-    packages = [
-        # Version required to skip a security fix to the pre-release library
-        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc6=2.24-11+deb9u3",
-        "base-files",
-        "ca-certificates",
-        "openssl",
-        "libssl1.0.2",
-        "libssl1.1",
-        "libbz2-1.0",
-        "libdb5.3",
-        "libffi6",
-        "libncursesw5",
-        "liblzma5",
-        "libexpat1",
-        "libreadline7",
-        "libtinfo5",
-        "libsqlite3-0",
-        "mime-support",
-        "netbase",
-        "readline-common",
-        "tzdata",
+[
+    dpkg_src(
+        name = arch + "_" + name + "_backports",
+        arch = arch,
+        distro = distro + "-backports",
+        sha256 = SHA256s[arch][name]["backports"],
+        snapshot = DEBIAN_SNAPSHOT,
+        url = "https://snapshot.debian.org/archive",
+    )
+    for arch in ARCHITECTURES
+    for (name, distro) in VERSIONS
+    if "backports" in SHA256s[arch][name]
+]
 
-        #c++
-        "libgcc1",
-        "libgomp1",
-        "libstdc++6",
+[
+    dpkg_list(
+        name = "package_bundle_" + arch + "_debian11",
+        packages = [
+            "base-files",
+            "ca-certificates",
+            "libc6",
+            "libc-bin",
+            "libssl1.1",
+            "netbase",
+            "openssl",
+            "tzdata",
 
-        #java
-        "zlib1g",
-        "openjdk-8-jre-headless",
+            # c++
+            "libgcc-s1",
+            "libgomp1",
+            "libstdc++6",
+        ] + ([
+            # python only builds on amd64/arm64
+            "dash",
+            "libbz2-1.0",
+            "libcom-err2",
+            "libcrypt1",  # TODO: glibc library for -lcrypt; maybe should be in cc?
+            "libdb5.3",
+            "libexpat1",
+            "libffi7",
+            "libgssapi-krb5-2",
+            "libk5crypto3",
+            "libkeyutils1",
+            "libkrb5-3",
+            "libkrb5support0",
+            "liblzma5",
+            "libmpdec3",
+            "libncursesw6",
+            "libnsl2",
+            "libpython3.9-minimal",
+            "libpython3.9-stdlib",
+            "libreadline8",
+            "libsqlite3-0",
+            "libtinfo6",
+            "libtirpc3",
+            "libuuid1",
+            "python3-distutils",
+            "python3.9-minimal",
+            "zlib1g",
+            # java only builds on amd64/arm64
+            "fontconfig-config",
+            "fonts-dejavu-core",
+            "libbrotli1",
+            "libexpat1",
+            "libfontconfig1",
+            "libfreetype6",
+            "libglib2.0-0",
+            "libgraphite2-3",
+            "libharfbuzz0b",
+            "libjpeg62-turbo",
+            "liblcms2-2",
+            "libpcre3",
+            "libpng16-16",
+            "libuuid1",
+            "openjdk-11-jdk-headless",
+            "openjdk-11-jre-headless",
+            "openjdk-17-jdk-headless",  # 11 and 17 should share the same "base"
+            "openjdk-17-jre-headless",
+            "zlib1g",
+        ] if arch in BASE_ARCHITECTURES else []),
+        sources = [
+            "@" + arch + "_debian11_security//file:Packages.json",
+            "@" + arch + "_debian11_updates//file:Packages.json",
+            "@" + arch + "_debian11//file:Packages.json",
+        ],
+    )
+    for arch in ARCHITECTURES
+]
 
-        #python
-        "libpython2.7-minimal",
-        "python2.7-minimal",
-        "libpython2.7-stdlib",
-        "dash",
-        # Version required to skip a security fix to the pre-release library
-        # TODO: Remove when there is a security fix or dpkg_list finds the recent version
-        "libc-bin=2.24-11+deb9u3",
+[
+    dpkg_list(
+        name = "package_bundle_" + arch + "_debian10",
+        packages = [
+            "libc6",
+            "libc-bin",
+            "base-files",
+            "ca-certificates",
+            "openssl",
+            "libssl1.1",
+            "libbz2-1.0",
+            "libdb5.3",
+            "libffi6",
+            "liblzma5",
+            "libreadline7",
+            "libsqlite3-0",
+            "mime-support",
+            "netbase",
+            "readline-common",
+            "tzdata",
 
-        #python3
-        "libpython3.5-minimal",
-        "python3.5-minimal",
-        "libpython3.5-stdlib",
-
-        #dotnet
-        "libcurl3",
-        "libgssapi-krb5-2",
-        "libicu57",
-        "liblttng-ust0",
-        "libssl1.0.2",
-        "libunwind8",
-        "libuuid1",
-        "zlib1g",
-        "curl",
-        "libcomerr2",
-        "libidn2-0",
-        "libk5crypto3",
-        "libkrb5-3",
-        "libldap-2.4-2",
-        "libldap-common",
-        "libsasl2-2",
-        "libnghttp2-14",
-        "libpsl5",
-        "librtmp1",
-        "libssh2-1",
-        "libkeyutils1",
-        "libkrb5support0",
-        "libunistring0",
-        "libgnutls30",
-        "libgmp10",
-        "libhogweed4",
-        "libidn11",
-        "libnettle6",
-        "libp11-kit0",
-        "libffi6",
-        "libtasn1-6",
-        "libsasl2-modules-db",
-        "libdb5.3",
-        "libgcrypt20",
-        "libgpg-error0",
-        "libacl1",
-        "libattr1",
-        "libselinux1",
-        "libpcre3",
-        "libbz2-1.0",
-        "liblzma5",
-    ],
-    # Takes the first package found: security updates should go first
-    # If there was a security fix to a package before the stable release, this will find
-    # the older security release. This happened for stretch libc6.
-    sources = [
-        "@debian_stretch_security//file:Packages.json",
-        "@debian_stretch_backports//file:Packages.json",
-        "@debian_stretch//file:Packages.json",
-    ],
-)
+            #c++
+            "libgcc1",
+            "libgomp1",
+            "libstdc++6",
+        ] + ([
+            # python3 only builds on amd64/arm64
+            "dash",
+            "libexpat1",
+            "libmpdec2",
+            "libpython3.7-minimal",
+            "libpython3.7-stdlib",
+            "libtinfo6",
+            "libuuid1",
+            "libncursesw6",
+            "python3-distutils",
+            "python3.7-minimal",
+            "zlib1g",
+        ] if arch in BASE_ARCHITECTURES else []) + ([
+            # java only builds on amd64
+            "zlib1g",
+            "libjpeg62-turbo",
+            "libexpat1",
+            "libpng16-16",
+            "liblcms2-2",
+            "libfreetype6",
+            "fonts-dejavu-core",
+            "fontconfig-config",
+            "libfontconfig1",
+            "libuuid1",
+            "openjdk-11-jre-headless",
+            "openjdk-11-jdk-headless",
+            "libgraphite2-3",
+            "libharfbuzz0b",
+            "libglib2.0-0",
+            "libpcre3",
+            "zlib1g",
+        ] if arch == "amd64" else []),
+        sources = [
+            "@" + arch + "_debian10_security//file:Packages.json",
+            "@" + arch + "_debian10_updates//file:Packages.json",
+            "@" + arch + "_debian10//file:Packages.json",
+        ],
+    )
+    for arch in ARCHITECTURES
+]
 
 # For Jetty
 http_archive(
     name = "jetty",
-    build_file = "//:BUILD.jetty",
-    sha256 = "c66abd7323f6df5b28690e145d2ae829dbd12b8a2923266fa23ab5139a9303c5",
-    strip_prefix = "jetty-distribution-9.4.14.v20181114/",
+    build_file = "//java:BUILD.jetty",
+    sha256 = "01fae654b09932e446019aa859e7af6e05e27dbade12b54cd7bae3249fc723d9",
+    strip_prefix = "jetty-distribution-9.4.43.v20210629/",
     type = "tar.gz",
-    urls = ["http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.14.v20181114/jetty-distribution-9.4.14.v20181114.tar.gz"],
+    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.43.v20210629/jetty-distribution-9.4.43.v20210629.tar.gz"],
 )
 
-# Node
+# Node (https://nodejs.org/en/about/releases/)
+# Follow Node's maintainence schedule and support all LTS versions that are not end of life
 http_archive(
-    name = "nodejs",
-    build_file = "//experimental/nodejs:BUILD.nodejs",
-    sha256 = "3df19b748ee2b6dfe3a03448ebc6186a3a86aeab557018d77a0f7f3314594ef6",
-    strip_prefix = "node-v8.12.0-linux-x64/",
+    name = "nodejs12_amd64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "860c481f0e7963cbe5afa669d9e5deefa773fb67da571823945ac79a3ea76d3c",
+    strip_prefix = "node-v12.22.9-linux-x64/",
     type = "tar.gz",
-    urls = ["https://nodejs.org/dist/v8.12.0/node-v8.12.0-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v12.22.9/node-v12.22.9-linux-x64.tar.gz"],
 )
 
-# dotnet
 http_archive(
-    name = "dotnet",
-    build_file = "//experimental/dotnet:BUILD.dotnet",
-    sha256 = "69ecad24bce4f2132e0db616b49e2c35487d13e3c379dabc3ec860662467b714",
+    name = "nodejs14_amd64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "bd96f88e054801d1368787f7eaf77b49cd052b9543c56bd6bc0bfc90310e2756",
+    strip_prefix = "node-v14.18.3-linux-x64/",
     type = "tar.gz",
-    urls = ["https://download.microsoft.com/download/5/F/0/5F0362BD-7D0A-4A9D-9BF9-022C6B15B04D/dotnet-runtime-2.0.0-linux-x64.tar.gz"],
+    urls = ["https://nodejs.org/dist/v14.18.3/node-v14.18.3-linux-x64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs16_amd64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "a0f23911d5d9c371e95ad19e4e538d19bffc0965700f187840eb39a91b0c3fb0",
+    strip_prefix = "node-v16.13.2-linux-x64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v16.13.2/node-v16.13.2-linux-x64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs12_arm64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "307aa26c68600e2f73d699e58a15c59ea06928e4a348cd5a216278d9f2ee0d6c",
+    strip_prefix = "node-v12.22.9-linux-arm64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v12.22.9/node-v12.22.9-linux-arm64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs14_arm64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "2d071ca1bc1d0ea1eb259e79b81ebb4387237b2f77b3cf616806534e0030eaa8",
+    strip_prefix = "node-v14.18.3-linux-arm64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v14.18.3/node-v14.18.3-linux-arm64.tar.gz"],
+)
+
+http_archive(
+    name = "nodejs16_arm64",
+    build_file = "//nodejs:BUILD.nodejs",
+    sha256 = "e87d7c173d7c70672d71cc816ffe0baea2b0458cb7f96c248560410e9cd37522",
+    strip_prefix = "node-v16.13.2-linux-arm64/",
+    type = "tar.gz",
+    urls = ["https://nodejs.org/dist/v16.13.2/node-v16.13.2-linux-arm64.tar.gz"],
 )
 
 # For the debug image
 http_file(
-    name = "busybox",
+    name = "busybox_amd64",
     executable = True,
-    sha256 = "b51b9328eb4e60748912e1c1867954a5cf7e9d5294781cae59ce225ed110523c",
-    urls = ["https://busybox.net/downloads/binaries/1.27.1-i686/busybox"],
+    sha256 = "51fcb60efbdf3e579550e9ab893730df56b33d0cc928a2a6467bd846cdfef7d8",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-x86_64"],
+)
+
+http_file(
+    name = "busybox_arm",
+    executable = True,
+    sha256 = "cd04052b8b6885f75f50b2a280bfcbf849d8710c8e61d369c533acf307eda064",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv7l"],
+)
+
+http_file(
+    name = "busybox_arm64",
+    executable = True,
+    sha256 = "141adb1b625a6f44c4b114f76b4387b4ea4f7ab802b88eb40e0d2f6adcccb1c3",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv8l"],
+)
+
+http_file(
+    name = "busybox_s390x",
+    executable = True,
+    sha256 = "48d13ac057046b95ba58921958be639cc3a179ac888cdd65aacd7a69139aa857",
+    urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-s390x"],
+)
+
+# To update ppc64le busybox binary (#723)
+# Get the latest commit hash from dist-ppc64le branch of docker-library repo.
+# Substitute it in the link: https://github.com/docker-library/busybox/raw/<latest-commit-hash>/stable/musl/busybox.tar.xz
+# Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
+http_file(
+    name = "busybox_ppc64le",
+    executable = True,
+    sha256 = "469297ea9293df0dcb6c3f8d344eaf9f9b6ec1732696ffe86994f87c3600423b",
+    urls = ["https://github.com/docker-library/busybox/raw/c0125333c4c3dfa4b9e5fd9fe6fbb875242f3613/stable/musl/busybox.tar.xz"],
 )
 
 # Docker rules.
-git_repository(
+http_archive(
     name = "io_bazel_rules_docker",
-    commit = "5eb0728594013d746959c4bd21aa4b0c3e3848d8",
-    remote = "https://github.com/bazelbuild/rules_docker.git",
+    sha256 = "92779d3445e7bdc79b961030b996cb0c91820ade7ffa7edca69273f404b085d5",
+    strip_prefix = "rules_docker-0.20.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.20.0/rules_docker-v0.20.0.tar.gz"],
 )
 
 load(
-    "@io_bazel_rules_docker//docker:docker.bzl",
-    "docker_pull",
-    "docker_repositories",
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
 )
 
-# Used to generate java ca certs.
-docker_pull(
-    name = "debian8",
-    # From tag: 2017-09-11-115552
-    digest = "sha256:6d381d0bf292e31291136cff03b3209eb40ef6342fb790483fa1b9d3af84ae46",
-    registry = "gcr.io",
-    repository = "google-appengine/debian8",
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
 )
 
-docker_repositories()
+container_repositories()
 
-# Have the py_image dependencies for testing.
 load(
     "@io_bazel_rules_docker//python:image.bzl",
     _py_image_repos = "repositories",
@@ -241,3 +409,18 @@ load(
 )
 
 _go_image_repos()
+
+# Rust repositories
+http_archive(
+    name = "rules_rust",
+    sha256 = "42e60f81e2b269d28334b73b70d02fb516c8de0c16242f5d376bfe6d94a3509f",
+    strip_prefix = "rules_rust-58f709ffec90da93c4e622d8d94f0cd55cd2ef54",
+    urls = [
+        # Master branch as of 2021-02-04
+        "https://github.com/bazelbuild/rules_rust/archive/58f709ffec90da93c4e622d8d94f0cd55cd2ef54.tar.gz",
+    ],
+)
+
+load("@rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories()

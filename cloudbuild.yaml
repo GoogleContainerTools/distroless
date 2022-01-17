@@ -1,106 +1,112 @@
-timeout: 1800s
-steps:  
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//base:static']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:static', 'gcr.io/$PROJECT_ID/static:latest']
+timeout: 3600s  # 60 minutes
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//base:base']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:base', 'gcr.io/$PROJECT_ID/base:latest']
-  
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//base:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/base:debug', 'gcr.io/$PROJECT_ID/base:debug']
+options:
+  machineType: N1_HIGHCPU_8
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//cc']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/cc:cc', 'gcr.io/$PROJECT_ID/cc:latest']
+steps:
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//cc:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/cc:debug', 'gcr.io/$PROJECT_ID/cc:debug']
+# Unfortunately gcr.io/cloud-marketplace-containers/google/bazel is
+# no longer maintained. The cloud-build project is, but does not tag
+# images with bazel versions. The SHA hash was found manually and
+# verified with:
+#
+#   docker pull gcr.io/cloud-builders/bazel
+#   docker run --rm -ti gcr.io/cloud-builders/bazel version
+#   docker image inspect gcr.io/cloud-builders/bazel --format '{{.Id}}'
+#
+# See: https://github.com/GoogleCloudPlatform/cloud-builders/issues/667
+- name: gcr.io/cloud-builders/bazel@sha256:a7ab9f3abba94aad648d5fa9f690d285c0f55d8b20a411a3d53ca22a2ab9ad50
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java:java8']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:java8', 'gcr.io/$PROJECT_ID/java:latest']
+    # package manager needs wget
+    apt-get install wget
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java:debug', 'gcr.io/$PROJECT_ID/java:debug']
+    # Make sure python points to python3
+    update-alternatives --install /usr/bin/python python /usr/bin/python3 0
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java/jetty']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:jetty', 'gcr.io/$PROJECT_ID/java/jetty:latest']
+    bazel build //package_manager:dpkg_parser.par
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//java/jetty:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/java/jetty:debug', 'gcr.io/$PROJECT_ID/java/jetty:debug']
+    # Optional: trigger building package bundles without concurrency to avoid
+    # flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
+    bazel build --jobs=1 @package_bundle_amd64_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm64_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_s390x_debian10//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_ppc64le_debian10//file:packages.bzl
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//experimental/python3:python3']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/python3:python3', 'gcr.io/$PROJECT_ID/python3:latest']
+    bazel build --jobs=1 @package_bundle_amd64_debian11//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm_debian11//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_arm64_debian11//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_s390x_debian11//file:packages.bzl
+    bazel build --jobs=1 @package_bundle_ppc64le_debian11//file:packages.bzl
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//experimental/python3:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/python3:debug', 'gcr.io/$PROJECT_ID/python3:debug']
+    bazel run //:publish
+    bazel build all.tar
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//experimental/python2.7:python27']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/python2.7:python27', 'gcr.io/$PROJECT_ID/python2.7:latest']
+- name: docker
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
+  entrypoint: ./cloudbuild_docker.sh
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//experimental/python2.7:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/python2.7:debug', 'gcr.io/$PROJECT_ID/python2.7:debug']
+- name: ubuntu
+  entrypoint: ./cloudbuild_jq.sh
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//experimental/nodejs']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/nodejs:nodejs', 'gcr.io/$PROJECT_ID/nodejs:latest']
+- name: gcr.io/projectsigstore/cosign:v1.3.1@sha256:3cd9b3a866579dc2e0cf2fdea547f4c9a27139276cc373165c26842bc594b8bd
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
+  # Workaround for: https://github.com/GoogleContainerTools/distroless/issues/914
+  # /tmp has permissions 777
+  - TUF_ROOT=/tmp
+  entrypoint: sh
+  args:
+  - -c
+  - ./cloudbuild_cosign.sh --key $_KMS_VAL
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//experimental/nodejs:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/nodejs:debug', 'gcr.io/$PROJECT_ID/nodejs:debug']  
+- name: gcr.io/projectsigstore/cosign:v1.3.1@sha256:3cd9b3a866579dc2e0cf2fdea547f4c9a27139276cc373165c26842bc594b8bd
+  env:
+  - PROJECT_ID=${PROJECT_ID}
+  - COMMIT_SHA=${COMMIT_SHA}
+  - REGISTRY=gcr.io
+  # Workaround for: https://github.com/GoogleContainerTools/distroless/issues/914
+  # /tmp has permissions 777
+  - TUF_ROOT=/tmp
+  - COSIGN_EXPERIMENTAL=true
+  - GOOGLE_SERVICE_ACCOUNT_NAME=keyless@${PROJECT_ID}.iam.gserviceaccount.com
+  entrypoint: sh
+  args:
+  - -c
+  - ./cloudbuild_cosign.sh
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//experimental/dotnet']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/dotnet:dotnet', 'gcr.io/$PROJECT_ID/dotnet:latest']
+# Start task in k8s to generate provenance
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: sh
+  args:
+  - -c
+  - |
+    #!/bin/sh
+    set -o errexit
+    set -o xtrace
 
-- name: gcr.io/cloud-builders/bazel
-  args: ['run', '//experimental/dotnet:debug']
-- name: gcr.io/cloud-builders/docker
-  args: ['tag', 'bazel/experimental/dotnet:debug', 'gcr.io/$PROJECT_ID/dotnet:debug']
+    gcloud container clusters get-credentials provenance --zone=us-central1-c --project=${PROJECT_ID}
 
+    # Install tkn
+    curl -Lo tkn_${_TKN_VERSION}_Linux_arm64.tar.gz  https://github.com/tektoncd/cli/releases/download/v${_TKN_VERSION}/tkn_${_TKN_VERSION}_Linux_x86_64.tar.gz
+    tar -xvzf tkn_${_TKN_VERSION}_Linux_arm64.tar.gz -C /usr/local/bin/ tkn
 
-images:
-  - 'gcr.io/$PROJECT_ID/static:latest'
-  - 'gcr.io/$PROJECT_ID/base:latest'
-  - 'gcr.io/$PROJECT_ID/base:debug'
-  - 'gcr.io/$PROJECT_ID/cc:latest'
-  - 'gcr.io/$PROJECT_ID/cc:debug'
-  - 'gcr.io/$PROJECT_ID/java:latest'
-  - 'gcr.io/$PROJECT_ID/java:debug'
-  - 'gcr.io/$PROJECT_ID/java/jetty:latest'
-  - 'gcr.io/$PROJECT_ID/java/jetty:debug'
-  - 'gcr.io/$PROJECT_ID/python3:latest'
-  - 'gcr.io/$PROJECT_ID/python3:debug'
-  - 'gcr.io/$PROJECT_ID/python2.7:latest'
-  - 'gcr.io/$PROJECT_ID/python2.7:debug'
-  - 'gcr.io/$PROJECT_ID/nodejs:latest'
-  - 'gcr.io/$PROJECT_ID/nodejs:debug'
-  - 'gcr.io/$PROJECT_ID/dotnet:latest'
-  - 'gcr.io/$PROJECT_ID/dotnet:debug'
+    # Start provenance pipeline
+    kubectl apply -f provenance
+    tkn pipeline start -f=provenance/provenance-pipeline.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults --workspace name=workarea,volumeClaimTemplateFile=provenance/tekton/workspace-template.yaml

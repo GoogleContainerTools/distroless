@@ -2,11 +2,13 @@
 
 ## Image Contents
 
-This image contains a minimal Linux, openjdk-based runtime.
+This image contains a minimal Linux, OpenJDK-based runtime.
 
 Specifically, the image contains everything in the [base image](../base/README.md), plus:
 
-* openjdk8 and its dependencies.
+* OpenJDK 11 (`gcr.io/distroless/java11-debian11`) and its dependencies.
+* OpenJDK 17 (`gcr.io/distroless/java17-debian11`) and its dependencies.
+
 
 ## Usage
 

@@ -1,8 +1,10 @@
-FROM node:8.9.1 AS build-env
-ADD . /app
+FROM node:16 AS build-env
+COPY . /app
 WORKDIR /app
 
-FROM gcr.io/distroless/nodejs
+RUN npm ci --only=production
+
+FROM gcr.io/distroless/nodejs:16
 COPY --from=build-env /app /app
 WORKDIR /app
 CMD ["hello.js"]

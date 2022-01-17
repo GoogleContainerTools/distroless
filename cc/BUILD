@@ -1,18 +1,38 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
-load("@package_bundle//file:packages.bzl", "packages")
+load("//base:distro.bzl", "DISTROS", "DISTRO_PACKAGES")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("//:checksums.bzl", "ARCHITECTURES")
 
-# An intermediate image for Java and other "mostly statically" compiled languages
-[docker_build(
-    name = "cc" if (not mode) else mode[1:],
-    base = "//base" + mode,
-    debs = [
-        packages["libgcc1"],
-        packages["libgomp1"],
-        packages["libstdc++6"],
+# distribution-specific deb dependencies
+DISTRO_DEBS = {
+    "debian10": [
+        "libgcc1",
     ],
-) for mode in [
-    "",
-    ":debug",
-]]
+    "debian11": [
+        "libgcc-s1",
+    ],
+}
+
+# An image for C/C++ programs
+[
+    container_image(
+        name = ("cc" if (not mode) else mode[1:]) + "_" + user + "_" + arch + "_" + distro,
+        architecture = arch,
+        base = "//base" + (mode if mode else ":base") + "_" + user + "_" + arch + "_" + distro,
+        debs = [
+            DISTRO_PACKAGES[arch][distro]["libgomp1"],
+            DISTRO_PACKAGES[arch][distro]["libstdc++6"],
+        ] + [DISTRO_PACKAGES[arch][distro][deb] for deb in DISTRO_DEBS[distro]],
+    )
+    for mode in [
+        "",
+        ":debug",
+    ]
+    for arch in ARCHITECTURES
+    for user in [
+        "root",
+        "nonroot",
+    ]
+    for distro in DISTROS
+]

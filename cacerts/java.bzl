@@ -12,55 +12,48 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Rule for building and extracting java ca-certificates inside of a docker image."""
-
 def _impl(ctx):
-    # Strip off the '.tar'
-    image_name = ctx.attr._builder_image.label.name.split('.', 1)[0]
-    # docker_build rules always generate an image named 'bazel/$package:$name'.
-    builder_image_name = "bazel/%s:%s" % (ctx.attr._builder_image.label.package,
-                                          image_name)
+    ctx.actions.run_shell(
+        outputs = [ctx.outputs.out],
+        inputs = [ctx.file.cacerts_tar],
+        tools = [ctx.file._jksutil] + ctx.files._build_tar,
+        arguments = [ctx.file.cacerts_tar.path, ctx.outputs.out.path],
+        env = {
+            "CREATE_JKS": ctx.executable._jksutil.path,
+            "BUILD_TAR": ctx.executable._build_tar.path,
+        },
+        command = """
+            set -o errexit
+            set -o xtrace
 
-    # Generate a shell script to run the build.
-    build_contents = """\
-#!/bin/bash
-set -ex
-docker load -i {0}
-# Install the certs in the builder image.
-cid=$(docker run -d {1} sh -c "apt-get update && apt-get install -y -q ca-certificates-java")
-docker attach $cid
+            mkdir -p etc/ssl/certs/java
+            tar -xOf "$1" ./etc/ssl/certs/ca-certificates.crt | $CREATE_JKS > etc/ssl/certs/java/cacerts
 
-# Copy out the certs as a tarball
-mkdir -p etc/ssl/certs/java
-docker cp $cid:/etc/ssl/certs/java/cacerts etc/ssl/certs/java/cacerts
-tar -cf {2} etc/
-
-# Cleanup
-docker rm $cid
- """.format(ctx.file._builder_image.path,
-            builder_image_name,
-            ctx.outputs.out.path)
-    script = ctx.actions.declare_file("cacerts.build")
-    ctx.file_action(
-        output=script,
-        content=build_contents,
+            $BUILD_TAR  --output "$2" \
+                        --file ./etc/ssl/certs/java/cacerts=./etc/ssl/certs/java/cacerts
+        """,
     )
-
-    ctx.actions.run(
-        outputs=[ctx.outputs.out],
-        inputs=ctx.attr._builder_image.files.to_list() +
-        ctx.attr._builder_image.data_runfiles.files.to_list() + ctx.attr._builder_image.default_runfiles.files.to_list(),
-        executable=script,
-    )
-
-    return struct()
 
 cacerts_java = rule(
+    doc = """
+Rule for converting the PEM formatted ca-certs in to JKS format. Output is a tar
+file with the JKS file at etc/ssl/certs/java/cacerts.
+""",
     attrs = {
-        "_builder_image": attr.label(
-            default = Label("@debian8//image:image.tar"),
-            allow_files = True,
-            single_file = True,
+        "cacerts_tar": attr.label(
+            allow_single_file = [".tar"],
+            mandatory = True,
+        ),
+        "_jksutil": attr.label(
+            default = Label("//cacerts/jksutil:jksutil"),
+            cfg = "host",
+            executable = True,
+            allow_single_file = True,
+        ),
+        "_build_tar": attr.label(
+            default = Label("@rules_pkg//:build_tar"),
+            cfg = "host",
+            executable = True,
         ),
     },
     executable = False,

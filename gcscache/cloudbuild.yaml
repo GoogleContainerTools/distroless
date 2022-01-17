@@ -1,0 +1,4 @@
+steps:
+  - name: golang
+    args: ['go', 'run', 'cmd/sync.go']
+    dir: gcscache

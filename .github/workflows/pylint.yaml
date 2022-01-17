@@ -1,0 +1,30 @@
+name: Pylint
+
+on:
+  pull_request:
+    branches: [ 'main' ]
+
+jobs:
+
+  autoformat:
+    name: Auto-format and Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Go 1.15.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15.x
+        id: go
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get install pylint
+
+      - name: Run pylint
+        shell: bash
+        run: |
+          find . -name "*.py" | xargs pylint --disable=R,C

@@ -15,16 +15,16 @@
 import argparse
 import gzip
 import json
+import lzma  # requires python3
 import os
-import io
-
-from six.moves import urllib
+import subprocess
 
 from package_manager.parse_metadata import parse_package_metadata
+from package_manager.version_utils import compare_versions
 from package_manager import util
 
 OUT_FOLDER = "file"
-OS_RELEASE_PATH = "etc"
+OS_RELEASE_PATH = "usr/lib"
 PACKAGES_FILE_NAME = os.path.join(OUT_FOLDER,"Packages.json")
 PACKAGE_MAP_FILE_NAME = os.path.join(OUT_FOLDER,"packages.bzl")
 OS_RELEASE_FILE_NAME = os.path.join(OS_RELEASE_PATH, "os-release")
@@ -40,14 +40,16 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("--package-files", action='store',
-                    help='A list of Packages.gz files to use')
+                    help='A list of Packages.xz/gz files to use')
 parser.add_argument("--packages", action='store',
                     help='A comma delimited list of packages to search for and download')
 parser.add_argument("--workspace-name", action='store',
                     help='The name of the current bazel workspace')
+parser.add_argument("--versionsfile", action='store',
+                    help='If set, the output path of the versions file to be generated')
 
 parser.add_argument("--download-and-extract-only", action='store',
-                    help='If True, download Packages.gz and make urls absolute from mirror url')
+                    help='If True, download Packages.xz/gz and make urls absolute from mirror url')
 parser.add_argument("--mirror-url", action='store',
                     help='The base url for the package list mirror')
 parser.add_argument("--arch", action='store',
@@ -57,39 +59,46 @@ parser.add_argument("--distro", action='store',
 parser.add_argument("--snapshot", action='store',
                     help='The snapshot date to download')
 parser.add_argument("--sha256", action='store',
-                    help='The sha256 checksum to validate for the Packages.gz file')
-parser.add_argument("--packages-gz-url", action='store',
-                    help='The full url for the Packages.gz file')
+                    help='The sha256 checksum to validate for the Packages.xz/gz file')
+parser.add_argument("--packages-url", action='store',
+                    help='The full url for the Packages.xz/gz file')
 parser.add_argument("--package-prefix", action='store',
-                    help='The prefix to prepend to the value of Filename key in the Packages.gz file.')
+                    help='The prefix to prepend to the value of Filename key in the Packages.xz/gz file.')
 
 
 def main():
     """ A tool for downloading debian packages and package metadata """
     args = parser.parse_args()
+
+    # golang/bazel use "ppc64le" https://golang.org/doc/install/source#introduction
+    # unfortunately debian uses "ppc64el" https://wiki.debian.org/ppc64el
+    if args.arch == "ppc64le":
+        args.arch = "ppc64el"
+    elif args.arch == "arm":
+        args.arch = "armhf"
+    if args.packages_url and 'ppc64le' in args.packages_url:
+        args.packages_url = args.packages_url.replace("ppc64le", "ppc64el")
+    elif args.packages_url and '-arm/' in args.packages_url:
+        args.packages_url = args.packages_url.replace("-arm/", "-armhf/")
+
     if args.download_and_extract_only:
         download_package_list(args.mirror_url,args.distro, args.arch, args.snapshot, args.sha256,
-                              args.packages_gz_url, args.package_prefix)
+                              args.packages_url, args.package_prefix)
         util.build_os_release_tar(args.distro, OS_RELEASE_FILE_NAME, OS_RELEASE_PATH, OS_RELEASE_TAR_FILE_NAME)
     else:
-        download_dpkg(args.package_files, args.packages, args.workspace_name)
+        download_dpkg(args.package_files, args.packages, args.workspace_name, args.versionsfile)
 
-def download_dpkg(package_files, packages, workspace_name):
+def download_dpkg(package_files, packages, workspace_name, versionsfile):
     """ Using an unzipped, json package file with full urls,
      downloads a .deb package
 
     Uses the 'Filename' key to download the .deb package
     """
-    pkg_vals_to_package_file_and_sha256 = {}
     package_to_rule_map = {}
+    package_to_version_map = {}
     package_file_to_metadata = {}
-    for pkg_vals in set(packages.split(",")):
-        pkg_split = pkg_vals.split("=")
-        if len(pkg_split) != 2:
-            pkg_name = pkg_vals
-            pkg_version = ""
-        else:
-            pkg_name, pkg_version = pkg_split
+    for pkg_name in set(packages.split(",")):
+        pkg = {}
         for package_file in package_files.split(","):
             if package_file not in package_file_to_metadata:
                 with open(package_file, 'rb') as f:
@@ -97,39 +106,39 @@ def download_dpkg(package_files, packages, workspace_name):
                     package_file_to_metadata[package_file] = json.loads(data.decode('utf-8'))
             metadata = package_file_to_metadata[package_file]
             if (pkg_name in metadata and
-            (pkg_version == "" or
-            pkg_version == metadata[pkg_name][VERSION_KEY])):
+            (not VERSION_KEY in pkg or compare_versions(metadata[pkg_name][VERSION_KEY], pkg[VERSION_KEY]) > 0)):
                 pkg = metadata[pkg_name]
-                buf = urllib.request.urlopen(pkg[FILENAME_KEY])
-                package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
-                out_file = os.path.join("file", util.encode_package_name(pkg_name))
-                with io.open(out_file, 'wb') as f:
-                    f.write(buf.read())
-                expected_checksum = util.sha256_checksum(out_file)
-                actual_checksum = pkg[SHA256_KEY]
-                if actual_checksum != expected_checksum:
-                    raise Exception("Wrong checksum for package %s.  Expected: %s, Actual: %s" %(pkg_name, expected_checksum, actual_checksum))
-                if pkg_version == "":
-                    break
-                if (pkg_vals in pkg_vals_to_package_file_and_sha256 and
-                pkg_vals_to_package_file_and_sha256[pkg_vals][1] != actual_checksum):
-                    raise Exception("Conflicting checksums for package %s, version %s.  Conflicting checksums: %s:%s, %s:%s" %
-                    (pkg_name, pkg_version,
-                     pkg_vals_to_package_file_and_sha256[pkg_vals][0], pkg_vals_to_package_file_and_sha256[pkg_vals][1],
-                     package_file, actual_checksum))
-                else:
-                    pkg_vals_to_package_file_and_sha256[pkg_vals] = [package_file, actual_checksum]
-                break
+        if (not pkg):
+            raise Exception("Package: %s not found in any of the sources" % pkg_name)
         else:
-            raise Exception("Package: %s, Version: %s not found in any of the sources" % (pkg_name, pkg_version))
+            out_file = os.path.join("file", util.encode_package_name(pkg_name))
+            download_and_save(pkg[FILENAME_KEY], out_file)
+            package_to_rule_map[pkg_name] = util.package_to_rule(workspace_name, pkg_name)
+            package_to_version_map[pkg_name] = pkg[VERSION_KEY]
+            actual_checksum = util.sha256_checksum(out_file)
+            expected_checksum = pkg[SHA256_KEY]
+            if actual_checksum != expected_checksum:
+                raise Exception("Wrong checksum for package %s %s (%s).  Expected: %s, Actual: %s" %(pkg_name, os.getcwd() + "/" + out_file, pkg[FILENAME_KEY], expected_checksum, actual_checksum))
     with open(PACKAGE_MAP_FILE_NAME, 'w') as f:
         f.write("packages = " + json.dumps(package_to_rule_map))
+        f.write("\nversions = " + json.dumps(package_to_version_map))
+    if versionsfile:
+        with open(versionsfile, 'w') as f:
+            f.write(json.dumps(package_to_version_map, sort_keys=True, indent=4, separators=(',', ': ')))
+            f.write('\n')
 
-def download_package_list(mirror_url, distro, arch, snapshot, sha256, packages_gz_url, package_prefix):
+def download_and_save(url, out_file):
+    try:
+        subprocess.check_output(["wget", "--tries", "10", url, "-O", out_file], stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as e:
+        print("error running wget: %s", e.output)
+        raise
+
+def download_package_list(mirror_url, distro, arch, snapshot, sha256, packages_url, package_prefix):
     """Downloads a debian package list, expands the relative urls,
     and saves the metadata as a json file
 
-    A debian package list is a gzipped, newline delimited, colon separated
+    A debian package list is a (xz|gzip)-ipped, newline delimited, colon separated
     file with metadata about all the packages available in that repository.
     Multiline keys are indented with spaces.
 
@@ -156,30 +165,34 @@ SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
 
     """
 
-    if bool(packages_gz_url) != bool(package_prefix):
-        raise Exception("packages_gz_url and package_prefix must be specified or skipped at the same time.")
+    if bool(packages_url) != bool(package_prefix):
+        raise Exception("packages_url and package_prefix must be specified or skipped at the same time.")
 
-    if (not packages_gz_url) and (not mirror_url or not snapshot or not distro or not arch):
-        raise Exception("If packages_gz_url is not specified, all of mirror_url, snapshot, "
+    if (not packages_url) and (not mirror_url or not snapshot or not distro or not arch):
+        raise Exception("If packages_url is not specified, all of mirror_url, snapshot, "
                         "distro and arch must be specified.")
 
-    url = packages_gz_url
+    url = packages_url
     if not url:
-        url = "%s/debian/%s/dists/%s/main/binary-%s/Packages.gz" % (
+        url = "%s/debian/%s/dists/%s/main/binary-%s/Packages.xz" % (
             mirror_url,
             snapshot,
             distro,
             arch
         )
 
-    buf = urllib.request.urlopen(url)
-    with io.open("Packages.gz", 'wb') as f:
-        f.write(buf.read())
-    actual_sha256 = util.sha256_checksum("Packages.gz")
+
+    packages_copy = url.split('/')[-1]
+    download_and_save(url, packages_copy)
+    actual_sha256 = util.sha256_checksum(packages_copy)
     if sha256 != actual_sha256:
-        raise Exception("sha256 of Packages.gz don't match: Expected: %s, Actual:%s" %(sha256, actual_sha256))
-    with gzip.open("Packages.gz", 'rb') as f:
-        data = f.read()
+        raise Exception("sha256 of %s don't match: Expected: %s, Actual:%s" %(packages_copy, sha256, actual_sha256))
+    if packages_copy.endswith(".gz"):
+        with gzip.open(packages_copy, 'rb') as f:
+            data = f.read()
+    else:
+        with lzma.open("Packages.xz", 'rb') as f:
+            data = f.read()
     metadata = parse_package_metadata(data, mirror_url, snapshot, package_prefix)
     with open(PACKAGES_FILE_NAME, 'w') as f:
         json.dump(metadata, f)

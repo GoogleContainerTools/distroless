@@ -1,15 +1,30 @@
 load("@subpar//:subpar.bzl", "par_binary")
 
+# Requires python3 for lzma system library
 par_binary(
     name = "dpkg_parser",
-    srcs = glob(["**/*.py"]),
+    srcs = [
+        "__init__.py",
+        "dpkg_parser.py",
+    ],
+    compiler_args = [
+        "--interpreter",
+        "/usr/bin/env python3",
+    ],
     main = "dpkg_parser.py",
-    visibility = ["//visibility:public"],
+    python_version = "PY3",
     deps = [
         ":parse_metadata",
         ":util",
+        ":version_utils",
         "@bazel_tools//third_party/py/six",
     ],
+)
+
+sh_binary(
+    name = "dpkg_extract",
+    srcs = ["dpkg_extract.sh"],
+    visibility = ["//:__subpackages__"],
 )
 
 py_library(
@@ -20,7 +35,15 @@ py_library(
 
 py_library(
     name = "util",
-    srcs = ["util.py"],
+    srcs = [
+        "util.py",
+        "@rules_pkg//:build_tar",
+    ],
+)
+
+py_library(
+    name = "version_utils",
+    srcs = ["version_utils.py"],
 )
 
 py_test(

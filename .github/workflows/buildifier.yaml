@@ -1,0 +1,49 @@
+name: Buildifier
+
+on:
+  pull_request:
+    branches: [ 'main' ]
+
+jobs:
+
+  autoformat:
+    name: Auto-format and Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Go 1.15.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15.x
+        id: go
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          cd $(mktemp -d)
+          GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@3.2.0
+
+      - name: Run buildifier
+        shell: bash
+        run: |
+          buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
+
+      - name: Verify buildifier
+        shell: bash
+        run: |
+          # From: https://backreference.org/2009/12/23/how-to-match-newlines-in-sed/
+          # This is to leverage this workaround:
+          # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
+          function urlencode() {
+            sed ':begin;$!N;s/\n/%0A/;tbegin'
+          }
+          if [[ $(git diff-index --name-only HEAD --) ]]; then
+              for x in $(git diff-index --name-only HEAD --); do
+                echo "::error file=$x::Please run buildifier.%0A$(git diff $x | urlencode)"
+              done
+              echo "${{ github.repository }} is out of style. Please run buildifier."
+              exit 1
+          fi
+          echo "${{ github.repository }} is formatted correctly."

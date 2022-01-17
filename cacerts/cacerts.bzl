@@ -1,42 +1,63 @@
 """A rule to unpack ca certificates from the debian package."""
 
 def _impl(ctx):
-    file_args = ' '.join([str(f.path) for f in ctx.files.certs[:]])
-    args = "%s %s %s %s \"%s\"" % (
-        ctx.executable._extract.path,
-        ctx.file.deb.path,
-        ctx.outputs.tar.path,
-        ctx.outputs.deb.path,
-        file_args,
+    file_args = " ".join([str(f.path) for f in ctx.files.certs[:]])
+    ctx.actions.run_shell(
+        inputs = [ctx.file.deb] + ctx.files.certs,
+        outputs = [ctx.outputs.tar],
+        tools = [] + ctx.files._build_tar + ctx.files._dpkg_extract,
+        arguments = [
+            ctx.file.deb.path,
+            ctx.outputs.tar.path,
+            file_args,
+        ],
+        env = {
+            "EXTRACT_DEB": ctx.executable._dpkg_extract.path,
+            "BUILD_TAR": ctx.executable._build_tar.path,
+        },
+        command = """
+            set -o errexit
+            $EXTRACT_DEB "$1" ./usr/share/ca-certificates ./usr/share/doc/ca-certificates/copyright
+            CERT_FILE=./etc/ssl/certs/ca-certificates.crt
+            mkdir -p $(dirname $CERT_FILE)
+            CERTS=$(find usr/share/ca-certificates -type f | sort)
+            for cert in $CERTS; do
+              cat $cert >> $CERT_FILE
+            done
+            CERTS_FILES=$3
+            for cert in $CERTS_FILES; do
+                cat $cert >> $CERT_FILE
+            done
+            $BUILD_TAR  --output "$2" \
+                        --file $CERT_FILE=$CERT_FILE \
+                        --file ./usr/share/doc/ca-certificates/copyright=./usr/share/doc/ca-certificates/copyright
+        """,
     )
-
-    ctx.action(command = args,
-            inputs = [ctx.executable._extract, ctx.file.deb] + ctx.files.certs,
-            outputs = [ctx.outputs.tar, ctx.outputs.deb])
 
 cacerts = rule(
     attrs = {
         "deb": attr.label(
-            allow_files = [".deb"],
-            single_file = True,
+            allow_single_file = [".deb"],
             mandatory = True,
         ),
         "certs": attr.label_list(
             allow_files = [".crt"],
         ),
         # Implicit dependencies.
-        "_extract": attr.label(
-            default = Label("//cacerts:extract_certs"),
+        "_build_tar": attr.label(
+            default = Label("@rules_pkg//:build_tar"),
             cfg = "host",
             executable = True,
-            allow_files = True,
+        ),
+        "_dpkg_extract": attr.label(
+            default = Label("//package_manager:dpkg_extract"),
+            cfg = "host",
+            executable = True,
         ),
     },
     executable = False,
     outputs = {
         "tar": "%{name}.tar",
-        "deb": "%{name}.deb",
     },
     implementation = _impl,
 )
-

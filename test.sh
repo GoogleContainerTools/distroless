@@ -14,13 +14,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -o errexit
+set -o xtrace
 
 # Linting
-./buildifier.sh
-find . -name "*.py" |xargs pylint --disable=R,C
+buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
+find . -name "*.py" | xargs pylint --disable=R,C
+
+# Make sure python points to python3
+PYTHON_VERSION=$(python --version)
+if [[ ! $PYTHON_VERSION == Python\ 3* ]];
+then
+  echo "python must point to a python3, currently points to $(readlink -f "$(which python)")"
+  echo "maybe run: update-alternatives --install /usr/bin/python python /usr/bin/python3"
+  exit 1
+fi
 
 # Bazel build and test
-bazel clean
-bazel build //...
-bazel test --test_output=errors //...
+bazel clean --curses=no
+bazel build --curses=no //package_manager:dpkg_parser.par
+
+# Optional: trigger building package bundles without concurrency to avoid
+# flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
+bazel build --jobs=1 @package_bundle_amd64_debian10//file:packages.bzl
+bazel build --jobs=1 @package_bundle_arm_debian10//file:packages.bzl
+bazel build --jobs=1 @package_bundle_arm64_debian10//file:packages.bzl
+bazel build --jobs=1 @package_bundle_s390x_debian10//file:packages.bzl
+bazel build --jobs=1 @package_bundle_ppc64le_debian10//file:packages.bzl
+
+bazel build --curses=no //...
+# Run all tests not tagged as "manual"
+bazel test --curses=no --test_output=errors --test_timeout=900 //...
+# Run all tests tagged with "amd64"
+bazel test --curses=no --test_output=errors --test_timeout=900 $(bazel query 'attr("tags", "amd64", "//...")')

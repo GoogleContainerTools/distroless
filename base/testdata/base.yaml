@@ -10,6 +10,9 @@ fileExistenceTests:
 - name: passwd
   path: '/etc/passwd'
   shouldExist: true
+- name: group
+  path: '/etc/group'
+  shouldExist: true
 - name: etc-os-release
   path: '/etc/os-release'
   shouldExist: true
@@ -26,5 +29,25 @@ fileExistenceTests:
   path: '/usr/sbin/tzconfig'
   shouldExist: true
 - name: homedir
-  path: '/home'
+  path: '/root'
   shouldExist: true
+- name: nonroot-homedir
+  path: '/home/nonroot'
+  shouldExist: true
+- name: dpkg-status.d
+  path: '/var/lib/dpkg/status.d/libc6'
+  shouldExist: true
+fileContentTests:
+- name: 'known users'
+  path: '/etc/passwd'
+  expectedContents: ['^root:x:0:0:root:/root:/sbin/nologin\nnobody:x:65534:65534:nobody:/nonexistent:/sbin/nologin\nnonroot:x:65532:65532:nonroot:/home/nonroot:/sbin/nologin\n$']
+- name: 'known groups'
+  path: '/etc/group'
+  expectedContents: ['^root:x:0:\nnobody:x:65534:\ntty:x:5:\nstaff:x:50:\nnonroot:x:65532:\n$']
+- name: '/usr/lib/os-release pretty name'
+  path: '/usr/lib/os-release'
+  expectedContents: ['PRETTY_NAME="Distroless"']
+# /etc/os-release is a symlink to /usr/lib/os-release, make sure they match.
+- name: '/etc/os-release pretty name'
+  path: '/etc/os-release'
+  expectedContents: ['PRETTY_NAME="Distroless"']
