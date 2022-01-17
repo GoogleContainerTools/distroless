@@ -1,0 +1,93 @@
+Package: libnewlib-dev
+Source: newlib
+Version: 2.1.0+git20140818.1a8323b-2
+Installed-size: 655
+Maintainer: agustin henze <tin@debian.org>
+Architecture: all
+Replaces: libnewlib0
+Suggests: libnewlib-arm-none-eabi, gcc-arm-none-eabi
+Breaks: libnewlib0
+Description: c library and math library intended for use on embedded systems
+Homepage: https://sourceware.org/newlib/
+Description-md5: 162c7aade6589c92a4fbbfc3569b799e
+Tag: devel::library, role::devel-lib
+Section: libdevel
+Priority: extra
+Filename: pool/main/n/newlib/libnewlib-dev_2.1.0+git20140818.1a8323b-2_all.deb
+Size: 224488
+Md5sum: d23fb1e09ff74af446a72454831b8a99
+Sha1: 451ef34577a9a98ea30ec0890507d3dce97ac3fc
+Sha256: dc810570e557bdcb3570c715b13e7521e153f741cf88a62443c6d6101025b3b5
+
+Package: libnewlib-doc
+Source: newlib
+Version: 2.1.0+git20140818.1a8323b-2
+Installed-Size: 2008
+Maintainer: Agustin Henze <tin@debian.org>
+Architecture: all
+Recommends: libnewlib-dev
+Description: C library and math library intended for use on embedded systems (doc)
+Homepage: https://sourceware.org/newlib/
+Description-md5: 40948aff3525e14c614fec3d16fcd682
+Section: doc
+Priority: extra
+Filename: pool/main/n/newlib/libnewlib-doc_2.1.0+git20140818.1a8323b-2_all.deb
+Size: 286846
+MD5sum: 4276af40ba4721199371ec214cf7ee56
+SHA1: 0769fc9fbba41e2fb4d6913c3ddf88db8f0f628b
+SHA256: 80f29946dec5802a9be116a5d30d43362318bde9e7dce722413a12010e9bcb91
+
+Package: newlib-source
+Source: newlib
+Version: 2.1.0+git20140818.1a8323b-2
+Installed-Size: 4637
+Maintainer: Agustin Henze <tin@debian.org>
+Architecture: all
+Recommends: xz-utils
+Description: C library and math library intended for use on embedded systems (source)
+Homepage: https://sourceware.org/newlib/
+Description-md5: 1a43d500b6359fa0802bf4b2d3bbe002
+Tag: role::source
+Section: devel
+Priority: extra
+Filename: pool/main/n/newlib/newlib-source_2.1.0+git20140818.1a8323b-2_all.deb
+Size: 4687602
+MD5sum: ee01527e5438eb1f5710ee579254e5aa
+SHA1: b6977e516115f26d7db9392579b2273e5efc25b9
+SHA256: 7fb8ae95b43bdc0c8398714b130e8ba2a21fca4b31cd94642f904c27c0300f2b
+
+Package: newmail
+Version: 0.5-2
+Installed-Size: 76
+Maintainer: Martin Schulze <joey@debian.org>
+Architecture: amd64
+Depends: libc6 (>= 2.7-1)
+Description: Notificator for incoming mail
+Homepage: http://www.infodrom.org/projects/newmail/
+Description-md5: 49b0168ce625e668ce3031036ad2f541
+Tag: interface::commandline, mail::notification, role::program,
+ scope::utility, works-with::mail
+Section: mail
+Priority: optional
+Filename: pool/main/n/newmail/newmail_0.5-2_amd64.deb
+Size: 14154
+MD5sum: 5cd31aab55877339145517fb6d5646cb
+SHA1: 869934a25a8bb3def0f17fef9221bed2d3a460f9
+SHA256: 52ec3ac93cf8ba038fbcefe1e78f26ca1d59356cdc95e60f987c3f52b3f5e7ef
+
+Package: zzuf
+Version: 0.13.svn20100215-4.1
+Installed-Size: 209
+Maintainer: Sam Hocevar <sho@debian.org>
+Architecture: amd64
+Depends: libc6 (>= 2.14)
+Description: transparent application fuzzer
+Description-md5: 27dbe1f74dc9503e917a86ba5a96a833
+Tag: implemented-in::c, role::program
+Section: devel
+Priority: optional
+Filename: pool/main/z/zzuf/zzuf_0.13.svn20100215-4.1_amd64.deb
+Size: 86174
+MD5sum: 0cf99b320ef14cdaead8dc98184242b6
+SHA1: 47b4e9b5def65974fb0e76355687977923946137
+SHA256: 6b063ba41ed2efc58931ebbd6ff668c522cb22c734597fa2409885eb9bd4fcd2
