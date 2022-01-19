@@ -22,7 +22,7 @@ spec:
   steps:
     - name: provenance
       image: golang:1.16
-      workingDir: $(workspaces.source.path)/provenance
+      workingDir: $(workspaces.source.path)
       env:
       - name: REGISTRY
         value: insecure-registry.default.svc.cluster.local:5000
@@ -31,4 +31,5 @@ spec:
         set -ex
 
         # get the digests for a subset of images built, and store in the IMAGES result
-        go run provenance.go ../images $(params.MANIFEST_SUBSECTION) > $(results.IMAGES.path)
+        (cd provenance; go build -o provenance provenance.go)
+        ./provenance/provenance images $(params.MANIFEST_SUBSECTION) > $(results.IMAGES.path)
