@@ -103,6 +103,10 @@ steps:
 
     gcloud container clusters get-credentials provenance --zone=us-central1-c --project=${PROJECT_ID}
 
+    # Install latest Tekton Pipelines and Tekton chains
+    kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+    kubectl apply --filename https://storage.googleapis.com/tekton-releases/chains/latest/release.yaml
+
     # Install tkn
     curl -Lo tkn_${_TKN_VERSION}_Linux_arm64.tar.gz  https://github.com/tektoncd/cli/releases/download/v${_TKN_VERSION}/tkn_${_TKN_VERSION}_Linux_x86_64.tar.gz
     tar -xvzf tkn_${_TKN_VERSION}_Linux_arm64.tar.gz -C /usr/local/bin/ tkn
