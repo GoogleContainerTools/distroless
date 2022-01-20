@@ -1,28 +1,30 @@
 # defines a function to replicate the container images for different distributions
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-load(":distro.bzl", "DISTRO_PACKAGES", "DISTRO_REPOSITORY")
 load("//cacerts:cacerts.bzl", "cacerts")
 load("//:checksums.bzl", "ARCHITECTURES")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 NONROOT = 65532
 
+def deb_file(arch, distro, package):
+    return "@" + arch + "_" + distro + "_" + package + "//file"
+
 # Replicate everything for all distroless suffixes
 def distro_components(distro):
     for arch in ARCHITECTURES:
         cacerts(
             name = "cacerts_" + arch + "_" + distro,
-            deb = DISTRO_PACKAGES[arch][distro]["ca-certificates"],
+            deb = deb_file(arch, distro, "ca-certificates"),
         )
 
         for (user, uid, workdir) in [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]:
             container_image(
                 name = "static_" + user + "_" + arch + "_" + distro,
                 debs = [
-                    DISTRO_PACKAGES[arch][distro]["base-files"],
-                    DISTRO_PACKAGES[arch][distro]["netbase"],
-                    DISTRO_PACKAGES[arch][distro]["tzdata"],
+                    deb_file(arch, distro, "base-files"),
+                    deb_file(arch, distro, "netbase"),
+                    deb_file(arch, distro, "tzdata"),
                 ],
                 architecture = arch,
                 env = {
@@ -42,7 +44,7 @@ def distro_components(distro):
                     # directory with specific permissions.
                     ":tmp.tar",
                     ":nsswitch.tar",
-                    DISTRO_REPOSITORY[arch][distro] + "//file:os_release.tar",
+                    "//os_release:os_release_" + distro + ".tar",
                     ":cacerts_" + arch + "_" + distro + ".tar",
                 ],
                 user = "%d" % uid,
@@ -54,9 +56,9 @@ def distro_components(distro):
                 architecture = arch,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 debs = [
-                    DISTRO_PACKAGES[arch][distro]["libc6"],
-                    DISTRO_PACKAGES[arch][distro]["libssl1.1"],
-                    DISTRO_PACKAGES[arch][distro]["openssl"],
+                    deb_file(arch, distro, "libc6"),
+                    deb_file(arch, distro, "libssl1.1"),
+                    deb_file(arch, distro, "openssl"),
                 ],
             )
 

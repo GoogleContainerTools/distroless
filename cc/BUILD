@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//base:distro.bzl", "DISTROS", "DISTRO_PACKAGES")
+load("//base:distro.bzl", "DISTROS")
+load("//base:base.bzl", "deb_file")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("//:checksums.bzl", "ARCHITECTURES")
 
@@ -21,9 +22,9 @@ DISTRO_DEBS = {
         architecture = arch,
         base = "//base" + (mode if mode else ":base") + "_" + user + "_" + arch + "_" + distro,
         debs = [
-            DISTRO_PACKAGES[arch][distro]["libgomp1"],
-            DISTRO_PACKAGES[arch][distro]["libstdc++6"],
-        ] + [DISTRO_PACKAGES[arch][distro][deb] for deb in DISTRO_DEBS[distro]],
+            deb_file(arch, distro, "libgomp1"),
+            deb_file(arch, distro, "libstdcpp6"),
+        ] + [deb_file(arch, distro, deb) for deb in DISTRO_DEBS[distro]],
     )
     for mode in [
         "",

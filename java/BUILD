@@ -1,26 +1,14 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//base:distro.bzl", "DISTROS", "DISTRO_PACKAGES")
+load("//base:distro.bzl", "DISTROS")
+load("//base:base.bzl", "deb_file")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("@package_bundle_amd64_debian10//file:packages.bzl", versions_amd64_debian10 = "versions")
-load("@package_bundle_amd64_debian11//file:packages.bzl", versions_amd64_debian11 = "versions")
-load("@package_bundle_arm64_debian10//file:packages.bzl", versions_arm64_debian10 = "versions")
-load("@package_bundle_arm64_debian11//file:packages.bzl", versions_arm64_debian11 = "versions")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
-
-DISTRO_VERSIONS = {
-    "amd64": {
-        "debian10": versions_amd64_debian10,
-        "debian11": versions_amd64_debian11,
-    },
-    "arm64": {
-        "debian11": versions_arm64_debian11,
-    },
-}
+load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
 
 USERS = [
     "root",
@@ -48,21 +36,21 @@ EXTRA_DEBS = {
         architecture = arch,
         base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
         debs = [
-            DISTRO_PACKAGES[arch][distro]["zlib1g"],
-            DISTRO_PACKAGES[arch][distro]["libjpeg62-turbo"],
-            DISTRO_PACKAGES[arch][distro]["libpng16-16"],
-            DISTRO_PACKAGES[arch][distro]["liblcms2-2"],
-            DISTRO_PACKAGES[arch][distro]["libfreetype6"],
-            DISTRO_PACKAGES[arch][distro]["fonts-dejavu-core"],
-            DISTRO_PACKAGES[arch][distro]["fontconfig-config"],
-            DISTRO_PACKAGES[arch][distro]["libexpat1"],
-            DISTRO_PACKAGES[arch][distro]["libfontconfig1"],
-            DISTRO_PACKAGES[arch][distro]["libuuid1"],
-            DISTRO_PACKAGES[arch][distro]["libgraphite2-3"],
-            DISTRO_PACKAGES[arch][distro]["libharfbuzz0b"],
-            DISTRO_PACKAGES[arch][distro]["libglib2.0-0"],
-            DISTRO_PACKAGES[arch][distro]["libpcre3"],
-        ] + [DISTRO_PACKAGES[arch][distro][deb] for deb in EXTRA_DEBS[distro]],
+            deb_file(arch, distro, "zlib1g"),
+            deb_file(arch, distro, "libjpeg62-turbo"),
+            deb_file(arch, distro, "libpng16-16"),
+            deb_file(arch, distro, "liblcms2-2"),
+            deb_file(arch, distro, "libfreetype6"),
+            deb_file(arch, distro, "fonts-dejavu-core"),
+            deb_file(arch, distro, "fontconfig-config"),
+            deb_file(arch, distro, "libexpat1"),
+            deb_file(arch, distro, "libfontconfig1"),
+            deb_file(arch, distro, "libuuid1"),
+            deb_file(arch, distro, "libgraphite2-3"),
+            deb_file(arch, distro, "libharfbuzz0b"),
+            deb_file(arch, distro, "libglib2.0-0"),
+            deb_file(arch, distro, "libpcre3"),
+        ] + [deb_file(arch, distro, deb) for deb in EXTRA_DEBS[distro]],
         env = {"LANG": "C.UTF-8"},
         tars = [
             "//cacerts:cacerts_java_" + arch + "_" + distro,
@@ -84,14 +72,18 @@ EXTRA_DEBS = {
         name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
         architecture = arch,
         base = ":java_base_" + user + "_" + arch + "_" + distro,
-        debs = [DISTRO_PACKAGES[arch][distro]["openjdk-" + java_version + "-jre-headless"]],
+        debs = [deb_file(
+            arch,
+            distro,
+            "openjdk-" + java_version + "-jre-headless",
+        )],
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
         entrypoint = [
             "/usr/bin/java",
             "-jar",
         ],
-        env = {"JAVA_VERSION": jre_ver(DISTRO_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])},
+        env = {"JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])},
         symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"},
     )
     for (java_version, arch, distro) in VERSION_PAIRS
@@ -104,8 +96,16 @@ EXTRA_DEBS = {
         architecture = arch,
         base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
         debs = [
-            DISTRO_PACKAGES[arch][distro]["openjdk-" + java_version + "-jre-headless"],
-            DISTRO_PACKAGES[arch][distro]["openjdk-" + java_version + "-jdk-headless"],
+            deb_file(
+                arch,
+                distro,
+                "openjdk-" + java_version + "-jre-headless",
+            ),
+            deb_file(
+                arch,
+                distro,
+                "openjdk-" + java_version + "-jdk-headless",
+            ),
         ],
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
@@ -113,7 +113,7 @@ EXTRA_DEBS = {
             "/usr/bin/java",
             "-jar",
         ],
-        env = {"JAVA_VERSION": jre_ver(DISTRO_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])},
+        env = {"JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])},
         symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"},
     )
     for (java_version, arch, distro) in VERSION_PAIRS
