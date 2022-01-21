@@ -139,7 +139,7 @@ See here for:
 
 * [Java](examples/java/BUILD)
 * [Python 3](examples/python3/BUILD)
-* [Golang](examples/go/BUILD)
+* [Go](examples/go/BUILD)
 * [Node.js](examples/nodejs/BUILD)
 
 See here for examples on how to complete some common tasks in your image:
