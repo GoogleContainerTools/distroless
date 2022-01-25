@@ -31,6 +31,15 @@ EXTRA_DEBS = {
 }
 
 [
+    cacerts_java(
+        name = "cacerts_java_" + arch + "_" + distro,
+        cacerts_tar = "//base:cacerts_" + arch + "_" + distro,
+    )
+    for distro in DISTROS
+    for arch in ARCHITECTURES
+]
+
+[
     container_image(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
         architecture = arch,
@@ -53,7 +62,7 @@ EXTRA_DEBS = {
         ] + [deb_file(arch, distro, deb) for deb in EXTRA_DEBS[distro]],
         env = {"LANG": "C.UTF-8"},
         tars = [
-            "//cacerts:cacerts_java_" + arch + "_" + distro,
+            ":cacerts_java_" + arch + "_" + distro,
             "//locale:locale_" + arch + "_" + distro,
         ],
     )
