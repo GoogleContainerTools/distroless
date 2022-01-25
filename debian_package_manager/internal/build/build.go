@@ -62,7 +62,7 @@ func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to fetch remote file: %q", pi.URL)
 	} else if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("failed (status: %q) to fetch remote file: %q", resp.StatusCode, pi.URL)
+		return nil, fmt.Errorf("failed (status: %d) to fetch remote file: %q", resp.StatusCode, pi.URL)
 	}
 	br := resp.Body
 	defer br.Close()
