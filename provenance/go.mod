@@ -1,4 +1,4 @@
-module github.com/GoogleContainerTools/distroless
+module github.com/GoogleContainerTools/distroless/provenance
 
 go 1.17
 

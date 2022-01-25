@@ -1,2 +1,7 @@
+.DS_Store
+.idea/*
+.vscode/*
+/sync
+package_*.bzl
 update
 generate

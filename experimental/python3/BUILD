@@ -1,9 +1,11 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//base:distro.bzl", "DISTROS", "DISTRO_PACKAGES")
+load("//base:distro.bzl", "DISTROS")
+load("//base:base.bzl", "deb_file")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS")
 load("//base:base.bzl", "NONROOT")
 
 # distribution-specific deb dependencies
@@ -47,19 +49,19 @@ DISTRO_VERSION = {
         # Based on //cc so that C extensions work properly.
         base = "//cc" + (mode if mode else ":cc") + "_root_" + arch + "_" + distro,
         debs = [
-            DISTRO_PACKAGES[arch][distro]["dash"],
-            DISTRO_PACKAGES[arch][distro]["libbz2-1.0"],
-            DISTRO_PACKAGES[arch][distro]["libc-bin"],  # for ctypes.find_library
-            DISTRO_PACKAGES[arch][distro]["libdb5.3"],
-            DISTRO_PACKAGES[arch][distro]["libexpat1"],
-            DISTRO_PACKAGES[arch][distro]["liblzma5"],
-            DISTRO_PACKAGES[arch][distro]["libsqlite3-0"],
-            DISTRO_PACKAGES[arch][distro]["libuuid1"],
-            DISTRO_PACKAGES[arch][distro]["libncursesw6"],
-            DISTRO_PACKAGES[arch][distro]["libtinfo6"],
-            DISTRO_PACKAGES[arch][distro]["python3-distutils"],
-            DISTRO_PACKAGES[arch][distro]["zlib1g"],
-        ] + [DISTRO_PACKAGES[arch][distro][deb] for deb in DISTRO_DEBS[distro]],
+            deb_file(arch, distro, "dash"),
+            deb_file(arch, distro, "libbz2-1.0"),
+            deb_file(arch, distro, "libc-bin"),  # for ctypes.find_library
+            deb_file(arch, distro, "libdb5.3"),
+            deb_file(arch, distro, "libexpat1"),
+            deb_file(arch, distro, "liblzma5"),
+            deb_file(arch, distro, "libsqlite3-0"),
+            deb_file(arch, distro, "libuuid1"),
+            deb_file(arch, distro, "libncursesw6"),
+            deb_file(arch, distro, "libtinfo6"),
+            deb_file(arch, distro, "python3-distutils"),
+            deb_file(arch, distro, "zlib1g"),
+        ] + [deb_file(arch, distro, deb) for deb in DISTRO_DEBS[distro]],
         entrypoint = [
             "/usr/bin/python" + DISTRO_VERSION[distro],
         ],

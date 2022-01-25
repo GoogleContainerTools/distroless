@@ -31,4 +31,5 @@ spec:
         set -ex
 
         # get the digests for a subset of images built, and store in the IMAGES result
-        go run provenance/provenance.go images $(params.MANIFEST_SUBSECTION) > $(results.IMAGES.path)
+        (cd provenance; go build -o provenance provenance.go)
+        ./provenance/provenance images $(params.MANIFEST_SUBSECTION) > $(results.IMAGES.path)

@@ -34,22 +34,6 @@ steps:
     # Make sure python points to python3
     update-alternatives --install /usr/bin/python python /usr/bin/python3 0
 
-    bazel build //package_manager:dpkg_parser.par
-
-    # Optional: trigger building package bundles without concurrency to avoid
-    # flakiness: https://github.com/GoogleContainerTools/distroless/issues/646
-    bazel build --jobs=1 @package_bundle_amd64_debian10//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_arm_debian10//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_arm64_debian10//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_s390x_debian10//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_ppc64le_debian10//file:packages.bzl
-
-    bazel build --jobs=1 @package_bundle_amd64_debian11//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_arm_debian11//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_arm64_debian11//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_s390x_debian11//file:packages.bzl
-    bazel build --jobs=1 @package_bundle_ppc64le_debian11//file:packages.bzl
-
     bazel run //:publish
     bazel build all.tar
 
@@ -102,6 +86,10 @@ steps:
     set -o xtrace
 
     gcloud container clusters get-credentials provenance --zone=us-central1-c --project=${PROJECT_ID}
+
+    # Install latest Tekton Pipelines and Tekton chains
+    kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+    kubectl apply --filename https://storage.googleapis.com/tekton-releases/chains/latest/release.yaml
 
     # Install tkn
     curl -Lo tkn_${_TKN_VERSION}_Linux_arm64.tar.gz  https://github.com/tektoncd/cli/releases/download/v${_TKN_VERSION}/tkn_${_TKN_VERSION}_Linux_x86_64.tar.gz
