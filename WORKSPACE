@@ -3,6 +3,7 @@ workspace(name = "distroless")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 http_archive(
     name = "io_bazel_rules_go",
@@ -177,7 +178,9 @@ load(
             "openjdk-11-jre-headless",
             "openjdk-17-jdk-headless",  # 11 and 17 should share the same "base"
             "openjdk-17-jre-headless",
-            "zlib1g",
+            "zlib1g", # shared by Java and .NET
+             # .NET only
+            "libicu67",
         ] if arch in BASE_ARCHITECTURES else []),
         sources = [
             "@" + arch + "_debian11_security//file:Packages.json",
@@ -321,6 +324,24 @@ http_archive(
     urls = ["https://nodejs.org/dist/v16.13.2/node-v16.13.2-linux-arm64.tar.gz"],
 )
 
+# For dotnet tests
+#git_repository(
+#    name = "io_bazel_rules_dotnet",
+#    remote = "https://github.com/bazelbuild/rules_dotnet",
+#    branch = "master",
+#)
+#load("@io_bazel_rules_dotnet//dotnet:deps.bzl", "dotnet_repositories")
+#dotnet_repositories()
+#
+#load(
+#    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
+#    "dotnet_register_toolchains",
+#    "dotnet_repositories_nugets",
+#)
+#
+#dotnet_register_toolchains()
+#dotnet_repositories_nugets()
+
 # For the debug image
 http_file(
     name = "busybox_amd64",
@@ -388,6 +409,12 @@ load(
 container_repositories()
 
 load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
+)
+
+
+load(
     "@io_bazel_rules_docker//python:image.bzl",
     _py_image_repos = "repositories",
 )
@@ -401,6 +428,15 @@ load(
 )
 
 _java_image_repos()
+
+# Have the dotnet_image dependencies for testing
+container_pull(
+    name = "dotnet-sdk",
+    registry = "mcr.microsoft.com",
+    repository = "dotnet/sdk",
+    digest = "sha256:d10187c335fc2caef331699065b26be1dfcb7ade5d812927301c82a2fc1605d1",
+)
+
 
 # Have the go_image dependencies for testing.
 load(

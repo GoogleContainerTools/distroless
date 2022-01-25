@@ -21,6 +21,7 @@
     "libgraphite2-3": "1.3.14-1",
     "libgssapi-krb5-2": "1.18.3-6+deb11u1",
     "libharfbuzz0b": "2.7.4-1",
+    "libicu67": "67.1-7",
     "libjpeg62-turbo": "1:2.0.6-4",
     "libk5crypto3": "1.18.3-6+deb11u1",
     "libkeyutils1": "1.6.1-2",

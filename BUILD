@@ -123,6 +123,8 @@ PYTHON3.update({
     for distro in DISTROS
 })
 
+DOTNET_RUNTIME_DEPS = {}
+
 NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs:latest-amd64": "//nodejs:nodejs16_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs:latest-arm64": "//nodejs:nodejs16_arm64_debian11",
