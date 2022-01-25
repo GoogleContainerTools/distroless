@@ -74,7 +74,7 @@
     - "libgomp1"
     - "libstdc++6"
 
-# python and java only build on a subset of architectures
+# python, jave, and .NET only build on a subset of architectures
 - distros: ["debian11"]
   archs: ["amd64","arm64"]
   packages:
@@ -89,7 +89,7 @@
     - "libgssapi-krb5-2"
     - "libk5crypto3"
     - "libkeyutils1"
-    - "libkrb5-3"
+    - "libkrb5-3" # also used by .NET (including krb5 deps)
     - "libkrb5support0"
     - "liblzma5"
     - "libmpdec3"
@@ -124,4 +124,6 @@
     - "openjdk-11-jre-headless"
     - "openjdk-17-jdk-headless"
     - "openjdk-17-jre-headless"
-    - "zlib1g"
+    - "zlib1g" # also used by .NET
+  # .NET (only needed for full globalization support)
+    - "libicu67"
