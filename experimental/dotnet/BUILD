@@ -1,10 +1,12 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//base:distro.bzl", "DISTROS" , "DISTRO_PACKAGES")
+load("//base:distro.bzl", "DISTROS")
+load("//base:base.bzl", "deb_file")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 # load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "csharp_binary")
+load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
 
 # Microsoft publishes .NET 6 for Bullseye only
 DISTROS = [ "debian11" ]
@@ -57,8 +59,8 @@ VERSION_PAIRS = [
         architecture = arch,
         base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
         debs = [
-            DISTRO_PACKAGES[arch][distro]["zlib1g"],
-        ] + [DISTRO_PACKAGES[arch][distro][deb] for deb in EXTRA_DEBS[variant]],
+            deb_file(arch, distro, "zlib1g"),
+        ] + [deb_file(arch, distro, deb) for deb in EXTRA_DEBS[variant]],
         symlinks = { "/usr/bin/dotnet": "/usr/share/dotnet/dotnet" },
         env = {
           "ASPNETCORE_URLS": "http://+:8080",
