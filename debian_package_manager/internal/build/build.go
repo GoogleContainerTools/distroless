@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"time"
 
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/build/config"
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/deb"
@@ -28,6 +29,51 @@ import (
 	"github.com/ulikunitz/xz"
 	"golang.org/x/sync/errgroup"
 )
+
+// HTTP retry logic from https://brandur.org/fragments/go-http-retry
+// A backoff schedule for when and how often to retry failed HTTP
+// requests. The first element is the time to wait after the
+// first failure, the second the time to wait after the second
+// failure, etc. After reaching the last element, retries stop
+// and the request is considered failed.
+var backoffSchedule = []time.Duration{
+	1 * time.Second,
+	3 * time.Second,
+	10 * time.Second,
+}
+
+func getURLData(url string) (*http.Response, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+func getURLDataWithRetries(url string) (*http.Response, error) {
+	var err error
+	var resp *http.Response
+
+	for _, backoff := range backoffSchedule {
+		resp, err = getURLData(url)
+
+		if err == nil {
+			break
+		}
+
+		fmt.Fprintf(os.Stderr, "Request error: %+v\n", err)
+		fmt.Fprintf(os.Stderr, "Retrying in %v\n", backoff)
+		time.Sleep(backoff)
+	}
+
+	// All retries failed
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
 
 func extractPackageInfo(snapshots *config.Snapshots, arch config.Arch, distro config.Distro, packages map[string]bool) (map[string]*deb.Package, error) {
 	pkgGrp := deb.PackageIndexGroup(snapshots, arch, distro)
@@ -58,7 +104,7 @@ func extractPackageInfo(snapshots *config.Snapshots, arch config.Arch, distro co
 }
 
 func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string]*deb.Package, error) {
-	resp, err := http.Get(pi.URL)
+	resp, err := getURLData(pi.URL)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to fetch remote file: %q", pi.URL)
 	} else if resp.StatusCode != http.StatusOK {
