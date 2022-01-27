@@ -27,6 +27,7 @@ EXTRA_DEBS = {
     "debian10": [],
     "debian11": [
         "libbrotli1",
+        "libcrypt1",
     ],
 }
 
