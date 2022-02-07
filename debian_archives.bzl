@@ -15,24 +15,6 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/c/ca-certificates/ca-certificates_20200601~deb10u2_all.deb"],
     )
     http_file(
-        name = "amd64_debian10_dash",
-        downloaded_file_path = "dash_0.5.10.2-5_amd64.deb",
-        sha256 = "e4872d9f258e76665317c94c637b4270dc1c15c9cf42da90dbfde0225c7f4564",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/d/dash/dash_0.5.10.2-5_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_fontconfig-config",
-        downloaded_file_path = "fontconfig-config_2.13.1-2_all.deb",
-        sha256 = "9f5d34ba20eb156ef62d8126866a376be985c6a83fdcfb33f12cd83acac480c2",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/f/fontconfig/fontconfig-config_2.13.1-2_all.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_fonts-dejavu-core",
-        downloaded_file_path = "fonts-dejavu-core_2.37-1_all.deb",
-        sha256 = "58d21a255606191e6512cca51f32c4480e7a798945cc980623377696acfa3cfc",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-1_all.deb"],
-    )
-    http_file(
         name = "amd64_debian10_libbz2-1.0",
         downloaded_file_path = "libbz2-1.0_1.0.6-9.2~deb10u1_amd64.deb",
         sha256 = "238193cbaa71cc5365ef2aa5ad45de8521ac38dd54f4ab53bafa7de15046fa89",
@@ -57,28 +39,10 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/d/db5.3/libdb5.3_5.3.28+dfsg1-0.5_amd64.deb"],
     )
     http_file(
-        name = "amd64_debian10_libexpat1",
-        downloaded_file_path = "libexpat1_2.2.6-2+deb10u1_amd64.deb",
-        sha256 = "d60dee1f402ee0fba6d44df584512ae9ede73e866048e8476de55d9b78fa2da1",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/e/expat/libexpat1_2.2.6-2+deb10u1_amd64.deb"],
-    )
-    http_file(
         name = "amd64_debian10_libffi6",
         downloaded_file_path = "libffi6_3.2.1-9_amd64.deb",
         sha256 = "d4d748d897e8e53aa239ead23a18724a1a30085cc6ca41a8c31b3b1e1b3452f4",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/libf/libffi/libffi6_3.2.1-9_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libfontconfig1",
-        downloaded_file_path = "libfontconfig1_2.13.1-2_amd64.deb",
-        sha256 = "6766d0bcfc615fb15542efb5235d38237ccaec4c219beb84dbd22d1662ccea8f",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/f/fontconfig/libfontconfig1_2.13.1-2_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libfreetype6",
-        downloaded_file_path = "libfreetype6_2.9.1-3+deb10u2_amd64.deb",
-        sha256 = "93f009440fd1ffcc4b3afdbc413eccc1d8101145a262ca0d0c305fc7029f2417",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/f/freetype/libfreetype6_2.9.1-3+deb10u2_amd64.deb"],
     )
     http_file(
         name = "amd64_debian10_libgcc1",
@@ -87,82 +51,16 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/gcc-8/libgcc1_8.3.0-6_amd64.deb"],
     )
     http_file(
-        name = "amd64_debian10_libglib2.0-0",
-        downloaded_file_path = "libglib2.0-0_2.58.3-2+deb10u3_amd64.deb",
-        sha256 = "566e664cc69e23fade34be92711f359ec02a9854222244f3603fdf640cc6688a",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/glib2.0/libglib2.0-0_2.58.3-2+deb10u3_amd64.deb"],
-    )
-    http_file(
         name = "amd64_debian10_libgomp1",
         downloaded_file_path = "libgomp1_8.3.0-6_amd64.deb",
         sha256 = "909fcd28491d7ebecf44ee2e8d0269b600271b0b6d236b19f2c0469cde162d21",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/gcc-8/libgomp1_8.3.0-6_amd64.deb"],
     )
     http_file(
-        name = "amd64_debian10_libgraphite2-3",
-        downloaded_file_path = "libgraphite2-3_1.3.13-7_amd64.deb",
-        sha256 = "f79bfdcfe09285cccee68c070171888b98adbf3e7bd3e8f6afcb6caef5623179",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/graphite2/libgraphite2-3_1.3.13-7_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libharfbuzz0b",
-        downloaded_file_path = "libharfbuzz0b_2.3.1-1_amd64.deb",
-        sha256 = "aee1dd6f9884c1acdd1b6d6f49bd419235decd00f49cd927e4be4c37af2ecdab",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/h/harfbuzz/libharfbuzz0b_2.3.1-1_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libjpeg62-turbo",
-        downloaded_file_path = "libjpeg62-turbo_1.5.2-2+deb10u1_amd64.deb",
-        sha256 = "b6cbc7d722cbf697cedbcd9b8b209f8cfa05f147fba4061adf2fcee6cc64c556",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_1.5.2-2+deb10u1_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_liblcms2-2",
-        downloaded_file_path = "liblcms2-2_2.9-3_amd64.deb",
-        sha256 = "6dd806a326519b98ed9e54b184b4da2d256c4d516e75d0a38f2f6059e14eb325",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/l/lcms2/liblcms2-2_2.9-3_amd64.deb"],
-    )
-    http_file(
         name = "amd64_debian10_liblzma5",
         downloaded_file_path = "liblzma5_5.2.4-1_amd64.deb",
         sha256 = "292dfe85defad3a08cca62beba85e90b0231d16345160f4a66aba96399c85859",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/x/xz-utils/liblzma5_5.2.4-1_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libmpdec2",
-        downloaded_file_path = "libmpdec2_2.4.2-2_amd64.deb",
-        sha256 = "9ca85e6e2645a5e660431294320658ec7a2910d9fed90ca4e648c1211a2b844b",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/m/mpdecimal/libmpdec2_2.4.2-2_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libncursesw6",
-        downloaded_file_path = "libncursesw6_6.1+20181013-2+deb10u2_amd64.deb",
-        sha256 = "7dffe9602586300292960f2e3cf4301acfc64a91aed6fa41ea2e719ae75788b3",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/n/ncurses/libncursesw6_6.1+20181013-2+deb10u2_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libpcre3",
-        downloaded_file_path = "libpcre3_8.39-12_amd64.deb",
-        sha256 = "5496ea46b812b1a00104fc97b30e13fc5f8f6e9ec128a8ff4fd2d66a80cc6bee",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/pcre3/libpcre3_8.39-12_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libpng16-16",
-        downloaded_file_path = "libpng16-16_1.6.36-6_amd64.deb",
-        sha256 = "82a252478465521cde9d5af473df01ed79f16e912effc5971892a574e9113500",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/libp/libpng1.6/libpng16-16_1.6.36-6_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libpython3.7-minimal",
-        downloaded_file_path = "libpython3.7-minimal_3.7.3-2+deb10u3_amd64.deb",
-        sha256 = "9135e295b3710c0c3fd3fbc1ba57e3925294bbf2d6cc27a42bd382dd905a044f",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/python3.7/libpython3.7-minimal_3.7.3-2+deb10u3_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libpython3.7-stdlib",
-        downloaded_file_path = "libpython3.7-stdlib_3.7.3-2+deb10u3_amd64.deb",
-        sha256 = "36b978fcacde4e5cddc205e32b7d5c50525fef83481144ac9ec4cc83ed9e213a",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/python3.7/libpython3.7-stdlib_3.7.3-2+deb10u3_amd64.deb"],
     )
     http_file(
         name = "amd64_debian10_libreadline7",
@@ -189,18 +87,6 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/gcc-8/libstdc++6_8.3.0-6_amd64.deb"],
     )
     http_file(
-        name = "amd64_debian10_libtinfo6",
-        downloaded_file_path = "libtinfo6_6.1+20181013-2+deb10u2_amd64.deb",
-        sha256 = "7f39c7a7b02c3373a427aa276830a6e1e0c4cc003371f34e2e50e9992aa70e1a",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/n/ncurses/libtinfo6_6.1+20181013-2+deb10u2_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_libuuid1",
-        downloaded_file_path = "libuuid1_2.33.1-0.1_amd64.deb",
-        sha256 = "90b90bef4593d4f347fb1e74a63c5609daa86d4c5003b14e85f58628d6c118b2",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/u/util-linux/libuuid1_2.33.1-0.1_amd64.deb"],
-    )
-    http_file(
         name = "amd64_debian10_mime-support",
         downloaded_file_path = "mime-support_3.62_all.deb",
         sha256 = "776efd686af26fa26325450280e3305463b1faef75d82b383bb00da61893d8ca",
@@ -213,34 +99,10 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/n/netbase/netbase_5.6_all.deb"],
     )
     http_file(
-        name = "amd64_debian10_openjdk-11-jdk-headless",
-        downloaded_file_path = "openjdk-11-jdk-headless_11.0.14+9-1~deb10u1_amd64.deb",
-        sha256 = "238b9039a131c643c1d1ce2f122f106929d711538e52dc3e61d7c2e3a73d5023",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20220125T132258Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.14+9-1~deb10u1_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_openjdk-11-jre-headless",
-        downloaded_file_path = "openjdk-11-jre-headless_11.0.14+9-1~deb10u1_amd64.deb",
-        sha256 = "a585b30ae3598f2ac5f9b98d6c2ca95dd1850bc6a6cf71bfc91102bdb423c8b1",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20220125T132258Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.14+9-1~deb10u1_amd64.deb"],
-    )
-    http_file(
         name = "amd64_debian10_openssl",
         downloaded_file_path = "openssl_1.1.1d-0+deb10u7_amd64.deb",
         sha256 = "eb2c128d1b378547bab986c7024bc297573a4ac6f180d2b44465b6ad5b432284",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/o/openssl/openssl_1.1.1d-0+deb10u7_amd64.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_python3-distutils",
-        downloaded_file_path = "python3-distutils_3.7.3-1_all.deb",
-        sha256 = "6918af11061d3141990e78f5ad0530ec0f9a188cac27113d9de2896203efc13f",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/python3-stdlib-extensions/python3-distutils_3.7.3-1_all.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_python3.7-minimal",
-        downloaded_file_path = "python3.7-minimal_3.7.3-2+deb10u3_amd64.deb",
-        sha256 = "496a2fff86a2433e26b4c0736ea762426dee1eb0b7578951e0d3392aa6e242b4",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/python3.7/python3.7-minimal_3.7.3-2+deb10u3_amd64.deb"],
     )
     http_file(
         name = "amd64_debian10_readline-common",
@@ -253,12 +115,6 @@ def repositories():
         downloaded_file_path = "tzdata_2021a-0+deb10u3_all.deb",
         sha256 = "1fac8d318a9ecd40a45f861349aef934aacf0b0092d54f17e7dfe0760d17fabd",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/t/tzdata/tzdata_2021a-0+deb10u3_all.deb"],
-    )
-    http_file(
-        name = "amd64_debian10_zlib1g",
-        downloaded_file_path = "zlib1g_1.2.11.dfsg-1_amd64.deb",
-        sha256 = "61bc9085aadd3007433ce6f560a08446a3d3ceb0b5e061db3fc62c42fbfe3eff",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/z/zlib/zlib1g_1.2.11.dfsg-1_amd64.deb"],
     )
     http_file(
         name = "amd64_debian11_base-files",
@@ -771,24 +627,6 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/c/ca-certificates/ca-certificates_20200601~deb10u2_all.deb"],
     )
     http_file(
-        name = "arm64_debian10_dash",
-        downloaded_file_path = "dash_0.5.10.2-5_arm64.deb",
-        sha256 = "63d948ae0479c25652798cb072ecb4a24ab281cda477224773f033b570760058",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/d/dash/dash_0.5.10.2-5_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_fontconfig-config",
-        downloaded_file_path = "fontconfig-config_2.13.1-2_all.deb",
-        sha256 = "9f5d34ba20eb156ef62d8126866a376be985c6a83fdcfb33f12cd83acac480c2",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/f/fontconfig/fontconfig-config_2.13.1-2_all.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_fonts-dejavu-core",
-        downloaded_file_path = "fonts-dejavu-core_2.37-1_all.deb",
-        sha256 = "58d21a255606191e6512cca51f32c4480e7a798945cc980623377696acfa3cfc",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-1_all.deb"],
-    )
-    http_file(
         name = "arm64_debian10_libbz2-1.0",
         downloaded_file_path = "libbz2-1.0_1.0.6-9.2~deb10u1_arm64.deb",
         sha256 = "759f72ebadc1c8a790a1260c29d40736d0ebc2ee1a4e003ea70704631b42614e",
@@ -813,28 +651,10 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/d/db5.3/libdb5.3_5.3.28+dfsg1-0.5_arm64.deb"],
     )
     http_file(
-        name = "arm64_debian10_libexpat1",
-        downloaded_file_path = "libexpat1_2.2.6-2+deb10u1_arm64.deb",
-        sha256 = "6d2a44169cd76b24828553f9e6364a5b92b4c1f5ae0e2d0ed2291a5512ee01e4",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/e/expat/libexpat1_2.2.6-2+deb10u1_arm64.deb"],
-    )
-    http_file(
         name = "arm64_debian10_libffi6",
         downloaded_file_path = "libffi6_3.2.1-9_arm64.deb",
         sha256 = "c5f7f4158dc6821bf37dd44ce0fe4399b5798d4ae7e821ad85b63059a2b31c0f",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/libf/libffi/libffi6_3.2.1-9_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libfontconfig1",
-        downloaded_file_path = "libfontconfig1_2.13.1-2_arm64.deb",
-        sha256 = "75e63900fe40ab9e5d1e1f58458c40330f9cff9805b92749c44d54b1ac1da8a4",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/f/fontconfig/libfontconfig1_2.13.1-2_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libfreetype6",
-        downloaded_file_path = "libfreetype6_2.9.1-3+deb10u2_arm64.deb",
-        sha256 = "45dd675bd7dbb031ca9bd4c787610484b76e93eb0b8e1cd528d241139347525d",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/f/freetype/libfreetype6_2.9.1-3+deb10u2_arm64.deb"],
     )
     http_file(
         name = "arm64_debian10_libgcc1",
@@ -843,82 +663,16 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/gcc-8/libgcc1_8.3.0-6_arm64.deb"],
     )
     http_file(
-        name = "arm64_debian10_libglib2.0-0",
-        downloaded_file_path = "libglib2.0-0_2.58.3-2+deb10u3_arm64.deb",
-        sha256 = "011943577b494c84a0fcdfc97c86847a67cf626131a45789e80792d33dc834fb",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/glib2.0/libglib2.0-0_2.58.3-2+deb10u3_arm64.deb"],
-    )
-    http_file(
         name = "arm64_debian10_libgomp1",
         downloaded_file_path = "libgomp1_8.3.0-6_arm64.deb",
         sha256 = "a147bccae845e5405941df3f761065cbc68f06bb29fccb46bfce7dff562cc0fa",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/gcc-8/libgomp1_8.3.0-6_arm64.deb"],
     )
     http_file(
-        name = "arm64_debian10_libgraphite2-3",
-        downloaded_file_path = "libgraphite2-3_1.3.13-7_arm64.deb",
-        sha256 = "dab0d61c2544978289d778b38b51d359140c559f6303e1a77a687af99859113a",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/graphite2/libgraphite2-3_1.3.13-7_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libharfbuzz0b",
-        downloaded_file_path = "libharfbuzz0b_2.3.1-1_arm64.deb",
-        sha256 = "bb4812967a524ecb220fcfd6f9c2bfcb8a0498d612fd6fc0e922998bb88ae3d7",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/h/harfbuzz/libharfbuzz0b_2.3.1-1_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libjpeg62-turbo",
-        downloaded_file_path = "libjpeg62-turbo_1.5.2-2+deb10u1_arm64.deb",
-        sha256 = "3e30730c819d6664b9f40b192585377be128fca970496641b98bcf8c405ef6e8",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_1.5.2-2+deb10u1_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_liblcms2-2",
-        downloaded_file_path = "liblcms2-2_2.9-3_arm64.deb",
-        sha256 = "19bd1bc27e7ae0fe18ae363b91697e5da27082f35b50e8852d9f3fc200e1dd76",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/l/lcms2/liblcms2-2_2.9-3_arm64.deb"],
-    )
-    http_file(
         name = "arm64_debian10_liblzma5",
         downloaded_file_path = "liblzma5_5.2.4-1_arm64.deb",
         sha256 = "a0e05b73ef039aac46b5d1ddab5c35e60561424238152e363e7319958dd4b814",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/x/xz-utils/liblzma5_5.2.4-1_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libmpdec2",
-        downloaded_file_path = "libmpdec2_2.4.2-2_arm64.deb",
-        sha256 = "72638348c7faeccd51d75e7bba75748c319a2240734e3577a06d9d0e210a7c35",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/m/mpdecimal/libmpdec2_2.4.2-2_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libncursesw6",
-        downloaded_file_path = "libncursesw6_6.1+20181013-2+deb10u2_arm64.deb",
-        sha256 = "da4dc6c68aecff023f614ce84355291486b72068e6e0bf7b27d16b78361b162b",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/n/ncurses/libncursesw6_6.1+20181013-2+deb10u2_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libpcre3",
-        downloaded_file_path = "libpcre3_8.39-12_arm64.deb",
-        sha256 = "cf959aa722666827ec498a255ec14d20dd4ec3859446bb33de5332417588ff9f",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/pcre3/libpcre3_8.39-12_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libpng16-16",
-        downloaded_file_path = "libpng16-16_1.6.36-6_arm64.deb",
-        sha256 = "d54f3c1dbb124dac2374d3f67b6aa288c331cb4f352f9257f318fc9bddbd8698",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/libp/libpng1.6/libpng16-16_1.6.36-6_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libpython3.7-minimal",
-        downloaded_file_path = "libpython3.7-minimal_3.7.3-2+deb10u3_arm64.deb",
-        sha256 = "3894a25b00365d0064a6213e6fb2fc78411279a36e95b1ce818b82c064c32865",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/python3.7/libpython3.7-minimal_3.7.3-2+deb10u3_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libpython3.7-stdlib",
-        downloaded_file_path = "libpython3.7-stdlib_3.7.3-2+deb10u3_arm64.deb",
-        sha256 = "5e3cacad793d30615ff9df3ad1b7baee5eeb16556cd37ebbd9c90d991bd9aa19",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/python3.7/libpython3.7-stdlib_3.7.3-2+deb10u3_arm64.deb"],
     )
     http_file(
         name = "arm64_debian10_libreadline7",
@@ -945,18 +699,6 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/g/gcc-8/libstdc++6_8.3.0-6_arm64.deb"],
     )
     http_file(
-        name = "arm64_debian10_libtinfo6",
-        downloaded_file_path = "libtinfo6_6.1+20181013-2+deb10u2_arm64.deb",
-        sha256 = "1b0533fcee638b5c76a07fb6ce3a64e6cb67d5e81574d6541486c0b2130430d5",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/n/ncurses/libtinfo6_6.1+20181013-2+deb10u2_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_libuuid1",
-        downloaded_file_path = "libuuid1_2.33.1-0.1_arm64.deb",
-        sha256 = "28d3a69bae1bdc9185e70d97214773a563a7f8a72682b2deef394a4f7c9c79b8",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/u/util-linux/libuuid1_2.33.1-0.1_arm64.deb"],
-    )
-    http_file(
         name = "arm64_debian10_mime-support",
         downloaded_file_path = "mime-support_3.62_all.deb",
         sha256 = "776efd686af26fa26325450280e3305463b1faef75d82b383bb00da61893d8ca",
@@ -969,34 +711,10 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/n/netbase/netbase_5.6_all.deb"],
     )
     http_file(
-        name = "arm64_debian10_openjdk-11-jdk-headless",
-        downloaded_file_path = "openjdk-11-jdk-headless_11.0.14+9-1~deb10u1_arm64.deb",
-        sha256 = "5ce7faa589ce6f298e67368c09e1024d184b9bffa836a4642f8da48add0327a4",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20220125T132258Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.14+9-1~deb10u1_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_openjdk-11-jre-headless",
-        downloaded_file_path = "openjdk-11-jre-headless_11.0.14+9-1~deb10u1_arm64.deb",
-        sha256 = "c7f306fd348117cb9c68ce4ca824c3d2bace38f1e4da5ffb7332b814e6c127a8",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20220125T132258Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.14+9-1~deb10u1_arm64.deb"],
-    )
-    http_file(
         name = "arm64_debian10_openssl",
         downloaded_file_path = "openssl_1.1.1d-0+deb10u7_arm64.deb",
         sha256 = "d5c72cb5dd59472519dc26aead40fc41026b2de453d4a8464061cb7aeaba126c",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/o/openssl/openssl_1.1.1d-0+deb10u7_arm64.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_python3-distutils",
-        downloaded_file_path = "python3-distutils_3.7.3-1_all.deb",
-        sha256 = "6918af11061d3141990e78f5ad0530ec0f9a188cac27113d9de2896203efc13f",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/python3-stdlib-extensions/python3-distutils_3.7.3-1_all.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_python3.7-minimal",
-        downloaded_file_path = "python3.7-minimal_3.7.3-2+deb10u3_arm64.deb",
-        sha256 = "4c11c7291857e0a3bbc9017e6bdc0e061e09373b1587ec0d62202607a1f3675f",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/p/python3.7/python3.7-minimal_3.7.3-2+deb10u3_arm64.deb"],
     )
     http_file(
         name = "arm64_debian10_readline-common",
@@ -1009,12 +727,6 @@ def repositories():
         downloaded_file_path = "tzdata_2021a-0+deb10u3_all.deb",
         sha256 = "1fac8d318a9ecd40a45f861349aef934aacf0b0092d54f17e7dfe0760d17fabd",
         urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/t/tzdata/tzdata_2021a-0+deb10u3_all.deb"],
-    )
-    http_file(
-        name = "arm64_debian10_zlib1g",
-        downloaded_file_path = "zlib1g_1.2.11.dfsg-1_arm64.deb",
-        sha256 = "1fa65d3ae86bf52d86ad523520d0d88711ec351b5f75be1bfe477bbaf48d3f42",
-        urls = ["https://snapshot.debian.org/archive/debian/20220125T033125Z/pool/main/z/zlib/zlib1g_1.2.11.dfsg-1_arm64.deb"],
     )
     http_file(
         name = "arm64_debian11_base-files",

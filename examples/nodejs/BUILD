@@ -4,7 +4,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("//base:distro.bzl", "DISTROS")
+load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
 # These examples are adapted from:

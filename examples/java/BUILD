@@ -4,7 +4,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
-load("//base:distro.bzl", "DISTROS")
+load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 
 [
     java_image(
