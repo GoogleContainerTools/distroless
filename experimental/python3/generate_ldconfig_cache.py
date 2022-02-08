@@ -11,7 +11,7 @@ import sys
 import tempfile
 
 
-CONTAINER_IMAGE_PATH = 'experimental/python3/python3_root_{}_debian10'
+CONTAINER_IMAGE_PATH = 'experimental/python3/python3_root_{}_debian11'
 EXECUTABLE_SUFFIX = '.executable'
 
 

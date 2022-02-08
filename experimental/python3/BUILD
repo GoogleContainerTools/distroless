@@ -5,40 +5,10 @@ load("//base:base.bzl", "deb_file")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
-load("//base:distro.bzl", "DISTROS")
+load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//base:base.bzl", "NONROOT")
 
-# distribution-specific deb dependencies
-DISTRO_DEBS = {
-    "debian10": [
-        "libffi6",
-        "libmpdec2",
-        "libpython3.7-minimal",
-        "libpython3.7-stdlib",
-        "libreadline7",
-        "python3.7-minimal",
-    ],
-    "debian11": [
-        "libcom-err2",
-        "libcrypt1",
-        "libffi7",
-        "libgssapi-krb5-2",
-        "libk5crypto3",
-        "libkeyutils1",
-        "libkrb5-3",
-        "libkrb5support0",
-        "libmpdec3",
-        "libnsl2",
-        "libpython3.9-minimal",
-        "libpython3.9-stdlib",
-        "libreadline8",
-        "libtirpc3",
-        "python3.9-minimal",
-    ],
-}
-
 DISTRO_VERSION = {
-    "debian10": "3.7",
     "debian11": "3.9",
 }
 
@@ -61,7 +31,22 @@ DISTRO_VERSION = {
             deb_file(arch, distro, "libtinfo6"),
             deb_file(arch, distro, "python3-distutils"),
             deb_file(arch, distro, "zlib1g"),
-        ] + [deb_file(arch, distro, deb) for deb in DISTRO_DEBS[distro]],
+            deb_file(arch, distro, "libcom-err2"),
+            deb_file(arch, distro, "libcrypt1"),
+            deb_file(arch, distro, "libffi7"),
+            deb_file(arch, distro, "libgssapi-krb5-2"),
+            deb_file(arch, distro, "libk5crypto3"),
+            deb_file(arch, distro, "libkeyutils1"),
+            deb_file(arch, distro, "libkrb5-3"),
+            deb_file(arch, distro, "libkrb5support0"),
+            deb_file(arch, distro, "libmpdec3"),
+            deb_file(arch, distro, "libnsl2"),
+            deb_file(arch, distro, "libpython3.9-minimal"),
+            deb_file(arch, distro, "libpython3.9-stdlib"),
+            deb_file(arch, distro, "libreadline8"),
+            deb_file(arch, distro, "libtirpc3"),
+            deb_file(arch, distro, "python3.9-minimal"),
+        ],
         entrypoint = [
             "/usr/bin/python" + DISTRO_VERSION[distro],
         ],
@@ -115,7 +100,7 @@ DISTRO_VERSION = {
     sh_binary(
         name = "generate_ldconfig_" + arch + "_cache",
         srcs = ["generate_ldconfig_cache.py"],
-        data = [":python3_root_" + arch + "_debian10"],
+        data = [":python3_root_" + arch + "_debian11"],
         tags = [
             "manual",
             arch,
@@ -127,7 +112,7 @@ DISTRO_VERSION = {
 [
     genrule(
         name = "ld_so_cache_" + arch + "_new",
-        srcs = [":python3_root_" + arch + "_debian10"],
+        srcs = [":python3_root_" + arch + "_debian11"],
         outs = ["ld.so.cache." + arch + ".new"],
         cmd = "$(location :generate_ldconfig_" + arch + "_cache) " + arch + " $(OUTS)",
         tags = [
