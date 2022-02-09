@@ -56,12 +56,9 @@ for java_version in -base 11 17; do
   docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug-nonroot "amd64 arm64"
 done
 
-docker manifest create gcr.io/$PROJECT_ID/nodejs:latest \
-   gcr.io/$PROJECT_ID/nodejs:latest-amd64 \
-   gcr.io/$PROJECT_ID/nodejs:latest-arm64
-docker manifest push gcr.io/$PROJECT_ID/nodejs:latest
-
-docker manifest create gcr.io/$PROJECT_ID/nodejs:debug \
-   gcr.io/$PROJECT_ID/nodejs:debug-amd64 \
-   gcr.io/$PROJECT_ID/nodejs:debug-arm64
-docker manifest push gcr.io/$PROJECT_ID/nodejs:debug
+for distro_suffix in "" -debian11; do
+  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:latest "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:debug "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16 "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16-debug "amd64 arm64"
+done

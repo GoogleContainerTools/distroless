@@ -120,25 +120,40 @@ PYTHON3.update({
 })
 
 NODEJS = {
-    "{REGISTRY}/{PROJECT_ID}/nodejs:latest-amd64": "//nodejs:nodejs16_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:latest-arm64": "//nodejs:nodejs16_arm64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:debug-amd64": "//nodejs:nodejs16_debug_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:debug-arm64": "//nodejs:nodejs16_debug_arm64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs:12": "//nodejs:nodejs12_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs:14": "//nodejs:nodejs14_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:16": "//nodejs:nodejs16_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs:12-debug": "//nodejs:nodejs12_debug_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs:14-debug": "//nodejs:nodejs14_debug_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:16-debug": "//nodejs:nodejs16_debug_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:latest": "//nodejs:nodejs16_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:debug": "//nodejs:nodejs16_debug_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:12": "//nodejs:nodejs12_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14": "//nodejs:nodejs14_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:16": "//nodejs:nodejs16_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:12-debug": "//nodejs:nodejs12_debug_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14-debug": "//nodejs:nodejs14_debug_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:16-debug": "//nodejs:nodejs16_debug_amd64_debian11",
 }
+
+NODEJS.update({
+    "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_" + arch + "_debian11"
+    for arch in BASE_ARCHITECTURES
+    for (tag_base, suffix) in [
+        ("latest", ""),
+        ("debug", "_debug"),
+        ("16", ""),
+        ("16-debug", "_debug"),
+    ]
+})
+
+NODEJS.update({
+    "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_" + arch + "_" + distro
+    for arch in BASE_ARCHITECTURES
+    for (tag_base, suffix) in [
+        ("latest", ""),
+        ("debug", "_debug"),
+        ("16", ""),
+        ("16-debug", "_debug"),
+    ]
+    for distro in LANGUAGE_DISTROS
+})
 
 JAVA_BASE = {
     "{REGISTRY}/{PROJECT_ID}/java-base:latest": "//java:java_base_root_amd64_debian11",
