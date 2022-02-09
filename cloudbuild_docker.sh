@@ -56,12 +56,6 @@ for java_version in -base 11 17; do
   docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug-nonroot "amd64 arm64"
 done
 
-# these java image tags are deprecated (remove march 31st 2020)
-docker_manifest gcr.io/$PROJECT_ID/java-debian11:nonroot "amd64 arm64"
-docker_manifest gcr.io/$PROJECT_ID/java-debian11:latest "amd64 arm64"
-docker_manifest gcr.io/$PROJECT_ID/java-debian11:debug-nonroot "amd64 arm64"
-docker_manifest gcr.io/$PROJECT_ID/java-debian11:debug "amd64 arm64"
-
 docker manifest create gcr.io/$PROJECT_ID/nodejs:latest \
    gcr.io/$PROJECT_ID/nodejs:latest-amd64 \
    gcr.io/$PROJECT_ID/nodejs:latest-arm64
