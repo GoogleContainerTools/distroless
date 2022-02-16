@@ -4,8 +4,7 @@ load("//:checksums.bzl", "ARCHITECTURES")
 load(":commands.bzl", "BUSYBOX_COMMANDS")
 
 # This works for all architectures because it is just files.
-# Ppc64le needs special case as there is no direct working binary file available.
-# Like Ppc64le, Arm64 also uses busybox from https://github.com/docker-library/busybox to work around the arm64 compatibility problem of busybox-armv8l from busybox.net.
+# Ppc64le/Arm64 needs special case as there is no direct working binary file available.
 [genrule(
     name = "busybox_" + arch + "_tar",
     srcs = ["@busybox_" + arch + "//file"],
