@@ -5,12 +5,13 @@ load(":commands.bzl", "BUSYBOX_COMMANDS")
 
 # This works for all architectures because it is just files.
 # Ppc64le needs special case as there is no direct working binary file available.
+# Like Ppc64le, Arm64 also uses busybox from https://github.com/docker-library/busybox to work around the arm64 compatibility problem of busybox-armv8l from busybox.net. 
 [genrule(
     name = "busybox_" + arch + "_tar",
     srcs = ["@busybox_" + arch + "//file"],
     outs = ["busybox_" + arch + ".tar"],
     cmd = "mkdir busybox; cp $(<) busybox/busybox; cd busybox; \
-           if [[ $(<) == *ppc64le* ]]; then \
+           if [[ $(<) == *ppc64le* || $(<) == *arm64* ]]; then \
              tar -xf busybox ./bin && mv -f ./bin/busybox . && rm -rf ./bin; \
            fi; \
            for cmd in %s; do \
