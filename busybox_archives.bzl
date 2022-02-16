@@ -16,11 +16,15 @@ def repositories():
         urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv7l"],
     )
 
+    # To update arm64 busybox binary (#657)
+    # Get the latest commit hash from dist-arm64v8 branch of docker-library repo.
+    # Substitute it in the link: https://github.com/docker-library/busybox/raw/<latest-commit-hash>/stable/musl/busybox.tar.xz
+    # Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
     http_file(
         name = "busybox_arm64",
         executable = True,
-        sha256 = "141adb1b625a6f44c4b114f76b4387b4ea4f7ab802b88eb40e0d2f6adcccb1c3",
-        urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv8l"],
+        sha256 = "02033a50ef38a32a72b4b28183654116c42dae61ec9dccb349f9f63c6ae30f53",
+        urls = ["https://github.com/docker-library/busybox/raw/22bb23a2665eefb1520dc4c99d5ac9bdf87ae93b/stable/musl/busybox.tar.xz"],
     )
 
     http_file(
