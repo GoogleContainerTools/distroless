@@ -28,10 +28,12 @@ for distro_suffix in "" -debian10 -debian11; do
 done
 
 # python, java and nodejs are debian11 only
-cosign sign "$@" gcr.io/$PROJECT_ID/python3-debian11:nonroot
-cosign sign "$@" gcr.io/$PROJECT_ID/python3-debian11:latest
-cosign sign "$@" gcr.io/$PROJECT_ID/python3-debian11:debug-nonroot
-cosign sign "$@" gcr.io/$PROJECT_ID/python3-debian11:debug
+for distro_suffix in "" -debian11; do
+  cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffix}:nonroot
+  cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffix}:latest
+  cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffix}:debug-nonroot
+  cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffux}:debug
+done
 
 for distro_suffix in "" -debian11; do
   cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${distro_suffix}:latest
