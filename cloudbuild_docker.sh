@@ -44,7 +44,7 @@ done
 
 # python node and java are debian11 only
 
-for distro_suffix in "" debian11; do
+for distro_suffix in "" -debian11; do
   docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:nonroot "amd64 arm64"
   docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:latest "amd64 arm64"
   docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:debug-nonroot "amd64 arm64"
