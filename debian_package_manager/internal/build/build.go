@@ -16,11 +16,14 @@
 package build
 
 import (
+	"compress/gzip"
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/build/config"
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/deb"
@@ -67,16 +70,24 @@ func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string
 	br := resp.Body
 	defer br.Close()
 
-	xzr, err := xz.NewReader(br)
-	if err != nil {
-		return nil, errors.Wrapf(err, "failed to xz open package index file %q", pi.URL)
+	var reader io.Reader
+	if ".xz" == filepath.Ext(pi.URL) {
+		reader, err = xz.NewReader(br)
+		if err != nil {
+			return nil, errors.Wrapf(err, "failed to xz open package index file %q", pi.URL)
+		}
+	} else {
+		reader, err = gzip.NewReader(br)
+		if err != nil {
+			return nil, errors.Wrapf(err, "failed to gz open package index file %q", pi.URL)
+		}
 	}
 
 	poolRoot, err := url.Parse(pi.PoolRoot)
 	if err != nil {
 		panic(err) // we shouldn't be generating bad urls
 	}
-	pkgs, err := deb.Parse(xzr, packages, poolRoot)
+	pkgs, err := deb.Parse(reader, packages, poolRoot)
 	return pkgs, errors.Wrapf(err, "parsing packages at %q", pi.URL)
 }
 
