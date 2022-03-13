@@ -20,6 +20,18 @@ import (
 )
 
 func PackageIndexGroup(snapshots *config.Snapshots, arch config.Arch, distro config.Distro) []*PackageIndex {
+	phpArchitectures := [2]string{"amd64", "arm64"}
+	for _, phpArchitecture := range phpArchitectures {
+		if phpArchitecture == arch.DebianName() {
+			return []*PackageIndex{
+				Main(snapshots.Debian, arch, distro),
+				Updates(snapshots.Debian, arch, distro),
+				Security(snapshots.Security, arch, distro),
+				Sury(arch, distro),
+			}
+		}
+	}
+
 	return []*PackageIndex{
 		Main(snapshots.Debian, arch, distro),
 		Updates(snapshots.Debian, arch, distro),
