@@ -1,0 +1,126 @@
+schemaVersion: "1.0.0"
+fileExistenceTests:
+  - name: php-fpm symlink
+    path: '/usr/sbin/php-fpm'
+    shouldExist: true
+commandTests:
+  - name: php-fpm version
+    command: [ "/usr/sbin/php-fpm", "--version" ]
+    expectedOutput: ["PHP 7.4"]
+  - name: php-fpm-modules
+    command: [ "/usr/sbin/php-fpm", "-m" ]
+    expectedOutput:
+      - 'apcu'
+      - 'cgi-fcgi'
+      - 'Core'
+      - 'ctype'
+      - 'curl'
+      - 'date'
+      - 'dom'
+      - 'exif'
+      - 'fileinfo'
+      - 'filter'
+      - 'ftp'
+      - 'gd'
+      - 'hash'
+      - 'iconv'
+      - 'intl'
+      - 'json'
+      - 'libxml'
+      - 'mbstring'
+      - 'mysqlnd'
+      - 'openssl'
+      - 'pcre'
+      - 'PDO'
+      - 'pdo_mysql'
+      - 'Phar'
+      - 'posix'
+      - 'readline'
+      - 'Reflection'
+      - 'session'
+      - 'SimpleXML'
+      - 'sodium'
+      - 'SPL'
+      - 'standard'
+      - 'tokenizer'
+      - 'xml'
+      - 'xmlreader'
+      - 'xmlwriter'
+      - 'Zend OPcache'
+      - 'zip'
+      - 'zlib'
+
+  - name: php-cli version
+    command: ["/usr/bin/php", "--version"]
+    expectedOutput: ["PHP 7.4"]
+  - name: config-files
+    command: [ "/usr/bin/php", "--ini" ]
+    expectedOutput:
+      - '/etc/php/7.4/cli/conf.d/10-mysqlnd.ini'
+      - '/etc/php/7.4/cli/conf.d/10-opcache.ini,'
+      - '/etc/php/7.4/cli/conf.d/10-pdo.ini,'
+      - '/etc/php/7.4/cli/conf.d/10-pdo_mysql.ini,'
+      - '/etc/php/7.4/cli/conf.d/15-xml.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-apcu.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-ctype.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-curl.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-dom.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-exif.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-fileinfo.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-ftp.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-gd.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-iconv.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-intl.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-mbstring.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-phar.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-posix.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-readline.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-simplexml.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-tokenizer.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-xmlreader.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-xmlwriter.ini,'
+      - '/etc/php/7.4/cli/conf.d/20-zip.ini'
+  - name: php-cli extensions
+    command: ["/usr/bin/php", "-m"]
+    expectedOutput:
+      - 'apcu'
+      - 'Core'
+      - 'ctype'
+      - 'curl'
+      - 'date'
+      - 'dom'
+      - 'exif'
+      - 'fileinfo'
+      - 'filter'
+      - 'ftp'
+      - 'gd'
+      - 'hash'
+      - 'iconv'
+      - 'intl'
+      - 'json'
+      - 'libxml'
+      - 'mbstring'
+      - 'mysqlnd'
+      - 'openssl'
+      - 'pcre'
+      - 'PDO'
+      - 'pdo_mysql'
+      - 'Phar'
+      - 'posix'
+      - 'readline'
+      - 'Reflection'
+      - 'session'
+      - 'SimpleXML'
+      - 'sodium'
+      - 'SPL'
+      - 'standard'
+      - 'tokenizer'
+      - 'xml'
+      - 'xmlreader'
+      - 'xmlwriter'
+      - 'Zend OPcache'
+      - 'zip'
+      - 'zlib'
+  - name: php-cli uid
+    command: ["/usr/bin/php", "-r", "echo getmyuid();"]
+    expectedOutput: ['65532']

@@ -248,6 +248,23 @@ JETTY = {
     "{REGISTRY}/{PROJECT_ID}/java-debian11/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian11",
 }
 
+load("//php:php_versions.bzl", "PHP_VERSIONS")
+
+PHP = {}
+
+PHP.update({
+    "{REGISTRY}/{PROJECT_ID}/php:" + php_version + "-" + tag_base + "-" + arch + "-" + distro: "//php:php" + php_version + "_" + label + "_" + arch + "_" + distro
+    for php_version in PHP_VERSIONS
+    for (tag_base, label) in [
+        ("root", "root"),
+        ("nonroot", "nonroot"),
+        ("debug", "debug_root"),
+        ("debug-nonroot", "debug_nonroot"),
+    ]
+    for distro in LANGUAGE_DISTROS
+    for arch in BASE_ARCHITECTURES
+})
+
 ALL = {}
 
 ALL.update(STATIC)
@@ -269,6 +286,8 @@ ALL.update(JAVA17)
 ALL.update(LEGACY_JAVA_TAGS)
 
 ALL.update(JETTY)
+
+ALL.update(PHP)
 
 container_bundle(
     name = "all",

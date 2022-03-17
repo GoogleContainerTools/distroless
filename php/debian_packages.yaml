@@ -1,0 +1,125 @@
+# python and java only build on a subset of architectures
+- distros: ["debian11"]
+  archs: ["amd64","arm64"]
+  packages:
+    # php
+    - "libmagic1"
+    - "libmagic-mgc"
+    - "mime-support"
+    - "libsystemd0"
+    - "libgcrypt20"
+    - "libgpg-error0"
+    - "liblz4-1"
+    - "libacl1"
+    - "libattr1"
+    - "libapparmor1"
+    - "libpcre2-8-0"
+    - "libncurses6"  #cli
+    - "libtinfo6"  #cli
+    - "libedit2"  #cli
+    - "libbsd0"
+    - "libargon2-1"  #argon
+    - "libcurl4"  #curl
+    - "libffi7"  #curl
+    - "libnghttp2-14"  #curl
+    - "libidn2-0"  #curl
+    - "libpsl5"  #curl
+    - "libldap-2.4-2"  #curl
+    - "librtmp1"  #curl
+    - "libssh2-1"  #curl
+    - "libk5crypto3"  #curl
+    - "libkrb5-3"  #curl
+    - "libunistring2"  #curl
+    - "libgssapi-krb5-2"  #curl
+    - "libkeyutils1"  #curl
+    - "libkrb5support0"  #curl
+    - "libgnutls30"  #curl
+    - "libgmp10"  #curl
+    - "libhogweed6"  #curl
+    - "libnettle8"  #curl
+    - "libp11-kit0"  #curl
+    - "libtasn1-6"  #curl
+    - "libsasl2-2"  #curl
+    - "libbrotli1"  #curl
+    - "libdeflate0"  #curl
+    - "libmd0"  #curl
+    - "libcom-err2"
+    - "libonig5"  #mbstring
+    - "libsodium23"  #sodium
+    - "libsqlite3-0"  #sqlite
+    - "libssl1.1"  #ssl
+    - "libxml2"  #xml
+    - "liblzma5"  #xml
+    - "libxslt1.1"  #xml
+    - "zlib1g"  #zlib
+    - "libzip4"  #zip
+    - "libbz2-1.0"  #zip
+    - "libmcrypt4"  #mcrypt
+    - "libgd3"  #gd
+    - "libfontconfig1"  #gd
+    - "libfreetype6"  #gd
+    - "libjpeg62-turbo"  #gd
+    - "libpng16-16"  #gd
+    - "libtiff5"  #gd
+    - "libwebp6"  #gd
+    - "libxpm4"  #gd
+    - "libexpat1"  #gd
+    - "libuuid1"  #gd
+    - "libx11-6"  #gd
+    - "libxcb1"  #gd
+    - "libx11-data"  #gd
+    - "libzstd1"  #gd
+    - "libjbig0"  #gd
+    - "libxau6"  #gd
+    - "libxdmcp6"  #gd
+    - "libicu67"  #intl
+    - "ucf"
+    #php7.4
+    - "php7.4-json"
+    - "php7.4-apcu"
+    - "php7.4-cli"
+    - "php7.4-common"
+    - "php7.4-curl"
+    - "php7.4-dev"
+    - "php7.4-fpm"
+    - "php7.4-gd"
+    - "php7.4-intl"
+    - "php7.4-mbstring"
+    - "php7.4-mcrypt"
+    - "php7.4-mysql"
+    - "php7.4-opcache"
+    - "php7.4-readline"
+    - "php7.4-xml"
+    - "php7.4-zip"
+    #php8.0
+    - "php8.0-apcu"
+    - "php8.0-cli"
+    - "php8.0-common"
+    - "php8.0-curl"
+    - "php8.0-dev"
+    - "php8.0-fpm"
+    - "php8.0-gd"
+    - "php8.0-intl"
+    - "php8.0-mbstring"
+    - "php8.0-mcrypt"
+    - "php8.0-mysql"
+    - "php8.0-opcache"
+    - "php8.0-readline"
+    - "php8.0-xml"
+    - "php8.0-zip"
+    #php8.1
+    - "php8.1-apcu"
+    - "php8.1-cli"
+    - "php8.1-common"
+    - "php8.1-curl"
+    - "php8.1-dev"
+    - "php8.1-fpm"
+    - "php8.1-gd"
+    - "php8.1-intl"
+    - "php8.1-mbstring"
+    - "php8.1-mcrypt"
+    - "php8.1-mysql"
+    - "php8.1-opcache"
+    - "php8.1-readline"
+    - "php8.1-xml"
+    - "php8.1-zip"

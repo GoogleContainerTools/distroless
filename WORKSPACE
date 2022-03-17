@@ -57,6 +57,10 @@ load(":node_archives.bzl", node_repositories = "repositories")
 
 node_repositories()
 
+load("//php:debian_archives.bzl", php_repositories = "repositories")
+
+php_repositories()
+
 # For Jetty
 http_archive(
     name = "jetty",
