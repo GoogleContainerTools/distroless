@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: bazelbuild/setup-bazelisk@v1
     - name: Mount bazel cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: "~/.cache/bazel"
         key: bazel
