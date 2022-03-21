@@ -11,6 +11,8 @@ pkg_tar(
             "WORKSPACE",
             "*.tar.gz",
             "BUILD.bazel",
+            "/nodejs/lib/node_modules/npm/",
+            "/nodejs/lib/node_modules/corepack/",
         ],
     ),
     package_dir = "/nodejs",
