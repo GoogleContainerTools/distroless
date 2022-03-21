@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 
 pkg_tar(
-    name = "nodejs-archive",
+    name = "tar",
     # The new_http_archive WORKSPACE rule leaves the original .tar.gz and bazel artifacts in the directory,
     srcs = glob(
         ["**/*"],
@@ -11,22 +11,11 @@ pkg_tar(
             "WORKSPACE",
             "*.tar.gz",
             "BUILD.bazel",
+            "lib/node_modules/corepack/**",
+            "lib/node_modules/npm/**",
         ],
     ),
     package_dir = "/nodejs",
     # See: https://github.com/bazelbuild/bazel/issues/2176
     strip_prefix = ".",
-)
-
-genrule(
-    name = "tar",
-    srcs = [":nodejs-archive"],
-    outs = ["node.tar"],
-    cmd = """
-    tar -xf $(location :nodejs-archive)
-    tar \\
-        --exclude='nodejs/lib/node_modules/npm' \\
-        --exclude='nodejs/lib/node_modules/corepack' \\
-        -hcf $(location node.tar) nodejs
-    """,
 )
