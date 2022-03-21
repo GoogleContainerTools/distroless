@@ -29,7 +29,7 @@ NODEJS_MAJOR_VERISONS = ("12", "14", "16")
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + "_" + distro + "_test",
         configs = [
             "testdata/nodejs" + major_version + ".yaml",
-            "testdata/check_npm.yaml"
+            "testdata/check_npm.yaml",
         ],
         image = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + "_" + distro,
         tags = [
