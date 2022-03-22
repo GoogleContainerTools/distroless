@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
         
 
     - name: Set up Go 1.16.x
@@ -24,7 +24,7 @@ jobs:
       run: ./updateWorkspaceSnapshots.sh
     
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@7380612b49221684fefa025244f2ef4008ae50ad
+      uses: peter-evans/create-pull-request@18f7dc018cc2cd597073088f7c7591b9d1c02672 # v3.14.0
       with:
         token: ${{ secrets.ACTIONS_TOKEN }}
         commit-message: "Bumping packages to latest stable versions"
