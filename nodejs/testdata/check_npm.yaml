@@ -2,7 +2,7 @@ schemaVersion: "2.0.0"
 fileExistenceTests:
   - name: npm
     path: '/nodejs/lib/node_modules/npm'
-    shouldExist: false
+    shouldExist: true
   - name: corepack
     path: '/nodejs/lib/node_modules/corepack'
-    shouldExist: false
+    shouldExist: true
