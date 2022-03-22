@@ -1,0 +1,17 @@
+schemaVersion: "2.0.0"
+fileExistenceTests:
+  - name: npm
+    path: '/nodejs/lib/node_modules/npm'
+    shouldExist: false
+  - name: corepack
+    path: '/nodejs/lib/node_modules/corepack'
+    shouldExist: false
+  - name: npm
+    path: '/nodejs/bin/npm'
+    shouldExist: false
+  - name: corepack
+    path: '/nodejs/bin/corepack'
+    shouldExist: false
+  - name: npx
+    path: '/nodejs/bin/npx'
+    shouldExist: false
