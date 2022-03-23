@@ -7,7 +7,7 @@ cosign version
 
 # Sign all images from 'images' file
 
-cosign sign "$@" $(cat images)
+cosign --timeout 10m sign "$@" $(cat images)
 
 # Sign 'latest' images with cosign
 for distro_suffix in "" -debian10 -debian11; do
