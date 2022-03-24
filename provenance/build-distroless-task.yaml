@@ -51,6 +51,9 @@ spec:
         # Make sure python points to python3
         update-alternatives --install /usr/bin/python python /usr/bin/python3 0
 
+        # fetch all dependencies with retries and backoff
+        for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //... && break || sleep 20; done
+
         bazel build all.tar
         
         # install jq and create the images file
