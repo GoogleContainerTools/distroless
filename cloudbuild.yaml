@@ -100,4 +100,4 @@ steps:
 
     # Start provenance pipeline
     kubectl apply -f provenance
-    tkn pipeline start -f=provenance/provenance-pipeline.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults --workspace name=workarea,volumeClaimTemplateFile=provenance/tekton/workspace-template.yaml
+    tkn pipeline start -f=provenance/provenance-pipeline.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --timeout 2h --use-param-defaults --workspace name=workarea,volumeClaimTemplateFile=provenance/tekton/workspace-template.yaml
