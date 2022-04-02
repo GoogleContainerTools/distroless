@@ -75,7 +75,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "python3-distutils": "3.9.2-1",
             "python3.9-minimal": "3.9.2-1",
             "tzdata": "2021a-1+deb11u3",
-            "zlib1g": "1:1.2.11.dfsg-2",
+            "zlib1g": "1:1.2.11.dfsg-2+deb11u1",
         },
     },
     "arm": {
@@ -189,7 +189,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "python3-distutils": "3.9.2-1",
             "python3.9-minimal": "3.9.2-1",
             "tzdata": "2021a-1+deb11u3",
-            "zlib1g": "1:1.2.11.dfsg-2",
+            "zlib1g": "1:1.2.11.dfsg-2+deb11u1",
         },
     },
     "ppc64le": {
