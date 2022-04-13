@@ -24,7 +24,7 @@ jobs:
       run: ./updateWorkspaceSnapshots.sh
     
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@f1a7646cead32c950d90344a4fb5d4e926972a8f # v4.0.1
+      uses: peter-evans/create-pull-request@bd72e1b7922d417764d27d30768117ad7da78a0e # v4.0.2
       with:
         token: ${{ secrets.ACTIONS_TOKEN }}
         commit-message: "Bumping packages to latest stable versions"
