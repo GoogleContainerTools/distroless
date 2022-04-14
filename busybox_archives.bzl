@@ -2,11 +2,15 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 # For the debug image
 def repositories():
+    # To update amd64 busybox binary (#1014)
+    # Get the latest commit hash from dist-amd64 branch of docker-library repo.
+    # Substitute it in the link: https://github.com/docker-library/busybox/raw/<latest-commit-hash>/stable/musl/busybox.tar.xz
+    # Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
     http_file(
         name = "busybox_amd64",
         executable = True,
-        sha256 = "51fcb60efbdf3e579550e9ab893730df56b33d0cc928a2a6467bd846cdfef7d8",
-        urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-x86_64"],
+        sha256 = "169548e8934284b7292bc359ba542c0cfad0b14069881294a6e6939555afbfc0",
+        urls = ["https://github.com/docker-library/busybox/raw/8822d69939aa6c41b50c66d0a4c5a5f8729f2178/stable/musl/busybox.tar.xz"],
     )
 
     http_file(
