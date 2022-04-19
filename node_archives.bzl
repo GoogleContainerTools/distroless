@@ -30,7 +30,7 @@ def repositories():
         urls = ["https://nodejs.org/dist/v16.14.2/node-v16.14.2-linux-x64.tar.gz"],
     )
 
-	http_archive(
+    http_archive(
         name = "nodejs18_amd64",
         build_file = "//nodejs:BUILD.nodejs",
         sha256 = "6260d3526dff25d43451ea8e90e0174975b4cd067e8535dc1d85a6d6b29f3043",
@@ -66,7 +66,7 @@ def repositories():
         urls = ["https://nodejs.org/dist/v16.14.2/node-v16.14.2-linux-arm64.tar.gz"],
     )
 
-	http_archive(
+    http_archive(
         name = "nodejs18_arm64",
         build_file = "//nodejs:BUILD.nodejs",
         sha256 = "dc59b5191e2bffcb124e80e12a323b5f700c1fa57a83a1846531008aba1e154d",
