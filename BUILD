@@ -209,34 +209,6 @@ JAVA17.update({
     for arch in BASE_ARCHITECTURES
 })
 
-# these are existing legacy tags that are scheduled to be removed
-LEGACY_JAVA_TAGS = {
-    "{REGISTRY}/{PROJECT_ID}/java:base": "//java:java_base_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:base-nonroot": "//java:java_base_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:base-debug": "//java:java_base_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:base-debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:base": "//java:java_base_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-nonroot": "//java:java_base_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-debug": "//java:java_base_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:base-debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:latest": "//java:java11_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:nonroot": "//java:java11_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:debug": "//java:java11_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:11": "//java:java11_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:11-nonroot": "//java:java11_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:11-debug": "//java:java11_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java:11-debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:latest": "//java:java11_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:nonroot": "//java:java11_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:11": "//java:java11_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:11-nonroot": "//java:java11_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:debug": "//java:java11_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:11-debug": "//java:java11_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/java-debian11:11-debug-nonroot": "//java:java11_debug_nonroot_amd64_debian11",
-}
-
 JETTY = {
     "{REGISTRY}/{PROJECT_ID}/java/jetty:latest": "//java/jetty:jetty_java11_debian11",
     "{REGISTRY}/{PROJECT_ID}/java/jetty:debug": "//java/jetty:jetty_java11_debug_debian11",
@@ -265,8 +237,6 @@ ALL.update(JAVA_BASE)
 ALL.update(JAVA11)
 
 ALL.update(JAVA17)
-
-ALL.update(LEGACY_JAVA_TAGS)
 
 ALL.update(JETTY)
 
