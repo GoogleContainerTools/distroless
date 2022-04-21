@@ -31,7 +31,7 @@ spec:
     #
     # See: https://github.com/GoogleCloudPlatform/cloud-builders/issues/667
     - name: bazel
-      image: gcr.io/cloud-builders/bazel@sha256:a7ab9f3abba94aad648d5fa9f690d285c0f55d8b20a411a3d53ca22a2ab9ad50
+      image: gcr.io/cloud-builders/bazel@sha256:264866d68b070d4aeec5ebbb70ec5fc71a90ec329e85cd3e5018e37479412887
       workingDir: $(workspaces.source.path)
       env:
       - name: PROJECT_ID
