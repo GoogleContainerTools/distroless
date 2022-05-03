@@ -3,7 +3,6 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 def repositories():
     # Node (https://nodejs.org/en/about/releases/)
     # Follow Node's maintainence schedule and support all LTS versions that are not end of life
-
     http_archive(
         name = "nodejs14_amd64",
         build_file = "//nodejs:BUILD.nodejs",
