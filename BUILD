@@ -149,6 +149,29 @@ NODEJS.update({
     for distro in LANGUAGE_DISTROS
 })
 
+NODEJS.update({
+    "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_" + arch + "_debian11"
+    for arch in BASE_ARCHITECTURES
+    for (tag_base, suffix) in [
+        ("latest", ""),
+        ("debug", "_debug"),
+        ("18", ""),
+        ("18-debug", "_debug"),
+    ]
+})
+
+NODEJS.update({
+    "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_" + arch + "_" + distro
+    for arch in BASE_ARCHITECTURES
+    for (tag_base, suffix) in [
+        ("latest", ""),
+        ("debug", "_debug"),
+        ("18", ""),
+        ("18-debug", "_debug"),
+    ]
+    for distro in LANGUAGE_DISTROS
+})
+
 JAVA_BASE = {
     "{REGISTRY}/{PROJECT_ID}/java-base:latest": "//java:java_base_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java-base:nonroot": "//java:java_base_nonroot_amd64_debian11",
