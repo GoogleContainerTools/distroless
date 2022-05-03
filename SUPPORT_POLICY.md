@@ -20,7 +20,7 @@ The current estimation of end of life for images with the pattern:
 Java will only support current LTS version distributed by debian [see here](https://wiki.debian.org/Java).
 
 ### Node
-Node version support is for even numbered releases (12, 14, etc) that are current, active or in LTS maintenance. For more information, [see here](https://nodejs.org/en/about/releases/).
+Node version support is for even numbered releases (14, 16, 18, etc) that are current, active or in LTS maintenance. For more information, [see here](https://nodejs.org/en/about/releases/).
 
 ### Python
 Python support is experimental, and this project does not make any guarantees about the version of python in images.

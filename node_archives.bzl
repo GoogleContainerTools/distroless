@@ -4,15 +4,6 @@ def repositories():
     # Node (https://nodejs.org/en/about/releases/)
     # Follow Node's maintainence schedule and support all LTS versions that are not end of life
     http_archive(
-        name = "nodejs12_amd64",
-        build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "ff92a45c4d03e8e270bec1ab337b8fff6e9de293dabfe7e8936a41f2fb0b202e",
-        strip_prefix = "node-v12.22.12-linux-x64/",
-        type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v12.22.12/node-v12.22.12-linux-x64.tar.gz"],
-    )
-
-    http_archive(
         name = "nodejs14_amd64",
         build_file = "//nodejs:BUILD.nodejs",
         sha256 = "3019e0508145c4c1fc6662f0b9b1c78bb84181aeea4749fac38ca51587aaf82f",
@@ -37,15 +28,6 @@ def repositories():
         strip_prefix = "node-v18.0.0-linux-x64/",
         type = "tar.gz",
         urls = ["https://nodejs.org/dist/v18.0.0/node-v18.0.0-linux-x64.tar.gz"],
-    )
-
-    http_archive(
-        name = "nodejs12_arm64",
-        build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "91aefa690914b7f24250f3c0b560b42c6d306315d40009c96b5a6940115895fe",
-        strip_prefix = "node-v12.22.12-linux-arm64/",
-        type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v12.22.12/node-v12.22.12-linux-arm64.tar.gz"],
     )
 
     http_archive(
