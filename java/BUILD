@@ -18,6 +18,7 @@ USERS = [
 JAVA_VERSIONS = [
     "11",
     "17",
+    "18",
 ]
 
 [
@@ -180,6 +181,8 @@ RULE_NAMES = [
     ("java11_nonroot_debian11", "java11_nonroot_amd64_debian11"),
     ("java17_root_debian11", "java17_root_amd64_debian11"),
     ("java17_nonroot_debian11", "java17_nonroot_amd64_debian11"),
+    ("java18_root_debian11", "java18_root_amd64_debian11"),
+    ("java18_nonroot_debian11", "java18_nonroot_amd64_debian11"),
 ]
 
 [
