@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//base:distro.bzl", "DISTROS")
 load("//base:base.bzl", "deb_file")
+load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
@@ -15,20 +15,19 @@ USERS = [
     "nonroot",
 ]
 
-VERSION_PAIRS = [
-    ("11", "amd64", "debian10"),
-    ("11", "amd64", "debian11"),
-    ("11", "arm64", "debian11"),
-    ("17", "amd64", "debian11"),
-    ("17", "arm64", "debian11"),
+JAVA_VERSIONS = [
+    "11",
+    "17",
 ]
 
-EXTRA_DEBS = {
-    "debian10": [],
-    "debian11": [
-        "libbrotli1",
-    ],
-}
+[
+    cacerts_java(
+        name = "cacerts_java_" + arch + "_" + distro,
+        cacerts_tar = "//base:cacerts_" + arch + "_" + distro,
+    )
+    for distro in DISTROS
+    for arch in ARCHITECTURES
+]
 
 [
     container_image(
@@ -50,10 +49,12 @@ EXTRA_DEBS = {
             deb_file(arch, distro, "libharfbuzz0b"),
             deb_file(arch, distro, "libglib2.0-0"),
             deb_file(arch, distro, "libpcre3"),
-        ] + [deb_file(arch, distro, deb) for deb in EXTRA_DEBS[distro]],
+            deb_file(arch, distro, "libbrotli1"),
+            deb_file(arch, distro, "libcrypt1"),
+        ],
         env = {"LANG": "C.UTF-8"},
         tars = [
-            "//cacerts:cacerts_java_" + arch + "_" + distro,
+            ":cacerts_java_" + arch + "_" + distro,
             "//locale:locale_" + arch + "_" + distro,
         ],
     )
@@ -64,7 +65,6 @@ EXTRA_DEBS = {
     for user in USERS
     for distro in DISTROS
     for arch in ARCHITECTURES
-    if not (arch == "arm64" and distro == "debian10")
 ]
 
 [
@@ -86,7 +86,9 @@ EXTRA_DEBS = {
         env = {"JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])},
         symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"},
     )
-    for (java_version, arch, distro) in VERSION_PAIRS
+    for java_version in JAVA_VERSIONS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
     for user in USERS
 ]
 
@@ -116,8 +118,10 @@ EXTRA_DEBS = {
         env = {"JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])},
         symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"},
     )
-    for (java_version, arch, distro) in VERSION_PAIRS
     for user in USERS
+    for java_version in JAVA_VERSIONS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 [
@@ -149,8 +153,10 @@ EXTRA_DEBS = {
             "manual",
         ],
     )
+    for java_version in JAVA_VERSIONS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
     for user in USERS
-    for (java_version, arch, distro) in VERSION_PAIRS
 ]
 
 [
@@ -163,13 +169,13 @@ EXTRA_DEBS = {
             "manual",
         ],
     )
+    for java_version in JAVA_VERSIONS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
     for user in USERS
-    for (java_version, arch, distro) in VERSION_PAIRS
 ]
 
 RULE_NAMES = [
-    ("java11_root_debian10", "java11_root_amd64_debian10"),
-    ("java11_nonroot_debian10", "java11_nonroot_amd64_debian10"),
     ("java11_root_debian11", "java11_root_amd64_debian11"),
     ("java11_nonroot_debian11", "java11_nonroot_amd64_debian11"),
     ("java17_root_debian11", "java17_root_amd64_debian11"),

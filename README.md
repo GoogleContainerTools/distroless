@@ -1,4 +1,4 @@
-# "Distroless" Docker Images
+# "Distroless" Container Images
 
 [![CI Build Status](https://github.com/GoogleContainerTools/distroless/actions/workflows/ci.yaml/badge.svg)](https://github.com/GoogleContainerTools/distroless/actions/workflows/ci.yaml)
 

@@ -1,9 +1,9 @@
-FROM node:16 AS build-env
+FROM node:18 AS build-env
 ADD . /app
 WORKDIR /app
-RUN npm install --production
+RUN npm install --omit=dev
 
-FROM gcr.io/distroless/nodejs:16
+FROM gcr.io/distroless/nodejs:18
 COPY --from=build-env /app /app
 WORKDIR /app
 EXPOSE 3000

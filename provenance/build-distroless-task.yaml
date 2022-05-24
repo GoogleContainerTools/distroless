@@ -31,7 +31,7 @@ spec:
     #
     # See: https://github.com/GoogleCloudPlatform/cloud-builders/issues/667
     - name: bazel
-      image: gcr.io/cloud-builders/bazel@sha256:a7ab9f3abba94aad648d5fa9f690d285c0f55d8b20a411a3d53ca22a2ab9ad50
+      image: gcr.io/cloud-builders/bazel@sha256:cb5766ff99f3df2fa7db38ea4e07423e84b36b4c7236e0f21197e16dc979947f
       workingDir: $(workspaces.source.path)
       env:
       - name: PROJECT_ID
@@ -50,6 +50,9 @@ spec:
 
         # Make sure python points to python3
         update-alternatives --install /usr/bin/python python /usr/bin/python3 0
+
+        # fetch all dependencies with retries and backoff
+        for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //... && break || sleep 20; done
 
         bazel build all.tar
         

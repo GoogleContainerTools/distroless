@@ -13,22 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: bazelbuild/setup-bazelisk@v1
-    - name: Mount bazel cache
-      uses: actions/cache@v2
-      with:
-        path: "~/.cache/bazel"
-        key: bazel
-
+    - uses: actions/checkout@v3
+    - uses: bazelbuild/setup-bazelisk@v2
     - name: Build and test
       run: |
         set -ex
-        bazel build --curses=no //package_manager:dpkg_parser.par
+        for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //... && break || sleep 20; done
         bazel build --curses=no //...
         bazel test --curses=no --test_output=errors //...
         # Ignore experimental targets, which might not pass.
         # TODO: Fix or remove these exceptions.
-        targets=$(bazel query 'attr("tags", "'amd64'", "//...")' | grep -v experimental)
+        targets=$(bazel query 'attr("tags", "'amd64'", "//...")')
         bazel build --curses=no ${targets}
         bazel test --curses=no --test_output=errors ${targets}

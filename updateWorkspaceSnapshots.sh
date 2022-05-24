@@ -8,4 +8,4 @@ set -o xtrace
 
 # the default config and output files are all in the current working
 # working directory
-./debian_package_manager/update
+for i in $(seq 5); do ./debian_package_manager/update && break || sleep 60; done

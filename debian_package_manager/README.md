@@ -81,8 +81,4 @@ This config can be imported in .bzl or BUILD files with
 load("//:debian_versions.bzl", VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
 
 VERSIONS["amd64"]["debian10"]["base-files"]
-<<<<<<< HEAD
 ```
-=======
-```
->>>>>>> 73a0a42 (Rework debian packagemanager)

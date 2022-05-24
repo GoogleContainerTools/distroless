@@ -15,7 +15,7 @@ steps:
 #   docker image inspect gcr.io/cloud-builders/bazel --format '{{.Id}}'
 #
 # See: https://github.com/GoogleCloudPlatform/cloud-builders/issues/667
-- name: gcr.io/cloud-builders/bazel@sha256:a7ab9f3abba94aad648d5fa9f690d285c0f55d8b20a411a3d53ca22a2ab9ad50
+- name: gcr.io/cloud-builders/bazel@sha256:cb5766ff99f3df2fa7db38ea4e07423e84b36b4c7236e0f21197e16dc979947f
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
@@ -34,6 +34,9 @@ steps:
     # Make sure python points to python3
     update-alternatives --install /usr/bin/python python /usr/bin/python3 0
 
+    # fetch all dependencies with retries and backoff
+    for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //... && break || sleep 20; done
+
     bazel run //:publish
     bazel build all.tar
 
@@ -47,7 +50,7 @@ steps:
 - name: ubuntu
   entrypoint: ./cloudbuild_jq.sh
 
-- name: gcr.io/projectsigstore/cosign:v1.3.1@sha256:3cd9b3a866579dc2e0cf2fdea547f4c9a27139276cc373165c26842bc594b8bd
+- name: gcr.io/projectsigstore/cosign:v1.6.0@sha256:b667002156c4bf9fedd9273f689b800bb5c341660e710e3bbac981c9795423d9
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
@@ -60,7 +63,7 @@ steps:
   - -c
   - ./cloudbuild_cosign.sh --key $_KMS_VAL
 
-- name: gcr.io/projectsigstore/cosign:v1.3.1@sha256:3cd9b3a866579dc2e0cf2fdea547f4c9a27139276cc373165c26842bc594b8bd
+- name: gcr.io/projectsigstore/cosign:v1.6.0@sha256:b667002156c4bf9fedd9273f689b800bb5c341660e710e3bbac981c9795423d9
   env:
   - PROJECT_ID=${PROJECT_ID}
   - COMMIT_SHA=${COMMIT_SHA}
@@ -74,27 +77,3 @@ steps:
   args:
   - -c
   - ./cloudbuild_cosign.sh
-
-# Start task in k8s to generate provenance
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: sh
-  args:
-  - -c
-  - |
-    #!/bin/sh
-    set -o errexit
-    set -o xtrace
-
-    gcloud container clusters get-credentials provenance --zone=us-central1-c --project=${PROJECT_ID}
-
-    # Install latest Tekton Pipelines and Tekton chains
-    kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
-    kubectl apply --filename https://storage.googleapis.com/tekton-releases/chains/latest/release.yaml
-
-    # Install tkn
-    curl -Lo tkn_${_TKN_VERSION}_Linux_arm64.tar.gz  https://github.com/tektoncd/cli/releases/download/v${_TKN_VERSION}/tkn_${_TKN_VERSION}_Linux_x86_64.tar.gz
-    tar -xvzf tkn_${_TKN_VERSION}_Linux_arm64.tar.gz -C /usr/local/bin/ tkn
-
-    # Start provenance pipeline
-    kubectl apply -f provenance
-    tkn pipeline start -f=provenance/provenance-pipeline.yaml --param CHAINS-GIT_COMMIT=${COMMIT_SHA} --use-param-defaults --workspace name=workarea,volumeClaimTemplateFile=provenance/tekton/workspace-template.yaml
