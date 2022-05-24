@@ -55,7 +55,7 @@ VERSION_PAIRS = [
 
 [
     container_image(
-        name = "dotnet_runtime_deps_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
+        name = "dotnet-" + version + "_runtime_deps_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
         architecture = arch,
         base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
         debs = [
@@ -75,7 +75,6 @@ VERSION_PAIRS = [
         "_debug",
     ]
     for user in USERS
-    for distro in [ "debian11" ]
-    for arch in ARCHITECTURES
+    for (version, arch, distro) in VERSION_PAIRS
     for variant in VARIANTS
 ]
