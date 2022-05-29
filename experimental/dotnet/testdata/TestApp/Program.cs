@@ -41,31 +41,42 @@ public static class Program
         // 1. excellent availability
         // 2. (hopefully) independent infrastructure
         // 3. different CAs
-        string[] wellKnownSecureSites = {
+        string[] wellKnownSecureSites =
+        {
             "https://amazon.com",
             "https://google.com",
             "https://microsoft.com"
         };
 
-        HttpClient client = new() { Timeout = TimeSpan.FromSeconds(5) };
+        HttpClient client = new() { Timeout = TimeSpan.FromSeconds(15) };
 
         List<(string, Task<HttpResponseMessage>)> tasks = new(wellKnownSecureSites.Length);
         foreach (string wellKnownSecureSite in wellKnownSecureSites)
         {
             Uri uri = new(wellKnownSecureSite, UriKind.Absolute);
-            tasks.Add((wellKnownSecureSite, client.GetAsync(uri, cancellationToken)));
+            tasks.Add((wellKnownSecureSite, client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken)));
         }
 
-        await Task.WhenAll(tasks.Select(t => t.Item2));
+        try
+        {
+            await Task.WhenAll(tasks.Select(t => t.Item2));
+        }
+        catch
+        {
+            // This will be handled down below.
+
+        }
 
         int failureCount = 0;
         string error = "";
-        foreach((string wellKnownSecureSite, Task<HttpResponseMessage> task)  in tasks)
+        foreach ((string wellKnownSecureSite, Task<HttpResponseMessage> task) in tasks)
         {
-            if(task.IsCompletedSuccessfully){
-              continue;
+            if (task.IsCompletedSuccessfully)
+            {
+                continue;
             }
-            if(task.IsFaulted || task.IsCanceled)
+
+            if (task.IsFaulted || task.IsCanceled)
             {
                 failureCount++;
                 if (error == "")
@@ -154,4 +165,3 @@ public static class Program
         }
     }
 }
-

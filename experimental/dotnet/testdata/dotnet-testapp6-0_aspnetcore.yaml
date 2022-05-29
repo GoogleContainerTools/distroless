@@ -8,5 +8,5 @@ commandTests:
   exitCode: 145
 - name: dotnet-asp-run
   command: "dotnet"
-  args: ["/asp-app/AspTestApp.dll"]
+  args: ["/app/AspTestApp.dll"]
   expectedOutput: ["I'm an Active Server Page"]

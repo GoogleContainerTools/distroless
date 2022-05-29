@@ -12,4 +12,6 @@ fileExistenceTests:
 - name: testapp
   path: "/app/TestApp.dll"
   shouldExist: true
-
+- name: asp-testapp
+  path: "/app/AspTestApp.dll"
+  shouldExist: true

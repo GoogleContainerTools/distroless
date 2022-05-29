@@ -4,12 +4,12 @@ public static class Program
 {
     public static async Task Main(string[] args)
     {
-        const string CONTENT = "I'm an Active Server Page";
+        const string CONTENT = "I'm an Active Server Page ;)";
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         builder.Logging.ClearProviders();
         WebApplication app = builder.Build();
 
-        CancellationTokenSource cts = new CancellationTokenSource(10_000);
+        CancellationTokenSource cts = new CancellationTokenSource(20_000);
         app.MapGet("/", () => CONTENT);
 
         await app.StartAsync(cts.Token);

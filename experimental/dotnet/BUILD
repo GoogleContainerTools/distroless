@@ -133,15 +133,27 @@ DOTNET_TYPES = [
         name = "testapp-sources",
         srcs = glob(["testdata/TestApp/*"]),
     ),
+    filegroup(
+        name = "asp-testapp-sources",
+        srcs = glob(["testdata/AspTestApp/*"]),
+    ),
+    # These should be two genrules and to pks_tar rules.
+    # Using two genrules suffers from some weird file permissions when building AspTestApp :/
     genrule(
         name = "testapp-publish",
-        cmd = "dotnet publish --framework net6.0 -c Release -o $(@D) ./experimental/dotnet/testdata/TestApp",
-        srcs = [":testapp-sources"],
+        cmd = "dotnet publish --framework net6.0 -c Release -o $(@D)/app ./experimental/dotnet/testdata/TestApp"
+              + " && dotnet publish --framework net6.0 -c Release -o $(@D)/asp-app ./experimental/dotnet/testdata/AspTestApp",
+        srcs = [":testapp-sources", "asp-testapp-sources"],
         outs = [
-          "TestApp.deps.json",
-          "TestApp.dll",
-          "TestApp.pdb",
-          "TestApp.runtimeconfig.json"
+          "app/TestApp.deps.json",
+          "app/TestApp.dll",
+          "app/TestApp.pdb",
+          "app/TestApp.runtimeconfig.json",
+          "asp-app/appsettings.json",
+          "asp-app/AspTestApp.deps.json",
+          "asp-app/AspTestApp.dll",
+          "asp-app/AspTestApp.pdb",
+          "asp-app/AspTestApp.runtimeconfig.json"
         ],
     ),
     pkg_tar(
@@ -150,27 +162,10 @@ DOTNET_TYPES = [
         srcs = [":testapp-publish"],
         mode = "0755",
     ),
-    genrule(
-        name = "asp-testapp-publish",
-        cmd = "dotnet publish --framework net6.0 -c Release -o $(@D) ./experimental/dotnet/testdata/AspTestApp",
-        srcs = glob(["testdata/AspTestApp/*"]),
-        outs = [
-          "appsettings.json",
-          "AspTestApp.deps.json",
-          "AspTestApp.dll",
-          "AspTestApp.pdb",
-          "AspTestApp.runtimeconfig.json"
-        ],
-    ),
-    pkg_tar(
-        name = "asp-testapp-bin",
-        package_dir = "/asp-app",
-        srcs = [":asp-testapp-publish"],
-        mode = "0755",
-    ),
 ]
 
 [
+    # Need to set file permissions, so test command can write to /src/ when running as non-root
     pkg_tar(
         name = "testapp-sources-tar_" + user,
         package_dir = "/src",
@@ -186,7 +181,7 @@ DOTNET_TYPES = [
         name = "dotnet-testapp" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
         architecture = arch,
         base = ":dotnet-" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
-        tars = [":testapp-bin", ":testapp-sources-tar_" + user, "asp-testapp-bin"],
+        tars = [":testapp-bin", ":testapp-sources-tar_" + user]
     )
     for mode in [
         "",
