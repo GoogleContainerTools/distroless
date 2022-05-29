@@ -1,0 +1,15 @@
+schemaVersion: "2.0.0"
+commandTests:
+- name: test-https
+  command: "dotnet"
+  args: ["/app/TestApp.dll", "https"]
+  expectedOutput: ['Success! Error: .*']
+- name: test-gzip
+  command: "dotnet"
+  args: ["/app/TestApp.dll", "gzip"]
+  expectedOutput: ['Success! Error: .*']
+fileExistenceTests:
+- name: testapp
+  path: "/app/TestApp.dll"
+  shouldExist: true
+

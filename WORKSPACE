@@ -112,10 +112,12 @@ _java_image_repos()
 # Have the dotnet_image dependencies for testing
 git_repository(
     name = "io_bazel_rules_dotnet",
-    remote = "https://github.com/bazelbuild/rules_dotnet",
     branch = "master",
+    remote = "https://github.com/bazelbuild/rules_dotnet",
 )
+
 load("@io_bazel_rules_dotnet//dotnet:deps.bzl", "dotnet_repositories")
+
 dotnet_repositories()
 
 load(
@@ -125,10 +127,16 @@ load(
 )
 
 dotnet_register_toolchains()
+
 dotnet_repositories_nugets()
 
 # There is no readily available dotnet image in @io_bazel_rules_docker,
 # using the official .NET SDK image instead
+
+load(":dotnet_archives.bzl", dotnet_bin_repositories = "repositories")
+
+dotnet_bin_repositories()
+
 load(
     "@io_bazel_rules_docker//container:container.bzl",
     "container_pull",
@@ -136,9 +144,9 @@ load(
 
 container_pull(
     name = "dotnet-sdk",
+    digest = "sha256:59d5f3cfa61923f035d160c3452f45b8bbbb79222ec3433476b58dfa2553a80f",
     registry = "mcr.microsoft.com",
     repository = "dotnet/sdk",
-    digest = "sha256:d10187c335fc2caef331699065b26be1dfcb7ade5d812927301c82a2fc1605d1",
 )
 
 # Have the go_image dependencies for testing.

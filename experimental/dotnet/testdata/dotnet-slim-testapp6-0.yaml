@@ -1,0 +1,8 @@
+schemaVersion: "2.0.0"
+commandTests:
+- name: test-i18n
+  command: "dotnet"
+  args: ["/app/TestApp.dll", "i18n"]
+  expectedError: ["System.Globalization.CultureNotFoundException: Only the invariant culture is supported in globalization-invariant mode."]
+  exitCode: 139
+

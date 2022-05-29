@@ -15,3 +15,8 @@
 /bazel-*
 # Ignore outputs generated during Bazel bootstrapping.
 /output/
+
+/experimental/dotnet/testdata/TestApp/bin/
+/experimental/dotnet/testdata/TestApp/obj/
+/experimental/dotnet/testdata/AspTestApp/bin/
+/experimental/dotnet/testdata/AspTestApp/obj/

@@ -1,0 +1,27 @@
+schemaVersion: "2.0.0"
+commandTests:
+- name: dotnet
+  command: "/usr/share/dotnet/dotnet"
+  args: ["--list-runtimes"]
+  expectedOutput:
+  - "Microsoft.NETCore.App 6.0.5 \\[/usr/share/dotnet/shared/Microsoft.NETCore.App\\]"
+  excludedOutput:
+  - "AspNetCore"
+- name: dotnet-symlink
+  command: "dotnet"
+  args: ["--list-runtimes"]
+  expectedOutput:
+  - "Microsoft.NETCore.App 6.0.5 \\[/usr/share/dotnet/shared/Microsoft.NETCore.App\\]"
+  excludedOutput:
+  - "AspNetCore"
+- name: dotnet-list-sdks
+  command: "/usr/share/dotnet/dotnet"
+  args: ["--list-sdks"]
+  excludedOutput: ['\w+']
+fileExistenceTests:
+- name: busybox
+  path: "/busybox/sh"
+  shouldExist: false
+- name: no-shell
+  path: "/bin/sh"
+  shouldExist: false
