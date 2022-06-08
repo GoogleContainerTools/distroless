@@ -11,7 +11,6 @@ for d in examples/*; do
 
 	# Skip these non-working examples.
 	if [[ $d == "examples/cc" ]]; then continue; fi
-	if [[ $d == "examples/nodejs" ]]; then continue; fi
 
 	# Build the Dockerfile and run the image, or fail.
 	echo ====================================
