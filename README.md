@@ -85,17 +85,16 @@ Follow these steps to get started:
 
   ```dockerfile
   # Start by building the application.
-  FROM golang:1.17-bullseye as build
+  FROM golang:1.18 as build
 
   WORKDIR /go/src/app
-  ADD . /go/src/app
+  COPY . .
 
-  RUN go get -d -v ./...
-
-  RUN go build -o /go/bin/app
+  RUN go mod download
+  RUN CGO_ENABLED=0 go build -o /go/bin/app
 
   # Now copy it into our base image.
-  FROM gcr.io/distroless/base-debian11
+  FROM gcr.io/distroless/static-debian11
   COPY --from=build /go/bin/app /
   CMD ["/app"]
   ```
