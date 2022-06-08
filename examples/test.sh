@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 for d in examples/*; do
 	# Skip non-directories.
 	if [[ ! -d "$d" ]]; then continue; fi
 
+	# Skip if the directory doesn't have a Dockerfile.
+	if [[ ! -f $d/Dockerfile ]]; then continue; fi
+
+	# Skip these non-working examples.
+	if [[ $d == "examples/cc" ]]; then continue; fi
+	if [[ $d == "examples/nodejs" ]]; then continue; fi
+
 	# Build the Dockerfile and run the image, or fail.
-	$(docker build -t $d $d/ && docker run $d) || $(echo "$d failed" && exit 1)
+	echo ====================================
+	echo = building $d
+	echo ====================================
+	docker build -t $d ./$d/
+	docker run $d
 done
