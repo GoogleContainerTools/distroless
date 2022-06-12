@@ -20,7 +20,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "netbase": "5.6",
             "openssl": "1.1.1n-0+deb10u2",
             "readline-common": "7.0-5",
-            "tzdata": "2021a-0+deb10u4",
+            "tzdata": "2021a-0+deb10u5",
         },
         "debian11": {
             "base-files": "11.1+deb11u3",
@@ -74,7 +74,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "openssl": "1.1.1n-0+deb11u2",
             "python3-distutils": "3.9.2-1",
             "python3.9-minimal": "3.9.2-1",
-            "tzdata": "2021a-1+deb11u3",
+            "tzdata": "2021a-1+deb11u4",
             "zlib1g": "1:1.2.11.dfsg-2+deb11u1",
         },
     },
@@ -98,7 +98,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "netbase": "5.6",
             "openssl": "1.1.1n-0+deb10u2",
             "readline-common": "7.0-5",
-            "tzdata": "2021a-0+deb10u4",
+            "tzdata": "2021a-0+deb10u5",
         },
         "debian11": {
             "base-files": "11.1+deb11u3",
@@ -111,7 +111,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "libstdcpp6": "10.2.1-6",
             "netbase": "6.3",
             "openssl": "1.1.1n-0+deb11u2",
-            "tzdata": "2021a-1+deb11u3",
+            "tzdata": "2021a-1+deb11u4",
         },
     },
     "arm64": {
@@ -134,7 +134,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "netbase": "5.6",
             "openssl": "1.1.1n-0+deb10u2",
             "readline-common": "7.0-5",
-            "tzdata": "2021a-0+deb10u4",
+            "tzdata": "2021a-0+deb10u5",
         },
         "debian11": {
             "base-files": "11.1+deb11u3",
@@ -188,7 +188,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "openssl": "1.1.1n-0+deb11u2",
             "python3-distutils": "3.9.2-1",
             "python3.9-minimal": "3.9.2-1",
-            "tzdata": "2021a-1+deb11u3",
+            "tzdata": "2021a-1+deb11u4",
             "zlib1g": "1:1.2.11.dfsg-2+deb11u1",
         },
     },
@@ -212,7 +212,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "netbase": "5.6",
             "openssl": "1.1.1n-0+deb10u2",
             "readline-common": "7.0-5",
-            "tzdata": "2021a-0+deb10u4",
+            "tzdata": "2021a-0+deb10u5",
         },
         "debian11": {
             "base-files": "11.1+deb11u3",
@@ -225,7 +225,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "libstdcpp6": "10.2.1-6",
             "netbase": "6.3",
             "openssl": "1.1.1n-0+deb11u2",
-            "tzdata": "2021a-1+deb11u3",
+            "tzdata": "2021a-1+deb11u4",
         },
     },
     "s390x": {
@@ -248,7 +248,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "netbase": "5.6",
             "openssl": "1.1.1n-0+deb10u2",
             "readline-common": "7.0-5",
-            "tzdata": "2021a-0+deb10u4",
+            "tzdata": "2021a-0+deb10u5",
         },
         "debian11": {
             "base-files": "11.1+deb11u3",
@@ -261,7 +261,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "libstdcpp6": "10.2.1-6",
             "netbase": "6.3",
             "openssl": "1.1.1n-0+deb11u2",
-            "tzdata": "2021a-1+deb11u3",
+            "tzdata": "2021a-1+deb11u4",
         },
     },
 }
