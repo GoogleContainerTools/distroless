@@ -40,7 +40,7 @@ cacerts = rule(
         ),
         # Implicit dependencies.
         "_build_tar": attr.label(
-            default = Label("@rules_pkg//pkg/private/tar:build_tar"),
+            default = Label("//tools:build_tar"),
             cfg = "host",
             executable = True,
         ),
