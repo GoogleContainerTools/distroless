@@ -31,7 +31,7 @@ locale = rule(
         ),
         # Implicit dependencies.
         "_build_tar": attr.label(
-            default = Label("//tools:build_tar"),
+            default = Label("//build_tar"),
             cfg = "host",
             executable = True,
         ),

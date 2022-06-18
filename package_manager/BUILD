@@ -37,7 +37,7 @@ py_library(
     name = "util",
     srcs = [
         "util.py",
-        "//tools:build_tar",
+        "//build_tar",
     ],
 )
 

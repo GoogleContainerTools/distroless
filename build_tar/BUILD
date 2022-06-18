@@ -8,10 +8,6 @@ py_library(
         "archive.py",
     ],
     srcs_version = "PY3",
-    visibility = [
-        "//experimental:__pkg__",
-        "//tests:__pkg__",
-    ],
 )
 
 py_library(
@@ -21,10 +17,6 @@ py_library(
         "helpers.py",
     ],
     srcs_version = "PY3",
-    visibility = [
-        "//experimental:__pkg__",
-        "//tests:__pkg__",
-    ],
 )
 
 py_binary(
