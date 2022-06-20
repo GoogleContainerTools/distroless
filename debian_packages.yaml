@@ -42,7 +42,7 @@
 
 # python and java only build on a subset of architectures
 - distros: ["debian11"]
-  archs: ["amd64","arm64"]
+  archs: ["amd64","arm64","s390x"]
   packages:
   # python
     - "dash"

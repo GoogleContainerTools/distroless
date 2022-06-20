@@ -1353,6 +1353,36 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/c/ca-certificates/ca-certificates_20210119_all.deb"],
     )
     http_file(
+        name = "s390x_debian11_dash",
+        downloaded_file_path = "dash_0.5.11+git20200708+dd9ef66-5_s390x.deb",
+        sha256 = "72a9ab0a9cc5ac854c25ac5bf09c10cd940dcc0665e9697a7415aada9ae902fa",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/d/dash/dash_0.5.11+git20200708+dd9ef66-5_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_fontconfig-config",
+        downloaded_file_path = "fontconfig-config_2.13.1-4.2_all.deb",
+        sha256 = "48afb6ad7d15e6104a343b789f73697301ad8bff77b69927bc998f5a409d8e90",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/f/fontconfig/fontconfig-config_2.13.1-4.2_all.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_fonts-dejavu-core",
+        downloaded_file_path = "fonts-dejavu-core_2.37-2_all.deb",
+        sha256 = "1f67421437b6eb18669d2868e3e02cb88668683d635198142f48aacc5b397118",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-2_all.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libbrotli1",
+        downloaded_file_path = "libbrotli1_1.0.9-2+b2_s390x.deb",
+        sha256 = "3f2ebe4c83833f374f3aad7f3b6aa9cf68ca3511544b97a185ab5c126790ac5f",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b2_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libbz2-1.0",
+        downloaded_file_path = "libbz2-1.0_1.0.8-4_s390x.deb",
+        sha256 = "9f88bf88995a42a5f4d391ed90eaf3c79ab1ce2db769607d51f5740865569a2c",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/b/bzip2/libbz2-1.0_1.0.8-4_s390x.deb"],
+    )
+    http_file(
         name = "s390x_debian11_libc-bin",
         downloaded_file_path = "libc-bin_2.31-13+deb11u3_s390x.deb",
         sha256 = "8b9e2baa3af8df5d391216271963ba0a83735bfa624beb2687f9d435919ed3db",
@@ -1365,16 +1395,178 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/glibc/libc6_2.31-13+deb11u3_s390x.deb"],
     )
     http_file(
+        name = "s390x_debian11_libcom-err2",
+        downloaded_file_path = "libcom-err2_1.46.2-2_s390x.deb",
+        sha256 = "f448b65322f84803a244c529f2b4c2f11914c2d1e745064f1927c678f3456595",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/e/e2fsprogs/libcom-err2_1.46.2-2_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libcrypt1",
+        downloaded_file_path = "libcrypt1_4.4.18-4_s390x.deb",
+        sha256 = "dbab47c5dedde0c5dfc6f5c974e23bd4a48ebc48cb8a56e2cabded6fc52818b7",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libx/libxcrypt/libcrypt1_4.4.18-4_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libdb5.3",
+        downloaded_file_path = "libdb5.3_5.3.28+dfsg1-0.8_s390x.deb",
+        sha256 = "de2b918bac8e24040c1d7c7d476673f8a6a7a1639027e59cad0fd9d52b0b6f96",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/d/db5.3/libdb5.3_5.3.28+dfsg1-0.8_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libexpat1",
+        downloaded_file_path = "libexpat1_2.2.10-2+deb11u3_s390x.deb",
+        sha256 = "7970986f9c9770b4a9b001917da23262200b1ef1727ed444aca6c65946de669c",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/e/expat/libexpat1_2.2.10-2+deb11u3_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libffi7",
+        downloaded_file_path = "libffi7_3.3-6_s390x.deb",
+        sha256 = "ba884499f5c90e76ab4b10be85b9646af45e2b1f07eb7982bf54dee600569b6b",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libf/libffi/libffi7_3.3-6_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libfontconfig1",
+        downloaded_file_path = "libfontconfig1_2.13.1-4.2_s390x.deb",
+        sha256 = "3890eb7a635164973f4205f75586a0a60a681328f730a9e0002af80e143cb036",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/f/fontconfig/libfontconfig1_2.13.1-4.2_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libfreetype6",
+        downloaded_file_path = "libfreetype6_2.10.4+dfsg-1_s390x.deb",
+        sha256 = "bb232748cd9471b186264475c348b6d0d4a19387c3573e9c6b7aac7d8a186e83",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/f/freetype/libfreetype6_2.10.4+dfsg-1_s390x.deb"],
+    )
+    http_file(
         name = "s390x_debian11_libgcc-s1",
         downloaded_file_path = "libgcc-s1_10.2.1-6_s390x.deb",
         sha256 = "129b6403af3832426f470a30a3f01a71725eb38b7b7a93de4480f56ae5393e22",
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/gcc-10/libgcc-s1_10.2.1-6_s390x.deb"],
     )
     http_file(
+        name = "s390x_debian11_libglib2.0-0",
+        downloaded_file_path = "libglib2.0-0_2.66.8-1_s390x.deb",
+        sha256 = "2166169b9c7d5a639bf8e5b018a7f48a240c36d404d1e2db8d4ce2acafc4b907",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/glib2.0/libglib2.0-0_2.66.8-1_s390x.deb"],
+    )
+    http_file(
         name = "s390x_debian11_libgomp1",
         downloaded_file_path = "libgomp1_10.2.1-6_s390x.deb",
         sha256 = "d836fcc5ba63095ed15efefee912c83902c7213f40b6aece73455c9348d5e462",
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/gcc-10/libgomp1_10.2.1-6_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libgraphite2-3",
+        downloaded_file_path = "libgraphite2-3_1.3.14-1_s390x.deb",
+        sha256 = "5d11b4ffb8f9559b77b3b6981f3c59df5a446a075b2bcc0f6184c0d9ba8c4b1c",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libgssapi-krb5-2",
+        downloaded_file_path = "libgssapi-krb5-2_1.18.3-6+deb11u1_s390x.deb",
+        sha256 = "aade78883f78786547039374b2d2767ba45839cca3c6c798d7c123c60e659df6",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/k/krb5/libgssapi-krb5-2_1.18.3-6+deb11u1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libharfbuzz0b",
+        downloaded_file_path = "libharfbuzz0b_2.7.4-1_s390x.deb",
+        sha256 = "a54b2558537d4758b51db666cba7e27c9dd83ad8b19f727a9eb2008576b2900c",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/h/harfbuzz/libharfbuzz0b_2.7.4-1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libjpeg62-turbo",
+        downloaded_file_path = "libjpeg62-turbo_2.0.6-4_s390x.deb",
+        sha256 = "a75580859d0a161124bb1f3dd0ecb9f96786c18b5d39a02b57eb4cf7d7dd8653",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.0.6-4_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libk5crypto3",
+        downloaded_file_path = "libk5crypto3_1.18.3-6+deb11u1_s390x.deb",
+        sha256 = "d1ad27eab030b94460d1098427a055d229b9dd00b2f33418ccff2b33c8f1a037",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/k/krb5/libk5crypto3_1.18.3-6+deb11u1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libkeyutils1",
+        downloaded_file_path = "libkeyutils1_1.6.1-2_s390x.deb",
+        sha256 = "3aa2ca22ee6e5a525734d841c7595aadfb4870e84e0421c199c618da6b312b95",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/k/keyutils/libkeyutils1_1.6.1-2_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libkrb5-3",
+        downloaded_file_path = "libkrb5-3_1.18.3-6+deb11u1_s390x.deb",
+        sha256 = "f783907db5a69dcccfc305958a036eb39d364215f860026aca3950a9d70294ca",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/k/krb5/libkrb5-3_1.18.3-6+deb11u1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libkrb5support0",
+        downloaded_file_path = "libkrb5support0_1.18.3-6+deb11u1_s390x.deb",
+        sha256 = "dae45f51d528392388741dfa800b222681b950bb021813ca069fc97706424448",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/k/krb5/libkrb5support0_1.18.3-6+deb11u1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_liblcms2-2",
+        downloaded_file_path = "liblcms2-2_2.12~rc1-2_s390x.deb",
+        sha256 = "0de7a9428b71b6abcaa0cccf2bb37aa6800d58baf5ca5fc063c4827703614853",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/l/lcms2/liblcms2-2_2.12~rc1-2_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_liblzma5",
+        downloaded_file_path = "liblzma5_5.2.5-2.1~deb11u1_s390x.deb",
+        sha256 = "07e3311a462d4ec1482f13acd2ec68da8c6259aad67a0eeaa754719740d0ea13",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/x/xz-utils/liblzma5_5.2.5-2.1~deb11u1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libmpdec3",
+        downloaded_file_path = "libmpdec3_2.5.1-1_s390x.deb",
+        sha256 = "acf522022110fc06dc373eb24e95bec4d2fa78e5dbac01e064b227b908c31551",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/m/mpdecimal/libmpdec3_2.5.1-1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libncursesw6",
+        downloaded_file_path = "libncursesw6_6.2+20201114-2_s390x.deb",
+        sha256 = "3ffcd3ad456b9b41323b9b027b1698bc195bd69b3861fa651a2a19ab9c6fec12",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/n/ncurses/libncursesw6_6.2+20201114-2_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libnsl2",
+        downloaded_file_path = "libnsl2_1.3.0-2_s390x.deb",
+        sha256 = "861496c42f7c2e60a4b9a45ba01b3f9985cd3ab19558b9fc616991f7bd1f7baf",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libn/libnsl/libnsl2_1.3.0-2_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libpcre3",
+        downloaded_file_path = "libpcre3_8.39-13_s390x.deb",
+        sha256 = "ff08eb6d116b07affbed8cdd7c519caf2fc56beffef5dd7b6519eda670c1a7f7",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/p/pcre3/libpcre3_8.39-13_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libpng16-16",
+        downloaded_file_path = "libpng16-16_1.6.37-3_s390x.deb",
+        sha256 = "34b92145dcf4a532dab76086ec30a636a58d31c635e7c6f9d4cb47dfc4704512",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libp/libpng1.6/libpng16-16_1.6.37-3_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libpython3.9-minimal",
+        downloaded_file_path = "libpython3.9-minimal_3.9.2-1_s390x.deb",
+        sha256 = "05793c090a1e61c746b0d8c8ae11e12fde6dfebc2a98d52d8354913dbee60881",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/p/python3.9/libpython3.9-minimal_3.9.2-1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libpython3.9-stdlib",
+        downloaded_file_path = "libpython3.9-stdlib_3.9.2-1_s390x.deb",
+        sha256 = "8db9073309dcc8e6a273f50e88077b843bd5affc2412dc49a6d9c8ae0b954e46",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/p/python3.9/libpython3.9-stdlib_3.9.2-1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libreadline8",
+        downloaded_file_path = "libreadline8_8.1-1_s390x.deb",
+        sha256 = "df72dcc89d794b1606909d8a2e8c668b164ee80aa2437b49884c257c5d60438a",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/r/readline/libreadline8_8.1-1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libsqlite3-0",
+        downloaded_file_path = "libsqlite3-0_3.34.1-3_s390x.deb",
+        sha256 = "c5b811820575e6100e872407ab4657377b45e874fdf5990ca284d851ec752662",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/s/sqlite3/libsqlite3-0_3.34.1-3_s390x.deb"],
     )
     http_file(
         name = "s390x_debian11_libssl1.1",
@@ -1389,10 +1581,52 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/gcc-10/libstdc++6_10.2.1-6_s390x.deb"],
     )
     http_file(
+        name = "s390x_debian11_libtinfo6",
+        downloaded_file_path = "libtinfo6_6.2+20201114-2_s390x.deb",
+        sha256 = "8355f858effd58ba7015d41f009d42a17f0c0128f054b42053ed018310ec996b",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/n/ncurses/libtinfo6_6.2+20201114-2_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libtirpc3",
+        downloaded_file_path = "libtirpc3_1.3.1-1_s390x.deb",
+        sha256 = "2312d3595eae2d195319454fae5ba0d0a2608d6299cd0ac00e469d3b3617045b",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libt/libtirpc/libtirpc3_1.3.1-1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_libuuid1",
+        downloaded_file_path = "libuuid1_2.36.1-8+deb11u1_s390x.deb",
+        sha256 = "8df64efb47308f903f0b9835b697c84a2be133ffa9af0ac9d93414a2f6771fae",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/u/util-linux/libuuid1_2.36.1-8+deb11u1_s390x.deb"],
+    )
+    http_file(
         name = "s390x_debian11_netbase",
         downloaded_file_path = "netbase_6.3_all.deb",
         sha256 = "f444889ad3441758e3a5092418e062da2b0c6a811fdb0c262a6b70cb2518dbde",
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/n/netbase/netbase_6.3_all.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_openjdk-11-jdk-headless",
+        downloaded_file_path = "openjdk-11-jdk-headless_11.0.15+10-1~deb11u1_s390x.deb",
+        sha256 = "fa19d40effb2e5b3aee7bf049297a5bd58ff301290d4ba5916e46f512dd6e8ac",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.15+10-1~deb11u1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_openjdk-11-jre-headless",
+        downloaded_file_path = "openjdk-11-jre-headless_11.0.15+10-1~deb11u1_s390x.deb",
+        sha256 = "8742440549a5c448010d4cf70f05a128d5c1671d22185ac7612bae4990fb368a",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.15+10-1~deb11u1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_openjdk-17-jdk-headless",
+        downloaded_file_path = "openjdk-17-jdk-headless_17.0.3+7-1~deb11u1_s390x.deb",
+        sha256 = "a97ca3e25867fcac3c5c41e8491f1e83073d4638e6b3f40731c42f2520ecfcde",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.3+7-1~deb11u1_s390x.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_openjdk-17-jre-headless",
+        downloaded_file_path = "openjdk-17-jre-headless_17.0.3+7-1~deb11u1_s390x.deb",
+        sha256 = "a8a95b70bdc9945592b55c4fec26248a863d5781e83a6dd43950fb167c8a2393",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.3+7-1~deb11u1_s390x.deb"],
     )
     http_file(
         name = "s390x_debian11_openssl",
@@ -1401,8 +1635,26 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openssl/openssl_1.1.1n-0+deb11u2_s390x.deb"],
     )
     http_file(
+        name = "s390x_debian11_python3-distutils",
+        downloaded_file_path = "python3-distutils_3.9.2-1_all.deb",
+        sha256 = "05ec4080e0f05ba6b1c339d89c97f6343919be450b66cf4cfb215f54dcb85e58",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/p/python3-stdlib-extensions/python3-distutils_3.9.2-1_all.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_python3.9-minimal",
+        downloaded_file_path = "python3.9-minimal_3.9.2-1_s390x.deb",
+        sha256 = "e31722edb8a46290fbeb44464dbf03537c6cde53ecb1d72dac9576c4c3d39e15",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/p/python3.9/python3.9-minimal_3.9.2-1_s390x.deb"],
+    )
+    http_file(
         name = "s390x_debian11_tzdata",
         downloaded_file_path = "tzdata_2021a-1+deb11u4_all.deb",
         sha256 = "fbd924ad16be1933ee07f505e2fe5a98df8c143eacecbd6f830ce4e25d93ca11",
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/t/tzdata/tzdata_2021a-1+deb11u4_all.deb"],
+    )
+    http_file(
+        name = "s390x_debian11_zlib1g",
+        downloaded_file_path = "zlib1g_1.2.11.dfsg-2+deb11u1_s390x.deb",
+        sha256 = "4a20d1f44bd13529754e019dee4026e1dd5c45533de8bea23ba67fb0a04ad8c7",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/z/zlib/zlib1g_1.2.11.dfsg-2+deb11u1_s390x.deb"],
     )
