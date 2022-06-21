@@ -42,7 +42,7 @@
 
 # debian 11, limited architectures, java only
 - distros: ["debian11"]
-  archs: ["amd64", "arm64", "s390x"]
+  archs: ["amd64", "arm64", "s390x", "ppc64le"]
   packages:
     - "fontconfig-config"
     - "fonts-dejavu-core"
@@ -67,7 +67,7 @@
 
 # debian 11, limited architectures, python only
 - distros: ["debian11"]
-  archs: ["amd64","arm64"]
+  archs: ["amd64", "arm64"]
   packages:
     - "dash"
     - "libbz2-1.0"

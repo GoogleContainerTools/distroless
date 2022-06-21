@@ -15,7 +15,7 @@ USERS = [
     "nonroot",
 ]
 
-JAVA_ARCHITECTURES = ARCHITECTURES + ["s390x"]
+JAVA_ARCHITECTURES = ARCHITECTURES + ["s390x", "ppc64le"]
 
 JAVA_VERSIONS = [
     "11",

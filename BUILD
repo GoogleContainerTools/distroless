@@ -4,7 +4,7 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
 load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
 load("//base:distro.bzl", "DISTROS", "LANGUAGE_DISTROS")
 
-JAVA_ARCHITECTURES = BASE_ARCHITECTURES + ["s390x"]
+JAVA_ARCHITECTURES = BASE_ARCHITECTURES + ["s390x", "ppc64le"]
 
 LABEL_USERS = [
     ("latest", "root"),

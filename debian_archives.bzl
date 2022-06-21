@@ -1173,6 +1173,24 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/c/ca-certificates/ca-certificates_20210119_all.deb"],
     )
     http_file(
+        name = "ppc64le_debian11_fontconfig-config",
+        downloaded_file_path = "fontconfig-config_2.13.1-4.2_all.deb",
+        sha256 = "48afb6ad7d15e6104a343b789f73697301ad8bff77b69927bc998f5a409d8e90",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/f/fontconfig/fontconfig-config_2.13.1-4.2_all.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_fonts-dejavu-core",
+        downloaded_file_path = "fonts-dejavu-core_2.37-2_all.deb",
+        sha256 = "1f67421437b6eb18669d2868e3e02cb88668683d635198142f48aacc5b397118",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-2_all.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libbrotli1",
+        downloaded_file_path = "libbrotli1_1.0.9-2+b2_ppc64el.deb",
+        sha256 = "a7a7099df1c6ab6c3472731d88892e83f0077b2d3ec1414ff8f1c311a55a9f92",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b2_ppc64el.deb"],
+    )
+    http_file(
         name = "ppc64le_debian11_libc-bin",
         downloaded_file_path = "libc-bin_2.31-13+deb11u3_ppc64el.deb",
         sha256 = "f69385530c120572c6705965c38a0c60c2b7b1d2c9725bc39cae5a7036ad45d9",
@@ -1185,16 +1203,82 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/glibc/libc6_2.31-13+deb11u3_ppc64el.deb"],
     )
     http_file(
+        name = "ppc64le_debian11_libcrypt1",
+        downloaded_file_path = "libcrypt1_4.4.18-4_ppc64el.deb",
+        sha256 = "0087ad3e3d01968c3fb354f77b46966e4ca79246a08caca9257695095befcf05",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libx/libxcrypt/libcrypt1_4.4.18-4_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libexpat1",
+        downloaded_file_path = "libexpat1_2.2.10-2+deb11u3_ppc64el.deb",
+        sha256 = "3dff2b7c1c8dd378744b5790f10f977cc8ab9065197e2e57ba915e9660cdbce7",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/e/expat/libexpat1_2.2.10-2+deb11u3_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libfontconfig1",
+        downloaded_file_path = "libfontconfig1_2.13.1-4.2_ppc64el.deb",
+        sha256 = "a4eed4b8c8cefe48e0567a0c098a7bf9fc6aab4093a9dd2e75fbdfa2d1ef7aa8",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/f/fontconfig/libfontconfig1_2.13.1-4.2_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libfreetype6",
+        downloaded_file_path = "libfreetype6_2.10.4+dfsg-1_ppc64el.deb",
+        sha256 = "39a727ce78b0f1ddf446b3e555f9948513b3bb2f7ae35dfcec9ad176beaf7d13",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/f/freetype/libfreetype6_2.10.4+dfsg-1_ppc64el.deb"],
+    )
+    http_file(
         name = "ppc64le_debian11_libgcc-s1",
         downloaded_file_path = "libgcc-s1_10.2.1-6_ppc64el.deb",
         sha256 = "8b612f798430a6dd8b8b5e8f712b7ea92329201c6a438a9d176e9e285f1c14d5",
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/gcc-10/libgcc-s1_10.2.1-6_ppc64el.deb"],
     )
     http_file(
+        name = "ppc64le_debian11_libglib2.0-0",
+        downloaded_file_path = "libglib2.0-0_2.66.8-1_ppc64el.deb",
+        sha256 = "c31d5cac3c9b6d861b62a5f9972f1351355d57a622d1669fa410457c912ab905",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/glib2.0/libglib2.0-0_2.66.8-1_ppc64el.deb"],
+    )
+    http_file(
         name = "ppc64le_debian11_libgomp1",
         downloaded_file_path = "libgomp1_10.2.1-6_ppc64el.deb",
         sha256 = "f4b1f093072bf65694a98432d108e5c62756c147f5e92e657021428dc602b9f4",
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/gcc-10/libgomp1_10.2.1-6_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libgraphite2-3",
+        downloaded_file_path = "libgraphite2-3_1.3.14-1_ppc64el.deb",
+        sha256 = "6998cf0f9dd4c0d09ce0521e26ed967f596fc1e8b394edbc49fc0cd4a969a3d2",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libharfbuzz0b",
+        downloaded_file_path = "libharfbuzz0b_2.7.4-1_ppc64el.deb",
+        sha256 = "eceadc98a48d3950cd69be4648ef134b76a224415a6fad9193407860604d6a9b",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/h/harfbuzz/libharfbuzz0b_2.7.4-1_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libjpeg62-turbo",
+        downloaded_file_path = "libjpeg62-turbo_2.0.6-4_ppc64el.deb",
+        sha256 = "7c198ae4e27ddb57d53ee68bf2846b3dc88d33b9948d5f2903ee9e69312848b9",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.0.6-4_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_liblcms2-2",
+        downloaded_file_path = "liblcms2-2_2.12~rc1-2_ppc64el.deb",
+        sha256 = "e4b32374b944aae5c4ab9e3742a68ad978faae9403c2685c5e44c7aa4d6e0123",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/l/lcms2/liblcms2-2_2.12~rc1-2_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libpcre3",
+        downloaded_file_path = "libpcre3_8.39-13_ppc64el.deb",
+        sha256 = "c24f9bb2b39d2fb9750a52a9ba512754079062c92be5f51b204689117c11868a",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/p/pcre3/libpcre3_8.39-13_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_libpng16-16",
+        downloaded_file_path = "libpng16-16_1.6.37-3_ppc64el.deb",
+        sha256 = "ea4e1daaeab93a09f9fc943a852099c89d69da0c9606d0f4419ae0c5d4b5c10d",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/libp/libpng1.6/libpng16-16_1.6.37-3_ppc64el.deb"],
     )
     http_file(
         name = "ppc64le_debian11_libssl1.1",
@@ -1209,10 +1293,40 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/g/gcc-10/libstdc++6_10.2.1-6_ppc64el.deb"],
     )
     http_file(
+        name = "ppc64le_debian11_libuuid1",
+        downloaded_file_path = "libuuid1_2.36.1-8+deb11u1_ppc64el.deb",
+        sha256 = "8c5a094cf457ffedcd3c401f8aef735a4e9a405cd07208ec6c8e57441f650bdf",
+        urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/u/util-linux/libuuid1_2.36.1-8+deb11u1_ppc64el.deb"],
+    )
+    http_file(
         name = "ppc64le_debian11_netbase",
         downloaded_file_path = "netbase_6.3_all.deb",
         sha256 = "f444889ad3441758e3a5092418e062da2b0c6a811fdb0c262a6b70cb2518dbde",
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/n/netbase/netbase_6.3_all.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_openjdk-11-jdk-headless",
+        downloaded_file_path = "openjdk-11-jdk-headless_11.0.15+10-1~deb11u1_ppc64el.deb",
+        sha256 = "6e3634d06ba2df3d15b67ce2e94106c11bd04f916ca9df6fccfaa94aecfabc13",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.15+10-1~deb11u1_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_openjdk-11-jre-headless",
+        downloaded_file_path = "openjdk-11-jre-headless_11.0.15+10-1~deb11u1_ppc64el.deb",
+        sha256 = "0e12550d95cced372eb4dda36893e24bafcdda7dc6969022a16609b2189c5401",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.15+10-1~deb11u1_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_openjdk-17-jdk-headless",
+        downloaded_file_path = "openjdk-17-jdk-headless_17.0.3+7-1~deb11u1_ppc64el.deb",
+        sha256 = "7fbd5f2ebb3be81079afea042968a90040c09cee79f90b2a9e920a67741e5c4f",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.3+7-1~deb11u1_ppc64el.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_openjdk-17-jre-headless",
+        downloaded_file_path = "openjdk-17-jre-headless_17.0.3+7-1~deb11u1_ppc64el.deb",
+        sha256 = "46300431b51adc127590b92e0f08c0d45ab690b950944ac8440270e93008384d",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.3+7-1~deb11u1_ppc64el.deb"],
     )
     http_file(
         name = "ppc64le_debian11_openssl",
@@ -1225,6 +1339,12 @@ def repositories():
         downloaded_file_path = "tzdata_2021a-1+deb11u4_all.deb",
         sha256 = "fbd924ad16be1933ee07f505e2fe5a98df8c143eacecbd6f830ce4e25d93ca11",
         urls = ["https://snapshot.debian.org/archive/debian/20220611T211102Z/pool/main/t/tzdata/tzdata_2021a-1+deb11u4_all.deb"],
+    )
+    http_file(
+        name = "ppc64le_debian11_zlib1g",
+        downloaded_file_path = "zlib1g_1.2.11.dfsg-2+deb11u1_ppc64el.deb",
+        sha256 = "3d60e6988425f58b56878a7c3aa1e24342b49d68faab50865dde37c8170eedf0",
+        urls = ["https://snapshot.debian.org/archive/debian-security/20220610T212141Z/pool/updates/main/z/zlib/zlib1g_1.2.11.dfsg-2+deb11u1_ppc64el.deb"],
     )
     http_file(
         name = "s390x_debian10_base-files",
