@@ -72,6 +72,7 @@
     - "dash"
     - "libbz2-1.0"
     - "libcom-err2"
+    - "libcrypt1" # TODO: glibc library for -lcrypt; maybe should be in cc?
     - "libdb5.3"
     - "libexpat1"
     - "libffi7"
@@ -94,3 +95,4 @@
     - "python3-distutils"
     - "python3.9-minimal"
     - "zlib1g"
+
