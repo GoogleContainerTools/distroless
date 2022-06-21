@@ -19,8 +19,11 @@ import os
 import tarfile
 import tempfile
 
-import archive # pylint: disable=import-error
-import helpers # pylint: disable=import-error
+try:
+    from build_tar import archive, helpers
+except ImportError:
+    import archive
+    import helpers
 
 
 class TarFile(object):
@@ -35,10 +38,9 @@ class TarFile(object):
         self.compression = compression
         self.root_directory = root_directory
         self.default_mtime = default_mtime
-        self.tarfile = None
 
     def __enter__(self):
-        self.tarfile = archive.TarFileWriter(
+        self.tarfile = archive.TarFileWriter( # pylint: disable=attribute-defined-outside-init
             self.output,
             self.compression,
             self.root_directory,
