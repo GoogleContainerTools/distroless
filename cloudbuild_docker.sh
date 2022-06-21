@@ -52,10 +52,10 @@ for distro_suffix in "" -debian11; do
 done
 
 for java_version in -base 11 17; do
-  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:latest "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:nonroot "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug-nonroot "amd64 arm64"
+  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:latest "amd64 arm64 s390x ppc64le"
+  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:nonroot "amd64 arm64 s390x ppc64le"
+  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug "amd64 arm64 s390x ppc64le"
+  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug-nonroot "amd64 arm64 s390x ppc64le"
 done
 
 for distro_suffix in "" -debian11; do
