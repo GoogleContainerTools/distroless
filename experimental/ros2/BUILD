@@ -48,6 +48,9 @@ ARCHITECTURES=["amd64"]
             deb_file(arch, distro, "libreadline8"),
             deb_file(arch, distro, "libtirpc3"),
             deb_file(arch, distro, "python3.9-minimal"),
+            deb_file(arch, distro, "libpython3.9"),
+            deb_file(arch, distro, "libtinyxml2-8"),
+            deb_file(arch, distro, "libfmt7"),
         ],
         entrypoint = [
             "/usr/bin/python" + DISTRO_VERSION[distro],
