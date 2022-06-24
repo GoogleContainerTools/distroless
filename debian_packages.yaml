@@ -96,3 +96,10 @@
     - "python3.9-minimal"
     - "zlib1g"
 
+# debian 11, limited architectures, ros2 only
+- distros: ["debian11"]
+  archs: ["amd64"]
+  packages:
+    - "libpython3.9"
+    - "libtinyxml2-8"
+    - "libfmt7"
