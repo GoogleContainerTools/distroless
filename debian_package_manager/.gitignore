@@ -3,5 +3,3 @@
 .vscode/*
 /sync
 package_*.bzl
-update
-generate
