@@ -53,9 +53,6 @@ class SimpleArFile(object):
     Upon error, this class will raise a ArError exception.
     """
 
-    # TODO(dmarting): We should use a standard library instead but python 2.7
-    #   does not have AR reading library.
-
     class ArError(Exception):
         pass
 

@@ -232,11 +232,6 @@ def main():
         action="append",
         help="Add a symlink a inside the layer pointing to b if a:b is specified",
     )
-    # TODO(aiuto): Add back in the validation
-    # flags.register_validator(
-    #   'link',
-    #   lambda l: all(value.find(':') > 0 for value in l),
-    #   message='--link value should contains a : separator')
     parser.add_argument(
         "--directory", help="Directory in which to store the file inside the layer"
     )
