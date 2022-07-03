@@ -4,14 +4,14 @@ commandTests:
   command: "/usr/share/dotnet/dotnet"
   args: ["--list-runtimes"]
   expectedOutput:
-  - "Microsoft.NETCore.App 6.0.5 \\[/usr/share/dotnet/shared/Microsoft.NETCore.App\\]"
+  - "Microsoft.NETCore.App 6.0.6 \\[/usr/share/dotnet/shared/Microsoft.NETCore.App\\]"
   excludedOutput:
   - "AspNetCore"
 - name: dotnet-symlink
   command: "dotnet"
   args: ["--list-runtimes"]
   expectedOutput:
-  - "Microsoft.NETCore.App 6.0.5 \\[/usr/share/dotnet/shared/Microsoft.NETCore.App\\]"
+  - "Microsoft.NETCore.App 6.0.6 \\[/usr/share/dotnet/shared/Microsoft.NETCore.App\\]"
   excludedOutput:
   - "AspNetCore"
 - name: dotnet-list-sdks
