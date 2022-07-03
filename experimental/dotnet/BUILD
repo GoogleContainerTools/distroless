@@ -1,10 +1,10 @@
 package(default_visibility = ["//visibility:public"])
 
 load("//base:distro.bzl", "DISTROS")
-load("//base:base.bzl", "deb_file")
-load("//base:base.bzl", "NONROOT")
+load("//base:base.bzl", deb_file = "deb_file", NONROOT = "NONROOT")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+# load("@io_bazel_rules_docker//docker/util:run.bzl", "container_run_and_commit_layer")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
@@ -78,6 +78,7 @@ DOTNET_TYPES = [
         },
         tags = [
             arch,
+            "image"
         ],
     )
     for mode in [
@@ -96,6 +97,10 @@ DOTNET_TYPES = [
         base = ":dotnet-" + version + "_runtime-deps_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
         symlinks = {"/usr/bin/dotnet": "/usr/share/dotnet/dotnet"},
         tars = ["@dotnet_" + version + "_" + type + "_" + arch + "//:tar"],
+        tags = [
+            arch,
+            "image"
+        ],
     )
     for mode in [
         "",
@@ -137,7 +142,7 @@ DOTNET_TYPES = [
         name = "asp-testapp-sources",
         srcs = glob(["testdata/AspTestApp/*"]),
     ),
-    # These should be two genrules and to pks_tar rules.
+    # These should be two genrules and two pks_tar rules.
     # Using two genrules suffers from some weird file permissions when building AspTestApp :/
     genrule(
         name = "testapp-publish",
@@ -166,6 +171,7 @@ DOTNET_TYPES = [
 
 [
     # Need to set file permissions, so test command can write to /src/ when running as non-root
+    # TODO: Readonly root FS
     pkg_tar(
         name = "testapp-sources-tar_" + user,
         package_dir = "/src",
@@ -181,28 +187,9 @@ DOTNET_TYPES = [
         name = "dotnet-testapp" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
         architecture = arch,
         base = ":dotnet-" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
-        tars = [":testapp-bin", ":testapp-sources-tar_" + user]
-    )
-    for mode in [
-        "",
-        "_debug",
-    ]
-    for user in USERS
-    for (version, arch, distro) in VERSION_PAIRS
-    for variant in VARIANTS
-    for type in DOTNET_TYPES
-]
-
-
-[
-    container_test(
-        name = "dotnet-testapp" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro + "_test",
-        configs = ["testdata/dotnet-testapp" + version + ".yaml"],
-        image = ":dotnet-testapp" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
+        tars = [":testapp-bin", ":testapp-sources-tar_" + user],
         tags = [
             arch,
-            type,
-            "manual",
         ],
     )
     for mode in [
@@ -217,13 +204,14 @@ DOTNET_TYPES = [
 
 [
     container_test(
-        name = "dotnet-i18n-testapp" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro + "_test",
+        name = "dotnet-testapp" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro + "_test",
         configs = ["testdata/dotnet-" + variant + "-testapp" + version + ".yaml"],
         image = ":dotnet-testapp" + version + "_" + type + "_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
             type,
             "manual",
+            "app",
         ],
     )
     for mode in [
@@ -246,6 +234,9 @@ DOTNET_TYPES = [
             type,
             "manual",
         ],
+        #docker_run_flags = [
+        #    "--read-only",
+        #],
     )
     for mode in [
         "",
@@ -254,5 +245,5 @@ DOTNET_TYPES = [
     for user in USERS
     for (version, arch, distro) in VERSION_PAIRS
     for variant in VARIANTS
-    for type in DOTNET_TYPES
+    for type in ["aspnetcore", "sdk"]
 ]

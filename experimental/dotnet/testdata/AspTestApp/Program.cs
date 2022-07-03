@@ -1,3 +1,4 @@
+
 namespace AspTestApp;
 
 public static class Program

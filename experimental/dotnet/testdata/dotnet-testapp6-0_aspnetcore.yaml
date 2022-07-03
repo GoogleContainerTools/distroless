@@ -1,11 +1,11 @@
 schemaVersion: "2.0.0"
 commandTests:
-- name: dotnet-build
-  command: "dotnet"
-  args: ["build", "/src/"]
-  expectedError:
-  - "Could not execute because the application was not found or a compatible .NET SDK is not installed."
-  exitCode: 145
+#- name: dotnet-build
+#  command: "dotnet"
+#  args: ["build", "/src/"]
+#  expectedError:
+#  - "Could not execute because the application was not found or a compatible .NET SDK is not installed."
+#  exitCode: 145
 - name: dotnet-asp-run
   command: "dotnet"
   args: ["/app/AspTestApp.dll"]
