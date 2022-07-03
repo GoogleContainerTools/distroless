@@ -15,6 +15,11 @@ USERS = [
     "nonroot",
 ]
 
+JAVA_ARCHITECTURES = ARCHITECTURES + [
+    "s390x",
+    "ppc64le",
+]
+
 JAVA_VERSIONS = [
     "11",
     "17",
@@ -26,7 +31,7 @@ JAVA_VERSIONS = [
         cacerts_tar = "//base:cacerts_" + arch + "_" + distro,
     )
     for distro in DISTROS
-    for arch in ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
 ]
 
 [
@@ -64,7 +69,7 @@ JAVA_VERSIONS = [
     ]
     for user in USERS
     for distro in DISTROS
-    for arch in ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
 ]
 
 [
@@ -87,7 +92,7 @@ JAVA_VERSIONS = [
         symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"},
     )
     for java_version in JAVA_VERSIONS
-    for arch in ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
     for distro in DISTROS
     for user in USERS
 ]
@@ -120,7 +125,7 @@ JAVA_VERSIONS = [
     )
     for user in USERS
     for java_version in JAVA_VERSIONS
-    for arch in ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -138,7 +143,7 @@ JAVA_VERSIONS = [
         "",
         "_debug",
     ]
-    for arch in ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
     for user in USERS
     for distro in DISTROS
 ]
@@ -154,7 +159,7 @@ JAVA_VERSIONS = [
         ],
     )
     for java_version in JAVA_VERSIONS
-    for arch in ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
     for distro in DISTROS
     for user in USERS
 ]
@@ -170,7 +175,7 @@ JAVA_VERSIONS = [
         ],
     )
     for java_version in JAVA_VERSIONS
-    for arch in ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
     for distro in DISTROS
     for user in USERS
 ]

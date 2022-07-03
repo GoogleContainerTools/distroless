@@ -25,7 +25,7 @@
 
 # debian 11
 - distros: ["debian11"]
-  archs: ["amd64","arm64","arm","s390x","ppc64le"]
+  archs: ["amd64", "arm64", "arm", "s390x", "ppc64le"]
   packages:
     - "base-files"
     - "ca-certificates"
@@ -42,13 +42,37 @@
 
 # python, jave, and .NET only build on a subset of architectures
 - distros: ["debian11"]
-  archs: ["amd64","arm64"]
+  archs: ["amd64", "arm64", "s390x", "ppc64le"]
   packages:
-  # python
+    - "fontconfig-config"
+    - "fonts-dejavu-core"
+    - "libbrotli1"
+    - "libcrypt1" # TODO: glibc library for -lcrypt; maybe should be in cc?
+    - "libexpat1"
+    - "libfontconfig1"
+    - "libfreetype6"
+    - "libglib2.0-0"
+    - "libgraphite2-3"
+    - "libharfbuzz0b"
+    - "libjpeg62-turbo"
+    - "liblcms2-2"
+    - "libpcre3"
+    - "libpng16-16"
+    - "libuuid1"
+    - "openjdk-11-jdk-headless"
+    - "openjdk-11-jre-headless"
+    - "openjdk-17-jdk-headless"
+    - "openjdk-17-jre-headless"
+    - "zlib1g"
+
+# debian 11, limited architectures, python only
+- distros: ["debian11"]
+  archs: ["amd64", "arm64"]
+  packages:
     - "dash"
     - "libbz2-1.0"
     - "libcom-err2"
-    - "libcrypt1"  # TODO: glibc library for -lcrypt; maybe should be in cc?
+    - "libcrypt1" # TODO: glibc library for -lcrypt; maybe should be in cc?
     - "libdb5.3"
     - "libexpat1"
     - "libffi7"
@@ -70,26 +94,6 @@
     - "libuuid1"
     - "python3-distutils"
     - "python3.9-minimal"
-    - "zlib1g"
-  # java
-    - "fontconfig-config"
-    - "fonts-dejavu-core"
-    - "libbrotli1"
-    - "libexpat1"
-    - "libfontconfig1"
-    - "libfreetype6"
-    - "libglib2.0-0"
-    - "libgraphite2-3"
-    - "libharfbuzz0b"
-    - "libjpeg62-turbo"
-    - "liblcms2-2"
-    - "libpcre3"
-    - "libpng16-16"
-    - "libuuid1"
-    - "openjdk-11-jdk-headless"
-    - "openjdk-11-jre-headless"
-    - "openjdk-17-jdk-headless"
-    - "openjdk-17-jre-headless"
     - "zlib1g" # also used by .NET
   # .NET (only needed for full globalization support)
     - "libicu67"

@@ -46,7 +46,7 @@ os_release = rule(
         ),
         # Implicit dependencies.
         "_build_tar": attr.label(
-            default = Label("@rules_pkg//:build_tar"),
+            default = Label("//build_tar"),
             cfg = "host",
             executable = True,
         ),

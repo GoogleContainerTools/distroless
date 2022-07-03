@@ -51,7 +51,7 @@ file with the JKS file at etc/ssl/certs/java/cacerts.
             allow_single_file = True,
         ),
         "_build_tar": attr.label(
-            default = Label("@rules_pkg//:build_tar"),
+            default = Label("//build_tar"),
             cfg = "host",
             executable = True,
         ),

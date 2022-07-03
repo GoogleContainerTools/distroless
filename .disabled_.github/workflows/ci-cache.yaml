@@ -1,11 +1,11 @@
-name: package manager CI
+name: cache CI
 
-on:
-  workflow_dispatch: # Allow manual runs.
-  pull_request:
-    branches: [ 'main' ]
-  push:
-    branches: [ 'main' ]
+on: []
+#  workflow_dispatch: # Allow manual runs.
+#  pull_request:
+#    branches: [ 'main' ]
+#  push:
+#    branches: [ 'main' ]
 
 jobs:
   build-and-test:
@@ -27,8 +27,8 @@ jobs:
           ${{ runner.os }}-go-
     - name: Build, test
       run: |
-        cd debian_package_manager
-        make update generate test
+        cd gcscache
+        make sync test
 
   golangci:
     name: lint
@@ -43,4 +43,4 @@ jobs:
         timeout-minutes: 5
         with:
           version: latest
-          working-directory: debian_package_manager
+          working-directory: gcscache

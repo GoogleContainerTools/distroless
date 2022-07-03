@@ -4,6 +4,11 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
 load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
 load("//base:distro.bzl", "DISTROS", "LANGUAGE_DISTROS")
 
+JAVA_ARCHITECTURES = BASE_ARCHITECTURES + [
+    "s390x",
+    "ppc64le",
+]
+
 LABEL_USERS = [
     ("latest", "root"),
     ("nonroot", "nonroot"),
@@ -179,7 +184,7 @@ JAVA_BASE = {
 
 JAVA_BASE.update({
     "{REGISTRY}/{PROJECT_ID}/java-base-debian11:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian11"
-    for arch in BASE_ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
     for (tag_base, label) in [
         ("latest", "root"),
         ("nonroot", "nonroot"),
@@ -203,7 +208,7 @@ JAVA11.update({
         ("debug", "debug_root"),
         ("debug-nonroot", "debug_nonroot"),
     ]
-    for arch in BASE_ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
 })
 
 JAVA17 = {
@@ -221,7 +226,7 @@ JAVA17.update({
         ("debug", "debug_root"),
         ("debug-nonroot", "debug_nonroot"),
     ]
-    for arch in BASE_ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
 })
 
 JETTY = {
