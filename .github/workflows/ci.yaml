@@ -1,11 +1,11 @@
 name: CI
 
-on:
-  workflow_dispatch: # Allow manual runs.
-  pull_request:
-    branches: [ 'main' ]
-  push:
-    branches: [ 'main' ]
+on: []
+#  workflow_dispatch: # Allow manual runs.
+#  pull_request:
+#    branches: [ 'main' ]
+#  push:
+#    branches: [ 'main' ]
 
 jobs:
   ci:

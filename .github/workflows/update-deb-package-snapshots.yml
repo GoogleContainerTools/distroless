@@ -1,8 +1,8 @@
 name: update-snapshots
-on:
+on: []
   # will send emails to last editor of this cron syntax
-  schedule:
-    - cron:  '35 8 * * *'
+  # schedule:
+  #  - cron:  '35 8 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
