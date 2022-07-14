@@ -14,7 +14,7 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
         name = "hello_" + user + "_" + arch + "_" + distro,
         architecture = arch,
         base = "//nodejs:nodejs16_" + user + "_" + arch + "_" + distro,
-        cmd = ["hello.js"],
+        cmd = ["/hello.js"],
         files = [":hello.js"],
     )
     for user in [
@@ -30,7 +30,7 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
         name = "hello_http_" + user + "_" + arch + "_" + distro,
         architecture = arch,
         base = "//nodejs:nodejs16_" + user + "_" + arch + "_" + distro,
-        cmd = ["hello_http.js"],
+        cmd = ["/hello_http.js"],
         files = [":hello_http.js"],
         ports = ["8000"],
     )
