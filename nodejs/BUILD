@@ -30,12 +30,12 @@ NODEJS_MAJOR_VERISONS = ("14", "16", "18")
 
 [
     container_test(
-        name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + "_" + distro + "_test",
+        name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro + "_test",
         configs = [
             "testdata/nodejs" + major_version + ".yaml",
             "testdata/check_npm.yaml",
         ],
-        image = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + "_" + distro,
+        image = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
             "manual",
@@ -44,6 +44,10 @@ NODEJS_MAJOR_VERISONS = ("14", "16", "18")
     for mode in [
         "",
         "_debug",
+    ]
+    for user in [
+        "root",
+        "nonroot",
     ]
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
@@ -56,13 +60,17 @@ exports_files([
 
 [
     container_image(
-        name = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + "_" + distro,
-        base = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + "_" + distro,
+        name = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
+        base = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
         files = ["testdata/check_certificate.js"],
     )
     for mode in [
         "",
         "_debug",
+    ]
+    for user in [
+        "root",
+        "nonroot",
     ]
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
@@ -71,9 +79,9 @@ exports_files([
 
 [
     container_test(
-        name = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + "_" + distro + "_test",
+        name = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro + "_test",
         configs = ["testdata/check_certificate.yaml"],
-        image = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + arch + "_" + distro,
+        image = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
             "manual",
@@ -82,6 +90,10 @@ exports_files([
     for mode in [
         "",
         "_debug",
+    ]
+    for user in [
+        "root",
+        "nonroot",
     ]
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
