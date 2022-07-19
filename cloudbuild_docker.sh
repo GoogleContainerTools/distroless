@@ -64,7 +64,7 @@ for distro_suffix in "" -debian11; do
   docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16 "amd64 arm64"
   docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16-debug "amd64 arm64"
 
-  for node_version in 16 18; do
+  for node_version in 14 16 18; do
     docker_manifest gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:latest "amd64 arm64"
     docker_manifest gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:debug "amd64 arm64"
   done

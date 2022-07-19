@@ -43,7 +43,7 @@ for distro_suffix in "" -debian11; do
   cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16
   cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16-debug
 
-  for node_version in 16 18; do
+  for node_version in 14 16 18; do
     cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:latest
     cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:debug
   done

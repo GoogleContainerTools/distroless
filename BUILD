@@ -126,6 +126,7 @@ NODEJS = {
     for arch in BASE_ARCHITECTURES
     for distro in LANGUAGE_DISTROS
     for version in [
+        "14",
         "16",
         "18",
     ]
@@ -139,6 +140,7 @@ NODEJS.update({
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + arch + "_debian11"
     for arch in BASE_ARCHITECTURES
     for version in [
+        "14",
         "16",
         "18",
     ]
