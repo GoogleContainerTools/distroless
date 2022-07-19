@@ -122,11 +122,22 @@ PYTHON3.update({
 })
 
 NODEJS = {
+    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + arch + "_" + distro
+    for arch in BASE_ARCHITECTURES
+    for distro in LANGUAGE_DISTROS
+	for version in ["16", "18"]
+    for (tag_base, label) in [
+        ("latest", ""),
+		("debug", "_debug"),
+    ]
+}
+
+NODEJS.update({
     "{REGISTRY}/{PROJECT_ID}/nodejs:14": "//nodejs:nodejs14_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs:14-debug": "//nodejs:nodejs14_debug_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14": "//nodejs:nodejs14_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14-debug": "//nodejs:nodejs14_debug_amd64_debian11",
-}
+})
 
 NODEJS.update({
     "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_" + arch + "_debian11"
