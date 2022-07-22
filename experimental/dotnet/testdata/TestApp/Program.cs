@@ -25,6 +25,9 @@ public static class Program
             case "gzip":
                 RunGzipTest();
                 break;
+            case "tzdata":
+                RunTimeZoneTest();
+                break;
             case "i18n":
                 RunGlobalizationTest();
                 break;
@@ -158,6 +161,17 @@ public static class Program
         throw new TestException($"Failure! Expected: 'Iİ ₺1,99', Actual: '{formatted}'");
     }
 
+    private static void RunTimeZoneTest()
+    {
+        TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+        if (tz.SupportsDaylightSavingTime && tz.BaseUtcOffset == TimeSpan.FromHours(1))
+        {
+            Console.WriteLine("Success! Error: ''");
+            return;
+        }
+        throw new TestException($"Failure! Expected: 'Id: Europe/Amsterdam, Offset: 01:00:00, DST: True', Actual: 'Id: {tz.Id}, Offset: {tz.BaseUtcOffset}, DST: {tz.SupportsDaylightSavingTime}'");
+    }
+    
     private sealed class TestException : Exception
     {
         public TestException(string message) : base(message)
