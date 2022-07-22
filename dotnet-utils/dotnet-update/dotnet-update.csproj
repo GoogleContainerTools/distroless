@@ -5,7 +5,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>DotnetUpdate</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>annotations</Nullable>
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
 

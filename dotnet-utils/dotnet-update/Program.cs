@@ -13,9 +13,9 @@ namespace DotnetUpdate;
 
 public static class Program
 {
-    private static readonly UTF8Encoding s_noBom = new(false);
+    private static readonly UTF8Encoding s_Utf8NoBom = new(false);
     private static readonly Uri s_versionsUri = new("https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/6.0/releases.json", UriKind.Absolute);
-    private static HttpClient s_httpClient;
+    private static readonly HttpClient s_httpClient = new();
 
     // dotnet run -c Release -- $GITROOT/dotnet_archives.bzl $GITROOT/experimental/dotnet/testdata
     public static async Task Main(string[] args)
@@ -23,10 +23,9 @@ public static class Program
         string pathToArchivesBzl = args[0];
         string pathToTestData = args[1];
         using CancellationTokenSource cts = new(120_000);
-        s_httpClient = new HttpClient();
         
         Release? r = await GetLatestRelease(cts.Token);
-        await CalculateHash(r, cts.Token);
+        await r.CalculateHash(cts.Token);
         await WriteDotnetArchives(r.GetBinariesSorted(), pathToArchivesBzl, cts.Token);
         await PatchContainerStructureTests(pathToTestData,
             new Regex(@"\d\.\d\.\d{3}\s\\", RegexOptions.Compiled), r.Sdk.Version,
@@ -39,9 +38,9 @@ public static class Program
         static async Task Patch(string file, Regex sdkRegex, ReleaseVersion sdkVersion, Regex releaseRegex, ReleaseVersion releaseVersion, CancellationToken cancellationToken)
         {
             string contents = await File.ReadAllTextAsync(file, cancellationToken);
-            string result = sdkRegex.Replace(contents, $"{sdkVersion.ToString()} \\");
-            result = releaseRegex.Replace(result, $"{releaseVersion.ToString()} \\");
-            await File.WriteAllTextAsync(file, result, s_noBom, cancellationToken);
+            string result = sdkRegex.Replace(contents, $"{sdkVersion} \\");
+            result = releaseRegex.Replace(result, $"{releaseVersion} \\");
+            await File.WriteAllTextAsync(file, result, s_Utf8NoBom, cancellationToken);
         }
         
         string[] files = Directory.GetFiles(pathToTestdata, "*.yaml", SearchOption.TopDirectoryOnly);
@@ -87,19 +86,6 @@ public static class Program
 
         using(FileStream fs = File.Open(archivesPath, FileMode.Truncate)){
             await fs.WriteAsync(System.Text.Encoding.UTF8.GetBytes(bzl), CancellationToken.None);
-        }
-	
-    }
-
-    private static async Task CalculateHash(Release release, CancellationToken cancellationToken)
-    {
-        try
-        {
-            await release.CalculateHash(cancellationToken);
-        }
-        catch(Exception ex)
-        {
-            throw;
         }
     }
 
