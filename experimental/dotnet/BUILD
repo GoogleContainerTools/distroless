@@ -97,6 +97,9 @@ DOTNET_TYPES = [
         base = ":dotnet-" + version + "_runtime-deps_" + variant + mode + "_" + user + "_" + arch + "_" + distro,
         symlinks = {"/usr/bin/dotnet": "/usr/share/dotnet/dotnet"},
         tars = ["@dotnet_" + version + "_" + type + "_" + arch + "//:tar"],
+        env = {
+            "DOTNET_ROOT": "/usr/share/dotnet",
+        },
         tags = [
             arch,
             "image"
