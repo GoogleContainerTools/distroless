@@ -6,47 +6,47 @@ def repositories():
     http_archive(
         name = "dotnet_6-0_sdk_amd64",
         build_file = "//experimental/dotnet:BUILD.dotnet",
-        sha256 = "57d146fac54f7c91686a2940d8f098aae91f998cd15b800f29fe88476af66cef",
+        sha256 = "883a25a15a6aa9d74ae35b23efdb6dced85e52b9519fc590313cec6c2626af79",
         type = "tar.gz",
-        urls = ["https://download.visualstudio.microsoft.com/download/pr/77d472e5-194c-421e-992d-e4ca1d08e6cc/56c61ac303ddf1b12026151f4f000a2b/dotnet-sdk-6.0.301-linux-x64.tar.gz"],
+        urls = ["https://download.visualstudio.microsoft.com/download/pr/0e83f50a-0619-45e6-8f16-dc4f41d1bb16/e0de908b2f070ef9e7e3b6ddea9d268c/dotnet-sdk-6.0.302-linux-x64.tar.gz"],
     )
 
     http_archive(
         name = "dotnet_6-0_sdk_arm64",
         build_file = "//experimental/dotnet:BUILD.dotnet",
-        sha256 = "562462991b120ce07c114668566db1d8a222b1c9821608dc30df2bfd4ed2d0e5",
+        sha256 = "eefcb70438113652d2f732bb21dfc1e9b9d442151a2d8881c94fd04905333645",
         type = "tar.gz",
-        urls = ["https://download.visualstudio.microsoft.com/download/pr/06c4ee8e-bf2c-4e46-ab1c-e14dd72311c1/f7bc6c9677eaccadd1d0e76c55d361ea/dotnet-sdk-6.0.301-linux-arm64.tar.gz"],
+        urls = ["https://download.visualstudio.microsoft.com/download/pr/33389348-a7d7-41ae-850f-ec46d3ca9612/36bad11f948b05a4fa9faac93c35e574/dotnet-sdk-6.0.302-linux-arm64.tar.gz"],
     )
 
     http_archive(
         name = "dotnet_6-0_aspnetcore_amd64",
         build_file = "//experimental/dotnet:BUILD.dotnet",
-        sha256 = "38ad01d083f0f493116bd06dd80210589abc8b3d502cf81c5dc40ba0fc19d3d5",
+        sha256 = "61c2b79cc31e1d5df9a398766044177cecb7b9c2baad4ef9d011723ba21fd0ee",
         type = "tar.gz",
-        urls = ["https://download.visualstudio.microsoft.com/download/pr/afd5344f-a9e9-45f9-85b5-de4551c53736/c30996daa407f9bb540ebc5edfcf16fc/aspnetcore-runtime-6.0.6-linux-x64.tar.gz"],
+        urls = ["https://download.visualstudio.microsoft.com/download/pr/98271725-1784-407c-841a-64d87c674512/b433af33506c816e3b5838f5c65d990a/aspnetcore-runtime-6.0.7-linux-x64.tar.gz"],
     )
 
     http_archive(
         name = "dotnet_6-0_aspnetcore_arm64",
         build_file = "//experimental/dotnet:BUILD.dotnet",
-        sha256 = "e80fbf9feed47e2214c848ac66bdf10ce19ddcd5a06a05ec9b255a7915bd43fd",
+        sha256 = "b0f7908e4eb7819ff08fc3a4670c52a73035bbea11bebf7d2ef0c39e829cfdc8",
         type = "tar.gz",
-        urls = ["https://download.visualstudio.microsoft.com/download/pr/94553ccb-ce1a-401c-8840-bdffb4e9d0cb/ab8a0024df90506d953904ac38b5a978/aspnetcore-runtime-6.0.6-linux-arm64.tar.gz"],
+        urls = ["https://download.visualstudio.microsoft.com/download/pr/b79c5fa9-a08d-4534-9424-4bacfc3cdc3d/449179d6fe8cda05f52b7be0f6828eb0/aspnetcore-runtime-6.0.7-linux-arm64.tar.gz"],
     )
 
     http_archive(
         name = "dotnet_6-0_runtime_amd64",
         build_file = "//experimental/dotnet:BUILD.dotnet",
-        sha256 = "9a3e9b9f39ca51c354725738fea4b931dd4a85e30d0373f0dd2c0517f7de65ac",
+        sha256 = "6ed407c5c6d365673e707bd9532a0db78d43fbdb2cea99674a841c784cba5063",
         type = "tar.gz",
-        urls = ["https://download.visualstudio.microsoft.com/download/pr/ec4172e3-077a-42c0-859d-349e517d7935/82d945cdc4c33fbe440a86a240a58a41/dotnet-runtime-6.0.6-linux-x64.tar.gz"],
+        urls = ["https://download.visualstudio.microsoft.com/download/pr/bd828687-1706-4041-a804-5e93631fe256/d4ec75936459a7e8c772c929edcbfeda/dotnet-runtime-6.0.7-linux-x64.tar.gz"],
     )
 
     http_archive(
         name = "dotnet_6-0_runtime_arm64",
         build_file = "//experimental/dotnet:BUILD.dotnet",
-        sha256 = "d93230446632671f579e2b1aaa7b82b4c0b53c5e66fbdecfc7e9c78c2ac27fe3",
+        sha256 = "149b6ef26606fec97262ff1e8c45f17fc8dbc67e5ea2f5e2cd0f6d55aa48c8eb",
         type = "tar.gz",
-        urls = ["https://download.visualstudio.microsoft.com/download/pr/44ed3398-9838-4fd0-b225-60d5aadfb00e/00fd4a320d09a380753b45106e2a8e94/dotnet-runtime-6.0.6-linux-arm64.tar.gz"],
+        urls = ["https://download.visualstudio.microsoft.com/download/pr/f9706e92-c7a1-4dc8-806a-0e95827c5b02/23be52946e4e2425c798208c5f16bb64/dotnet-runtime-6.0.7-linux-arm64.tar.gz"],
     )

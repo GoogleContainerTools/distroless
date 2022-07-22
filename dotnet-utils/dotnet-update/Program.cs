@@ -21,7 +21,7 @@ public static class Program
     public static async Task Main(string[] args)
     {
         string pathToArchivesBzl = args[0];
-	string pathToTestData = args[1];
+        string pathToTestData = args[1];
         using CancellationTokenSource cts = new(120_000);
         s_httpClient = new HttpClient();
         
