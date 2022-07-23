@@ -11,5 +11,5 @@ tar -xvf all.tar
 cd ..
 
 # Get a list of all images
-cat bazel-bin/manifest.json | jq -r [".[] | .RepoTags"] | jq 'flatten' | jq  .[] | sed 's/\"//g' > images
+cat bazel-bin/manifest.json | jq -r ".[] | .RepoTags"  | jq 'flatten' | jq ".[]" | sed 's/\"//g' > images
 cat images

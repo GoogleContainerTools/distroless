@@ -124,7 +124,16 @@ PYTHON3.update({
     for distro in LANGUAGE_DISTROS
 })
 
-DOTNET_RUNTIME_DEPS = {}
+# "dotnet-" + version + "_runtime-deps_" + variant + mode + "_" + user + "_" + arch + "_" + distro
+
+DOTNET_RUNTIME_DEPS = {
+    "{REGISTRY}/{PROJECT_ID}/distroless-dotnet-" + version + "_" + variant + ":" + mode + user + "-" + arch: "//experimental/dotnet:dotnet-" + version + "_runtime-deps_" + variant + mode2 + "_" + user + "_" + arch + "_debian11"
+    for arch in BASE_ARCHITECTURES
+    for version in ["6.0", "7.0"]
+    for variant in ["slim", "full"]
+    for (mode, mode2) in [("", ""), ("debug_", "_debug")]
+    for user in ["nonroot", "root"]
+}
 
 NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs:14": "//nodejs:nodejs14_amd64_debian11",
@@ -242,23 +251,25 @@ JETTY = {
 
 ALL = {}
 
-ALL.update(STATIC)
+# ALL.update(STATIC)
+#
+# ALL.update(BASE)
+#
+# ALL.update(CC)
+#
+# ALL.update(PYTHON3)
+# 
+# ALL.update(NODEJS)
+# 
+# ALL.update(JAVA_BASE)
+# 
+# ALL.update(JAVA11)
+# 
+# ALL.update(JAVA17)
+# 
+# ALL.update(JETTY)
 
-ALL.update(BASE)
-
-ALL.update(CC)
-
-ALL.update(PYTHON3)
-
-ALL.update(NODEJS)
-
-ALL.update(JAVA_BASE)
-
-ALL.update(JAVA11)
-
-ALL.update(JAVA17)
-
-ALL.update(JETTY)
+ALL.update(DOTNET_RUNTIME_DEPS)
 
 container_bundle(
     name = "all",

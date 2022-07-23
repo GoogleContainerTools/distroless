@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.IO.Compression;
+using System.Runtime;
 
 namespace TestApp;
 
@@ -15,29 +16,47 @@ public static class Program
 
         string arg = args[0];
 
-        CancellationTokenSource cts = new(20_000);
+        CancellationTokenSource cts = new(60_000);
 
-        switch (arg)
+        try
         {
-            case "https":
-                await RunHttpsTestAsync(cts.Token);
-                break;
-            case "gzip":
-                RunGzipTest();
-                break;
-            case "tzdata":
-                RunTimeZoneTest();
-                break;
-            case "i18n":
-                RunGlobalizationTest();
-                break;
-            case "kerberos":
-                throw new NotImplementedException("Kerberos test not implemented yet");
-            default:
-                throw new NotSupportedException($"Unknown test argument '{arg}'");
+            switch (arg)
+            {
+                case "gcmode":
+                    RunGcModeTest();
+                    break;
+                case "https":
+                    await RunHttpsTestAsync(cts.Token);
+                    break;
+                case "gzip":
+                    RunGzipTest();
+                    break;
+                case "tzdata":
+                    RunTimeZoneTest();
+                    break;
+                case "i18n":
+                    RunGlobalizationTest();
+                    break;
+                case "kerberos":
+                    throw new NotImplementedException("Kerberos test not implemented yet");
+                default:
+                    throw new NotSupportedException($"Unknown test argument '{arg}'");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(ex.ToString());
         }
     }
 
+    private static void RunGcModeTest()
+    {
+        if (GCSettings.IsServerGC)
+        {
+            throw new TestException($"Unexpected GC mode: {nameof(GCSettings.IsServerGC)}: {GCSettings.IsServerGC}");
+        }
+        Console.WriteLine($"Success! Error: ''");
+    }
     private static async Task RunHttpsTestAsync(CancellationToken cancellationToken)
     {
         // We use these three because:
@@ -51,7 +70,7 @@ public static class Program
             "https://microsoft.com"
         };
 
-        HttpClient client = new() { Timeout = TimeSpan.FromSeconds(15) };
+        HttpClient client = new() { Timeout = TimeSpan.FromSeconds(40) };
 
         List<(string, Task<HttpResponseMessage>)> tasks = new(wellKnownSecureSites.Length);
         foreach (string wellKnownSecureSite in wellKnownSecureSites)
@@ -66,8 +85,7 @@ public static class Program
         }
         catch
         {
-            // This will be handled down below.
-
+            // This will be handled below.
         }
 
         int failureCount = 0;
@@ -82,13 +100,20 @@ public static class Program
             if (task.IsFaulted || task.IsCanceled)
             {
                 failureCount++;
-                if (error == "")
+                try
                 {
-                    error = $"{wellKnownSecureSite} failed with {task.Exception?.GetType().Name}: {task.Exception?.Message}";
+                    await task;
                 }
-                else
+                catch (Exception ex)
                 {
-                    error = $"{error}, {wellKnownSecureSite} failed with {task.Exception?.GetType().Name}: {task.Exception?.Message}";
+                    if (error == "")
+                    {
+                        error = $"{wellKnownSecureSite} failed with {ex.GetType()}: {ex.Message}";
+                    }
+                    else
+                    {
+                        error = $"{error}, {wellKnownSecureSite} failed with {ex.GetType().Name}: {ex.Message}";
+                    }
                 }
             }
         }
@@ -118,31 +143,35 @@ public static class Program
             return;
         }
 
-        throw new TestException($"Failure! {nameof(inEqualsOut)}: {inEqualsOut}, {nameof(compressedDifferent)}: {compressedDifferent}");
+        throw new TestException($"{nameof(inEqualsOut)}: {inEqualsOut}, {nameof(compressedDifferent)}: {compressedDifferent}");
 
         static byte[] Compress(byte[] originalBytes)
         {
-            MemoryStream compressed = new();
-            MemoryStream original = new(originalBytes, writable: false);
+            using MemoryStream compressed = new();
+            using MemoryStream original = new(originalBytes, writable: false);
+            using (GZipStream compressor = new(compressed, CompressionMode.Compress, leaveOpen: true))
+            {
+                original.CopyTo(compressor);
+            }
 
-            GZipStream compressor = new(compressed, CompressionMode.Compress, leaveOpen: true);
-            original.CopyTo(compressor);
-            compressor.Flush();
-
+            compressed.Flush();
             compressed.Position = 0;
+
             return compressed.ToArray();
         }
 
         static byte[] Decompress(byte[] compressedBytes)
         {
-            MemoryStream compressed = new(compressedBytes, writable: false);
-            MemoryStream decompressed = new();
+            using MemoryStream compressed = new(compressedBytes, writable: false);
+            using MemoryStream decompressed = new();
+            using (GZipStream decompressor = new(compressed, CompressionMode.Decompress, leaveOpen: true))
+            {
+                decompressor.CopyTo(decompressed);
+            }
 
-            GZipStream decompressor = new(compressed, CompressionMode.Decompress, leaveOpen: true);
-            decompressor.CopyTo(decompressed);
-            decompressor.Flush();
-
+            decompressed.Flush();
             decompressed.Position = 0;
+
             return decompressed.ToArray();
         }
     }
@@ -158,7 +187,7 @@ public static class Program
             return;
         }
 
-        throw new TestException($"Failure! Expected: 'Iİ ₺1,99', Actual: '{formatted}'");
+        throw new TestException($"Expected: 'Iİ ₺1,99', Actual: '{formatted}'");
     }
 
     private static void RunTimeZoneTest()
@@ -169,12 +198,12 @@ public static class Program
             Console.WriteLine("Success! Error: ''");
             return;
         }
-        throw new TestException($"Failure! Expected: 'Id: Europe/Amsterdam, Offset: 01:00:00, DST: True', Actual: 'Id: {tz.Id}, Offset: {tz.BaseUtcOffset}, DST: {tz.SupportsDaylightSavingTime}'");
+        throw new TestException($"Expected: 'Id: Europe/Amsterdam, Offset: 01:00:00, DST: True', Actual: 'Id: {tz.Id}, Offset: {tz.BaseUtcOffset}, DST: {tz.SupportsDaylightSavingTime}'");
     }
     
     private sealed class TestException : Exception
     {
-        public TestException(string message) : base(message)
+        public TestException(string message) : base($"Failure! {message}")
         {
         }
     }

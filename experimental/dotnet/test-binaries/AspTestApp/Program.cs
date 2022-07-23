@@ -17,7 +17,7 @@ public static class Program
         
         HttpClient client = new HttpClient
         {
-            Timeout = TimeSpan.FromSeconds(1),
+            Timeout = TimeSpan.FromSeconds(10),
             BaseAddress = new Uri("http://localhost:8080")
         };
 

@@ -1,0 +1,33 @@
+schemaVersion: "2.0.0"
+commandTests:
+- name: test-gcmode
+  command: "/app/TestApp"
+  args: ["gcmode"]
+  expectedOutput: ['Success! Error: .*']
+- name: test-https
+  command: "/app/TestApp"
+  args: ["https"]
+  expectedOutput: ['Success! Error: .*']
+- name: test-gzip
+  command: "/app/TestApp"
+  args: ["gzip"]
+  expectedOutput: ['Success! Error: .*']
+- name: test-tzdata
+  command: "/app/TestApp"
+  args: ["tzdata"]
+  expectedOutput: ['Success! Error: .*']
+- name: test-i18n
+  command: "/app/TestApp"
+  args: ["i18n"]
+  expectedOutput: ['Success! Error: .*']
+- name: dotnet-asp-run
+  command: "/app/AspTestApp"
+  args: []
+  expectedOutput: ["I'm an Active Server Page"]
+fileExistenceTests:
+- name: testapp
+  path: "/app/TestApp"
+  shouldExist: true
+- name: asp-testapp
+  path: "/app/AspTestApp"
+  shouldExist: true

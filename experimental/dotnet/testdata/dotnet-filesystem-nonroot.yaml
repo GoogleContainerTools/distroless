@@ -1,0 +1,4 @@
+﻿schemaVersion: "2.0.0"
+metadataTest:
+  user: 65532
+  workdir: "/home/nonroot"

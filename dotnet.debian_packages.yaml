@@ -1,0 +1,29 @@
+# Base/CC
+- distros: ["debian11"]
+  archs: ["amd64", "arm64"]
+  packages:
+    - "base-files"
+    - "ca-certificates"
+    - "libc6"
+    - "libc-bin"
+    - "libssl1.1"
+    - "netbase"
+    - "openssl"
+    - "tzdata"
+    # c++
+    - "libgcc-s1"
+    - "libgomp1"
+    - "libstdc++6"
+
+# .NET
+- distros: ["debian11"]
+  archs: ["amd64", "arm64"]
+  packages:
+    - "libcom-err2"
+    - "libgssapi-krb5-2"
+    - "libk5crypto3"
+    - "libkeyutils1"
+    - "libkrb5-3"
+    - "libkrb5support0"
+    - "zlib1g"
+    - "libicu67"

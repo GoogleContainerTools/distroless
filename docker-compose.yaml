@@ -1,0 +1,18 @@
+version: '2.0'
+services:
+  registry:
+    image: registry:latest
+    volumes:
+      - ./registry-data:/var/lib/registry
+    ports:
+    - 5000:5000
+  ui:
+    image: joxit/docker-registry-ui:latest
+    ports:
+      - 80:80
+    environment:
+      - REGISTRY_TITLE=My Private Docker Registry
+      - NGINX_PROXY_PASS_URL=http://registry:5000
+      - SINGLE_REGISTRY=true
+    depends_on:
+      - registry

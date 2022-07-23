@@ -1,0 +1,30 @@
+﻿schemaVersion: "2.0.0"
+fileExistenceTests:
+- name: zlib
+  path: "/lib/aarch64-linux-gnu/libz.so.1"
+  shouldExist: true
+- name: libcomm_err
+  path: "/lib/aarch64-linux-gnu/libcom_err.so.2"
+  shouldExist: false
+- name: libicu
+  path: "/usr/lib/aarch64-linux-gnu/libicui18n.so.67"
+  shouldExist: false
+- name: libkrb5
+  path: "/usr/lib/aarch64-linux-gnu/libkrb5.so.3"
+  shouldExist: false
+- name: libgssapi_krb5
+  path: "/usr/lib/aarch64-linux-gnu/libgssapi_krb5.so.2"
+  shouldExist: false
+- name: libk5crypto
+  path: "/usr/lib/aarch64-linux-gnu/libk5crypto.so.3"
+  shouldExist: false
+- name: libkeyutils
+  path: "/lib/aarch64-linux-gnu/libkeyutils.so.1"
+  shouldExist: false
+- name: libkrb5support
+  path: "/usr/lib/aarch64-linux-gnu/libkrb5support.so.0"
+  shouldExist: false
+metadataTest:
+  env:
+  - key: DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
+    value: "1"
