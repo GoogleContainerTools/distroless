@@ -3,15 +3,15 @@ commandTests:
   - name: java
     command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "11\.0\.15"']
+    expectedError: ['openjdk version "11\.0\.16"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "11\.0\.15"']
+    expectedError: ['openjdk version "11\.0\.16"']
   - name: javac
     command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
     args: ["-version"]
-    expectedOutput: ['javac 11\.0\.15']
+    expectedOutput: ['javac 11\.0\.16']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
@@ -25,4 +25,4 @@ fileExistenceTests:
 metadataTest:
   env:
     - key: 'JAVA_VERSION'
-      value: '11.0.15'
+      value: '11.0.16'
