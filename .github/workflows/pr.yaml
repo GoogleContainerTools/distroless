@@ -1,0 +1,33 @@
+name: Build and Publish
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install cosign
+      uses: sigstore/cosign-installer@09a077b27eb1310dcfb21981bee195b30ce09de0
+
+    - name: Show env
+      run: |
+        env
+        which dotnet
+        ls -lah /usr/share/dotnet
+
+    - name: Install Prerequisites
+      run: |
+        curl https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -sSL \
+          | sudo bash /dev/stdin --channel 7.0 --install-dir /usr/share/dotnet
+
+    - name: Build
+      run: ./dotnet.build.sh
+
+    - name: Test
+      run: ./dotnet.test.sh
