@@ -1,0 +1,44 @@
+name: Build and Publish
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: "17 22 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Update Packages
+      run: ./dotnet.updateWorkspaceSnapshots.sh
+
+    - name: git diff
+      run: git --no-pager diff
+
+    - name: git commit
+      id: git_commit
+      run: |
+        git checkout -b automation/package-update
+        git add .
+        git commit -m "Update Debian packages"
+
+    - name: Create Pull Request
+      uses: actions/github-script@v6
+      if: steps.git_commit.conclusion == 'success'
+      with:
+        script: |
+          const { repo, owner } = context.repo;
+          const result = await github.rest.pulls.create({
+            title: 'Update Debian Packages',
+            owner,
+            repo,
+            head: 'automation/package-update',
+            base: 'main',
+            body: [
+              'Update Debian packages'
+            ].join('\n')
+          });

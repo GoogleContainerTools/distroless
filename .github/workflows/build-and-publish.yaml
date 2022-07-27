@@ -1,0 +1,49 @@
+name: Build and Publish
+
+on:
+  workflow_dispatch:
+#  push:
+#    branches:
+#    - main
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    environment: workflow-build-and-publish
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install cosign
+      uses: sigstore/cosign-installer@09a077b27eb1310dcfb21981bee195b30ce09de0
+
+    - name: Show env
+      run: |
+        env
+        which dotnet
+        ls -lah /usr/share/dotnet
+
+    - name: Install Prerequisites
+      run: |
+        curl https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -sSL \
+          | sudo bash /dev/stdin --channel 7.0 --install-dir /usr/share/dotnet
+
+    - name: Build
+      run: ./dotnet.build.sh
+
+    - name: Test
+      run: ./dotnet.test.sh
+
+
+    - name: Publish
+      env:
+        GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+        REGISTRY: ghcr.io
+        PROJECT_ID: jasper-d
+        COSIGN_EXPERIMENTAL: 1
+        run: |
+          echo $GHCR_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
+          docker logout ghcr.io
+          echo "$COSIGN_EXPERIMENTAL"
+    #     ./dotnet.publish.sh
+    

@@ -2,10 +2,14 @@
 
 set -euxo pipefail
 
-export PROJECT_ID=jasper-d
-export REGISTRY=localhost:5000
+echo "REGISTRY: ${REGISTRY:=localhost:5000}"
+echo "PROJECT_ID: ${PROJECT_ID:=jasper-d}"
 
-#bazel run --stamp //:publish
+export
+export COSIGN_EXPERIMENTAL=1
+
+
+bazel run --stamp //:publish
 
 #bazel build --stamp all.tar
 
@@ -38,8 +42,9 @@ docker_manifest() {
   docker manifest push --insecure $_image
 }
 
+docker image ls
+
 for dotnet_version in 6.0 7.0; do
-  docker image ls
   for image in ${multiArchImages[@]}; do
     echo "Image is $image"
     image=${image/REGISTRY/$REGISTRY}
@@ -49,20 +54,22 @@ for dotnet_version in 6.0 7.0; do
   done
 done
 
+docker image ls
+
 cosign version
 
+
 for dotnet_version in 6.0 7.0; do
-  docker image ls
-  export COSIGN_PASSWORD=""
+
   for image in ${multiArchImages[@]}; do
     echo "Image is $image"
     image=${image/REGISTRY/$REGISTRY}
     image=${image/PROJECT_ID/$PROJECT_ID}
     image=${image/DOTNET_VERSION/$dotnet_version}
-    cosign sign --fulcio-url "" --key cosign.key --recursive $image
+    cosign sign --upload=false --verbose --recursive $image
 
-    cosign verify --enforce-sct --key cosign.pub $image
-    cosign verify --enforce-sct --key cosign.pub "$image-amd64"
-    cosign verify --enforce-sct --key cosign.pub "$image-arm64"
+    #cosign verify $image
+    #cosign verify "$image-amd64"
+    #cosign verify "$image-arm64"
   done
 done

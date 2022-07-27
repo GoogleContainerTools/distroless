@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
 set -euxo pipefail
-#
-#bazel build \
-#  --curses=no \
-#  --action_env DOTNET_CLI_HOME="/tmp" \
-#  $(bazel query 'kind("genrule rule", //experimental/dotnet/...)')
 
 bazel test \
   --curses=no \
