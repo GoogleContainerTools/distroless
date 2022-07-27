@@ -1,13 +1,15 @@
 package(default_visibility = ["//visibility:public"])
 
 load(":base.bzl", "NONROOT", "distro_components")
-load(":distro.bzl", "DISTROS")
+load(":distro.bzl", "LANGUAGE_DISTROS")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
 NOBODY = 65534
+
+DISTROS = LANGUAGE_DISTROS
 
 # Create /etc/passwd with the root user
 passwd_entry(

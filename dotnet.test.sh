@@ -9,6 +9,12 @@ set -euxo pipefail
 
 bazel test \
   --curses=no \
+  --test_output=all \
+  --test_timeout=900 \
+   $(bazel query 'attr("tags", "manual", "//base/...")') 
+
+bazel test \
+  --curses=no \
   --test_output=errors \
   --test_timeout=900 \
   //experimental/dotnet/...

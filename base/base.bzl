@@ -2,7 +2,7 @@
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//cacerts:cacerts.bzl", "cacerts")
-load("//:checksums.bzl", "ARCHITECTURES")
+load("//:checksums.bzl", "BASE_ARCHITECTURES")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 NONROOT = 65532
@@ -12,7 +12,7 @@ def deb_file(arch, distro, package):
 
 # Replicate everything for all distroless suffixes
 def distro_components(distro):
-    for arch in ARCHITECTURES:
+    for arch in BASE_ARCHITECTURES:
         cacerts(
             name = "cacerts_" + arch + "_" + distro,
             deb = deb_file(arch, distro, "ca-certificates"),
