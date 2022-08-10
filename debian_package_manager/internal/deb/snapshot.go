@@ -82,6 +82,7 @@ func Main(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex
 		Snapshot: snapshot,
 		Distro:   distro,
 		Arch:     arch,
+		Channel:  "main",
 	}
 }
 
@@ -92,6 +93,7 @@ func Updates(snapshot string, arch config.Arch, distro config.Distro) *PackageIn
 		Snapshot: snapshot,
 		Distro:   distro,
 		Arch:     arch,
+		Channel:  "updates",
 	}
 }
 
@@ -106,5 +108,6 @@ func Security(snapshot string, arch config.Arch, distro config.Distro) *PackageI
 		Snapshot: snapshot,
 		Distro:   distro,
 		Arch:     arch,
+		Channel:  "security",
 	}
 }

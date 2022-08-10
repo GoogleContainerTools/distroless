@@ -20,6 +20,13 @@ import (
 )
 
 func PackageIndexGroup(snapshots *config.Snapshots, arch config.Arch, distro config.Distro) []*PackageIndex {
+	// special casing for missing security distros
+	if (arch == config.PPC64LE || arch == config.S390X) && distro == config.DEBIAN10 {
+		return []*PackageIndex{
+			Main(snapshots.Debian, arch, distro),
+			Updates(snapshots.Debian, arch, distro),
+		}
+	}
 	return []*PackageIndex{
 		Main(snapshots.Debian, arch, distro),
 		Updates(snapshots.Debian, arch, distro),
@@ -31,6 +38,7 @@ type PackageIndex struct {
 	URL      string
 	PoolRoot string
 	Snapshot string
+	Channel  string
 	Distro   config.Distro
 	Arch     config.Arch
 }
