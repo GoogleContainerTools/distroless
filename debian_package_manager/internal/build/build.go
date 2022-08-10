@@ -29,13 +29,15 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func extractPackageInfo(snapshots *config.Snapshots, arch config.Arch, distro config.Distro, packages map[string]bool) (map[string]*deb.Package, error) {
+func extractPackageInfo(snapshots *config.Snapshots, arch config.Arch, distro config.Distro, packages map[string]bool) (map[string]*deb.Package, []string, error) {
 	pkgGrp := deb.PackageIndexGroup(snapshots, arch, distro)
 	merged := map[string]*deb.Package{}
+	channels := []string{}
 	for _, pix := range pkgGrp {
+		channels = append(channels, pix.Channel)
 		rpi, err := resolvePackages(pix, packages)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		for pkg, pi := range rpi {
 			existing, ok := merged[pkg]
@@ -52,9 +54,9 @@ func extractPackageInfo(snapshots *config.Snapshots, arch config.Arch, distro co
 				missing = append(missing, pname)
 			}
 		}
-		return nil, fmt.Errorf("packages %q for (%q,%q) were not found in any indexes", missing, arch, distro)
+		return nil, nil, fmt.Errorf("packages %q for (%q,%q) were not found in any indexes", missing, arch, distro)
 	}
-	return merged, nil
+	return merged, channels, nil
 }
 
 func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string]*deb.Package, error) {
@@ -62,7 +64,7 @@ func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to fetch remote file: %q", pi.URL)
 	} else if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("failed (status: %q) to fetch remote file: %q", resp.StatusCode, pi.URL)
+		return nil, fmt.Errorf("failed (status: %v) to fetch remote file: %q", resp.StatusCode, pi.URL)
 	}
 	br := resp.Body
 	defer br.Close()
@@ -84,12 +86,12 @@ func checkForUpdates(current *config.Snapshots, latest *config.Snapshots, pkgDB 
 	fmt.Print("Looking for updates...")
 	for arch, distropackages := range pkgDB {
 		for distro, packages := range distropackages {
-			latestVersions, err := extractPackageInfo(latest, arch, distro, packages)
+			latestVersions, _, err := extractPackageInfo(latest, arch, distro, packages)
 			if err != nil {
 				return false, err
 			}
 			fmt.Print(".")
-			currentVersions, err := extractPackageInfo(current, arch, distro, packages)
+			currentVersions, _, err := extractPackageInfo(current, arch, distro, packages)
 			if err != nil {
 				return false, err
 			}
@@ -115,6 +117,7 @@ func writeConfig(snapshots *config.Snapshots, snapshotsFile string, pkgDB config
 
 	allPackages := map[string]map[string]map[string]*deb.Package{}
 	errs, _ := errgroup.WithContext(context.Background())
+	fmt.Printf("Processing packages at debian(%v), security (%v)... \n", snapshots.Debian, snapshots.Security)
 	for arch, distropackages := range pkgDB {
 		allPackages[arch.String()] = map[string]map[string]*deb.Package{}
 		for distro, packages := range distropackages {
@@ -122,11 +125,11 @@ func writeConfig(snapshots *config.Snapshots, snapshotsFile string, pkgDB config
 			la := arch
 			lp := packages
 			errs.Go(func() error {
-				fmt.Printf("Processing packages: %q %q\n", la.String(), ld.String())
-				packageInfo, err := extractPackageInfo(snapshots, la, ld, lp)
+				packageInfo, channels, err := extractPackageInfo(snapshots, la, ld, lp)
 				if err != nil {
 					return errors.Wrapf(err, "could not process packages for %q %q", la.String(), ld.String())
 				}
+				fmt.Printf("%v %v %v\n", ld, la, channels)
 				allPackages[la.String()][ld.String()] = packageInfo
 				return nil
 			})

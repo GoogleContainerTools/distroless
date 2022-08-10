@@ -1,11 +1,7 @@
 name: cache CI
 
 on:
-  workflow_dispatch: # Allow manual runs.
-  pull_request:
-    branches: [ 'main' ]
-  push:
-    branches: [ 'main' ]
+  workflow_dispatch: # Allow manual runs
 
 jobs:
   build-and-test:
