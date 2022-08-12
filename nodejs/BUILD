@@ -5,7 +5,12 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
-NODEJS_MAJOR_VERISONS = ("14", "16", "18")
+NODEJS_MAJOR_VERSIONS = ("14", "16", "18")
+
+NODE_ARCHITECTURES = ARCHITECTURES + [
+    "s390x",
+    "ppc64le",
+]
 
 [
     container_image(
@@ -19,8 +24,8 @@ NODEJS_MAJOR_VERISONS = ("14", "16", "18")
         "",
         "_debug",
     ]
-    for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for major_version in NODEJS_MAJOR_VERSIONS
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -41,8 +46,8 @@ NODEJS_MAJOR_VERISONS = ("14", "16", "18")
         "",
         "_debug",
     ]
-    for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for major_version in NODEJS_MAJOR_VERSIONS
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -60,8 +65,8 @@ exports_files([
         "",
         "_debug",
     ]
-    for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for major_version in NODEJS_MAJOR_VERSIONS
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -79,7 +84,7 @@ exports_files([
         "",
         "_debug",
     ]
-    for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for major_version in NODEJS_MAJOR_VERSIONS
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
 ]

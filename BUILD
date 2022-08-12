@@ -9,6 +9,11 @@ JAVA_ARCHITECTURES = BASE_ARCHITECTURES + [
     "ppc64le",
 ]
 
+NODE_ARCHITECTURES = BASE_ARCHITECTURES + [
+    "s390x",
+    "ppc64le",
+]
+
 LABEL_USERS = [
     ("latest", "root"),
     ("nonroot", "nonroot"),
@@ -133,7 +138,7 @@ NODEJS = {
 
 NODEJS.update({
     "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_" + arch + "_debian11"
-    for arch in BASE_ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for (tag_base, suffix) in [
         ("16", ""),
         ("16-debug", "_debug"),
@@ -142,7 +147,7 @@ NODEJS.update({
 
 NODEJS.update({
     "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_" + arch + "_" + distro
-    for arch in BASE_ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for (tag_base, suffix) in [
         ("16", ""),
         ("16-debug", "_debug"),
@@ -152,7 +157,7 @@ NODEJS.update({
 
 NODEJS.update({
     "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_" + arch + "_debian11"
-    for arch in BASE_ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for (tag_base, suffix) in [
         ("latest", ""),
         ("debug", "_debug"),
@@ -163,7 +168,7 @@ NODEJS.update({
 
 NODEJS.update({
     "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_" + arch + "_" + distro
-    for arch in BASE_ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for (tag_base, suffix) in [
         ("latest", ""),
         ("debug", "_debug"),

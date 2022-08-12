@@ -56,3 +56,57 @@ def repositories():
         type = "tar.gz",
         urls = ["https://nodejs.org/dist/v18.7.0/node-v18.7.0-linux-arm64.tar.gz"],
     )
+
+    http_archive(
+        name = "nodejs14_ppc64le",
+        build_file = "//nodejs:BUILD.nodejs",
+        sha256 = "b61f6ab4ec04e8b607b692199203ee3f88a6344ffa027dc90aa023b47f3edd95",
+        strip_prefix = "node-v14.20.0-linux-ppc64le/",
+        type = "tar.gz",
+        urls = ["https://nodejs.org/dist/v14.20.0/node-v14.20.0-linux-ppc64le.tar.gz"],
+    )
+
+    http_archive(
+        name = "nodejs16_ppc64le",
+        build_file = "//nodejs:BUILD.nodejs",
+        sha256 = "3f1c57af5994e4f524d33e0173e5b60a76ad2347bc4b838719bc06cc0a1ef1c3",
+        strip_prefix = "node-v16.16.0-linux-ppc64le/",
+        type = "tar.gz",
+        urls = ["https://nodejs.org/dist/v16.16.0/node-v16.16.0-linux-ppc64le.tar.gz"],
+    )
+
+    http_archive(
+        name = "nodejs18_ppc64le",
+        build_file = "//nodejs:BUILD.nodejs",
+        sha256 = "a5d2a43630f0a381bace91c31a7e7752b64341c3d8b2eaf5515f814fad07a231",
+        strip_prefix = "node-v18.7.0-linux-ppc64le/",
+        type = "tar.gz",
+        urls = ["https://nodejs.org/dist/v18.7.0/node-v18.7.0-linux-ppc64le.tar.gz"],
+    )
+
+    http_archive(
+        name = "nodejs14_s390x",
+        build_file = "//nodejs:BUILD.nodejs",
+        sha256 = "5d1b24364d7de9ad7cc96250caa897949760ffd41398c1865577183a0b9e1cca",
+        strip_prefix = "node-v14.20.0-linux-s390x/",
+        type = "tar.gz",
+        urls = ["https://nodejs.org/dist/v14.20.0/node-v14.20.0-linux-s390x.tar.gz"],
+    )
+
+    http_archive(
+        name = "nodejs16_s390x",
+        build_file = "//nodejs:BUILD.nodejs",
+        sha256 = "b71b5dd31f398c5467cc3b93a79d5757e7ad286e5ad2bd79d5fda6b775b481c7",
+        strip_prefix = "node-v16.16.0-linux-s390x/",
+        type = "tar.gz",
+        urls = ["https://nodejs.org/dist/v16.16.0/node-v16.16.0-linux-s390x.tar.gz"],
+    )
+
+    http_archive(
+        name = "nodejs18_s390x",
+        build_file = "//nodejs:BUILD.nodejs",
+        sha256 = "3d5330337892ff21a5fb7058a68aee3274ab36637b212380cbb78c45cd15244b",
+        strip_prefix = "node-v18.7.0-linux-s390x/",
+        type = "tar.gz",
+        urls = ["https://nodejs.org/dist/v18.7.0/node-v18.7.0-linux-s390x.tar.gz"],
+    )
