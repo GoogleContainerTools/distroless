@@ -42,10 +42,10 @@ def repositories():
     http_archive(
         name = "nodejs16_arm64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "378a3998e7c4dabd0cbd96b05a1b08e834c4b607f09c0745072de9423626fca4",
-        strip_prefix = "node-v16.16.0-linux-arm64/",
+        sha256 = "0e83e93bd3658f4ae516b5f1f174190bd87aaae3d691eb91a8945eed04dc8491",
+        strip_prefix = "node-v16.17.0-linux-arm64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v16.16.0/node-v16.16.0-linux-arm64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v16.17.0/node-v16.17.0-linux-arm64.tar.gz"],
     )
 
     http_archive(
