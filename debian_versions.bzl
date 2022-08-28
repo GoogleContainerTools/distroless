@@ -75,7 +75,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "python3-distutils": "3.9.2-1",
             "python3.9-minimal": "3.9.2-1",
             "tzdata": "2021a-1+deb11u5",
-            "zlib1g": "1:1.2.11.dfsg-2+deb11u1",
+            "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
     },
     "arm": {
@@ -189,7 +189,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "python3-distutils": "3.9.2-1",
             "python3.9-minimal": "3.9.2-1",
             "tzdata": "2021a-1+deb11u5",
-            "zlib1g": "1:1.2.11.dfsg-2+deb11u1",
+            "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
     },
     "ppc64le": {
@@ -245,7 +245,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "openjdk-17-jre-headless": "17.0.4+8-1~deb11u1",
             "openssl": "1.1.1n-0+deb11u3",
             "tzdata": "2021a-1+deb11u5",
-            "zlib1g": "1:1.2.11.dfsg-2+deb11u1",
+            "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
     },
     "s390x": {
@@ -301,7 +301,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "openjdk-17-jre-headless": "17.0.4+8-1~deb11u1",
             "openssl": "1.1.1n-0+deb11u3",
             "tzdata": "2021a-1+deb11u5",
-            "zlib1g": "1:1.2.11.dfsg-2+deb11u1",
+            "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
     },
 }
