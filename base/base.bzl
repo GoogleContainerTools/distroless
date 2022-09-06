@@ -52,11 +52,19 @@ def distro_components(distro):
             )
 
             container_image(
-                name = "base_" + user + "_" + arch + "_" + distro,
+                name = "base_nossl_" + user + "_" + arch + "_" + distro,
                 architecture = arch,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 debs = [
                     deb_file(arch, distro, "libc6"),
+                ],
+            )
+
+            container_image(
+                name = "base_" + user + "_" + arch + "_" + distro,
+                architecture = arch,
+                base = ":base_nossl_" + user + "_" + arch + "_" + distro,
+                debs = [
                     deb_file(arch, distro, "libssl1.1"),
                     deb_file(arch, distro, "openssl"),
                 ],
