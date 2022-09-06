@@ -1,28 +1,3 @@
-# debian 10
-- distros: ["debian10"]
-  archs: ["amd64", "arm64", "arm", "s390x", "ppc64le"]
-  packages:
-    - "libc6"
-    - "libc-bin"
-    - "base-files"
-    - "ca-certificates"
-    - "openssl"
-    - "libssl1.1"
-    - "libbz2-1.0"
-    - "libdb5.3"
-    - "libffi6"
-    - "liblzma5"
-    - "libreadline7"
-    - "libsqlite3-0"
-    - "mime-support"
-    - "netbase"
-    - "readline-common"
-    - "tzdata"
-    #c++
-    - "libgcc1"
-    - "libgomp1"
-    - "libstdc++6"
-
 # debian 11
 - distros: ["debian11"]
   archs: ["amd64", "arm64", "arm", "s390x", "ppc64le"]

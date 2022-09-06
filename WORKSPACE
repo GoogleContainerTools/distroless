@@ -40,9 +40,6 @@ load(
     "//:checksums.bzl",
     "ARCHITECTURES",
     "BASE_ARCHITECTURES",
-    "DEBIAN_SECURITY_SNAPSHOT",
-    "DEBIAN_SNAPSHOT",
-    "SHA256s",
     "VERSIONS",
 )
 load(":debian_archives.bzl", debian_repositories = "repositories")

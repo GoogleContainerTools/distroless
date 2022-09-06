@@ -7,9 +7,6 @@ load("//:checksums.bzl", "ARCHITECTURES")
 
 # distribution-specific deb dependencies
 DISTRO_DEBS = {
-    "debian10": [
-        "libgcc1",
-    ],
     "debian11": [
         "libgcc-s1",
     ],

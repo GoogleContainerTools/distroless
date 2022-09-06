@@ -4,14 +4,14 @@ The current estimation of end of life for images with the pattern:
 
 `gcr.io/distroless/<image>-debian<version>:(latest|nonroot|debug|debug-nonroot)`
 
-| Image       | Debian 10 EOL | Debian 11 EOL   |
-| ----------- | ------------- | --------------- |
-| static      | aug 2022      | debian 12 + 1yr |
-| base        | aug 2022      | debian 12 + 1yr |
-| cc          | aug 2022      | debian 12 + 1yr |
-| java*       | jan 2022      | debian 12 + 3mo |
-| node*       | jan 2022      | debian 12 + 3mo |
-| python*     | jan 2022      | debian 12 + 3mo |
+| Image       | Debian 11 EOL   |
+| ----------- | --------------- |
+| static      | debian 12 + 1yr |
+| base        | debian 12 + 1yr |
+| cc          | debian 12 + 1yr |
+| java*       | debian 12 + 3mo |
+| node*       | debian 12 + 3mo |
+| python*     | debian 12 + 3mo |
 
 \* see below for language specific runtime notes
 
@@ -24,6 +24,5 @@ Node version support is for even numbered releases (14, 16, 18, etc) that are cu
 
 ### Python
 Python support is experimental, and this project does not make any guarantees about the version of python in images.
-
 
 ### Images no longer supported (TBD)

@@ -25,13 +25,13 @@ Look into `./test.sh` to understand how. Minimally,
 
 For running tests, check `./test.sh`. (`bazel test //...` will NOT run all tests, as many tests are marked "manual".)
 
-For building and loading images to your local Docker engine, do `bazel run //java:java11_debian10` for example. After successful build, `docker images` will list images like `bazel/java:java11_debian10`.
+For building and loading images to your local Docker engine, do `bazel run //java:java11_debian11` for example. After successful build, `docker images` will list images like `bazel/java:java11_debian11`.
 
 For styling Bazel files, install and run `buildifier` with:
 
 ```shell
 # Install buildifier version 3.2.0
-GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@3.2.0
+go install github.com/bazelbuild/buildtools/buildifier@latest
 
 # This will automatically fix files.
 buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
