@@ -452,7 +452,7 @@ class TarFileWriter(object):
             # Support xz compression through xz... until we can use Py3
             if subprocess.call("which xz", shell=True, stdout=subprocess.PIPE):
                 raise self.Error(
-                    "Cannot handle .xz and .lzma compression: " "xz not found."
+                    "Cannot handle .xz and .lzma compression: xz not found."
                 )
             subprocess.call(
                 "mv {0} {0}.d && xz -z {0}.d && mv {0}.d.xz {0}".format(self.name),

@@ -25,7 +25,7 @@ docker_manifest() {
   docker manifest push $_image
 }
 
-for distro_suffix in "" -debian10 -debian11; do
+for distro_suffix in "" -debian11; do
   docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:nonroot "amd64 arm arm64 s390x ppc64le"
   docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:latest "amd64 arm arm64 s390x ppc64le"
   docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:debug-nonroot "amd64 arm arm64 s390x ppc64le"
@@ -41,8 +41,6 @@ for distro_suffix in "" -debian10 -debian11; do
   docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:debug-nonroot "amd64 arm arm64 s390x ppc64le"
   docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:debug "amd64 arm arm64 s390x ppc64le"
 done
-
-# python node and java are debian11 only
 
 for distro_suffix in "" -debian11; do
   docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:nonroot "amd64 arm64"

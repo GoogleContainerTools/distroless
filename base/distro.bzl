@@ -1,4 +1,4 @@
-DISTROS = ["debian10", "debian11"]
+DISTROS = ["debian11"]
 
 # language images (java, node, python, etc) have shorter support windows
 # see SUPPORT_POLICY.md
