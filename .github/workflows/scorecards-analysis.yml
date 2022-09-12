@@ -17,6 +17,7 @@ jobs:
     permissions:
       # Needed to upload the results to code-scanning dashboard.
       security-events: write
+      id-token: write
     
     steps:
       - name: "Checkout code"
@@ -25,7 +26,7 @@ jobs:
           persist-credentials: false
 
       - name: "Run analysis"
-        uses: ossf/scorecard-action@68bf5b3327e4fd443d2add8ab122280547b4a16d # v1.1.2
+        uses: ossf/scorecard-action@865b4092859256271290c77adbd10a43f4779972 # v2.0.3
         with:
           results_file: results.sarif
           results_format: sarif
