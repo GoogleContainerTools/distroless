@@ -27,13 +27,13 @@ import (
 )
 
 func LatestSnapshot() (*config.Snapshots, error) {
-	snapshotURL := "https://snapshot.debian.org/archive/debian/?year=%d;month=%d"
+	snapshotURL := "https://snapshot.debian.org/archive/debian/?year=%d&month=%d"
 	s, err := latest(snapshotURL)
 	if err != nil {
 		return nil, errors.Wrap(err, "calculating latest snapshot")
 	}
 
-	securitySnapshotURL := "https://snapshot.debian.org/archive/debian-security/?year=%d;month=%d"
+	securitySnapshotURL := "https://snapshot.debian.org/archive/debian-security/?year=%d&month=%d"
 	ss, err := latest(securitySnapshotURL)
 	if err != nil {
 		return nil, errors.Wrap(err, "calculating latest security snapshot")
