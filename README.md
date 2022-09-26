@@ -73,7 +73,8 @@ But this does not work:
 ENTRYPOINT "myapp"
 ```
 
-For the same reasons, if the entrypoint is left to the default empty vector, the CMD command should be specified in `vector` form (see examples below).
+For the same reasons, if the entrypoint is set to the empty vector, the CMD command should be specified in `vector` form (see examples below).
+Not that by default static, base and cc images have the empty vector entrypoint. Images with an included language runtime have a langauge specific default (see: [java](java/README.md#usage), [nodejs](nodejs/README.md#usage), [python3](experimental/python3/README.md#usage)).
 
 ### Docker
 
