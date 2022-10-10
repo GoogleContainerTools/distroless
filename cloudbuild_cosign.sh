@@ -10,7 +10,7 @@ cosign version
 cosign --timeout 20m sign "$@" $(cat images)
 
 # Sign 'latest' images with cosign
-for distro_suffix in "" -debian11; do
+for distro_suffix in "" -debian11 -debian12; do
   cosign sign "$@" gcr.io/$PROJECT_ID/static${distro_suffix}:nonroot
   cosign sign "$@" gcr.io/$PROJECT_ID/static${distro_suffix}:latest
   cosign sign "$@" gcr.io/$PROJECT_ID/static${distro_suffix}:debug-nonroot
