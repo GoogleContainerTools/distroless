@@ -15,4 +15,5 @@ ARCHITECTURES = BASE_ARCHITECTURES + ["arm", "s390x", "ppc64le"]
 
 VERSIONS = [
     ("debian11", "bullseye", "11"),
+    ("debian12", "bookworm", "12"),
 ]
