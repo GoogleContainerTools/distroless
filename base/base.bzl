@@ -7,6 +7,16 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 NONROOT = 65532
 
+# distribution-specific deb dependencies
+DISTRO_DEBS = {
+    "debian11": [
+        "libssl1.1",
+    ],
+    "debian12": [
+        "libssl3",
+    ],
+}
+
 def deb_file(arch, distro, package):
     return "@" + arch + "_" + distro + "_" + package + "//file"
 
@@ -57,9 +67,8 @@ def distro_components(distro):
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 debs = [
                     deb_file(arch, distro, "libc6"),
-                    deb_file(arch, distro, "libssl1.1"),
                     deb_file(arch, distro, "openssl"),
-                ],
+                ] + [deb_file(arch, distro, deb) for deb in DISTRO_DEBS[distro]],
             )
 
             # A debug image with busybox available.
