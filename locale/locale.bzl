@@ -12,14 +12,15 @@ def _impl(ctx):
         env = {
             "EXTRACT_DEB": ctx.executable._dpkg_extract.path,
             "BUILD_TAR": ctx.executable._build_tar.path,
+            "LOCALE_PATH": ctx.attr.path,
         },
         command = """
-            $EXTRACT_DEB "$1" ./usr/lib/locale/C.UTF-8 ./usr/share/doc/libc-bin/copyright
+            $EXTRACT_DEB "$1" .$LOCALE_PATH ./usr/share/doc/libc-bin/copyright
 
             $BUILD_TAR  --output "$2" \
                         --mode 0644 \
                         --file ./usr/share/doc/libc-bin/copyright=./usr/share/doc/libc-bin/copyright \
-                        --file ./usr/lib/locale/C.UTF-8=./usr/lib/locale/C.UTF-8
+                        --file .$LOCALE_PATH=.$LOCALE_PATH
         """,
     )
 
@@ -27,6 +28,9 @@ locale = rule(
     attrs = {
         "deb": attr.label(
             allow_single_file = [".deb"],
+            mandatory = True,
+        ),
+        "path": attr.string(
             mandatory = True,
         ),
         # Implicit dependencies.
