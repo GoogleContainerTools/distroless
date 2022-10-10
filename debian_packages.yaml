@@ -1,12 +1,11 @@
-# debian 11
-- distros: ["debian11"]
+# debian 11 + 12
+- distros: ["debian11", "debian12"]
   archs: ["amd64", "arm64", "arm", "s390x", "ppc64le"]
   packages:
     - "base-files"
     - "ca-certificates"
     - "libc6"
     - "libc-bin"
-    - "libssl1.1"
     - "netbase"
     - "openssl"
     - "tzdata"
@@ -14,6 +13,18 @@
     - "libgcc-s1"
     - "libgomp1"
     - "libstdc++6"
+
+# debian 11
+- distros: ["debian11"]
+  archs: ["amd64", "arm64", "arm", "s390x", "ppc64le"]
+  packages:
+    - "libssl1.1"
+
+# debian 12
+- distros: ["debian12"]
+  archs: ["amd64", "arm64", "arm", "s390x", "ppc64le"]
+  packages:
+    - "libssl3"
 
 # debian 11, limited architectures, java only
 - distros: ["debian11"]

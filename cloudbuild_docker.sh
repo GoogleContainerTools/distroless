@@ -25,7 +25,7 @@ docker_manifest() {
   docker manifest push $_image
 }
 
-for distro_suffix in "" -debian11; do
+for distro_suffix in "" -debian11 -debian12; do
   docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:nonroot "amd64 arm arm64 s390x ppc64le"
   docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:latest "amd64 arm arm64 s390x ppc64le"
   docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:debug-nonroot "amd64 arm arm64 s390x ppc64le"
