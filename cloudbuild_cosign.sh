@@ -49,7 +49,9 @@ for distro_suffix in "" -debian11; do
 
   for node_version in 14 16 18; do
     cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:latest
+    cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:nonroot
     cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:debug
+    cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:debug-nonroot
   done
 done
 
