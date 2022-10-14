@@ -122,7 +122,7 @@ PYTHON3.update({
 })
 
 NODEJS = {
-    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + distro
     for arch in BASE_ARCHITECTURES
     for distro in LANGUAGE_DISTROS
     for version in [
@@ -130,23 +130,27 @@ NODEJS = {
         "16",
         "18",
     ]
-    for (tag_base, label) in [
-        ("latest", ""),
-        ("debug", "_debug"),
+    for (tag_base, label, user) in [
+        ("latest", "", "root"),
+        ("nonroot", "", "nonroot"),
+        ("debug", "_debug", "root"),
+        ("debug-nonroot", "_debug", "nonroot"),
     ]
 }
 
 NODEJS.update({
-    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + arch + "_debian11"
+    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_debian11"
     for arch in BASE_ARCHITECTURES
     for version in [
         "14",
         "16",
         "18",
     ]
-    for (tag_base, label) in [
-        ("latest", ""),
-        ("debug", "_debug"),
+    for (tag_base, label, user) in [
+        ("latest", "", "root"),
+        ("nonroot", "", "nonroot"),
+        ("debug", "_debug", "root"),
+        ("debug-nonroot", "_debug", "nonroot"),
     ]
 })
 
