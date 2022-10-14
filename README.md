@@ -34,9 +34,9 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/nodejs14-debian11   | latest, debug                          |
-| gcr.io/distroless/nodejs16-debian11   | latest, debug                          |
-| gcr.io/distroless/nodejs18-debian11   | latest, debug                          |
+| gcr.io/distroless/nodejs14-debian11   | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/nodejs16-debian11   | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot  |
 
 Any other tags are considered deprecated and are no longer updated
 
