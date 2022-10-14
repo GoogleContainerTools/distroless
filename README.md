@@ -25,16 +25,18 @@ These images are built using [bazel](https://bazel.build), but they can also be 
 
 The following images are currently published and updated by the distroless project
 
-| Image                                 | Tags                                                    |
-| ---                                   | ---                                                     |
-| gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot                   |
-| gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot                   |
-| gcr.io/distroless/cc-debian11         | latest, nonroot, debug, debug-nonroot                   |
-| gcr.io/distroless/python3-debian11    | latest, nonroot, debug, debug-nonroot                   |
-| gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot                   |
-| gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot                   |
-| gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot                   |
-| gcr.io/distroless/nodejs-debian11     | 14, 14-debug, 16, 16-debug, 18, 18-debug, latest, debug |
+| Image                                 | Tags                                   |
+| ---                                   | ---                                    |
+| gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/cc-debian11         | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/python3-debian11    | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/nodejs14-debian11   | latest, debug                          |
+| gcr.io/distroless/nodejs16-debian11   | latest, debug                          |
+| gcr.io/distroless/nodejs18-debian11   | latest, debug                          |
 
 Any other tags are considered deprecated and are no longer updated
 
@@ -88,7 +90,9 @@ Follow these steps to get started:
     * [gcr.io/distroless/java11-debian11](java/README.md)
     * [gcr.io/distroless/java17-debian11](java/README.md)
     * [gcr.io/distroless/cc-debian11](cc/README.md)
-    * [gcr.io/distroless/nodejs-debian11](nodejs/README.md)
+    * [gcr.io/distroless/nodejs14-debian11](nodejs/README.md)
+    * [gcr.io/distroless/nodejs16-debian11](nodejs/README.md)
+    * [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
 
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
     * [gcr.io/distroless/python3-debian11](experimental/python3/README.md)
