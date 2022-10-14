@@ -24,10 +24,10 @@ def repositories():
     http_archive(
         name = "nodejs18_amd64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "f468b86031cca41ee9aa7a911e70eb624413153c7432754cbe9206c7ef3de090",
-        strip_prefix = "node-v18.10.0-linux-x64/",
+        sha256 = "5935236185a515b4beb991baabbe0084d552eb5122ab9b3fd0fad018af795cb3",
+        strip_prefix = "node-v18.11.0-linux-x64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v18.10.0/node-v18.10.0-linux-x64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v18.11.0/node-v18.11.0-linux-x64.tar.gz"],
     )
 
     http_archive(
