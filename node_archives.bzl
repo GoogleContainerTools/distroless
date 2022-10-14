@@ -15,19 +15,19 @@ def repositories():
     http_archive(
         name = "nodejs16_amd64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "da5658693243b3ecf6a4cba6751a71df1eb9e9703ca93b42a9404aed85f58ad0",
-        strip_prefix = "node-v16.17.1-linux-x64/",
+        sha256 = "faca6476cb5b41aa995370fd856d16fcfbbef5c18718a6fa44cc1bae4140849d",
+        strip_prefix = "node-v16.18.0-linux-x64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v16.17.1/node-v16.17.1-linux-x64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v16.18.0/node-v16.18.0-linux-x64.tar.gz"],
     )
 
     http_archive(
         name = "nodejs18_amd64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "f468b86031cca41ee9aa7a911e70eb624413153c7432754cbe9206c7ef3de090",
-        strip_prefix = "node-v18.10.0-linux-x64/",
+        sha256 = "5935236185a515b4beb991baabbe0084d552eb5122ab9b3fd0fad018af795cb3",
+        strip_prefix = "node-v18.11.0-linux-x64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v18.10.0/node-v18.10.0-linux-x64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v18.11.0/node-v18.11.0-linux-x64.tar.gz"],
     )
 
     http_archive(
@@ -42,17 +42,17 @@ def repositories():
     http_archive(
         name = "nodejs16_arm64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "adc7032888d4e672a4aac886baede8c04fccdd1a2e7ab4bcf325e3f336f44a3d",
-        strip_prefix = "node-v16.17.1-linux-arm64/",
+        sha256 = "7d495b6e26d26dd3dba64b567383f843f3d6211810182a22973fb83c32b5920b",
+        strip_prefix = "node-v16.18.0-linux-arm64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v16.17.1/node-v16.17.1-linux-arm64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v16.18.0/node-v16.18.0-linux-arm64.tar.gz"],
     )
 
     http_archive(
         name = "nodejs18_arm64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "ad536980cb4944b0d17055937c5d5170c95147765f547ce8469331a808d0c408",
-        strip_prefix = "node-v18.10.0-linux-arm64/",
+        sha256 = "48e5008774bd36471ece361e7a8795d59a0d40da7e849e13a1ed7f33cf8095a5",
+        strip_prefix = "node-v18.11.0-linux-arm64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v18.10.0/node-v18.10.0-linux-arm64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v18.11.0/node-v18.11.0-linux-arm64.tar.gz"],
     )
