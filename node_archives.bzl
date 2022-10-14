@@ -15,10 +15,10 @@ def repositories():
     http_archive(
         name = "nodejs16_amd64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "da5658693243b3ecf6a4cba6751a71df1eb9e9703ca93b42a9404aed85f58ad0",
-        strip_prefix = "node-v16.17.1-linux-x64/",
+        sha256 = "faca6476cb5b41aa995370fd856d16fcfbbef5c18718a6fa44cc1bae4140849d",
+        strip_prefix = "node-v16.18.0-linux-x64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v16.17.1/node-v16.17.1-linux-x64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v16.18.0/node-v16.18.0-linux-x64.tar.gz"],
     )
 
     http_archive(
