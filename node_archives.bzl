@@ -51,8 +51,8 @@ def repositories():
     http_archive(
         name = "nodejs18_arm64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "48e5008774bd36471ece361e7a8795d59a0d40da7e849e13a1ed7f33cf8095a5",
-        strip_prefix = "node-v18.11.0-linux-arm64/",
+        sha256 = "9bb70b30b9d34f2b859cfef73ec3134537408dbf7806d45f104bc1e1d3c832e9",
+        strip_prefix = "node-v18.12.0-linux-arm64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v18.11.0/node-v18.11.0-linux-arm64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v18.12.0/node-v18.12.0-linux-arm64.tar.gz"],
     )
