@@ -56,6 +56,7 @@ for java_version in -base 11 17; do
   docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug-nonroot "amd64 arm64 s390x ppc64le"
 done
 
+# these are existing legacy tags that are scheduled to be removed
 for distro_suffix in "" -debian11; do
   docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:latest "amd64 arm64"
   docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:debug "amd64 arm64"
@@ -63,4 +64,11 @@ for distro_suffix in "" -debian11; do
   docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:18-debug "amd64 arm64"
   docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16 "amd64 arm64"
   docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16-debug "amd64 arm64"
+done
+
+for distro_suffix in "" -debian11; do
+  for node_version in 14 16 18; do
+    docker_manifest gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:latest "amd64 arm64"
+    docker_manifest gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:debug "amd64 arm64"
+  done
 done

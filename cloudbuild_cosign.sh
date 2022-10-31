@@ -35,6 +35,7 @@ for distro_suffix in "" -debian11; do
   cosign sign "$@" gcr.io/$PROJECT_ID/python3${distro_suffux}:debug
 done
 
+# these are existing legacy tags that are scheduled to be removed
 for distro_suffix in "" -debian11; do
   cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${distro_suffix}:latest
   cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${distro_suffix}:debug
@@ -42,6 +43,14 @@ for distro_suffix in "" -debian11; do
   cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${distro_suffix}:18-debug
   cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16
   cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16-debug
+done
+
+for distro_suffix in "" -debian11; do
+
+  for node_version in 14 16 18; do
+    cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:latest
+    cosign sign "$@" gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:debug
+  done
 done
 
 for java_version in -base 11 17; do
