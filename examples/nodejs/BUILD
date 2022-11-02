@@ -11,25 +11,33 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 # https://howtonode.org/hello-node
 [
     container_image(
-        name = "hello_" + arch + "_" + distro,
+        name = "hello_" + user + "_" + arch + "_" + distro,
         architecture = arch,
-        base = "//nodejs:nodejs16_" + arch + "_" + distro,
-        cmd = ["hello.js"],
+        base = "//nodejs:nodejs16_" + user + "_" + arch + "_" + distro,
+        cmd = ["/hello.js"],
         files = [":hello.js"],
     )
+    for user in [
+        "root",
+        "nonroot",
+    ]
     for arch in ARCHITECTURES
     for distro in DISTROS
 ]
 
 [
     container_image(
-        name = "hello_http_" + arch + "_" + distro,
+        name = "hello_http_" + user + "_" + arch + "_" + distro,
         architecture = arch,
-        base = "//nodejs:nodejs16_" + arch + "_" + distro,
-        cmd = ["hello_http.js"],
+        base = "//nodejs:nodejs16_" + user + "_" + arch + "_" + distro,
+        cmd = ["/hello_http.js"],
         files = [":hello_http.js"],
         ports = ["8000"],
     )
+    for user in [
+        "root",
+        "nonroot",
+    ]
     for arch in ARCHITECTURES
     for distro in DISTROS
 ]
@@ -38,14 +46,18 @@ load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
 [
     container_test(
-        name = "hello_" + arch + "_" + distro + "_test",
+        name = "hello_" + user + "_" + arch + "_" + distro + "_test",
         configs = ["testdata/hello.yaml"],
-        image = ":hello_" + arch + "_" + distro,
+        image = ":hello_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
             "manual",
         ],
     )
+    for user in [
+        "root",
+        "nonroot",
+    ]
     for arch in ARCHITECTURES
     for distro in DISTROS
 ]

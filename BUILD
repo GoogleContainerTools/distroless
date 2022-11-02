@@ -122,7 +122,7 @@ PYTHON3.update({
 })
 
 NODEJS = {
-    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + distro
     for arch in BASE_ARCHITECTURES
     for distro in LANGUAGE_DISTROS
     for version in [
@@ -130,36 +130,40 @@ NODEJS = {
         "16",
         "18",
     ]
-    for (tag_base, label) in [
-        ("latest", ""),
-        ("debug", "_debug"),
+    for (tag_base, label, user) in [
+        ("latest", "", "root"),
+        ("nonroot", "", "nonroot"),
+        ("debug", "_debug", "root"),
+        ("debug-nonroot", "_debug", "nonroot"),
     ]
 }
 
 NODEJS.update({
-    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + arch + "_debian11"
+    "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_debian11"
     for arch in BASE_ARCHITECTURES
     for version in [
         "14",
         "16",
         "18",
     ]
-    for (tag_base, label) in [
-        ("latest", ""),
-        ("debug", "_debug"),
+    for (tag_base, label, user) in [
+        ("latest", "", "root"),
+        ("nonroot", "", "nonroot"),
+        ("debug", "_debug", "root"),
+        ("debug-nonroot", "_debug", "nonroot"),
     ]
 })
 
 # these are existing legacy tags that are scheduled to be removed
 LEGACY_NODEJS_TAGS = {
-    "{REGISTRY}/{PROJECT_ID}/nodejs:14": "//nodejs:nodejs14_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:14-debug": "//nodejs:nodejs14_debug_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14": "//nodejs:nodejs14_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14-debug": "//nodejs:nodejs14_debug_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:14": "//nodejs:nodejs14_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs:14-debug": "//nodejs:nodejs14_debug_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14": "//nodejs:nodejs14_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14-debug": "//nodejs:nodejs14_debug_root_amd64_debian11",
 }
 
 LEGACY_NODEJS_TAGS.update({
-    "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_" + arch + "_debian11"
+    "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_root_" + arch + "_debian11"
     for arch in BASE_ARCHITECTURES
     for (tag_base, suffix) in [
         ("16", ""),
@@ -168,7 +172,7 @@ LEGACY_NODEJS_TAGS.update({
 })
 
 LEGACY_NODEJS_TAGS.update({
-    "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_root_" + arch + "_" + distro
     for arch in BASE_ARCHITECTURES
     for (tag_base, suffix) in [
         ("16", ""),
@@ -178,7 +182,7 @@ LEGACY_NODEJS_TAGS.update({
 })
 
 LEGACY_NODEJS_TAGS.update({
-    "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_" + arch + "_debian11"
+    "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_root_" + arch + "_debian11"
     for arch in BASE_ARCHITECTURES
     for (tag_base, suffix) in [
         ("latest", ""),
@@ -189,7 +193,7 @@ LEGACY_NODEJS_TAGS.update({
 })
 
 LEGACY_NODEJS_TAGS.update({
-    "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_root_" + arch + "_" + distro
     for arch in BASE_ARCHITECTURES
     for (tag_base, suffix) in [
         ("latest", ""),
