@@ -70,6 +70,34 @@ BASE.update({
     for distro in DISTROS
 })
 
+BASE_NOSSL = {
+    "{REGISTRY}/{PROJECT_ID}/preview/base-nossl:{COMMIT_SHA}": "//base:base_nossl_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/preview/base-nossl-debian11:{COMMIT_SHA}": "//base:base_nossl_root_amd64_debian11",
+}
+
+BASE_NOSSL.update({
+    "{REGISTRY}/{PROJECT_ID}/preview/base-nossl:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
+    for arch in ARCHITECTURES
+    for (tag_base, label, user) in [
+        ("latest", "base_nossl", "root"),
+        ("nonroot", "base_nossl", "nonroot"),
+        ("debug", "base_nossl_debug", "root"),
+        ("debug-nonroot", "base_nossl_debug", "nonroot"),
+    ]
+})
+
+BASE_NOSSL.update({
+    "{REGISTRY}/{PROJECT_ID}/preview/base-nossl-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
+    for arch in ARCHITECTURES
+    for (tag_base, label, user) in [
+        ("latest", "base_nossl", "root"),
+        ("nonroot", "base_nossl", "nonroot"),
+        ("debug", "base_nossl_debug", "root"),
+        ("debug-nonroot", "base_nossl_debug", "nonroot"),
+    ]
+    for distro in DISTROS
+})
+
 CC = {
     "{REGISTRY}/{PROJECT_ID}/cc:{COMMIT_SHA}": "//cc:cc_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/cc-debian11:{COMMIT_SHA}": "//cc:cc_root_amd64_debian11",
@@ -274,6 +302,8 @@ ALL = {}
 ALL.update(STATIC)
 
 ALL.update(BASE)
+
+ALL.update(BASE_NOSSL)
 
 ALL.update(CC)
 

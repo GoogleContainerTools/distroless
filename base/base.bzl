@@ -52,6 +52,15 @@ def distro_components(distro):
             )
 
             container_image(
+                name = "base_nossl_" + user + "_" + arch + "_" + distro,
+                architecture = arch,
+                base = ":static_" + user + "_" + arch + "_" + distro,
+                debs = [
+                    deb_file(arch, distro, "libc6"),
+                ],
+            )
+
+            container_image(
                 name = "base_" + user + "_" + arch + "_" + distro,
                 architecture = arch,
                 base = ":static_" + user + "_" + arch + "_" + distro,
@@ -67,6 +76,17 @@ def distro_components(distro):
                 name = "debug_" + user + "_" + arch + "_" + distro,
                 architecture = arch,
                 base = ":base_" + user + "_" + arch + "_" + distro,
+                directory = "/",
+                entrypoint = ["/busybox/sh"],
+                env = {"PATH": "$$PATH:/busybox"},
+                tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
+            )
+
+            # A base_nossl debug image with busybox available.
+            container_image(
+                name = "base_nossl_debug_" + user + "_" + arch + "_" + distro,
+                architecture = arch,
+                base = ":base_nossl_" + user + "_" + arch + "_" + distro,
                 directory = "/",
                 entrypoint = ["/busybox/sh"],
                 env = {"PATH": "$$PATH:/busybox"},
@@ -133,6 +153,13 @@ def distro_components(distro):
             tags = ["manual", arch],
         )
 
+        container_test(
+            name = "base_nossl_" + arch + "_" + distro + "_test",
+            configs = ["testdata/base.yaml"],
+            image = ":base_nossl_root_" + arch + "_" + distro,
+            tags = ["manual", arch],
+        )
+
         ##########################################################################################
         # Check for busybox
         ##########################################################################################
@@ -140,6 +167,13 @@ def distro_components(distro):
             name = "debug_" + arch + "_" + distro + "_test",
             configs = ["testdata/debug.yaml"],
             image = ":debug_root_" + arch + "_" + distro,
+            tags = ["manual", arch],
+        )
+
+        container_test(
+            name = "base_nossl_debug_" + arch + "_" + distro + "_test",
+            configs = ["testdata/debug.yaml"],
+            image = ":base_nossl_debug_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
@@ -157,6 +191,13 @@ def distro_components(distro):
             name = "base_release_" + arch + "_" + distro + "_test",
             configs = ["testdata/" + distro + ".yaml"],
             image = ":base_root_" + arch + "_" + distro,
+            tags = ["manual", arch],
+        )
+
+        container_test(
+            name = "base_nossl_release_" + arch + "_" + distro + "_test",
+            configs = ["testdata/" + distro + ".yaml"],
+            image = ":base_nossl_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
