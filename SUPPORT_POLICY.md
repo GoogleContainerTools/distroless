@@ -4,14 +4,14 @@ The current estimation of end of life for images with the pattern:
 
 `gcr.io/distroless/<image>-debian<version>:(latest|nonroot|debug|debug-nonroot)`
 
-| Image       | Debian 11 EOL   |
-| ----------- | --------------- |
-| static      | debian 12 + 1yr |
-| base        | debian 12 + 1yr |
-| cc          | debian 12 + 1yr |
-| java*       | debian 12 + 3mo |
-| node*       | debian 12 + 3mo |
-| python*     | debian 12 + 3mo |
+| Image       | Debian 11 EOL               |
+| ----------- | --------------------------- |
+| static      | debian 12 release day + 1yr |
+| base        | debian 12 release day + 1yr |
+| cc          | debian 12 release day + 1yr |
+| java*       | debian 12 release day + 3mo |
+| node*       | debian 12 release day + 3mo |
+| python*     | debian 12 release day + 3mo |
 
 \* see below for language specific runtime notes
 
