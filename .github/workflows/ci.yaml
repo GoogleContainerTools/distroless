@@ -8,8 +8,25 @@ on:
     branches: [ 'main' ]
 
 jobs:
+  set-matrix:
+    name: Set CI target to matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bazelbuild/setup-bazelisk@v2
+      - run: sudo apt update && sudo apt install -y jq
+      - id: set-matrix
+        run: echo matrix=$(bazel query 'attr("tags", "'amd64'", "//...")' | tr ':' '/' | awk -F '/' '{print $3}' | uniq | jq -Rc . | jq -cs .) >> $GITHUB_OUTPUT
+
   ci:
-    name: CI
+    needs: set-matrix
+    strategy:
+      matrix:
+        target: ${{ fromJson(needs.set-matrix.outputs.matrix) }}
+    name: CI for ${{ matrix.target }}
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +40,6 @@ jobs:
         bazel test --curses=no --test_output=errors //...
         # Ignore experimental targets, which might not pass.
         # TODO: Fix or remove these exceptions.
-        targets=$(bazel query 'attr("tags", "'amd64'", "//...")')
+        targets=$(bazel query 'attr("tags", "'amd64'", "//${{ matrix.target }}/...")')
         bazel build --curses=no ${targets}
         bazel test --curses=no --test_output=errors ${targets}
