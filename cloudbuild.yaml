@@ -1,4 +1,4 @@
-timeout: 3600s  # 60 minutes
+timeout: 7200s  # 2 hours
 
 options:
   machineType: N1_HIGHCPU_8
