@@ -35,8 +35,6 @@ jobs:
     - name: Build and test
       run: |
         set -ex
-        # trigger some failures (test... revert these two lines)
-        [[ "${{ matrix.target }}" == "base" ]]
         for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //... && break || sleep 20; done
         bazel build --curses=no //...
         bazel test --curses=no --test_output=errors //...
@@ -45,16 +43,18 @@ jobs:
         targets=$(bazel query 'attr("tags", "'amd64'", "//${{ matrix.target }}/...")')
         bazel build --curses=no ${targets}
         bazel test --curses=no --test_output=errors ${targets}
-        
-  ci-results:
+
+  # since the matrix of ci jobs is dynamically generated, we actually make "ci-results" the required job here
+  ci-results: 
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
     needs: [ci]
     steps:
       - run: |
+          set -e
           result="${{ needs.ci.result }}"
-          if [[ $result == "success" || $result == "skipped" ]]; then
+          if [[ $result == "success" ]];
             exit 0
           else
             exit 1
