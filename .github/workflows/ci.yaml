@@ -43,3 +43,17 @@ jobs:
         targets=$(bazel query 'attr("tags", "'amd64'", "//${{ matrix.target }}/...")')
         bazel build --curses=no ${targets}
         bazel test --curses=no --test_output=errors ${targets}
+        
+  ci-results:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    name: Final Results
+    needs: [ci]
+    steps:
+      - run: |
+          result="${{ needs.build.result }}"
+          if [[ $result == "success" || $result == "skipped" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
