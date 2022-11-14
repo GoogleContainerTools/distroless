@@ -35,6 +35,8 @@ jobs:
     - name: Build and test
       run: |
         set -ex
+        # trigger some failures (test... revert these two lines)
+        [[ "${{ matrix.target }}" == "base" ]]
         for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //... && break || sleep 20; done
         bazel build --curses=no //...
         bazel test --curses=no --test_output=errors //...
