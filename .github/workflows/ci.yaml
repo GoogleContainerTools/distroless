@@ -51,7 +51,7 @@ jobs:
     needs: [ci]
     steps:
       - run: |
-          result="${{ needs.build.result }}"
+          result="${{ needs.ci.result }}"
           if [[ $result == "success" || $result == "skipped" ]]; then
             exit 0
           else
