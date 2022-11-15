@@ -53,9 +53,4 @@ jobs:
     steps:
       - run: |
           set -e
-          result="${{ needs.ci.result }}"
-          if [[ $result == "success" ]]; then
-            exit 0
-          else
-            exit 1
-          fi
+          test "${{ needs.ci.result }}" = "success"      
