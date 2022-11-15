@@ -48,7 +48,7 @@ jobs:
   ci-results: 
     if: ${{ always() }}
     runs-on: ubuntu-latest
-    name: Final Results
+    name: All CI tests pass
     needs: [ci]
     steps:
       - run: |
