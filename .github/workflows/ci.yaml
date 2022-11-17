@@ -43,3 +43,14 @@ jobs:
         targets=$(bazel query 'attr("tags", "'amd64'", "//${{ matrix.target }}/...")')
         bazel build --curses=no ${targets}
         bazel test --curses=no --test_output=errors ${targets}
+
+  # since the matrix of ci jobs is dynamically generated, we actually make "ci-results" the required job here
+  ci-results: 
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    name: All CI tests pass
+    needs: [ci]
+    steps:
+      - run: |
+          set -e
+          test "${{ needs.ci.result }}" = "success"      
