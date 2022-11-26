@@ -7,7 +7,7 @@ on:
 jobs:
   examples:
     name: Build and run examples
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04  # contains libc that is compatible with debian11 (22.04/latest doesn't)
 
     steps:
       - uses: actions/checkout@v3
