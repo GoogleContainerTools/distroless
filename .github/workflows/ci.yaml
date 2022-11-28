@@ -26,8 +26,23 @@ jobs:
     strategy:
       matrix:
         target: ${{ fromJson(needs.set-matrix.outputs.matrix) }}
-    name: CI for ${{ matrix.target }}
-    runs-on: ubuntu-latest
+    name: CI tests for ${{ matrix.target }}
+    runs-on: ubuntu-20.04 # most compatible with debian 11
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: bazelbuild/setup-bazelisk@v2
+    - name: Build and test
+      run: |
+        set -ex
+        for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //${{ matrix.target }}/... && break || sleep 20; done
+        targets=$(bazel query 'attr("tags", "'amd64'", "//${{ matrix.target }}/...")')
+        bazel build --curses=no ${targets}
+        bazel test --curses=no --test_output=errors ${targets}
+
+  ci-unit:
+    name: CI unit tests
+    runs-on: ubuntu-20.04 # most compatible with debian 11
 
     steps:
     - uses: actions/checkout@v3
@@ -38,11 +53,6 @@ jobs:
         for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //... && break || sleep 20; done
         bazel build --curses=no //...
         bazel test --curses=no --test_output=errors //...
-        # Ignore experimental targets, which might not pass.
-        # TODO: Fix or remove these exceptions.
-        targets=$(bazel query 'attr("tags", "'amd64'", "//${{ matrix.target }}/...")')
-        bazel build --curses=no ${targets}
-        bazel test --curses=no --test_output=errors ${targets}
 
   # since the matrix of ci jobs is dynamically generated, we actually make "ci-results" the required job here
   ci-results: 
