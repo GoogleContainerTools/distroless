@@ -33,10 +33,10 @@ def repositories():
     http_archive(
         name = "nodejs14_arm64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "f3e6fb4a833c084863e7dfa3a50ac29f53b421ad070748ff9c9a81291284faf8",
-        strip_prefix = "node-v14.21.1-linux-arm64/",
+        sha256 = "bb7ac11ee8ff3a06773028d53443769c4b0c0f0e85ece68921645882b181cf80",
+        strip_prefix = "node-v14.21.2-linux-arm64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v14.21.1/node-v14.21.1-linux-arm64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v14.21.2/node-v14.21.2-linux-arm64.tar.gz"],
     )
 
     http_archive(
