@@ -23,14 +23,16 @@ def _impl(ctx):
             "BUILD_TAR": ctx.executable._build_tar.path,
         },
         command = """
-            set -o errexit
-            set -o xtrace
+set -o errexit
 
-            mkdir -p etc/ssl/certs/java
-            tar -xOf "$1" ./etc/ssl/certs/ca-certificates.crt | $CREATE_JKS > etc/ssl/certs/java/cacerts
+mkdir -p etc/ssl/certs/java
+tar -xf "$1" ./etc/ssl/certs/ca-certificates.crt | $CREATE_JKS > etc/ssl/certs/java/cacerts
 
-            $BUILD_TAR  --output "$2" \
-                        --file ./etc/ssl/certs/java/cacerts=./etc/ssl/certs/java/cacerts
+echo "[" >> java_cacerts.manifest
+echo "[0,\\"./etc/ssl/certs/java/cacerts\\",\\"./etc/ssl/certs/java/cacerts\\",\\"\\",null,null]" >> java_cacerts.manifest
+echo "]" >> java_cacerts.manifest
+
+$BUILD_TAR --manifest java_cacerts.manifest --output "$2" --directory "/"
         """,
     )
 
@@ -51,7 +53,7 @@ file with the JKS file at etc/ssl/certs/java/cacerts.
             allow_single_file = True,
         ),
         "_build_tar": attr.label(
-            default = Label("//build_tar"),
+            default = Label("@rules_pkg//pkg/private/tar:build_tar"),
             cfg = "host",
             executable = True,
         ),

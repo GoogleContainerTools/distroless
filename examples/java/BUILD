@@ -1,17 +1,35 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-package(default_visibility = ["//visibility:public"])
-
-load("@io_bazel_rules_docker//java:image.bzl", "java_image")
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 
+package(default_visibility = ["//visibility:public"])
+
+java_binary(
+    name = "hello",
+    srcs = ["HelloJava.java"],
+    main_class = "examples.HelloJava",
+)
+
+pkg_tar(
+    name = "hello_tar",
+    srcs = [
+        ":hello"
+    ]
+)
+
 [
-    java_image(
+    oci_image(
         name = "hello_" + user + "_" + distro,
-        srcs = ["HelloJava.java"],
-        base = "//java:java11_" + user + "_amd64" + "_" + distro,
-        main_class = "examples.HelloJava",
+        base = "//java:java11_" + user + "_arm64" + "_" + distro,
+        cmd = [
+            "/hello.jar"
+        ],
+        tars = [
+            ":hello_tar"
+        ]
     )
     for user in [
         "root",
@@ -20,17 +38,14 @@ load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
     for distro in DISTROS
 ]
 
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-
 [
-    container_test(
+    structure_test(
         name = "hello_" + user + "_" + distro + "_test",
         size = "small",
-        configs = ["testdata/hello_" + user + "_" + distro + ".yaml"],
+        config = ["testdata/hello_" + user + "_" + distro + ".yaml"],
         image = ":hello_" + user + "_" + distro,
         tags = [
-            "amd64",
-            "manual",
+            "arm64"
         ],
     )
     for user in [

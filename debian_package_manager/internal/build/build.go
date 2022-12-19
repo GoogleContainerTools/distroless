@@ -24,6 +24,7 @@ import (
 
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/build/config"
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/deb"
+	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/rhttp"
 	"github.com/pkg/errors"
 	"github.com/ulikunitz/xz"
 	"golang.org/x/sync/errgroup"
@@ -60,9 +61,9 @@ func extractPackageInfo(snapshots *config.Snapshots, arch config.Arch, distro co
 }
 
 func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string]*deb.Package, error) {
-	resp, err := http.Get(pi.URL)
+	resp, err := rhttp.Get(pi.URL)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to fetch remote file: %q", pi.URL)
+		return nil, errors.Wrapf(err, "failed to fetch remote file: %s", pi.URL)
 	} else if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("failed (status: %v) to fetch remote file: %q", resp.StatusCode, pi.URL)
 	}
@@ -85,6 +86,7 @@ func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string
 func checkForUpdates(current *config.Snapshots, latest *config.Snapshots, pkgDB config.Packages) (bool, error) {
 	fmt.Print("Looking for updates...")
 	for arch, distropackages := range pkgDB {
+		fmt.Print(".")
 		for distro, packages := range distropackages {
 			latestVersions, _, err := extractPackageInfo(latest, arch, distro, packages)
 			if err != nil {

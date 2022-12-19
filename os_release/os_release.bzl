@@ -30,9 +30,11 @@ HOME_URL="https://github.com/GoogleContainerTools/distroless"
 SUPPORT_URL="https://github.com/GoogleContainerTools/distroless/blob/master/README.md"
 BUG_REPORT_URL="https://github.com/GoogleContainerTools/distroless/issues/new"
 EOF
+            echo "[" >> os_release.manifest
+            echo "[0,\\"$OS_RELEASE_FILE\\",\\"$OS_RELEASE_FILE\\",\\"\\",null,null]" >> os_release.manifest
+            echo "]" >> os_release.manifest
 
-            $BUILD_TAR  --output "$1" \
-                        --file $OS_RELEASE_FILE=$OS_RELEASE_FILE \
+            $BUILD_TAR --manifest os_release.manifest  --output "$1" --directory "/"
         """,
     )
 
@@ -46,7 +48,7 @@ os_release = rule(
         ),
         # Implicit dependencies.
         "_build_tar": attr.label(
-            default = Label("//build_tar"),
+            default = Label("@rules_pkg//pkg/private/tar:build_tar"),
             cfg = "host",
             executable = True,
         ),

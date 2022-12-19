@@ -4,19 +4,18 @@ def _impl(ctx):
     ctx.actions.run_shell(
         inputs = [ctx.file.deb],
         outputs = [ctx.outputs.tar],
-        tools = [] + ctx.files._build_tar + ctx.files._dpkg_extract,
+        tools = ctx.files._build_tar,
         arguments = [
             ctx.file.deb.path,
             ctx.outputs.tar.path,
         ],
         env = {
-            "EXTRACT_DEB": ctx.executable._dpkg_extract.path,
             "BUILD_TAR": ctx.executable._build_tar.path,
         },
         command = """
             set -o errexit
 
-            $EXTRACT_DEB "$1" ./usr/share/ca-certificates ./usr/share/doc/ca-certificates/copyright
+            tar -xf "$1" ./usr/share/ca-certificates ./usr/share/doc/ca-certificates/copyright
 
             CERT_FILE=./etc/ssl/certs/ca-certificates.crt
             mkdir -p $(dirname $CERT_FILE)
@@ -26,29 +25,27 @@ def _impl(ctx):
               cat $cert >> $CERT_FILE
             done
 
-            $BUILD_TAR  --output "$2" \
-                        --file $CERT_FILE=$CERT_FILE \
-                        --file ./usr/share/doc/ca-certificates/copyright=./usr/share/doc/ca-certificates/copyright
+            echo "[" >> cacerts.manifest
+            echo '[0,"./usr/share/doc/ca-certificates/copyright","./usr/share/doc/ca-certificates/copyright","",null,null],' >> cacerts.manifest
+            echo "[0,\\"$CERT_FILE\\",\\"$CERT_FILE\\",\\"\\",null,null]" >> cacerts.manifest
+            echo "]" >> cacerts.manifest
+
+            $BUILD_TAR --manifest cacerts.manifest --output "$2" --directory "/"
         """,
     )
 
 cacerts = rule(
     attrs = {
         "deb": attr.label(
-            allow_single_file = [".deb"],
+            allow_single_file = [".tar.xz"],
             mandatory = True,
         ),
         # Implicit dependencies.
         "_build_tar": attr.label(
-            default = Label("//build_tar"),
+            default = Label("@rules_pkg//pkg/private/tar:build_tar"),
             cfg = "host",
             executable = True,
-        ),
-        "_dpkg_extract": attr.label(
-            default = Label("//package_manager:dpkg_extract"),
-            cfg = "host",
-            executable = True,
-        ),
+        )
     },
     executable = False,
     outputs = {
