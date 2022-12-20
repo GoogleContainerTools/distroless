@@ -28,8 +28,8 @@ The following images are currently published and updated by the distroless proje
 | Image                                 | Tags                                   |
 | ---                                   | ---                                    |
 | gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/cc-debian11         | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/python3-debian11    | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot  |
