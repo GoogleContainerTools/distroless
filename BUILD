@@ -71,12 +71,12 @@ BASE.update({
 })
 
 BASE_NOSSL = {
-    "{REGISTRY}/{PROJECT_ID}/preview/base-nossl:{COMMIT_SHA}": "//base:base_nossl_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/preview/base-nossl-debian11:{COMMIT_SHA}": "//base:base_nossl_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/base-nossl:{COMMIT_SHA}": "//base:base_nossl_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/base-nossl-debian11:{COMMIT_SHA}": "//base:base_nossl_root_amd64_debian11",
 }
 
 BASE_NOSSL.update({
-    "{REGISTRY}/{PROJECT_ID}/preview/base-nossl:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
+    "{REGISTRY}/{PROJECT_ID}/base-nossl:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
     for arch in ARCHITECTURES
     for (tag_base, label, user) in [
         ("latest", "base_nossl", "root"),
@@ -87,7 +87,7 @@ BASE_NOSSL.update({
 })
 
 BASE_NOSSL.update({
-    "{REGISTRY}/{PROJECT_ID}/preview/base-nossl-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/base-nossl-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in ARCHITECTURES
     for (tag_base, label, user) in [
         ("latest", "base_nossl", "root"),
