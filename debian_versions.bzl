@@ -2,7 +2,7 @@
 DEBIAN_PACKAGE_VERSIONS = {
     "amd64": {
         "debian11": {
-            "base-files": "11.1+deb11u5",
+            "base-files": "11.1+deb11u6",
             "ca-certificates": "20210119",
             "dash": "0.5.11+git20200708+dd9ef66-5",
             "fontconfig-config": "2.13.1-4.2",
@@ -59,7 +59,7 @@ DEBIAN_PACKAGE_VERSIONS = {
     },
     "arm": {
         "debian11": {
-            "base-files": "11.1+deb11u5",
+            "base-files": "11.1+deb11u6",
             "ca-certificates": "20210119",
             "libc-bin": "2.31-13+deb11u5",
             "libc6": "2.31-13+deb11u5",
@@ -74,7 +74,7 @@ DEBIAN_PACKAGE_VERSIONS = {
     },
     "arm64": {
         "debian11": {
-            "base-files": "11.1+deb11u5",
+            "base-files": "11.1+deb11u6",
             "ca-certificates": "20210119",
             "dash": "0.5.11+git20200708+dd9ef66-5",
             "fontconfig-config": "2.13.1-4.2",
@@ -131,7 +131,7 @@ DEBIAN_PACKAGE_VERSIONS = {
     },
     "ppc64le": {
         "debian11": {
-            "base-files": "11.1+deb11u5",
+            "base-files": "11.1+deb11u6",
             "ca-certificates": "20210119",
             "fontconfig-config": "2.13.1-4.2",
             "fonts-dejavu-core": "2.37-2",
@@ -166,7 +166,7 @@ DEBIAN_PACKAGE_VERSIONS = {
     },
     "s390x": {
         "debian11": {
-            "base-files": "11.1+deb11u5",
+            "base-files": "11.1+deb11u6",
             "ca-certificates": "20210119",
             "fontconfig-config": "2.13.1-4.2",
             "fonts-dejavu-core": "2.37-2",
