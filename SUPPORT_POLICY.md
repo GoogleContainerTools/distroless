@@ -8,6 +8,7 @@ The current estimation of end of life for images with the pattern:
 | ----------- | --------------------------- |
 | static      | debian 12 release day + 1yr |
 | base        | debian 12 release day + 1yr |
+| base-nossl  | debian 12 release day + 1yr |
 | cc          | debian 12 release day + 1yr |
 | java*       | debian 12 release day + 3mo |
 | node*       | debian 12 release day + 3mo |
