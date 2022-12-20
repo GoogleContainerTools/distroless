@@ -21,6 +21,11 @@ for distro_suffix in "" -debian11; do
   cosign sign "$@" gcr.io/$PROJECT_ID/base${distro_suffix}:debug-nonroot
   cosign sign "$@" gcr.io/$PROJECT_ID/base${distro_suffix}:debug
 
+  cosign sign "$@" gcr.io/$PROJECT_ID/base-nossl${distro_suffix}:nonroot
+  cosign sign "$@" gcr.io/$PROJECT_ID/base-nossl${distro_suffix}:latest
+  cosign sign "$@" gcr.io/$PROJECT_ID/base-nossl${distro_suffix}:debug-nonroot
+  cosign sign "$@" gcr.io/$PROJECT_ID/base-nossl${distro_suffix}:debug
+
   cosign sign "$@" gcr.io/$PROJECT_ID/cc${distro_suffix}:nonroot
   cosign sign "$@" gcr.io/$PROJECT_ID/cc${distro_suffix}:latest
   cosign sign "$@" gcr.io/$PROJECT_ID/cc${distro_suffix}:debug-nonroot
