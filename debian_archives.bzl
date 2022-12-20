@@ -46,13 +46,13 @@ def repositories():
     )
     debian_archive(
         name = "amd64_debian11_libc-bin",
-        downloaded_file_path = "libc-bin_2.31-13+deb11u5_amd64.deb",
+        package_name = "libc-bin",
         sha256 = "92a19a31dd2ed0c1881bee02a8b3d026cb971ec916d5ef6332f9dd378798f06a",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc-bin_2.31-13+deb11u5_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian11_libc6",
-        downloaded_file_path = "libc6_2.31-13+deb11u5_amd64.deb",
+        package_name = "libc6",
         sha256 = "adf6994e4c000ff5b882db411a23925a5860a10146e27fa08fc08cb4d08e6d85",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc6_2.31-13+deb11u5_amd64.deb"],
     )
@@ -76,7 +76,7 @@ def repositories():
     )
     debian_archive(
         name = "amd64_debian11_libexpat1",
-        downloaded_file_path = "libexpat1_2.2.10-2+deb11u5_amd64.deb",
+        package_name = "libexpat1",
         sha256 = "5744040c4735bcdd51238aebfa3e402b857244897f1007f61154982ebe5abbd7",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/e/expat/libexpat1_2.2.10-2+deb11u5_amd64.deb"],
     )
@@ -124,7 +124,7 @@ def repositories():
     )
     debian_archive(
         name = "amd64_debian11_libgssapi-krb5-2",
-        downloaded_file_path = "libgssapi-krb5-2_1.18.3-6+deb11u3_amd64.deb",
+        package_name = "libgssapi-krb5-2",
         sha256 = "03d2c35600ebb5b83e6acaf3b130f5ca2012d70fc13e2664564dfec354076562",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/k/krb5/libgssapi-krb5-2_1.18.3-6+deb11u3_amd64.deb"],
     )
@@ -142,7 +142,7 @@ def repositories():
     )
     debian_archive(
         name = "amd64_debian11_libk5crypto3",
-        downloaded_file_path = "libk5crypto3_1.18.3-6+deb11u3_amd64.deb",
+        package_name = "libk5crypto3",
         sha256 = "115c090e64614cffed4786ca20038ccf304ab75183714508694d7b979f260c11",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/k/krb5/libk5crypto3_1.18.3-6+deb11u3_amd64.deb"],
     )
@@ -154,13 +154,13 @@ def repositories():
     )
     debian_archive(
         name = "amd64_debian11_libkrb5-3",
-        downloaded_file_path = "libkrb5-3_1.18.3-6+deb11u3_amd64.deb",
+        package_name = "libkrb5-3",
         sha256 = "e983d4a5f0d13410383478d5b5686b4f4ea3dc5d379540234bb813ff7a48ba9d",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/k/krb5/libkrb5-3_1.18.3-6+deb11u3_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian11_libkrb5support0",
-        downloaded_file_path = "libkrb5support0_1.18.3-6+deb11u3_amd64.deb",
+        package_name = "libkrb5support0",
         sha256 = "5ec0151297fd6259ff10c62233894966768fd4e9bafd31be6fb84f7a2f854a0f",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/k/krb5/libkrb5support0_1.18.3-6+deb11u3_amd64.deb"],
     )
@@ -310,7 +310,7 @@ def repositories():
     )
     debian_archive(
         name = "amd64_debian11_tzdata",
-        downloaded_file_path = "tzdata_2021a-1+deb11u8_all.deb",
+        package_name = "tzdata",
         sha256 = "e9297c1cf6c95644aaba97aae6e39122e2eafef05f91be9fb7d03ba2a620213b",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/t/tzdata/tzdata_2021a-1+deb11u8_all.deb"],
     )
@@ -334,13 +334,13 @@ def repositories():
     )
     debian_archive(
         name = "arm_debian11_libc-bin",
-        downloaded_file_path = "libc-bin_2.31-13+deb11u5_armhf.deb",
+        package_name = "libc-bin",
         sha256 = "8ad7d41a14c934e65df4505aed1dee42bdacc9ac68981e2d66dad7f1a8792178",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc-bin_2.31-13+deb11u5_armhf.deb"],
     )
     debian_archive(
         name = "arm_debian11_libc6",
-        downloaded_file_path = "libc6_2.31-13+deb11u5_armhf.deb",
+        package_name = "libc6",
         sha256 = "3b1253ae82414527373b84fa34584cb5223bafbc0ab27fb713c539bbae4ee39e",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc6_2.31-13+deb11u5_armhf.deb"],
     )
@@ -382,7 +382,7 @@ def repositories():
     )
     debian_archive(
         name = "arm_debian11_tzdata",
-        downloaded_file_path = "tzdata_2021a-1+deb11u8_all.deb",
+        package_name = "tzdata",
         sha256 = "e9297c1cf6c95644aaba97aae6e39122e2eafef05f91be9fb7d03ba2a620213b",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/t/tzdata/tzdata_2021a-1+deb11u8_all.deb"],
     )
@@ -430,13 +430,13 @@ def repositories():
     )
     debian_archive(
         name = "arm64_debian11_libc-bin",
-        downloaded_file_path = "libc-bin_2.31-13+deb11u5_arm64.deb",
+        package_name = "libc-bin",
         sha256 = "8a691cca6e8a841bd9d9a95ccb21222c2feb6c9b996fc3776f8f1a3bffc0f004",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc-bin_2.31-13+deb11u5_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian11_libc6",
-        downloaded_file_path = "libc6_2.31-13+deb11u5_arm64.deb",
+        package_name = "libc6",
         sha256 = "6f32b8a6bf691b2fa63ba9a4eddba9a29f34c209fd7a64df86585d2b58c567f8",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc6_2.31-13+deb11u5_arm64.deb"],
     )
@@ -460,7 +460,7 @@ def repositories():
     )
     debian_archive(
         name = "arm64_debian11_libexpat1",
-        downloaded_file_path = "libexpat1_2.2.10-2+deb11u5_arm64.deb",
+        package_name = "libexpat1",
         sha256 = "8d20bfd061845bda0321d01accd6f8386ead5b1d7250a585d12b8d5fb1408ffa",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/e/expat/libexpat1_2.2.10-2+deb11u5_arm64.deb"],
     )
@@ -508,7 +508,7 @@ def repositories():
     )
     debian_archive(
         name = "arm64_debian11_libgssapi-krb5-2",
-        downloaded_file_path = "libgssapi-krb5-2_1.18.3-6+deb11u3_arm64.deb",
+        package_name = "libgssapi-krb5-2",
         sha256 = "dbfa98b48e405dd5febdfb95095fb3ac3659d9c9c7baa29b16904fa6b65b7a2b",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/k/krb5/libgssapi-krb5-2_1.18.3-6+deb11u3_arm64.deb"],
     )
@@ -526,7 +526,7 @@ def repositories():
     )
     debian_archive(
         name = "arm64_debian11_libk5crypto3",
-        downloaded_file_path = "libk5crypto3_1.18.3-6+deb11u3_arm64.deb",
+        package_name = "libk5crypto3",
         sha256 = "6193fca1f4dbcc366cff4767194f9bcc278467c9dcd786c90a2933846312db39",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/k/krb5/libk5crypto3_1.18.3-6+deb11u3_arm64.deb"],
     )
@@ -538,13 +538,13 @@ def repositories():
     )
     debian_archive(
         name = "arm64_debian11_libkrb5-3",
-        downloaded_file_path = "libkrb5-3_1.18.3-6+deb11u3_arm64.deb",
+        package_name = "libkrb5-3",
         sha256 = "130a57d59a0b76711d1d42b54491017d84052c8bad05971fc8d13b2c5cb07a5f",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/k/krb5/libkrb5-3_1.18.3-6+deb11u3_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian11_libkrb5support0",
-        downloaded_file_path = "libkrb5support0_1.18.3-6+deb11u3_arm64.deb",
+        package_name = "libkrb5support0",
         sha256 = "7e42d93c73eff4d34e981aeabb48f6a7da2123a145fe13c08b0f853a947d76bf",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/k/krb5/libkrb5support0_1.18.3-6+deb11u3_arm64.deb"],
     )
@@ -694,7 +694,7 @@ def repositories():
     )
     debian_archive(
         name = "arm64_debian11_tzdata",
-        downloaded_file_path = "tzdata_2021a-1+deb11u8_all.deb",
+        package_name = "tzdata",
         sha256 = "e9297c1cf6c95644aaba97aae6e39122e2eafef05f91be9fb7d03ba2a620213b",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/t/tzdata/tzdata_2021a-1+deb11u8_all.deb"],
     )
@@ -736,13 +736,13 @@ def repositories():
     )
     debian_archive(
         name = "ppc64le_debian11_libc-bin",
-        downloaded_file_path = "libc-bin_2.31-13+deb11u5_ppc64el.deb",
+        package_name = "libc-bin",
         sha256 = "20cf6c99d17883e372f2bd49ad34ef9c1819dab6b7ec314cb79d6ae550d9fe13",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc-bin_2.31-13+deb11u5_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian11_libc6",
-        downloaded_file_path = "libc6_2.31-13+deb11u5_ppc64el.deb",
+        package_name = "libc6",
         sha256 = "0e5ab08c9de81e6cac721f6a7bf9c9db44dfed128957434e24bac677c2eafb6c",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc6_2.31-13+deb11u5_ppc64el.deb"],
     )
@@ -754,7 +754,7 @@ def repositories():
     )
     debian_archive(
         name = "ppc64le_debian11_libexpat1",
-        downloaded_file_path = "libexpat1_2.2.10-2+deb11u5_ppc64el.deb",
+        package_name = "libexpat1",
         sha256 = "cbf5268366667e541654f4b7290c2baa5329aee2f25b18bea520f69063fc9474",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/e/expat/libexpat1_2.2.10-2+deb11u5_ppc64el.deb"],
     )
@@ -880,7 +880,7 @@ def repositories():
     )
     debian_archive(
         name = "ppc64le_debian11_tzdata",
-        downloaded_file_path = "tzdata_2021a-1+deb11u8_all.deb",
+        package_name = "tzdata",
         sha256 = "e9297c1cf6c95644aaba97aae6e39122e2eafef05f91be9fb7d03ba2a620213b",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/t/tzdata/tzdata_2021a-1+deb11u8_all.deb"],
     )
@@ -922,13 +922,13 @@ def repositories():
     )
     debian_archive(
         name = "s390x_debian11_libc-bin",
-        downloaded_file_path = "libc-bin_2.31-13+deb11u5_s390x.deb",
+        package_name = "libc-bin",
         sha256 = "f774b09c946a284c59acca729368dae234c88ba2659e49c0a6bfbcffd3642c6a",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc-bin_2.31-13+deb11u5_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian11_libc6",
-        downloaded_file_path = "libc6_2.31-13+deb11u5_s390x.deb",
+        package_name = "libc6",
         sha256 = "1bb4a382bb309f5505a2ff2c76447599cdb78fdd2e32b3573b488f35a44e57f4",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/g/glibc/libc6_2.31-13+deb11u5_s390x.deb"],
     )
@@ -940,7 +940,7 @@ def repositories():
     )
     debian_archive(
         name = "s390x_debian11_libexpat1",
-        downloaded_file_path = "libexpat1_2.2.10-2+deb11u5_s390x.deb",
+        package_name = "libexpat1",
         sha256 = "f3358a35ea71f682052c56db8d6f26fa95326cf672301f80d07ee770b4aa8bb4",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/e/expat/libexpat1_2.2.10-2+deb11u5_s390x.deb"],
     )
@@ -1066,7 +1066,7 @@ def repositories():
     )
     debian_archive(
         name = "s390x_debian11_tzdata",
-        downloaded_file_path = "tzdata_2021a-1+deb11u8_all.deb",
+        package_name = "tzdata",
         sha256 = "e9297c1cf6c95644aaba97aae6e39122e2eafef05f91be9fb7d03ba2a620213b",
         urls = ["https://snapshot.debian.org/archive/debian/20221217T151645Z/pool/main/t/tzdata/tzdata_2021a-1+deb11u8_all.deb"],
     )

@@ -59,7 +59,7 @@ def distro_components(distro):
                 stamp = True,
                 architecture = arch,
                 base = ":static_" + user + "_" + arch + "_" + distro,
-                debs = [
+                tars = [
                     deb_pkg(arch, distro, "libc6"),
                 ],
             )
@@ -84,14 +84,11 @@ def distro_components(distro):
             )
 
             # A base_nossl debug image with busybox available.
-            container_image(
+            oci_image(
                 name = "base_nossl_debug_" + user + "_" + arch + "_" + distro,
-                stamp = True,
-                architecture = arch,
                 base = ":base_nossl_" + user + "_" + arch + "_" + distro,
-                directory = "/",
                 entrypoint = ["/busybox/sh"],
-                env = {"PATH": "$$PATH:/busybox"},
+                env = {"PATH": "$PATH:/busybox"},
                 tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
             )
 
@@ -160,9 +157,9 @@ def distro_components(distro):
             tags = ["manual", arch],
         )
 
-        container_test(
+        structure_test(
             name = "base_nossl_" + arch + "_" + distro + "_test",
-            configs = ["testdata/base.yaml"],
+            config = ["testdata/base.yaml"],
             image = ":base_nossl_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )

@@ -32,9 +32,9 @@ load("@distroless//pkg:debian_archive.bzl", "debian_archive")
 
 def repositories():
 {{- range $arch,$dm := . }}{{ range $distro,$pm := $dm }}{{ range $pn,$pi := $pm }}
-	debian_archive(
+    debian_archive(
         name = "{{ printf "%s_%s_" $arch $distro }}{{ bazelify $pi.Name }}",
-		package_name = "{{ $pi.Name }}",
+        package_name = "{{ $pi.Name }}",
         sha256 = "{{ $pi.SHA256 }}",
         urls = ["{{ $pi.URL }}"],
     )

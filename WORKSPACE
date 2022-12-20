@@ -1,11 +1,18 @@
 workspace(name = "distroless")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 # rules_oci setup
-local_repository(
+# local_repository(
+#     name = "contrib_rules_oci",
+#     path = "../rules/rules_oci"
+# )
+git_repository(
     name = "contrib_rules_oci",
-    path = "../rules/rules_oci"
+    remote = "https://github.com/bazel-contrib/rules_oci.git",
+    commit = "835d1977718db84e8d87aa8086517cda623d0a7c",
+    shallow_since = "1671569474 +0300"
 )
 
 load("@contrib_rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")

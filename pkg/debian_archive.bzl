@@ -27,8 +27,7 @@ pkg_tar(
 )
 
 debian_spdx(
-    name = "{name}",
-    visibility = ["//visibility:public"],
+    name = "spdx",
     control = "control.tar.xz",
     tar = ":tar",
     package_name = "{package_name}",
@@ -36,10 +35,16 @@ debian_spdx(
     sha256 = "{sha256}",
     urls = [{urls}]
 )
+
+filegroup(
+    name = "{name}",
+    srcs = [":tar", ":spdx"],
+    visibility = ["//visibility:public"],
+)
 """
 
 def _impl(rctx):
-    rctx.report_progress('test')
+    rctx.report_progress("Fetching {}".format(rctx.attr.package_name))
     rctx.download_and_extract(
         url = rctx.attr.urls,
         sha256 = rctx.attr.sha256,
