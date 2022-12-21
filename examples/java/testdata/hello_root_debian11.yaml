@@ -1,5 +1,5 @@
 schemaVersion: "1.0.0"
 commandTests:
   - name: hello
-    command: ['/usr/bin/java', '-cp', '/hello.jar', 'examples.HelloJava']
+    command: ['/usr/bin/java', '-cp', '/hello_root_debian11_binary.jar', 'examples.HelloJava']
     expectedOutput: ['Hello world']

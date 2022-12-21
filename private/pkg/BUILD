@@ -6,3 +6,12 @@ go_binary(
     name = "debian_spdx",
     srcs = ["debian_spdx.go"],
 )   
+
+
+go_binary(
+    name = "dpkg_status",
+    srcs = ["dpkg_status.go"],
+    deps = [
+        "@com_github_ulikunitz_xz//:xz"
+    ]
+)   

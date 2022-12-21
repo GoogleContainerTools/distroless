@@ -3,7 +3,7 @@
 def _impl(ctx):
     ctx.actions.run_shell(
         outputs = [ctx.outputs.tar],
-        tools = [] + ctx.files._build_tar,
+        tools = ctx.files._build_tar,
         arguments = [
             ctx.outputs.tar.path,
             ctx.attr.codename,

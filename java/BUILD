@@ -1,6 +1,6 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image")
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//oci:defs.bzl", "structure_test", "java_image")
+load("//private/oci:defs.bzl", "java_image")
 load("//base:base.bzl", "deb_pkg")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//cacerts:java.bzl", "cacerts_java")

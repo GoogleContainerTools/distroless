@@ -18,7 +18,7 @@ def _impl(ctx):
     
     args = ctx.actions.args()
     args.add(ctx.file.control.path)
-    args.add(ctx.file.tar.path)
+    args.add(ctx.file.data.path)
     args.add(ctx.attr.package_name)
     args.add(ctx.attr.spdx_id, format = "--id=%s")
     args.add(output.path, format = "--output=%s")
@@ -28,7 +28,7 @@ def _impl(ctx):
     args.add(ctx.attr.sha256, format = "--sha256=%s")
 
     ctx.actions.run_shell(
-        inputs = [ctx.file.control, ctx.file.tar],
+        inputs = [ctx.file.control, ctx.file.data],
         outputs = [output],
         command = SPDX_CMD.format(generator = ctx.file._generator.path),
         tools = [ctx.executable._generator],
@@ -44,7 +44,7 @@ debian_spdx = rule(
     implementation = _impl,
     attrs = {
         "control": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz"]),
-        "tar": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz"]),
+        "data": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz"]),
         "package_name": attr.string(mandatory = True),
         "spdx_id": attr.string(mandatory = True),
         "urls": attr.string_list(mandatory=True),

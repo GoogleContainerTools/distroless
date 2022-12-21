@@ -1,6 +1,5 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_tarball", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//pkg:spdx_sbom.bzl", "spdx_sbom")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//base:base.bzl", "deb_pkg", "NONROOT")
@@ -64,19 +63,6 @@ DISTRO_VERSION = {
         ],
         # Use UTF-8 encoding for file system: match modern Linux
         env = {"LANG": "C.UTF-8"}
-    )
-    for mode in [
-        "",
-        ":debug",
-    ]
-    for arch in ARCHITECTURES
-    for distro in DISTROS
-]
-
-[
-    spdx_sbom(
-        name = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro + "_sbom",
-        image = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro,
     )
     for mode in [
         "",

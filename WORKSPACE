@@ -44,22 +44,27 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_depe
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.19.1")
-# bazel_gazelle is used by rules_docker, and needs to be updated to override the very old version
-# used in that workspace. We must use a version compatible with our version of rules_go. See:
-# https://github.com/bazelbuild/bazel-gazelle#compatibility-with-rules-go
+
 http_archive(
     name = "bazel_gazelle",
-    sha256 = "222e49f034ca7a1d1231422cdb67066b885819885c356673cb1f72f748a3c9d4",
+    sha256 = "448e37e0dbf61d6fa8f00aaa12d191745e14f07c31cabfa731f0c8e8a4f41b97",
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.22.3/bazel-gazelle-v0.22.3.tar.gz",
-        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.22.3/bazel-gazelle-v0.22.3.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.28.0/bazel-gazelle-v0.28.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.28.0/bazel-gazelle-v0.28.0.tar.gz",
     ],
 )
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies",  "go_repository")
 gazelle_dependencies()
 
+go_repository(
+    name = "com_github_ulikunitz_xz",
+    importpath = "github.com/ulikunitz/xz",
+    sum = "h1:kpFauv27b6ynzBNT/Xy+1k+fK4WswhN/6PN5WhFAGw8=",
+    version = "v0.5.11",
+)
+
+# Custom archives
 load(":debian_archives.bzl", debian_repositories = "repositories")
 debian_repositories()
 

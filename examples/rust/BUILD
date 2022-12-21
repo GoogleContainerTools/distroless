@@ -3,7 +3,7 @@
 # repository code at any time.
 
 # Rust
-load("//oci:defs.bzl", "rust_image")
+load("//private/oci:defs.bzl", "rust_image")
 
 package(default_visibility = ["//visibility:public"])
 

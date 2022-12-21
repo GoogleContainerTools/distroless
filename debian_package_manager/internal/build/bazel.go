@@ -28,7 +28,7 @@ import (
 )
 
 var archivesTemplate = `# AUTO GENERATED
-load("@distroless//pkg:debian_archive.bzl", "debian_archive")
+load("@distroless//private/pkg:debian_archive.bzl", "debian_archive")
 
 def repositories():
 {{- range $arch,$dm := . }}{{ range $distro,$pm := $dm }}{{ range $pn,$pi := $pm }}

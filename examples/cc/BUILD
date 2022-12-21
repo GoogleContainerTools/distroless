@@ -3,7 +3,7 @@
 # repository code at any time.
 load("//base:distro.bzl", "DISTROS")
 load("@contrib_rules_oci//oci:defs.bzl", "structure_test")
-load("//oci:defs.bzl", "cc_image")
+load("//private/oci:defs.bzl", "cc_image")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -24,10 +24,10 @@ package(default_visibility = ["//visibility:public"])
     size = "small",
     config = ["testdata/hello.yaml"],
     image = ":hello_" + distro,
-    # tags = [
-    #     "amd64",
-    #     "manual",
-    # ],
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for distro in DISTROS]
 
 [structure_test(
@@ -35,8 +35,8 @@ package(default_visibility = ["//visibility:public"])
     size = "small",
     config = ["testdata/hello_cc.yaml"],
     image = ":hello_cc_" + distro,
-    # tags = [
-    #     "amd64",
-    #     "manual",
-    # ],
+    tags = [
+        "amd64",
+        "manual",
+    ],
 ) for distro in DISTROS]
