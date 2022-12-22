@@ -2,7 +2,7 @@
 load("//cacerts:cacerts.bzl", "cacerts")
 load("//:checksums.bzl", "ARCHITECTURES")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 NONROOT = 65532
@@ -16,13 +16,67 @@ def deb_pkg(arch, distro, package):
 
 # Replicate everything for all distroless suffixes
 def distro_components(distro):
+    USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
+
+    # loop for multi-arch images
+    for (user, _, _) in USER_VARIANTS:
+        oci_image_index(
+            name = "static_" + user + "_" + distro,
+            images = [
+                "static_" + user + "_" + arch + "_" + distro
+                for arch in ARCHITECTURES
+            ]
+        )
+
+        oci_image_index(
+            name = "base_nossl_" + user + "_" + distro,
+            images = [
+                "base_nossl_" + user + "_" + arch + "_" + distro
+                for arch in ARCHITECTURES
+            ]
+        )
+
+        oci_image_index(
+            name = "base_" + user + "_" + distro,
+            images = [
+                "base_" + user + "_" + arch + "_" + distro
+                for arch in ARCHITECTURES
+            ]
+        )
+
+        oci_image_index(
+            name = "debug_" + user + "_" + distro,
+            images = [
+                "debug_" + user + "_" + arch + "_" + distro
+                for arch in ARCHITECTURES
+            ]
+        )
+
+        oci_image_index(
+            name = "base_nossl_debug_" + user + "_" + distro,
+            images = [
+                "base_nossl_debug_" + user + "_" + arch + "_" + distro
+                for arch in ARCHITECTURES
+            ]
+        )
+
+        oci_image_index(
+            name = "static_debug_" + user + "_" + distro,
+            images = [
+                "static_debug_" + user + "_" + arch + "_" + distro
+                for arch in ARCHITECTURES
+            ]
+        )
+
+
+
     for arch in ARCHITECTURES:
         cacerts(
             name = "cacerts_" + arch + "_" + distro,
             deb = deb_file(arch, distro, "ca-certificates"),
         )
 
-        for (user, uid, workdir) in [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]:
+        for (user, uid, workdir) in USER_VARIANTS:
             oci_image(
                 name = "static_" + user + "_" + arch + "_" + distro,
                 env = {

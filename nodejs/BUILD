@@ -1,12 +1,35 @@
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 package(default_visibility = ["//visibility:public"])
 
 NODEJS_MAJOR_VERISONS = ("14", "16", "18")
 
+MODE = [
+    "",
+    "_debug",
+]
+
+USER = [
+    "root",
+    "nonroot",
+]
+
+[
+    oci_image_index(
+        name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + distro,
+        images = [
+            "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro
+            for arch in ARCHITECTURES
+        ]
+    )
+    for mode in MODE
+    for user in USER
+    for major_version in NODEJS_MAJOR_VERISONS
+    for distro in DISTROS
+]
 [
     oci_image(
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
@@ -16,14 +39,8 @@ NODEJS_MAJOR_VERISONS = ("14", "16", "18")
             "@nodejs" + major_version + "_" + arch
         ],
     )
-    for mode in [
-        "",
-        "_debug",
-    ]
-    for user in [
-        "root",
-        "nonroot",
-    ]
+    for mode in MODE
+    for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
     for distro in DISTROS
@@ -42,14 +59,8 @@ NODEJS_MAJOR_VERISONS = ("14", "16", "18")
             "manual",
         ],
     )
-    for mode in [
-        "",
-        "_debug",
-    ]
-    for user in [
-        "root",
-        "nonroot",
-    ]
+    for mode in MODE
+    for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
     for distro in DISTROS
@@ -68,14 +79,8 @@ pkg_tar(
             ":check_certificate"
         ],
     )
-    for mode in [
-        "",
-        "_debug",
-    ]
-    for user in [
-        "root",
-        "nonroot",
-    ]
+    for mode in MODE
+    for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
     for distro in DISTROS
@@ -91,14 +96,8 @@ pkg_tar(
             "manual",
         ],
     )
-    for mode in [
-        "",
-        "_debug",
-    ]
-    for user in [
-        "root",
-        "nonroot",
-    ]
+    for mode in MODE
+    for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
     for arch in ARCHITECTURES
     for distro in DISTROS

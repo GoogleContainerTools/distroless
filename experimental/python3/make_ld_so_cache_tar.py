@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Packages ld.so.cache into a tar file with the correct path to avoid extra container layers.
 '''

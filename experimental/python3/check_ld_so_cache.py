@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Verifies that the checked in ld.so.cache matches the generated file from
 the current base image. This avoids an extra container image layer, and

@@ -1,4 +1,4 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//private/oci:defs.bzl", "java_image")
 load("//base:base.bzl", "deb_pkg")
@@ -50,6 +50,24 @@ JAVA_VERSIONS = [
     for distro in DISTROS
 ]
 
+
+# Base
+[
+    oci_image_index(
+        name = "java_base" + mode + "_" + user + "_" + distro,
+        images = [
+            "java_base" + mode + "_" + user + "_" + arch + "_" + distro
+            for arch in JAVA_ARCHITECTURES
+        ]
+    )
+    for mode in [
+        "",
+        "_debug",
+    ]
+    for user in USERS
+    for distro in DISTROS
+]
+
 [
     oci_image(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
@@ -86,6 +104,20 @@ JAVA_VERSIONS = [
     for arch in JAVA_ARCHITECTURES
 ]
 
+# Java JRE Headless
+[
+    oci_image_index(
+        name = "java" + java_version + "_" + user + "_" + distro,
+        images = [
+            "java" + java_version + "_" + user + "_" + arch + "_" + distro
+            for arch in JAVA_ARCHITECTURES
+        ]
+    )
+    for java_version in JAVA_VERSIONS
+    for distro in DISTROS
+    for user in USERS
+]
+
 [
     oci_image(
         name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
@@ -109,6 +141,19 @@ JAVA_VERSIONS = [
     for user in USERS
 ]
 
+# Java JRE Headless - Debug
+[
+    oci_image_index(
+        name = "java" + java_version + "_debug_" + user + "_" + distro,
+        images = [
+            "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro
+            for arch in JAVA_ARCHITECTURES
+        ]
+    )
+    for java_version in JAVA_VERSIONS
+    for distro in DISTROS
+    for user in USERS
+]
 [
     oci_image(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
