@@ -1,5 +1,5 @@
 # AUTO GENERATED
-load("@distroless//private/pkg:debian_archive.bzl", "debian_archive")
+load("@distroless//private/remote:debian_archive.bzl", "debian_archive")
 
 def repositories():
     debian_archive(

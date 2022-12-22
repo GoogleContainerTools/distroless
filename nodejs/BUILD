@@ -13,7 +13,7 @@ NODEJS_MAJOR_VERISONS = ("14", "16", "18")
         base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
         entrypoint = ["/nodejs/bin/node"],
         tars = [
-            "@nodejs" + major_version + "_" + arch + "//:tar"
+            "@nodejs" + major_version + "_" + arch
         ],
     )
     for mode in [

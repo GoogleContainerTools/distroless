@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/ulikunitz/xz"
@@ -25,9 +26,13 @@ func main() {
 	controlFile, err := os.Open(control)
 	panicIfErr(err)
 	defer controlFile.Close()
-	controlFileXz, err := xz.NewReader(controlFile)
-	panicIfErr(err)
-	controlTar := tar.NewReader(controlFileXz)
+
+	var controlReader io.Reader = controlFile
+	if strings.Contains(control, ".xz") {
+		controlReader, err = xz.NewReader(controlFile)
+		panicIfErr(err)
+	}
+	controlTar := tar.NewReader(controlReader)
 
 	outputFile, err := os.Create(output)
 	panicIfErr(err)
@@ -38,9 +43,13 @@ func main() {
 	dataFile, err := os.OpenFile(data, os.O_RDONLY, os.ModePerm)
 	panicIfErr(err)
 	defer dataFile.Close()
-	dataFileXz, err := xz.NewReader(dataFile)
-	panicIfErr(err)
-	dataTar := tar.NewReader(dataFileXz)
+
+	var dataReader io.Reader = dataFile
+	if strings.Contains(data, ".xz") {
+		dataReader, err = xz.NewReader(dataFile)
+		panicIfErr(err)
+	}
+	dataTar := tar.NewReader(dataReader)
 
 	seenDpkgDir := false
 
@@ -79,9 +88,9 @@ func main() {
 
 		var rewriteTo string
 
-		if header.Name == "./control" {
+		if header.Name == "./control" || header.Name == "control" {
 			rewriteTo = "%s/%s"
-		} else if header.Name == "./md5sums" {
+		} else if header.Name == "./md5sums" || header.Name == "md5sums" {
 			rewriteTo = "%s/%s.md5sums"
 		} else {
 			continue

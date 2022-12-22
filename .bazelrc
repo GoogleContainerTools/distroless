@@ -1,5 +1,1 @@
-build --workspace_status_command=./hack/print-workspace-status.sh
-test --workspace_status_command=./hack/print-workspace-status.sh
-run --workspace_status_command=./hack/print-workspace-status.sh
-
 test --test_env=DOCKER_HOST
