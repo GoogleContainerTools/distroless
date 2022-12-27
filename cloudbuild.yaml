@@ -32,7 +32,7 @@ steps:
       export SOURCE_DATE_EPOCH=$(date --date="${_COMMIT_DATE}" +"%s")
     else
       # When a _COMMIT_DATE is not specified, set the SOURCE_DATE_EPOCH
-      # to zero to preserve the reprodusibility of the build.
+      # to zero to preserve the reproducibility of the build.
       export SOURCE_DATE_EPOCH=0
     fi
 

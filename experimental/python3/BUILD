@@ -52,6 +52,7 @@ DISTRO_VERSION = {
         ],
         # Use UTF-8 encoding for file system: match modern Linux
         env = {"LANG": "C.UTF-8"},
+        stamp = True,
         symlinks = {
             "/usr/bin/python": "/usr/bin/python" + DISTRO_VERSION[distro],
             "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro],
@@ -74,6 +75,7 @@ DISTRO_VERSION = {
         name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + "_" + distro,
         architecture = arch,
         base = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro,
+        stamp = True,
         user = "%d" % NONROOT,
         workdir = "/home/nonroot",
     )
