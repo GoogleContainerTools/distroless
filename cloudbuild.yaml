@@ -28,6 +28,14 @@ steps:
     set -o errexit
     set -o xtrace
 
+    if [ ! -z "${_COMMIT_DATE}" ] ; then
+      export SOURCE_DATE_EPOCH=$(date --date="${_COMMIT_DATE}" +"%s")
+    else
+      # When a _COMMIT_DATE is not specified, set the SOURCE_DATE_EPOCH
+      # to zero to preserve the reproducibility of the build.
+      export SOURCE_DATE_EPOCH=0
+    fi
+
     # package manager needs wget
     apt-get install wget
 
@@ -37,8 +45,8 @@ steps:
     # fetch all dependencies with retries and backoff
     for i in $(seq 5); do bazel fetch --loading_phase_threads=1 //... && break || sleep 20; done
 
-    bazel run //:publish
-    bazel build all.tar
+    bazel run --stamp //:publish
+    bazel build --stamp all.tar
 
 - name: docker
   env:
@@ -77,3 +85,12 @@ steps:
   args:
   - -c
   - ./cloudbuild_cosign.sh
+
+substitutions:
+  # This is populated by build triggers according to:
+  # https://cloud.google.com/build/docs/configuring-builds/use-bash-and-bindings-in-substitutions#creating_substitutions_using_payload_bindings
+  # in particular we set this up to have the value:
+  #    $(commit.commit.committer.date)
+  # You may specify this to gcloud builds submit with the following value:
+  #    $(git log -1 --date=iso-strict --pretty=%cd)
+  _COMMIT_DATE: "" # default value
