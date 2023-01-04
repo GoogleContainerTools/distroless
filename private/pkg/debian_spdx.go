@@ -64,7 +64,7 @@ func generateSpdx() {
 	flag.StringVar(&id, "id", "", "")
 	flag.StringVar(&copyright, "copyright", "", "")
 	flag.StringVar(&generates, "generates", "", "")
-	// TODO: multiple urls
+	// TODO: multiple urls. it is not required at the moment since .deb are fetched without a fallback mirror.
 	flag.StringVar(&url, "url", "", "")
 	if err := flag.CommandLine.Parse(os.Args[2:]); err != nil {
 		panic(err)

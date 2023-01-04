@@ -23,7 +23,7 @@ def _impl(ctx):
     args.add(ctx.attr.spdx_id, format = "--id=%s")
     args.add(output.path, format = "--output=%s")
     args.add(ctx.label, format = "--generates=%s")
-    # TODO: multiple urls
+    # TODO: multiple urls. it is not required at the moment since .deb are fetched without a fallback mirror.
     args.add(ctx.attr.urls[0], format = "--url=%s")
     args.add(ctx.attr.sha256, format = "--sha256=%s")
 

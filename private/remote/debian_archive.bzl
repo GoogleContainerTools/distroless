@@ -3,21 +3,21 @@ BUILD_TMPL = """\
 load("@distroless//private/pkg:dpkg_status.bzl", "dpkg_status")
 load("@distroless//private/pkg:debian_spdx.bzl", "debian_spdx")
 
-filegroup(
+alias(
 	name = "control",
-	srcs = ["control.tar.xz"],
+	actual = "@{name}_sources//:control",
 	visibility = ["//visibility:public"]
 )
-filegroup(
+alias(
 	name = "data",
-	srcs = ["data.tar.xz"],
+	actual = "@{name}_sources//:data",
 	visibility = ["//visibility:public"]
 )
 
 debian_spdx(
     name = "spdx",
-    control = "control.tar.xz",
-    data = "data.tar.xz",
+    control = ":control",
+    data = ":data",
     package_name = "{package_name}",
     spdx_id = "{spdx_id}",
     sha256 = "{sha256}",
@@ -26,8 +26,8 @@ debian_spdx(
 
 dpkg_status(
     name = "data_with_dpkg_status",
-    control = "control.tar.xz",
-    data = "data.tar.xz",
+    control = ":control",
+    data = ":data",
     package_name = "{package_name}"
 )
 
@@ -39,13 +39,43 @@ filegroup(
 )
 """
 
-def _impl(rctx):
+_attrs = {
+    "package_name": attr.string(mandatory = True),
+    "urls": attr.string_list(mandatory=True),
+    "sha256": attr.string(mandatory=True),
+}
+
+SOURCE_BUILD_TMPL="""\
+filegroup(
+	name = "control",
+	srcs = ["control.tar.xz"],
+	visibility = ["//visibility:public"]
+)
+filegroup(
+	name = "data",
+	srcs = ["data.tar.xz"],
+	visibility = ["//visibility:public"]
+)
+"""
+
+def _debian_source_impl(rctx):
     rctx.report_progress("Fetching {}".format(rctx.attr.package_name))
     rctx.download_and_extract(
         url = rctx.attr.urls,
         sha256 = rctx.attr.sha256,
         type = "deb"
     )
+    rctx.file(
+        "BUILD.bazel", 
+        content = SOURCE_BUILD_TMPL
+    )
+
+_debian_sources = repository_rule(
+    implementation = _debian_source_impl,
+    attrs = _attrs
+)
+
+def _debian_archive_impl(rctx):
     rctx.file(
         "BUILD.bazel", 
         content = BUILD_TMPL.format(
@@ -57,12 +87,13 @@ def _impl(rctx):
         )
     )
 
-
-debian_archive = repository_rule(
-    implementation = _impl,
-    attrs = {
-        "package_name": attr.string(mandatory = True),
-        "urls": attr.string_list(mandatory=True),
-        "sha256": attr.string(mandatory=True),
-    }
+_debian_archive = repository_rule(
+    implementation = _debian_archive_impl,
+    attrs = _attrs
 )
+
+def debian_archive(name, **kwargs):
+    _debian_sources(name = "{}_sources".format(name), **kwargs)
+    _debian_archive(name = name, **kwargs)
+
+
