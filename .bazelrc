@@ -1,1 +1,2 @@
 test --test_env=DOCKER_HOST
+run --workspace_status_command=private/stamp.bash

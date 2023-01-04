@@ -11,23 +11,25 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 git_repository(
     name = "contrib_rules_oci",
     remote = "https://github.com/bazel-contrib/rules_oci.git",
-    commit = "835d1977718db84e8d87aa8086517cda623d0a7c",
-    shallow_since = "1671569474 +0300"
+    commit = "202890ef22f604d0bfd10060da5f723cded324f1",
+    shallow_since = "1672773666 +0300"
 )
 
 load("@contrib_rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
 
 rules_oci_dependencies()
 
-#load("@contrib_rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "LATEST_COSIGN_VERSION", "oci_register_toolchains")
 load("@contrib_rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "oci_register_toolchains")
 
 oci_register_toolchains(
     name = "oci",
     crane_version = LATEST_CRANE_VERSION,
     zot_version = LATEST_ZOT_VERSION,
-    # cosign_version = LATEST_COSIGN_VERSION
 )
+
+load("@contrib_rules_oci//cosign:repositories.bzl", "cosign_register_toolchains")
+
+cosign_register_toolchains(name = "oci_cosign")
 
 # rules_go setup
 http_archive(

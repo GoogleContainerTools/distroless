@@ -46,7 +46,7 @@ JAVA_VERSIONS = [
         },
     )
     for java_version in JAVA_VERSIONS
-    for arch in ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
     for distro in DISTROS
 ]
 
