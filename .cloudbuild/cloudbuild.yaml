@@ -7,7 +7,7 @@ options:
 artifacts:
   objects:
     location: 'gs://${_ARTIFACTS_GCS_}/logs'
-    paths: ['/var/log/bazel-remote.log']
+    paths: ['.logs/*.log']
 
 steps:
   - name: gcr.io/cloud-builders/bazel@sha256:e82204cf0715edb80e4957fa55f944b9dd06b0b1c4eb4b0ca0022de7839726f6
