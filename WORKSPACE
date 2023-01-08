@@ -11,8 +11,8 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 git_repository(
     name = "contrib_rules_oci",
     remote = "https://github.com/bazel-contrib/rules_oci.git",
-    commit = "202890ef22f604d0bfd10060da5f723cded324f1",
-    shallow_since = "1672773666 +0300"
+    commit = "7307ec65fb3877d0ff117391c9c3146bca64ced6",
+    shallow_since = "1673116766 +0300"
 )
 
 load("@contrib_rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
@@ -65,6 +65,14 @@ go_repository(
     sum = "h1:kpFauv27b6ynzBNT/Xy+1k+fK4WswhN/6PN5WhFAGw8=",
     version = "v0.5.11",
 )
+
+go_repository(
+    name = "com_github_spdx_tools_golang",
+    importpath = "github.com/spdx/tools-golang",
+    sum = "h1:9B623Cfs+mclYK6dsae7gLSwuIBHvlgmEup87qpqsAQ=",
+    version = "v0.3.1-0.20230104082527-d6f58551be3f",
+)
+
 
 # Custom archives
 load(":debian_archives.bzl", debian_repositories = "repositories")

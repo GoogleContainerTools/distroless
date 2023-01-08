@@ -9,7 +9,7 @@ fi
 shift
 shift
 shift
-{generator} generate --control="$tmp/control" --copyright=$COPYRIGHT $@
+{generator} --control="$tmp/control" --copyright=$COPYRIGHT $@
 """
 
 

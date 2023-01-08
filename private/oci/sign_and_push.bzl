@@ -1,11 +1,13 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_push")
-load("@contrib_rules_oci//cosign:defs.bzl", "cosign_sign")
+load("@contrib_rules_oci//cosign:defs.bzl", "cosign_sign", "cosign_attach")
+load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
 
 PUSH_AND_SIGN_CMD="""\
 repository="$(stamp "{REPOSITORY}")"
 tag="$(stamp "{TAG}")"
 [[ -n $EXPORT ]] && echo "$repository:$tag" >> $EXPORT
-"$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY"
+"$(realpath {ATTACH_CMD})" --repository "$repository"
+"$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --attachment sbom
 "$(realpath {PUSH_CMD})" --repository "$repository" --tag "$tag"
 """
 
@@ -19,8 +21,9 @@ def _sign_and_push_impl(ctx):
         repository_and_tag = url.split(":")
         cmds.append(
             PUSH_AND_SIGN_CMD.format(
-                SIGN_CMD = files[0].short_path,
-                PUSH_CMD = files[1].short_path,
+                ATTACH_CMD = files[0].short_path,
+                SIGN_CMD = files[1].short_path,
+                PUSH_CMD = files[2].short_path,
                 REPOSITORY = repository_and_tag[0],
                 TAG = repository_and_tag[1]
             )
@@ -65,6 +68,17 @@ def sign_and_push_all(name, images):
             image = image, 
             repository = "repository.default.local"
         )
+        oci_image_spdx(
+            name = "{}_{}_sbom".format(name, idx),
+            image = image
+        )
+        cosign_attach(
+            name = "{}_{}_attach".format(name, idx),
+            image = image, 
+            type = "sbom",
+            attachment = "{}_{}_sbom".format(name, idx),
+            repository = "repository.default.local"
+        )
         cosign_sign(
             name = "{}_{}_sign".format(name, idx),
             image = image, 
@@ -73,10 +87,12 @@ def sign_and_push_all(name, images):
         native.filegroup(
             name = "{}_{}".format(name, idx),
             srcs = [
+                ":{}_{}_attach".format(name, idx),
                 ":{}_{}_sign".format(name, idx), 
                 ":{}_{}_push".format(name, idx)
             ]
         )
+
         image_dict[":{}_{}".format(name, idx)] = url
 
     sign_and_push(
