@@ -90,6 +90,7 @@ http_archive(
     build_file = "//java:BUILD.jetty",
     sha256 = "50d6eccd349d2e671bfea710cee833911287eb706fe1d39503eab76fc6fc1a0c",
     strip_prefix = "jetty-distribution-9.4.48.v20220622/",
+    add_prefix = "output",
     type = "tar.gz",
     urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.48.v20220622/jetty-distribution-9.4.48.v20220622.tar.gz"],
 )

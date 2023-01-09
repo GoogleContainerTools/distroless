@@ -18,7 +18,7 @@ done
 """
 
 def _impl(ctx):
-    ca_certificates = ctx.actions.declare_file("ca_certificates_{}".format(ctx.label.name))
+    ca_certificates = ctx.actions.declare_file("ca_certificates_{}.crt".format(ctx.label.name))
     copyright = ctx.actions.declare_file("ca_certificates_copyright_{}".format(ctx.label.name))
     ctx.actions.run_shell(
         inputs = [ctx.file.deb],

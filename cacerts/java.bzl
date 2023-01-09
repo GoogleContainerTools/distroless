@@ -15,15 +15,20 @@
 load("@rules_pkg//:providers.bzl", "PackageFilesInfo")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
+CMD="""\
+#!/usr/bin/env bash
+set -o pipefail -o errexit
+tar -xOf "$1" ./etc/ssl/certs/ca-certificates.crt | $3 > $2
+"""
+
 def _impl(ctx):
     cacerts = ctx.actions.declare_file(ctx.label.name)
     ctx.actions.run_shell(
         outputs = [cacerts],
         inputs = [ctx.file.cacerts_tar],
         tools = [ctx.file._jksutil],
-        arguments = [ctx.file.cacerts_tar.path, cacerts.path],
-        env = {"CREATE_JKS": ctx.executable._jksutil.path},
-        command = """tar -xf "$1" ./etc/ssl/certs/ca-certificates.crt | $CREATE_JKS > $2""",
+        arguments = [ctx.file.cacerts_tar.path, cacerts.path, ctx.executable._jksutil.path],
+        command = CMD,
     )
     return [
         DefaultInfo(files = depset([cacerts])),
@@ -47,7 +52,6 @@ file with the JKS file at etc/ssl/certs/java/cacerts.
             allow_single_file = True,
         ),
     },
-    executable = False,
     implementation = _impl,
 )
 

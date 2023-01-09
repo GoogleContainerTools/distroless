@@ -1,10 +1,14 @@
 SPDX_CMD="""\
 tmp="$(mktemp -d)"
-tar -xf "$1" -C "$tmp" "./control"
 
-COPYRIGHT_PATH="./usr/share/doc/$3/copyright"
-if  tar -xf "$2" -C "$tmp" "$COPYRIGHT_PATH" >/dev/null 2>&1; then
-    COPYRIGHT="$tmp/$COPYRIGHT_PATH"
+tar -xf "$1" -C "$tmp" "./control" || tar -xf "$1" -C "$tmp" "control"
+
+if  tar -xf "$2" -C "$tmp" "usr/share/doc/$3/copyright" >/dev/null 2>&1; then
+    COPYRIGHT="$tmp/usr/share/doc/$3/copyright"
+fi
+
+if  tar -xf "$2" -C "$tmp" "./usr/share/doc/$3/copyright" >/dev/null 2>&1; then
+    COPYRIGHT="$tmp/usr/share/doc/$3/copyright"
 fi
 shift
 shift

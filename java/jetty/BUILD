@@ -7,7 +7,7 @@ package(default_visibility = ["//visibility:public"])
     name = rule_name,
     base = base_image,
     cmd = ["/jetty/start.jar"],
-    tars = ["@jetty//:tar"],
+    tars = ["@jetty//:jetty"],
     workdir = "/jetty",
     # We expect users to add their WAR under /jetty/webapps.
 ) for (rule_name, base_image) in [

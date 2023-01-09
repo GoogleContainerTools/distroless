@@ -3,18 +3,11 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 package(default_visibility = ["//visibility:public"])
 
 pkg_tar(
-    name = "tar",
+    name = "jetty",
     srcs = glob(
-        ["**/*"],
-        exclude = [
-            "demo-base/**",
-            # The new_http_archive WORKSPACE rule leaves the original .tar.gz and bazel artifacts in the directory,
-            "WORKSPACE",
-            "*.tar.gz",
-            "BUILD.bazel",
-        ],
+        include = ["output/**/*"],
+        exclude = ["output/demo-base/**"]
     ),
     package_dir = "/jetty",
-    # See: https://github.com/bazelbuild/bazel/issues/2176
-    strip_prefix = ".",
+    strip_prefix = "external/jetty/output"
 )
