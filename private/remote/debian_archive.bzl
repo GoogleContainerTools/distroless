@@ -3,6 +3,7 @@ BUILD_TMPL = """\
 load("@distroless//private/pkg:dpkg_status.bzl", "dpkg_status")
 load("@distroless//private/pkg:debian_spdx.bzl", "debian_spdx")
 load("@distroless//private/util:merge_providers.bzl", "merge_providers")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 alias(
 	name = "control",
@@ -15,6 +16,22 @@ alias(
 	visibility = ["//visibility:public"]
 )
 
+dpkg_status(
+    name = "dpkg",
+    control = ":control",
+    package_name = "{package_name}"
+)
+
+pkg_tar(
+    name = "data_with_dpkg_status",
+    # workaround for https://github.com/bazelbuild/rules_pkg/issues/652
+    package_dir = "./",
+    deps = [
+        ":data",
+        ":dpkg"
+    ]
+)
+
 debian_spdx(
     name = "spdx",
     control = ":control",
@@ -24,14 +41,6 @@ debian_spdx(
     sha256 = "{sha256}",
     urls = [{urls}]
 )
-
-dpkg_status(
-    name = "data_with_dpkg_status",
-    control = ":control",
-    data = ":data",
-    package_name = "{package_name}"
-)
-
 
 merge_providers(
     name = "{name}",

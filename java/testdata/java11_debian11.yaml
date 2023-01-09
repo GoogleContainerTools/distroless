@@ -22,6 +22,6 @@ fileExistenceTests:
     path: "/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
     shouldExist: false
 metadataTest:
-  env:
+  envVars:
     - key: 'JAVA_VERSION'
       value: '11.0.16'

@@ -16,9 +16,8 @@ import (
 const DPKG_STATUS_DIR = "./var/lib/dpkg/status.d"
 
 func main() {
-	var control, data, packageName, output string
+	var control, packageName, output string
 	flag.StringVar(&control, "control", "", "")
-	flag.StringVar(&data, "data", "", "")
 	flag.StringVar(&packageName, "package-name", "", "")
 	flag.StringVar(&output, "output", "", "")
 	flag.Parse()
@@ -40,33 +39,7 @@ func main() {
 	outputTar := tar.NewWriter(outputFile)
 	defer outputTar.Close()
 
-	dataFile, err := os.OpenFile(data, os.O_RDONLY, os.ModePerm)
-	panicIfErr(err)
-	defer dataFile.Close()
-
-	var dataReader io.Reader = dataFile
-	if strings.Contains(data, ".xz") {
-		dataReader, err = xz.NewReader(dataFile)
-		panicIfErr(err)
-	}
-	dataTar := tar.NewReader(dataReader)
-
 	seenDpkgDir := false
-
-	for {
-		header, err := dataTar.Next()
-		if err == io.EOF {
-			break
-		} else {
-			panicIfErr(err)
-		}
-		err = outputTar.WriteHeader(header)
-		panicIfErr(err)
-		_, err = io.Copy(outputTar, dataTar)
-		if header.Name == DPKG_STATUS_DIR {
-			seenDpkgDir = true
-		}
-	}
 
 	if !seenDpkgDir {
 		err = outputTar.WriteHeader(&tar.Header{
