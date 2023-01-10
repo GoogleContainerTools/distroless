@@ -14,9 +14,10 @@ def _impl(ctx):
             copyright.path
         ],
         command = """
+        set -o pipefail -o errexit -o nounset
         tmp=$(mktemp -d)
         tar -xf "$1" -C "$tmp" ./usr/lib/locale/C.UTF-8 ./usr/share/doc/libc-bin/copyright
-        cp -r "$tmp/usr/lib/locale/C.UTF-8/" $2
+        cp -r "$tmp/usr/lib/locale/C.UTF-8/." $2
         mv "$tmp/usr/share/doc/libc-bin/copyright" $3
         """,
     )

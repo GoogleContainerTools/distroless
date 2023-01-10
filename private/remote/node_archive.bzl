@@ -22,13 +22,13 @@ pkg_tar(
 )
 
 pkg_tar(
-    name = "control",
-    srcs = ["controlfile"]
+    name = "_control",
+    srcs = ["control"]
 )
 
 dpkg_status(
     name = "dpkg",
-    control = ":control.tar",
+    control = ":_control.tar",
     package_name = "{package_name}"
 )
 
@@ -42,7 +42,7 @@ pkg_tar(
 
 debian_spdx(
     name = "spdx",
-    control = ":control.tar",
+    control = ":_control.tar",
     data = ":data.tar",
     package_name = "{package_name}",
     spdx_id = "{spdx_id}",
@@ -67,7 +67,7 @@ def _impl(rctx):
         output = "output",
     )
     rctx.template(
-        "controlfile",
+        "control",
         rctx.attr.control,
         substitutions = {
             "{{VERSION}}": rctx.attr.version,
