@@ -18,7 +18,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 CMD="""\
 #!/usr/bin/env bash
 set -o pipefail -o errexit
-tar -xOf "$1" ./etc/ssl/certs/ca-certificates.crt | $3 > $2
+tar -xOf "$1" etc/ssl/certs/ca-certificates.crt | $3 > $2
 """
 
 def _impl(ctx):
