@@ -110,7 +110,6 @@ def distro_components(distro):
 
             oci_image(
                 name = "base_nossl_" + user + "_" + arch + "_" + distro,
-                stamp = True,
                 architecture = arch,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [

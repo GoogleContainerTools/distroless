@@ -73,7 +73,6 @@ JAVA_VERSIONS = [
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
         base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
         env = {"LANG": "C.UTF-8"},
-        stamp = True,
         tars = [
             deb_pkg(arch, distro, "zlib1g"),
             deb_pkg(arch, distro, "libjpeg62-turbo"),

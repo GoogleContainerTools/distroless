@@ -109,7 +109,6 @@ DISTRO_VERSION = {
     oci_image(
         name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + "_" + distro,
         base = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro,
-        stamp = True,
         user = "%d" % NONROOT,
         workdir = "/home/nonroot",
     )
