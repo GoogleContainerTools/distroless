@@ -7,7 +7,7 @@ apt-get update
 apt-get install -y jq
 
 cd bazel-bin
-tar -xvf all.tar
+tar -xvf all.tar manifest.json
 cd ..
 
 # Get a list of all images
