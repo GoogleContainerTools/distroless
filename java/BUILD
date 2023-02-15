@@ -58,7 +58,6 @@ JAVA_VERSIONS = [
             deb_file(arch, distro, "libcrypt1"),
         ],
         env = {"LANG": "C.UTF-8"},
-        stamp = True,
         tars = [
             ":cacerts_java_" + arch + "_" + distro,
             "//locale:locale_" + arch + "_" + distro,
@@ -90,7 +89,6 @@ JAVA_VERSIONS = [
             "-jar",
         ],
         env = {"JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])},
-        stamp = True,
         symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"},
     )
     for java_version in JAVA_VERSIONS
@@ -123,7 +121,6 @@ JAVA_VERSIONS = [
             "-jar",
         ],
         env = {"JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])},
-        stamp = True,
         symlinks = {"/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"},
     )
     for user in USERS

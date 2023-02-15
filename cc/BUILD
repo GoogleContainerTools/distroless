@@ -22,7 +22,6 @@ DISTRO_DEBS = {
             deb_file(arch, distro, "libgomp1"),
             deb_file(arch, distro, "libstdcpp6"),
         ] + [deb_file(arch, distro, deb) for deb in DISTRO_DEBS[distro]],
-        stamp = True,
     )
     for mode in [
         "",
