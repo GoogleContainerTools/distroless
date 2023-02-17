@@ -1,0 +1,6 @@
+build --announce_rc
+build --repository_cache=~/.cache/bazel-repo
+build --disk_cache=~/.cache/bazel
+
+common --curses=no
+test  --test_output=errors
