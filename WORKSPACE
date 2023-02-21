@@ -128,6 +128,6 @@ http_archive(
 
 load("@rules_rust//rust:repositories.bzl", "rust_register_toolchains", "rust_repositories")
 
-rust_repositories()
+rust_repositories(edition = "2021")
 
 rust_register_toolchains()

@@ -9,7 +9,7 @@ on:
 
 jobs:
   ci-images:
-    name: CI tests for images
+    name: CI for image tests
     runs-on: ubuntu-20.04 # most compatible with debian 11
 
     steps:
