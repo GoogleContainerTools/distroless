@@ -28,7 +28,7 @@ steps:
     entrypoint: .cloudbuild/cloudbuild_docker.sh
 
   - name: ubuntu
-    entrypoint: ./cloudbuild_jq.sh
+    entrypoint: .cloudbuild/cloudbuild_jq.sh
 
   - name: gcr.io/projectsigstore/cosign:v1.13.1@sha256:fd5b09be23ef1027e1bdd490ce78dcc65d2b15902e1f4ba8e04f3b4019cc1057
     env:
