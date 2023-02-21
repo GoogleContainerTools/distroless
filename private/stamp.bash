@@ -6,10 +6,14 @@ if [ -z "${PROJECT_ID:-}" ]; then
   if which gcloud > /dev/null; then
     PROJECT_ID="$(gcloud config get-value core/project)"
   else
+    # some registries don't allow uppercase chars. we'll use lowercase ones to get meaningful error messages.
     PROJECT_ID="no-project"
   fi
 fi
 
-echo "PROJECT_ID ${PROJECT_ID}"
+# TODO: uncomment real project id before landing to main.
+#echo "PROJECT_ID ${PROJECT_ID}"
+echo "PROJECT_ID distroless/testing"
+
 echo "COMMIT_SHA ${COMMIT_SHA:-no-commit-sha}"
 echo "REGISTRY ${REGISTRY:-gcr.io}"
