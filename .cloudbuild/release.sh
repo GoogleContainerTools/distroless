@@ -24,7 +24,7 @@ echo "common --google_default_credentials" >> ~/.bazelrc
 echo "common --announce_rc" >> ~/.bazelrc
 
 for i in $(seq 5); do 
-    bazel cquery 'kind(merge_providers, deps(kind(container_image, ...)))' --output=label --config=release && break || sleep 20;
+    bazel cquery 'kind(filegroup, deps(kind(container_image, ...)))' --output=label --config=release && break || sleep 20;
 done
 
 bazel run //:publish --config=release

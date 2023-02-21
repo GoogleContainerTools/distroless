@@ -36,7 +36,7 @@ jobs:
       - name: Fetch
         run: |
           for i in $(seq 5); do 
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'kind(merge_providers, deps(kind(container_image, ...)))' --output=label && break || sleep 20; 
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'kind(filegroup, deps(kind(container_image, ...)))' --output=label && break || sleep 20; 
           done
       - name: Test
         run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test $(bazel query 'attr(tags, "amd64", ...)')
