@@ -126,7 +126,7 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.18.0/rules_rust-v0.18.0.tar.gz"],
 )
 
-load("@rules_rust//rust:repositories.bzl", "rust_repositories")
+load("@rules_rust//rust:repositories.bzl", "rust_register_toolchains", "rust_repositories")
 
 rust_repositories()
 
