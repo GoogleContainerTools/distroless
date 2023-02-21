@@ -11,9 +11,6 @@ if [ -z "${PROJECT_ID:-}" ]; then
   fi
 fi
 
-# TODO: uncomment real project id before landing to main.
-#echo "PROJECT_ID ${PROJECT_ID}"
-echo "PROJECT_ID distroless/testing"
-
+echo "PROJECT_ID ${PROJECT_ID}"
 echo "COMMIT_SHA ${COMMIT_SHA:-no-commit-sha}"
 echo "REGISTRY ${REGISTRY:-gcr.io}"
