@@ -2,9 +2,9 @@
 test --test_env=DOCKER_HOST
 
 # Stamp 
-build --workspace_status_command=private/stamp.bash
-run --workspace_status_command=private/stamp.bash
-test --workspace_status_command=private/stamp.bash
+build:release --workspace_status_command=./private/stamp.bash --stamp
+run:release --workspace_status_command=./private/stamp.bash --stamp
+test:release --workspace_status_command=./private/stamp.bash --stamp
 
 # Allow external dependencies to be retried. debian snapshot is unreliable and needs retries.
 common --experimental_repository_downloader_retries=20
