@@ -26,7 +26,6 @@ jobs:
                 bazel-cache-
       - name: Free space
         run: |
-          sudo apt-get remove -y '^ghc-8.*'
           sudo apt-get remove -y '^dotnet-.*'
           sudo apt-get remove -y '^llvm-.*'
           sudo apt-get remove -y 'php.*'
