@@ -25,7 +25,7 @@ steps:
     - PROJECT_ID=${PROJECT_ID}/testing
     - COMMIT_SHA=${COMMIT_SHA}
     - REGISTRY=gcr.io
-    entrypoint: ./cloudbuild_docker.sh
+    entrypoint: .cloudbuild/cloudbuild_docker.sh
 
   - name: ubuntu
     entrypoint: ./cloudbuild_jq.sh
@@ -41,7 +41,7 @@ steps:
     entrypoint: sh
     args:
     - -c
-    - ./cloudbuild_cosign.sh --key $_KMS_VAL
+    - .cloudbuild/cloudbuild_cosign.sh --key $_KMS_VAL
 
   - name: gcr.io/projectsigstore/cosign:v1.13.1@sha256:fd5b09be23ef1027e1bdd490ce78dcc65d2b15902e1f4ba8e04f3b4019cc1057
     env:
@@ -56,4 +56,4 @@ steps:
     entrypoint: sh
     args:
     - -c
-    - ./cloudbuild_cosign.sh
+    - .cloudbuild/cloudbuild_cosign.sh
