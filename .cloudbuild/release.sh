@@ -12,11 +12,6 @@ mkdir .logs
 apt-get install bazel-6.0.0
 ln -sf /usr/bin/bazel-6.0.0 /usr/bin/bazel
 
-# setup docker-credential-gcr
-# curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v2.1.6/docker-credential-gcr_linux_amd64-2.1.6.tar.gz" | tar xz docker-credential-gcr
-# chmod +x docker-credential-gcr && mv docker-credential-gcr /usr/bin/
-# docker-credential-gcr configure-docker
-
 # setup remote caching and remote asset API.
 echo "common --remote_cache=grpc://0.0.0.0:4700" >> ~/.bazelrc
 echo "common --experimental_remote_downloader=grpc://0.0.0.0:4700" >> ~/.bazelrc
