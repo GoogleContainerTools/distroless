@@ -9,7 +9,7 @@ on:
 
 jobs:
   ci-images:
-    name: CI tests for images
+    name: CI for image tests
     runs-on: ubuntu-20.04 # most compatible with debian 11
 
     steps:
@@ -26,7 +26,6 @@ jobs:
                 bazel-cache-
       - name: Free space
         run: |
-          sudo apt-get remove -y '^ghc-8.*'
           sudo apt-get remove -y '^dotnet-.*'
           sudo apt-get remove -y '^llvm-.*'
           sudo apt-get remove -y 'php.*'
