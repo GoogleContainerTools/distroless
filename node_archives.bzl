@@ -24,10 +24,10 @@ def repositories():
     http_archive(
         name = "nodejs18_amd64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "6a7c6862b86cb01b892ca5967dba14bd3122dbfed9d5c9fedd30585d5974f1f6",
-        strip_prefix = "node-v18.14.1-linux-x64/",
+        sha256 = "95bdaaf92265eefd40d2055fb9b5cd6cbc3cb2c4495e3ebd4b1b501822d69731",
+        strip_prefix = "node-v18.14.2-linux-x64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v18.14.1/node-v18.14.1-linux-x64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v18.14.2/node-v18.14.2-linux-x64.tar.gz"],
     )
 
     http_archive(
@@ -51,8 +51,8 @@ def repositories():
     http_archive(
         name = "nodejs18_arm64",
         build_file = "//nodejs:BUILD.nodejs",
-        sha256 = "608af6ad3cf5a171c889c022cb51a460bdbf57fbb8fbcd40612ea8063aa95f07",
-        strip_prefix = "node-v18.14.1-linux-arm64/",
+        sha256 = "e5c5d83e65271260ea4135330309d43fdc26c42457156ff237eeba65c6237f58",
+        strip_prefix = "node-v18.14.2-linux-arm64/",
         type = "tar.gz",
-        urls = ["https://nodejs.org/dist/v18.14.1/node-v18.14.1-linux-arm64.tar.gz"],
+        urls = ["https://nodejs.org/dist/v18.14.2/node-v18.14.2-linux-arm64.tar.gz"],
     )
