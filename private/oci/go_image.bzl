@@ -21,7 +21,6 @@ def go_image(name, srcs, base, arch = "amd64", os = "linux"):
         base = base,
         entrypoint = ["/{}_binary".format(name)],
         tars = [
-            "{}_layer".format(name)
-        ]
+            "{}_layer".format(name),
+        ],
     )
-    

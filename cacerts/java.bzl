@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 "extract ca-certificates and converts to version 2 JKS from PEM-encoded x509 certs"
+
 load("@rules_pkg//:providers.bzl", "PackageFilesInfo")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
-CMD="""\
+CMD = """\
 #!/usr/bin/env bash
 set -o pipefail -o errexit
 tar -xOf "$1" etc/ssl/certs/ca-certificates.crt | $3 > $2
@@ -32,7 +33,7 @@ def _impl(ctx):
     )
     return [
         DefaultInfo(files = depset([cacerts])),
-        PackageFilesInfo(dest_src_map = {"/etc/ssl/certs/java/cacerts": cacerts})
+        PackageFilesInfo(dest_src_map = {"/etc/ssl/certs/java/cacerts": cacerts}),
     ]
 
 _cacerts_java = rule(

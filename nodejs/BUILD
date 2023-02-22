@@ -23,20 +23,21 @@ USER = [
         images = [
             "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro
             for arch in ARCHITECTURES
-        ]
+        ],
     )
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
     for distro in DISTROS
 ]
+
 [
     oci_image(
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
         base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
         entrypoint = ["/nodejs/bin/node"],
         tars = [
-            "@nodejs" + major_version + "_" + arch
+            "@nodejs" + major_version + "_" + arch,
         ],
     )
     for mode in MODE
@@ -68,7 +69,7 @@ USER = [
 
 pkg_tar(
     name = "check_certificate",
-    srcs = ["testdata/check_certificate.js"]
+    srcs = ["testdata/check_certificate.js"],
 )
 
 [
@@ -76,7 +77,7 @@ pkg_tar(
         name = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
         base = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
         tars = [
-            ":check_certificate"
+            ":check_certificate",
         ],
     )
     for mode in MODE

@@ -9,14 +9,14 @@ package(default_visibility = ["//visibility:public"])
 
 [cc_image(
     name = "hello_" + distro,
-    base = "//cc:cc_root_amd64_" + distro,
     srcs = ["hello.c"],
+    base = "//cc:cc_root_amd64_" + distro,
 ) for distro in DISTROS]
 
 [cc_image(
     name = "hello_cc_" + distro,
-    base = "//cc:cc_root_amd64_" + distro,
     srcs = ["hello_cc.cc"],
+    base = "//cc:cc_root_amd64_" + distro,
 ) for distro in DISTROS]
 
 [structure_test(

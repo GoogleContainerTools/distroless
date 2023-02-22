@@ -10,9 +10,9 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 # )
 git_repository(
     name = "contrib_rules_oci",
-    remote = "https://github.com/bazel-contrib/rules_oci.git",
     commit = "7307ec65fb3877d0ff117391c9c3146bca64ced6",
-    shallow_since = "1673116766 +0300"
+    remote = "https://github.com/bazel-contrib/rules_oci.git",
+    shallow_since = "1673116766 +0300",
 )
 
 load("@contrib_rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
@@ -65,7 +65,8 @@ http_archive(
     ],
 )
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies",  "go_repository")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+
 gazelle_dependencies()
 
 go_repository(
@@ -82,24 +83,26 @@ go_repository(
     version = "v0.3.1-0.20230104082527-d6f58551be3f",
 )
 
-
 # Custom archives
 load(":debian_archives.bzl", debian_repositories = "repositories")
+
 debian_repositories()
 
 load(":busybox_archives.bzl", busybox_repositories = "repositories")
+
 busybox_repositories()
 
 load(":node_archives.bzl", node_repositories = "repositories")
+
 node_repositories()
 
 # For Jetty
 http_archive(
     name = "jetty",
+    add_prefix = "output",
     build_file = "//java:BUILD.jetty",
     sha256 = "50d6eccd349d2e671bfea710cee833911287eb706fe1d39503eab76fc6fc1a0c",
     strip_prefix = "jetty-distribution-9.4.48.v20220622/",
-    add_prefix = "output",
     type = "tar.gz",
     urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.48.v20220622/jetty-distribution-9.4.48.v20220622.tar.gz"],
 )
@@ -107,12 +110,13 @@ http_archive(
 # rules_pkg setup
 http_archive(
     name = "rules_pkg",
-    urls = ["https://github.com/bazelbuild/rules_pkg/releases/download/0.7.1/rules_pkg-0.7.1.tar.gz"],
     sha256 = "451e08a4d78988c06fa3f9306ec813b836b1d076d0f055595444ba4ff22b867f",
+    urls = ["https://github.com/bazelbuild/rules_pkg/releases/download/0.7.1/rules_pkg-0.7.1.tar.gz"],
 )
-load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
-rules_pkg_dependencies()
 
+load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
+
+rules_pkg_dependencies()
 
 # rules_rust setup
 http_archive(
@@ -120,12 +124,14 @@ http_archive(
     sha256 = "2466e5b2514772e84f9009010797b9cd4b51c1e6445bbd5b5e24848d90e6fb2e",
     urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.18.0/rules_rust-v0.18.0.tar.gz"],
 )
+
 load("@rules_rust//rust:repositories.bzl", "rust_register_toolchains", "rust_repositories")
 
 rust_repositories(edition = "2021")
+
 rust_register_toolchains()
 
-# rules_docker setup. 
+# rules_docker setup.
 # NOTE: this ruleset is almost unused and replaced by rules_oci completely expect a few helper macros that'll be hosted on distroless-tools.
 http_archive(
     name = "io_bazel_rules_docker",

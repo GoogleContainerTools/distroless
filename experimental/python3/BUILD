@@ -2,7 +2,7 @@ load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_ta
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
-load("//base:base.bzl", "deb_pkg", "NONROOT")
+load("//base:base.bzl", "NONROOT", "deb_pkg")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -16,7 +16,7 @@ DISTRO_VERSION = {
         symlinks = {
             "/usr/bin/python": "/usr/bin/python" + DISTRO_VERSION[distro],
             "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro],
-        }
+        },
     )
     for distro in DISTROS
 ]
@@ -28,7 +28,7 @@ DISTRO_VERSION = {
         images = [
             ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro
             for arch in ARCHITECTURES
-        ]
+        ],
     )
     for mode in [
         "",
@@ -42,6 +42,11 @@ DISTRO_VERSION = {
         name = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro,
         # Based on //cc so that C extensions work properly.
         base = "//cc" + (mode if mode else ":cc") + "_root_" + arch + "_" + distro,
+        entrypoint = [
+            "/usr/bin/python" + DISTRO_VERSION[distro],
+        ],
+        # Use UTF-8 encoding for file system: match modern Linux
+        env = {"LANG": "C.UTF-8"},
         tars = [
             deb_pkg(arch, distro, "dash"),
             deb_pkg(arch, distro, "libbz2-1.0"),
@@ -70,15 +75,9 @@ DISTRO_VERSION = {
             deb_pkg(arch, distro, "libreadline8"),
             deb_pkg(arch, distro, "libtirpc3"),
             deb_pkg(arch, distro, "python3.9-minimal"),
-
             "ld_so_" + arch + "_cache.tar",
             ":python_aliases_%s" % distro,
         ],
-        entrypoint = [
-            "/usr/bin/python" + DISTRO_VERSION[distro],
-        ],
-        # Use UTF-8 encoding for file system: match modern Linux
-        env = {"LANG": "C.UTF-8"}
     )
     for mode in [
         "",
@@ -95,7 +94,7 @@ DISTRO_VERSION = {
         images = [
             ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + "_" + distro
             for arch in ARCHITECTURES
-        ]
+        ],
     )
     for mode in [
         "",
@@ -170,7 +169,7 @@ mv tmp/ld.so.cache $(OUTS)
         tags = [
             "manual",
             arch,
-        ]
+        ],
     )
     for arch in ARCHITECTURES
 ]
@@ -226,11 +225,10 @@ mv tmp/ld.so.cache $(OUTS)
             arch,
         ],
     )
-
     for user in [
         "root",
         "nonroot",
-    ]    
+    ]
     for arch in ARCHITECTURES
     for distro in DISTROS
 ]

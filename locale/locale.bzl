@@ -1,4 +1,5 @@
 """A rule to unpack minimal locales from the debian package."""
+
 load("@rules_pkg//:providers.bzl", "PackageFilesInfo")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
@@ -11,7 +12,7 @@ def _impl(ctx):
         arguments = [
             ctx.file.deb_file.path,
             locale.path,
-            copyright.path
+            copyright.path,
         ],
         command = """
         set -o pipefail -o errexit -o nounset
@@ -27,10 +28,10 @@ def _impl(ctx):
         PackageFilesInfo(
             dest_src_map = {
                 "/usr/lib/locale/C.UTF-8": locale,
-                "/usr/share/doc/libc-bin/copyright": copyright
+                "/usr/share/doc/libc-bin/copyright": copyright,
             },
             attributes = {"mode": "0644"},
-        )
+        ),
     ]
 
 _locale = rule(
@@ -48,5 +49,5 @@ def locale(name, **kwargs):
     _locale(name = "%s_locale" % name, **kwargs)
     pkg_tar(
         name = name,
-        srcs = ["%s_locale" % name]
+        srcs = ["%s_locale" % name],
     )

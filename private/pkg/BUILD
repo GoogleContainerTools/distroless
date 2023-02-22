@@ -2,32 +2,30 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 package(default_visibility = ["//visibility:public"])
 
-
 go_binary(
     name = "oci_image_spdx",
     srcs = ["oci_image_spdx.go"],
     deps = [
-        "@com_github_spdx_tools_golang//spdx/v2_3",
+        "@com_github_spdx_tools_golang//json",
         "@com_github_spdx_tools_golang//spdx/common",
-        "@com_github_spdx_tools_golang//json"
-    ]
-)   
+        "@com_github_spdx_tools_golang//spdx/v2_3",
+    ],
+)
 
 go_binary(
     name = "debian_spdx",
     srcs = ["debian_spdx.go"],
     deps = [
-        "@com_github_spdx_tools_golang//spdx/v2_3",
+        "@com_github_spdx_tools_golang//json",
         "@com_github_spdx_tools_golang//spdx/common",
-        "@com_github_spdx_tools_golang//json"
-    ]
-)   
-
+        "@com_github_spdx_tools_golang//spdx/v2_3",
+    ],
+)
 
 go_binary(
     name = "dpkg_status",
     srcs = ["dpkg_status.go"],
     deps = [
-        "@com_github_ulikunitz_xz//:xz"
-    ]
-)   
+        "@com_github_ulikunitz_xz//:xz",
+    ],
+)

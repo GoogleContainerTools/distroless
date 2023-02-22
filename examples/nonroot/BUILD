@@ -48,12 +48,10 @@ go_binary(
     pure = "on",
 )
 
-
 pkg_tar(
     name = "user_tar",
-    srcs = [":user"]
+    srcs = [":user"],
 )
-
 
 [oci_image(
     name = "check_user_image_" + distro,

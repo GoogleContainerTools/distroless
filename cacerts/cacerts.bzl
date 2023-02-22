@@ -1,8 +1,9 @@
 """A rule to unpack ca certificates from the debian package."""
+
 load("@rules_pkg//:providers.bzl", "PackageFilesInfo")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
-CMD="""\
+CMD = """\
 #!/usr/bin/env bash
 set -o pipefail -o errexit -o nounset
 
@@ -26,27 +27,27 @@ def _impl(ctx):
         arguments = [
             ctx.file.deb.path,
             ca_certificates.path,
-            copyright.path
+            copyright.path,
         ],
         command = CMD,
-    ) 
+    )
 
     files = {
         "/etc/ssl/certs/ca-certificates.crt": ca_certificates,
-        "/usr/share/doc/ca-certificates/copyright": copyright
+        "/usr/share/doc/ca-certificates/copyright": copyright,
     }
 
     return [
         DefaultInfo(files = depset([ca_certificates, copyright])),
-        PackageFilesInfo(dest_src_map = files)
-    ]   
+        PackageFilesInfo(dest_src_map = files),
+    ]
 
 _cacerts = rule(
     attrs = {
         "deb": attr.label(
             allow_single_file = [".tar.xz"],
             mandatory = True,
-        )
+        ),
     },
     executable = False,
     implementation = _impl,

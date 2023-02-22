@@ -3,7 +3,7 @@
 load("@rules_pkg//:providers.bzl", "PackageFilesInfo")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
-OS_RELEASE_TMPL="""\
+OS_RELEASE_TMPL = """\
 PRETTY_NAME="Distroless"
 NAME="Debian GNU/Linux"
 ID="debian"
@@ -20,14 +20,13 @@ def _impl(ctx):
         os_release,
         content = OS_RELEASE_TMPL.format(
             VERSION = ctx.attr.version,
-            CODENAME = ctx.attr.codename
-        )
+            CODENAME = ctx.attr.codename,
+        ),
     )
     return [
         DefaultInfo(files = depset([os_release])),
-        PackageFilesInfo(dest_src_map = {"/usr/lib/os-release": os_release})
-    ]   
-
+        PackageFilesInfo(dest_src_map = {"/usr/lib/os-release": os_release}),
+    ]
 
 _os_release = rule(
     attrs = {

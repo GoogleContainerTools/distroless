@@ -40,7 +40,8 @@ DISTRO_DEBS = {
             deb_pkg(arch, distro, "libgomp1"),
             deb_pkg(arch, distro, "libstdcpp6"),
         ] + [
-            deb_pkg(arch, distro, deb) for deb in DISTRO_DEBS[distro]
+            deb_pkg(arch, distro, deb)
+            for deb in DISTRO_DEBS[distro]
         ],
     )
     for mode in [

@@ -13,7 +13,6 @@ def deb_file(arch, distro, package):
 def deb_pkg(arch, distro, package):
     return "@{arch}_{distro}_{package}".format(arch = arch, distro = distro, package = package)
 
-
 # Replicate everything for all distroless suffixes
 def distro_components(distro):
     USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
@@ -25,7 +24,7 @@ def distro_components(distro):
             images = [
                 "static_" + user + "_" + arch + "_" + distro
                 for arch in ARCHITECTURES
-            ]
+            ],
         )
 
         oci_image_index(
@@ -33,7 +32,7 @@ def distro_components(distro):
             images = [
                 "base_nossl_" + user + "_" + arch + "_" + distro
                 for arch in ARCHITECTURES
-            ]
+            ],
         )
 
         oci_image_index(
@@ -41,7 +40,7 @@ def distro_components(distro):
             images = [
                 "base_" + user + "_" + arch + "_" + distro
                 for arch in ARCHITECTURES
-            ]
+            ],
         )
 
         oci_image_index(
@@ -49,7 +48,7 @@ def distro_components(distro):
             images = [
                 "debug_" + user + "_" + arch + "_" + distro
                 for arch in ARCHITECTURES
-            ]
+            ],
         )
 
         oci_image_index(
@@ -57,7 +56,7 @@ def distro_components(distro):
             images = [
                 "base_nossl_debug_" + user + "_" + arch + "_" + distro
                 for arch in ARCHITECTURES
-            ]
+            ],
         )
 
         oci_image_index(
@@ -65,10 +64,8 @@ def distro_components(distro):
             images = [
                 "static_debug_" + user + "_" + arch + "_" + distro
                 for arch in ARCHITECTURES
-            ]
+            ],
         )
-
-
 
     for arch in ARCHITECTURES:
         cacerts(
@@ -178,7 +175,7 @@ def distro_components(distro):
             name = "check_certs_image_" + arch + "_" + distro,
             base = "//base:static_root_" + arch + "_" + distro,
             tars = [
-                ":check_certs_" + arch + "_" + distro + "_tar"                
+                ":check_certs_" + arch + "_" + distro + "_tar",
             ],
             visibility = ["//visibility:private"],
         )

@@ -1,4 +1,3 @@
-
 load(":java_image.bzl", _java_image = "java_image")
 load(":cc_image.bzl", _cc_image = "cc_image")
 load(":rust_image.bzl", _rust_image = "rust_image")

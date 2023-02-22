@@ -35,21 +35,23 @@ JAVA_VERSIONS = [
 ]
 
 [
-
     pkg_tar(
         name = "openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
-        deps = [
-            deb_pkg(arch, distro, "openjdk-" + java_version + "-jre-headless")
-        ],
         symlinks = {
-            "/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java"
+            "/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java",
         },
+        deps = [
+            deb_pkg(
+                arch,
+                distro,
+                "openjdk-" + java_version + "-jre-headless",
+            ),
+        ],
     )
     for java_version in JAVA_VERSIONS
     for arch in JAVA_ARCHITECTURES
     for distro in DISTROS
 ]
-
 
 # Base
 [
@@ -58,7 +60,7 @@ JAVA_VERSIONS = [
         images = [
             "java_base" + mode + "_" + user + "_" + arch + "_" + distro
             for arch in JAVA_ARCHITECTURES
-        ]
+        ],
     )
     for mode in [
         "",
@@ -110,7 +112,7 @@ JAVA_VERSIONS = [
         images = [
             "java" + java_version + "_" + user + "_" + arch + "_" + distro
             for arch in JAVA_ARCHITECTURES
-        ]
+        ],
     )
     for java_version in JAVA_VERSIONS
     for distro in DISTROS
@@ -121,9 +123,6 @@ JAVA_VERSIONS = [
     oci_image(
         name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
         base = ":java_base_" + user + "_" + arch + "_" + distro,
-        tars = [
-            ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro
-        ],
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
         entrypoint = [
@@ -131,8 +130,11 @@ JAVA_VERSIONS = [
             "-jar",
         ],
         env = {
-            "JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])
+            "JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"]),
         },
+        tars = [
+            ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
+        ],
     )
     for java_version in JAVA_VERSIONS
     for arch in JAVA_ARCHITECTURES
@@ -147,21 +149,18 @@ JAVA_VERSIONS = [
         images = [
             "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro
             for arch in JAVA_ARCHITECTURES
-        ]
+        ],
     )
     for java_version in JAVA_VERSIONS
     for distro in DISTROS
     for user in USERS
 ]
+
 [
     oci_image(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
         architecture = arch,
         base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
-        tars = [
-            ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
-            deb_pkg(arch, distro, "openjdk-" + java_version + "-jdk-headless"),
-        ],
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
         entrypoint = [
@@ -169,8 +168,16 @@ JAVA_VERSIONS = [
             "-jar",
         ],
         env = {
-            "JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"])
+            "JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"]),
         },
+        tars = [
+            ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
+            deb_pkg(
+                arch,
+                distro,
+                "openjdk-" + java_version + "-jdk-headless",
+            ),
+        ],
     )
     for user in USERS
     for java_version in JAVA_VERSIONS

@@ -100,4 +100,3 @@ pkg_tar(
 )
 
 [distro_components(distro) for distro in DISTROS]
-

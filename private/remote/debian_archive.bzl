@@ -51,11 +51,11 @@ merge_providers(
 
 _attrs = {
     "package_name": attr.string(mandatory = True),
-    "urls": attr.string_list(mandatory=True),
-    "sha256": attr.string(mandatory=True),
+    "urls": attr.string_list(mandatory = True),
+    "sha256": attr.string(mandatory = True),
 }
 
-SOURCE_BUILD_TMPL="""\
+SOURCE_BUILD_TMPL = """\
 filegroup(
 	name = "control",
 	srcs = ["control.tar.xz"],
@@ -73,37 +73,35 @@ def _debian_source_impl(rctx):
     rctx.download_and_extract(
         url = rctx.attr.urls,
         sha256 = rctx.attr.sha256,
-        type = "deb"
+        type = "deb",
     )
     rctx.file(
-        "BUILD.bazel", 
-        content = SOURCE_BUILD_TMPL
+        "BUILD.bazel",
+        content = SOURCE_BUILD_TMPL,
     )
 
 _debian_sources = repository_rule(
     implementation = _debian_source_impl,
-    attrs = _attrs
+    attrs = _attrs,
 )
 
 def _debian_archive_impl(rctx):
     rctx.file(
-        "BUILD.bazel", 
+        "BUILD.bazel",
         content = BUILD_TMPL.format(
             name = rctx.attr.name,
             package_name = rctx.attr.package_name,
             spdx_id = rctx.attr.name,
             urls = ",".join(['"%s"' % url for url in rctx.attr.urls]),
             sha256 = rctx.attr.sha256,
-        )
+        ),
     )
 
 _debian_archive = repository_rule(
     implementation = _debian_archive_impl,
-    attrs = _attrs
+    attrs = _attrs,
 )
 
 def debian_archive(name, **kwargs):
     _debian_sources(name = "{}_sources".format(name), **kwargs)
     _debian_archive(name = name, **kwargs)
-
-

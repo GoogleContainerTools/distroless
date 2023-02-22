@@ -15,12 +15,11 @@ def _impl(ctx):
 
     return DefaultInfo(files = depset([output]))
 
-
 dpkg_status = rule(
     implementation = _impl,
     attrs = {
         "control": attr.label(allow_single_file = [".tar", ".tar.xz", "tar.gz"]),
         "package_name": attr.string(mandatory = True),
-        "_generator": attr.label(default = ":dpkg_status", executable = True, allow_single_file = True, cfg = "exec")
-    }
+        "_generator": attr.label(default = ":dpkg_status", executable = True, allow_single_file = True, cfg = "exec"),
+    },
 )

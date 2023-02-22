@@ -27,7 +27,7 @@ STATIC |= {
 STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static:" + tag_base: "//base:" + label + "_" + user + "_debian11"
     for (tag_base, label, user) in STATIC_VARIANTS
-}   
+}
 
 STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
@@ -43,7 +43,7 @@ STATIC |= {
     for distro in DISTROS
 }
 
-## BASE 
+## BASE
 BASE_VARIANTS = [
     ("latest", "base", "root"),
     ("nonroot", "base", "nonroot"),
@@ -194,13 +194,13 @@ PYTHON3 |= {
     for distro in LANGUAGE_DISTROS
 }
 
-
 ## NODEJS
 NODEJS_VERSIONS = [
     "14",
     "16",
     "18",
 ]
+
 NODEJS_VARIATIONS = [
     ("latest", "", "root"),
     ("nonroot", "", "nonroot"),
@@ -329,6 +329,7 @@ JAVA11_VARIATIONS = [
     ("debug", "debug_root"),
     ("debug-nonroot", "debug_nonroot"),
 ]
+
 JAVA11 = {
     "{REGISTRY}/{PROJECT_ID}/java11:latest": "//java:java11_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java11:nonroot": "//java:java11_nonroot_amd64_debian11",
@@ -388,20 +389,30 @@ JETTY = {
 }
 
 ALL = {}
+
 ALL |= STATIC
+
 ALL |= BASE
+
 ALL |= BASE_NOSSL
+
 ALL |= CC
+
 ALL |= PYTHON3
+
 ALL |= NODEJS
+
 ALL |= LEGACY_NODEJS_TAGS
+
 ALL |= JAVA_BASE
+
 ALL |= JAVA11
+
 ALL |= JAVA17
+
 ALL |= JETTY
 
 sign_and_push_all(
     name = "sign_and_push",
-    images = ALL
+    images = ALL,
 )
-

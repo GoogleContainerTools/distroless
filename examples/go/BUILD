@@ -6,11 +6,10 @@ load("//private/oci:defs.bzl", "go_image")
 
 package(default_visibility = ["//visibility:public"])
 
-
 go_image(
     name = "go_example",
-    base = "//base:base_root_amd64_debian11",
     srcs = ["main.go"],
+    base = "//base:base_root_amd64_debian11",
 )
 
 # Run
@@ -19,6 +18,6 @@ go_image(
 # podman run localhost/distroless/examples/go:latest
 oci_tarball(
     name = "tarball",
+    image = ":go_example",
     repotags = ["distroless/examples/go:latest"],
-    image = ":go_example"
 )

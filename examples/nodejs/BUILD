@@ -14,15 +14,15 @@ package(default_visibility = ["//visibility:public"])
 pkg_tar(
     name = "hello_tar",
     srcs = [
-        "hello.js"
-    ]
+        "hello.js",
+    ],
 )
 
 pkg_tar(
     name = "hello_http_tar",
     srcs = [
-        "hello_http.js"
-    ]
+        "hello_http.js",
+    ],
 )
 
 [
@@ -30,7 +30,7 @@ pkg_tar(
         name = "hello_" + user + "_" + arch + "_" + distro,
         base = "//nodejs:nodejs16_" + user + "_" + arch + "_" + distro,
         cmd = ["hello.js"],
-        tars = [":hello_tar"]
+        tars = [":hello_tar"],
     )
     for user in [
         "root",

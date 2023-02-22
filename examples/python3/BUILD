@@ -6,17 +6,20 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 pkg_tar(
     name = "hello_py",
-    srcs = ["hello.py"]
+    srcs = ["hello.py"],
 )
 
 # This example runs a python program that walks the filesystem under "/etc" and prints every filename.
 oci_image(
     name = "hello",
     base = "//experimental/python3:python3_root_arm64_debian11",
-    cmd = ["hello.py", "/etc"],
+    cmd = [
+        "hello.py",
+        "/etc",
+    ],
     tars = [
-        ":hello_py"
-    ]
+        ":hello_py",
+    ],
 )
 
 # Run
@@ -24,6 +27,6 @@ oci_image(
 # podman run localhost/distroless/examples/py:latest
 oci_tarball(
     name = "tarball",
+    image = ":hello",
     repotags = ["distroless/examples/py:latest"],
-    image = ":hello"
 )

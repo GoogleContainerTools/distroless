@@ -72,31 +72,30 @@ def _impl(rctx):
         substitutions = {
             "{{VERSION}}": rctx.attr.version,
             "{{ARCHITECTURE}}": rctx.attr.architecture,
-            "{{SHA256}}": rctx.attr.sha256
-        }
+            "{{SHA256}}": rctx.attr.sha256,
+        },
     )
     rctx.file(
-        "BUILD.bazel", 
+        "BUILD.bazel",
         content = BUILD_TMPL.format(
             name = rctx.attr.name,
             package_name = rctx.attr.package_name,
             spdx_id = rctx.attr.name,
             urls = ",".join(['"%s"' % url for url in rctx.attr.urls]),
             sha256 = rctx.attr.sha256,
-        )
+        ),
     )
 
 node_archive = repository_rule(
     implementation = _impl,
     attrs = {
-        "urls": attr.string_list(mandatory=True),
-        "sha256": attr.string(mandatory=True),
+        "urls": attr.string_list(mandatory = True),
+        "sha256": attr.string(mandatory = True),
         "type": attr.string(default = ".tar.gz"),
         "strip_prefix": attr.string(),
-
         "package_name": attr.string(default = "nodejs"),
         "version": attr.string(mandatory = True),
         "architecture": attr.string(mandatory = True),
-        "control": attr.label()
+        "control": attr.label(),
     },
 )

@@ -1,4 +1,5 @@
 "an aspect rule that generates spdx by collecting spdx output group"
+
 def _image_aspect_impl(target, ctx):
     output = ctx.actions.declare_file("%s.spdx.json" % target.label.name)
 
@@ -13,8 +14,7 @@ def _image_aspect_impl(target, ctx):
             output_group_info = ctx.rule.attr.base[OutputGroupInfo]
             if output_group_info and "spdx" in output_group_info:
                 input_depsets.append(output_group_info.spdx)
-                args.add_all(output_group_info.spdx, format_each="--contains=%s")
-
+                args.add_all(output_group_info.spdx, format_each = "--contains=%s")
 
         for src in ctx.rule.attr.tars:
             if OutputGroupInfo in src and "spdx" in src[OutputGroupInfo]:
@@ -22,11 +22,10 @@ def _image_aspect_impl(target, ctx):
                 args.add_all(src[OutputGroupInfo].spdx)
 
     elif ctx.rule.kind == "oci_image_index":
-
         for image in ctx.rule.attr.images:
             if OutputGroupInfo in image and "spdx" in image[OutputGroupInfo]:
                 input_depsets.append(image[OutputGroupInfo].spdx)
-                args.add_all(image[OutputGroupInfo].spdx, format_each="--contains=%s")
+                args.add_all(image[OutputGroupInfo].spdx, format_each = "--contains=%s")
 
     ctx.actions.run(
         inputs = depset(transitive = input_depsets),
@@ -44,7 +43,7 @@ def _image_aspect_impl(target, ctx):
 image_aspect = aspect(
     implementation = _image_aspect_impl,
     attr_aspects = ["base", "images"],
-    attrs = { "_generator": attr.label(default = ":oci_image_spdx", executable = True, allow_single_file = True, cfg = "exec") },
+    attrs = {"_generator": attr.label(default = ":oci_image_spdx", executable = True, allow_single_file = True, cfg = "exec")},
 )
 
 def _oci_image_spdx_impl(ctx):

@@ -10,7 +10,7 @@ def repositories():
         urls = ["https://nodejs.org/dist/v14.21.3/node-v14.21.3-linux-x64.tar.gz"],
         version = "14.21.2",
         architecture = "amd64",
-        control = "//nodejs:control"
+        control = "//nodejs:control",
     )
 
     node_archive(
@@ -20,7 +20,7 @@ def repositories():
         urls = ["https://nodejs.org/dist/v16.19.1/node-v16.19.1-linux-x64.tar.gz"],
         version = "16.19.1",
         architecture = "amd64",
-        control = "//nodejs:control"
+        control = "//nodejs:control",
     )
 
     node_archive(
@@ -30,7 +30,7 @@ def repositories():
         urls = ["https://nodejs.org/dist/v18.14.1/node-v18.14.1-linux-x64.tar.gz"],
         version = "18.14.1",
         architecture = "amd64",
-        control = "//nodejs:control"
+        control = "//nodejs:control",
     )
 
     node_archive(
@@ -40,7 +40,7 @@ def repositories():
         urls = ["https://nodejs.org/dist/v14.21.3/node-v14.21.3-linux-arm64.tar.gz"],
         version = "14.21.3",
         architecture = "arm64",
-        control = "//nodejs:control"
+        control = "//nodejs:control",
     )
 
     node_archive(
@@ -50,7 +50,7 @@ def repositories():
         urls = ["https://nodejs.org/dist/v16.19.1/node-v16.19.1-linux-arm64.tar.gz"],
         version = "16.19.1",
         architecture = "arm64",
-        control = "//nodejs:control"
+        control = "//nodejs:control",
     )
 
     node_archive(
@@ -60,5 +60,5 @@ def repositories():
         urls = ["https://nodejs.org/dist/v18.14.1/node-v18.14.1-linux-arm64.tar.gz"],
         version = "18.14.1",
         architecture = "arm64",
-        control = "//nodejs:control"
+        control = "//nodejs:control",
     )

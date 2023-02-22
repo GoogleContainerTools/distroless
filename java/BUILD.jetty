@@ -6,8 +6,8 @@ pkg_tar(
     name = "jetty",
     srcs = glob(
         include = ["output/**/*"],
-        exclude = ["output/demo-base/**"]
+        exclude = ["output/demo-base/**"],
     ),
     package_dir = "/jetty",
-    strip_prefix = "external/jetty/output"
+    strip_prefix = "external/jetty/output",
 )
