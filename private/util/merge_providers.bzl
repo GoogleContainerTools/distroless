@@ -1,4 +1,4 @@
-"an utility rule that merges DefaultInfo and OutputGroupInfo providers"
+"a utility rule that merges DefaultInfo and OutputGroupInfo providers"
 
 SKIP = "_hidden_top_level_INTERNAL_"
 
