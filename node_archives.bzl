@@ -8,7 +8,7 @@ def repositories():
         sha256 = "bef2685d9469058c1229cc7789e171861044fe3f70316ec744e9bf3609cd45ed",
         strip_prefix = "node-v14.21.3-linux-x64/",
         urls = ["https://nodejs.org/dist/v14.21.3/node-v14.21.3-linux-x64.tar.gz"],
-        version = "14.21.2",
+        version = "14.21.3",
         architecture = "amd64",
         control = "//nodejs:control",
     )
