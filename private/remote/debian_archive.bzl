@@ -6,14 +6,14 @@ load("@distroless//private/util:merge_providers.bzl", "merge_providers")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 alias(
-	name = "control",
-	actual = "@{name}_sources//:control",
-	visibility = ["//visibility:public"]
+    name = "control",
+    actual = "@{name}_sources//:control",
+    visibility = ["//visibility:public"]
 )
 alias(
-	name = "data",
-	actual = "@{name}_sources//:data",
-	visibility = ["//visibility:public"]
+    name = "data",
+    actual = "@{name}_sources//:data",
+    visibility = ["//visibility:public"]
 )
 
 dpkg_status(
@@ -57,14 +57,14 @@ _attrs = {
 
 SOURCE_BUILD_TMPL = """\
 filegroup(
-	name = "control",
-	srcs = ["control.tar.xz"],
-	visibility = ["//visibility:public"]
+    name = "control",
+    srcs = ["control.tar.xz"],
+    visibility = ["//visibility:public"]
 )
 filegroup(
-	name = "data",
-	srcs = ["data.tar.xz"],
-	visibility = ["//visibility:public"]
+    name = "data",
+    srcs = ["data.tar.xz"],
+    visibility = ["//visibility:public"]
 )
 """
 

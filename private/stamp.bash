@@ -6,6 +6,7 @@ if [ -z "${PROJECT_ID:-}" ]; then
   if which gcloud > /dev/null; then
     PROJECT_ID="$(gcloud config get-value core/project)"
   else
+    # some registries don't allow uppercase chars. we'll use lowercase ones to get meaningful error messages.
     PROJECT_ID="no-project"
   fi
 fi
