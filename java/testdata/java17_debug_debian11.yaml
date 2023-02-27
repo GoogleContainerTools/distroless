@@ -23,6 +23,6 @@ fileExistenceTests:
     path: "/bin/sh"
     shouldExist: false
 metadataTest:
-  env:
+  envVars:
     - key: 'JAVA_VERSION'
       value: '17.0.6'

@@ -4,6 +4,6 @@ commandTests:
     # This is a bit ugly because structure tests can't test the default entrypoint yet.
     command: ["/usr/bin/java",
               "-cp",
-              "/app/distroless/java/check_certs_java11_nonroot_debian11.binary.jar:/app/distroless/java/check_certs_java11_nonroot_debian11.binary",
+              "/check_certs_java11_nonroot_debian11_binary.jar:/check_certs_java11_nonroot_debian11_binary",
               "testdata.CheckCerts"]
     expectedOutput: ['Successfully connected: 200']

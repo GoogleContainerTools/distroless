@@ -2,9 +2,7 @@
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("@io_bazel_rules_docker//go:image.bzl", "go_image")
-load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_file")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 load("//base:distro.bzl", "DISTROS")
@@ -32,7 +30,7 @@ pkg_tar(
 )
 
 # Include it in our image as a tar.
-container_image(
+oci_image(
     name = "passwd_image",
     base = "//base:base_root_amd64_debian11",
     tars = [":passwd_tar"],
@@ -50,17 +48,22 @@ go_binary(
     pure = "on",
 )
 
-[container_image(
+pkg_tar(
+    name = "user_tar",
+    srcs = [":user"],
+)
+
+[oci_image(
     name = "check_user_image_" + distro,
     base = ":passwd_image",
-    files = [":user"],
+    tars = [":user_tar"],
     visibility = ["//visibility:private"],
 ) for distro in DISTROS]
 
 # Test to verify this works :)
-[container_test(
+[structure_test(
     name = "check_user_" + distro + "_test",
-    configs = ["testdata/user.yaml"],
+    config = ["testdata/user.yaml"],
     image = ":check_user_image_" + distro,
     tags = [
         "amd64",

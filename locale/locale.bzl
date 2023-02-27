@@ -1,49 +1,53 @@
 """A rule to unpack minimal locales from the debian package."""
 
-def _impl(ctx):
-    ctx.actions.run_shell(
-        inputs = [ctx.file.deb],
-        outputs = [ctx.outputs.tar],
-        tools = [] + ctx.files._build_tar + ctx.files._dpkg_extract,
-        arguments = [
-            ctx.file.deb.path,
-            ctx.outputs.tar.path,
-        ],
-        env = {
-            "EXTRACT_DEB": ctx.executable._dpkg_extract.path,
-            "BUILD_TAR": ctx.executable._build_tar.path,
-        },
-        command = """
-            $EXTRACT_DEB "$1" ./usr/lib/locale/C.UTF-8 ./usr/share/doc/libc-bin/copyright
+load("@rules_pkg//:providers.bzl", "PackageFilesInfo")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
-            $BUILD_TAR  --output "$2" \
-                        --mode 0644 \
-                        --file ./usr/share/doc/libc-bin/copyright=./usr/share/doc/libc-bin/copyright \
-                        --file ./usr/lib/locale/C.UTF-8=./usr/lib/locale/C.UTF-8
+def _impl(ctx):
+    locale = ctx.actions.declare_directory("%s/locale" % ctx.label.name)
+    copyright = ctx.actions.declare_file("%s/copyright" % ctx.label.name)
+    ctx.actions.run_shell(
+        inputs = [ctx.file.deb_file],
+        outputs = [locale, copyright],
+        arguments = [
+            ctx.file.deb_file.path,
+            locale.path,
+            copyright.path,
+        ],
+        command = """
+        set -o pipefail -o errexit -o nounset
+        tmp=$(mktemp -d)
+        tar -xf "$1" -C "$tmp" ./usr/lib/locale/C.UTF-8 ./usr/share/doc/libc-bin/copyright
+        cp -r "$tmp/usr/lib/locale/C.UTF-8/." $2
+        mv "$tmp/usr/share/doc/libc-bin/copyright" $3
         """,
     )
 
-locale = rule(
+    return [
+        DefaultInfo(files = depset([locale, copyright])),
+        PackageFilesInfo(
+            dest_src_map = {
+                "/usr/lib/locale/C.UTF-8": locale,
+                "/usr/share/doc/libc-bin/copyright": copyright,
+            },
+            attributes = {"mode": "0644"},
+        ),
+    ]
+
+_locale = rule(
     attrs = {
-        "deb": attr.label(
-            allow_single_file = [".deb"],
+        "deb_file": attr.label(
+            allow_single_file = True,
             mandatory = True,
-        ),
-        # Implicit dependencies.
-        "_build_tar": attr.label(
-            default = Label("//build_tar"),
-            cfg = "host",
-            executable = True,
-        ),
-        "_dpkg_extract": attr.label(
-            default = Label("//package_manager:dpkg_extract"),
-            cfg = "host",
-            executable = True,
         ),
     },
     executable = False,
-    outputs = {
-        "tar": "%{name}.tar",
-    },
     implementation = _impl,
 )
+
+def locale(name, **kwargs):
+    _locale(name = "%s_locale" % name, **kwargs)
+    pkg_tar(
+        name = name,
+        srcs = ["%s_locale" % name],
+    )
