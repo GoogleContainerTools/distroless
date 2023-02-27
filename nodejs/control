@@ -1,7 +1,7 @@
 Package: nodejs
 Version: {{VERSION}}
 Architecture: {{ARCHITECTURE}}
-Maintainer: Distroless <https://github.com/GoogleContainerTools/distroless>
+Maintainer: OpenJS Foundation <https://openjsf.org/>
 Homepage: https://nodejs.org
 SHA256: {{SHA256}}
 Description: Node.js event-based server-side javascript engine

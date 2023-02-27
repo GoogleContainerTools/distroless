@@ -11,8 +11,8 @@ func Get(url string) (*_http.Response, error) {
 do:
 	resp, err := _http.Get(url)
 	if err == nil {
+		fmt.Printf("URL: %s, Status: %s\n", url, resp.Status)
 		if resp.StatusCode == _http.StatusGatewayTimeout && retry < 10 {
-			fmt.Printf("URL: %s, Status: %s\n", url, resp.Status)
 			fmt.Printf("Retrying: %s\n", url)
 			retry += 1
 			time.Sleep(time.Second * time.Duration(retry))
