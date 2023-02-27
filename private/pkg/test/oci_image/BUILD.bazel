@@ -5,11 +5,11 @@ load("//base:base.bzl", "deb_pkg")
 
 oci_image(
     name = "image_arm64",
-    tars = [
-        deb_pkg("arm64", "debian11", "base-files")
-    ],
-    os = "linux",
     architecture = "arm64",
+    os = "linux",
+    tars = [
+        deb_pkg("arm64", "debian11", "base-files"),
+    ],
 )
 
 oci_image_spdx(
@@ -19,11 +19,11 @@ oci_image_spdx(
 
 oci_image(
     name = "image_amd64",
-    tars = [
-        deb_pkg("amd64", "debian11", "netbase")
-    ],
-    os = "linux",
     architecture = "amd64",
+    os = "linux",
+    tars = [
+        deb_pkg("amd64", "debian11", "netbase"),
+    ],
 )
 
 oci_image_spdx(
@@ -35,15 +35,14 @@ oci_image_index(
     name = "fat_image",
     images = [
         ":image_arm64",
-        ":image_amd64"
-    ]
+        ":image_amd64",
+    ],
 )
 
 oci_image_spdx(
     name = "fat_image_sbom",
     image = ":fat_image",
 )
-
 
 write_source_files(
     name = "test_sboms",
