@@ -12,48 +12,11 @@ artifacts:
 steps:
   - name: gcr.io/cloud-builders/bazel@sha256:e82204cf0715edb80e4957fa55f944b9dd06b0b1c4eb4b0ca0022de7839726f6
     env:
-      - PROJECT_ID=${PROJECT_ID}
+      - PROJECT_ID=${PROJECT_ID}/testing
       - COMMIT_SHA=${COMMIT_SHA}
       - REGISTRY=gcr.io
       - REMOTE_CACHE_GCS=${_REMOTE_CACHE_GCS_}
       - KEY=${_KMS_VAL}
+      - KEYLESS=keyless@${PROJECT_ID}.iam.gserviceaccount.com
     entrypoint: bash
     args: [".cloudbuild/release.sh"]
-    
-  - name: docker
-    env:
-    - PROJECT_ID=${PROJECT_ID}
-    - COMMIT_SHA=${COMMIT_SHA}
-    - REGISTRY=gcr.io
-    entrypoint: .cloudbuild/cloudbuild_docker.sh
-
-  - name: ubuntu
-    entrypoint: .cloudbuild/cloudbuild_jq.sh
-
-  - name: gcr.io/projectsigstore/cosign:v1.13.1@sha256:fd5b09be23ef1027e1bdd490ce78dcc65d2b15902e1f4ba8e04f3b4019cc1057
-    env:
-    - PROJECT_ID=${PROJECT_ID}
-    - COMMIT_SHA=${COMMIT_SHA}
-    - REGISTRY=gcr.io
-    # Workaround for: https://github.com/GoogleContainerTools/distroless/issues/914
-    # /tmp has permissions 777
-    - TUF_ROOT=/tmp
-    entrypoint: sh
-    args:
-    - -c
-    - .cloudbuild/cloudbuild_cosign.sh --key $_KMS_VAL
-
-  - name: gcr.io/projectsigstore/cosign:v1.13.1@sha256:fd5b09be23ef1027e1bdd490ce78dcc65d2b15902e1f4ba8e04f3b4019cc1057
-    env:
-    - PROJECT_ID=${PROJECT_ID}
-    - COMMIT_SHA=${COMMIT_SHA}
-    - REGISTRY=gcr.io
-    # Workaround for: https://github.com/GoogleContainerTools/distroless/issues/914
-    # /tmp has permissions 777
-    - TUF_ROOT=/tmp
-    - COSIGN_EXPERIMENTAL=true
-    - GOOGLE_SERVICE_ACCOUNT_NAME=keyless@${PROJECT_ID}.iam.gserviceaccount.com
-    entrypoint: sh
-    args:
-    - -c
-    - .cloudbuild/cloudbuild_cosign.sh

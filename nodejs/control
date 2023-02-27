@@ -1,0 +1,16 @@
+Package: nodejs
+Version: {{VERSION}}
+Architecture: {{ARCHITECTURE}}
+Maintainer: OpenJS Foundation <https://openjsf.org/>
+Homepage: https://nodejs.org
+SHA256: {{SHA256}}
+Description: Node.js event-based server-side javascript engine
+ Node.js is similar in design to and influenced by systems like
+ Ruby's Event Machine or Python's Twisted.
+ .
+ It takes the event model a bit further - it presents the event
+ loop as a language construct instead of as a library.
+ .
+ Node.js is bundled with several useful libraries to handle server tasks :
+ System, Events, Standard I/O, Modules, Timers, Child Processes, POSIX,
+ HTTP, Multipart Parsing, TCP, DNS, Assert, Path, URL, Query Strings.

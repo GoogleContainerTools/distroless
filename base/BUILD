@@ -1,11 +1,10 @@
-package(default_visibility = ["//visibility:public"])
-
 load(":base.bzl", "NONROOT", "distro_components")
 load(":distro.bzl", "DISTROS")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
+
+package(default_visibility = ["//visibility:public"])
 
 NOBODY = 65534
 
