@@ -1,0 +1,55 @@
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
+load("//base:base.bzl", "deb_pkg")
+
+oci_image(
+    name = "image_arm64",
+    tars = [
+        deb_pkg("arm64", "debian11", "base-files")
+    ],
+    os = "linux",
+    architecture = "arm64",
+)
+
+oci_image_spdx(
+    name = "image_arm64_sbom",
+    image = ":image_arm64",
+)
+
+oci_image(
+    name = "image_amd64",
+    tars = [
+        deb_pkg("amd64", "debian11", "netbase")
+    ],
+    os = "linux",
+    architecture = "amd64",
+)
+
+oci_image_spdx(
+    name = "image_amd64_sbom",
+    image = ":image_amd64",
+)
+
+oci_image_index(
+    name = "fat_image",
+    images = [
+        ":image_arm64",
+        ":image_amd64"
+    ]
+)
+
+oci_image_spdx(
+    name = "fat_image_sbom",
+    image = ":fat_image",
+)
+
+
+write_source_files(
+    name = "test_sboms",
+    files = {
+        "fat_image_sbom.spdx.json": ":fat_image_sbom",
+        "image_arm64.spdx.json": ":image_arm64_sbom",
+        "image_amd64.spdx.json": ":image_amd64_sbom",
+    },
+)

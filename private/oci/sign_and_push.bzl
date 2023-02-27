@@ -10,7 +10,7 @@ tag="$(stamp "{TAG}")"
 
 "$(realpath {ATTACH_CMD})" --repository "$repository"
 "$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --attachment sbom
-[[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" COSIGN_EXPERIMENTAL=true --repository "$repository"
+[[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" COSIGN_EXPERIMENTAL=true "$(realpath {SIGN_CMD})" --repository "$repository"
 "$(realpath {PUSH_CMD})" --repository "$repository" --tag "$tag"
 """
 
