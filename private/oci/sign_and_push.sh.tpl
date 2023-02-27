@@ -2,12 +2,17 @@
 set -o pipefail -o errexit -o nounset
 
 KEY="${KEY:-}"
+KEYLESS="${KEYLESS:-}"
 EXPORT=""
 
 while (( $# > 0 )); do
   case $1 in
     (--key)
       KEY="$2"
+      shift
+      shift;;
+    (--keyless)
+      KEYLESS="$2"
       shift
       shift;;
     (--export)

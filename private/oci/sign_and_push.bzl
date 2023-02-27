@@ -5,9 +5,12 @@ load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
 PUSH_AND_SIGN_CMD = """\
 repository="$(stamp "{REPOSITORY}")"
 tag="$(stamp "{TAG}")"
+
 [[ -n $EXPORT ]] && echo "$repository:$tag" >> $EXPORT
+
 "$(realpath {ATTACH_CMD})" --repository "$repository"
 "$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --attachment sbom
+[[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" COSIGN_EXPERIMENTAL=true --repository "$repository"
 "$(realpath {PUSH_CMD})" --repository "$repository" --tag "$tag"
 """
 

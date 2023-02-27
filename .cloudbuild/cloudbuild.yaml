@@ -17,5 +17,6 @@ steps:
       - REGISTRY=gcr.io
       - REMOTE_CACHE_GCS=${_REMOTE_CACHE_GCS_}
       - KEY=${_KMS_VAL}
+      - KEYLESS=keyless@${PROJECT_ID}.iam.gserviceaccount.com
     entrypoint: bash
     args: [".cloudbuild/release.sh"]
