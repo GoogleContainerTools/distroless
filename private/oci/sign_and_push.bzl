@@ -18,7 +18,7 @@ tag="$(stamp "{TAG}")"
 "$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --attachment sbom --tlog-upload=false
 
 # Sign keyless by using an identity
-[[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" COSIGN_EXPERIMENTAL=true "$(realpath {SIGN_CMD})" --repository "$repository"
+[[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" COSIGN_EXPERIMENTAL=true "$(realpath {SIGN_CMD})" --repository "$repository" --yes
 
 # Tag the image
 "$(realpath {PUSH_CMD})" --repository "$repository" --tag "$tag"
