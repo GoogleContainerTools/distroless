@@ -1,26 +1,18 @@
 workspace(name = "distroless")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 # rules_oci setup
-# local_repository(
-#     name = "contrib_rules_oci",
-#     path = "../rules/rules_oci"
-# )
-git_repository(
+http_archive(
     name = "contrib_rules_oci",
-    commit = "7307ec65fb3877d0ff117391c9c3146bca64ced6",
-    remote = "https://github.com/bazel-contrib/rules_oci.git",
-    shallow_since = "1673116766 +0300",
+    strip_prefix = "rules_oci-91327d960263fac3c038c1900bb2ae398a4122f1",
+    url = "https://github.com/bazel-contrib/rules_oci/archive/91327d960263fac3c038c1900bb2ae398a4122f1.tar.gz",
 )
 
 load("@contrib_rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
-
 rules_oci_dependencies()
 
 load("@contrib_rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "oci_register_toolchains")
-
 oci_register_toolchains(
     name = "oci",
     crane_version = LATEST_CRANE_VERSION,
@@ -28,9 +20,9 @@ oci_register_toolchains(
 )
 
 load("@contrib_rules_oci//cosign:repositories.bzl", "cosign_register_toolchains")
-
 cosign_register_toolchains(name = "oci_cosign")
 
+# platforms
 http_archive(
     name = "platforms",
     sha256 = "5308fc1d8865406a49427ba24a9ab53087f17f5266a7aabbfc28823f3916e1ca",
