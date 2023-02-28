@@ -8,9 +8,19 @@ tag="$(stamp "{TAG}")"
 
 [[ -n $EXPORT ]] && echo "$repository:$tag" >> $EXPORT
 
+# Push the image by its digest
+"$(realpath {PUSH_CMD})" --repository "$repository"
+
+# Attach the sbom
 "$(realpath {ATTACH_CMD})" --repository "$repository"
-"$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --attachment sbom
+
+# Sign the image and the SBOM
+"$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --attachment sbom --tlog-upload=false
+
+# Sign keyless by using an identity
 [[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" COSIGN_EXPERIMENTAL=true "$(realpath {SIGN_CMD})" --repository "$repository"
+
+# Tag the image
 "$(realpath {PUSH_CMD})" --repository "$repository" --tag "$tag"
 """
 
