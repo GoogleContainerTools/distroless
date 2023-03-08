@@ -5,14 +5,17 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # rules_oci setup
 http_archive(
     name = "contrib_rules_oci",
-    strip_prefix = "rules_oci-91327d960263fac3c038c1900bb2ae398a4122f1",
-    url = "https://github.com/bazel-contrib/rules_oci/archive/91327d960263fac3c038c1900bb2ae398a4122f1.tar.gz",
+    sha256 = "d6bdc1767d326c67b4cbdc79abfed00c8a4ca14b92adea9faf3db4710d514596",
+    strip_prefix = "rules_oci-0.3.2",
+    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v0.3.2/rules_oci-v0.3.2.tar.gz",
 )
 
 load("@contrib_rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
+
 rules_oci_dependencies()
 
 load("@contrib_rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "oci_register_toolchains")
+
 oci_register_toolchains(
     name = "oci",
     crane_version = LATEST_CRANE_VERSION,
@@ -20,6 +23,7 @@ oci_register_toolchains(
 )
 
 load("@contrib_rules_oci//cosign:repositories.bzl", "cosign_register_toolchains")
+
 cosign_register_toolchains(name = "oci_cosign")
 
 # platforms
