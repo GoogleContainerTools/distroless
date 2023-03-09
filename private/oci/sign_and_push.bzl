@@ -1,5 +1,5 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_push")
-load("@contrib_rules_oci//cosign:defs.bzl", "cosign_attach", "cosign_sign")
+load("@contrib_rules_oci//cosign:defs.bzl", "cosign_attest", "cosign_sign")
 load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
 
 PUSH_AND_SIGN_CMD = """\
@@ -11,11 +11,11 @@ tag="$(stamp "{TAG}")"
 # Push the image by its digest
 "$(realpath {PUSH_CMD})" --repository "$repository"
 
-# Attach the sbom
-"$(realpath {ATTACH_CMD})" --repository "$repository"
+# Attest the sbom
+"$(realpath {ATTEST_CMD})" --repository "$repository" --key "$KEY" --tlog-upload=false
 
-# Sign the image and the SBOM
-"$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --attachment sbom --tlog-upload=false
+# Sign the image
+"$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --tlog-upload=false
 
 # Sign keyless by using an identity
 [[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" COSIGN_EXPERIMENTAL=true "$(realpath {SIGN_CMD})" --repository "$repository" --yes
@@ -34,7 +34,7 @@ def _sign_and_push_impl(ctx):
         repository_and_tag = url.split(":")
         cmds.append(
             PUSH_AND_SIGN_CMD.format(
-                ATTACH_CMD = files[0].short_path,
+                ATTEST_CMD = files[0].short_path,
                 SIGN_CMD = files[1].short_path,
                 PUSH_CMD = files[2].short_path,
                 REPOSITORY = repository_and_tag[0],
@@ -82,11 +82,11 @@ def sign_and_push_all(name, images):
             name = "{}_{}_sbom".format(name, idx),
             image = image,
         )
-        cosign_attach(
-            name = "{}_{}_attach".format(name, idx),
+        cosign_attest(
+            name = "{}_{}_attest".format(name, idx),
             image = image,
-            type = "sbom",
-            attachment = "{}_{}_sbom".format(name, idx),
+            type = "spdx",
+            predicate = "{}_{}_sbom".format(name, idx),
             repository = "repository.default.local",
         )
         cosign_sign(
@@ -97,7 +97,7 @@ def sign_and_push_all(name, images):
         native.filegroup(
             name = "{}_{}".format(name, idx),
             srcs = [
-                ":{}_{}_attach".format(name, idx),
+                ":{}_{}_attest".format(name, idx),
                 ":{}_{}_sign".format(name, idx),
                 ":{}_{}_push".format(name, idx),
             ],
