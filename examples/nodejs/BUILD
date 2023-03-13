@@ -1,21 +1,36 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-package(default_visibility = ["//visibility:public"])
-
-load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 
+package(default_visibility = ["//visibility:public"])
+
 # These examples are adapted from:
 # https://howtonode.org/hello-node
+
+pkg_tar(
+    name = "hello_tar",
+    srcs = [
+        "hello.js",
+    ],
+)
+
+pkg_tar(
+    name = "hello_http_tar",
+    srcs = [
+        "hello_http.js",
+    ],
+)
+
 [
-    container_image(
+    oci_image(
         name = "hello_" + user + "_" + arch + "_" + distro,
-        architecture = arch,
         base = "//nodejs:nodejs16_" + user + "_" + arch + "_" + distro,
-        cmd = ["/hello.js"],
-        files = [":hello.js"],
+        cmd = ["hello.js"],
+        tars = [":hello_tar"],
     )
     for user in [
         "root",
@@ -26,13 +41,11 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 ]
 
 [
-    container_image(
+    oci_image(
         name = "hello_http_" + user + "_" + arch + "_" + distro,
-        architecture = arch,
         base = "//nodejs:nodejs16_" + user + "_" + arch + "_" + distro,
-        cmd = ["/hello_http.js"],
-        files = [":hello_http.js"],
-        ports = ["8000"],
+        cmd = ["hello_http.js"],
+        tars = [":hello_http_tar"],
     )
     for user in [
         "root",
@@ -42,12 +55,10 @@ load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
     for distro in DISTROS
 ]
 
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-
 [
-    container_test(
+    structure_test(
         name = "hello_" + user + "_" + arch + "_" + distro + "_test",
-        configs = ["testdata/hello.yaml"],
+        config = ["testdata/hello.yaml"],
         image = ":hello_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,

@@ -1,10 +1,11 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-package(default_visibility = ["//visibility:public"])
-
-load("@io_bazel_rules_docker//java:image.bzl", "java_image")
+load("@contrib_rules_oci//oci:defs.bzl", "structure_test")
+load("//private/oci:defs.bzl", "java_image")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
+
+package(default_visibility = ["//visibility:public"])
 
 [
     java_image(
@@ -20,13 +21,11 @@ load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
     for distro in DISTROS
 ]
 
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
-
 [
-    container_test(
+    structure_test(
         name = "hello_" + user + "_" + distro + "_test",
         size = "small",
-        configs = ["testdata/hello_" + user + "_" + distro + ".yaml"],
+        config = ["testdata/hello_" + user + "_" + distro + ".yaml"],
         image = ":hello_" + user + "_" + distro,
         tags = [
             "amd64",
