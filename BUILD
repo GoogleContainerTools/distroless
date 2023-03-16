@@ -17,9 +17,14 @@ STATIC = {
     "{REGISTRY}/{PROJECT_ID}/static-debian11:{COMMIT_SHA}": "//base:static_root_amd64_debian11",
 }
 
+# Static-only architectures to reduce impact on overall build
+STATIC_ARCHITECTURES = ARCHITECTURES + [
+    "riscv64",
+]
+
 STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in ARCHITECTURES
+    for arch in STATIC_ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
 }
 
@@ -31,7 +36,7 @@ STATIC |= {
 
 STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
-    for arch in ARCHITECTURES
+    for arch in STATIC_ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
     for distro in DISTROS
 }
