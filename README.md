@@ -7,6 +7,9 @@ They do not contain package managers, shells or any other programs you would exp
 
 For more information, see this [talk](https://swampup2017.sched.com/event/A6CW/distroless-docker-containerizing-apps-not-vms?iframe=no&w=100%&sidebar=yes&bg=no) ([video](https://www.youtube.com/watch?v=lviLZFciDv4)).
 
+**Since March 2023, Distroless images use oci manifests, if you see errors referencing `application/vnd.oci.image.manifest.v1+json`
+or `application/vnd.oci.image.index.v1+json`, update your container tooling (docker, jib, etc) to latest.**
+
 ## Why should I use distroless images?
 
 Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google
