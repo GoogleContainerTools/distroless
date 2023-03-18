@@ -10,6 +10,7 @@ DISTRO_DEBS = {
     "debian11": [
         "libgcc-s1",
     ],
+    "unstable": [],
 }
 
 # An image for C/C++ programs

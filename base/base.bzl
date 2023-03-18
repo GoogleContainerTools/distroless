@@ -13,6 +13,57 @@ def deb_file(arch, distro, package):
 def deb_pkg(arch, distro, package):
     return "@{arch}_{distro}_{package}".format(arch = arch, distro = distro, package = package)
 
+# Stripped-down list for unstable distros/architectures.
+def unstable_distro_components(distro, architectures):
+    USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
+
+    for (user, _, _) in USER_VARIANTS:
+        oci_image_index(
+            name = "static_" + user + "_" + distro,
+            images = [
+                "static_" + user + "_" + arch + "_" + distro
+                for arch in architectures
+            ],
+        )
+
+    for arch in architectures:
+        cacerts(
+            name = "cacerts_" + arch + "_" + distro,
+            deb = deb_file(arch, distro, "ca-certificates"),
+        )
+
+        for (user, uid, workdir) in USER_VARIANTS:
+            oci_image(
+                name = "static_" + user + "_" + arch + "_" + distro,
+                env = {
+                    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                    # allows openssl to find the certificates by default
+                    # TODO: We should run update-ca-certifaces, but that requires "openssl rehash"
+                    # which would probably need to be run inside the container
+                    "SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt",
+                },
+                tars = [
+                    deb_pkg(arch, distro, "base-files"),
+                    deb_pkg(arch, distro, "netbase"),
+                    deb_pkg(arch, distro, "tzdata"),
+                    ":passwd",
+                    ":group_tar",
+
+                    # Create /tmp, too many things assume it exists.
+                    # tmp.tar has a /tmp with the correct permissions 01777
+                    # A tar is needed because at the moment there is no way to create a
+                    # directory with specific permissions.
+                    ":tmp.tar",
+                    ":nsswitch.tar",
+                    "//os_release:os_release_" + distro + ".tar",
+                    ":cacerts_" + arch + "_" + distro + ".tar",
+                ],
+                user = "%d" % uid,
+                workdir = workdir,
+                os = "linux",
+                architecture = arch,
+            )
+
 # Replicate everything for all distroless suffixes
 def distro_components(distro):
     USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]

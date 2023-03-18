@@ -1,5 +1,6 @@
-load(":base.bzl", "NONROOT", "distro_components")
-load(":distro.bzl", "DISTROS")
+load(":base.bzl", "NONROOT", "distro_components", "unstable_distro_components")
+load(":distro.bzl", "DISTROS", "UNSTABLE_DISTROS")
+load("//:checksums.bzl", "ARCHITECTURES", "UNSTABLE_ARCHITECTURES")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
@@ -100,3 +101,4 @@ pkg_tar(
 )
 
 [distro_components(distro) for distro in DISTROS]
+[unstable_distro_components(distro, UNSTABLE_ARCHITECTURES) for distro in UNSTABLE_DISTROS]

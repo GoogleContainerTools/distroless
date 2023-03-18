@@ -1,6 +1,6 @@
 load("//private/oci:defs.bzl", "sign_and_push_all")
-load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
-load("//base:distro.bzl", "DISTROS", "LANGUAGE_DISTROS")
+load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES", "UNSTABLE_ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS", "LANGUAGE_DISTROS", "UNSTABLE_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -12,6 +12,11 @@ STATIC_VARIANTS = [
     ("debug-nonroot", "static_debug", "nonroot"),
 ]
 
+UNSTABLE_VARIANTS = [
+    ("latest", "static", "root"),
+    ("nonroot", "static", "nonroot"),
+]
+
 STATIC = {
     "{REGISTRY}/{PROJECT_ID}/static:{COMMIT_SHA}": "//base:static_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/static-debian11:{COMMIT_SHA}": "//base:static_root_amd64_debian11",
@@ -21,6 +26,19 @@ STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
     for arch in ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
+}
+
+# unstable
+STATIC |= {
+    "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_unstable"
+    for arch in UNSTABLE_ARCHITECTURES
+    for (tag_base, label, user) in UNSTABLE_VARIANTS
+}
+# oci_image_index
+STATIC |= {
+    "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base: "//base:" + label + "_" + user + "_" + distro
+    for (tag_base, label, user) in UNSTABLE_VARIANTS
+    for distro in UNSTABLE_DISTROS
 }
 
 # oci_image_index

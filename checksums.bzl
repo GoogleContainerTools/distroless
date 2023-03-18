@@ -3,6 +3,7 @@
 # TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
 
 BASE_ARCHITECTURES = ["amd64", "arm64"]
+UNSTABLE_ARCHITECTURES = ["riscv64"]
 
 # Exceptions:
 # - s390x doesn't have libunwind8.
@@ -15,4 +16,5 @@ ARCHITECTURES = BASE_ARCHITECTURES + ["arm", "s390x", "ppc64le"]
 
 VERSIONS = [
     ("debian11", "bullseye", "11"),
+    ("unstable", "unstable", "0"),
 ]

@@ -164,6 +164,17 @@ DEBIAN_PACKAGE_VERSIONS = {
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
     },
+    "riscv64": {
+        "unstable": {
+            "base-files": "12.4",
+            "ca-certificates": "20230311",
+            "libc-bin": "2.36-8",
+            "libc6": "2.36-8",
+            "netbase": "6.4",
+            "openssl": "3.0.8-1",
+            "tzdata": "2022g-7",
+        },
+    },
     "s390x": {
         "debian11": {
             "base-files": "11.1+deb11u6",
