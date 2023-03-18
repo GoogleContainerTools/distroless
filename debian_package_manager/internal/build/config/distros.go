@@ -24,9 +24,10 @@ type Distro int64
 const (
 	DEBIAN10 Distro = iota
 	DEBIAN11
+	UNSTABLE
 )
 
-var distros = []Distro{DEBIAN10, DEBIAN11}
+var distros = []Distro{DEBIAN10, DEBIAN11, UNSTABLE}
 
 func (d Distro) String() string {
 	switch d {
@@ -34,6 +35,8 @@ func (d Distro) String() string {
 		return "debian10"
 	case DEBIAN11:
 		return "debian11"
+	case UNSTABLE:
+		return "unstable"
 	}
 	panic("unknown release")
 }
@@ -44,6 +47,8 @@ func (d Distro) Version() int {
 		return 10
 	case DEBIAN11:
 		return 11
+	case UNSTABLE:
+		return 0
 	}
 	panic("unknown release")
 }
@@ -54,6 +59,8 @@ func (d Distro) Codename() string {
 		return "buster"
 	case DEBIAN11:
 		return "bullseye"
+	case UNSTABLE:
+		return "unstable"
 	}
 	panic("unknown release")
 }

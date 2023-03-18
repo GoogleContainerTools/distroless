@@ -27,9 +27,10 @@ const (
 	ARM
 	PPC64LE
 	S390X
+	RISCV64
 )
 
-var archs = []Arch{AMD64, ARM64, ARM, PPC64LE, S390X}
+var archs = []Arch{AMD64, ARM64, ARM, PPC64LE, S390X, RISCV64}
 
 func (a Arch) String() string {
 	switch a {
@@ -43,6 +44,8 @@ func (a Arch) String() string {
 		return "ppc64le"
 	case S390X:
 		return "s390x"
+	case RISCV64:
+		return "riscv64"
 	}
 	panic("unknown release")
 }
@@ -60,6 +63,8 @@ func (a Arch) DebianName() string {
 		return "ppc64el"
 	case S390X:
 		return "s390x"
+	case RISCV64:
+		return "riscv64"
 	}
 	panic("unknown release")
 }
