@@ -59,7 +59,7 @@ OqxYbK0Iro6GzSmOzxkn+N2AKawLyXi84WSwJQBK//psATakCgAQKkNTAA==
 cosign verify --key cosign.pub $IMAGE_NAME
 ```
 
-Since cosign v2, keyless signature has been the new default. You can use the following command to verify any distroless image with cosign v2:
+Distroless images are also signed with cosign in keyless mode.  You can verify the keyless signature of any distroless image with:
 
 ```
 cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com  --certificate-identity keyless@distroless.iam.gserviceaccount.com
