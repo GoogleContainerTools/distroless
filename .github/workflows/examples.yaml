@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [ 'main' ]
 
+permissions:
+  contents: read
+
 jobs:
   examples:
     name: Build and run examples
