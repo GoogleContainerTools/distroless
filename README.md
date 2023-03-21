@@ -158,9 +158,10 @@ This should expose the Express application to your localhost:3000
 
 ### Bazel
 
-For full documentation on how to use bazel to generate Docker images, see the [bazelbuild/rules_docker](http://github.com/bazelbuild/rules_docker) repository.
+For full documentation on how to use bazel to generate Container images, see the [bazel-contrib/rules_oci](https://github.com/bazel-contrib/rules_oci) repository.
 
-For documentation and examples on how to use the bazel package manager rules, see [./package_manager](./package_manager)
+For documentation and example on how to use the go-based debian package manager (current) to generate bazel config, see [./debian_package_manager](./debian_package_manager)
+For documentation and examples on how to use the bazel package manager rules (not used in this repo), see [./package_manager](./package_manager)
 
 Examples can be found in this repository in the [examples](examples/) directory.
 
@@ -177,14 +178,10 @@ See here for:
 See here for examples on how to complete some common tasks in your image:
 
 * [Adding and running as a non-root user](examples/nonroot)
-* [Including debian packages](https://github.com/bazelbuild/rules_docker#container_image-1)
+* Including debian packages (TBD, currently in [private](./private/remote/debian_archive.bzl))
 * [Including CA certificates](cacerts/)
 
 See here for more information on how these images are [built and released](RELEASES.md).
-
-### Jib
-
-For full documentation on how to use Jib to generate Docker images from Maven and Gradle, see the [GoogleContainerTools/jib](http://github.com/GoogleContainerTools/jib) repository.
 
 ### Base Operating System
 
