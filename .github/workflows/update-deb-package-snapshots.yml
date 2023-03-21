@@ -3,7 +3,6 @@ on:
   # will send emails to last editor of this cron syntax (distroless-bot)
   schedule:
     - cron:  '35 8 * * *'
-  workflow_dispatch: # Allow manual runs.
   
 permissions:
   contents: read
