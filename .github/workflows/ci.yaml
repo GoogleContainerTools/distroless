@@ -7,6 +7,9 @@ on:
   push:
     branches: [ 'main' ]
 
+permissions:
+  contents: read
+
 jobs:
   ci-images:
     name: CI for image tests
