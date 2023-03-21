@@ -238,58 +238,6 @@ NODEJS |= {
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
 
-# these are existing legacy tags that are scheduled to be removed
-
-# TODO(loosebazooka): i can't figure out the scheming of the legacy tags. why 14 only has amd64 eventhough cloudbuild_docker.sh says otherwise?
-LEGACY_NODEJS_TAGS = {
-    "{REGISTRY}/{PROJECT_ID}/nodejs:14": "//nodejs:nodejs14_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs:14-debug": "//nodejs:nodejs14_debug_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14": "//nodejs:nodejs14_root_amd64_debian11",
-    "{REGISTRY}/{PROJECT_ID}/nodejs-debian11:14-debug": "//nodejs:nodejs14_debug_root_amd64_debian11",
-}
-
-LEGACY_NODEJS_TAGS |= {
-    "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_root_" + arch + "_debian11"
-    for arch in BASE_ARCHITECTURES
-    for (tag_base, suffix) in [
-        ("16", ""),
-        ("16-debug", "_debug"),
-    ]
-}
-
-LEGACY_NODEJS_TAGS |= {
-    "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs16" + suffix + "_root_" + arch + "_" + distro
-    for arch in BASE_ARCHITECTURES
-    for (tag_base, suffix) in [
-        ("16", ""),
-        ("16-debug", "_debug"),
-    ]
-    for distro in LANGUAGE_DISTROS
-}
-
-LEGACY_NODEJS_TAGS |= {
-    "{REGISTRY}/{PROJECT_ID}/nodejs:" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_root_" + arch + "_debian11"
-    for arch in BASE_ARCHITECTURES
-    for (tag_base, suffix) in [
-        ("latest", ""),
-        ("debug", "_debug"),
-        ("18", ""),
-        ("18-debug", "_debug"),
-    ]
-}
-
-LEGACY_NODEJS_TAGS |= {
-    "{REGISTRY}/{PROJECT_ID}/nodejs-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs18" + suffix + "_root_" + arch + "_" + distro
-    for arch in BASE_ARCHITECTURES
-    for (tag_base, suffix) in [
-        ("latest", ""),
-        ("debug", "_debug"),
-        ("18", ""),
-        ("18-debug", "_debug"),
-    ]
-    for distro in LANGUAGE_DISTROS
-}
-
 ## JAVA_BASE
 JAVA_ARCHITECTURES = BASE_ARCHITECTURES + [
     "s390x",
@@ -401,8 +349,6 @@ ALL |= CC
 ALL |= PYTHON3
 
 ALL |= NODEJS
-
-ALL |= LEGACY_NODEJS_TAGS
 
 ALL |= JAVA_BASE
 
