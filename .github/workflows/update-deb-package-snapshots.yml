@@ -3,10 +3,15 @@ on:
   # will send emails to last editor of this cron syntax (distroless-bot)
   schedule:
     - cron:  '35 8 * * *'
+  
+permissions:
+  contents: read
+    
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
+      contents: write
       pull-requests: write
 
     steps:
