@@ -45,9 +45,9 @@ def repositories():
 
     node_archive(
         name = "nodejs16_arm64",
-        sha256 = "d4bfa62f5b1aacf74169e8ff58af812d0ef34ef6152c6ad812f220e9bf6cc462",
-        strip_prefix = "node-v16.19.1-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v16.19.1/node-v16.19.1-linux-arm64.tar.gz"],
+        sha256 = "58ea2f702936832fcf7d9cf1e9249bb7d9769185f8ad2ece05a70a7f61dbf879",
+        strip_prefix = "node-v16.20.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v16.20.0/node-v16.20.0-linux-arm64.tar.gz"],
         version = "16.19.1",
         architecture = "arm64",
         control = "//nodejs:control",
