@@ -232,6 +232,7 @@ BUILD       Dockerfile  hello.py
 - [Kubernetes](https://github.com/kubernetes/enhancements/blob/master/keps/sig-release/1729-rebase-images-to-distroless/README.md), since v1.15
 - [Knative](https://knative.dev)
 - [Tekton](https://tekton.dev)
+- [precision-shell](https://github.com/groboclown/precision-shell)
 
 If your project uses Distroless, send a PR to add your project here!
 
