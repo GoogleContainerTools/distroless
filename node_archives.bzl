@@ -25,9 +25,9 @@ def repositories():
 
     node_archive(
         name = "nodejs18_amd64",
-        sha256 = "b298a73a9fc07badfa9e4a2e86ed48824fc9201327cdc43e3f3f58b273c535e7",
-        strip_prefix = "node-v18.15.0-linux-x64/",
-        urls = ["https://nodejs.org/dist/v18.15.0/node-v18.15.0-linux-x64.tar.gz"],
+        sha256 = "fc83046a93d2189d919005a348db3b2372b598a145d84eb9781a3a4b0f032e95",
+        strip_prefix = "node-v18.16.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-x64.tar.gz"],
         version = "18.15.0",
         architecture = "amd64",
         control = "//nodejs:control",
