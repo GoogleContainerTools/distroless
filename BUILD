@@ -199,6 +199,7 @@ NODEJS_VERSIONS = [
     "14",
     "16",
     "18",
+    "20",
 ]
 
 NODEJS_VARIATIONS = [

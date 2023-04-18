@@ -41,6 +41,7 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/nodejs14-debian11   | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/nodejs16-debian11   | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot  |
+| gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot  |
 
 Any other tags are considered deprecated and are no longer updated
 
@@ -104,6 +105,7 @@ Follow these steps to get started:
     * [gcr.io/distroless/nodejs14-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs16-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
+    * [gcr.io/distroless/nodejs20-debian11](nodejs/README.md)
 
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
     * [gcr.io/distroless/python3-debian11](experimental/python3/README.md)

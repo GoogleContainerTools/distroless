@@ -9,6 +9,7 @@ Specifically, these images contain everything in the [base image](../base/README
 - Node.js v14 (`gcr.io/distroless/nodejs14-debian11`) and its dependencies.
 - Node.js v16 (`gcr.io/distroless/nodejs16-debian11`) and its dependencies.
 - Node.js v18 (`gcr.io/distroless/nodejs18-debian11`) and its dependencies.
+- Node.js v20 (`gcr.io/distroless/nodejs20-debian11`) and its dependencies.
 
 ## Usage
 
