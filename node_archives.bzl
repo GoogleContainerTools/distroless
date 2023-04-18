@@ -75,7 +75,7 @@ def repositories():
 
     node_archive(
         name = "nodejs20_arm64",
-        sha256 = "997ddc7ca941280aeb357d4ad40ea7f93cb4d7989b93056dbf1b42a1a89b449b",
+        sha256 = "6eeaf1e93baf82ca95e02590eec65e3187e756ddce6c23bbec1c09d49ebbff2a",
         strip_prefix = "node-v20.0.0-linux-arm64/",
         urls = ["https://nodejs.org/dist/v20.0.0/node-v20.0.0-linux-arm64.tar.gz"],
         version = "20.0.0",
