@@ -38,7 +38,6 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/nodejs14-debian11   | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/nodejs16-debian11   | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot  |
 | gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot  |
@@ -102,7 +101,6 @@ Follow these steps to get started:
     * [gcr.io/distroless/java11-debian11](java/README.md)
     * [gcr.io/distroless/java17-debian11](java/README.md)
     * [gcr.io/distroless/cc-debian11](cc/README.md)
-    * [gcr.io/distroless/nodejs14-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs16-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs20-debian11](nodejs/README.md)
