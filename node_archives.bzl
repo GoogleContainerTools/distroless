@@ -28,7 +28,7 @@ def repositories():
         sha256 = "fc83046a93d2189d919005a348db3b2372b598a145d84eb9781a3a4b0f032e95",
         strip_prefix = "node-v18.16.0-linux-x64/",
         urls = ["https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-x64.tar.gz"],
-        version = "18.15.0",
+        version = "18.16.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
@@ -68,7 +68,7 @@ def repositories():
         sha256 = "dc3dfaee899ed21682e47eaf15525f85aff29013c392490e9b25219cd95b1c35",
         strip_prefix = "node-v18.16.0-linux-arm64/",
         urls = ["https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-arm64.tar.gz"],
-        version = "18.15.0",
+        version = "18.16.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
