@@ -11,22 +11,19 @@ permissions:
   contents: read
 
 jobs:
-  ci-images:
-    name: CI for image tests
+  ci-build-test:
+    name: CI build and unit test
     runs-on: ubuntu-20.04 # most compatible with debian 11
-
     steps:
       - uses: actions/checkout@v3
       - name: Mount bazel caches
         uses: actions/cache@v3
         with:
             path: |
-                ~/.cache/bazel
                 ~/.cache/bazel-repo
-            key: bazel-cache-image-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', '**/*.yaml', 'WORKSPACE') }}-${{ github.sha }}
+            key: bazel-cache-deps-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', '**/*.yaml', 'WORKSPACE') }}-${{ github.sha }}
             restore-keys: |
-                bazel-cache-image-
-                bazel-cache-
+                bazel-cache-deps-
       - name: Free space
         run: |
           sudo apt-get remove -y '^dotnet-.*'
@@ -39,26 +36,39 @@ jobs:
       - name: Fetch
         run: |
           for i in $(seq 5); do 
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'kind(merge_providers, deps(kind(oci_image, ...)))' --output=label && break || sleep 20; 
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //... && break || sleep 20;
           done
-      - name: Test
-        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test $(bazel query 'attr(tags, "amd64", ...)')
+      - name: Build All Images
+        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc build $(bazel query 'kind(oci_image, deps(:sign_and_push))')
+      - name: Unit Tests
+        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test //... --build_tests_only
 
-  ci-unit:
-    name: CI unit tests
+  ci-images:
+    name: CI image tests
     runs-on: ubuntu-20.04 # most compatible with debian 11
-
     steps:
       - uses: actions/checkout@v3
       - name: Mount bazel caches
         uses: actions/cache@v3
         with:
             path: |
-                ~/.cache/bazel
                 ~/.cache/bazel-repo
-            key: bazel-cache-unit-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', '**/*.yaml', 'WORKSPACE') }}-${{ github.sha }}
+            key: bazel-cache-deps-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', '**/*.yaml', 'WORKSPACE') }}-${{ github.sha }}
             restore-keys: |
-                bazel-cache-unit-
-                bazel-cache-
-      - name: Test
-        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test //... --build_tests_only
+                bazel-cache-deps-
+      - name: Free space
+        run: |
+          sudo apt-get remove -y '^dotnet-.*'
+          sudo apt-get remove -y '^llvm-.*'
+          sudo apt-get remove -y 'php.*'
+          sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
+          sudo apt-get autoremove -y
+          sudo apt-get clean
+          rm -rf /usr/share/dotnet/
+      - name: Fetch
+        run: |
+          for i in $(seq 5); do 
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch $(bazel query 'attr(tags, "amd64", ...)') && break || sleep 20;
+          done
+      - name: Image Tests
+        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test $(bazel query 'attr(tags, "amd64", ...)')
