@@ -2,12 +2,13 @@ package main
 
 import (
 	"archive/tar"
+	"compress/gzip"
 	"flag"
 	"fmt"
 	"io"
 	"log"
 	"os"
-	"strings"
+	"path/filepath"
 	"time"
 
 	"github.com/ulikunitz/xz"
@@ -27,8 +28,12 @@ func main() {
 	defer controlFile.Close()
 
 	var controlReader io.Reader = controlFile
-	if strings.Contains(control, ".xz") {
+	switch filepath.Ext(control) {
+	case ".xz":
 		controlReader, err = xz.NewReader(controlFile)
+		panicIfErr(err)
+	case ".gz":
+		controlReader, err = gzip.NewReader(controlFile)
 		panicIfErr(err)
 	}
 	controlTar := tar.NewReader(controlReader)

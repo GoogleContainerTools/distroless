@@ -58,12 +58,12 @@ _attrs = {
 SOURCE_BUILD_TMPL = """\
 filegroup(
     name = "control",
-    srcs = ["control.tar.xz"],
+    srcs = glob(["control.tar.*"]),
     visibility = ["//visibility:public"]
 )
 filegroup(
     name = "data",
-    srcs = ["data.tar.xz"],
+    srcs = glob(["data.tar.*"]),
     visibility = ["//visibility:public"]
 )
 """
