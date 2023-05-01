@@ -5,7 +5,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 package(default_visibility = ["//visibility:public"])
 
-NODEJS_MAJOR_VERISONS = ("14", "16", "18", "20")
+NODEJS_MAJOR_VERISONS = ("16", "18", "20")
 
 MODE = [
     "",
