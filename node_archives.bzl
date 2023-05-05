@@ -9,7 +9,7 @@ def repositories():
         sha256 = "7abc0e558fa3b3c4cc0fd3c7fa5dbe61500ba7213f5e87ed560c65a733c6a5c4",
         strip_prefix = "node-v16.20.0-linux-x64/",
         urls = ["https://nodejs.org/dist/v16.20.0/node-v16.20.0-linux-x64.tar.gz"],
-        version = "16.19.1",
+        version = "16.20.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
@@ -39,7 +39,7 @@ def repositories():
         sha256 = "58ea2f702936832fcf7d9cf1e9249bb7d9769185f8ad2ece05a70a7f61dbf879",
         strip_prefix = "node-v16.20.0-linux-arm64/",
         urls = ["https://nodejs.org/dist/v16.20.0/node-v16.20.0-linux-arm64.tar.gz"],
-        version = "16.19.1",
+        version = "16.20.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
