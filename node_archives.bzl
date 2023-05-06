@@ -9,7 +9,7 @@ def repositories():
         sha256 = "7abc0e558fa3b3c4cc0fd3c7fa5dbe61500ba7213f5e87ed560c65a733c6a5c4",
         strip_prefix = "node-v16.20.0-linux-x64/",
         urls = ["https://nodejs.org/dist/v16.20.0/node-v16.20.0-linux-x64.tar.gz"],
-        version = "16.19.1",
+        version = "16.20.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
@@ -26,10 +26,10 @@ def repositories():
 
     node_archive(
         name = "nodejs20_amd64",
-        sha256 = "95439a0a836fc858565c7b6a7b1e55d1741901e6f205485e496abbefe973cfce",
-        strip_prefix = "node-v20.0.0-linux-x64/",
-        urls = ["https://nodejs.org/dist/v20.0.0/node-v20.0.0-linux-x64.tar.gz"],
-        version = "20.0.0",
+        sha256 = "fbc345638e3fed3b639353b2b3971bddba9e55e93b6e1848be6215787d7f20b8",
+        strip_prefix = "node-v20.1.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v20.1.0/node-v20.1.0-linux-x64.tar.gz"],
+        version = "20.1.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
@@ -39,7 +39,7 @@ def repositories():
         sha256 = "58ea2f702936832fcf7d9cf1e9249bb7d9769185f8ad2ece05a70a7f61dbf879",
         strip_prefix = "node-v16.20.0-linux-arm64/",
         urls = ["https://nodejs.org/dist/v16.20.0/node-v16.20.0-linux-arm64.tar.gz"],
-        version = "16.19.1",
+        version = "16.20.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
@@ -56,10 +56,10 @@ def repositories():
 
     node_archive(
         name = "nodejs20_arm64",
-        sha256 = "6eeaf1e93baf82ca95e02590eec65e3187e756ddce6c23bbec1c09d49ebbff2a",
-        strip_prefix = "node-v20.0.0-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v20.0.0/node-v20.0.0-linux-arm64.tar.gz"],
-        version = "20.0.0",
+        sha256 = "b3867bda723ad3e4b1319b5584c99dde84b20d4ac557af82b26921ba6c2dc274",
+        strip_prefix = "node-v20.1.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v20.1.0/node-v20.1.0-linux-arm64.tar.gz"],
+        version = "20.1.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
