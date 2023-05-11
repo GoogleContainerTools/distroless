@@ -26,21 +26,23 @@ These images are built using [bazel](https://bazel.build), but they can also be 
 
 ### What images are available?
 
-The following images are currently published and updated by the distroless project
+The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY]([url](https://github.com/GoogleContainerTools/distroless/blob/main/SUPPORT_POLICY.md)) for support timelines)
 
-| Image                                 | Tags                                   |
-| ---                                   | ---                                    |
-| gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/cc-debian11         | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/python3-debian11    | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/nodejs16-debian11   | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot  |
-| gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot  |
+| Image                                 | Tags                                   | Architecture Suffixes             | 
+| ---                                   | ---                                    | ---                               |
+| gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/cc-debian11         | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/python3-debian11    | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
+| gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/nodejs16-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
+| gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
+| gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
+
+These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian11:latest-amd64`
 
 Any other tags are considered deprecated and are no longer updated
 
