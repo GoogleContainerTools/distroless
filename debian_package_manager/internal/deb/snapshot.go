@@ -55,7 +55,20 @@ var (
 func latest(urltemplate string) (string, error) {
 	year, month, _ := time.Now().Date()
 	snapshotURL := fmt.Sprintf(urltemplate, year, month)
-	resp, err := rhttp.Get(snapshotURL)
+	resp, err := latestFromUrl(snapshotURL)
+	if err != nil {
+		snapshotURL1 := fmt.Sprintf(urltemplate, year, month - 1)
+		resp1, err1 := latestFromUrl(snapshotURL1)
+		if err1 != nil {
+			return "", err1
+		}
+		return resp1, err1
+	}
+	return resp, err
+}
+
+func latestFromUrl(snapshotURL string) (string, error) {
+	resp, err := http.Get(snapshotURL)
 	if err != nil {
 		return "", err
 	}
