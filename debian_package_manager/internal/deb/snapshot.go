@@ -68,7 +68,7 @@ func latest(urltemplate string) (string, error) {
 }
 
 func latestFromUrl(snapshotURL string) (string, error) {
-	resp, err := http.Get(snapshotURL)
+	resp, err := rhttp.Get(snapshotURL)
 	if err != nil {
 		return "", err
 	}
