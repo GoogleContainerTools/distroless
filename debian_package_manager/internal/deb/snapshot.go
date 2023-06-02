@@ -57,7 +57,13 @@ func latest(urltemplate string) (string, error) {
 	snapshotURL := fmt.Sprintf(urltemplate, year, month)
 	resp, err := latestFromUrl(snapshotURL)
 	if err != nil {
-		snapshotURL1 := fmt.Sprintf(urltemplate, year, month - 1)
+		if month == 1 {
+			year = year - 1
+			month = 12
+		} else {
+			month = month - 1
+		}
+		snapshotURL1 := fmt.Sprintf(urltemplate, year, month)
 		resp1, err1 := latestFromUrl(snapshotURL1)
 		if err1 != nil {
 			return "", err1
