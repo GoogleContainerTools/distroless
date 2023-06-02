@@ -4,6 +4,10 @@ updates:
   directory: "/"
   schedule:
     interval: "daily"
+- package-ecosystem: "gomod"
+  directory: "debian-package-manager/"
+  schedule:
+    interval: "daily"
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:
