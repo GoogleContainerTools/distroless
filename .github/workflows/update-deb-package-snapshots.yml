@@ -15,15 +15,10 @@ jobs:
       pull-requests: write
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-        
-
-    - name: Set up Go 1.16.x
-      uses: actions/setup-go@v4
+    - uses: actions/checkout@v3
+    - uses: actions/setup-go@v4
       with:
-        go-version: 1.16.x
-      id: go
+        go-version: '1.20'
 
     - name: Run update script
       run: ./updateWorkspaceSnapshots.sh
