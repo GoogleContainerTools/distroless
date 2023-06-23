@@ -22,7 +22,7 @@ flags
 --snapshots <location>    (default: ./debian_snapshots.yaml)
 --packages <location>     (default: ./debian_packages.yaml)
 --versions-out <location> (default: ./debian_versions.bzl)
---archives-out <location> (default: ./devian_archives.bzl)
+--archives-out <location> (default: ./debian_archives.bzl)
 ```
 
 ### debian_snapshots.yaml (input/output)
