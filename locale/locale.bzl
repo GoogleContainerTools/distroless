@@ -16,8 +16,10 @@ def _impl(ctx):
         ],
         command = """
         set -o pipefail -o errexit -o nounset
+        ar -x "$1" data.tar.xz
         tmp=$(mktemp -d)
-        tar -xf "$1" -C "$tmp" ./usr/lib/locale/C.UTF-8 ./usr/share/doc/libc-bin/copyright
+        tar -xf data.tar.xz -C "$tmp" ./usr/lib/locale/C.UTF-8 ./usr/share/doc/libc-bin/copyright
+        rm data.tar.xz
         cp -r "$tmp/usr/lib/locale/C.UTF-8/." $2
         mv "$tmp/usr/share/doc/libc-bin/copyright" $3
         """,
