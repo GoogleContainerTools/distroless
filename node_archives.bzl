@@ -16,10 +16,10 @@ def repositories():
 
     node_archive(
         name = "nodejs18_amd64",
-        sha256 = "59582f51570d0857de6333620323bdeee5ae36107318f86ce5eca24747cabf5b",
-        strip_prefix = "node-v18.16.1-linux-x64/",
-        urls = ["https://nodejs.org/dist/v18.16.1/node-v18.16.1-linux-x64.tar.gz"],
-        version = "18.16.1",
+        sha256 = "5c4a7fd9262c0c47bafab3442de6c3fed1602be3d243cb8cf11309a201955e75",
+        strip_prefix = "node-v18.17.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v18.17.0/node-v18.17.0-linux-x64.tar.gz"],
+        version = "18.17.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
@@ -46,10 +46,10 @@ def repositories():
 
     node_archive(
         name = "nodejs18_arm64",
-        sha256 = "555b5c521e068acc976e672978ba0f5b1a0c030192b50639384c88143f4460bc",
-        strip_prefix = "node-v18.16.1-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v18.16.1/node-v18.16.1-linux-arm64.tar.gz"],
-        version = "18.16.1",
+        sha256 = "9d586f9d8b73a121b8a5438079c7106379aaae868f945a9f1755565607607944",
+        strip_prefix = "node-v18.17.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v18.17.0/node-v18.17.0-linux-arm64.tar.gz"],
+        version = "18.17.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
