@@ -10,6 +10,9 @@ DISTRO_DEBS = {
     "debian11": [
         "libgcc-s1",
     ],
+    "debian12": [
+        "libgcc-s1",
+    ],
 }
 
 # An image for C/C++ programs
