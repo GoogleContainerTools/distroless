@@ -35,7 +35,7 @@ func (d Distro) String() string {
 		return "debian10"
 	case DEBIAN11:
 		return "debian11"
-	case DEBIAN11:
+	case DEBIAN12:
 		return "debian12"
 	}
 	panic("unknown release")
@@ -47,7 +47,7 @@ func (d Distro) Version() int {
 		return 10
 	case DEBIAN11:
 		return 11
-	case DEBIAN11:
+	case DEBIAN12:
 		return 12
 	}
 	panic("unknown release")
