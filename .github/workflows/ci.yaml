@@ -21,9 +21,10 @@ jobs:
         with:
             path: |
                 ~/.cache/bazel-repo
-            key: bazel-cache-deps-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', '**/*.yaml', 'WORKSPACE') }}-${{ github.sha }}
+            key: bazel-cache-deps-ci1-${{ github.sha }}
             restore-keys: |
-                bazel-cache-deps-
+                bazel-cache-deps-ci1-${{ github.sha }}
+                bazel-cache-deps-ci1-
       - name: Free space
         run: |
           sudo apt-get remove -y '^dotnet-.*'
@@ -53,9 +54,10 @@ jobs:
         with:
             path: |
                 ~/.cache/bazel-repo
-            key: bazel-cache-deps-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', '**/*.yaml', 'WORKSPACE') }}-${{ github.sha }}
+            key: bazel-cache-deps-ci2-${{ github.sha }}
             restore-keys: |
-                bazel-cache-deps-
+                bazel-cache-deps-ci2-${{ github.sha }}
+                bazel-cache-deps-ci2-
       - name: Free space
         run: |
           sudo apt-get remove -y '^dotnet-.*'
