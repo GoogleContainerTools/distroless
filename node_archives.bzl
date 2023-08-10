@@ -46,10 +46,10 @@ def repositories():
 
     node_archive(
         name = "nodejs18_arm64",
-        sha256 = "9d586f9d8b73a121b8a5438079c7106379aaae868f945a9f1755565607607944",
-        strip_prefix = "node-v18.17.0-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v18.17.0/node-v18.17.0-linux-arm64.tar.gz"],
-        version = "18.17.0",
+        sha256 = "8f5203f5c6dc44ea50ac918b7ecbdb1c418e4f3d9376d8232a1ef9ff38f9c480",
+        strip_prefix = "node-v18.17.1-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v18.17.1/node-v18.17.1-linux-arm64.tar.gz"],
+        version = "18.17.1",
         architecture = "arm64",
         control = "//nodejs:control",
     )
