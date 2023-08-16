@@ -22,7 +22,7 @@ import (
 	"time"
 
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/build/config"
-	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/rhttp"
+	"github.com/hashicorp/go-retryablehttp"
 	"github.com/pkg/errors"
 )
 
@@ -55,7 +55,7 @@ var (
 func latest(urltemplate string) (string, error) {
 	year, month, _ := time.Now().Date()
 	snapshotURL := fmt.Sprintf(urltemplate, year, month)
-	resp, err := rhttp.Get(snapshotURL)
+	resp, err := retryablehttp.Get(snapshotURL)
 	if err != nil {
 		return "", err
 	}
