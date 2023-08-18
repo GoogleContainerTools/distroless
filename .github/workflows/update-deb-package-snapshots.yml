@@ -22,6 +22,13 @@ jobs:
 
     - name: Run update script
       run: ./updateWorkspaceSnapshots.sh
+
+    - name: Run update sboms script
+      run: |
+        for i in $(seq 5); do
+          bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //private/pkg/test/oci_image:test_sboms && break || sleep 20;
+        done
+        bazel run @//private/pkg/test/oci_image:test_sboms
     
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
