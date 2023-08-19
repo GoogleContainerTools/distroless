@@ -11,7 +11,7 @@ commandTests:
   - name: javac
     command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
     args: ["-version"]
-    expectedOutput: ['javac 11\.0\.18']
+    expectedOutput: ['javac 11\.0\.20']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
