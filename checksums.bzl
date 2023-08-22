@@ -1,7 +1,3 @@
-# WARNING!!!
-# DO NOT MODIFY THIS FILE DIRECTLY.
-# TO GENERATE THIS RUN: ./updateWorkspaceSnapshots.sh
-
 BASE_ARCHITECTURES = ["amd64", "arm64"]
 
 # Exceptions:
@@ -16,3 +12,8 @@ ARCHITECTURES = BASE_ARCHITECTURES + ["arm", "s390x", "ppc64le"]
 VERSIONS = [
     ("debian11", "bullseye", "11"),
 ]
+
+VARIANTS = {
+    "arm": "v7",
+    "arm64": "v8",
+}
