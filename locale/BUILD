@@ -9,6 +9,7 @@ package(default_visibility = ["//:__subpackages__"])
     locale(
         name = "locale_" + arch + "_" + distro,
         deb_file = deb_file(arch, distro, "libc-bin"),
+        distro = distro,
     )
     for arch in ARCHITECTURES
     for distro in DISTROS

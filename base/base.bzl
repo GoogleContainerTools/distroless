@@ -119,7 +119,7 @@ def distro_components(distro):
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
                     deb_pkg(arch, distro, "libc6"),
-                    deb_pkg(arch, distro, "libssl1.1"),
+                    deb_pkg(arch, distro, "libssl1.1" if distro == "debian11" else "libssl3"),
                     deb_pkg(arch, distro, "openssl"),
                 ],
             )

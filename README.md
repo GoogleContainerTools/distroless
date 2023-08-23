@@ -30,6 +30,10 @@ The following images are currently published and updated by the distroless proje
 
 | Image                                 | Tags                                   | Architecture Suffixes             | 
 | ---                                   | ---                                    | ---                               |
+| gcr.io/distroless/static-debian12     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-debian12       | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-nossl-debian12 | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/cc-debian12         | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
@@ -98,10 +102,13 @@ Follow these steps to get started:
 
 * Pick the right base image for your application stack.
   We publish the following distroless base images on `gcr.io`:
+    * [gcr.io/distroless/static-debian12](base/README.md)
     * [gcr.io/distroless/static-debian11](base/README.md)
+    * [gcr.io/distroless/base-debian12](base/README.md)
     * [gcr.io/distroless/base-debian11](base/README.md)
     * [gcr.io/distroless/java11-debian11](java/README.md)
     * [gcr.io/distroless/java17-debian11](java/README.md)
+    * [gcr.io/distroless/cc-debian12](cc/README.md)
     * [gcr.io/distroless/cc-debian11](cc/README.md)
     * [gcr.io/distroless/nodejs16-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
@@ -187,7 +194,7 @@ See here for more information on how these images are [built and released](RELEA
 
 ### Base Operating System
 
-Distroless images are based on Debian 11 (bullseye). Images are explicitly tagged with Debian version suffixes (e.g. `-debian11`). Specifying an image without the distribution will currently select `-debian11` images, but that will change in the future to a newer version of Debian. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
+Distroless images are based on Debian 11 (bullseye) and Debian 12 (bookworm). Images are explicitly tagged with Debian version suffixes (e.g. `-debian11`). Specifying an image without the distribution will currently select `-debian11` images, but that will change in the future to a newer version of Debian. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
 
 ### Operating System Updates for Security Fixes and CVEs
 
