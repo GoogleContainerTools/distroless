@@ -37,6 +37,7 @@ http_archive(
 )
 
 # rules_go setup
+# NOTE: cannot upgrade past v0.35.0 until https://github.com/bazelbuild/rules_go/issues/3531 is resolved.
 http_archive(
     name = "io_bazel_rules_go",
     sha256 = "099a9fb96a376ccbbb7d291ed4ecbdfd42f6bc822ab77ae6f1b5cb9e914e94fa",
