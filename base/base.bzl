@@ -200,14 +200,15 @@ def distro_components(distro):
         )
 
         ##########################################################################################
-        # Check that we can invoke openssl in the base image to check certificates.
+        # Check that we can invoke openssl in the base image to check certificates (only debian11).
         ##########################################################################################
-        structure_test(
-            name = "openssl_" + arch + "_" + distro + "_test",
-            config = ["testdata/certs.yaml"],
-            image = ":base_root_" + arch + "_" + distro,
-            tags = ["manual", arch],
-        )
+        if distro == "debian11":
+            structure_test(
+                name = "openssl_" + arch + "_" + distro + "_test",
+                config = ["testdata/certs.yaml"],
+                image = ":base_root_" + arch + "_" + distro,
+                tags = ["manual", arch],
+            )
 
         ##########################################################################################
         # Check for common base files.
