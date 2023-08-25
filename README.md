@@ -104,6 +104,8 @@ Follow these steps to get started:
   We publish the following distroless base images on `gcr.io`:
     * [gcr.io/distroless/static-debian12](base/README.md)
     * [gcr.io/distroless/static-debian11](base/README.md)
+    * [gcr.io/distroless/base-nossl-debian12](base/README.md)
+    * [gcr.io/distroless/base-nossl-debian11](base/README.md)
     * [gcr.io/distroless/base-debian12](base/README.md)
     * [gcr.io/distroless/base-debian11](base/README.md)
     * [gcr.io/distroless/java11-debian11](java/README.md)

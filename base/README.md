@@ -1,4 +1,4 @@
-# Documentation for `gcr.io/distroless/base` and `gcr.io/distroless/static`
+# Documentation for `gcr.io/distroless/base`, `gcr.io/distroless/base-nossl` and `gcr.io/distroless/static`
 
 ## Image Contents
 
@@ -11,12 +11,17 @@ Statically compiled applications (Go) that do not require libc can use the `gcr.
 * A /tmp directory
 * tzdata
 
+Applications that require libc but do not need libssl can use the `gcr.io/distroless/base-nossl`, which contains all
+of the packages in `gcr.io/distroless/static`, and
+
+* glibc
+
 Most other applications (and Go apps that require libc/cgo) should start with `gcr.io/distroless/base`, which contains all
 of the packages in `gcr.io/distroless/static`, and 
 
 * glibc
 * libssl
-* openssl
+* openssl (only debian11, removed from debian12 onward)
 
 ## Usage
 

@@ -4,6 +4,11 @@ load("@rules_pkg//:providers.bzl", "PackageFilesInfo")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 def _impl(ctx):
+    # From Debian 12 the C.UTF-8 locale has been renamed into C.utf8:
+    # https://metadata.ftp-master.debian.org/changelogs//main/g/glibc/glibc_2.36-9+deb12u1_changelog
+    # >   * debian/debhelper.in/libc-bin.install, debian/rules.d/build.mk,
+    # >     debian/rules: rename the C.UTF-8 locale into C.utf8 to match upstream
+    # >     naming.
     cutf8 = "C.UTF-8" if ctx.attr.distro == "debian11" else "C.utf8"
     locale = ctx.actions.declare_directory("%s/locale" % ctx.label.name)
     copyright = ctx.actions.declare_file("%s/copyright" % ctx.label.name)

@@ -5,16 +5,6 @@ load("//:checksums.bzl", "ARCHITECTURES")
 
 package(default_visibility = ["//visibility:public"])
 
-# distribution-specific deb dependencies
-DISTRO_DEBS = {
-    "debian11": [
-        "libgcc-s1",
-    ],
-    "debian12": [
-        "libgcc-s1",
-    ],
-}
-
 # An image for C/C++ programs
 [
     oci_image_index(
@@ -42,10 +32,8 @@ DISTRO_DEBS = {
         tars = [
             deb_pkg(arch, distro, "libgomp1"),
             deb_pkg(arch, distro, "libstdcpp6"),
-        ] + [
-            deb_pkg(arch, distro, deb)
-            for deb in DISTRO_DEBS[distro]
-        ],
+            deb_pkg(arch, distro, "libgcc-s1"),
+        ]
     )
     for mode in [
         "",
