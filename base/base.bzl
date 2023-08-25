@@ -118,10 +118,10 @@ def distro_components(distro):
             BASE_DISTRO_DEBS = {
                 "debian11": [
                     "libssl1.1",
-                    "openssl"
+                    "openssl",
                 ],
                 "debian12": [
-                   "libssl3",
+                    "libssl3",
                 ],
             }
 

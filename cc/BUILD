@@ -33,7 +33,7 @@ package(default_visibility = ["//visibility:public"])
             deb_pkg(arch, distro, "libgomp1"),
             deb_pkg(arch, distro, "libstdcpp6"),
             deb_pkg(arch, distro, "libgcc-s1"),
-        ]
+        ],
     )
     for mode in [
         "",
