@@ -22,7 +22,7 @@ package(default_visibility = ["//visibility:public"])
 [structure_test(
     name = "hello_" + distro + "_test",
     size = "small",
-    config = ["testdata/hello.yaml"],
+    config = ["testdata/hello_" + distro + ".yaml"],
     image = ":hello_" + distro,
     tags = [
         "amd64",
@@ -33,7 +33,7 @@ package(default_visibility = ["//visibility:public"])
 [structure_test(
     name = "hello_cc_" + distro + "_test",
     size = "small",
-    config = ["testdata/hello_cc.yaml"],
+    config = ["testdata/hello_cc_" + distro + ".yaml"],
     image = ":hello_cc_" + distro,
     tags = [
         "amd64",

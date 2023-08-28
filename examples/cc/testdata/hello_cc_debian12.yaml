@@ -1,0 +1,5 @@
+schemaVersion: "1.0.0"
+commandTests:
+  - name: hello_cc
+    command: ['/hello_cc_debian12_binary']
+    expectedOutput: ['Hello from distroless C\+\+!']

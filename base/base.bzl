@@ -114,13 +114,25 @@ def distro_components(distro):
                 ],
             )
 
+            # base image distribution-specific deb dependencies
+            BASE_DISTRO_DEBS = {
+                "debian11": [
+                    "libssl1.1",
+                    "openssl",
+                ],
+                "debian12": [
+                    "libssl3",
+                ],
+            }
+
             oci_image(
                 name = "base_" + user + "_" + arch + "_" + distro,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
                     deb_pkg(arch, distro, "libc6"),
-                    deb_pkg(arch, distro, "libssl1.1"),
-                    deb_pkg(arch, distro, "openssl"),
+                ] + [
+                    deb_pkg(arch, distro, deb)
+                    for deb in BASE_DISTRO_DEBS[distro]
                 ],
             )
 
@@ -188,14 +200,15 @@ def distro_components(distro):
         )
 
         ##########################################################################################
-        # Check that we can invoke openssl in the base image to check certificates.
+        # Check that we can invoke openssl in the base image to check certificates (only debian11).
         ##########################################################################################
-        structure_test(
-            name = "openssl_" + arch + "_" + distro + "_test",
-            config = ["testdata/certs.yaml"],
-            image = ":base_root_" + arch + "_" + distro,
-            tags = ["manual", arch],
-        )
+        if distro == "debian11":
+            structure_test(
+                name = "openssl_" + arch + "_" + distro + "_test",
+                config = ["testdata/certs.yaml"],
+                image = ":base_root_" + arch + "_" + distro,
+                tags = ["manual", arch],
+            )
 
         ##########################################################################################
         # Check for common base files.
