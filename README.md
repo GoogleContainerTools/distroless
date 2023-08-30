@@ -28,12 +28,17 @@ These images are built using [bazel](https://bazel.build), but they can also be 
 
 The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY]([url](https://github.com/GoogleContainerTools/distroless/blob/main/SUPPORT_POLICY.md)) for support timelines)
 
+#### Debian 12
 | Image                                 | Tags                                   | Architecture Suffixes             | 
 | ---                                   | ---                                    | ---                               |
 | gcr.io/distroless/static-debian12     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-debian12       | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-nossl-debian12 | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/cc-debian12         | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+
+#### Debian 11
+| Image                                 | Tags                                   | Architecture Suffixes             |
+| ---                                   | ---                                    | ---                               |
 | gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
