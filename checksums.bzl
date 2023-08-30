@@ -13,3 +13,8 @@ VERSIONS = [
     ("debian11", "bullseye", "11"),
     ("debian12", "bookworm", "12"),
 ]
+
+VARIANTS = {
+    "arm": "v7",
+    "arm64": "v8",
+}

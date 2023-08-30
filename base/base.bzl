@@ -1,6 +1,6 @@
 # defines a function to replicate the container images for different distributions
 load("//cacerts:cacerts.bzl", "cacerts")
-load("//:checksums.bzl", "ARCHITECTURES")
+load("//:checksums.bzl", "ARCHITECTURES", "VARIANTS")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
@@ -103,6 +103,7 @@ def distro_components(distro):
                 workdir = workdir,
                 os = "linux",
                 architecture = arch,
+                variant = VARIANTS.get(arch),
             )
 
             oci_image(
