@@ -26,10 +26,10 @@ def repositories():
 
     node_archive(
         name = "nodejs20_amd64",
-        sha256 = "a8678ae00425acdf692e943e3f1cea11a4c46281e4257b82886423bd4ef6f2b5",
-        strip_prefix = "node-v20.5.1-linux-x64/",
-        urls = ["https://nodejs.org/dist/v20.5.1/node-v20.5.1-linux-x64.tar.gz"],
-        version = "20.5.1",
+        sha256 = "fc14b089783e7fcaefd01bb7afc0561fac55e1950d56a6b33891a93cb8007b17",
+        strip_prefix = "node-v20.6.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v20.6.0/node-v20.6.0-linux-x64.tar.gz"],
+        version = "20.6.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
@@ -56,10 +56,10 @@ def repositories():
 
     node_archive(
         name = "nodejs20_arm64",
-        sha256 = "bb7321b4555abdf9fcd62426a23993f3610ac4c18d6fb843e35c2f8add631510",
-        strip_prefix = "node-v20.5.1-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v20.5.1/node-v20.5.1-linux-arm64.tar.gz"],
-        version = "20.5.1",
+        sha256 = "b68ae1ca9bd7387223c5d30a9d355e66ef4595bfe26ef6e9ae29824bc9abf25b",
+        strip_prefix = "node-v20.6.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v20.6.0/node-v20.6.0-linux-arm64.tar.gz"],
+        version = "20.6.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
