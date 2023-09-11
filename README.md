@@ -29,7 +29,7 @@ These images are built using [bazel](https://bazel.build), but they can also be 
 The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY]([url](https://github.com/GoogleContainerTools/distroless/blob/main/SUPPORT_POLICY.md)) for support timelines)
 
 #### Debian 12
-| Image                                 | Tags                                   | Architecture Suffixes             | 
+| Image                                 | Tags                                   | Architecture Suffixes             |
 | ---                                   | ---                                    | ---                               |
 | gcr.io/distroless/static-debian12     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-debian12       | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
@@ -47,7 +47,6 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
 | gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
 | gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/nodejs16-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
 | gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
 | gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
 
@@ -117,7 +116,6 @@ Follow these steps to get started:
     * [gcr.io/distroless/java17-debian11](java/README.md)
     * [gcr.io/distroless/cc-debian12](cc/README.md)
     * [gcr.io/distroless/cc-debian11](cc/README.md)
-    * [gcr.io/distroless/nodejs16-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs20-debian11](nodejs/README.md)
 
