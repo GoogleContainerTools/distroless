@@ -256,9 +256,13 @@ JAVA_BASE_VARIATIONS = [
 
 JAVA_BASE = {
     "{REGISTRY}/{PROJECT_ID}/java-base:latest": "//java:java_base_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:latest": "//java:java_base_root_amd64_debian12",
     "{REGISTRY}/{PROJECT_ID}/java-base:nonroot": "//java:java_base_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:nonroot": "//java:java_base_nonroot_amd64_debian12",
     "{REGISTRY}/{PROJECT_ID}/java-base:debug": "//java:java_base_debug_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:debug": "//java:java_base_debug_root_amd64_debian12",
     "{REGISTRY}/{PROJECT_ID}/java-base:debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian12",
 }
 
 JAVA_BASE |= {
@@ -267,9 +271,20 @@ JAVA_BASE |= {
     for (tag_base, label) in JAVA_BASE_VARIATIONS
 }
 
+JAVA_BASE |= {
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian12"
+    for arch in JAVA_ARCHITECTURES
+    for (tag_base, label) in JAVA_BASE_VARIATIONS
+}
+
 # oci_image_index
 JAVA_BASE |= {
     "{REGISTRY}/{PROJECT_ID}/java-base-debian11:" + tag_base: "//java:java_base_" + label + "_debian11"
+    for (tag_base, label) in JAVA_BASE_VARIATIONS
+}
+
+JAVA_BASE |= {
+    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base: "//java:java_base_" + label + "_debian12"
     for (tag_base, label) in JAVA_BASE_VARIATIONS
 }
 
@@ -310,9 +325,13 @@ JAVA17_VARIATIONS = [
 
 JAVA17 = {
     "{REGISTRY}/{PROJECT_ID}/java17:latest": "//java:java17_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java17-debian12:latest": "//java:java17_root_amd64_debian12",
     "{REGISTRY}/{PROJECT_ID}/java17:nonroot": "//java:java17_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java17-debian12:nonroot": "//java:java17_nonroot_amd64_debian12",
     "{REGISTRY}/{PROJECT_ID}/java17:debug": "//java:java17_debug_root_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java17-debian12:debug": "//java:java17_debug_root_amd64_debian12",
     "{REGISTRY}/{PROJECT_ID}/java17:debug-nonroot": "//java:java17_debug_nonroot_amd64_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java17-debian12:debug-nonroot": "//java:java17_debug_nonroot_amd64_debian12",
 }
 
 JAVA17 |= {
@@ -321,9 +340,20 @@ JAVA17 |= {
     for arch in JAVA_ARCHITECTURES
 }
 
+JAVA17 |= {
+    "{REGISTRY}/{PROJECT_ID}/java17-debian12:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian12"
+    for (tag_base, label) in JAVA17_VARIATIONS
+    for arch in JAVA_ARCHITECTURES
+}
+
 # oci_image_index
 JAVA17 |= {
     "{REGISTRY}/{PROJECT_ID}/java17-debian11:" + tag_base: "//java:java17_" + label + "_debian11"
+    for (tag_base, label) in JAVA17_VARIATIONS
+}
+
+JAVA17 |= {
+    "{REGISTRY}/{PROJECT_ID}/java17-debian12:" + tag_base: "//java:java17_" + label + "_debian12"
     for (tag_base, label) in JAVA17_VARIATIONS
 }
 

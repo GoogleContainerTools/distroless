@@ -7,7 +7,7 @@ A debian package index parser with bazel config generation
 ```sh
 # if new versions are available, update snapshots and bazel config
 $ make update
-$ ./update 
+$ ./update
 
 # generate new config for current snapshot
 $ make generate

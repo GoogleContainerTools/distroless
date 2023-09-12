@@ -7,26 +7,32 @@ load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
+JAVA_VERSIONS_PER_DISTRO = [
+    ("11", "debian11"),
+    ("17", "debian11"),
+    ("17", "debian12"),
+]
+
 [
     java_image(
-        name = "hello_" + user + "_" + distro,
+        name = "hello_java" + java_version + "_" + user + "_" + distro,
         srcs = ["HelloJava.java"],
-        base = "//java:java11_" + user + "_amd64" + "_" + distro,
+        base = "//java:java" + java_version + "_" + user + "_amd64" + "_" + distro,
         main_class = "examples.HelloJava",
     )
     for user in [
         "root",
         "nonroot",
     ]
-    for distro in DISTROS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
 [
     structure_test(
-        name = "hello_" + user + "_" + distro + "_test",
+        name = "hello_java" + java_version + "_" + user + "_" + distro + "_test",
         size = "small",
         config = ["testdata/hello_" + user + "_" + distro + ".yaml"],
-        image = ":hello_" + user + "_" + distro,
+        image = ":hello_java" + java_version + "_" + user + "_" + distro,
         tags = [
             "amd64",
             "manual",
@@ -36,5 +42,5 @@ package(default_visibility = ["//visibility:public"])
         "root",
         "nonroot",
     ]
-    for distro in DISTROS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]

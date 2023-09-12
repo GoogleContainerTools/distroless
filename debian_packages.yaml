@@ -87,3 +87,26 @@
     - "libgcc-s1"
     - "libgomp1"
     - "libstdc++6"
+
+# debian 12, limited architectures, java only
+- distros: ["debian12"]
+  archs: ["amd64", "arm64", "s390x", "ppc64le"]
+  packages:
+    - "fontconfig-config"
+    - "fonts-dejavu-core"
+    - "libbrotli1"
+    - "libcrypt1" # TODO: glibc library for -lcrypt; maybe should be in cc?
+    - "libexpat1"
+    - "libfontconfig1"
+    - "libfreetype6"
+    - "libglib2.0-0"
+    - "libgraphite2-3"
+    - "libharfbuzz0b"
+    - "libjpeg62-turbo"
+    - "liblcms2-2"
+    - "libpcre2-8-0"
+    - "libpng16-16"
+    - "libuuid1"
+    - "openjdk-17-jdk-headless"
+    - "openjdk-17-jre-headless"
+    - "zlib1g"
