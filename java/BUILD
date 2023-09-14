@@ -87,7 +87,7 @@ DISTRO_SPECIFIC_LIBRARIES = {
 [
     oci_image(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
-        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
+        base = ("//base:base_nossl" if (not ("debug" in mode)) else "//base:base_nossl_debug") + "_" + user + "_" + arch + "_" + distro,
         env = {"LANG": "C.UTF-8"},
         tars = [
             deb_pkg(arch, distro, "zlib1g"),
@@ -105,6 +105,8 @@ DISTRO_SPECIFIC_LIBRARIES = {
             deb_pkg(arch, distro, "libglib2.0-0"),
             deb_pkg(arch, distro, "libbrotli1"),
             deb_pkg(arch, distro, "libcrypt1"),
+            deb_pkg(arch, distro, "libstdcpp6"),
+            deb_pkg(arch, distro, "libgcc-s1"),
             ":cacerts_java_" + arch + "_" + distro,
             "//locale:locale_" + arch + "_" + distro,
         ] + [deb_pkg(arch, distro, library) for library in DISTRO_SPECIFIC_LIBRARIES[distro]],
