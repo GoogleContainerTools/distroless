@@ -2,7 +2,7 @@ load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "struct
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//private/oci:defs.bzl", "java_image")
 load("//base:base.bzl", "deb_pkg")
-load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
+load("//base:distro.bzl", "DISTROS")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
@@ -23,6 +23,12 @@ JAVA_ARCHITECTURES = ARCHITECTURES + [
 JAVA_VERSIONS = [
     "11",
     "17",
+]
+
+JAVA_VERSIONS_PER_DISTRO = [
+    ("11", "debian11"),
+    ("17", "debian11"),
+    ("17", "debian12"),
 ]
 
 [
@@ -48,9 +54,8 @@ JAVA_VERSIONS = [
             ),
         ],
     )
-    for java_version in JAVA_VERSIONS
     for arch in JAVA_ARCHITECTURES
-    for distro in DISTROS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
 # Base
@@ -70,10 +75,19 @@ JAVA_VERSIONS = [
     for distro in DISTROS
 ]
 
+DISTRO_SPECIFIC_LIBRARIES = {
+    "debian11": [
+        "libpcre3",
+    ],
+    "debian12": [
+        "libpcre2-8-0",
+    ],
+}
+
 [
     oci_image(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
-        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
+        base = ("//base:base_nossl" if (not ("debug" in mode)) else "//base:base_nossl_debug") + "_" + user + "_" + arch + "_" + distro,
         env = {"LANG": "C.UTF-8"},
         tars = [
             deb_pkg(arch, distro, "zlib1g"),
@@ -89,12 +103,13 @@ JAVA_VERSIONS = [
             deb_pkg(arch, distro, "libgraphite2-3"),
             deb_pkg(arch, distro, "libharfbuzz0b"),
             deb_pkg(arch, distro, "libglib2.0-0"),
-            deb_pkg(arch, distro, "libpcre3"),
             deb_pkg(arch, distro, "libbrotli1"),
             deb_pkg(arch, distro, "libcrypt1"),
+            deb_pkg(arch, distro, "libstdcpp6"),
+            deb_pkg(arch, distro, "libgcc-s1"),
             ":cacerts_java_" + arch + "_" + distro,
             "//locale:locale_" + arch + "_" + distro,
-        ],
+        ] + [deb_pkg(arch, distro, library) for library in DISTRO_SPECIFIC_LIBRARIES[distro]],
     )
     for mode in [
         "",
@@ -114,9 +129,8 @@ JAVA_VERSIONS = [
             for arch in JAVA_ARCHITECTURES
         ],
     )
-    for java_version in JAVA_VERSIONS
-    for distro in DISTROS
     for user in USERS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -136,10 +150,9 @@ JAVA_VERSIONS = [
             ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
         ],
     )
-    for java_version in JAVA_VERSIONS
     for arch in JAVA_ARCHITECTURES
-    for distro in DISTROS
     for user in USERS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
 # Java JRE Headless - Debug
@@ -151,9 +164,8 @@ JAVA_VERSIONS = [
             for arch in JAVA_ARCHITECTURES
         ],
     )
-    for java_version in JAVA_VERSIONS
-    for distro in DISTROS
     for user in USERS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -180,9 +192,8 @@ JAVA_VERSIONS = [
         ],
     )
     for user in USERS
-    for java_version in JAVA_VERSIONS
     for arch in JAVA_ARCHITECTURES
-    for distro in DISTROS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -214,10 +225,9 @@ JAVA_VERSIONS = [
             "manual",
         ],
     )
-    for java_version in JAVA_VERSIONS
     for arch in JAVA_ARCHITECTURES
-    for distro in DISTROS
     for user in USERS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -230,17 +240,18 @@ JAVA_VERSIONS = [
             "manual",
         ],
     )
-    for java_version in JAVA_VERSIONS
     for arch in JAVA_ARCHITECTURES
-    for distro in DISTROS
     for user in USERS
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
 RULE_NAMES = [
     ("java11_root_debian11", "java11_root_amd64_debian11"),
     ("java11_nonroot_debian11", "java11_nonroot_amd64_debian11"),
     ("java17_root_debian11", "java17_root_amd64_debian11"),
+    ("java17_root_debian12", "java17_root_amd64_debian12"),
     ("java17_nonroot_debian11", "java17_nonroot_amd64_debian11"),
+    ("java17_nonroot_debian12", "java17_nonroot_amd64_debian12"),
 ]
 
 [
