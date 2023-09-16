@@ -214,7 +214,7 @@ NODEJS_VARIATIONS = [
 NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + distro
     for arch in BASE_ARCHITECTURES
-    for distro in LANGUAGE_DISTROS
+    for distro in DISTROS
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
@@ -222,7 +222,7 @@ NODEJS = {
 # oci_image_index
 NODEJS |= {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base: "//nodejs:nodejs" + version + label + "_" + user + "_" + distro
-    for distro in LANGUAGE_DISTROS
+    for distro in DISTROS
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }

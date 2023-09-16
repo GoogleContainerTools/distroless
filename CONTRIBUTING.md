@@ -28,9 +28,9 @@ oci_tarball(
 )
 ```
 then build the tarball and load it into docker
-```
+```shell
 bazel build //:local_build
-docker load --input $(bazel cquery --output=files //local_build))
+docker load --input $(bazel cquery --output=files //:local_build)
 ```
 
 ## Code style
