@@ -333,6 +333,12 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb"],
     )
     debian_archive(
+        name = "amd64_debian12_dash",
+        package_name = "dash",
+        sha256 = "33ea40061da2f1a861ec46212b2b6a34f0776a049b1a3f0abce2fb8cb994258f",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/d/dash/dash_0.5.12-2_amd64.deb"],
+    )
+    debian_archive(
         name = "amd64_debian12_fontconfig-config",
         package_name = "fontconfig-config",
         sha256 = "281c66e46b95f045a0282a6c7a03b33de0e9a08d016897a759aaf4a04adfddbe",
@@ -351,6 +357,12 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_amd64.deb"],
     )
     debian_archive(
+        name = "amd64_debian12_libbz2-1.0",
+        package_name = "libbz2-1.0",
+        sha256 = "54149da3f44b22d523b26b692033b84503d822cc5122fed606ea69cc83ca5aeb",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/b/bzip2/libbz2-1.0_1.0.8-5+b1_amd64.deb"],
+    )
+    debian_archive(
         name = "amd64_debian12_libc-bin",
         package_name = "libc-bin",
         sha256 = "259b757afef838d394db8f153df1a7f233e39cb87b2abdaa6d89d7369381b537",
@@ -363,16 +375,34 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/g/glibc/libc6_2.36-9+deb12u1_amd64.deb"],
     )
     debian_archive(
+        name = "amd64_debian12_libcom-err2",
+        package_name = "libcom-err2",
+        sha256 = "8010e4285276bb344c05ae780deae2fffb45e237116c3a78481365c5954125ec",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/e/e2fsprogs/libcom-err2_1.47.0-2_amd64.deb"],
+    )
+    debian_archive(
         name = "amd64_debian12_libcrypt1",
         package_name = "libcrypt1",
         sha256 = "f5f60a5cdfd4e4eaa9438ade5078a57741a7a78d659fcb0c701204f523e8bd29",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_amd64.deb"],
     )
     debian_archive(
+        name = "amd64_debian12_libdb5.3",
+        package_name = "libdb5.3",
+        sha256 = "7dc5127b8dd0da80e992ba594954c005ae4359d839a24eb65d0d8129b5235c84",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/d/db5.3/libdb5.3_5.3.28+dfsg2-1_amd64.deb"],
+    )
+    debian_archive(
         name = "amd64_debian12_libexpat1",
         package_name = "libexpat1",
         sha256 = "fe36a7f35361fc40d0057ef447a7302fd41d51740d51c98fb3870bbed5b96e56",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/e/expat/libexpat1_2.5.0-1_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libffi8",
+        package_name = "libffi8",
+        sha256 = "6d9f6c25c30efccce6d4bceaa48ea86c329a3432abb360a141f76ac223a4c34a",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libf/libffi/libffi8_3.4.4-1_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian12_libfontconfig1",
@@ -411,6 +441,12 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_amd64.deb"],
     )
     debian_archive(
+        name = "amd64_debian12_libgssapi-krb5-2",
+        package_name = "libgssapi-krb5-2",
+        sha256 = "52e7c4645098213967be55fa6db89f1cffb584d1d66550a0a29fe2a7333dfa1c",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/krb5/libgssapi-krb5-2_1.20.1-2_amd64.deb"],
+    )
+    debian_archive(
         name = "amd64_debian12_libharfbuzz0b",
         package_name = "libharfbuzz0b",
         sha256 = "bfce132b7ee67b9c2d2166075b1936a25c8cc6866b6a049f99b8e94baa916e71",
@@ -423,10 +459,52 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_amd64.deb"],
     )
     debian_archive(
+        name = "amd64_debian12_libk5crypto3",
+        package_name = "libk5crypto3",
+        sha256 = "e1ce4cf7d925c25ec3d6be61205e9af889815ce6131db8ad925b3db38363da6b",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/krb5/libk5crypto3_1.20.1-2_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libkeyutils1",
+        package_name = "libkeyutils1",
+        sha256 = "cfac89e6a7a54ff3c6a4f843310e25efeddaa771baeae470bd98bd588c373563",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/keyutils/libkeyutils1_1.6.3-2_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libkrb5-3",
+        package_name = "libkrb5-3",
+        sha256 = "27dd4ce7e9542ad88a6d3856bccfaf1d383bf9cf90d888cce762dd150cceb136",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/krb5/libkrb5-3_1.20.1-2_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libkrb5support0",
+        package_name = "libkrb5support0",
+        sha256 = "bd36a4f9b1a9b1d83cc93a109b817bc20f885b76b881168b16a15e8262f1f2c8",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/krb5/libkrb5support0_1.20.1-2_amd64.deb"],
+    )
+    debian_archive(
         name = "amd64_debian12_liblcms2-2",
         package_name = "liblcms2-2",
         sha256 = "8b417407302ca99e5d5f70bacece70bda54f8cd0bb6d59b478b6411c27c1366a",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/l/lcms2/liblcms2-2_2.14-2_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_liblzma5",
+        package_name = "liblzma5",
+        sha256 = "d4b7736e58512a2b047f9cb91b71db5a3cf9d3451192fc6da044c77bf51fe869",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/x/xz-utils/liblzma5_5.4.1-0.2_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libncursesw6",
+        package_name = "libncursesw6",
+        sha256 = "98fa7a53dc565a38b65fb70422ad08001bf5361d8fbc74255280c329996a6bec",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/n/ncurses/libncursesw6_6.4-4_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libnsl2",
+        package_name = "libnsl2",
+        sha256 = "c0d83437fdb016cb289436f49f28a36be44b3e8f1f2498c7e3a095f709c0d6f8",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libn/libnsl/libnsl2_1.3.0-2_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian12_libpcre2-8-0",
@@ -441,6 +519,30 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_amd64.deb"],
     )
     debian_archive(
+        name = "amd64_debian12_libpython3.11-minimal",
+        package_name = "libpython3.11-minimal",
+        sha256 = "6fc5ab5858781ab90c68b4deea09f21871fd7b55dc1a0764ad7116ac4c86574d",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/p/python3.11/libpython3.11-minimal_3.11.2-6_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libpython3.11-stdlib",
+        package_name = "libpython3.11-stdlib",
+        sha256 = "67eec0eb4df58b93e1bf97c402c2cbeb361bf9c5af44fa3a02ff1c723c791ca2",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/p/python3.11/libpython3.11-stdlib_3.11.2-6_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libreadline8",
+        package_name = "libreadline8",
+        sha256 = "e02ebbd3701cf468dbf98d6d917fbe0325e881f07fe8b316150c8d2a64486e66",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/r/readline/libreadline8_8.2-1.3_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libsqlite3-0",
+        package_name = "libsqlite3-0",
+        sha256 = "a8b11a1664a998cc2499fb04327d1f6c4e8f77b78ea8b6f8418d96fc54e3731f",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/s/sqlite3/libsqlite3-0_3.40.1-2_amd64.deb"],
+    )
+    debian_archive(
         name = "amd64_debian12_libssl3",
         package_name = "libssl3",
         sha256 = "45407e1164813c6473f4c1113d26d2b8d776ed607f88e29169b91b64f4035577",
@@ -451,6 +553,18 @@ def repositories():
         package_name = "libstdc++6",
         sha256 = "9b1b269020cec6aced3b39f096f7b67edd1f0d4ab24f412cb6506d0800e19cbf",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libtinfo6",
+        package_name = "libtinfo6",
+        sha256 = "072d908f38f51090ca28ca5afa3b46b2957dc61fe35094c0b851426859a49a51",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/n/ncurses/libtinfo6_6.4-4_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_libtirpc3",
+        package_name = "libtirpc3",
+        sha256 = "2a46d5a5e9486da11ffeff5740931740d6deae4f92cd6098df060dc5dff1e1c7",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libt/libtirpc/libtirpc3_1.3.3+ds-1_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian12_libuuid1",
@@ -481,6 +595,18 @@ def repositories():
         package_name = "openssl",
         sha256 = "1625c55cb44fcb2798fcb66e3e5d47dab5112917f8bc2a89ec74d37ea78479bb",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/o/openssl/openssl_3.0.9-1_amd64.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_python3-distutils",
+        package_name = "python3-distutils",
+        sha256 = "a620b555f301860a08e30534c7e6f7d79818e5e1977bfec39a612e7003074318",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/p/python3-stdlib-extensions/python3-distutils_3.11.2-3_all.deb"],
+    )
+    debian_archive(
+        name = "amd64_debian12_python3.11-minimal",
+        package_name = "python3.11-minimal",
+        sha256 = "a72247ba64bcd1d0ace2ea8eefd7bcfaca84204def9495269526c25dd9fddc0c",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/p/python3.11/python3.11-minimal_3.11.2-6_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian12_tzdata",
@@ -957,6 +1083,12 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb"],
     )
     debian_archive(
+        name = "arm64_debian12_dash",
+        package_name = "dash",
+        sha256 = "c1358e2a8054eb93efd460adf480224a16ea9e0b4d7b4c6cbcf8c8c91902a1d7",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/d/dash/dash_0.5.12-2_arm64.deb"],
+    )
+    debian_archive(
         name = "arm64_debian12_fontconfig-config",
         package_name = "fontconfig-config",
         sha256 = "297b5a63f9214ffebe08892cdf2effdaf2b408e719811d5e8e98870f710cd35c",
@@ -975,6 +1107,12 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_arm64.deb"],
     )
     debian_archive(
+        name = "arm64_debian12_libbz2-1.0",
+        package_name = "libbz2-1.0",
+        sha256 = "d3a96ece03326498b39ff093a76800dfcbcb1d4049d6ae6e9f6fa1aa7a590ad6",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/b/bzip2/libbz2-1.0_1.0.8-5+b1_arm64.deb"],
+    )
+    debian_archive(
         name = "arm64_debian12_libc-bin",
         package_name = "libc-bin",
         sha256 = "f80fa6f178bdcc70215b82085b8d6a58597c59e0c1ed86ea82e107a6db50c866",
@@ -987,16 +1125,34 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/g/glibc/libc6_2.36-9+deb12u1_arm64.deb"],
     )
     debian_archive(
+        name = "arm64_debian12_libcom-err2",
+        package_name = "libcom-err2",
+        sha256 = "0bd07f2a030f9e0346a80bbdf211fe3a55835dda70ed0e9d9da23f0e24cf4e99",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/e/e2fsprogs/libcom-err2_1.47.0-2_arm64.deb"],
+    )
+    debian_archive(
         name = "arm64_debian12_libcrypt1",
         package_name = "libcrypt1",
         sha256 = "eea0ad76ea5eb507127fea0c291622ea4ecdbb71c4b9a8ed9c76ae33fc1a0127",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_arm64.deb"],
     )
     debian_archive(
+        name = "arm64_debian12_libdb5.3",
+        package_name = "libdb5.3",
+        sha256 = "344367608d622298a3d916f4cee3dc3173286f3b21f8f497ab21e7178ba930f9",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/d/db5.3/libdb5.3_5.3.28+dfsg2-1_arm64.deb"],
+    )
+    debian_archive(
         name = "arm64_debian12_libexpat1",
         package_name = "libexpat1",
         sha256 = "39de7d17cb312d76f586866a38d7649102178a2cdb7f4cef1b4f279ea3cebf07",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/e/expat/libexpat1_2.5.0-1_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libffi8",
+        package_name = "libffi8",
+        sha256 = "80b5c36177dc0e29d531c7eddbed3cc7355cb490e49f8cfa5959572d161f27b3",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libf/libffi/libffi8_3.4.4-1_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian12_libfontconfig1",
@@ -1035,6 +1191,12 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_arm64.deb"],
     )
     debian_archive(
+        name = "arm64_debian12_libgssapi-krb5-2",
+        package_name = "libgssapi-krb5-2",
+        sha256 = "4372b858d97318fb3cce18270e820bf7d2ca436d71fd6546564c0a4831278156",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/krb5/libgssapi-krb5-2_1.20.1-2_arm64.deb"],
+    )
+    debian_archive(
         name = "arm64_debian12_libharfbuzz0b",
         package_name = "libharfbuzz0b",
         sha256 = "64b1d4aa672dc4eda5e11b9ff8061122060fc7aba6ad16908c89a269ffa174ee",
@@ -1047,10 +1209,52 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_arm64.deb"],
     )
     debian_archive(
+        name = "arm64_debian12_libk5crypto3",
+        package_name = "libk5crypto3",
+        sha256 = "51751c36099ca6f5397f25dc8b653db977fe1f68780a4122d8cae6cbba4772e2",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/krb5/libk5crypto3_1.20.1-2_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libkeyutils1",
+        package_name = "libkeyutils1",
+        sha256 = "aac46cb6faec4e737502b3c2290b7b02f8ba04e8accd5af7fd07934df0c867b1",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/keyutils/libkeyutils1_1.6.3-2_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libkrb5-3",
+        package_name = "libkrb5-3",
+        sha256 = "a07fe8c0376cd9c5e2a7d7d7d7dbc4186325925e8cdac173a84de9882ebcbbad",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/krb5/libkrb5-3_1.20.1-2_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libkrb5support0",
+        package_name = "libkrb5support0",
+        sha256 = "e713f1858b08cefcdd6d2f11df913f67dee3af64719f1d3016afd041d839dfe8",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/k/krb5/libkrb5support0_1.20.1-2_arm64.deb"],
+    )
+    debian_archive(
         name = "arm64_debian12_liblcms2-2",
         package_name = "liblcms2-2",
         sha256 = "1e48b6846b0e7cdce7675da6b0f8bc5fef3f5170fd2470d17d65dc3d8c009720",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/l/lcms2/liblcms2-2_2.14-2_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_liblzma5",
+        package_name = "liblzma5",
+        sha256 = "48216df0ab15bf757176417c154c27a208b82aa42b00a16794e4699ec9e8e2e3",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/x/xz-utils/liblzma5_5.4.1-0.2_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libncursesw6",
+        package_name = "libncursesw6",
+        sha256 = "cf32cb6751718872c6def448b82211eec494f688e2f1a3e6c71bfdaf6b0722c5",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/n/ncurses/libncursesw6_6.4-4_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libnsl2",
+        package_name = "libnsl2",
+        sha256 = "8f9ba58b219779b43c4ccc78c79b0a23f721fc96323c202abb31e02f942104b3",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libn/libnsl/libnsl2_1.3.0-2_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian12_libpcre2-8-0",
@@ -1065,6 +1269,30 @@ def repositories():
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_arm64.deb"],
     )
     debian_archive(
+        name = "arm64_debian12_libpython3.11-minimal",
+        package_name = "libpython3.11-minimal",
+        sha256 = "399271d141a1e08479c80f7832921ddf5fdb46c15c8b0dd3172c52c74b79b197",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/p/python3.11/libpython3.11-minimal_3.11.2-6_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libpython3.11-stdlib",
+        package_name = "libpython3.11-stdlib",
+        sha256 = "1af0700762fc1ca17000e124a456e50f6a769808ea1a6a0d0e941ec87647fb3a",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/p/python3.11/libpython3.11-stdlib_3.11.2-6_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libreadline8",
+        package_name = "libreadline8",
+        sha256 = "f3b162b7c1e05430607e792ebdbfc417cbd1f1d32cf83664133ae63d811a72d2",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/r/readline/libreadline8_8.2-1.3_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libsqlite3-0",
+        package_name = "libsqlite3-0",
+        sha256 = "87e891926ba874c9f5fbd3b48d564cf103dd97db78f2d83fd1175826771dacfd",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/s/sqlite3/libsqlite3-0_3.40.1-2_arm64.deb"],
+    )
+    debian_archive(
         name = "arm64_debian12_libssl3",
         package_name = "libssl3",
         sha256 = "38571741535338220b015739b7d7c8a3f58988f4a7a7d7fed85871279a5a2b3e",
@@ -1075,6 +1303,18 @@ def repositories():
         package_name = "libstdc++6",
         sha256 = "21e971c5d3506f783b89efe8e12ac85081ddd9213e4f6529262bcfe95c326670",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libtinfo6",
+        package_name = "libtinfo6",
+        sha256 = "baef0f6776f84c7eed4f1146d6e5774689567dad43216894d41da02e6608e4b3",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/n/ncurses/libtinfo6_6.4-4_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_libtirpc3",
+        package_name = "libtirpc3",
+        sha256 = "deaf9ea54f74cab6690b4bc0b427f05cbe62cc073580d84f5f18a8d9e2ece401",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/libt/libtirpc/libtirpc3_1.3.3+ds-1_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian12_libuuid1",
@@ -1105,6 +1345,18 @@ def repositories():
         package_name = "openssl",
         sha256 = "f7604e1f5d969c0447642a917b7203d8519c2fc8f5d867dba0708823acc18c8e",
         urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/o/openssl/openssl_3.0.9-1_arm64.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_python3-distutils",
+        package_name = "python3-distutils",
+        sha256 = "a620b555f301860a08e30534c7e6f7d79818e5e1977bfec39a612e7003074318",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/p/python3-stdlib-extensions/python3-distutils_3.11.2-3_all.deb"],
+    )
+    debian_archive(
+        name = "arm64_debian12_python3.11-minimal",
+        package_name = "python3.11-minimal",
+        sha256 = "6e83406f07fb2f567aa12d57e51c24c40c42d7f144970ed9a05f0be25a1b1241",
+        urls = ["https://snapshot.debian.org/archive/debian/20230816T213052Z/pool/main/p/python3.11/python3.11-minimal_3.11.2-6_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian12_tzdata",
