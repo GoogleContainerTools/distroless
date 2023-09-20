@@ -188,14 +188,14 @@ PYTHON3 |= {
     "{REGISTRY}/{PROJECT_ID}/python3-" + distro + ":" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in BASE_ARCHITECTURES
     for (tag_base, label, user) in PYTHON3_VARIATIONS
-    for distro in LANGUAGE_DISTROS
+    for distro in DISTROS
 }
 
 # oci_image_index
 PYTHON3 |= {
     "{REGISTRY}/{PROJECT_ID}/python3-" + distro + ":" + tag_base: "//experimental/python3:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in PYTHON3_VARIATIONS
-    for distro in LANGUAGE_DISTROS
+    for distro in DISTROS
 }
 
 ## NODEJS
