@@ -4,15 +4,15 @@ The current estimation of end of life for images with the pattern:
 
 `gcr.io/distroless/<image>-debian<version>:(latest|nonroot|debug|debug-nonroot)`
 
-| Image       | Debian 11 EOL               |
-| ----------- | --------------------------- |
-| static      | debian 12 release day + 1yr |
-| base        | debian 12 release day + 1yr |
-| base-nossl  | debian 12 release day + 1yr |
-| cc          | debian 12 release day + 1yr |
-| java*       | debian 12 release day + 3mo |
-| node*       | debian 12 release day + 3mo |
-| python*     | debian 12 release day + 3mo |
+| Image       | Debian 11 EOL               | Debian 12 EOL               |
+| ----------- | --------------------------- | --------------------------- |
+| static      | 2024-06-01                  | debian 13 release day + 1yr |
+| base        | 2024-06-01                  | debian 13 release day + 1yr |
+| base-nossl  | 2024-06-01                  | debian 13 release day + 1yr |
+| cc          | 2024-06-01                  | debian 13 release day + 1yr |
+| java*       | 2023-12-01                  | debian 13 release day + 3mo |
+| node*       | 2023-12-01                  | debian 13 release day + 3mo |
+| python*     | 2023-12-01                  | debian 13 release day + 3mo |
 
 \* see below for language specific runtime notes
 
@@ -27,3 +27,4 @@ Node version support is for even numbered releases (18, 20, etc) that are curren
 Python support is experimental, and this project does not make any guarantees about the version of python in images.
 
 ### Images no longer supported (TBD)
+A list of supported image tags is available here: https://github.com/GoogleContainerTools/distroless#what-images-are-available
