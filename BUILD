@@ -184,18 +184,30 @@ PYTHON3 |= {
     for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
+# python on debian11 builds off of experimental
 PYTHON3 |= {
-    "{REGISTRY}/{PROJECT_ID}/python3-" + distro + ":" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/python3-debian11:" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_debian11"
     for arch in BASE_ARCHITECTURES
     for (tag_base, label, user) in PYTHON3_VARIATIONS
-    for distro in DISTROS
 }
 
 # oci_image_index
 PYTHON3 |= {
-    "{REGISTRY}/{PROJECT_ID}/python3-" + distro + ":" + tag_base: "//experimental/python3:" + label + "_" + user + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/python3-debian11:" + tag_base: "//experimental/python3:" + label + "_" + user + "_debian11"
     for (tag_base, label, user) in PYTHON3_VARIATIONS
-    for distro in DISTROS
+}
+
+# python on debian12 has moved out of experimental
+PYTHON3 |= {
+    "{REGISTRY}/{PROJECT_ID}/python3-debian12:" + tag_base + "-" + arch: "//python3:" + label + "_" + user + "_" + arch + "_debian12"
+    for arch in BASE_ARCHITECTURES
+    for (tag_base, label, user) in PYTHON3_VARIATIONS
+}
+
+# oci_image_index
+PYTHON3 |= {
+    "{REGISTRY}/{PROJECT_ID}/python3-debian12:" + tag_base: "//python3:" + label + "_" + user + "_debian12"
+    for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
 ## NODEJS

@@ -1,14 +1,13 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
-load("//base:distro.bzl", "DISTROS")
+load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//base:base.bzl", "NONROOT", "deb_pkg")
 
 package(default_visibility = ["//visibility:public"])
 
 DISTRO_VERSION = {
     "debian11": "3.9",
-    "debian12": "3.11",
 }
 
 [
@@ -63,32 +62,22 @@ DISTRO_VERSION = {
             deb_pkg(arch, distro, "zlib1g"),
             deb_pkg(arch, distro, "libcom-err2"),
             deb_pkg(arch, distro, "libcrypt1"),
+            deb_pkg(arch, distro, "libffi7"),
             deb_pkg(arch, distro, "libgssapi-krb5-2"),
             deb_pkg(arch, distro, "libk5crypto3"),
             deb_pkg(arch, distro, "libkeyutils1"),
             deb_pkg(arch, distro, "libkrb5-3"),
             deb_pkg(arch, distro, "libkrb5support0"),
+            deb_pkg(arch, distro, "libmpdec3"),
             deb_pkg(arch, distro, "libnsl2"),
+            deb_pkg(arch, distro, "libpython3.9-minimal"),
+            deb_pkg(arch, distro, "libpython3.9-stdlib"),
             deb_pkg(arch, distro, "libreadline8"),
             deb_pkg(arch, distro, "libtirpc3"),
+            deb_pkg(arch, distro, "python3.9-minimal"),
             "ld_so_" + arch + "_cache.tar",
             ":python_aliases_%s" % distro,
-        ] + {
-            # Distro-specific packages
-            "debian11": [
-                deb_pkg(arch, distro, "libffi7"),
-                deb_pkg(arch, distro, "libmpdec3"),
-                deb_pkg(arch, distro, "libpython3.9-minimal"),
-                deb_pkg(arch, distro, "libpython3.9-stdlib"),
-                deb_pkg(arch, distro, "python3.9-minimal"),
-            ],
-            "debian12": [
-                deb_pkg(arch, distro, "libffi8"),
-                deb_pkg(arch, distro, "libpython3.11-minimal"),
-                deb_pkg(arch, distro, "libpython3.11-stdlib"),
-                deb_pkg(arch, distro, "python3.11-minimal"),
-            ],
-        }[distro],
+        ],
     )
     for mode in [
         "",
