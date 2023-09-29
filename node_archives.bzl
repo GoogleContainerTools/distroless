@@ -45,6 +45,26 @@ def repositories():
     )
 
     node_archive(
+        name = "nodejs18_arm",
+        sha256 = "a84bf4ae2cd25a4d6aa5d562b6f7a62a8270221f94a5bbc9e4380494f0ee474d",
+        strip_prefix = "node-v18.18.0-linux-armv7l/",
+        urls = ["https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-armv7l.tar.gz"],
+        version = "18.18.0",
+        architecture = "arm",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs20_arm",
+        sha256 = "1922c4ff0c710b18bc6946e4efcc592b832e8c22853066b70a74181ac6d92a36",
+        strip_prefix = "node-v20.8.0-linux-armv7l/",
+        urls = ["https://nodejs.org/dist/v20.8.0/node-v20.8.0-linux-armv7l.tar.gz"],
+        version = "20.8.0",
+        architecture = "arm",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
         name = "nodejs18_ppc64le",
         sha256 = "f2ca5c856a4bb6a26e14d24ef69e249b078c8057ee92b6a268adbf6d2ef3b095",
         strip_prefix = "node-v18.18.0-linux-ppc64le/",

@@ -7,6 +7,7 @@ package(default_visibility = ["//visibility:public"])
 
 NODE_ARCHITECTURES = ARCHITECTURES + [
     "ppc64le",
+    "arm",
 ]
 
 NODEJS_MAJOR_VERISONS = ("18", "20")
