@@ -83,3 +83,23 @@ def repositories():
         architecture = "ppc64le",
         control = "//nodejs:control",
     )
+
+    node_archive(
+        name = "nodejs18_s390x",
+        sha256 = "a61865c5ad92a9affab43279db6a2fefbeb6f3a57732cc72354fb8a9edd66364",
+        strip_prefix = "node-v18.18.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-s390x.tar.gz"],
+        version = "18.18.0",
+        architecture = "s390x",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs20_s390x",
+        sha256 = "7f1c1f515eb4a93ef00ef8630de6f1e308c21969ce4b3ff482269cedb7929595",
+        strip_prefix = "node-v20.8.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v20.8.0/node-v20.8.0-linux-s390x.tar.gz"],
+        version = "20.8.0",
+        architecture = "s390x",
+        control = "//nodejs:control",
+    )

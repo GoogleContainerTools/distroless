@@ -213,6 +213,7 @@ PYTHON3 |= {
 NODE_ARCHITECTURES = BASE_ARCHITECTURES + [
     "ppc64le",
     "arm",
+    "s390x",
 ]
 
 ## NODEJS
