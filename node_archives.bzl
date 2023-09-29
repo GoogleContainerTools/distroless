@@ -43,3 +43,23 @@ def repositories():
         architecture = "arm64",
         control = "//nodejs:control",
     )
+
+    node_archive(
+        name = "nodejs18_ppc64le",
+        sha256 = "f2ca5c856a4bb6a26e14d24ef69e249b078c8057ee92b6a268adbf6d2ef3b095",
+        strip_prefix = "node-v18.18.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-ppc64le.tar.gz"],
+        version = "18.18.0",
+        architecture = "ppc64le",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs20_ppc64le",
+        sha256 = "44beb7fb1ebacedf5a4c08cc4cd5d346820058a3f3316d9f34bc2fa16a29fd8c",
+        strip_prefix = "node-v20.8.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v20.8.0/node-v20.8.0-linux-ppc64le.tar.gz"],
+        version = "20.8.0",
+        architecture = "ppc64le",
+        control = "//nodejs:control",
+    )

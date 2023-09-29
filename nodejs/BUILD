@@ -5,6 +5,10 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 package(default_visibility = ["//visibility:public"])
 
+NODE_ARCHITECTURES = ARCHITECTURES + [
+    "ppc64le",
+]
+
 NODEJS_MAJOR_VERISONS = ("18", "20")
 
 MODE = [
@@ -22,7 +26,7 @@ USER = [
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + distro,
         images = [
             "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro
-            for arch in ARCHITECTURES
+            for arch in NODE_ARCHITECTURES
         ],
     )
     for mode in MODE
@@ -43,7 +47,7 @@ USER = [
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -63,7 +67,7 @@ USER = [
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -83,7 +87,7 @@ pkg_tar(
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -100,6 +104,6 @@ pkg_tar(
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
 ]

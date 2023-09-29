@@ -210,6 +210,10 @@ PYTHON3 |= {
     for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
+NODE_ARCHITECTURES = BASE_ARCHITECTURES + [
+    "ppc64le",
+]
+
 ## NODEJS
 NODEJS_VERSIONS = [
     "18",
@@ -225,7 +229,7 @@ NODEJS_VARIATIONS = [
 
 NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + distro
-    for arch in BASE_ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for distro in DISTROS
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
@@ -241,7 +245,7 @@ NODEJS |= {
 
 NODEJS |= {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_debian11"
-    for arch in BASE_ARCHITECTURES
+    for arch in NODE_ARCHITECTURES
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
