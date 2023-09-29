@@ -26,20 +26,6 @@ pkg_tar(
     srcs = ["control"]
 )
 
-dpkg_status(
-    name = "dpkg",
-    control = ":_control.tar",
-    package_name = "{package_name}"
-)
-
-pkg_tar(
-    name = "data_with_dpkg_status",
-    deps = [
-        ":data",
-        ":dpkg"
-    ]
-)
-
 debian_spdx(
     name = "spdx",
     control = ":_control.tar",
@@ -52,7 +38,7 @@ debian_spdx(
 
 merge_providers(
     name = "{name}",
-    srcs = [":data_with_dpkg_status", ":spdx"],
+    srcs = [":data", ":spdx"],
     visibility = ["//visibility:public"],
 )
 """
@@ -96,6 +82,8 @@ node_archive = repository_rule(
         "package_name": attr.string(default = "nodejs"),
         "version": attr.string(mandatory = True),
         "architecture": attr.string(mandatory = True),
+        # control is only used to populate the sbom, see https://github.com/GoogleContainerTools/distroless/issues/1373
+        # for why writing debian control files to the image is incompatible with scanners.
         "control": attr.label(),
     },
 )
