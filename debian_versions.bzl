@@ -10,7 +10,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "libbrotli1": "1.0.9-2+b2",
             "libbz2-1.0": "1.0.8-4",
             "libc-bin": "2.31-13+deb11u6",
-            "libc6": "2.31-13+deb11u6",
+            "libc6": "2.31-13+deb11u7",
             "libcom-err2": "1.46.2-2",
             "libcrypt1": "1:4.4.18-4",
             "libdb5.3": "5.3.28+dfsg1-0.8",
