@@ -256,7 +256,7 @@ RULE_NAMES = [
 [
     structure_test(
         name = "check_certs_" + rule_name + "_test",
-        config = ["testdata/" + rule_name + "_certs.yaml"],
+        config = ["testdata/java_certs.yaml"],
         image = ":check_certs_" + rule_name,
         tags = [
             "amd64",
@@ -279,7 +279,7 @@ RULE_NAMES = [
 [
     structure_test(
         name = "check_encoding_" + rule_name + "_test",
-        config = ["testdata/" + rule_name + "_encoding.yaml"],
+        config = ["testdata/java_encoding.yaml"],
         image = ":check_encoding_" + rule_name,
         tags = [
             "amd64",
@@ -302,7 +302,7 @@ RULE_NAMES = [
 [
     structure_test(
         name = "check_libharfbuzz_" + rule_name + "_test",
-        config = ["testdata/" + rule_name + "_libharfbuzz.yaml"],
+        config = ["testdata/java_libharfbuzz.yaml"],
         image = ":check_libharfbuzz_" + rule_name,
         tags = [
             "amd64",
