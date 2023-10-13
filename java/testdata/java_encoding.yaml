@@ -3,7 +3,7 @@ commandTests:
   - name: check_encoding
     command: ["/usr/bin/java",
               "-cp",
-              "/check_encoding_java17_nonroot_debian11_binary.jar:/check_encoding_java17_nonroot_debian11_binary",
+              "/*",
               "testdata.CheckEncoding"]
     expectedOutput: ['LANG=C.UTF-8',
                      'Locale.getDefault\(\)=en',

@@ -1,8 +1,0 @@
-schemaVersion: "1.0.0"
-commandTests:
-  - name: check_libharfbuzz
-    command: ["/usr/bin/java",
-              "-cp",
-              "/check_libharfbuzz_java17_root_debian11_binary.jar:/check_libharfbuzz_java17_root_debian11_binary",
-              "testdata.CheckLibharfbuzz"]
-    expectedOutput: ['^\d+ fonts available']
