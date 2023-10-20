@@ -40,6 +40,7 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/java17-debian12     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
 | gcr.io/distroless/nodejs18-debian12   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
 | gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
+| gcr.io/distroless/nodejs21-debian12   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
 
 #### Debian 11
 | Image                                 | Tags                                   | Architecture Suffixes             |
@@ -54,6 +55,7 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
 | gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
 | gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
+| gcr.io/distroless/nodejs21-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
 
 These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian11:latest-amd64`
 
@@ -126,7 +128,8 @@ Follow these steps to get started:
     * [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs20-debian12](nodejs/README.md)
     * [gcr.io/distroless/nodejs20-debian11](nodejs/README.md)
-
+    * [gcr.io/distroless/nodejs21-debian12](nodejs/README.md)
+    * [gcr.io/distroless/nodejs21-debian11](nodejs/README.md)
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
     * [gcr.io/distroless/python3-debian12](experimental/python3/README.md)
     * [gcr.io/distroless/python3-debian11](experimental/python3/README.md)

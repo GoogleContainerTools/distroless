@@ -1,13 +1,14 @@
-const https = require('https')
+const https = require("node:https");
+
 const options = {
-  hostname: 'www.google.com',
+  hostname: "www.google.com",
   port: 443,
-  path: '/',
-  method: 'GET'
-}
+  path: "/",
+  method: "GET",
+};
 
-const req = https.request(options, res => {
-  console.log(`statusCode: ${res.statusCode}`)
-})
+const req = https.request(options, (res) => {
+  console.log(`statusCode: ${res.statusCode}`);
+});
 
-req.end()
+req.end();
