@@ -1,5 +1,5 @@
 load("//base:distro.bzl", "DISTROS")
-load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//:checksums.bzl", "ARCHITECTURES")
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
