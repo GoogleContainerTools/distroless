@@ -5,7 +5,6 @@ load("//base:base.bzl", "deb_pkg")
 load("//base:distro.bzl", "DISTROS")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
-load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
 
 package(default_visibility = ["//visibility:public"])
@@ -15,14 +14,18 @@ USERS = [
     "nonroot",
 ]
 
-JAVA_ARCHITECTURES = ARCHITECTURES + [
+JAVA_ARCHITECTURES = [
+    "amd64",
+    "arm64",
     "s390x",
     "ppc64le",
 ]
 
-JAVA_VERSIONS = [
-    "11",
-    "17",
+JAVA_21_ARCHITECTURES = [
+    "amd64",
+    "arm64",
+    # "s390x", adoptium doesn't have a build yet
+    "ppc64le",
 ]
 
 JAVA_VERSIONS_PER_DISTRO = [
@@ -56,6 +59,36 @@ JAVA_VERSIONS_PER_DISTRO = [
     )
     for arch in JAVA_ARCHITECTURES
     for java_version, distro in JAVA_VERSIONS_PER_DISTRO
+]
+
+# special case for java 21, we will start using temurin, the goal is to slowly transition all builds
+# to temurin, to also back support java 11 on debian12.
+[
+    pkg_tar(
+        name = "temurin_jre_" + java_version + "_" + arch,
+        symlinks = {
+            "usr/bin/java": "/usr/lib/jvm/temurin" + java_version + "_jre_" + arch + "/bin/java",
+        },
+        deps = [
+            "@temurin" + java_version + "_jre_" + arch,
+        ],
+    )
+    for arch in JAVA_21_ARCHITECTURES
+    for java_version in ["21"]
+]
+
+[
+    pkg_tar(
+        name = "temurin_jdk_" + java_version + "_" + arch,
+        symlinks = {
+            "usr/bin/java": "/usr/lib/jvm/temurin" + java_version + "_jdk_" + arch + "/bin/java",
+        },
+        deps = [
+            "@temurin" + java_version + "_jdk_" + arch,
+        ],
+    )
+    for arch in JAVA_21_ARCHITECTURES
+    for java_version in ["21"]
 ]
 
 # Base
@@ -196,6 +229,81 @@ DISTRO_SPECIFIC_LIBRARIES = {
     for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
+# Temurin Java 21
+[
+    oci_image_index(
+        name = "java" + java_version + "_" + user + "_" + distro,
+        images = [
+            "java" + java_version + "_" + user + "_" + arch + "_" + distro
+            for arch in JAVA_21_ARCHITECTURES
+        ],
+    )
+    for user in USERS
+    for java_version, distro in [("21", "debian12")]
+]
+
+[
+    oci_image(
+        name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
+        base = ":java_base_" + user + "_" + arch + "_" + distro,
+        # We expect users to use:
+        # cmd = ["/path/to/deploy.jar", "--option1", ...]
+        entrypoint = [
+            "/usr/bin/java",
+            "-jar",
+        ],
+        # TODO: I don't know how to set this correctly in bazel yet, so lets get
+        # someone who is a bazel expert to help with this to get this informations
+        # directly from the custom repository rule
+        # env = {
+        #    "JAVA_VERSION": TBD,
+        # },
+        tars = [
+            ":temurin_jre_" + java_version + "_" + arch,
+        ],
+    )
+    for arch in JAVA_21_ARCHITECTURES
+    for user in USERS
+    for java_version, distro in [("21", "debian12")]
+]
+
+# Temurin Java 21 Debug
+[
+    oci_image_index(
+        name = "java" + java_version + "_debug_" + user + "_" + distro,
+        images = [
+            "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro
+            for arch in JAVA_21_ARCHITECTURES
+        ],
+    )
+    for user in USERS
+    for java_version, distro in [("21", "debian12")]
+]
+
+[
+    oci_image(
+        name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
+        architecture = arch,
+        base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
+        # We expect users to use:
+        # cmd = ["/path/to/deploy.jar", "--option1", ...]
+        entrypoint = [
+            "/usr/bin/java",
+            "-jar",
+        ],
+        # see oci_image for non debug image
+        # env = {
+        #    "JAVA_VERSION": TBD ,
+        # },
+        tars = [
+            ":temurin_jdk_" + java_version + "_" + arch,
+        ],
+    )
+    for user in USERS
+    for arch in JAVA_21_ARCHITECTURES
+    for java_version, distro in [("21", "debian12")]
+]
+
 [
     structure_test(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro + "_test",
@@ -225,9 +333,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
             "manual",
         ],
     )
-    for arch in JAVA_ARCHITECTURES
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12")]
+    for arch in (JAVA_ARCHITECTURES if java_version != "21" else JAVA_21_ARCHITECTURES)
 ]
 
 [
@@ -240,9 +348,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
             "manual",
         ],
     )
-    for arch in JAVA_ARCHITECTURES
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12")]
+    for arch in (JAVA_ARCHITECTURES if java_version != "21" else JAVA_21_ARCHITECTURES)
 ]
 
 RULE_NAMES = [
@@ -252,6 +360,8 @@ RULE_NAMES = [
     ("java17_root_debian12", "java17_root_amd64_debian12"),
     ("java17_nonroot_debian11", "java17_nonroot_amd64_debian11"),
     ("java17_nonroot_debian12", "java17_nonroot_amd64_debian12"),
+    ("java21_root_debian12", "java21_root_amd64_debian12"),
+    ("java21_nonroot_debian12", "java21_nonroot_amd64_debian12"),
 ]
 
 [

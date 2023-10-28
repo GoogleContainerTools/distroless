@@ -93,6 +93,10 @@ load(":node_archives.bzl", node_repositories = "repositories")
 
 node_repositories()
 
+load(":java_archives.bzl", java_repositories = "repositories")
+
+java_repositories()
+
 # For Jetty
 http_archive(
     name = "jetty",
