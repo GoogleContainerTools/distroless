@@ -23,8 +23,8 @@ Java will only support current LTS version distributed by debian [see here](http
 ### Node
 Node version support is for even numbered releases (18, 20, etc) that are current, active or in LTS maintenance. For more information, [see here](https://nodejs.org/en/about/releases/).
 
-### Python
-Python support is experimental, and this project does not make any guarantees about the version of python in images.
+### Python on Debian 11
+Python on Debian 11 support is experimental, and this project does not make any guarantees about the version of python in images.
 
 ### Images no longer supported (TBD)
 A list of supported image tags is available here: https://github.com/GoogleContainerTools/distroless#what-images-are-available

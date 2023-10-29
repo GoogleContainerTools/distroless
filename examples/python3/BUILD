@@ -14,7 +14,7 @@ pkg_tar(
 [
     oci_image(
         name = "hello_" + distro,
-        base = "//experimental/python3:python3_root_arm64_" + distro,
+        base = "//python3:python3_root_arm64_" + distro,
         cmd = [
             "hello.py",
             "/etc",
