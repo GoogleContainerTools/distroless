@@ -102,7 +102,7 @@ ENTRYPOINT "myapp"
 ```
 
 For the same reasons, if the entrypoint is set to the empty vector, the CMD command should be specified in `vector` form (see examples below).
-Note that by default static, base and cc images have the empty vector entrypoint. Images with an included language runtime have a language specific default (see: [java](java/README.md#usage), [nodejs](nodejs/README.md#usage), [python3](experimental/python3/README.md#usage)).
+Note that by default static, base and cc images have the empty vector entrypoint. Images with an included language runtime have a language specific default (see: [java](java/README.md#usage), [nodejs](nodejs/README.md#usage), [python3](python3/README.md#usage)).
 
 ### Docker
 
@@ -126,9 +126,8 @@ Follow these steps to get started:
     * [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
     * [gcr.io/distroless/nodejs20-debian12](nodejs/README.md)
     * [gcr.io/distroless/nodejs20-debian11](nodejs/README.md)
-
+    * [gcr.io/distroless/python3-debian12](python3/README.md)
 * The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
-    * [gcr.io/distroless/python3-debian12](experimental/python3/README.md)
     * [gcr.io/distroless/python3-debian11](experimental/python3/README.md)
 * Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
@@ -228,7 +227,7 @@ cd examples/python3/
 edit the ```Dockerfile``` to change the final image to ```:debug```:
 
 ```dockerfile
-FROM gcr.io/distroless/python3-debian11:debug
+FROM gcr.io/distroless/python3-debian12:debug
 COPY . /app
 WORKDIR /app
 CMD ["hello.py", "/etc"]
