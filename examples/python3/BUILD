@@ -11,20 +11,29 @@ pkg_tar(
 )
 
 # This example runs a python program that walks the filesystem under "/etc" and prints every filename.
-[
-    oci_image(
-        name = "hello_" + distro,
-        base = "//python3:python3_root_arm64_" + distro,
-        cmd = [
-            "hello.py",
-            "/etc",
-        ],
-        tars = [
-            ":hello_py",
-        ],
-    )
-    for distro in DISTROS
-]
+oci_image(
+    name = "hello_debian11",
+    base = "//experimental/python3:python3_root_amd64_debian11",
+    cmd = [
+        "hello.py",
+        "/etc",
+    ],
+    tars = [
+        ":hello_py",
+    ],
+)
+
+oci_image(
+    name = "hello_debian12",
+    base = "//python3:python3_root_amd64_debian12",
+    cmd = [
+        "hello.py",
+        "/etc",
+    ],
+    tars = [
+        ":hello_py",
+    ],
+)
 
 # Run
 # podman load -i bazel-bin/examples/python3/tarball/tarball.tar
