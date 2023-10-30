@@ -259,7 +259,7 @@ JAVA_ARCHITECTURES = BASE_ARCHITECTURES + [
     "ppc64le",
 ]
 
-JAVA_BASE_VARIATIONS = [
+JAVA_VARIATIONS = [
     ("latest", "root"),
     ("nonroot", "nonroot"),
     ("debug", "debug_root"),
@@ -280,34 +280,27 @@ JAVA_BASE = {
 JAVA_BASE |= {
     "{REGISTRY}/{PROJECT_ID}/java-base-debian11:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian11"
     for arch in JAVA_ARCHITECTURES
-    for (tag_base, label) in JAVA_BASE_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
 }
 
 JAVA_BASE |= {
     "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian12"
     for arch in JAVA_ARCHITECTURES
-    for (tag_base, label) in JAVA_BASE_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
 }
 
 # oci_image_index
 JAVA_BASE |= {
     "{REGISTRY}/{PROJECT_ID}/java-base-debian11:" + tag_base: "//java:java_base_" + label + "_debian11"
-    for (tag_base, label) in JAVA_BASE_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
 }
 
 JAVA_BASE |= {
     "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base: "//java:java_base_" + label + "_debian12"
-    for (tag_base, label) in JAVA_BASE_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
 }
 
 ## JAVA11
-JAVA11_VARIATIONS = [
-    ("latest", "root"),
-    ("nonroot", "nonroot"),
-    ("debug", "debug_root"),
-    ("debug-nonroot", "debug_nonroot"),
-]
-
 JAVA11 = {
     "{REGISTRY}/{PROJECT_ID}/java11:latest": "//java:java11_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java11:nonroot": "//java:java11_nonroot_amd64_debian11",
@@ -317,24 +310,17 @@ JAVA11 = {
 
 JAVA11 |= {
     "{REGISTRY}/{PROJECT_ID}/java11-debian11:" + tag_base + "-" + arch: "//java:java11_" + label + "_" + arch + "_debian11"
-    for (tag_base, label) in JAVA11_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
     for arch in JAVA_ARCHITECTURES
 }
 
 # oci_image_index
 JAVA11 |= {
     "{REGISTRY}/{PROJECT_ID}/java11-debian11:" + tag_base: "//java:java11_" + label + "_debian11"
-    for (tag_base, label) in JAVA11_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
 }
 
 ## JAVA17
-JAVA17_VARIATIONS = [
-    ("latest", "root"),
-    ("nonroot", "nonroot"),
-    ("debug", "debug_root"),
-    ("debug-nonroot", "debug_nonroot"),
-]
-
 JAVA17 = {
     "{REGISTRY}/{PROJECT_ID}/java17:latest": "//java:java17_root_amd64_debian11",
     "{REGISTRY}/{PROJECT_ID}/java17-debian12:latest": "//java:java17_root_amd64_debian12",
@@ -348,25 +334,49 @@ JAVA17 = {
 
 JAVA17 |= {
     "{REGISTRY}/{PROJECT_ID}/java17-debian11:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian11"
-    for (tag_base, label) in JAVA17_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
     for arch in JAVA_ARCHITECTURES
 }
 
 JAVA17 |= {
     "{REGISTRY}/{PROJECT_ID}/java17-debian12:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian12"
-    for (tag_base, label) in JAVA17_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
     for arch in JAVA_ARCHITECTURES
 }
 
 # oci_image_index
 JAVA17 |= {
     "{REGISTRY}/{PROJECT_ID}/java17-debian11:" + tag_base: "//java:java17_" + label + "_debian11"
-    for (tag_base, label) in JAVA17_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
 }
 
 JAVA17 |= {
     "{REGISTRY}/{PROJECT_ID}/java17-debian12:" + tag_base: "//java:java17_" + label + "_debian12"
-    for (tag_base, label) in JAVA17_VARIATIONS
+    for (tag_base, label) in JAVA_VARIATIONS
+}
+
+## JAVA 21 (experimental for now)
+JAVA_21_ARCHITECTURES = [
+    "amd64",
+    "arm64",
+    "ppc64le",
+]
+
+JAVA21 = {
+    "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base + "-" + arch: "//java:java21_" + label + "_" + arch + "_debian12"
+    for (tag_base, label) in JAVA_VARIATIONS
+    for arch in JAVA_21_ARCHITECTURES
+}
+
+# oci_image_index
+JAVA21 |= {
+    "{REGISTRY}/{PROJECT_ID}/java21:" + tag_base: "//java:java21_" + label + "_debian12"
+    for (tag_base, label) in JAVA_VARIATIONS
+}
+
+JAVA21 |= {
+    "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base: "//java:java21_" + label + "_debian12"
+    for (tag_base, label) in JAVA_VARIATIONS
 }
 
 ## JETTY
@@ -401,9 +411,16 @@ ALL |= JAVA11
 
 ALL |= JAVA17
 
+ALL |= JAVA21
+
 ALL |= JETTY
 
 sign_and_push_all(
     name = "sign_and_push",
     images = ALL,
+)
+
+sign_and_push_all(
+    name = "sign_and_push_java21",
+    images = JAVA21,
 )

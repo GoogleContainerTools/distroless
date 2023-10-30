@@ -1,0 +1,7 @@
+Package: Eclipse Temurin
+Version: {{VERSION}}
+Architecture: {{ARCHITECTURE}}
+Maintainer: Adoptium Working Group <https://adoptium.net/>
+Homepage: https://adoptium.net
+SHA256: {{SHA256}}
+Description: Eclipse Temurin is the name of the OpenJDK distribution from Adoptium.
