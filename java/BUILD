@@ -6,6 +6,7 @@ load("//base:distro.bzl", "DISTROS")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
+load("//:java_archives.bzl", "JAVA_RELEASE_VERSIONS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -252,12 +253,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
             "/usr/bin/java",
             "-jar",
         ],
-        # TODO: I don't know how to set this correctly in bazel yet, so lets get
-        # someone who is a bazel expert to help with this to get this informations
-        # directly from the custom repository rule
-        # env = {
-        #    "JAVA_VERSION": TBD,
-        # },
+        env = {
+            "JAVA_VERSION": JAVA_RELEASE_VERSIONS["temurin" + java_version + "_jre_" + arch],
+        },
         tars = [
             ":temurin_jre_" + java_version + "_" + arch,
         ],
@@ -291,10 +289,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
             "/usr/bin/java",
             "-jar",
         ],
-        # see oci_image for non debug image
-        # env = {
-        #    "JAVA_VERSION": TBD ,
-        # },
+        env = {
+            "JAVA_VERSION": JAVA_RELEASE_VERSIONS["temurin" + java_version + "_jdk_" + arch],
+        },
         tars = [
             ":temurin_jdk_" + java_version + "_" + arch,
         ],

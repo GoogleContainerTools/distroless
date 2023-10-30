@@ -22,8 +22,7 @@ fileExistenceTests:
   - name: no-shell
     path: "/bin/sh"
     shouldExist: false
-# TODO
-# metadataTest:
-#   envVars:
-#    - key: 'JAVA_VERSION'
-#      value: '17.0.8'
+metadataTest:
+  envVars:
+   - key: 'JAVA_VERSION'
+     value: '21.0.1'

@@ -21,8 +21,7 @@ fileExistenceTests:
   - name: no-javac
     path: "/usr/lib/jvm/temurin21_jre_amd64/bin/javac"
     shouldExist: false
-# todo
-# metadataTest:
-#  envVars:
-#    - key: 'JAVA_VERSION'
-#      value: '21.0.1'
+metadataTest:
+  envVars:
+    - key: 'JAVA_VERSION'
+      value: '21.0.1'
