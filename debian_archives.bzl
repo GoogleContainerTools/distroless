@@ -48,13 +48,13 @@ def repositories():
         name = "amd64_debian11_libc-bin",
         package_name = "libc-bin",
         sha256 = "8b048ab5c7e9f5b7444655541230e689631fd9855c384e8c4a802586d9bbc65a",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_amd64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian11_libc6",
         package_name = "libc6",
         sha256 = "765c87ae3f40c07abcf911b4040805fe4728c42e22d5a174a59fe4413ca433e0",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_amd64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian11_libcom-err2",
@@ -270,13 +270,13 @@ def repositories():
         name = "amd64_debian11_openjdk-11-jdk-headless",
         package_name = "openjdk-11-jdk-headless",
         sha256 = "6b72b14c4e4e895fc4e384b3df0f7547d56f47801cc7da6bfc5f25086039dc04",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.21+9-1~deb11u1_amd64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.21+9-1~deb11u1_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian11_openjdk-11-jre-headless",
         package_name = "openjdk-11-jre-headless",
         sha256 = "266914df035215ebddfcdd341feed9d66179ec5f4cf05f2488e4321658079723",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.21+9-1~deb11u1_amd64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.21+9-1~deb11u1_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian11_openjdk-17-jdk-headless",
@@ -366,13 +366,13 @@ def repositories():
         name = "amd64_debian12_libc-bin",
         package_name = "libc-bin",
         sha256 = "9840ce93b42b66c784852df07ee9131b7acab886177794a5c9ba761da9463887",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_amd64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian12_libc6",
         package_name = "libc6",
         sha256 = "96c2d796a21fdc92b4d272a550841c208e89c91ab0d54514ac28ae92da64c2c7",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_amd64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian12_libcom-err2",
@@ -546,7 +546,7 @@ def repositories():
         name = "amd64_debian12_libssl3",
         package_name = "libssl3",
         sha256 = "6e129c5814812b3516a656ae5b664b9970e2f8823250cd5b98190f21c0de2bca",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_amd64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian12_libstdcpp6",
@@ -594,7 +594,7 @@ def repositories():
         name = "amd64_debian12_openssl",
         package_name = "openssl",
         sha256 = "ea063646d4f70d15be5ed52b67b5ac95d68dda823c60d808c7c25439c6d14e4d",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_amd64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_amd64.deb"],
     )
     debian_archive(
         name = "amd64_debian12_python3-distutils",
@@ -636,13 +636,13 @@ def repositories():
         name = "arm_debian11_libc-bin",
         package_name = "libc-bin",
         sha256 = "58ec829920f47e3701c08a0fb16202645a1402034fa2c8e3e279b1b53c25d962",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_armhf.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_armhf.deb"],
     )
     debian_archive(
         name = "arm_debian11_libc6",
         package_name = "libc6",
         sha256 = "a915ffd7087c80633429d3bf94ab5e7b485369b07a28b8c000d8413341c80012",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_armhf.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_armhf.deb"],
     )
     debian_archive(
         name = "arm_debian11_libgcc-s1",
@@ -702,13 +702,13 @@ def repositories():
         name = "arm_debian12_libc-bin",
         package_name = "libc-bin",
         sha256 = "38c44247c5b3e864d6db2877edd9c9a0555fc4e23ae271b73d7f527802616df5",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_armhf.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_armhf.deb"],
     )
     debian_archive(
         name = "arm_debian12_libc6",
         package_name = "libc6",
         sha256 = "c488dc24934cd1576a7ec7998ad7fa42b4072093f9b8195c2b05e8aa41b3a87a",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_armhf.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_armhf.deb"],
     )
     debian_archive(
         name = "arm_debian12_libgcc-s1",
@@ -726,7 +726,7 @@ def repositories():
         name = "arm_debian12_libssl3",
         package_name = "libssl3",
         sha256 = "e22f668aaa42fe6e14ecfbf7ab0ff152ef610956ee60ddf28800a994f7c26a7d",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_armhf.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_armhf.deb"],
     )
     debian_archive(
         name = "arm_debian12_libstdcpp6",
@@ -744,7 +744,7 @@ def repositories():
         name = "arm_debian12_openssl",
         package_name = "openssl",
         sha256 = "fa601d4b63af41d80e80e4f1bee2c776f24f9160ee542b27113da7379e036009",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_armhf.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_armhf.deb"],
     )
     debian_archive(
         name = "arm_debian12_tzdata",
@@ -798,13 +798,13 @@ def repositories():
         name = "arm64_debian11_libc-bin",
         package_name = "libc-bin",
         sha256 = "17936e3def85af83d8898d5597c69cd5ec19d7ccea5885c10d5cd7670d0dc159",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_arm64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian11_libc6",
         package_name = "libc6",
         sha256 = "388763ac39e143c670b7a9c8394aac6bb36ce3c3c13428fef02e9cd9ce73575d",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_arm64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian11_libcom-err2",
@@ -1020,13 +1020,13 @@ def repositories():
         name = "arm64_debian11_openjdk-11-jdk-headless",
         package_name = "openjdk-11-jdk-headless",
         sha256 = "b48d0b3f9fb39164646f7132d4009ebe1568208a8c433f19b8a08444d6d71041",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.21+9-1~deb11u1_arm64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.21+9-1~deb11u1_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian11_openjdk-11-jre-headless",
         package_name = "openjdk-11-jre-headless",
         sha256 = "c89cd74db9f95f49b339b6f9f2d7fa5c23546ed34414bdc92866b5d249874186",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.21+9-1~deb11u1_arm64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.21+9-1~deb11u1_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian11_openjdk-17-jdk-headless",
@@ -1116,13 +1116,13 @@ def repositories():
         name = "arm64_debian12_libc-bin",
         package_name = "libc-bin",
         sha256 = "bf333f8ed1ddb406c34a753bc574f9901c2ee41cebfa58d9aff985d8d07c5ba5",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_arm64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian12_libc6",
         package_name = "libc6",
         sha256 = "75668ed8689fa8c38ce36728f84eb987bb8e7b0acc16802afe2bb07b25c3155c",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_arm64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian12_libcom-err2",
@@ -1296,7 +1296,7 @@ def repositories():
         name = "arm64_debian12_libssl3",
         package_name = "libssl3",
         sha256 = "4e05dfa7319f72c5598f29a39eaf568203e2ae2314d5ef434dbf764de6448462",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_arm64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian12_libstdcpp6",
@@ -1344,7 +1344,7 @@ def repositories():
         name = "arm64_debian12_openssl",
         package_name = "openssl",
         sha256 = "ef8ec413c2bd866dbe7ab068cd45b28d22e6c586e3ab0bd8de127a3e8dfe650b",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_arm64.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_arm64.deb"],
     )
     debian_archive(
         name = "arm64_debian12_python3-distutils",
@@ -1404,13 +1404,13 @@ def repositories():
         name = "ppc64le_debian11_libc-bin",
         package_name = "libc-bin",
         sha256 = "87748bc247e91a1dc82584e86c66fcd8d7a17783c47c3ca752a5c34314a5d082",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_ppc64el.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian11_libc6",
         package_name = "libc6",
         sha256 = "158e9b2de05f0cf063eb465f63c06664818e6f7d627fc26b39abe6ff5726d2c7",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_ppc64el.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian11_libcrypt1",
@@ -1518,13 +1518,13 @@ def repositories():
         name = "ppc64le_debian11_openjdk-11-jdk-headless",
         package_name = "openjdk-11-jdk-headless",
         sha256 = "9f4c1b8c821b353c52fce3aaaf3a2f159ebdcfbbcdf0775f95c1de1b19309637",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.21+9-1~deb11u1_ppc64el.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.21+9-1~deb11u1_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian11_openjdk-11-jre-headless",
         package_name = "openjdk-11-jre-headless",
         sha256 = "062fd7dd3c04da4b062d7e2f09767f1839722ca9e61f84ef95b07047327312b5",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.21+9-1~deb11u1_ppc64el.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.21+9-1~deb11u1_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian11_openjdk-17-jdk-headless",
@@ -1590,13 +1590,13 @@ def repositories():
         name = "ppc64le_debian12_libc-bin",
         package_name = "libc-bin",
         sha256 = "e5283f2de0ad3b1536db09e379d99e404a20ad77d7594fc265ccbe409d3d0fa5",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_ppc64el.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian12_libc6",
         package_name = "libc6",
         sha256 = "06bca4a0dc0ac7fe4b49688171e8b00e88ddf2227148f6455a4e614937843d43",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_ppc64el.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian12_libcrypt1",
@@ -1680,7 +1680,7 @@ def repositories():
         name = "ppc64le_debian12_libssl3",
         package_name = "libssl3",
         sha256 = "62fefa777c0c508c52630a9ba53c8492f2ee7dbc3f23eb58ad932b34795d2b70",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_ppc64el.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian12_libstdcpp6",
@@ -1716,7 +1716,7 @@ def repositories():
         name = "ppc64le_debian12_openssl",
         package_name = "openssl",
         sha256 = "ef72ad09481309d5af359b29bbc6670d6bf1b30d68257e6573a7f9ffc8e5e035",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_ppc64el.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_ppc64el.deb"],
     )
     debian_archive(
         name = "ppc64le_debian12_tzdata",
@@ -1764,13 +1764,13 @@ def repositories():
         name = "s390x_debian11_libc-bin",
         package_name = "libc-bin",
         sha256 = "d2b8de7f828a63128e7ea21261a546826248bdbfa20da6ec5f3cafe43d3a395b",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_s390x.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.31-13+deb11u7_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian11_libc6",
         package_name = "libc6",
         sha256 = "df97be6de12a42832fdc3212dfbdbb38919471883fc94a74892eec52fe27a4d3",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_s390x.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.31-13+deb11u7_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian11_libcrypt1",
@@ -1878,13 +1878,13 @@ def repositories():
         name = "s390x_debian11_openjdk-11-jdk-headless",
         package_name = "openjdk-11-jdk-headless",
         sha256 = "012354bae41b32e69550828aac760445546e2db47793b36512e553c20f143946",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.21+9-1~deb11u1_s390x.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openjdk-11/openjdk-11-jdk-headless_11.0.21+9-1~deb11u1_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian11_openjdk-11-jre-headless",
         package_name = "openjdk-11-jre-headless",
         sha256 = "9439985df210cb3b4f078448958e3b193d4311d3b5204b67c935c147411a05d9",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.21+9-1~deb11u1_s390x.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openjdk-11/openjdk-11-jre-headless_11.0.21+9-1~deb11u1_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian11_openjdk-17-jdk-headless",
@@ -1950,13 +1950,13 @@ def repositories():
         name = "s390x_debian12_libc-bin",
         package_name = "libc-bin",
         sha256 = "12b2d4f2422682794bc735aab3159e44a910d9c91c67885d551b4e53688d83df",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_s390x.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u3_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian12_libc6",
         package_name = "libc6",
         sha256 = "827d210dd30426405c980b45ddf6cb6194e45711909de44cf4e998be939d6a49",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_s390x.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u3_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian12_libcrypt1",
@@ -2040,7 +2040,7 @@ def repositories():
         name = "s390x_debian12_libssl3",
         package_name = "libssl3",
         sha256 = "39046c25476b3a20def5db5cfbef5d885d01d2df1ff2e56d2f5cadaeeadc2606",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_s390x.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian12_libstdcpp6",
@@ -2076,7 +2076,7 @@ def repositories():
         name = "s390x_debian12_openssl",
         package_name = "openssl",
         sha256 = "d696a48af727ebc8d0587771e3e2a5bca817f4786504ea196017bd58bf3506b4",
-        urls = ["https://snapshot.debian.org/archive/debian-security/20231028T150401Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_s390x.deb"],
+        urls = ["https://snapshot.debian.org/archive/debian-security/20231030T100412Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_s390x.deb"],
     )
     debian_archive(
         name = "s390x_debian12_tzdata",

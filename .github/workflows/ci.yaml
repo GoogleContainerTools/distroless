@@ -34,15 +34,20 @@ jobs:
           sudo apt-get autoremove -y
           sudo apt-get clean
           rm -rf /usr/share/dotnet/
-      - name: Fetch
+      - name: Fetch # this can take a long time if there are a lot of errors
         run: |
-          for i in $(seq 5); do 
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //... && break || sleep 20;
+          for i in $(seq 10); do 
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //... && break || sleep 180;
           done
       - name: Build All Images
-        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc build $(bazel query 'kind(oci_image, deps(:sign_and_push))')
+        run: |
+          set -e
+          targets=$(bazel query 'kind(oci_image, deps(:sign_and_push))')
+          bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc build $targets
       - name: Unit Tests
         run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test //... --build_tests_only
+      - name: Build Examples
+        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc build //examples/...
 
   ci-images:
     name: CI image tests
