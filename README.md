@@ -64,15 +64,17 @@ Any other tags are considered deprecated and are no longer updated
 All distroless images are signed by [cosign](https://github.com/sigstore/cosign).
 We recommend verifying any distroless image you use before building your image.
 
-#### Keyless (recommended)
-Distroless images are signed with cosign in keyless mode.  You can verify the keyless signature of any distroless image with:
+#### Keyless
+Distroless images are signed with cosign in keyless mode, this is the only supported mechanism starting November 2023.  You can verify the keyless signature of any distroless image with:
 
 ```
 cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com  --certificate-identity keyless@distroless.iam.gserviceaccount.com
 ```
 
-#### Key (no tlog, deprecated, EOL Sept 2023)
+#### Key (DEPRECATED)
 Verifying using the distroless keys is deprecated in favor of keyless. These signing events are not uploaded to the transparency log. You can use the [distroless public key](cosign.pub) to verify any distroless image with:
+
+Images built after November 2023 will not be verifyable with `cosign.pub`, use keyless signature verification
 
 ```
 cat cosign.pub

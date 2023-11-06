@@ -12,13 +12,10 @@ tag="$(stamp "{TAG}")"
 "$(realpath {PUSH_CMD})" --repository "$repository"
 
 # Attest the sbom
-[[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" "$(realpath {ATTEST_CMD})" --repository "$repository" --yes
+GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" "$(realpath {ATTEST_CMD})" --repository "$repository" --yes
 
 # Sign keyless by using an identity
-[[ -n $KEYLESS ]] && GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" "$(realpath {SIGN_CMD})" --repository "$repository" --yes
-
-# Sign the image
-"$(realpath {SIGN_CMD})" --repository "$repository" --key "$KEY" --tlog-upload=false
+GOOGLE_SERVICE_ACCOUNT_NAME="$KEYLESS" "$(realpath {SIGN_CMD})" --repository "$repository" --yes
 
 # Tag the image
 "$(realpath {PUSH_CMD})" --repository "$repository" --tag "$tag"
