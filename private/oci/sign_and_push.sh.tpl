@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 set -o pipefail -o errexit -o nounset
 
-KEY="${KEY:-}"
 KEYLESS="${KEYLESS:-}"
 EXPORT=""
 
 while (( $# > 0 )); do
   case $1 in
-    (--key)
-      KEY="$2"
-      shift
-      shift;;
     (--keyless)
       KEYLESS="$2"
       shift
@@ -26,8 +21,8 @@ while (( $# > 0 )); do
   esac
 done
 
-if [ -z $KEY ]; then
-  echo "--key flag or KEY environment variable must be provided"
+if [ -z $KEYLESS ]; then
+  echo "--keyless flag or KEYLESS environment variable must be provided"
   exit 1
 fi
 
