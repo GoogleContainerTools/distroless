@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/build/config"
@@ -28,13 +29,13 @@ import (
 
 func LatestSnapshot() (*config.Snapshots, error) {
 	snapshotURL := "https://snapshot.debian.org/archive/debian/?year=%d&month=%d"
-	s, err := latest(snapshotURL)
+	s, err := latest(snapshotURL, 1)
 	if err != nil {
 		return nil, errors.Wrap(err, "calculating latest snapshot")
 	}
 
 	securitySnapshotURL := "https://snapshot.debian.org/archive/debian-security/?year=%d&month=%d"
-	ss, err := latest(securitySnapshotURL)
+	ss, err := latest(securitySnapshotURL, 1)
 	if err != nil {
 		return nil, errors.Wrap(err, "calculating latest security snapshot")
 	}
@@ -46,33 +47,68 @@ func LatestSnapshot() (*config.Snapshots, error) {
 }
 
 var (
-	reSnapshot = regexp.MustCompile("[0-9]+T[0-9]+Z")
+	reSnapshot     = regexp.MustCompile("[0-9]+T[0-9]+Z")
+	dateFormat     = "20060102T150405Z0700"
+	dateOnlyFormat = "20060102"
 )
 
-// get latest-1 if possible or latest if only one snapshot is available for the month
-// sometimes the debian snapshots archive isn't fully realized at latest and results
-// in errors
-func latest(urltemplate string) (string, error) {
-	year, month, _ := time.Now().Date()
+// Get the latest snapshot from (today - daysBack), sometimes
+// the debian snapshots archive isn't fully realized at latest and
+// results in errors
+func latest(urltemplate string, daysBack int) (string, error) {
+	targetDate := time.Now().AddDate(0, 0, -1*daysBack)
+	year, month, _ := targetDate.Date()
+	snapshots, err := findSnapshots(urltemplate, year, month)
+	if err != nil {
+		return "", err
+	}
+	// if no snapshots were found for a month, go back a month
+	if len(snapshots) == 0 {
+		year, month, _ := targetDate.AddDate(0, 0, -targetDate.Day()).Date()
+		snapshots, err = findSnapshots(urltemplate, year, month)
+		if err != nil {
+			return "", err
+		}
+		if len(snapshots) == 0 {
+			return "", errors.Errorf("No snapshots found")
+		}
+	}
+	return findSnapshot(snapshots, targetDate)
+}
+
+func findSnapshots(urltemplate string, year int, month time.Month) ([][]byte, error) {
 	snapshotURL := fmt.Sprintf(urltemplate, year, month)
 	resp, err := retryablehttp.Get(snapshotURL)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	body := resp.Body
 	defer body.Close()
 	content, err := io.ReadAll(body)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	matches := reSnapshot.FindAll(content, -1)
-	if len(matches) == 0 {
-		return "", errors.Errorf("No snapshots found at %q", snapshotURL)
-	} else if len(matches) == 1 {
-		return string(matches[0]), nil
-	} else {
-		return string(matches[len(matches)-2]), nil
+	return matches, nil
+}
+
+// find a snapshot =< targetDate, snapshots is excepted to be a monotonically increasing list of dates
+func findSnapshot(snapshots [][]byte, targetDate time.Time) (string, error) {
+	for i := len(snapshots) - 1; i >= 0; i-- {
+		snapshotDate := string(snapshots[i])
+		if t, err := time.Parse(dateFormat, snapshotDate); err != nil {
+			return "", errors.Errorf("Could not parse snapshot date %v", snapshotDate)
+		} else {
+			targetDatePrefix := targetDate.Format(dateOnlyFormat)
+			// check if the prefix matches (same day) or if its earlier (no snapshots were found for targetDate)
+			if strings.HasPrefix(snapshotDate, targetDatePrefix) || t.Before(targetDate) {
+				return snapshotDate, nil
+			}
+		}
 	}
+	// I don't think we should be here, but we could just pick the earliest snapshot we found even if it is later
+	// than the target date
+	return string(snapshots[0]), nil
 }
 
 func Main(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
