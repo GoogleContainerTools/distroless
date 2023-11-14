@@ -16,6 +16,10 @@ fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
     shouldExist: true
+  - name: certs
+    path: "/usr/lib/jvm/temurin21_jdk_amd64/lib/security/cacerts"
+    permissions: 'Lrwxrwxrwx'
+    shouldExist: true
   - name: busybox
     path: "/busybox/sh"
     shouldExist: true

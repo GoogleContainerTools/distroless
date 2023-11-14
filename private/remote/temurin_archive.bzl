@@ -3,19 +3,64 @@ BUILD_TMPL = """\
 load("@distroless//private/pkg:debian_spdx.bzl", "debian_spdx")
 load("@distroless//private/util:merge_providers.bzl", "merge_providers")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("@rules_pkg//pkg:mappings.bzl", "pkg_filegroup", "pkg_files", "pkg_attributes", "pkg_mklink_impl")
 
-pkg_tar(
-    name = "data",
+# all files except bin and cacerts
+pkg_files(
+    name = "_most_files",
     srcs = glob(
         ["output/**/*"],
     ),
-    package_dir = "/usr/lib/jvm/{name}",
-    strip_prefix = "external/{name}/output"
+    excludes = ["_bin_dir", "_cacerts"],
+    strip_prefix = "output",
+)
+
+# special rules for bin files to make them executable
+pkg_files(
+    name = "_bin_dir",
+    srcs = glob(
+        ["output/bin/*"],
+    ),
+    attributes = pkg_attributes(
+        mode = "0755",
+        user = "root",
+        group = "root",
+    ),
+    strip_prefix = "output",
+)
+
+# everything that needs to go into the jvm install dir
+pkg_filegroup(
+    name = "_jvm_dir",
+    srcs = ["_bin_dir", "_most_files"],
+    prefix = "/usr/lib/jvm/{name}",
+)
+
+# cacerts rules
+pkg_files(
+    name = "_cacerts",
+    srcs = glob(
+        ["output/lib/security/cacerts"],
+    ),
+    renames = {{
+        "output/lib/security/cacerts": "/etc/ssl/certs/java/cacerts",
+    }},
+)
+
+pkg_mklink_impl(
+    name = "_cacerts_link",
+    link_name = "/usr/lib/jvm/{name}/lib/security/cacerts",
+    target = "/etc/ssl/certs/java/cacerts",
+)
+
+pkg_tar(
+    name = "data",
+    srcs = ["_jvm_dir", "_cacerts", "_cacerts_link"],
 )
 
 pkg_tar(
     name = "_control",
-    srcs = ["control"]
+    srcs = ["control"],
 )
 
 debian_spdx(
