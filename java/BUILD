@@ -109,18 +109,12 @@ JAVA_VERSIONS_PER_DISTRO = [
     for distro in DISTROS
 ]
 
-DISTRO_SPECIFIC_LIBRARIES = {
-    "debian11": [
-        "libpcre3",
-    ],
-    "debian12": [
-        "libpcre2-8-0",
-    ],
-}
-
+# a build-base that isn't published, but used to generate our publishable base and as a base for temurin
+# temurin ships with libharfbuzz and cacerts but debian distributed ones do not include it
+# libharfbuzz depends on libpcre,libglib,libgraphite
 [
     oci_image(
-        name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
+        name = "java_build_base" + mode + "_" + user + "_" + arch + "_" + distro,
         base = ("//base:base_nossl" if (not ("debug" in mode)) else "//base:base_nossl_debug") + "_" + user + "_" + arch + "_" + distro,
         env = {"LANG": "C.UTF-8"},
         tars = [
@@ -134,15 +128,42 @@ DISTRO_SPECIFIC_LIBRARIES = {
             deb_pkg(arch, distro, "libexpat1"),
             deb_pkg(arch, distro, "libfontconfig1"),
             deb_pkg(arch, distro, "libuuid1"),
-            deb_pkg(arch, distro, "libgraphite2-3"),
-            deb_pkg(arch, distro, "libharfbuzz0b"),
-            deb_pkg(arch, distro, "libglib2.0-0"),
             deb_pkg(arch, distro, "libbrotli1"),
             deb_pkg(arch, distro, "libcrypt1"),
             deb_pkg(arch, distro, "libstdcpp6"),
             deb_pkg(arch, distro, "libgcc-s1"),
-            ":cacerts_java_" + arch + "_" + distro,
             "//locale:locale_" + arch + "_" + distro,
+        ],
+    )
+    for mode in [
+        "",
+        "_debug",
+    ]
+    for user in USERS
+    for distro in DISTROS
+    for arch in JAVA_ARCHITECTURES
+]
+
+# libpcre is a dependency for libharfbuzz (so this is specifically for common java_base)
+DISTRO_SPECIFIC_LIBRARIES = {
+    "debian11": [
+        "libpcre3",
+    ],
+    "debian12": [
+        "libpcre2-8-0",
+    ],
+}
+
+[
+    oci_image(
+        name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
+        base = "java_build_base" + mode + "_" + user + "_" + arch + "_" + distro,
+        env = {"LANG": "C.UTF-8"},
+        tars = [
+            deb_pkg(arch, distro, "libharfbuzz0b"),
+            deb_pkg(arch, distro, "libgraphite2-3"),
+            deb_pkg(arch, distro, "libglib2.0-0"),
+            ":cacerts_java_" + arch + "_" + distro,
         ] + [deb_pkg(arch, distro, library) for library in DISTRO_SPECIFIC_LIBRARIES[distro]],
     )
     for mode in [
@@ -246,7 +267,7 @@ DISTRO_SPECIFIC_LIBRARIES = {
 [
     oci_image(
         name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
-        base = ":java_base_" + user + "_" + arch + "_" + distro,
+        base = ":java_build_base_" + user + "_" + arch + "_" + distro,
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
         entrypoint = [
@@ -282,7 +303,7 @@ DISTRO_SPECIFIC_LIBRARIES = {
     oci_image(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
         architecture = arch,
-        base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
+        base = ":java_build_base_debug_" + user + "_" + arch + "_" + distro,
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
         entrypoint = [
