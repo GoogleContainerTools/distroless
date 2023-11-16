@@ -1,0 +1,30 @@
+load("@rules_distroless//distroless:defs.bzl", "os_release", "locale")
+load(":variables.bzl", "variables", "matrix")
+
+package(default_visibility = ["//visibility:public"])
+
+[
+    os_release(
+        name = "os_release_%s" % dist,
+        content = {
+            key: value.format(CODENAME = codename, VERSION = version)
+            for (key, value) in variables.OS_RELEASE.items()
+        }
+    )
+    for (dist, codename, version) in variables.VERSIONS
+]
+
+[
+    locale(
+        name = "locale_%s" % combined,
+        package = "@%s_%s_libc-bin//:data" % (arch, dist),
+        # From Debian 12 the C.UTF-8 locale has been renamed into C.utf8:
+        # https://metadata.ftp-master.debian.org/changelogs//main/g/glibc/glibc_2.36-9+deb12u1_changelog
+        # >   * debian/debhelper.in/libc-bin.install, debian/rules.d/build.mk,
+        # >     debian/rules: rename the C.UTF-8 locale into C.utf8 to match upstream
+        # >     naming.
+        charset = "C.UTF-8" if dist == "debian11" else "C.utf8"
+    )
+    for (combined, dist, arch) in matrix.DIST_ARCH_ALL
+]
+

@@ -132,7 +132,7 @@ JAVA_VERSIONS_PER_DISTRO = [
             deb_pkg(arch, distro, "libcrypt1"),
             deb_pkg(arch, distro, "libstdcpp6"),
             deb_pkg(arch, distro, "libgcc-s1"),
-            "//locale:locale_" + arch + "_" + distro,
+            "//common:locale_" + distro + "_" + arch,
         ],
     )
     for mode in [

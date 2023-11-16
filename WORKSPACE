@@ -2,6 +2,23 @@ workspace(name = "distroless")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# rules_distroless setup
+http_archive(
+    name = "rules_distroless",
+    sha256 = "ac23c7c09ccaa6c53a74ef2056cbd82800a9e2f36c7b2b1f5cef5fd2d82baf7b",
+    strip_prefix = "rules_distroless-0.1.2",
+    url = "https://github.com/GoogleContainerTools/rules_distroless/releases/download/v0.1.2/rules_distroless-v0.1.2.tar.gz",
+)
+
+load("@rules_distroless//distroless:dependencies.bzl", "rules_distroless_dependencies")
+
+rules_distroless_dependencies()
+
+load("@aspect_bazel_lib//lib:repositories.bzl", "register_tar_toolchains", "register_expand_template_toolchains")
+
+register_tar_toolchains()
+register_expand_template_toolchains()
+
 # rules_oci setup
 http_archive(
     name = "contrib_rules_oci",
