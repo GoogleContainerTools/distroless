@@ -1,4 +1,4 @@
-load("@rules_distroless//distroless:defs.bzl", "os_release", "locale")
+load("@rules_distroless//distroless:defs.bzl", "os_release", "locale", "cacerts", "group")
 load(":variables.bzl", "variables", "matrix")
 
 package(default_visibility = ["//visibility:public"])
@@ -28,3 +28,23 @@ package(default_visibility = ["//visibility:public"])
     for (combined, dist, arch) in matrix.DIST_ARCH_ALL
 ]
 
+
+[
+    cacerts(
+        name = "cacerts_%s" % combined,
+        package = "@%s_%s_ca-certificates//:data" % (arch, dist),
+    )
+    for (combined, dist, arch) in matrix.DIST_ARCH_ALL
+]
+
+# create /etc/group with the root, tty, and staff groups
+group(
+    name = "group",
+    groups = [
+        dict(name = "root", gid = 0, users = []), # root_group
+        dict(name = "nobody", gid = variables.NOBODY, users = []), # nobody_group
+        dict(name = "nonroot", gid = variables.NONROOT, users = []), # tty_group
+        dict(name = "tty", gid = 5, users = []), # staff_group
+        dict(name = "staff", gid = 50, users = []), # nonroot_group
+    ]
+)

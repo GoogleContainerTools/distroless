@@ -3,8 +3,7 @@
 # repository code at any time.
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//base:distro.bzl", "DISTROS")
-load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//common:variables.bzl", "variables")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -36,8 +35,8 @@ pkg_tar(
         "root",
         "nonroot",
     ]
-    for arch in ARCHITECTURES
-    for distro in DISTROS
+    for arch in variables.BASE_ARCHS
+    for distro in variables.DISTS
 ]
 
 [
@@ -51,8 +50,8 @@ pkg_tar(
         "root",
         "nonroot",
     ]
-    for arch in ARCHITECTURES
-    for distro in DISTROS
+    for arch in variables.BASE_ARCHS
+    for distro in variables.DISTS
 ]
 
 [
@@ -69,6 +68,6 @@ pkg_tar(
         "root",
         "nonroot",
     ]
-    for arch in ARCHITECTURES
-    for distro in DISTROS
+    for arch in variables.BASE_ARCHS
+    for distro in variables.DISTS
 ]

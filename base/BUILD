@@ -1,13 +1,11 @@
-load(":base.bzl", "NONROOT", "distro_components")
-load(":distro.bzl", "DISTROS")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("@io_bazel_rules_docker//contrib:group.bzl", "group_entry", "group_file")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_tar")
+load("//common:variables.bzl", "variables")
+load(":base.bzl", "base_images")
 
 package(default_visibility = ["//visibility:public"])
 
-NOBODY = 65534
 
+# TODO: remove these once rules_distroless passwd creates home directories as well
 # Create /etc/passwd with the root user
 passwd_entry(
     name = "root_user",
@@ -22,21 +20,21 @@ passwd_entry(
 passwd_entry(
     name = "nobody_user",
     create_home = False,
-    gid = NOBODY,
+    gid = variables.NOBODY,
     home = "/nonexistent",
     info = "nobody",
     shell = "/sbin/nologin",
-    uid = NOBODY,
+    uid = variables.NOBODY,
     username = "nobody",
 )
 
 passwd_entry(
     name = "nonroot_user",
-    gid = NONROOT,
+    gid = variables.NONROOT,
     home = "/home/nonroot",
     info = "nonroot",
     shell = "/sbin/nologin",
-    uid = NONROOT,
+    uid = variables.NONROOT,
     username = "nonroot",
 )
 
@@ -50,53 +48,9 @@ passwd_tar(
     passwd_file_pkg_dir = "etc",
 )
 
-# Create /etc/group with the root, tty, and staff groups
-group_entry(
-    name = "root_group",
-    gid = 0,
-    groupname = "root",
-)
 
-group_entry(
-    name = "nobody_group",
-    gid = NOBODY,
-    groupname = "nobody",
-)
 
-group_entry(
-    name = "nonroot_group",
-    gid = NONROOT,
-    groupname = "nonroot",
-)
-
-group_entry(
-    name = "tty_group",
-    gid = 5,
-    groupname = "tty",
-)
-
-group_entry(
-    name = "staff_group",
-    gid = 50,
-    groupname = "staff",
-)
-
-group_file(
-    name = "group",
-    entries = [
-        ":root_group",
-        ":nobody_group",
-        ":tty_group",
-        ":staff_group",
-        ":nonroot_group",
-    ],
-)
-
-pkg_tar(
-    name = "group_tar",
-    srcs = [":group"],
-    mode = "0644",
-    package_dir = "etc",
-)
-
-[distro_components(distro) for distro in DISTROS]
+[
+    base_images(dist = dist) 
+    for dist in variables.DISTS
+]

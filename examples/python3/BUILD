@@ -3,7 +3,7 @@
 # repository code at any time.
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//base:distro.bzl", "DISTROS")
+load("//common:variables.bzl", "variables")
 
 pkg_tar(
     name = "hello_py",
@@ -44,5 +44,5 @@ oci_image(
         image = ":hello_" + distro,
         repotags = ["distroless/examples/py:latest"],
     )
-    for distro in DISTROS
+    for distro in variables.DISTS
 ]

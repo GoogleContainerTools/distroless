@@ -29,7 +29,7 @@ OS_RELEASE = dict(
 
 # language images (java, node, python, etc) have shorter support windows
 # see SUPPORT_POLICY.md
-LANGUAGE_DISTS = ["debian11"]
+LANG_DISTS = ["debian11"]
 
 DISTS = ["debian11", "debian12"]
 
@@ -40,8 +40,7 @@ VERSIONS = [
 
 variables = struct(
     # ARCH
-    BASE_ARCHITECTURES = BASE_ARCHITECTURES,
-    ARCHITECTURES = ARCHITECTURES,
+    BASE_ARCHS = BASE_ARCHITECTURES,
     ARCHS = ARCHITECTURES,
     VARIANTS = VARIANTS,
 
@@ -51,7 +50,11 @@ variables = struct(
     # DIST
     VERSIONS = VERSIONS,
     DISTS = DISTS,
-    LANGUAGE_DISTS = LANGUAGE_DISTS
+    LANG_DISTS = LANG_DISTS,
+
+    # GROUP IDS
+    NOBODY = 65534,
+    NONROOT = 65532
 )
 
 matrix = struct(

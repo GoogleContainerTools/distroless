@@ -3,7 +3,6 @@
 # repository code at any time.
 load("@contrib_rules_oci//oci:defs.bzl", "structure_test")
 load("//private/oci:defs.bzl", "java_image")
-load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 

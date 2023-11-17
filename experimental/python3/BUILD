@@ -1,8 +1,7 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
-load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
-load("//base:base.bzl", "NONROOT", "deb_pkg")
+load("//common:variables.bzl", "variables")
+load("//private/util:deb.bzl", "deb")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -18,7 +17,7 @@ DISTRO_VERSION = {
             "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro],
         },
     )
-    for distro in DISTROS
+    for distro in variables.LANG_DISTS
 ]
 
 # root
@@ -27,14 +26,14 @@ DISTRO_VERSION = {
         name = ("python3" if (not mode) else mode[1:]) + "_root_" + distro,
         images = [
             ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro
-            for arch in ARCHITECTURES
+            for arch in variables.BASE_ARCHS
         ],
     )
     for mode in [
         "",
         ":debug",
     ]
-    for distro in DISTROS
+    for distro in variables.LANG_DISTS
 ]
 
 [
@@ -48,33 +47,33 @@ DISTRO_VERSION = {
         # Use UTF-8 encoding for file system: match modern Linux
         env = {"LANG": "C.UTF-8"},
         tars = [
-            deb_pkg(arch, distro, "dash"),
-            deb_pkg(arch, distro, "libbz2-1.0"),
-            deb_pkg(arch, distro, "libc-bin"),  # for ctypes.find_library
-            deb_pkg(arch, distro, "libdb5.3"),
-            deb_pkg(arch, distro, "libexpat1"),
-            deb_pkg(arch, distro, "liblzma5"),
-            deb_pkg(arch, distro, "libsqlite3-0"),
-            deb_pkg(arch, distro, "libuuid1"),
-            deb_pkg(arch, distro, "libncursesw6"),
-            deb_pkg(arch, distro, "libtinfo6"),
-            deb_pkg(arch, distro, "python3-distutils"),
-            deb_pkg(arch, distro, "zlib1g"),
-            deb_pkg(arch, distro, "libcom-err2"),
-            deb_pkg(arch, distro, "libcrypt1"),
-            deb_pkg(arch, distro, "libffi7"),
-            deb_pkg(arch, distro, "libgssapi-krb5-2"),
-            deb_pkg(arch, distro, "libk5crypto3"),
-            deb_pkg(arch, distro, "libkeyutils1"),
-            deb_pkg(arch, distro, "libkrb5-3"),
-            deb_pkg(arch, distro, "libkrb5support0"),
-            deb_pkg(arch, distro, "libmpdec3"),
-            deb_pkg(arch, distro, "libnsl2"),
-            deb_pkg(arch, distro, "libpython3.9-minimal"),
-            deb_pkg(arch, distro, "libpython3.9-stdlib"),
-            deb_pkg(arch, distro, "libreadline8"),
-            deb_pkg(arch, distro, "libtirpc3"),
-            deb_pkg(arch, distro, "python3.9-minimal"),
+            deb.package(arch, distro, "dash"),
+            deb.package(arch, distro, "libbz2-1.0"),
+            deb.package(arch, distro, "libc-bin"),  # for ctypes.find_library
+            deb.package(arch, distro, "libdb5.3"),
+            deb.package(arch, distro, "libexpat1"),
+            deb.package(arch, distro, "liblzma5"),
+            deb.package(arch, distro, "libsqlite3-0"),
+            deb.package(arch, distro, "libuuid1"),
+            deb.package(arch, distro, "libncursesw6"),
+            deb.package(arch, distro, "libtinfo6"),
+            deb.package(arch, distro, "python3-distutils"),
+            deb.package(arch, distro, "zlib1g"),
+            deb.package(arch, distro, "libcom-err2"),
+            deb.package(arch, distro, "libcrypt1"),
+            deb.package(arch, distro, "libffi7"),
+            deb.package(arch, distro, "libgssapi-krb5-2"),
+            deb.package(arch, distro, "libk5crypto3"),
+            deb.package(arch, distro, "libkeyutils1"),
+            deb.package(arch, distro, "libkrb5-3"),
+            deb.package(arch, distro, "libkrb5support0"),
+            deb.package(arch, distro, "libmpdec3"),
+            deb.package(arch, distro, "libnsl2"),
+            deb.package(arch, distro, "libpython3.9-minimal"),
+            deb.package(arch, distro, "libpython3.9-stdlib"),
+            deb.package(arch, distro, "libreadline8"),
+            deb.package(arch, distro, "libtirpc3"),
+            deb.package(arch, distro, "python3.9-minimal"),
             "ld_so_" + arch + "_cache.tar",
             ":python_aliases_%s" % distro,
         ],
@@ -83,8 +82,8 @@ DISTRO_VERSION = {
         "",
         ":debug",
     ]
-    for arch in ARCHITECTURES
-    for distro in DISTROS
+    for arch in variables.BASE_ARCHS
+    for distro in variables.LANG_DISTS
 ]
 
 # nonroot
@@ -93,14 +92,14 @@ DISTRO_VERSION = {
         name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + distro,
         images = [
             ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + "_" + distro
-            for arch in ARCHITECTURES
+            for arch in variables.BASE_ARCHS
         ],
     )
     for mode in [
         "",
         ":debug",
     ]
-    for distro in DISTROS
+    for distro in variables.LANG_DISTS
 ]
 
 [
@@ -108,15 +107,15 @@ DISTRO_VERSION = {
     oci_image(
         name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + "_" + distro,
         base = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro,
-        user = "%d" % NONROOT,
+        user = "%d" % variables.NONROOT,
         workdir = "/home/nonroot",
     )
     for mode in [
         "",
         ":debug",
     ]
-    for arch in ARCHITECTURES
-    for distro in DISTROS
+    for arch in variables.BASE_ARCHS
+    for distro in variables.LANG_DISTS
 ]
 
 [
@@ -127,7 +126,7 @@ DISTRO_VERSION = {
         cmd = "$(location :make_ld_so_cache_tar.py) $(SRCS) $(OUTS)",
         tools = [":make_ld_so_cache_tar.py"],
     )
-    for arch in ARCHITECTURES
+    for arch in variables.BASE_ARCHS
 ]
 
 [
@@ -140,7 +139,7 @@ DISTRO_VERSION = {
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in variables.BASE_ARCHS
 ]
 
 [
@@ -171,7 +170,7 @@ mv tmp/ld.so.cache $(OUTS)
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in variables.BASE_ARCHS
 ]
 
 [
@@ -191,7 +190,7 @@ mv tmp/ld.so.cache $(OUTS)
             arch,
         ],
     )
-    for arch in ARCHITECTURES
+    for arch in variables.BASE_ARCHS
 ]
 
 [
@@ -209,8 +208,8 @@ mv tmp/ld.so.cache $(OUTS)
         "root",
         "nonroot",
     ]
-    for arch in ARCHITECTURES
-    for distro in DISTROS
+    for arch in variables.BASE_ARCHS
+    for distro in variables.LANG_DISTS
 ]
 
 # tests for version-specific things
@@ -229,6 +228,6 @@ mv tmp/ld.so.cache $(OUTS)
         "root",
         "nonroot",
     ]
-    for arch in ARCHITECTURES
-    for distro in DISTROS
+    for arch in variables.BASE_ARCHS
+    for distro in variables.LANG_DISTS
 ]
