@@ -10,10 +10,11 @@ USER_VARIANTS = [("root", 0, "/"), ("nonroot", variables.NONROOT, "/home/nonroot
 
 def base_images(dist):
     """Replicate everything for all distroless suffixes
-    
-    Args: 
+
+    Args:
         dist: name of the distribution
     """
+
     # loop for multi-arch images
     for (user, _, _) in USER_VARIANTS:
         oci_image_index(
@@ -65,7 +66,6 @@ def base_images(dist):
         )
 
     for arch in variables.ARCHS:
-
         for (user, uid, workdir) in USER_VARIANTS:
             oci_image(
                 name = "static_" + user + "_" + arch + "_" + dist,
@@ -89,7 +89,7 @@ def base_images(dist):
                     ":nsswitch.tar",
                     "//common:group",
                     "//common:os_release_" + dist,
-                    "//common:cacerts_" + dist + "_" + arch
+                    "//common:cacerts_" + dist + "_" + arch,
                 ],
                 user = "%d" % uid,
                 workdir = workdir,

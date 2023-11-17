@@ -1,5 +1,5 @@
-load("@rules_distroless//distroless:defs.bzl", "os_release", "locale", "cacerts", "group")
-load(":variables.bzl", "variables", "matrix")
+load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "locale", "os_release")
+load(":variables.bzl", "matrix", "variables")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -7,9 +7,12 @@ package(default_visibility = ["//visibility:public"])
     os_release(
         name = "os_release_%s" % dist,
         content = {
-            key: value.format(CODENAME = codename, VERSION = version)
+            key: value.format(
+                CODENAME = codename,
+                VERSION = version,
+            )
             for (key, value) in variables.OS_RELEASE.items()
-        }
+        },
     )
     for (dist, codename, version) in variables.VERSIONS
 ]
@@ -17,17 +20,16 @@ package(default_visibility = ["//visibility:public"])
 [
     locale(
         name = "locale_%s" % combined,
-        package = "@%s_%s_libc-bin//:data" % (arch, dist),
         # From Debian 12 the C.UTF-8 locale has been renamed into C.utf8:
         # https://metadata.ftp-master.debian.org/changelogs//main/g/glibc/glibc_2.36-9+deb12u1_changelog
         # >   * debian/debhelper.in/libc-bin.install, debian/rules.d/build.mk,
         # >     debian/rules: rename the C.UTF-8 locale into C.utf8 to match upstream
         # >     naming.
-        charset = "C.UTF-8" if dist == "debian11" else "C.utf8"
+        charset = "C.UTF-8" if dist == "debian11" else "C.utf8",
+        package = "@%s_%s_libc-bin//:data" % (arch, dist),
     )
     for (combined, dist, arch) in matrix.DIST_ARCH_ALL
 ]
-
 
 [
     cacerts(
@@ -41,10 +43,30 @@ package(default_visibility = ["//visibility:public"])
 group(
     name = "group",
     groups = [
-        dict(name = "root", gid = 0, users = []), # root_group
-        dict(name = "nobody", gid = variables.NOBODY, users = []), # nobody_group
-        dict(name = "nonroot", gid = variables.NONROOT, users = []), # tty_group
-        dict(name = "tty", gid = 5, users = []), # staff_group
-        dict(name = "staff", gid = 50, users = []), # nonroot_group
-    ]
+        dict(
+            name = "root",
+            gid = 0,
+            users = [],
+        ),  # root_group
+        dict(
+            name = "nobody",
+            gid = variables.NOBODY,
+            users = [],
+        ),  # nobody_group
+        dict(
+            name = "nonroot",
+            gid = variables.NONROOT,
+            users = [],
+        ),  # tty_group
+        dict(
+            name = "tty",
+            gid = 5,
+            users = [],
+        ),  # staff_group
+        dict(
+            name = "staff",
+            gid = 50,
+            users = [],
+        ),  # nonroot_group
+    ],
 )

@@ -4,7 +4,6 @@ load(":base.bzl", "base_images")
 
 package(default_visibility = ["//visibility:public"])
 
-
 # TODO: remove these once rules_distroless passwd creates home directories as well
 # Create /etc/passwd with the root user
 passwd_entry(
@@ -48,9 +47,7 @@ passwd_tar(
     passwd_file_pkg_dir = "etc",
 )
 
-
-
 [
-    base_images(dist = dist) 
+    base_images(dist = dist)
     for dist in variables.DISTS
 ]

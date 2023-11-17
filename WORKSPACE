@@ -14,9 +14,10 @@ load("@rules_distroless//distroless:dependencies.bzl", "rules_distroless_depende
 
 rules_distroless_dependencies()
 
-load("@aspect_bazel_lib//lib:repositories.bzl", "register_tar_toolchains", "register_expand_template_toolchains")
+load("@aspect_bazel_lib//lib:repositories.bzl", "register_expand_template_toolchains", "register_tar_toolchains")
 
 register_tar_toolchains()
+
 register_expand_template_toolchains()
 
 # rules_oci setup

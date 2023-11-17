@@ -1,7 +1,6 @@
 load("//common:variables.bzl", "variables")
 load("//private/oci:defs.bzl", "sign_and_push_all")
 
-
 package(default_visibility = ["//visibility:public"])
 
 ## STATIC

@@ -54,7 +54,7 @@ variables = struct(
 
     # GROUP IDS
     NOBODY = 65534,
-    NONROOT = 65532
+    NONROOT = 65532,
 )
 
 matrix = struct(
@@ -68,5 +68,5 @@ matrix = struct(
         ("%s_%s" % (dist, arch), dist, arch)
         for dist in variables.DISTS
         for arch in variables.ARCHS
-    ]
+    ],
 )
