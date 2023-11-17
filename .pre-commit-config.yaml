@@ -1,0 +1,31 @@
+# See CONTRIBUTING.md for instructions.
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+# Commitizen runs in commit-msg stage
+# but we don't want to run the other hooks on commit messages
+default_stages: [commit]
+
+# Use a slightly older version of node by default
+# as the default uses a very new version of GLIBC
+default_language_version:
+  node: 16.18.0
+
+repos:
+  # Check formatting and lint for starlark code
+  - repo: https://github.com/keith/pre-commit-buildifier
+    rev: 6.1.0.1
+    hooks:
+      - id: buildifier
+      - id: buildifier-lint
+  # Enforce that commit messages allow for later changelog generation
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v2.18.0
+    hooks:
+      # Requires that commitizen is already installed
+      - id: commitizen
+        stages: [commit-msg]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v2.4.0"
+    hooks:
+      - id: prettier
