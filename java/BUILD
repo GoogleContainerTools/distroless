@@ -38,7 +38,7 @@ JAVA_VERSIONS_PER_DISTRO = [
 [
     cacerts_java(
         name = "cacerts_java_" + arch + "_" + distro,
-        cacerts_tar = "//base:cacerts_" + arch + "_" + distro,
+        cacerts_tar = "//common:cacerts_" + distro + "_" + arch,
     )
     for distro in variables.DISTS
     for arch in JAVA_ARCHITECTURES
