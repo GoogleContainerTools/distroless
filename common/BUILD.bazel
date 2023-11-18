@@ -1,4 +1,4 @@
-load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "locale", "os_release")
+load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
 load(":variables.bzl", "matrix", "variables")
 
 package(default_visibility = ["//visibility:public"])
@@ -43,30 +43,76 @@ package(default_visibility = ["//visibility:public"])
 group(
     name = "group",
     groups = [
-        dict(
-            name = "root",
-            gid = 0,
-            users = [],
-        ),  # root_group
-        dict(
-            name = "nobody",
-            gid = variables.NOBODY,
-            users = [],
-        ),  # nobody_group
-        dict(
-            name = "nonroot",
-            gid = variables.NONROOT,
-            users = [],
-        ),  # tty_group
-        dict(
-            name = "tty",
-            gid = 5,
-            users = [],
-        ),  # staff_group
-        dict(
-            name = "staff",
-            gid = 50,
-            users = [],
-        ),  # nonroot_group
+        {
+            "name": "root",  # root_group
+            "gid": variables.ROOT,
+            "users": [],
+        },
+        {
+            "name": "nobody",  # nobody_group
+            "gid": variables.NOBODY,
+            "users": [],
+        },
+        {
+            "name": "nonroot",  # nonroot_group
+            "gid": variables.NONROOT,
+            "users": [],
+        },
+        {
+            "name": "tty",  # tty_group
+            "gid": 5,
+            "users": [],
+        },
+        {
+            "name": "staff",  # staff_group
+            "gid": 50,
+            "users": [],
+        },
+    ],
+)
+
+passwd(
+    name = "passwd",
+    passwds = [
+        {
+            "gecos": ["nobody"],
+            "gid": variables.NOBODY,
+            "home": "/nonexistent",
+            "shell": "/sbin/nologin",
+            "uid": variables.NOBODY,
+            "username": "nobody",
+        },
+        {
+            "gecos": ["root"],
+            "gid": variables.ROOT,
+            "shell": "/sbin/nologin",
+            "home": "/root",
+            "uid": variables.ROOT,
+            "username": "root",
+        },
+        {
+            "gecos": ["nonroot"],
+            "gid": variables.NONROOT,
+            "home": "/home/nonroot",
+            "shell": "/sbin/nologin",
+            "uid": variables.NONROOT,
+            "username": "nonroot",
+        },
+    ],
+)
+
+home(
+    name = "home",
+    dirs = [
+        {
+            "home": "./root",
+            "uid": variables.ROOT,
+            "gid": variables.ROOT,
+        },
+        {
+            "home": "./home/nonroot",
+            "uid": variables.NONROOT,
+            "gid": variables.NONROOT,
+        },
     ],
 )

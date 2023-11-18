@@ -38,6 +38,10 @@ VERSIONS = [
     ("debian12", "bookworm", "12"),
 ]
 
+NOBODY = 65534
+NONROOT = 65532
+ROOT = 0
+
 variables = struct(
     # ARCH
     BASE_ARCHS = BASE_ARCHITECTURES,
@@ -53,8 +57,9 @@ variables = struct(
     LANG_DISTS = LANG_DISTS,
 
     # GROUP IDS
-    NOBODY = 65534,
-    NONROOT = 65532,
+    NOBODY = NOBODY,
+    NONROOT = NONROOT,
+    ROOT = ROOT,
 )
 
 matrix = struct(

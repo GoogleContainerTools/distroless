@@ -80,13 +80,14 @@ def base_images(dist):
                     deb.package(arch, dist, "base-files"),
                     deb.package(arch, dist, "netbase"),
                     deb.package(arch, dist, "tzdata"),
-                    ":passwd",
                     # Create /tmp, too many things assume it exists.
                     # tmp.tar has a /tmp with the correct permissions 01777
                     # A tar is needed because at the moment there is no way to create a
                     # directory with specific permissions.
                     ":tmp.tar",
                     ":nsswitch.tar",
+                    "//common:passwd",
+                    "//common:home",
                     "//common:group",
                     "//common:os_release_" + dist,
                     "//common:cacerts_" + dist + "_" + arch,
