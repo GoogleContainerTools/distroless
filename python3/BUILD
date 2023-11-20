@@ -15,7 +15,7 @@ DISTROS = [
 ]
 
 DISTRO_VERSION = {
-    "debian12": "3.11",
+    "debian12": "3.12",
 }
 
 [
