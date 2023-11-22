@@ -66,10 +66,10 @@ def repositories():
 
     node_archive(
         name = "nodejs20_arm64",
-        sha256 = "d2a7dbeeb274bfd16b579d2cafb92f673010df36c83a5b55de3916aad6806a6a",
-        strip_prefix = "node-v20.9.0-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v20.9.0/node-v20.9.0-linux-arm64.tar.gz"],
-        version = "20.9.0",
+        sha256 = "8354cdb7cb2ad585ee6bb24819f5229bb48c118c5dabb282dfed153d766a68a4",
+        strip_prefix = "node-v20.10.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-arm64.tar.gz"],
+        version = "20.10.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
