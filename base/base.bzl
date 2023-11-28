@@ -123,6 +123,7 @@ def distro_components(distro):
                 ],
                 "debian12": [
                     "libssl3",
+                    "libstdc++6"
                 ],
             }
 
