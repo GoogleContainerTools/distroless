@@ -46,10 +46,10 @@ def repositories():
 
     node_archive(
         name = "nodejs18_s390x",
-        sha256 = "c5ed8da4272740190ce2a477096cb8486ade0d15e2b830f298d7d599c2e6cd97",
-        strip_prefix = "node-v18.18.2-linux-s390x/",
-        urls = ["https://nodejs.org/dist/v18.18.2/node-v18.18.2-linux-s390x.tar.gz"],
-        version = "18.18.2",
+        sha256 = "83a8a3efb96fa7d9002f17d50d871a1a22453307003e57ba1a87713a2b223789",
+        strip_prefix = "node-v18.19.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v18.19.0/node-v18.19.0-linux-s390x.tar.gz"],
+        version = "18.19.0",
         architecture = "s390x",
         control = "//nodejs:control",
     )
