@@ -325,7 +325,10 @@ DISTRO_SPECIFIC_LIBRARIES = {
 [
     structure_test(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/java_base" + mode + ".yaml"],
+        config = [
+            "testdata/java_base" + mode + ".yaml",
+            "testdata/usrmerge.yaml",
+        ],
         image = ":java_base" + mode + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,

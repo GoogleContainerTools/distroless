@@ -96,7 +96,10 @@ DISTRO_VERSION = {
     structure_test(
         name = "python3_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
-        config = ["testdata/python3.yaml"],
+        config = [
+            "testdata/python3.yaml",
+            "testdata/usrmerge.yaml",
+        ],
         image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",

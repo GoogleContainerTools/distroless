@@ -1,0 +1,14 @@
+schemaVersion: "2.0.0"
+fileExistenceTests:
+  - name: '/bin -> /usr/bin'
+    path: '/bin'
+    shouldExist: true
+    permissions: 'Lrwxrwxrwx'
+    uid: 0
+    gid: 0
+  - name: '/bin -> /usr/bin'
+    path: '/sbin'
+    shouldExist: true
+    permissions: 'Lrwxrwxrwx'
+    uid: 0
+    gid: 0

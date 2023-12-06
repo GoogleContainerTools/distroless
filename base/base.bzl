@@ -96,6 +96,7 @@ def distro_components(distro):
                     # directory with specific permissions.
                     ":tmp.tar",
                     ":nsswitch.tar",
+                    ":usrmerge.tar",
                     "//os_release:os_release_" + distro + ".tar",
                     ":cacerts_" + arch + "_" + distro + ".tar",
                 ],
