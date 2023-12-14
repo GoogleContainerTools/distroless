@@ -57,7 +57,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
         "debian12": {
-            "base-files": "12.4+deb12u3",
+            "base-files": "12.4+deb12u4",
             "ca-certificates": "20230311",
             "dash": "0.5.12-2",
             "fontconfig-config": "2.14.1-4",
@@ -124,7 +124,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "tzdata": "2021a-1+deb11u10",
         },
         "debian12": {
-            "base-files": "12.4+deb12u3",
+            "base-files": "12.4+deb12u4",
             "ca-certificates": "20230311",
             "libc-bin": "2.36-9+deb12u3",
             "libc6": "2.36-9+deb12u3",
@@ -194,7 +194,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
         "debian12": {
-            "base-files": "12.4+deb12u3",
+            "base-files": "12.4+deb12u4",
             "ca-certificates": "20230311",
             "dash": "0.5.12-2",
             "fontconfig-config": "2.14.1-4",
@@ -281,7 +281,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
         "debian12": {
-            "base-files": "12.4+deb12u3",
+            "base-files": "12.4+deb12u4",
             "ca-certificates": "20230311",
             "fontconfig-config": "2.14.1-4",
             "fonts-dejavu-core": "2.37-6",
@@ -347,7 +347,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
         "debian12": {
-            "base-files": "12.4+deb12u3",
+            "base-files": "12.4+deb12u4",
             "ca-certificates": "20230311",
             "fontconfig-config": "2.14.1-4",
             "fonts-dejavu-core": "2.37-6",
