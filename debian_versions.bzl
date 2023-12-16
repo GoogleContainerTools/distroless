@@ -53,7 +53,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "openssl": "1.1.1w-0+deb11u1",
             "python3-distutils": "3.9.2-1",
             "python3.9-minimal": "3.9.2-1",
-            "tzdata": "2021a-1+deb11u10",
+            "tzdata": "2021a-1+deb11u11",
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
         "debian12": {
@@ -121,7 +121,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "libstdcpp6": "10.2.1-6",
             "netbase": "6.3",
             "openssl": "1.1.1w-0+deb11u1",
-            "tzdata": "2021a-1+deb11u10",
+            "tzdata": "2021a-1+deb11u11",
         },
         "debian12": {
             "base-files": "12.4+deb12u4",
@@ -190,7 +190,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "openssl": "1.1.1w-0+deb11u1",
             "python3-distutils": "3.9.2-1",
             "python3.9-minimal": "3.9.2-1",
-            "tzdata": "2021a-1+deb11u10",
+            "tzdata": "2021a-1+deb11u11",
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
         "debian12": {
@@ -277,7 +277,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "openjdk-17-jdk-headless": "17.0.9+9-1~deb11u1",
             "openjdk-17-jre-headless": "17.0.9+9-1~deb11u1",
             "openssl": "1.1.1w-0+deb11u1",
-            "tzdata": "2021a-1+deb11u10",
+            "tzdata": "2021a-1+deb11u11",
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
         "debian12": {
@@ -343,7 +343,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "openjdk-17-jdk-headless": "17.0.9+9-1~deb11u1",
             "openjdk-17-jre-headless": "17.0.9+9-1~deb11u1",
             "openssl": "1.1.1w-0+deb11u1",
-            "tzdata": "2021a-1+deb11u10",
+            "tzdata": "2021a-1+deb11u11",
             "zlib1g": "1:1.2.11.dfsg-2+deb11u2",
         },
         "debian12": {
