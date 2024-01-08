@@ -38,6 +38,7 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/python3-debian12    | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
 | gcr.io/distroless/java-base-debian12  | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
 | gcr.io/distroless/java17-debian12     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/java21-debian12     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, ppc64le             |
 | gcr.io/distroless/nodejs18-debian12   | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
 
@@ -122,6 +123,7 @@ Follow these steps to get started:
     * [gcr.io/distroless/java11-debian11](java/README.md)
     * [gcr.io/distroless/java17-debian12](java/README.md)
     * [gcr.io/distroless/java17-debian11](java/README.md)
+    * [gcr.io/distroless/java21-debian12](java/README.md)
     * [gcr.io/distroless/cc-debian12](cc/README.md)
     * [gcr.io/distroless/cc-debian11](cc/README.md)
     * [gcr.io/distroless/nodejs18-debian12](nodejs/README.md)

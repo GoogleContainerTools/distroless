@@ -8,6 +8,8 @@ Specifically, the image contains everything in the [base image](../base/README.m
 
 * OpenJDK 11 (`gcr.io/distroless/java11-debian11`) and its dependencies.
 * OpenJDK 17 (`gcr.io/distroless/java17-debian12`, `gcr.io/distroless/java17-debian11`) and its dependencies.
+* OpenJDK 21 (`gcr.io/distroless/java21-debian12`) and its dependencies.
+
 
 
 ## Usage
