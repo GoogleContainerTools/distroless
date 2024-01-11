@@ -56,50 +56,50 @@ def repositories():
 
     node_archive(
         name = "nodejs20_amd64",
-        sha256 = "d3f0908a9d9190a8525c5b9a716ed91bb57e908555841b0c47f75b2a001ff91b",
-        strip_prefix = "node-v20.10.0-linux-x64/",
-        urls = ["https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-x64.tar.gz"],
-        version = "20.10.0",
+        sha256 = "9556262f6cd4c020af027782afba31ca6d1a37e45ac0b56cecd2d5a4daf720e0",
+        strip_prefix = "node-v20.11.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v20.11.0/node-v20.11.0-linux-x64.tar.gz"],
+        version = "20.11.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs20_arm64",
-        sha256 = "8354cdb7cb2ad585ee6bb24819f5229bb48c118c5dabb282dfed153d766a68a4",
-        strip_prefix = "node-v20.10.0-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-arm64.tar.gz"],
-        version = "20.10.0",
+        sha256 = "402178cd5438b9ed89bffafc119e2bd4148616390bcdfd7089090ffc4615c981",
+        strip_prefix = "node-v20.11.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v20.11.0/node-v20.11.0-linux-arm64.tar.gz"],
+        version = "20.11.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs20_arm",
-        sha256 = "cf0c2838a6bb4aa9422084c89fd9447dfc61915754859ac9b1178ea57c953baf",
-        strip_prefix = "node-v20.10.0-linux-armv7l/",
-        urls = ["https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-armv7l.tar.gz"],
-        version = "20.10.0",
+        sha256 = "04bc09322f3d71230c32364a6f55d64c67bdb4fe032f07bab5d3cb0a940b6b86",
+        strip_prefix = "node-v20.11.0-linux-armv7l/",
+        urls = ["https://nodejs.org/dist/v20.11.0/node-v20.11.0-linux-armv7l.tar.gz"],
+        version = "20.11.0",
         architecture = "arm",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs20_ppc64le",
-        sha256 = "4ebedbc3a02e620aa4f1460cb336bcc93c958a2720c14e339f13cd9bc0be606b",
-        strip_prefix = "node-v20.10.0-linux-ppc64le/",
-        urls = ["https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-ppc64le.tar.gz"],
-        version = "20.10.0",
+        sha256 = "333b51abb06931348640a8707a16ce8a71ac7c1c11ba6a7bd9ce0941f8bbde81",
+        strip_prefix = "node-v20.11.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v20.11.0/node-v20.11.0-linux-ppc64le.tar.gz"],
+        version = "20.11.0",
         architecture = "ppc64le",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs20_s390x",
-        sha256 = "70c6279156bc28f410d5c1d89d777c8a447621c5f9e1c4a3a270a3c3245e9a38",
-        strip_prefix = "node-v20.10.0-linux-s390x/",
-        urls = ["https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-s390x.tar.gz"],
-        version = "20.10.0",
+        sha256 = "8d093b2f49017f67cff368fcfeafe036d9c3d0eca2656b379132afef2bf12725",
+        strip_prefix = "node-v20.11.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v20.11.0/node-v20.11.0-linux-s390x.tar.gz"],
+        version = "20.11.0",
         architecture = "s390x",
         control = "//nodejs:control",
     )
