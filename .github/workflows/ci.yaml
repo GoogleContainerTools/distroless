@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Mount bazel caches
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
             path: |
                 ~/.cache/bazel-repo
@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Mount bazel caches
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
             path: |
                 ~/.cache/bazel-repo
