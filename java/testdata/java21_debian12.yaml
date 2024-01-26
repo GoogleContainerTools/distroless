@@ -25,6 +25,14 @@ fileExistenceTests:
   - name: no-javac
     path: "/usr/lib/jvm/temurin21_jre_amd64/bin/javac"
     shouldExist: false
+  - name: jexec-executable
+    path: "/usr/lib/jvm/temurin21_jre_amd64/lib/jexec"
+    shouldExist: true
+    isExecutableBy: "any"
+  - name: jspawnhelper-executable
+    path: "/usr/lib/jvm/temurin21_jre_amd64/lib/jspawnhelper"
+    shouldExist: true
+    isExecutableBy: "any"
 metadataTest:
   envVars:
     - key: 'JAVA_VERSION'
