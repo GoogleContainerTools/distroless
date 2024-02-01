@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Distroless currently only tracks debian 11 ([bullseye](https://packages.debian.org/bullseye/)) packages.
+Distroless currently tracks debian 11 ([bullseye](https://packages.debian.org/bullseye/)) and debian 12 ([bookworm](https://packages.debian.org/bookworm)) packages.
 
 Debian tracking information at https://github.com/GoogleContainerTools/distroless/blob/main/debian_archives.bzl and generally is updated within 48 hours of debian publishing an update.
 
