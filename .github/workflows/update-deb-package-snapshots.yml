@@ -36,7 +36,7 @@ jobs:
         token: ${{ secrets.ACTIONS_TOKEN }}
         commit-message: "Bumping packages to latest stable versions"
         author: "Distroless Bot <distroless-bot@google.com>"
-        commiter: "Distroless Bot <distroless-bot@google.com>"
+        committer: "Distroless Bot <distroless-bot@google.com>"
         title: "Bumping packages to latest stable versions"
         body: "Bumping packages to latest stable versions"
         branch: "update-snapshots"
