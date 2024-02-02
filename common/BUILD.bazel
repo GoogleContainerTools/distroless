@@ -1,7 +1,7 @@
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
-load("//:checksums.bzl", "VERSIONS", "ARCHITECTURES")
+load("//:checksums.bzl", "ARCHITECTURES", "VERSIONS")
 load("//base:distro.bzl", "DISTROS")
-load(":variables.bzl", "OS_RELEASE", "ROOT", "NONROOT", "NOBODY")
+load(":variables.bzl", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT")
 
 package(default_visibility = ["//visibility:public"])
 

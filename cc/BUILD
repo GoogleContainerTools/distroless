@@ -11,7 +11,7 @@ package(default_visibility = ["//visibility:public"])
         name = ("cc" if not mode else mode[1:]) + "_" + user + "_" + distro,
         images = [
             ("cc" if not mode else mode[1:]) + "_" + user + "_" + arch + "_" + distro
-             for arch in ARCHITECTURES
+            for arch in ARCHITECTURES
         ],
     )
     for mode in [
