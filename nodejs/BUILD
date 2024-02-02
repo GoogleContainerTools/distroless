@@ -1,6 +1,7 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//common:variables.bzl", "variables")
+load("//:checksums.bzl", "ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -21,13 +22,13 @@ USER = [
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + distro,
         images = [
             "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro
-            for arch in variables.ARCHS
+            for arch in ARCHITECTURES
         ],
     )
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for distro in variables.DISTS
+    for distro in DISTROS
 ]
 
 [
@@ -42,8 +43,8 @@ USER = [
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in variables.ARCHS
-    for distro in variables.DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 [
@@ -62,8 +63,8 @@ USER = [
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in variables.ARCHS
-    for distro in variables.DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 pkg_tar(
@@ -82,8 +83,8 @@ pkg_tar(
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in variables.ARCHS
-    for distro in variables.DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 [
@@ -99,6 +100,6 @@ pkg_tar(
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in variables.ARCHS
-    for distro in variables.DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]

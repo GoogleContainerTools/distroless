@@ -1,6 +1,6 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//common:variables.bzl", "variables")
+load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//private/util:deb.bzl", "deb")
 
 package(default_visibility = ["//visibility:public"])
@@ -34,7 +34,7 @@ DISTRO_VERSION = {
         name = ("python3" if (not mode) else mode[1:]) + "_" + user + "_" + distro,
         images = [
             ("python3" if (not mode) else mode[1:]) + "_" + user + "_" + arch + "_" + distro
-            for arch in variables.BASE_ARCHS
+            for arch in ARCHITECTURES
         ],
     )
     for mode in [
@@ -88,7 +88,7 @@ DISTRO_VERSION = {
         ":debug",
     ]
     for user in USERS
-    for arch in variables.BASE_ARCHS
+    for arch in ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -104,7 +104,7 @@ DISTRO_VERSION = {
         ],
     )
     for user in USERS
-    for arch in variables.BASE_ARCHS
+    for arch in ARCHITECTURES
     for distro in DISTROS
 ]
 
@@ -121,6 +121,6 @@ DISTRO_VERSION = {
         ],
     )
     for user in USERS
-    for arch in variables.BASE_ARCHS
+    for arch in ARCHITECTURES
     for distro in DISTROS
 ]

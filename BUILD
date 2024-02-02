@@ -1,5 +1,6 @@
-load("//common:variables.bzl", "variables")
 load("//private/oci:defs.bzl", "sign_and_push_all")
+load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS", "LANGUAGE_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -19,7 +20,7 @@ STATIC = {
 
 STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
 }
 
@@ -31,16 +32,16 @@ STATIC |= {
 
 STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
-    for distro in variables.DISTS
+    for distro in DISTROS
 }
 
 # oci_image_index
 STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base: "//base:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in STATIC_VARIANTS
-    for distro in variables.DISTS
+    for distro in DISTROS
 }
 
 ## BASE
@@ -59,7 +60,7 @@ BASE = {
 
 BASE |= {
     "{REGISTRY}/{PROJECT_ID}/base:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for (tag_base, label, user) in BASE_VARIANTS
 }
 
@@ -71,16 +72,16 @@ BASE |= {
 
 BASE |= {
     "{REGISTRY}/{PROJECT_ID}/base-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for (tag_base, label, user) in BASE_VARIANTS
-    for distro in variables.DISTS
+    for distro in DISTROS
 }
 
 # oci_image_index
 BASE |= {
     "{REGISTRY}/{PROJECT_ID}/base-" + distro + ":" + tag_base: "//base:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in BASE_VARIANTS
-    for distro in variables.DISTS
+    for distro in DISTROS
 }
 
 ## BASE NOSSL
@@ -99,7 +100,7 @@ BASE_NOSSL = {
 
 BASE_NOSSL |= {
     "{REGISTRY}/{PROJECT_ID}/base-nossl:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for (tag_base, label, user) in BASE_NOSSL_VARIANTS
 }
 
@@ -111,16 +112,16 @@ BASE_NOSSL |= {
 
 BASE_NOSSL |= {
     "{REGISTRY}/{PROJECT_ID}/base-nossl-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for (tag_base, label, user) in BASE_NOSSL_VARIANTS
-    for distro in variables.DISTS
+    for distro in DISTROS
 }
 
 # oci_image_index
 BASE_NOSSL |= {
     "{REGISTRY}/{PROJECT_ID}/base-nossl-" + distro + ":" + tag_base: "//base:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in BASE_NOSSL_VARIANTS
-    for distro in variables.DISTS
+    for distro in DISTROS
 }
 
 ## CC
@@ -139,7 +140,7 @@ CC = {
 
 CC |= {
     "{REGISTRY}/{PROJECT_ID}/cc:" + tag_base + "-" + arch: "//cc:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for (tag_base, label, user) in CC_VARIANTS
 }
 
@@ -151,16 +152,16 @@ CC |= {
 
 CC |= {
     "{REGISTRY}/{PROJECT_ID}/cc-" + distro + ":" + tag_base + "-" + arch: "//cc:" + label + "_" + user + "_" + arch + "_" + distro
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for (tag_base, label, user) in CC_VARIANTS
-    for distro in variables.DISTS
+    for distro in DISTROS
 }
 
 # oci_image_index
 CC |= {
     "{REGISTRY}/{PROJECT_ID}/cc-" + distro + ":" + tag_base: "//cc:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in CC_VARIANTS
-    for distro in variables.DISTS
+    for distro in DISTROS
 }
 
 ## PYTHON3
@@ -173,7 +174,7 @@ PYTHON3_VARIATIONS = [
 
 PYTHON3 = {
     "{REGISTRY}/{PROJECT_ID}/python3:" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in variables.BASE_ARCHS
+    for arch in BASE_ARCHITECTURES
     for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
@@ -186,7 +187,7 @@ PYTHON3 |= {
 # python on debian11 builds off of experimental
 PYTHON3 |= {
     "{REGISTRY}/{PROJECT_ID}/python3-debian11:" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in variables.BASE_ARCHS
+    for arch in BASE_ARCHITECTURES
     for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
@@ -199,7 +200,7 @@ PYTHON3 |= {
 # python on debian12 has moved out of experimental
 PYTHON3 |= {
     "{REGISTRY}/{PROJECT_ID}/python3-debian12:" + tag_base + "-" + arch: "//python3:" + label + "_" + user + "_" + arch + "_debian12"
-    for arch in variables.BASE_ARCHS
+    for arch in BASE_ARCHITECTURES
     for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
@@ -224,8 +225,8 @@ NODEJS_VARIATIONS = [
 
 NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + distro
-    for arch in variables.ARCHS
-    for distro in variables.DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
@@ -233,14 +234,14 @@ NODEJS = {
 # oci_image_index
 NODEJS |= {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base: "//nodejs:nodejs" + version + label + "_" + user + "_" + distro
-    for distro in variables.DISTS
+    for distro in DISTROS
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
 
 NODEJS |= {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_debian11"
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
@@ -253,7 +254,7 @@ NODEJS |= {
 }
 
 ## JAVA_BASE
-JAVA_ARCHITECTURES = variables.BASE_ARCHS + [
+JAVA_ARCHITECTURES = BASE_ARCHITECTURES + [
     "s390x",
     "ppc64le",
 ]

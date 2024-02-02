@@ -1,7 +1,7 @@
-load("//common:variables.bzl", "variables")
-load(":commands.bzl", "BUSYBOX_COMMANDS")
-
 package(default_visibility = ["//base:__subpackages__"])
+
+load("//:checksums.bzl", "ARCHITECTURES")
+load(":commands.bzl", "BUSYBOX_COMMANDS")
 
 # This works for all architectures because it is just files.
 # Ppc64le/Arm64/Amd64 needs special case as there is no direct working binary file available.
@@ -18,4 +18,4 @@ package(default_visibility = ["//base:__subpackages__"])
            done; \
            cd ..; \
            tar -cf $@ busybox" % " ".join(BUSYBOX_COMMANDS),
-) for arch in variables.ARCHS]
+) for arch in ARCHITECTURES]

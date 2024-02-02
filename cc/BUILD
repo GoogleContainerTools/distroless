@@ -1,5 +1,6 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//common:variables.bzl", "variables")
+load("//:checksums.bzl", "ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS")
 load("//private/util:deb.bzl", "deb")
 
 package(default_visibility = ["//visibility:public"])
@@ -10,7 +11,7 @@ package(default_visibility = ["//visibility:public"])
         name = ("cc" if not mode else mode[1:]) + "_" + user + "_" + distro,
         images = [
             ("cc" if not mode else mode[1:]) + "_" + user + "_" + arch + "_" + distro
-            for arch in variables.ARCHS
+             for arch in ARCHITECTURES
         ],
     )
     for mode in [
@@ -21,7 +22,7 @@ package(default_visibility = ["//visibility:public"])
         "root",
         "nonroot",
     ]
-    for distro in variables.DISTS
+    for distro in DISTROS
 ]
 
 [
@@ -38,10 +39,10 @@ package(default_visibility = ["//visibility:public"])
         "",
         ":debug",
     ]
-    for arch in variables.ARCHS
+    for arch in ARCHITECTURES
     for user in [
         "root",
         "nonroot",
     ]
-    for distro in variables.DISTS
+    for distro in DISTROS
 ]

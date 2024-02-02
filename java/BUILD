@@ -1,9 +1,9 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//cacerts:java.bzl", "cacerts_java")
-load("//common:variables.bzl", "variables")
 load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
 load("//:java_archives.bzl", "JAVA_RELEASE_VERSIONS")
+load("//base:distro.bzl", "DISTROS")
+load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", "java_image")
 load("//private/util:deb.bzl", "deb")
@@ -40,7 +40,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         name = "cacerts_java_" + arch + "_" + distro,
         cacerts_tar = "//common:cacerts_" + distro + "_" + arch,
     )
-    for distro in variables.DISTS
+    for distro in DISTROS
     for arch in JAVA_ARCHITECTURES
 ]
 
@@ -106,7 +106,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         "_debug",
     ]
     for user in USERS
-    for distro in variables.DISTS
+    for distro in DISTROS
 ]
 
 # a build-base that isn't published, but used to generate our publishable base and as a base for temurin
@@ -140,7 +140,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         "_debug",
     ]
     for user in USERS
-    for distro in variables.DISTS
+    for distro in DISTROS
     for arch in JAVA_ARCHITECTURES
 ]
 
@@ -171,7 +171,7 @@ DISTRO_SPECIFIC_LIBRARIES = {
         "_debug",
     ]
     for user in USERS
-    for distro in variables.DISTS
+    for distro in DISTROS
     for arch in JAVA_ARCHITECTURES
 ]
 
@@ -338,7 +338,7 @@ DISTRO_SPECIFIC_LIBRARIES = {
     ]
     for arch in JAVA_ARCHITECTURES
     for user in USERS
-    for distro in variables.DISTS
+    for distro in DISTROS
 ]
 
 [

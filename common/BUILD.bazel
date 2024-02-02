@@ -1,5 +1,7 @@
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
-load(":variables.bzl", "matrix", "variables")
+load("//:checksums.bzl", "VERSIONS", "ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS")
+load(":variables.bzl", "OS_RELEASE", "ROOT", "NONROOT", "NOBODY")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -11,32 +13,34 @@ package(default_visibility = ["//visibility:public"])
                 CODENAME = codename,
                 VERSION = version,
             )
-            for (key, value) in variables.OS_RELEASE.items()
+            for (key, value) in OS_RELEASE.items()
         },
     )
-    for (dist, codename, version) in variables.VERSIONS
+    for (dist, codename, version) in VERSIONS
 ]
 
 [
     locale(
-        name = "locale_%s" % combined,
+        name = "locale_%s_%s" % (distro, arch),
         # From Debian 12 the C.UTF-8 locale has been renamed into C.utf8:
         # https://metadata.ftp-master.debian.org/changelogs//main/g/glibc/glibc_2.36-9+deb12u1_changelog
         # >   * debian/debhelper.in/libc-bin.install, debian/rules.d/build.mk,
         # >     debian/rules: rename the C.UTF-8 locale into C.utf8 to match upstream
         # >     naming.
-        charset = "C.UTF-8" if dist == "debian11" else "C.utf8",
-        package = "@%s_%s_libc-bin//:data" % (arch, dist),
+        charset = "C.UTF-8" if distro == "debian11" else "C.utf8",
+        package = "@%s_%s_libc-bin//:data" % (arch, distro),
     )
-    for (combined, dist, arch) in matrix.DIST_ARCH_ALL
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 [
     cacerts(
-        name = "cacerts_%s" % combined,
-        package = "@%s_%s_ca-certificates//:data" % (arch, dist),
+        name = "cacerts_%s_%s" % (distro, arch),
+        package = "@%s_%s_ca-certificates//:data" % (arch, distro),
     )
-    for (combined, dist, arch) in matrix.DIST_ARCH_ALL
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 # create /etc/group with the root, tty, and staff groups
@@ -45,17 +49,17 @@ group(
     groups = [
         {
             "name": "root",  # root_group
-            "gid": variables.ROOT,
+            "gid": ROOT,
             "users": [],
         },
         {
             "name": "nobody",  # nobody_group
-            "gid": variables.NOBODY,
+            "gid": NOBODY,
             "users": [],
         },
         {
             "name": "nonroot",  # nonroot_group
-            "gid": variables.NONROOT,
+            "gid": NONROOT,
             "users": [],
         },
         {
@@ -76,26 +80,26 @@ passwd(
     passwds = [
         {
             "gecos": ["nobody"],
-            "gid": variables.NOBODY,
+            "gid": NOBODY,
             "home": "/nonexistent",
             "shell": "/sbin/nologin",
-            "uid": variables.NOBODY,
+            "uid": NOBODY,
             "username": "nobody",
         },
         {
             "gecos": ["root"],
-            "gid": variables.ROOT,
+            "gid": ROOT,
             "shell": "/sbin/nologin",
             "home": "/root",
-            "uid": variables.ROOT,
+            "uid": ROOT,
             "username": "root",
         },
         {
             "gecos": ["nonroot"],
-            "gid": variables.NONROOT,
+            "gid": NONROOT,
             "home": "/home/nonroot",
             "shell": "/sbin/nologin",
-            "uid": variables.NONROOT,
+            "uid": NONROOT,
             "username": "nonroot",
         },
     ],
@@ -106,13 +110,13 @@ home(
     dirs = [
         {
             "home": "./root",
-            "uid": variables.ROOT,
-            "gid": variables.ROOT,
+            "uid": ROOT,
+            "gid": ROOT,
         },
         {
             "home": "./home/nonroot",
-            "uid": variables.NONROOT,
-            "gid": variables.NONROOT,
+            "uid": NONROOT,
+            "gid": NONROOT,
         },
     ],
 )

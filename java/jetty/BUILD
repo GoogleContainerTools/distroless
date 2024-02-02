@@ -1,5 +1,5 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
-load("//common:variables.bzl", "variables")
+load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -23,7 +23,7 @@ package(default_visibility = ["//visibility:public"])
         "amd64",
         "manual",
     ],
-) for distro in variables.LANG_DISTS]
+) for distro in DISTROS]
 
 [structure_test(
     name = "jetty_java11_debug_" + distro + "_test",
@@ -33,4 +33,4 @@ package(default_visibility = ["//visibility:public"])
         "amd64",
         "manual",
     ],
-) for distro in variables.LANG_DISTS]
+) for distro in DISTROS]

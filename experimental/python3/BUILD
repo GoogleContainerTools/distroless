@@ -1,6 +1,8 @@
 load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball", "structure_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//common:variables.bzl", "variables")
+load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
+load("//common:variables.bzl", "NONROOT")
 load("//private/util:deb.bzl", "deb")
 
 package(default_visibility = ["//visibility:public"])
@@ -17,7 +19,7 @@ DISTRO_VERSION = {
             "/usr/bin/python3": "/usr/bin/python" + DISTRO_VERSION[distro],
         },
     )
-    for distro in variables.LANG_DISTS
+    for distro in DISTROS
 ]
 
 # root
@@ -26,14 +28,14 @@ DISTRO_VERSION = {
         name = ("python3" if (not mode) else mode[1:]) + "_root_" + distro,
         images = [
             ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro
-            for arch in variables.BASE_ARCHS
+            for arch in ARCHITECTURES
         ],
     )
     for mode in [
         "",
         ":debug",
     ]
-    for distro in variables.LANG_DISTS
+    for distro in DISTROS
 ]
 
 [
@@ -82,8 +84,8 @@ DISTRO_VERSION = {
         "",
         ":debug",
     ]
-    for arch in variables.BASE_ARCHS
-    for distro in variables.LANG_DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 # nonroot
@@ -92,14 +94,14 @@ DISTRO_VERSION = {
         name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + distro,
         images = [
             ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + "_" + distro
-            for arch in variables.BASE_ARCHS
+            for arch in ARCHITECTURES
         ],
     )
     for mode in [
         "",
         ":debug",
     ]
-    for distro in variables.LANG_DISTS
+    for distro in DISTROS
 ]
 
 [
@@ -107,15 +109,15 @@ DISTRO_VERSION = {
     oci_image(
         name = ("python3" if (not mode) else mode[1:]) + "_nonroot_" + arch + "_" + distro,
         base = ("python3" if (not mode) else mode[1:]) + "_root_" + arch + "_" + distro,
-        user = "%d" % variables.NONROOT,
+        user = "%d" % NONROOT,
         workdir = "/home/nonroot",
     )
     for mode in [
         "",
         ":debug",
     ]
-    for arch in variables.BASE_ARCHS
-    for distro in variables.LANG_DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 [
@@ -126,7 +128,7 @@ DISTRO_VERSION = {
         cmd = "$(location :make_ld_so_cache_tar.py) $(SRCS) $(OUTS)",
         tools = [":make_ld_so_cache_tar.py"],
     )
-    for arch in variables.BASE_ARCHS
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -139,7 +141,7 @@ DISTRO_VERSION = {
             arch,
         ],
     )
-    for arch in variables.BASE_ARCHS
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -170,7 +172,7 @@ mv tmp/ld.so.cache $(OUTS)
             arch,
         ],
     )
-    for arch in variables.BASE_ARCHS
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -190,7 +192,7 @@ mv tmp/ld.so.cache $(OUTS)
             arch,
         ],
     )
-    for arch in variables.BASE_ARCHS
+    for arch in ARCHITECTURES
 ]
 
 [
@@ -208,8 +210,8 @@ mv tmp/ld.so.cache $(OUTS)
         "root",
         "nonroot",
     ]
-    for arch in variables.BASE_ARCHS
-    for distro in variables.LANG_DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
 
 # tests for version-specific things
@@ -228,6 +230,6 @@ mv tmp/ld.so.cache $(OUTS)
         "root",
         "nonroot",
     ]
-    for arch in variables.BASE_ARCHS
-    for distro in variables.LANG_DISTS
+    for arch in ARCHITECTURES
+    for distro in DISTROS
 ]
