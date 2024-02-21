@@ -12,7 +12,7 @@ package(default_visibility = ["//visibility:public"])
 rust_image(
     name = "rust_example",
     srcs = ["src/main.rs"],
-    base = "//cc:cc_root_amd64_debian11",
+    base = "//cc:cc_root_amd64_debian12",
     tags = [
         "amd64",
         "manual",
