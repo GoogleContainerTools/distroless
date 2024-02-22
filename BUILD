@@ -165,6 +165,10 @@ CC |= {
 }
 
 ## PYTHON3
+PYTHON3_ARCHITECTURES = BASE_ARCHITECTURES + [
+    "arm",
+]
+
 PYTHON3_VARIATIONS = [
     ("latest", "python3", "root"),
     ("nonroot", "python3", "nonroot"),
@@ -174,7 +178,7 @@ PYTHON3_VARIATIONS = [
 
 PYTHON3 = {
     "{REGISTRY}/{PROJECT_ID}/python3:" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in BASE_ARCHITECTURES
+    for arch in PYTHON3_ARCHITECTURES
     for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
@@ -187,7 +191,7 @@ PYTHON3 |= {
 # python on debian11 builds off of experimental
 PYTHON3 |= {
     "{REGISTRY}/{PROJECT_ID}/python3-debian11:" + tag_base + "-" + arch: "//experimental/python3:" + label + "_" + user + "_" + arch + "_debian11"
-    for arch in BASE_ARCHITECTURES
+    for arch in PYTHON3_ARCHITECTURES
     for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
@@ -200,7 +204,7 @@ PYTHON3 |= {
 # python on debian12 has moved out of experimental
 PYTHON3 |= {
     "{REGISTRY}/{PROJECT_ID}/python3-debian12:" + tag_base + "-" + arch: "//python3:" + label + "_" + user + "_" + arch + "_debian12"
-    for arch in BASE_ARCHITECTURES
+    for arch in PYTHON3_ARCHITECTURES
     for (tag_base, label, user) in PYTHON3_VARIATIONS
 }
 
