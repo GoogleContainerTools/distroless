@@ -4,17 +4,17 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # rules_oci setup
 http_archive(
-    name = "contrib_rules_oci",
-    sha256 = "d6bdc1767d326c67b4cbdc79abfed00c8a4ca14b92adea9faf3db4710d514596",
-    strip_prefix = "rules_oci-0.3.2",
-    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v0.3.2/rules_oci-v0.3.2.tar.gz",
+    name = "rules_oci",
+    sha256 = "a3b6f4c0051938940ccf251a7bdcdf7ac5a93ae00e63ad107c9c6d3bfe20885b",
+    strip_prefix = "rules_oci-1.3.1",
+    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v1.3.1/rules_oci-v1.3.1.tar.gz",
 )
 
-load("@contrib_rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
+load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
 
 rules_oci_dependencies()
 
-load("@contrib_rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "oci_register_toolchains")
+load("@rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "oci_register_toolchains")
 
 oci_register_toolchains(
     name = "oci",
@@ -22,9 +22,21 @@ oci_register_toolchains(
     zot_version = LATEST_ZOT_VERSION,
 )
 
-load("@contrib_rules_oci//cosign:repositories.bzl", "cosign_register_toolchains")
+load("@rules_oci//cosign:repositories.bzl", "cosign_register_toolchains")
 
 cosign_register_toolchains(name = "oci_cosign")
+
+# setup container_structure_test
+http_archive(
+    name = "container_structure_test",
+    sha256 = "2da13da4c4fec9d4627d4084b122be0f4d118bd02dfa52857ff118fde88e4faa",
+    strip_prefix = "container-structure-test-1.16.0",
+    urls = ["https://github.com/GoogleContainerTools/container-structure-test/archive/v1.16.0.zip"],
+)
+
+load("@container_structure_test//:repositories.bzl", "container_structure_test_register_toolchain")
+
+container_structure_test_register_toolchain(name = "cst")
 
 # platforms
 http_archive(

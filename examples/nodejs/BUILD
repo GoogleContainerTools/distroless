@@ -1,10 +1,11 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//base:distro.bzl", "DISTROS")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -56,9 +57,9 @@ pkg_tar(
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "hello_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/hello.yaml"],
+        configs = ["testdata/hello.yaml"],
         image = ":hello_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,

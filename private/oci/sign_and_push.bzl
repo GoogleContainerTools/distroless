@@ -1,5 +1,5 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_push")
-load("@contrib_rules_oci//cosign:defs.bzl", "cosign_attest", "cosign_sign")
+load("@rules_oci//oci:defs.bzl", "oci_push")
+load("@rules_oci//cosign:defs.bzl", "cosign_attest", "cosign_sign")
 load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
 
 PUSH_AND_SIGN_CMD = """\

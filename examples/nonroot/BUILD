@@ -1,10 +1,11 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@io_bazel_rules_docker//contrib:passwd.bzl", "passwd_entry", "passwd_file")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("@rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//base:distro.bzl", "DISTROS")
 
 # Create a passwd file with a nonroot user and uid.
@@ -61,9 +62,9 @@ pkg_tar(
 ) for distro in DISTROS]
 
 # Test to verify this works :)
-[structure_test(
+[container_structure_test(
     name = "check_user_" + distro + "_test",
-    config = ["testdata/user.yaml"],
+    configs = ["testdata/user.yaml"],
     image = ":check_user_image_" + distro,
     tags = [
         "amd64",

@@ -1,7 +1,7 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//base:distro.bzl", "DISTROS")
 
@@ -42,7 +42,7 @@ oci_image(
     oci_tarball(
         name = "tarball_" + distro,
         image = ":hello_" + distro,
-        repotags = ["distroless/examples/py:latest"],
+        repo_tags = ["distroless/examples/py:latest"],
     )
     for distro in DISTROS
 ]

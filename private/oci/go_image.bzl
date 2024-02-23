@@ -1,6 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_oci//oci:defs.bzl", "oci_image")
 
 def go_image(name, srcs, base, arch = "amd64", os = "linux"):
     go_binary(
