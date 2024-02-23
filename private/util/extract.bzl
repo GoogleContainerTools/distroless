@@ -3,7 +3,6 @@
 load("@aspect_bazel_lib//lib:tar.bzl", "tar_lib")
 
 def _tar_extract_file_impl(ctx):
-
     bsdtar = ctx.toolchains[tar_lib.toolchain_type]
     parts = ctx.attr.file.split("/")
     output = ctx.actions.declare_file(parts[-1])
@@ -33,5 +32,5 @@ tar_extract_file = rule(
         "archive": attr.label(allow_single_file = True, mandatory = True),
         "file": attr.string(mandatory = True),
     },
-    toolchains = [tar_lib.toolchain_type]
+    toolchains = [tar_lib.toolchain_type],
 )

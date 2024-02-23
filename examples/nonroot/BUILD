@@ -19,9 +19,10 @@ passwd(
             "shell": "/bin/bash",
             "uid": 1002,
             "username": "nonroot",
-        }
+        },
     ],
 )
+
 home(
     name = "home",
     dirs = [
@@ -37,7 +38,10 @@ home(
 oci_image(
     name = "passwd_image",
     base = "//base:base_root_amd64_debian11",
-    tars = [":passwd", ":home"],
+    tars = [
+        ":passwd",
+        ":home",
+    ],
     user = "nonroot",
     visibility = ["//visibility:private"],
 )
