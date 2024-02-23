@@ -1,12 +1,13 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//private/oci:defs.bzl", "java_image")
+load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
+load("//:java_archives.bzl", "JAVA_RELEASE_VERSIONS")
 load("//base:base.bzl", "deb_pkg")
 load("//base:distro.bzl", "DISTROS")
 load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
-load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
-load("//:java_archives.bzl", "JAVA_RELEASE_VERSIONS")
+load("//private/oci:defs.bzl", "java_image")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -323,9 +324,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/java_base" + mode + ".yaml"],
+        configs = ["testdata/java_base" + mode + ".yaml"],
         image = ":java_base" + mode + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
@@ -342,9 +343,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "java" + java_version + "_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/java" + java_version + "_" + distro + ".yaml"],
+        configs = ["testdata/java" + java_version + "_" + distro + ".yaml"],
         image = ":java" + java_version + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
@@ -357,9 +358,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/java" + java_version + "_debug" + "_" + distro + ".yaml"],
+        configs = ["testdata/java" + java_version + "_debug" + "_" + distro + ".yaml"],
         image = ":java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
@@ -393,9 +394,9 @@ RULE_NAMES = [
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "check_certs_" + rule_name + "_test",
-        config = ["testdata/java_certs.yaml"],
+        configs = ["testdata/java_certs.yaml"],
         image = ":check_certs_" + rule_name,
         tags = [
             "amd64",
@@ -416,9 +417,9 @@ RULE_NAMES = [
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "check_encoding_" + rule_name + "_test",
-        config = ["testdata/java_encoding.yaml"],
+        configs = ["testdata/java_encoding.yaml"],
         image = ":check_encoding_" + rule_name,
         tags = [
             "amd64",
@@ -439,9 +440,9 @@ RULE_NAMES = [
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "check_libharfbuzz_" + rule_name + "_test",
-        config = ["testdata/java_libharfbuzz.yaml"],
+        configs = ["testdata/java_libharfbuzz.yaml"],
         image = ":check_libharfbuzz_" + rule_name,
         tags = [
             "amd64",

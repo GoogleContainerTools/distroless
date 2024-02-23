@@ -1,7 +1,7 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//base:distro.bzl", "DISTROS")
 

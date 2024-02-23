@@ -1,7 +1,8 @@
-load("//base:distro.bzl", "DISTROS")
-load("//:checksums.bzl", "ARCHITECTURES")
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//:checksums.bzl", "ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -48,9 +49,9 @@ USER = [
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro + "_test",
-        config = [
+        configs = [
             "testdata/nodejs" + major_version + ".yaml",
             "testdata/check_npm.yaml",
         ],
@@ -88,9 +89,9 @@ pkg_tar(
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/check_certificate.yaml"],
+        configs = ["testdata/check_certificate.yaml"],
         image = "check_certificate_nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,

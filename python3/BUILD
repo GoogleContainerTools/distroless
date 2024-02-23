@@ -1,7 +1,8 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//base:base.bzl", "deb_pkg")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//base:base.bzl", "deb_pkg")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -93,10 +94,10 @@ DISTRO_VERSION = {
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "python3_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
-        config = ["testdata/python3.yaml"],
+        configs = ["testdata/python3.yaml"],
         image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",
@@ -110,10 +111,10 @@ DISTRO_VERSION = {
 
 # tests for version-specific things
 [
-    structure_test(
+    container_structure_test(
         name = "version_specific_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
-        config = ["testdata/" + distro + ".yaml"],
+        configs = ["testdata/" + distro + ".yaml"],
         image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",

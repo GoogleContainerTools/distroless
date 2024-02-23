@@ -1,8 +1,9 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
-load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 load("//base:base.bzl", "NONROOT", "deb_pkg")
+load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -195,10 +196,10 @@ mv tmp/ld.so.cache $(OUTS)
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "python3_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
-        config = ["testdata/python3.yaml"],
+        configs = ["testdata/python3.yaml"],
         image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",
@@ -215,10 +216,10 @@ mv tmp/ld.so.cache $(OUTS)
 
 # tests for version-specific things
 [
-    structure_test(
+    container_structure_test(
         name = "version_specific_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
-        config = ["testdata/" + distro + ".yaml"],
+        configs = ["testdata/" + distro + ".yaml"],
         image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",

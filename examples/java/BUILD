@@ -1,9 +1,8 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-load("@contrib_rules_oci//oci:defs.bzl", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("//private/oci:defs.bzl", "java_image")
-load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -28,10 +27,10 @@ JAVA_VERSIONS_PER_DISTRO = [
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "hello_java" + java_version + "_" + user + "_" + distro + "_test",
         size = "small",
-        config = ["testdata/hello_" + user + "_" + distro + ".yaml"],
+        configs = ["testdata/hello_" + user + "_" + distro + ".yaml"],
         image = ":hello_java" + java_version + "_" + user + "_" + distro,
         tags = [
             "amd64",
