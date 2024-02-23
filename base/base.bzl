@@ -1,7 +1,7 @@
 "defines a function to replicate the container images for different distributions"
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", "ARCHITECTURES", "VARIANTS")

@@ -4,10 +4,10 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
 load("//:java_archives.bzl", "JAVA_RELEASE_VERSIONS")
 load("//base:distro.bzl", "DISTROS")
-load("//cacerts:java.bzl", "cacerts_java")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", "java_image")
 load("//private/util:deb.bzl", "deb")
+load("//private/util:java_cacerts.bzl", "java_cacerts")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -37,9 +37,9 @@ JAVA_VERSIONS_PER_DISTRO = [
 ]
 
 [
-    cacerts_java(
+    java_cacerts(
         name = "cacerts_java_" + arch + "_" + distro,
-        cacerts_tar = "//common:cacerts_" + distro + "_" + arch,
+        archive = "//common:cacerts_" + distro + "_" + arch,
     )
     for distro in DISTROS
     for arch in JAVA_ARCHITECTURES
