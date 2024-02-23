@@ -1,5 +1,8 @@
 "common variables"
 
+def quote(str):
+    return '''"{}"'''.format(str)
+
 OS_RELEASE = dict(
     PRETTY_NAME = "Distroless",
     NAME = "Debian GNU/Linux",

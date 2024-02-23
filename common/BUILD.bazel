@@ -1,7 +1,7 @@
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
 load("//:checksums.bzl", "ARCHITECTURES", "VERSIONS")
 load("//base:distro.bzl", "DISTROS")
-load(":variables.bzl", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT")
+load(":variables.bzl", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT", "quote")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -9,10 +9,10 @@ package(default_visibility = ["//visibility:public"])
     os_release(
         name = "os_release_%s" % dist,
         content = {
-            key: value.format(
+            key: quote(value.format(
                 CODENAME = codename,
                 VERSION = version,
-            )
+            ))
             for (key, value) in OS_RELEASE.items()
         },
     )
@@ -50,26 +50,31 @@ group(
         {
             "name": "root",  # root_group
             "gid": ROOT,
+            "password": "x",
             "users": [],
         },
         {
             "name": "nobody",  # nobody_group
             "gid": NOBODY,
+            "password": "x",
             "users": [],
         },
         {
             "name": "nonroot",  # nonroot_group
             "gid": NONROOT,
+            "password": "x",
             "users": [],
         },
         {
             "name": "tty",  # tty_group
             "gid": 5,
+            "password": "x",
             "users": [],
         },
         {
             "name": "staff",  # staff_group
             "gid": 50,
+            "password": "x",
             "users": [],
         },
     ],
