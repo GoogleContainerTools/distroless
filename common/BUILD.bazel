@@ -89,6 +89,7 @@ passwd(
             "home": "/nonexistent",
             "shell": "/sbin/nologin",
             "uid": NOBODY,
+            "password": "x",
             "username": "nobody",
         },
         {
@@ -97,6 +98,7 @@ passwd(
             "shell": "/sbin/nologin",
             "home": "/root",
             "uid": ROOT,
+            "password": "x",
             "username": "root",
         },
         {
@@ -105,6 +107,7 @@ passwd(
             "home": "/home/nonroot",
             "shell": "/sbin/nologin",
             "uid": NONROOT,
+            "password": "x",
             "username": "nonroot",
         },
     ],
