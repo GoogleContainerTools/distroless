@@ -110,7 +110,6 @@ def distro_components(distro):
 
             oci_image(
                 name = "base_nossl_" + user + "_" + arch + "_" + distro,
-                architecture = arch,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
                     deb_pkg(arch, distro, "libc6"),

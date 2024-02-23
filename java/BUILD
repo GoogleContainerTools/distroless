@@ -227,7 +227,6 @@ DISTRO_SPECIFIC_LIBRARIES = {
 [
     oci_image(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
-        architecture = arch,
         base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
@@ -303,7 +302,6 @@ DISTRO_SPECIFIC_LIBRARIES = {
 [
     oci_image(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
-        architecture = arch,
         base = ":java_build_base_debug_" + user + "_" + arch + "_" + distro,
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
