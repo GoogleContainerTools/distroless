@@ -19,5 +19,5 @@ go_image(
 oci_tarball(
     name = "tarball",
     image = ":go_example",
-    repotags = ["distroless/examples/go:latest"],
+    repo_tags = ["distroless/examples/go:latest"],
 )

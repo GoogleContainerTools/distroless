@@ -135,7 +135,7 @@ DISTRO_VERSION = {
     oci_tarball(
         name = "python3_root_" + arch + "_debian11_tarball",
         image = ":python3_root_" + arch + "_debian11",
-        repotags = ["distroless/gen/python3_root_%s_debian11_tarball:gen" % arch],
+        repo_tags = ["distroless/gen/python3_root_%s_debian11_tarball:gen" % arch],
         tags = [
             "manual",
             arch,

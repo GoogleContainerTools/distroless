@@ -42,7 +42,7 @@ oci_image(
     oci_tarball(
         name = "tarball_" + distro,
         image = ":hello_" + distro,
-        repotags = ["distroless/examples/py:latest"],
+        repo_tags = ["distroless/examples/py:latest"],
     )
     for distro in DISTROS
 ]

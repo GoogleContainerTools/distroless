@@ -24,7 +24,7 @@ load("@rules_oci//oci/private:tarball.bzl", "oci_tarball")
 oci_tarball(
     name = "local_build",
     image = "//base:static_root_amd64_debian17",
-    repotags = [],
+    repo_tags = [],
 )
 ```
 then build the tarball and load it into docker
