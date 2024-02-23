@@ -1,4 +1,4 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("//:checksums.bzl", "ARCHITECTURES")
 load("//base:distro.bzl", "DISTROS")
 load("//private/util:deb.bzl", "deb")

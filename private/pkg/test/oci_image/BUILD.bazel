@@ -1,4 +1,4 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
 load("//private/util:deb.bzl", "deb")

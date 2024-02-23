@@ -1,9 +1,10 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 load("@rules_distroless//distroless:defs.bzl", "home", "passwd")
+load("@rules_oci//oci:defs.bzl", "oci_image")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//base:distro.bzl", "DISTROS")
 
@@ -64,9 +65,9 @@ pkg_tar(
 ) for distro in DISTROS]
 
 # Test to verify this works :)
-[structure_test(
+[container_structure_test(
     name = "check_user_" + distro + "_test",
-    config = ["testdata/user.yaml"],
+    configs = ["testdata/user.yaml"],
     image = ":check_user_image_" + distro,
     tags = [
         "amd64",

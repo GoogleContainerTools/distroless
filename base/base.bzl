@@ -1,6 +1,7 @@
 "defines a function to replicate the container images for different distributions"
 
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", "ARCHITECTURES", "VARIANTS")
@@ -102,7 +103,6 @@ def base_images(distro):
 
             oci_image(
                 name = "base_nossl_" + user + "_" + arch + "_" + distro,
-                architecture = arch,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
                     deb.package(arch, distro, "libc6"),
@@ -187,9 +187,9 @@ def base_images(distro):
             visibility = ["//visibility:private"],
         )
 
-        structure_test(
+        container_structure_test(
             name = "static_" + arch + "_" + distro + "_test",
-            config = ["testdata/static.yaml"],
+            configs = ["testdata/static.yaml"],
             image = ":check_certs_image_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
@@ -198,9 +198,9 @@ def base_images(distro):
         # Check that we can invoke openssl in the base image to check certificates (only debian11).
         ##########################################################################################
         if distro == "debian11":
-            structure_test(
+            container_structure_test(
                 name = "openssl_" + arch + "_" + distro + "_test",
-                config = ["testdata/certs.yaml"],
+                configs = ["testdata/certs.yaml"],
                 image = ":base_root_" + arch + "_" + distro,
                 tags = ["manual", arch],
             )
@@ -208,16 +208,16 @@ def base_images(distro):
         ##########################################################################################
         # Check for common base files.
         ##########################################################################################
-        structure_test(
+        container_structure_test(
             name = "base_" + arch + "_" + distro + "_test",
-            config = ["testdata/base.yaml"],
+            configs = ["testdata/base.yaml"],
             image = ":base_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
-        structure_test(
+        container_structure_test(
             name = "base_nossl_" + arch + "_" + distro + "_test",
-            config = ["testdata/base.yaml"],
+            configs = ["testdata/base.yaml"],
             image = ":base_nossl_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
@@ -225,23 +225,23 @@ def base_images(distro):
         ##########################################################################################
         # Check for busybox
         ##########################################################################################
-        structure_test(
+        container_structure_test(
             name = "debug_" + arch + "_" + distro + "_test",
-            config = ["testdata/debug.yaml"],
+            configs = ["testdata/debug.yaml"],
             image = ":debug_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
-        structure_test(
+        container_structure_test(
             name = "base_nossl_debug_" + arch + "_" + distro + "_test",
-            config = ["testdata/debug.yaml"],
+            configs = ["testdata/debug.yaml"],
             image = ":base_nossl_debug_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
-        structure_test(
+        container_structure_test(
             name = "static_debug_" + arch + "_" + distro + "_test",
-            config = ["testdata/debug.yaml"],
+            configs = ["testdata/debug.yaml"],
             image = ":static_debug_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
@@ -249,37 +249,37 @@ def base_images(distro):
         ##########################################################################################
         # Check the /etc/os-release contents.
         ##########################################################################################
-        structure_test(
+        container_structure_test(
             name = "base_release_" + arch + "_" + distro + "_test",
-            config = ["testdata/" + distro + ".yaml"],
+            configs = ["testdata/" + distro + ".yaml"],
             image = ":base_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
-        structure_test(
+        container_structure_test(
             name = "base_nossl_release_" + arch + "_" + distro + "_test",
-            config = ["testdata/" + distro + ".yaml"],
+            configs = ["testdata/" + distro + ".yaml"],
             image = ":base_nossl_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
-        structure_test(
+        container_structure_test(
             name = "debug_release_" + arch + "_" + distro + "_test",
-            config = ["testdata/" + distro + ".yaml"],
+            configs = ["testdata/" + distro + ".yaml"],
             image = ":debug_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
-        structure_test(
+        container_structure_test(
             name = "static_release_" + arch + "_" + distro + "_test",
-            config = ["testdata/" + distro + ".yaml"],
+            configs = ["testdata/" + distro + ".yaml"],
             image = ":static_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
 
-        structure_test(
+        container_structure_test(
             name = "static_debug_release_" + arch + "_" + distro + "_test",
-            config = ["testdata/" + distro + ".yaml"],
+            configs = ["testdata/" + distro + ".yaml"],
             image = ":static_debug_root_" + arch + "_" + distro,
             tags = ["manual", arch],
         )

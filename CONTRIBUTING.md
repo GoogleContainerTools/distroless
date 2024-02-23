@@ -19,12 +19,12 @@ Follow either of the two links above to access the appropriate CLA and instructi
 
 1. For building and loading images to your local Docker engine, you need to add a new rule for that image to the BUILD:
 ```
-load("@contrib_rules_oci//oci/private:tarball.bzl", "oci_tarball")
+load("@rules_oci//oci/private:tarball.bzl", "oci_tarball")
 
 oci_tarball(
     name = "local_build",
     image = "//base:static_root_amd64_debian17",
-    repotags = [],
+    repo_tags = [],
 )
 ```
 then build the tarball and load it into docker
