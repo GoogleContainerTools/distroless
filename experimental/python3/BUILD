@@ -1,9 +1,9 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//private/util:deb.bzl", "deb")s
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
+load("//private/util:deb.bzl", "deb")
 
 package(default_visibility = ["//visibility:public"])
 
