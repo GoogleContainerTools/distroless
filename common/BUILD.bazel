@@ -76,7 +76,7 @@ group(
             "gid": NONROOT,
             "password": "x",
             "users": [],
-        }
+        },
     ],
 )
 
