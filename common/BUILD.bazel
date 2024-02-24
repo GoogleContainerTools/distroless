@@ -60,12 +60,6 @@ group(
             "users": [],
         },
         {
-            "name": "nonroot",  # nonroot_group
-            "gid": NONROOT,
-            "password": "x",
-            "users": [],
-        },
-        {
             "name": "tty",  # tty_group
             "gid": 5,
             "password": "x",
@@ -77,21 +71,18 @@ group(
             "password": "x",
             "users": [],
         },
+        {
+            "name": "nonroot",  # nonroot_group
+            "gid": NONROOT,
+            "password": "x",
+            "users": [],
+        }
     ],
 )
 
 passwd(
     name = "passwd",
     passwds = [
-        {
-            "gecos": ["nobody"],
-            "gid": NOBODY,
-            "home": "/nonexistent",
-            "shell": "/sbin/nologin",
-            "uid": NOBODY,
-            "password": "x",
-            "username": "nobody",
-        },
         {
             "gecos": ["root"],
             "gid": ROOT,
@@ -100,6 +91,15 @@ passwd(
             "uid": ROOT,
             "password": "x",
             "username": "root",
+        },
+        {
+            "gecos": ["nobody"],
+            "gid": NOBODY,
+            "home": "/nonexistent",
+            "shell": "/sbin/nologin",
+            "uid": NOBODY,
+            "password": "x",
+            "username": "nobody",
         },
         {
             "gecos": ["nonroot"],
