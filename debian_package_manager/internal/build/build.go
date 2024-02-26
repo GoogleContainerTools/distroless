@@ -19,6 +19,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 	"os"
 
 	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/build/config"
@@ -76,7 +77,13 @@ func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string
 
 	// CloudFlare mirror is the new mirror of snapshot.debian.org which is way faster as it
 	// caches everything across regions. This also takes presurre off of the origin server.
-	pkgs, err := deb.Parse(xzr, packages, []string{"snapshot-cloudflare.debian.org", pi.PoolRoot})
+	cloudflare, err := url.Parse(pi.PoolRoot)
+	if err != nil {
+		return nil, err
+	}
+	cloudflare.Host = "snapshot-cloudflare.debian.org"
+
+	pkgs, err := deb.Parse(xzr, packages, []string{cloudflare.String(), pi.PoolRoot})
 	return pkgs, errors.Wrapf(err, "parsing packages at %q", pi.URL)
 }
 
