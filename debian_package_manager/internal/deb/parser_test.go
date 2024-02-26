@@ -16,7 +16,6 @@
 package deb
 
 import (
-	"net/url"
 	"os"
 	"testing"
 
@@ -86,7 +85,7 @@ func TestParse_toPackageInfo(t *testing.T) {
 	want := map[string]*Package{
 		"zzuf": {
 			Name: "zzuf",
-			URL:  "https://somewhere/pool/main/z/zzuf/zzuf_0.13.svn20100215-4.1_amd64.deb",
+			URLs: []string{"https://somewhere/pool/main/z/zzuf/zzuf_0.13.svn20100215-4.1_amd64.deb"},
 			Version: Version{
 				UpstreamVersion: "0.13.svn20100215",
 				DebianRevision:  "4.1",
@@ -101,11 +100,7 @@ func TestParse_toPackageInfo(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			ppfx, err := url.Parse(pfx)
-			if err != nil {
-				t.Fatal(err)
-			}
-			got, err := Parse(packages, map[string]bool{"zzuf": true}, ppfx)
+			got, err := Parse(packages, map[string]bool{"zzuf": true}, []string{pfx})
 			if err != nil {
 				t.Fatal(err)
 			}

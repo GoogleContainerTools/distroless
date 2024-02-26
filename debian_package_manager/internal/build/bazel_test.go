@@ -17,13 +17,13 @@ func testdata() map[string]map[string]map[string]*deb.Package {
 			Name:    "xxxx",
 			SHA256:  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			Version: deb.MustParseVersion("1"),
-			URL:     "https://example.com/xxxx-aaaa-1111.deb",
+			URLs:    []string{"https://example.com/xxxx-aaaa-1111.deb"},
 		},
 		"ssss": {
 			Name:    "ssss",
 			SHA256:  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			Version: deb.MustParseVersion("2"),
-			URL:     "https://example.com/ssss-aaaa-1111.deb",
+			URLs:    []string{"https://example.com/ssss-aaaa-1111.deb"},
 		},
 	}
 	pkgInfo["cccc"]["2222"] = map[string]*deb.Package{
@@ -31,7 +31,7 @@ func testdata() map[string]map[string]map[string]*deb.Package {
 			Name:    "xxxx",
 			SHA256:  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			Version: deb.MustParseVersion("3"),
-			URL:     "https://example.com/xxxx-cccc-2222.deb",
+			URLs:    []string{"https://example.com/xxxx-cccc-2222.deb"},
 		},
 	}
 	pkgInfo["cccc"]["1111"] = map[string]*deb.Package{
@@ -39,7 +39,7 @@ func testdata() map[string]map[string]map[string]*deb.Package {
 			Name:    "xxxx++",
 			SHA256:  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			Version: deb.MustParseVersion("4"),
-			URL:     "https://example.com/xxxx++-cccc-1111.deb",
+			URLs:    []string{"https://example.com/xxxx++-cccc-1111.deb"},
 		},
 	}
 	return pkgInfo
@@ -60,25 +60,33 @@ def repositories():
         name = "aaaa_1111_ssss",
         package_name = "ssss",
         sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        urls = ["https://example.com/ssss-aaaa-1111.deb"],
+        urls = [
+			"https://example.com/ssss-aaaa-1111.deb",
+        ],
     )
     debian_archive(
         name = "aaaa_1111_xxxx",
         package_name = "xxxx",
         sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        urls = ["https://example.com/xxxx-aaaa-1111.deb"],
+        urls = [
+			"https://example.com/xxxx-aaaa-1111.deb",
+        ],
     )
     debian_archive(
         name = "cccc_1111_xxxxpp",
         package_name = "xxxx++",
         sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        urls = ["https://example.com/xxxx++-cccc-1111.deb"],
+        urls = [
+			"https://example.com/xxxx++-cccc-1111.deb",
+        ],
     )
     debian_archive(
         name = "cccc_2222_xxxx",
         package_name = "xxxx",
         sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        urls = ["https://example.com/xxxx-cccc-2222.deb"],
+        urls = [
+			"https://example.com/xxxx-cccc-2222.deb",
+        ],
     )
 `
 	if diff := cmp.Diff(got.String(), want); diff != "" {
