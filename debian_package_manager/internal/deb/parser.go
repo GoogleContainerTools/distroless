@@ -98,7 +98,12 @@ func Parse(r io.Reader, packages map[string]bool, poolPrefix *url.URL) (map[stri
 		fileURL := *poolPrefix // make a copy of the pool root so we don't mutate it
 		fileURL.Path = path.Join(poolPrefix.Path, entry[filenameKey])
 
-		p, err := NewPackage(entry[packageKey], entry[sha256Key], entry[versionKey], fileURL.String())
+		// CloudFlare mirror is the new mirror of snapshot.debian.org which is way faster as it
+		// caches everything across regions. This also takes presurre off of the origin server.
+		cloudflareMirror, _ /* must parse */ := url.Parse(fileURL.String())
+		cloudflareMirror.Host = "snapshot-cloudflare.debian.org"
+
+		p, err := NewPackage(entry[packageKey], entry[sha256Key], entry[versionKey], []string{cloudflareMirror.String(), fileURL.String()})
 		if err != nil {
 			return nil, err
 		}

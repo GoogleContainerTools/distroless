@@ -27,10 +27,10 @@ type Package struct {
 	Name    string
 	SHA256  string
 	Version Version
-	URL     string
+	URLs    []string
 }
 
-func NewPackage(name string, sha256hex string, version string, url string) (*Package, error) {
+func NewPackage(name string, sha256hex string, version string, urls []string) (*Package, error) {
 	if strings.TrimSpace(name) == "" {
 		return nil, errors.New("package name was empty")
 	}
@@ -50,7 +50,7 @@ func NewPackage(name string, sha256hex string, version string, url string) (*Pac
 		return nil, errors.Wrapf(err, "package version parsing error for %q", name)
 	}
 
-	return &Package{name, sha256hex, v, url}, nil
+	return &Package{name, sha256hex, v, urls}, nil
 }
 
 // Equivalent checks if these packages are the same file (even if they have different urls)
