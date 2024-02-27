@@ -2,6 +2,24 @@ workspace(name = "distroless")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# rules_distroless setup
+http_archive(
+    name = "rules_distroless",
+    sha256 = "08eeee56f857da3bb6f77d67f8246a1c4d50764debfbc8802a198f3997a3ae7c",
+    strip_prefix = "rules_distroless-0.1.6",
+    url = "https://github.com/GoogleContainerTools/rules_distroless/releases/download/v0.1.6/rules_distroless-v0.1.6.tar.gz",
+)
+
+load("@rules_distroless//distroless:dependencies.bzl", "rules_distroless_dependencies")
+
+rules_distroless_dependencies()
+
+load("@aspect_bazel_lib//lib:repositories.bzl", "register_expand_template_toolchains", "register_tar_toolchains")
+
+register_tar_toolchains()
+
+register_expand_template_toolchains()
+
 # rules_oci setup
 http_archive(
     name = "rules_oci",
@@ -146,11 +164,3 @@ load("@rules_rust//rust:repositories.bzl", "rust_register_toolchains", "rust_rep
 rust_repositories(edition = "2021")
 
 rust_register_toolchains()
-
-# rules_docker setup.
-# NOTE: this ruleset is almost unused and replaced by rules_oci completely expect a few helper macros that'll be hosted on distroless-tools.
-http_archive(
-    name = "io_bazel_rules_docker",
-    sha256 = "b1e80761a8a8243d03ebca8845e9cc1ba6c82ce7c5179ce2b295cd36f7e394bf",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.25.0/rules_docker-v0.25.0.tar.gz"],
-)
