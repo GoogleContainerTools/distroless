@@ -75,11 +75,15 @@ func resolvePackages(pi *deb.PackageIndex, packages map[string]bool) (map[string
 		return nil, errors.Wrapf(err, "failed to xz open package index file %q", pi.URL)
 	}
 
-	poolRoot, err := url.Parse(pi.PoolRoot)
+	// CloudFlare mirror is the new mirror of snapshot.debian.org which is way faster as it
+	// caches everything across regions. This also takes presurre off of the origin server.
+	cloudflare, err := url.Parse(pi.PoolRoot)
 	if err != nil {
-		panic(err) // we shouldn't be generating bad urls
+		return nil, err
 	}
-	pkgs, err := deb.Parse(xzr, packages, poolRoot)
+	cloudflare.Host = "snapshot-cloudflare.debian.org"
+
+	pkgs, err := deb.Parse(xzr, packages, []string{cloudflare.String(), pi.PoolRoot})
 	return pkgs, errors.Wrapf(err, "parsing packages at %q", pi.URL)
 }
 

@@ -22,17 +22,17 @@ func TestPackage_Equivalent(t *testing.T) {
 		Name:    "goose",
 		SHA256:  "12345",
 		Version: MustParseVersion("1"),
-		URL:     "https://somewhere.com/package.deb",
+		URLs:    []string{"https://somewhere.com/package.deb"},
 	}
 	testCases := []struct {
 		pkg    *Package
 		equals bool
 	}{
 		{pkg: base, equals: true},
-		{pkg: &Package{"goose", "12345", MustParseVersion("1"), "https://somewhereelse.com/package.deb"}, equals: true},
-		{pkg: &Package{"moose", "12345", MustParseVersion("1"), "https://somewhere.com/package.deb"}, equals: false},
-		{pkg: &Package{"goose", "123456", MustParseVersion("1"), "https://somewhere.com/package.deb"}, equals: false},
-		{pkg: &Package{"goose", "123456", MustParseVersion("2"), "https://somewhere.com/package.deb"}, equals: false},
+		{pkg: &Package{"goose", "12345", MustParseVersion("1"), []string{"https://somewhereelse.com/package.deb"}}, equals: true},
+		{pkg: &Package{"moose", "12345", MustParseVersion("1"), []string{"https://somewhere.com/package.deb"}}, equals: false},
+		{pkg: &Package{"goose", "123456", MustParseVersion("1"), []string{"https://somewhere.com/package.deb"}}, equals: false},
+		{pkg: &Package{"goose", "123456", MustParseVersion("2"), []string{"https://somewhere.com/package.deb"}}, equals: false},
 	}
 	for _, tc := range testCases {
 		if base.Equivalent(tc.pkg) != tc.equals {

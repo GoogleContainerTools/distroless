@@ -36,7 +36,9 @@ def repositories():
         name = "{{ printf "%s_%s_" $arch $distro }}{{ bazelify $pi.Name }}",
         package_name = "{{ $pi.Name }}",
         sha256 = "{{ $pi.SHA256 }}",
-        urls = ["{{ $pi.URL }}"],
+        urls = [{{ range $un,$url := $pi.URLs }}
+			"{{ $url }}",{{ end }}
+        ],
     )
 {{- end }}{{ end }}{{ end }}
 `

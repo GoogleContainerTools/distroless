@@ -88,17 +88,26 @@ func parse(r io.Reader, packages map[string]bool) ([]map[string]string, error) {
 	return allEntries, nil
 }
 
-func Parse(r io.Reader, packages map[string]bool, poolPrefix *url.URL) (map[string]*Package, error) {
+func Parse(r io.Reader, packages map[string]bool, poolprefixes []string) (map[string]*Package, error) {
 	allEntries, err := parse(r, packages)
 	if err != nil {
 		return nil, err
 	}
 	ps := map[string]*Package{}
 	for _, entry := range allEntries {
-		fileURL := *poolPrefix // make a copy of the pool root so we don't mutate it
-		fileURL.Path = path.Join(poolPrefix.Path, entry[filenameKey])
 
-		p, err := NewPackage(entry[packageKey], entry[sha256Key], entry[versionKey], fileURL.String())
+		urls := []string{}
+
+		for _, poolprefix := range poolprefixes {
+			url, err := url.Parse(poolprefix)
+			if err != nil {
+				return nil, err
+			}
+			url.Path = path.Join(url.Path, entry[filenameKey])
+			urls = append(urls, url.String())
+		}
+
+		p, err := NewPackage(entry[packageKey], entry[sha256Key], entry[versionKey], urls)
 		if err != nil {
 			return nil, err
 		}
