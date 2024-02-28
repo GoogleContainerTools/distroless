@@ -1,21 +1,23 @@
 "defines a function to replicate the container images for different distributions"
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
-load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", "ARCHITECTURES", "VARIANTS")
-load("//common:variables.bzl", "NONROOT")
-load("//private/util:deb.bzl", "deb")
+load("//cacerts:cacerts.bzl", "cacerts")
 
-USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
+NONROOT = 65532
 
-def base_images(distro):
-    """Replicate everything for all distroless suffixes
+def deb_file(arch, distro, package):
+    return "@{arch}_{distro}_{package}//:data".format(arch = arch, distro = distro, package = package)
 
-    Args:
-        distro: name of the distribution
-    """
+def deb_pkg(arch, distro, package):
+    return "@{arch}_{distro}_{package}".format(arch = arch, distro = distro, package = package)
+
+# Replicate everything for all distroless suffixes
+def distro_components(distro):
+    USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
 
     # loop for multi-arch images
     for (user, _, _) in USER_VARIANTS:
@@ -68,6 +70,11 @@ def base_images(distro):
         )
 
     for arch in ARCHITECTURES:
+        cacerts(
+            name = "cacerts_" + arch + "_" + distro,
+            deb = deb_file(arch, distro, "ca-certificates"),
+        )
+
         for (user, uid, workdir) in USER_VARIANTS:
             oci_image(
                 name = "static_" + user + "_" + arch + "_" + distro,
@@ -79,20 +86,20 @@ def base_images(distro):
                     "SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt",
                 },
                 tars = [
-                    deb.package(arch, distro, "base-files"),
-                    deb.package(arch, distro, "netbase"),
-                    deb.package(arch, distro, "tzdata"),
+                    deb_pkg(arch, distro, "base-files"),
+                    deb_pkg(arch, distro, "netbase"),
+                    deb_pkg(arch, distro, "tzdata"),
+                    ":passwd",
+                    ":group_tar",
+
                     # Create /tmp, too many things assume it exists.
                     # tmp.tar has a /tmp with the correct permissions 01777
                     # A tar is needed because at the moment there is no way to create a
                     # directory with specific permissions.
                     ":tmp.tar",
                     ":nsswitch.tar",
-                    "//common:passwd",
-                    "//common:home",
-                    "//common:group",
-                    "//common:os_release_" + distro,
-                    "//common:cacerts_" + distro + "_" + arch,
+                    "//os_release:os_release_" + distro + ".tar",
+                    ":cacerts_" + arch + "_" + distro + ".tar",
                 ],
                 user = "%d" % uid,
                 workdir = workdir,
@@ -105,7 +112,7 @@ def base_images(distro):
                 name = "base_nossl_" + user + "_" + arch + "_" + distro,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
-                    deb.package(arch, distro, "libc6"),
+                    deb_pkg(arch, distro, "libc6"),
                 ],
             )
 
@@ -124,10 +131,10 @@ def base_images(distro):
                 name = "base_" + user + "_" + arch + "_" + distro,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
-                    deb.package(arch, distro, "libc6"),
+                    deb_pkg(arch, distro, "libc6"),
                 ] + [
-                    deb.package(arch, distro, pkg)
-                    for pkg in BASE_DISTRO_DEBS[distro]
+                    deb_pkg(arch, distro, deb)
+                    for deb in BASE_DISTRO_DEBS[distro]
                 ],
             )
 

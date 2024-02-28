@@ -2,9 +2,8 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//base:base.bzl", "NONROOT", "deb_pkg")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
-load("//common:variables.bzl", "NONROOT")
-load("//private/util:deb.bzl", "deb")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -50,33 +49,33 @@ DISTRO_VERSION = {
         # Use UTF-8 encoding for file system: match modern Linux
         env = {"LANG": "C.UTF-8"},
         tars = [
-            deb.package(arch, distro, "dash"),
-            deb.package(arch, distro, "libbz2-1.0"),
-            deb.package(arch, distro, "libc-bin"),  # for ctypes.find_library
-            deb.package(arch, distro, "libdb5.3"),
-            deb.package(arch, distro, "libexpat1"),
-            deb.package(arch, distro, "liblzma5"),
-            deb.package(arch, distro, "libsqlite3-0"),
-            deb.package(arch, distro, "libuuid1"),
-            deb.package(arch, distro, "libncursesw6"),
-            deb.package(arch, distro, "libtinfo6"),
-            deb.package(arch, distro, "python3-distutils"),
-            deb.package(arch, distro, "zlib1g"),
-            deb.package(arch, distro, "libcom-err2"),
-            deb.package(arch, distro, "libcrypt1"),
-            deb.package(arch, distro, "libffi7"),
-            deb.package(arch, distro, "libgssapi-krb5-2"),
-            deb.package(arch, distro, "libk5crypto3"),
-            deb.package(arch, distro, "libkeyutils1"),
-            deb.package(arch, distro, "libkrb5-3"),
-            deb.package(arch, distro, "libkrb5support0"),
-            deb.package(arch, distro, "libmpdec3"),
-            deb.package(arch, distro, "libnsl2"),
-            deb.package(arch, distro, "libpython3.9-minimal"),
-            deb.package(arch, distro, "libpython3.9-stdlib"),
-            deb.package(arch, distro, "libreadline8"),
-            deb.package(arch, distro, "libtirpc3"),
-            deb.package(arch, distro, "python3.9-minimal"),
+            deb_pkg(arch, distro, "dash"),
+            deb_pkg(arch, distro, "libbz2-1.0"),
+            deb_pkg(arch, distro, "libc-bin"),  # for ctypes.find_library
+            deb_pkg(arch, distro, "libdb5.3"),
+            deb_pkg(arch, distro, "libexpat1"),
+            deb_pkg(arch, distro, "liblzma5"),
+            deb_pkg(arch, distro, "libsqlite3-0"),
+            deb_pkg(arch, distro, "libuuid1"),
+            deb_pkg(arch, distro, "libncursesw6"),
+            deb_pkg(arch, distro, "libtinfo6"),
+            deb_pkg(arch, distro, "python3-distutils"),
+            deb_pkg(arch, distro, "zlib1g"),
+            deb_pkg(arch, distro, "libcom-err2"),
+            deb_pkg(arch, distro, "libcrypt1"),
+            deb_pkg(arch, distro, "libffi7"),
+            deb_pkg(arch, distro, "libgssapi-krb5-2"),
+            deb_pkg(arch, distro, "libk5crypto3"),
+            deb_pkg(arch, distro, "libkeyutils1"),
+            deb_pkg(arch, distro, "libkrb5-3"),
+            deb_pkg(arch, distro, "libkrb5support0"),
+            deb_pkg(arch, distro, "libmpdec3"),
+            deb_pkg(arch, distro, "libnsl2"),
+            deb_pkg(arch, distro, "libpython3.9-minimal"),
+            deb_pkg(arch, distro, "libpython3.9-stdlib"),
+            deb_pkg(arch, distro, "libreadline8"),
+            deb_pkg(arch, distro, "libtirpc3"),
+            deb_pkg(arch, distro, "python3.9-minimal"),
             "ld_so_" + arch + "_cache.tar",
             ":python_aliases_%s" % distro,
         ],

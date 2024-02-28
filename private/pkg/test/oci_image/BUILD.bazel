@@ -1,14 +1,14 @@
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
-load("//private/util:deb.bzl", "deb")
+load("//base:base.bzl", "deb_pkg")
 
 oci_image(
     name = "image_arm64",
     architecture = "arm64",
     os = "linux",
     tars = [
-        deb.package("arm64", "debian11", "base-files"),
+        deb_pkg("arm64", "debian11", "base-files"),
     ],
 )
 
@@ -22,7 +22,7 @@ oci_image(
     architecture = "amd64",
     os = "linux",
     tars = [
-        deb.package("amd64", "debian11", "netbase"),
+        deb_pkg("amd64", "debian11", "netbase"),
     ],
 )
 
