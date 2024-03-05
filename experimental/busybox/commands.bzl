@@ -1,3 +1,5 @@
+load("@aspect_bazel_lib//lib:tar.bzl", "tar")
+
 BUSYBOX_COMMANDS = [
     "[",
     "[[",
@@ -381,3 +383,24 @@ BUSYBOX_COMMANDS = [
     "zcat",
     "zcip",
 ]
+
+BUSYBOX_ARCHIVE_BUILD = """\
+filegroup(
+    name = "file",
+    srcs = ["bin/busybox"],
+    visibility = ["//visibility:public"]
+)
+"""
+
+def busybox_layer(busybox, **kwargs):
+    tar(
+        srcs = [busybox],
+        mtree = [
+            "./busybox/ uid=0 gid=0 mode=0755 time=0.0 type=dir",
+            "./busybox/busybox uid=0 gid=0 mode=0755 time=0.0 type=file content=$(location {})".format(busybox),
+        ] + [
+            "./busybox/{cmd} uid=0 gid=0 mode=0755 time=0.0 type=link link=/busybox/busybox".format(cmd = cmd)
+            for cmd in BUSYBOX_COMMANDS
+        ],
+        **kwargs
+    )

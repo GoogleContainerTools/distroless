@@ -144,7 +144,7 @@ def distro_components(distro):
                 base = ":base_" + user + "_" + arch + "_" + distro,
                 entrypoint = ["/busybox/sh"],
                 env = {"PATH": "$PATH:/busybox"},
-                tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
+                tars = ["//experimental/busybox:busybox_" + arch],
             )
 
             # A base_nossl debug image with busybox available.
@@ -153,7 +153,7 @@ def distro_components(distro):
                 base = ":base_nossl_" + user + "_" + arch + "_" + distro,
                 entrypoint = ["/busybox/sh"],
                 env = {"PATH": "$PATH:/busybox"},
-                tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
+                tars = ["//experimental/busybox:busybox_" + arch],
             )
 
             # A static debug image with busybox available.
@@ -162,7 +162,7 @@ def distro_components(distro):
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 entrypoint = ["/busybox/sh"],
                 env = {"PATH": "$PATH:/busybox"},
-                tars = ["//experimental/busybox:busybox_" + arch + ".tar"],
+                tars = ["//experimental/busybox:busybox_" + arch],
             )
 
         ##########################################################################################
