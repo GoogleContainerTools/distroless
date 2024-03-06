@@ -1,0 +1,15 @@
+sh_binary(
+    name = "diff",
+    srcs = ["diff.bash"],
+    args = [
+        "--head-ref",
+        "test",
+        "--base-ref",
+        "test",
+        "--report",
+        "./report.log",
+        "--query-bazel",
+        "--registry-spawn-https",
+        "--cd-into-workspace",
+    ],
+)
