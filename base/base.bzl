@@ -1,8 +1,8 @@
 "defines a function to replicate the container images for different distributions"
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
-load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", "ARCHITECTURES", "VARIANTS")
 load("//common:variables.bzl", "NONROOT")
@@ -82,15 +82,14 @@ def base_images(distro):
                     deb.package(arch, distro, "base-files"),
                     deb.package(arch, distro, "netbase"),
                     deb.package(arch, distro, "tzdata"),
-                    # Create /tmp, too many things assume it exists.
-                    # tmp.tar has a /tmp with the correct permissions 01777
-                    # A tar is needed because at the moment there is no way to create a
-                    # directory with specific permissions.
-                    ":tmp.tar",
-                    ":nsswitch.tar",
+                    "//common:rootfs",
                     "//common:passwd",
                     "//common:home",
                     "//common:group",
+                    # Create /tmp, too many things assume it exists.
+                    # tmp.tar has a /tmp with the correct permissions 01777
+                    "//common:tmp",
+                    ":nsswitch.tar",
                     "//common:os_release_" + distro,
                     "//common:cacerts_" + distro + "_" + arch,
                 ],

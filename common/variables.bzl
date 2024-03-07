@@ -17,3 +17,6 @@ OS_RELEASE = dict(
 NOBODY = 65534
 NONROOT = 65532
 ROOT = 0
+
+# TODO: this should be 0, but for now we'll use this to minimize diff.
+MTIME = "946684800"
