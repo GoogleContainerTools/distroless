@@ -1,9 +1,34 @@
+load("@aspect_bazel_lib//lib:tar.bzl", "tar")
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
 load("//:checksums.bzl", "ARCHITECTURES", "VERSIONS")
 load("//base:distro.bzl", "DISTROS")
-load(":variables.bzl", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT", "quote")
+load("//private/util:deb.bzl", "deb")
+load(":variables.bzl", "MTIME", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT", "quote")
 
 package(default_visibility = ["//visibility:public"])
+
+tar(
+    name = "rootfs",
+    srcs = [],
+    args = [
+        "--format",
+        "gnutar",
+    ],
+    compress = "gzip",
+    mtree = ["./ type=dir uid=0 gid=0 time=0.0"],
+)
+
+tar(
+    name = "tmp",
+    srcs = [],
+    # original tmp.tar was created on a gnutar, mimic that.
+    args = [
+        "--format",
+        "gnutar",
+    ],
+    compress = "gzip",
+    mtree = ["./tmp gname=root uname=root time=1501783453.0 mode=1777 gid=0 uid=0 type=dir"],
+)
 
 [
     os_release(
@@ -15,6 +40,7 @@ package(default_visibility = ["//visibility:public"])
             ))
             for (key, value) in OS_RELEASE.items()
         },
+        time = MTIME,
     )
     for (dist, codename, version) in VERSIONS
 ]
@@ -28,7 +54,8 @@ package(default_visibility = ["//visibility:public"])
         # >     debian/rules: rename the C.UTF-8 locale into C.utf8 to match upstream
         # >     naming.
         charset = "C.UTF-8" if distro == "debian11" else "C.utf8",
-        package = "@%s_%s_libc-bin//:data" % (arch, distro),
+        package = deb.data(arch, distro, "libc-bin"),
+        time = MTIME,
     )
     for arch in ARCHITECTURES
     for distro in DISTROS
@@ -37,7 +64,8 @@ package(default_visibility = ["//visibility:public"])
 [
     cacerts(
         name = "cacerts_%s_%s" % (distro, arch),
-        package = "@%s_%s_ca-certificates//:data" % (arch, distro),
+        package = deb.data(arch, distro, "ca-certificates"),
+        time = MTIME,
     )
     for arch in ARCHITECTURES
     for distro in DISTROS
@@ -46,43 +74,39 @@ package(default_visibility = ["//visibility:public"])
 # create /etc/group with the root, tty, and staff groups
 group(
     name = "group",
-    groups = [
+    entries = [
         {
             "name": "root",  # root_group
             "gid": ROOT,
             "password": "x",
-            "users": [],
         },
         {
             "name": "nobody",  # nobody_group
             "gid": NOBODY,
             "password": "x",
-            "users": [],
         },
         {
             "name": "tty",  # tty_group
             "gid": 5,
             "password": "x",
-            "users": [],
         },
         {
             "name": "staff",  # staff_group
             "gid": 50,
             "password": "x",
-            "users": [],
         },
         {
             "name": "nonroot",  # nonroot_group
             "gid": NONROOT,
             "password": "x",
-            "users": [],
         },
     ],
+    time = MTIME,
 )
 
 passwd(
     name = "passwd",
-    passwds = [
+    entries = [
         {
             "gecos": ["root"],
             "gid": ROOT,
@@ -117,14 +141,22 @@ home(
     name = "home",
     dirs = [
         {
-            "home": "./root",
+            "home": "/root",
             "uid": ROOT,
             "gid": ROOT,
+            "mode": 700,
         },
         {
-            "home": "./home/nonroot",
+            "home": "/home",
             "uid": NONROOT,
             "gid": NONROOT,
+            "mode": 755,
+        },
+        {
+            "home": "/home/nonroot",
+            "uid": NONROOT,
+            "gid": NONROOT,
+            "mode": 700,
         },
     ],
 )

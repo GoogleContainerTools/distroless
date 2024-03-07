@@ -11,7 +11,7 @@ load("//base:distro.bzl", "DISTROS")
 # Create a passwd file and home directory with a nonroot user and uid.
 passwd(
     name = "passwd",
-    passwds = [
+    entries = [
         {
             "gecos": ["nonroot"],
             "gid": 1000,
