@@ -1,7 +1,6 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
 load("//:java_archives.bzl", "JAVA_RELEASE_VERSIONS")
 load("//base:distro.bzl", "DISTROS")
 load("//java:jre_ver.bzl", "jre_ver")
@@ -131,7 +130,7 @@ JAVA_VERSIONS_PER_DISTRO = [
             deb.package(arch, distro, "libuuid1"),
             deb.package(arch, distro, "libbrotli1"),
             deb.package(arch, distro, "libcrypt1"),
-            deb.package(arch, distro, "libstdcpp6"),
+            deb.package(arch, distro, "libstdc++6"),
             deb.package(arch, distro, "libgcc-s1"),
             "//common:locale_" + distro + "_" + arch,
         ],
@@ -200,7 +199,11 @@ DISTRO_SPECIFIC_LIBRARIES = {
             "-jar",
         ],
         env = {
-            "JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"]),
+            "JAVA_VERSION": jre_ver(deb.version(
+                arch,
+                distro,
+                "openjdk-" + java_version + "-jre-headless",
+            )),
         },
         tars = [
             ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
@@ -235,7 +238,11 @@ DISTRO_SPECIFIC_LIBRARIES = {
             "-jar",
         ],
         env = {
-            "JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"]),
+            "JAVA_VERSION": jre_ver(deb.version(
+                arch,
+                distro,
+                "openjdk-" + java_version + "-jre-headless",
+            )),
         },
         tars = [
             ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,

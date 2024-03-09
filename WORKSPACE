@@ -5,9 +5,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # rules_distroless setup
 http_archive(
     name = "rules_distroless",
-    sha256 = "26114c00e7a5aab87bc12660820264c00b00a07ad13966fdedbffd1e112e6b7d",
-    strip_prefix = "rules_distroless-0.2.1",
-    url = "https://github.com/GoogleContainerTools/rules_distroless/releases/download/v0.2.1/rules_distroless-v0.2.1.tar.gz",
+    # sha256 = "9306b5b8a296d95745d7b38be20c320db125f1b5f6fc3ad507de21c8d562b159",
+    strip_prefix = "rules_distroless-d3d8ee9efc4e925057a3b720fff733063e2f9944",
+    url = "https://github.com/GoogleContainerTools/rules_distroless/archive/d3d8ee9efc4e925057a3b720fff733063e2f9944.tar.gz",
 )
 
 load("@rules_distroless//distroless:dependencies.bzl", "distroless_dependencies")
@@ -109,9 +109,13 @@ go_repository(
 )
 
 # Custom archives
-load(":debian_archives.bzl", debian_repositories = "repositories")
+load("//common/package:repositories.bzl", debian_repositories = "repositories")
 
 debian_repositories()
+
+load("//common/package:packages.bzl", debian_packages = "packages")
+
+debian_packages()
 
 load(":busybox_archives.bzl", busybox_repositories = "repositories")
 
