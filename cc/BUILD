@@ -1,7 +1,7 @@
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//base:distro.bzl", "DISTROS")
-load("//base:base.bzl", "deb_pkg")
 load("//:checksums.bzl", "ARCHITECTURES")
+load("//base:distro.bzl", "DISTROS")
+load("//private/util:deb.bzl", "deb")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -30,9 +30,9 @@ package(default_visibility = ["//visibility:public"])
         name = ("cc" if (not mode) else mode[1:]) + "_" + user + "_" + arch + "_" + distro,
         base = "//base" + (mode if mode else ":base") + "_" + user + "_" + arch + "_" + distro,
         tars = [
-            deb_pkg(arch, distro, "libgomp1"),
-            deb_pkg(arch, distro, "libstdcpp6"),
-            deb_pkg(arch, distro, "libgcc-s1"),
+            deb.package(arch, distro, "libgomp1"),
+            deb.package(arch, distro, "libstdcpp6"),
+            deb.package(arch, distro, "libgcc-s1"),
         ],
     )
     for mode in [
