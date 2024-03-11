@@ -41,7 +41,7 @@ jobs:
           echo "HAS_CHANGES=FALSE" >> "$GITHUB_OUTPUT"
           exit 0;
         fi
-        "HAS_CHANGES=TRUE" >> "$GITHUB_OUTPUT"
+        echo "HAS_CHANGES=TRUE" >> "$GITHUB_OUTPUT"
 
         git checkout -b update-snapshots
 
