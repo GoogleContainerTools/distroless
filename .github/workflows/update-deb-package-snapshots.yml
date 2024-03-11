@@ -21,19 +21,20 @@ jobs:
       with:
         go-version: '1.20'
 
-    - name: Run update script
-      run: ./updateWorkspaceSnapshots.sh
+    # - name: Run update script
+    #   run: ./updateWorkspaceSnapshots.sh
 
-    - name: Run update sboms script
-      run: |
-        for i in $(seq 5); do
-          bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //private/pkg/test/oci_image:test_sboms && break || sleep 20;
-        done
-        bazel run @//private/pkg/test/oci_image:test_sboms
+    # - name: Run update sboms script
+    #   run: |
+    #     for i in $(seq 5); do
+    #       bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //private/pkg/test/oci_image:test_sboms && break || sleep 20;
+    #     done
+    #     bazel run @//private/pkg/test/oci_image:test_sboms
 
     - name: Create commits
       id: create-commits
       run: |
+        echo "test" >> README.md
         # Check work tree and end successfully if empty
         if [ -z "$(git status --porcelain)" ]; then
           echo "Nothing to commit";
