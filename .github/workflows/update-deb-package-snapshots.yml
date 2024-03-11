@@ -31,12 +31,15 @@ jobs:
         bazel run @//private/pkg/test/oci_image:test_sboms
 
     - name: Create commits
+      id: create-commits
       run: |
         # Check work tree and end successfully if empty
         if [ -z "$(git status --porcelain)" ]; then
           echo "Nothing to commit";
+          echo "HAS_CHANGES=FALSE" >> "$GITHUB_OUTPUT"
           exit 0;
         fi
+        "HAS_CHANGES=TRUE" >> "$GITHUB_OUTPUT"
 
         git checkout -b update-snapshots
 
@@ -50,16 +53,10 @@ jobs:
         git push --force origin HEAD
 
     - name: Create Pull Request
+      if: steps.create-commits.outputs.HAS_CHANGES == 'TRUE'
       env:
         GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       run: |
-        # Check diff and end successfully if empty
-        if [ -z "$(git diff origin/main)" ]; then
-          echo "No diff to create PR";
-          exit 0;
-        fi
-
-        # Create PR
         if ! OUTPUT=$(gh pr create -B main -H update-snapshots -t "Bumping packages to latest stable versions" -b "Bumping packages to latest stable versions" 2>&1) ; then
           echo $OUTPUT
           if [[ "${OUTPUT}" =~ "already exists" ]]; then
