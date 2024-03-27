@@ -86,10 +86,10 @@ def repositories():
 
     node_archive(
         name = "nodejs20_ppc64le",
-        sha256 = "9823305ac3a66925a9b61d8032f6bbb4c3e33c28e7f957ebb27e49732feffb23",
-        strip_prefix = "node-v20.11.1-linux-ppc64le/",
-        urls = ["https://nodejs.org/dist/v20.11.1/node-v20.11.1-linux-ppc64le.tar.gz"],
-        version = "20.11.1",
+        sha256 = "767d6150c086fcdeb9f689b9f487194e3fb459a6ec4e5668d51a051fce67a161",
+        strip_prefix = "node-v20.12.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v20.12.0/node-v20.12.0-linux-ppc64le.tar.gz"],
+        version = "20.12.0",
         architecture = "ppc64le",
         control = "//nodejs:control",
     )
