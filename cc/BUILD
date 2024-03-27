@@ -31,7 +31,7 @@ package(default_visibility = ["//visibility:public"])
         base = "//base" + (mode if mode else ":base") + "_" + user + "_" + arch + "_" + distro,
         tars = [
             deb.package(arch, distro, "libgomp1"),
-            deb.package(arch, distro, "libstdcpp6"),
+            deb.package(arch, distro, "libstdc++6"),
             deb.package(arch, distro, "libgcc-s1"),
         ],
     )

@@ -2,11 +2,11 @@ name: update-snapshots
 on:
   # will send emails to last editor of this cron syntax (distroless-bot)
   schedule:
-    - cron:  '30 20 * * *'
-  
+    - cron: "30 20 * * *"
+
 permissions:
   contents: read
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,27 +15,27 @@ jobs:
       pull-requests: write
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v5
-      with:
-        go-version: '1.20'
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.20"
 
-    - name: Run update script
-      run: ./updateWorkspaceSnapshots.sh
+      - name: Update snapshots and lock using "knife"
+        run: ./knife update-snapshots && ./knife lock
 
-    - name: Run update sboms script
-      run: |
-        for i in $(seq 5); do
-          bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //private/pkg/test/oci_image:test_sboms && break || sleep 20;
-        done
-        bazel run @//private/pkg/test/oci_image:test_sboms
-    
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
-      with:
-        token: ${{ secrets.ACTIONS_TOKEN }}
-        commit-message: "Bumping packages to latest stable versions"
-        author: "Distroless Bot <distroless-bot@google.com>"
-        title: "Bumping packages to latest stable versions"
-        body: "Bumping packages to latest stable versions"
-        branch: "update-snapshots"
+      - name: Run update sboms script
+        run: |
+          for i in $(seq 5); do
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //private/pkg/test/oci_image:test_sboms && break || sleep 20;
+          done
+          bazel run @//private/pkg/test/oci_image:test_sboms
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
+        with:
+          token: ${{ secrets.ACTIONS_TOKEN }}
+          commit-message: "Bumping packages to latest stable versions"
+          author: "Distroless Bot <distroless-bot@google.com>"
+          title: "Bumping packages to latest stable versions"
+          body: "Bumping packages to latest stable versions"
+          branch: "update-snapshots"
