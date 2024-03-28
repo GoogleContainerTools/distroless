@@ -110,15 +110,15 @@ load("//private/repos/deb:packages.bzl", debian_packages = "packages")
 
 debian_packages()
 
-load("//private/repos:busybox_archives.bzl", busybox_repositories = "repositories")
+load("//:busybox_archives.bzl", busybox_repositories = "repositories")
 
 busybox_repositories()
 
-load("//private/repos:node_archives.bzl", node_repositories = "repositories")
+load("//:node_archives.bzl", node_repositories = "repositories")
 
 node_repositories()
 
-load("//private/repos:java_archives.bzl", java_repositories = "repositories")
+load("//:java_archives.bzl", java_repositories = "repositories")
 
 java_repositories()
 
