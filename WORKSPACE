@@ -6,8 +6,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "rules_distroless",
     # sha256 = "9306b5b8a296d95745d7b38be20c320db125f1b5f6fc3ad507de21c8d562b159",
-    strip_prefix = "rules_distroless-d3d8ee9efc4e925057a3b720fff733063e2f9944",
-    url = "https://github.com/GoogleContainerTools/rules_distroless/archive/d3d8ee9efc4e925057a3b720fff733063e2f9944.tar.gz",
+    strip_prefix = "rules_distroless-2c3f41742743b66c62387ff181472e1718e50c30",
+    url = "https://github.com/GoogleContainerTools/rules_distroless/archive/2c3f41742743b66c62387ff181472e1718e50c30.tar.gz",
 )
 
 load("@rules_distroless//distroless:dependencies.bzl", "distroless_dependencies")
@@ -95,13 +95,6 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 gazelle_dependencies()
 
 go_repository(
-    name = "com_github_ulikunitz_xz",
-    importpath = "github.com/ulikunitz/xz",
-    sum = "h1:kpFauv27b6ynzBNT/Xy+1k+fK4WswhN/6PN5WhFAGw8=",
-    version = "v0.5.11",
-)
-
-go_repository(
     name = "com_github_spdx_tools_golang",
     importpath = "github.com/spdx/tools-golang",
     sum = "h1:9B623Cfs+mclYK6dsae7gLSwuIBHvlgmEup87qpqsAQ=",
@@ -109,23 +102,23 @@ go_repository(
 )
 
 # Custom archives
-load("//common/package:repositories.bzl", debian_repositories = "repositories")
+load("//private/repos/deb:repositories.bzl", debian_repositories = "repositories")
 
 debian_repositories()
 
-load("//common/package:packages.bzl", debian_packages = "packages")
+load("//private/repos/deb:packages.bzl", debian_packages = "packages")
 
 debian_packages()
 
-load(":busybox_archives.bzl", busybox_repositories = "repositories")
+load("//private/repos:busybox_archives.bzl", busybox_repositories = "repositories")
 
 busybox_repositories()
 
-load(":node_archives.bzl", node_repositories = "repositories")
+load("//private/repos:node_archives.bzl", node_repositories = "repositories")
 
 node_repositories()
 
-load(":java_archives.bzl", java_repositories = "repositories")
+load("//private/repos:java_archives.bzl", java_repositories = "repositories")
 
 java_repositories()
 

@@ -36,7 +36,7 @@ def _versions_impl(rctx):
         if repo not in versions:
             versions[repo] = dict()
 
-        for (_, pkg) in lock["packages"].items():
+        for pkg in lock["packages"]:
             if pkg["name"] not in versions[repo]:
                 versions[repo][pkg["name"]] = dict()
 

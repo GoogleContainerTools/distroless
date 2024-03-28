@@ -19,7 +19,7 @@ function cmd_lock() {
     echo "🚧 Querying for repos"
     echo ""
     local repos=
-    repos=$(bazel query "kind('_deb_package_index', //external:*)" --output=label 2>/dev/null | cut -d: -f2)
+    repos=$(bazel query "kind('deb_package_index', //external:*)" --output=label 2>/dev/null | cut -d: -f2)
 
     for repo in $repos; do
         echo "🔑 Locking $repo"

@@ -1,6 +1,9 @@
+"repositories for nodejs"
+
 load("//private/remote:node_archive.bzl", "node_archive")
 
 def repositories():
+    "node archives"
     # Node (https://nodejs.org/en/about/releases/)
     # Follow Node's maintainence schedule and support all LTS versions that are not end of life
 
