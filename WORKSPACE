@@ -5,9 +5,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # rules_distroless setup
 http_archive(
     name = "rules_distroless",
-    sha256 = "9306b5b8a296d95745d7b38be20c320db125f1b5f6fc3ad507de21c8d562b159",
-    strip_prefix = "rules_distroless-896a27f8aee503c6ea3eeae47b51a4fc84c8496a",
-    url = "https://github.com/GoogleContainerTools/rules_distroless/archive/896a27f8aee503c6ea3eeae47b51a4fc84c8496a.tar.gz",
+    sha256 = "26114c00e7a5aab87bc12660820264c00b00a07ad13966fdedbffd1e112e6b7d",
+    strip_prefix = "rules_distroless-0.2.1",
+    url = "https://github.com/GoogleContainerTools/rules_distroless/releases/download/v0.2.1/rules_distroless-v0.2.1.tar.gz",
 )
 
 load("@rules_distroless//distroless:dependencies.bzl", "distroless_dependencies")
