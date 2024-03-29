@@ -36,7 +36,8 @@ def _package(arch, dist, package):
     return "@{dist}//{package}/{arch}".format(arch = arch, dist = dist, package = package)
 
 def _data(arch, dist, package):
-    return "@{}//:data".format(_package(arch = arch, dist = dist, package = package))
+    (arch, dist) = _get_dist_arch_alias(arch, dist)
+    return "@{dist}//{package}/{arch}:data".format(arch = arch, dist = dist, package = package)
 
 def _version(arch, dist, package):
     (arch, dist) = _get_dist_arch_alias(arch, dist)
@@ -44,8 +45,6 @@ def _version(arch, dist, package):
 
 deb = struct(
     package = _package,
-    data = _package,
-    # TODO: locale needs data?
-    _TODO = _data,
+    data = _data,
     version = _version,
 )
