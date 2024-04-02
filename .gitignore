@@ -15,3 +15,6 @@
 /bazel-*
 # Ignore outputs generated during Bazel bootstrapping.
 /output/
+# ignore user bazelrc
+.bazelrc.user
+*.log

@@ -5,9 +5,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # rules_distroless setup
 http_archive(
     name = "rules_distroless",
-    sha256 = "26114c00e7a5aab87bc12660820264c00b00a07ad13966fdedbffd1e112e6b7d",
-    strip_prefix = "rules_distroless-0.2.1",
-    url = "https://github.com/GoogleContainerTools/rules_distroless/releases/download/v0.2.1/rules_distroless-v0.2.1.tar.gz",
+    sha256 = "d7ecb0d333b304d4954d8fb27567954871428b21103e4c0b65e30d66e0313e49",
+    strip_prefix = "rules_distroless-0.3.1",
+    url = "https://github.com/GoogleContainerTools/rules_distroless/releases/download/v0.3.1/rules_distroless-v0.3.1.tar.gz",
 )
 
 load("@rules_distroless//distroless:dependencies.bzl", "distroless_dependencies")
@@ -95,13 +95,6 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 gazelle_dependencies()
 
 go_repository(
-    name = "com_github_ulikunitz_xz",
-    importpath = "github.com/ulikunitz/xz",
-    sum = "h1:kpFauv27b6ynzBNT/Xy+1k+fK4WswhN/6PN5WhFAGw8=",
-    version = "v0.5.11",
-)
-
-go_repository(
     name = "com_github_spdx_tools_golang",
     importpath = "github.com/spdx/tools-golang",
     sum = "h1:9B623Cfs+mclYK6dsae7gLSwuIBHvlgmEup87qpqsAQ=",
@@ -109,9 +102,13 @@ go_repository(
 )
 
 # Custom archives
-load(":debian_archives.bzl", debian_repositories = "repositories")
+load("//private/repos/deb:repositories.bzl", debian_repositories = "repositories")
 
 debian_repositories()
+
+load("//private/repos/deb:packages.bzl", debian_packages = "packages")
+
+debian_packages()
 
 load(":busybox_archives.bzl", busybox_repositories = "repositories")
 

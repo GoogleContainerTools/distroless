@@ -21,11 +21,3 @@ go_binary(
         "@com_github_spdx_tools_golang//spdx/v2_3",
     ],
 )
-
-go_binary(
-    name = "dpkg_status",
-    srcs = ["dpkg_status.go"],
-    deps = [
-        "@com_github_ulikunitz_xz//:xz",
-    ],
-)
