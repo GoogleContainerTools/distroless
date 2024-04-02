@@ -198,6 +198,12 @@ function test_image() {
     echo ""
 
     bazel run $push_label -- --repository $repo_stage --tag $tag_stamped
+
+    if [[ "$(crane digest $repo_origin:$tag_stamped)" == "$(crane digest $repo_stage:$tag_stamped)" ]]; then
+        echo "👍 $repo_origin:$tag_stamped and $repo_stage:$tag_stamped have identical hash."
+        return 
+    fi
+   
     if ! diffoci diff --pull=always --all-platforms --semantic "$repo_origin:$tag_stamped" "$repo_stage:$tag_stamped"; then
         echo ""
         echo "      🔬 To reproduce: bazel run //private/tools:diff -- --only $image_label"
