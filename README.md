@@ -78,7 +78,7 @@ cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com 
 
 Verifying using the distroless keys is deprecated in favor of keyless. These signing events are not uploaded to the transparency log. You can use the [distroless public key](cosign.pub) to verify any distroless image with:
 
-Images built after November 2023 will not be verifyable with `cosign.pub`, use keyless signature verification
+Images built after November 2023 will not be verifiable with `cosign.pub`, use keyless signature verification
 
 ```
 cat cosign.pub
