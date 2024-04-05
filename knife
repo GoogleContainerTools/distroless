@@ -16,9 +16,10 @@ set -o pipefail -o errexit -o nounset
 # limitations under the License.
 
 if [ $(uname) == "Darwin" ]; then
-    echo "WARNING: You are on a macos, you need to run 'brew install coreutils' to install required packages."
+    echo "WARNING: You are on a macos, you need to run 'brew install coreutils gnu-sed' to install required packages."
     echo ""
     export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+    export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 fi
 
 
@@ -86,11 +87,11 @@ function cmd_update_snapshot() {
         fi
         echo "🗞️ $mpath"
         if [[ "$current" != "$latest" ]]; then 
-            gsed -i -E "s/(debian\/)([0-9]+T[0-9]+Z)/\1$latest/" "$mpath"
+            sed -i -E "s/(debian\/)([0-9]+T[0-9]+Z)/\1$latest/" "$mpath"
             echo "   debian: $current -> $latest"
         fi 
         if [[ "$current_security" != "$latest_security" ]]; then 
-            gsed -i -E "s/(debian-security\/)([0-9]+T[0-9]+Z)/\1$latest_security/" "$mpath"
+            sed -i -E "s/(debian-security\/)([0-9]+T[0-9]+Z)/\1$latest_security/" "$mpath"
             echo "   debian-security: $current_security -> $latest_security"
         fi
         echo ""
