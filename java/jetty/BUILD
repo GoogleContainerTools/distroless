@@ -1,5 +1,6 @@
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "structure_test")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -15,9 +16,9 @@ package(default_visibility = ["//visibility:public"])
     ("jetty_java11_debug_debian11", "//java:java11_debug_root_amd64_debian11"),
 ]]
 
-[structure_test(
+[container_structure_test(
     name = "jetty_java11_" + distro + "_test",
-    config = ["testdata/java11.yaml"],
+    configs = ["testdata/java11.yaml"],
     image = ":jetty_java11_" + distro,
     tags = [
         "amd64",
@@ -25,9 +26,9 @@ package(default_visibility = ["//visibility:public"])
     ],
 ) for distro in DISTROS]
 
-[structure_test(
+[container_structure_test(
     name = "jetty_java11_debug_" + distro + "_test",
-    config = ["testdata/java11_debug.yaml"],
+    configs = ["testdata/java11_debug.yaml"],
     image = ":jetty_java11_debug_" + distro,
     tags = [
         "amd64",

@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+set -o pipefail -o errexit -o nounset
+
+# Copyright 2024 Google Inc. All rights reserved.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if [ $(uname) == "Darwin" ]; then
+    echo "WARNING: You are on a macos, you need to run 'brew install coreutils gnu-sed' to install required packages."
+    echo ""
+    export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+    export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+fi
+
+
+function cmd_lock() {
+    echo "🚧 Querying for repos"
+    echo ""
+    local repos=
+    repos=$(bazel query "kind('deb_package_index', //external:*)" --output=label 2>/dev/null | cut -d: -f2)
+
+    for repo in $repos; do
+        echo "🔑 Locking $repo"
+        bazel run "@${repo}//:lock" &>/dev/null
+    done
+}
+
+function find_latest_snapshot() {
+    local type="$1"
+    local current="$(date +%Y-%m-01)"
+    local tmp=$(mktemp)
+    for _ in 1 2; do
+        local q=$(date -d "$current" +"year=%Y&month=%m")
+        if curl -fs "https://snapshot-cloudflare.debian.org/archive/debian/?$q" | grep -ohE "([0-9]+T[0-9]+Z)" > $tmp; then
+            break
+        fi
+        echo "Could not find snapshot at $current, going back a month" >&2
+        # go back 1 month
+        current="$(date -d "$current -1 month" +%Y-%m-01)"
+    done
+    cat $tmp | grep -ohE "([0-9]+T[0-9]+Z)" | head -n1
+}
+
+function cmd_update_snapshot() {
+    echo "🧐 Looking for updates... "
+    latest=$(find_latest_snapshot "debian")
+    latest_security=$(find_latest_snapshot "debian-security")
+    if [[ -z "$latest" || -z "$latest_security" ]]; then
+        echo ""
+        echo "could not find any snapshots for debian or debian-security"
+        exit 1
+    fi 
+    echo ""
+    echo "🎯 Found snapshots"
+    echo "   debian: $latest" 
+    echo "   security: $latest_security"
+    echo ""
+
+    # if tty ask for approval
+    if [ -t 1 ]; then 
+        read -p "Do you want to continue? (y/n) " -n 1 -r
+        sleep 0.5
+        echo $'\n'
+        if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
+            echo "Aborting..."
+            exit 0
+        fi
+    fi
+
+    for mpath in "./private/repos/deb/"*.yaml; do
+        current=$(grep -oE "debian/([0-9]+T[0-9]+Z)" $mpath | cut -d/ -f2 | head -n1)
+        current_security=$(grep -oE "debian-security/([0-9]+T[0-9]+Z)" $mpath | cut -d/ -f2 | head -n1)
+
+        if [[ "$current" == "$latest" && "$current_security" == "$latest_security" ]]; then 
+            echo "🎖️ $mpath is up to date."
+            continue
+        fi
+        echo "🗞️ $mpath"
+        if [[ "$current" != "$latest" ]]; then 
+            sed -i -E "s/(debian\/)([0-9]+T[0-9]+Z)/\1$latest/" "$mpath"
+            echo "   debian: $current -> $latest"
+        fi 
+        if [[ "$current_security" != "$latest_security" ]]; then 
+            sed -i -E "s/(debian-security\/)([0-9]+T[0-9]+Z)/\1$latest_security/" "$mpath"
+            echo "   debian-security: $current_security -> $latest_security"
+        fi
+        echo ""
+    done
+    echo ""
+    echo "👌 Done..."
+}
+
+
+function cmd_lint () {
+    echo "🧹 Linting"
+    echo ""
+    if ! which buildifier > /dev/null; then 
+        echo "🧱 No buildifier executable was found."
+        echo " Did you follow the ./CONTRIBUTING.md ?" 
+        exit 1
+    fi
+    buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
+    if ! which pylint > /dev/null; then 
+        echo "🐍 No pylint executable was found."
+        echo ""
+        echo "   Did you follow the ./CONTRIBUTING.md ?" 
+        echo ""
+        exit 1
+    fi
+    find . -name "*.py" | xargs pylint --disable=R,C
+}
+
+
+function cmd_test () {
+    echo "🧪 Testing"
+    echo "" 
+
+    # TODO: why do we need python installed on the system?
+    if ! which python > /dev/null && ! which python3 > /dev/null; then 
+        echo "🐍 No python executable was found."
+        exit 1
+    fi
+
+    # Make sure python points to python3
+    if which python && [[  $(python --version) != Python\ 3* ]]; then
+        echo "🐍 python must point to a python3, currently points to $(readlink -f "$(which python)")"
+        echo ""
+        echo "   Maybe run: update-alternatives --install /usr/bin/python python /usr/bin/python3"
+        exit 1
+    fi
+
+    local arch=$(uname -m)
+
+    echo "💡 only including image tests for $arch"
+    echo ""
+
+    arch_specific_targets=$(bazel query "attr(\"tags\", "$arch", \"//...\")")
+
+    # Run all tests tagged with "amd64"
+    bazel test --test_timeout=900 //... $arch_specific_targets
+}
+
+
+case "${1:-"~~nocmd"}" in
+lock)
+    cmd_lock
+    ;;
+update-snapshots)
+    cmd_update_snapshot
+    ;;
+lint)
+    cmd_lint
+    ;;
+test)
+    cmd_test
+    ;;
+~~nocmd) # no command provided
+    echo "provide a command: lock"
+    exit 1
+    ;;
+*) # unknown command
+    echo "unknown command $1"
+    exit 1
+    ;;
+esac

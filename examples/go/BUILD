@@ -1,7 +1,7 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-load("@contrib_rules_oci//oci:defs.bzl", "oci_tarball")
+load("@rules_oci//oci:defs.bzl", "oci_tarball")
 load("//private/oci:defs.bzl", "go_image")
 
 package(default_visibility = ["//visibility:public"])
@@ -19,5 +19,5 @@ go_image(
 oci_tarball(
     name = "tarball",
     image = ":go_example",
-    repotags = ["distroless/examples/go:latest"],
+    repo_tags = ["distroless/examples/go:latest"],
 )

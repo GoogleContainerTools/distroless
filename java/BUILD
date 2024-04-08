@@ -1,12 +1,12 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//private/oci:defs.bzl", "java_image")
-load("//base:base.bzl", "deb_pkg")
-load("//base:distro.bzl", "DISTROS")
-load("//cacerts:java.bzl", "cacerts_java")
-load("//java:jre_ver.bzl", "jre_ver")
-load("//:debian_versions.bzl", DEBIAN_VERSIONS = "DEBIAN_PACKAGE_VERSIONS")
 load("//:java_archives.bzl", "JAVA_RELEASE_VERSIONS")
+load("//base:distro.bzl", "DISTROS")
+load("//java:jre_ver.bzl", "jre_ver")
+load("//private/oci:defs.bzl", "java_image")
+load("//private/util:deb.bzl", "deb")
+load("//private/util:java_cacerts.bzl", "java_cacerts")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -36,9 +36,9 @@ JAVA_VERSIONS_PER_DISTRO = [
 ]
 
 [
-    cacerts_java(
+    java_cacerts(
         name = "cacerts_java_" + arch + "_" + distro,
-        cacerts_tar = "//base:cacerts_" + arch + "_" + distro,
+        archive = "//common:cacerts_" + distro + "_" + arch,
     )
     for distro in DISTROS
     for arch in JAVA_ARCHITECTURES
@@ -51,7 +51,7 @@ JAVA_VERSIONS_PER_DISTRO = [
             "/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java",
         },
         deps = [
-            deb_pkg(
+            deb.package(
                 arch,
                 distro,
                 "openjdk-" + java_version + "-jre-headless",
@@ -118,21 +118,21 @@ JAVA_VERSIONS_PER_DISTRO = [
         base = ("//base:base_nossl" if (not ("debug" in mode)) else "//base:base_nossl_debug") + "_" + user + "_" + arch + "_" + distro,
         env = {"LANG": "C.UTF-8"},
         tars = [
-            deb_pkg(arch, distro, "zlib1g"),
-            deb_pkg(arch, distro, "libjpeg62-turbo"),
-            deb_pkg(arch, distro, "libpng16-16"),
-            deb_pkg(arch, distro, "liblcms2-2"),
-            deb_pkg(arch, distro, "libfreetype6"),
-            deb_pkg(arch, distro, "fonts-dejavu-core"),
-            deb_pkg(arch, distro, "fontconfig-config"),
-            deb_pkg(arch, distro, "libexpat1"),
-            deb_pkg(arch, distro, "libfontconfig1"),
-            deb_pkg(arch, distro, "libuuid1"),
-            deb_pkg(arch, distro, "libbrotli1"),
-            deb_pkg(arch, distro, "libcrypt1"),
-            deb_pkg(arch, distro, "libstdcpp6"),
-            deb_pkg(arch, distro, "libgcc-s1"),
-            "//locale:locale_" + arch + "_" + distro,
+            deb.package(arch, distro, "zlib1g"),
+            deb.package(arch, distro, "libjpeg62-turbo"),
+            deb.package(arch, distro, "libpng16-16"),
+            deb.package(arch, distro, "liblcms2-2"),
+            deb.package(arch, distro, "libfreetype6"),
+            deb.package(arch, distro, "fonts-dejavu-core"),
+            deb.package(arch, distro, "fontconfig-config"),
+            deb.package(arch, distro, "libexpat1"),
+            deb.package(arch, distro, "libfontconfig1"),
+            deb.package(arch, distro, "libuuid1"),
+            deb.package(arch, distro, "libbrotli1"),
+            deb.package(arch, distro, "libcrypt1"),
+            deb.package(arch, distro, "libstdc++6"),
+            deb.package(arch, distro, "libgcc-s1"),
+            "//common:locale_" + distro + "_" + arch,
         ],
     )
     for mode in [
@@ -160,11 +160,11 @@ DISTRO_SPECIFIC_LIBRARIES = {
         base = "java_build_base" + mode + "_" + user + "_" + arch + "_" + distro,
         env = {"LANG": "C.UTF-8"},
         tars = [
-            deb_pkg(arch, distro, "libharfbuzz0b"),
-            deb_pkg(arch, distro, "libgraphite2-3"),
-            deb_pkg(arch, distro, "libglib2.0-0"),
+            deb.package(arch, distro, "libharfbuzz0b"),
+            deb.package(arch, distro, "libgraphite2-3"),
+            deb.package(arch, distro, "libglib2.0-0"),
             ":cacerts_java_" + arch + "_" + distro,
-        ] + [deb_pkg(arch, distro, library) for library in DISTRO_SPECIFIC_LIBRARIES[distro]],
+        ] + [deb.package(arch, distro, library) for library in DISTRO_SPECIFIC_LIBRARIES[distro]],
     )
     for mode in [
         "",
@@ -199,7 +199,11 @@ DISTRO_SPECIFIC_LIBRARIES = {
             "-jar",
         ],
         env = {
-            "JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"]),
+            "JAVA_VERSION": jre_ver(deb.version(
+                arch,
+                distro,
+                "openjdk-" + java_version + "-jre-headless",
+            )),
         },
         tars = [
             ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
@@ -226,7 +230,6 @@ DISTRO_SPECIFIC_LIBRARIES = {
 [
     oci_image(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
-        architecture = arch,
         base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
@@ -235,11 +238,15 @@ DISTRO_SPECIFIC_LIBRARIES = {
             "-jar",
         ],
         env = {
-            "JAVA_VERSION": jre_ver(DEBIAN_VERSIONS[arch][distro]["openjdk-" + java_version + "-jre-headless"]),
+            "JAVA_VERSION": jre_ver(deb.version(
+                arch,
+                distro,
+                "openjdk-" + java_version + "-jre-headless",
+            )),
         },
         tars = [
             ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
-            deb_pkg(
+            deb.package(
                 arch,
                 distro,
                 "openjdk-" + java_version + "-jdk-headless",
@@ -302,7 +309,6 @@ DISTRO_SPECIFIC_LIBRARIES = {
 [
     oci_image(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
-        architecture = arch,
         base = ":java_build_base_debug_" + user + "_" + arch + "_" + distro,
         # We expect users to use:
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
@@ -323,9 +329,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/java_base" + mode + ".yaml"],
+        configs = ["testdata/java_base" + mode + ".yaml"],
         image = ":java_base" + mode + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
@@ -342,9 +348,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "java" + java_version + "_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/java" + java_version + "_" + distro + ".yaml"],
+        configs = ["testdata/java" + java_version + "_" + distro + ".yaml"],
         image = ":java" + java_version + "_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
@@ -357,9 +363,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro + "_test",
-        config = ["testdata/java" + java_version + "_debug" + "_" + distro + ".yaml"],
+        configs = ["testdata/java" + java_version + "_debug" + "_" + distro + ".yaml"],
         image = ":java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
         tags = [
             arch,
@@ -393,9 +399,9 @@ RULE_NAMES = [
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "check_certs_" + rule_name + "_test",
-        config = ["testdata/java_certs.yaml"],
+        configs = ["testdata/java_certs.yaml"],
         image = ":check_certs_" + rule_name,
         tags = [
             "amd64",
@@ -416,9 +422,9 @@ RULE_NAMES = [
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "check_encoding_" + rule_name + "_test",
-        config = ["testdata/java_encoding.yaml"],
+        configs = ["testdata/java_encoding.yaml"],
         image = ":check_encoding_" + rule_name,
         tags = [
             "amd64",
@@ -439,9 +445,9 @@ RULE_NAMES = [
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "check_libharfbuzz_" + rule_name + "_test",
-        config = ["testdata/java_libharfbuzz.yaml"],
+        configs = ["testdata/java_libharfbuzz.yaml"],
         image = ":check_libharfbuzz_" + rule_name,
         tags = [
             "amd64",

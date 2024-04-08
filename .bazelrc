@@ -1,3 +1,7 @@
+# Bazel settings that apply to this repository.
+# Take care to document any settings that you expect users to apply.
+# Settings that apply only to CI are in .github/workflows/ci.bazelrc
+
 # Allow DOCKER_HOST env to leak into test actions. 
 test --test_env=DOCKER_HOST
 
@@ -9,3 +13,23 @@ test:release --workspace_status_command=./private/stamp.bash --stamp
 # Allow external dependencies to be retried. debian snapshot is unreliable and needs retries.
 common --experimental_repository_downloader_retries=20
 common --http_timeout_scaling=2.0
+
+# Enable platform specific options
+build --enable_platform_specific_config
+
+# Use a hermetic Java version
+build --java_runtime_version=remotejdk_11
+
+# Newer versions jdk creates collisions on /tmp
+# See: https://github.com/bazelbuild/bazel/issues/3236
+# https://github.com/GoogleContainerTools/rules_distroless/actions/runs/7118944984/job/19382981899?pr=9#step:8:51
+common:linux --sandbox_tmpfs_path=/tmp
+
+# Load any settings specific to the current user.
+# .bazelrc.user should appear in .gitignore so that settings are not shared with team members
+# This needs to be last statement in this
+# config, as the user configuration should be able to overwrite flags from this file.
+# See https://docs.bazel.build/versions/master/best-practices.html#bazelrc
+# (Note that we use .bazelrc.user so the file appears next to .bazelrc in directory listing,
+# rather than user.bazelrc as suggested in the Bazel docs)
+try-import %workspace%/.bazelrc.user

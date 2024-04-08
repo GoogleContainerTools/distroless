@@ -26,34 +26,36 @@ These images are built using [bazel](https://bazel.build), but they can also be 
 
 ### What images are available?
 
-The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY]([url](https://github.com/GoogleContainerTools/distroless/blob/main/SUPPORT_POLICY.md)) for support timelines)
+The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY](<[url](https://github.com/GoogleContainerTools/distroless/blob/main/SUPPORT_POLICY.md)>) for support timelines)
 
 #### Debian 12
-| Image                                 | Tags                                   | Architecture Suffixes             |
-| ---                                   | ---                                    | ---                               |
-| gcr.io/distroless/static-debian12     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-debian12       | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-nossl-debian12 | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/cc-debian12         | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/python3-debian12    | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
-| gcr.io/distroless/java-base-debian12  | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java17-debian12     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/nodejs18-debian12   | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
+
+| Image                                 | Tags                                  | Architecture Suffixes             |
+| ------------------------------------- | ------------------------------------- | --------------------------------- |
+| gcr.io/distroless/static-debian12     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-debian12       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-nossl-debian12 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/cc-debian12         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/python3-debian12    | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
+| gcr.io/distroless/java-base-debian12  | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/java17-debian12     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/nodejs18-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 
 #### Debian 11
-| Image                                 | Tags                                   | Architecture Suffixes             |
-| ---                                   | ---                                    | ---                               |
-| gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/cc-debian11         | latest, nonroot, debug, debug-nonroot  | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/python3-debian11    | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
-| gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot  | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
-| gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot  | amd64, arm64                      |
+
+| Image                                 | Tags                                  | Architecture Suffixes             |
+| ------------------------------------- | ------------------------------------- | --------------------------------- |
+| gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/cc-debian11         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/python3-debian11    | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
+| gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
+| gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
 
 These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian11:latest-amd64`
 
@@ -65,16 +67,18 @@ All distroless images are signed by [cosign](https://github.com/sigstore/cosign)
 We recommend verifying any distroless image you use before building your image.
 
 #### Keyless
-Distroless images are signed with cosign in keyless mode, this is the only supported mechanism starting November 2023.  You can verify the keyless signature of any distroless image with:
+
+Distroless images are signed with cosign in keyless mode, this is the only supported mechanism starting November 2023. You can verify the keyless signature of any distroless image with:
 
 ```
 cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com  --certificate-identity keyless@distroless.iam.gserviceaccount.com
 ```
 
 #### Key (DEPRECATED)
+
 Verifying using the distroless keys is deprecated in favor of keyless. These signing events are not uploaded to the transparency log. You can use the [distroless public key](cosign.pub) to verify any distroless image with:
 
-Images built after November 2023 will not be verifyable with `cosign.pub`, use keyless signature verification
+Images built after November 2023 will not be verifiable with `cosign.pub`, use keyless signature verification
 
 ```
 cat cosign.pub
@@ -111,64 +115,67 @@ Note that by default static, base and cc images have the empty vector entrypoint
 Docker multi-stage builds make using distroless images easy.
 Follow these steps to get started:
 
-* Pick the right base image for your application stack.
+- Pick the right base image for your application stack.
   We publish the following distroless base images on `gcr.io`:
-    * [gcr.io/distroless/static-debian12](base/README.md)
-    * [gcr.io/distroless/static-debian11](base/README.md)
-    * [gcr.io/distroless/base-nossl-debian12](base/README.md)
-    * [gcr.io/distroless/base-nossl-debian11](base/README.md)
-    * [gcr.io/distroless/base-debian12](base/README.md)
-    * [gcr.io/distroless/base-debian11](base/README.md)
-    * [gcr.io/distroless/java11-debian11](java/README.md)
-    * [gcr.io/distroless/java17-debian12](java/README.md)
-    * [gcr.io/distroless/java17-debian11](java/README.md)
-    * [gcr.io/distroless/cc-debian12](cc/README.md)
-    * [gcr.io/distroless/cc-debian11](cc/README.md)
-    * [gcr.io/distroless/nodejs18-debian12](nodejs/README.md)
-    * [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
-    * [gcr.io/distroless/nodejs20-debian12](nodejs/README.md)
-    * [gcr.io/distroless/nodejs20-debian11](nodejs/README.md)
-    * [gcr.io/distroless/python3-debian12](python3/README.md)
-* The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
-    * [gcr.io/distroless/python3-debian11](experimental/python3/README.md)
-* Write a multi-stage docker file.
+  - [gcr.io/distroless/static-debian12](base/README.md)
+  - [gcr.io/distroless/static-debian11](base/README.md)
+  - [gcr.io/distroless/base-nossl-debian12](base/README.md)
+  - [gcr.io/distroless/base-nossl-debian11](base/README.md)
+  - [gcr.io/distroless/base-debian12](base/README.md)
+  - [gcr.io/distroless/base-debian11](base/README.md)
+  - [gcr.io/distroless/java11-debian11](java/README.md)
+  - [gcr.io/distroless/java17-debian12](java/README.md)
+  - [gcr.io/distroless/java17-debian11](java/README.md)
+  - [gcr.io/distroless/cc-debian12](cc/README.md)
+  - [gcr.io/distroless/cc-debian11](cc/README.md)
+  - [gcr.io/distroless/nodejs18-debian12](nodejs/README.md)
+  - [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
+  - [gcr.io/distroless/nodejs20-debian12](nodejs/README.md)
+  - [gcr.io/distroless/nodejs20-debian11](nodejs/README.md)
+  - [gcr.io/distroless/python3-debian12](python3/README.md)
+- The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
+  - [gcr.io/distroless/python3-debian11](experimental/python3/README.md)
+- Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 
   The basic idea is that you'll have one stage to build your application artifacts, and insert them into your runtime distroless image.
   If you'd like to learn more, please see the documentation on [multi-stage builds](https://docs.docker.com/engine/userguide/eng-image/multistage-build/).
 
 #### Examples with Docker
-  Here's a quick example for go:
 
-  ```dockerfile
-  # Start by building the application.
-  FROM golang:1.18 as build
+Here's a quick example for go:
 
-  WORKDIR /go/src/app
-  COPY . .
+```dockerfile
+# Start by building the application.
+FROM golang:1.18 as build
 
-  RUN go mod download
-  RUN CGO_ENABLED=0 go build -o /go/bin/app
+WORKDIR /go/src/app
+COPY . .
 
-  # Now copy it into our base image.
-  FROM gcr.io/distroless/static-debian11
-  COPY --from=build /go/bin/app /
-  CMD ["/app"]
-  ```
+RUN go mod download
+RUN CGO_ENABLED=0 go build -o /go/bin/app
+
+# Now copy it into our base image.
+FROM gcr.io/distroless/static-debian11
+COPY --from=build /go/bin/app /
+CMD ["/app"]
+```
 
 You can find other examples here:
 
-* [Java](examples/java/Dockerfile)
-* [Python 3](examples/python3/Dockerfile)
-* [Go](examples/go/Dockerfile)
-* [Node.js](examples/nodejs/Dockerfile)
-* [Rust](examples/rust/Dockerfile)
+- [Java](examples/java/Dockerfile)
+- [Python 3](examples/python3/Dockerfile)
+- [Go](examples/go/Dockerfile)
+- [Node.js](examples/nodejs/Dockerfile)
+- [Rust](examples/rust/Dockerfile)
 
 To run any example, go to the directory for the language and run
+
 ```
 docker build -t myapp .
 docker run -t myapp
 ```
+
 To run the Node.js Express app [node-express](examples/nodejs/node-express) and expose the container's ports:
 
 ```
@@ -178,7 +185,6 @@ docker run -p 3000:3000 -t myexpressapp
 ```
 
 This should expose the Express application to your localhost:3000
-
 
 ### Bazel
 
@@ -194,16 +200,16 @@ Examples can be found in this repository in the [examples](examples/) directory.
 We have some examples on how to run some common application stacks in the /examples directory.
 See here for:
 
-* [Java](examples/java/BUILD)
-* [Python 3](examples/python3/BUILD)
-* [Go](examples/go/BUILD)
-* [Node.js](examples/nodejs/BUILD)
+- [Java](examples/java/BUILD)
+- [Python 3](examples/python3/BUILD)
+- [Go](examples/go/BUILD)
+- [Node.js](examples/nodejs/BUILD)
 
 See here for examples on how to complete some common tasks in your image:
 
-* [Adding and running as a non-root user](examples/nonroot)
-* Including debian packages (TBD, currently in [private](./private/remote/debian_archive.bzl))
-* [Including CA certificates](cacerts/)
+- [Adding and running as a non-root user](examples/nonroot)
+- [Including Debian Packages](https://github.com/GoogleContainerTools/rules_distroless/blob/main/docs/apt.md)
+- [Including CA certificates](https://github.com/GoogleContainerTools/rules_distroless/blob/main/docs/rules.md#cacerts)
 
 See here for more information on how these images are [built and released](RELEASES.md).
 
@@ -217,16 +223,15 @@ Distroless tracks the upstream Debian releases, using [Github actions to automat
 
 ### Debug Images
 
-Distroless images are minimal and lack shell access.  The ```:debug``` image set for each language provides a busybox shell to enter.
+Distroless images are minimal and lack shell access. The `:debug` image set for each language provides a busybox shell to enter.
 
 For example:
-
 
 ```
 cd examples/python3/
 ```
 
-edit the ```Dockerfile``` to change the final image to ```:debug```:
+edit the `Dockerfile` to change the final image to `:debug`:
 
 ```dockerfile
 FROM gcr.io/distroless/python3-debian12:debug
@@ -247,6 +252,7 @@ $ docker run --entrypoint=sh -ti my_debug_image
 /app # ls
 BUILD       Dockerfile  hello.py
 ```
+
 > Note: If the image you are using already has a tag, for example `gcr.io/distroless/java17-debian11:nonroot`, use the tag `debug-<existing tag>` instead, for example `gcr.io/distroless/java17-debian11:debug-nonroot`.
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
@@ -262,5 +268,5 @@ If your project uses Distroless, send a PR to add your project here!
 
 # Community Discussion
 
-* [distroless-users Google Group](https://groups.google.com/forum/#!forum/distroless-users)
-* [Kubernetes slack #distroless channel](https://slack.k8s.io/)
+- [distroless-users Google Group](https://groups.google.com/forum/#!forum/distroless-users)
+- [Kubernetes slack #distroless channel](https://slack.k8s.io/)

@@ -1,5 +1,8 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_push")
-load("@contrib_rules_oci//cosign:defs.bzl", "cosign_attest", "cosign_sign")
+"rules for signing, attesting and pushing images"
+
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@rules_oci//cosign:defs.bzl", "cosign_attest", "cosign_sign")
+load("@rules_oci//oci:defs.bzl", "oci_push")
 load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
 
 PUSH_AND_SIGN_CMD = """\
@@ -69,6 +72,7 @@ def sign_and_push_all(name, images):
         images: a dict where keys are fully qualified image url and values are image labels
     """
     image_dict = dict()
+    query_dict = dict()
     for (idx, (url, image)) in enumerate(images.items()):
         oci_push(
             name = "{}_{}_push".format(name, idx),
@@ -101,6 +105,21 @@ def sign_and_push_all(name, images):
         )
 
         image_dict[":{}_{}".format(name, idx)] = url
+        query_dict[image] = url.split(":") + [":{}_{}_push".format(name, idx)]
+
+    write_file(
+        name = name + ".query",
+        content = [
+            "{repo} {tag} {push_label} {image_label}".format(
+                repo = ref[0],
+                tag = ref[1],
+                push_label = ref[2],
+                image_label = image,
+            )
+            for (image, ref) in query_dict.items()
+        ],
+        out = name + "_query",
+    )
 
     sign_and_push(
         name = name,

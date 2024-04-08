@@ -2,19 +2,35 @@ workspace(name = "distroless")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# rules_oci setup
+# rules_distroless setup
 http_archive(
-    name = "contrib_rules_oci",
-    sha256 = "d6bdc1767d326c67b4cbdc79abfed00c8a4ca14b92adea9faf3db4710d514596",
-    strip_prefix = "rules_oci-0.3.2",
-    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v0.3.2/rules_oci-v0.3.2.tar.gz",
+    name = "rules_distroless",
+    sha256 = "d7ecb0d333b304d4954d8fb27567954871428b21103e4c0b65e30d66e0313e49",
+    strip_prefix = "rules_distroless-0.3.1",
+    url = "https://github.com/GoogleContainerTools/rules_distroless/releases/download/v0.3.1/rules_distroless-v0.3.1.tar.gz",
 )
 
-load("@contrib_rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
+load("@rules_distroless//distroless:dependencies.bzl", "distroless_dependencies")
+
+distroless_dependencies()
+
+load("@rules_distroless//distroless:toolchains.bzl", "distroless_register_toolchains")
+
+distroless_register_toolchains()
+
+# rules_oci setup
+http_archive(
+    name = "rules_oci",
+    sha256 = "56d5499025d67a6b86b2e6ebae5232c72104ae682b5a21287770bd3bf0661abf",
+    strip_prefix = "rules_oci-1.7.5",
+    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v1.7.5/rules_oci-v1.7.5.tar.gz",
+)
+
+load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
 
 rules_oci_dependencies()
 
-load("@contrib_rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "oci_register_toolchains")
+load("@rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "oci_register_toolchains")
 
 oci_register_toolchains(
     name = "oci",
@@ -22,9 +38,21 @@ oci_register_toolchains(
     zot_version = LATEST_ZOT_VERSION,
 )
 
-load("@contrib_rules_oci//cosign:repositories.bzl", "cosign_register_toolchains")
+load("@rules_oci//cosign:repositories.bzl", "cosign_register_toolchains")
 
 cosign_register_toolchains(name = "oci_cosign")
+
+# setup container_structure_test
+http_archive(
+    name = "container_structure_test",
+    sha256 = "2da13da4c4fec9d4627d4084b122be0f4d118bd02dfa52857ff118fde88e4faa",
+    strip_prefix = "container-structure-test-1.16.0",
+    urls = ["https://github.com/GoogleContainerTools/container-structure-test/archive/v1.16.0.zip"],
+)
+
+load("@container_structure_test//:repositories.bzl", "container_structure_test_register_toolchain")
+
+container_structure_test_register_toolchain(name = "cst")
 
 # platforms
 http_archive(
@@ -67,13 +95,6 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 gazelle_dependencies()
 
 go_repository(
-    name = "com_github_ulikunitz_xz",
-    importpath = "github.com/ulikunitz/xz",
-    sum = "h1:kpFauv27b6ynzBNT/Xy+1k+fK4WswhN/6PN5WhFAGw8=",
-    version = "v0.5.11",
-)
-
-go_repository(
     name = "com_github_spdx_tools_golang",
     importpath = "github.com/spdx/tools-golang",
     sum = "h1:9B623Cfs+mclYK6dsae7gLSwuIBHvlgmEup87qpqsAQ=",
@@ -81,9 +102,13 @@ go_repository(
 )
 
 # Custom archives
-load(":debian_archives.bzl", debian_repositories = "repositories")
+load("//private/repos/deb:repositories.bzl", debian_repositories = "repositories")
 
 debian_repositories()
+
+load("//private/repos/deb:packages.bzl", debian_packages = "packages")
+
+debian_packages()
 
 load(":busybox_archives.bzl", busybox_repositories = "repositories")
 
@@ -134,11 +159,3 @@ load("@rules_rust//rust:repositories.bzl", "rust_register_toolchains", "rust_rep
 rust_repositories(edition = "2021")
 
 rust_register_toolchains()
-
-# rules_docker setup.
-# NOTE: this ruleset is almost unused and replaced by rules_oci completely expect a few helper macros that'll be hosted on distroless-tools.
-http_archive(
-    name = "io_bazel_rules_docker",
-    sha256 = "b1e80761a8a8243d03ebca8845e9cc1ba6c82ce7c5179ce2b295cd36f7e394bf",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.25.0/rules_docker-v0.25.0.tar.gz"],
-)
