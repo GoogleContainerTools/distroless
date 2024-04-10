@@ -32,12 +32,39 @@ jobs:
           done
           bazel run @//private/pkg/test/oci_image:test_sboms
 
+      - name: Create commits
+        id: create-commits
+        run: |
+          # Check work tree and end successfully if empty
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing to commit";
+            echo "HAS_CHANGES=FALSE" >> "$GITHUB_OUTPUT"
+            exit 0;
+          fi
+          echo "HAS_CHANGES=TRUE" >> "$GITHUB_OUTPUT"
+
+          git checkout -b update-snapshots
+
+          # Set identity.
+          git config --global user.email "distroless-bot@google.com"
+          git config --global user.name "Distroless Bot"
+
+          # Commit changes
+          git add .
+          git commit -s -m "Bumping packages to latest stable versions"
+          git push --force origin HEAD
+
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
-        with:
-          token: ${{ secrets.ACTIONS_TOKEN }}
-          commit-message: "Bumping packages to latest stable versions"
-          author: "Distroless Bot <distroless-bot@google.com>"
-          title: "Bumping packages to latest stable versions"
-          body: "Bumping packages to latest stable versions"
-          branch: "update-snapshots"
+        if: steps.create-commits.outputs.HAS_CHANGES == 'TRUE'
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+        run: |
+          if ! OUTPUT=$(gh pr create -B main -H update-snapshots -t "Bumping packages to latest stable versions" -b "Bumping packages to latest stable versions" 2>&1) ; then
+            echo $OUTPUT
+            if [[ "${OUTPUT}" =~ "already exists" ]]; then
+              echo "PR already exists and it was updated. Ending successfully";
+              exit 0;
+            else
+              exit 1;
+            fi
+          fi
