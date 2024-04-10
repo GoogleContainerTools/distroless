@@ -22,7 +22,6 @@ if [ $(uname) == "Darwin" ]; then
     export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 fi
 
-
 function cmd_lock() {
     echo "🚧 Querying for repos"
     echo ""
@@ -51,7 +50,7 @@ function find_latest_snapshot() {
     cat $tmp | grep -ohE "([0-9]+T[0-9]+Z)" | head -n1
 }
 
-function cmd_update_snapshot() {
+function cmd_update_snapshots() {
     echo "🧐 Looking for updates... "
     latest=$(find_latest_snapshot "debian")
     latest_security=$(find_latest_snapshot "debian-security")
@@ -100,6 +99,15 @@ function cmd_update_snapshot() {
     echo "👌 Done..."
 }
 
+# write DISTROLESS_DIFF to GITHUB_ENV if changes are made
+function cmd_github_update_snapshots() {
+    local tmp=$(mktemp -d)
+    jq -nr 'inputs.packages[] | .key + " " + .sha256' ./private/repos/deb/*.lock.json | sort > "$tmp/old.hashes"
+    cmd_update_snapshots
+    cmd_lock
+    jq -nr 'inputs.packages[] | .key + " " + .sha256' ./private/repos/deb/*.lock.json | sort > "$tmp/new.hashes"
+    diff "$tmp/old.hashes" "$tmp/new.hashes" | tee "$tmp/diff" || printf "DISTROLESS_DIFF<<EOF\n$(<$tmp/diff)\nEOF" >> "$GITHUB_ENV"
+}
 
 function cmd_lint () {
     echo "🧹 Linting"
@@ -119,7 +127,6 @@ function cmd_lint () {
     fi
     find . -name "*.py" | xargs pylint --disable=R,C
 }
-
 
 function cmd_test () {
     echo "🧪 Testing"
@@ -156,10 +163,13 @@ lock)
     cmd_lock
     ;;
 update-snapshots)
-    cmd_update_snapshot
+    cmd_update_snapshots
     ;;
 lint)
     cmd_lint
+    ;;
+github-update-snapshots)
+    cmd_github_update_snapshots
     ;;
 test)
     cmd_test
