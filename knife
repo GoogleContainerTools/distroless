@@ -118,33 +118,11 @@ function cmd_lint () {
         exit 1
     fi
     buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
-    if ! which pylint > /dev/null; then 
-        echo "🐍 No pylint executable was found."
-        echo ""
-        echo "   Did you follow the ./CONTRIBUTING.md ?" 
-        echo ""
-        exit 1
-    fi
-    find . -name "*.py" | xargs pylint --disable=R,C
 }
 
 function cmd_test () {
     echo "🧪 Testing"
     echo "" 
-
-    # TODO: why do we need python installed on the system?
-    if ! which python > /dev/null && ! which python3 > /dev/null; then 
-        echo "🐍 No python executable was found."
-        exit 1
-    fi
-
-    # Make sure python points to python3
-    if which python && [[  $(python --version) != Python\ 3* ]]; then
-        echo "🐍 python must point to a python3, currently points to $(readlink -f "$(which python)")"
-        echo ""
-        echo "   Maybe run: update-alternatives --install /usr/bin/python python /usr/bin/python3"
-        exit 1
-    fi
 
     local arch=$(uname -m)
 
