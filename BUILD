@@ -216,6 +216,7 @@ PYTHON3 |= {
 NODEJS_VERSIONS = [
     "18",
     "20",
+    "22"
 ]
 
 NODEJS_VARIATIONS = [
