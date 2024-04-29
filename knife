@@ -36,18 +36,19 @@ function cmd_lock() {
 
 function find_latest_snapshot() {
     local type="$1"
-    local current="$(date +%Y-%m-01)"
+    # If it's the first of the month, look at the last month, otherwise this -1 day has no effect since searches
+    # occur at the "month" level. This is an intentional buffer added to get the snapshots fully hydrated. We
+    # intentionally don't include complicated logic for the case where it's after the 1st and no snapshots are
+    # availalbe for the month (it's extremely unlikely for our updater to run into this situation unless the 
+    # snapshot serving infrastructure is acting up).
+    local current="$(date -d '-1 day' +%Y-%m-%d)"
     local tmp=$(mktemp)
-    for _ in 1 2; do
-        local q=$(date -d "$current" +"year=%Y&month=%m")
-        if curl -fs "https://snapshot-cloudflare.debian.org/archive/debian/?$q" | grep -ohE "([0-9]+T[0-9]+Z)" > $tmp; then
-            break
-        fi
-        echo "Could not find snapshot at $current, going back a month" >&2
-        # go back 1 month
-        current="$(date -d "$current -1 month" +%Y-%m-01)"
-    done
-    cat $tmp | grep -ohE "([0-9]+T[0-9]+Z)" | head -n1
+    local q=$(date -d "$current" +"year=%Y&month=%m")
+    if curl -fs "https://snapshot-cloudflare.debian.org/archive/debian/?$q" | grep -ohE "([0-9]+T[0-9]+Z)" > $tmp; then
+      # same logic as above, find the newest snapshot that isn't "today"
+      today=$(date +"%Y%m%dT")
+      cat $tmp | grep -v $today | tail -n1
+    fi
 }
 
 function cmd_update_snapshots() {
@@ -153,7 +154,7 @@ test)
     cmd_test
     ;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, test"
     exit 1
     ;;
 *) # unknown command
