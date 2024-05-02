@@ -149,10 +149,10 @@ def repositories():
 
     node_archive(
         name = "nodejs22_s390x",
-        sha256 = "7ec5fdad0c819eea17900eb43c1de948d620a783b1ac94062caa438778a92b30",
-        strip_prefix = "node-v22.0.0-linux-s390x/",
-        urls = ["https://nodejs.org/dist/v22.0.0/node-v22.0.0-linux-s390x.tar.gz"],
-        version = "22.0.0",
+        sha256 = "1961314d0d51cf9c4719705ba809f8451597c577dfb0cb500a058115a05d586a",
+        strip_prefix = "node-v22.1.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v22.1.0/node-v22.1.0-linux-s390x.tar.gz"],
+        version = "22.1.0",
         architecture = "s390x",
         control = "//nodejs:control",
     )
