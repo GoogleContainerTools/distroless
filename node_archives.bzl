@@ -109,10 +109,10 @@ def repositories():
 
     node_archive(
         name = "nodejs22_amd64",
-        sha256 = "74bb0f3a80307c529421c3ed84517b8f543867709f41e53cd73df99e6442af4d",
-        strip_prefix = "node-v22.0.0-linux-x64/",
-        urls = ["https://nodejs.org/dist/v22.0.0/node-v22.0.0-linux-x64.tar.gz"],
-        version = "22.0.0",
+        sha256 = "d8ae35a9e2bb0c0c0611ee9bacf564ea51cc8291ace1447f95ee6aeaf4f1d61d",
+        strip_prefix = "node-v22.1.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v22.1.0/node-v22.1.0-linux-x64.tar.gz"],
+        version = "22.1.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
