@@ -106,3 +106,53 @@ def repositories():
         architecture = "s390x",
         control = "//nodejs:control",
     )
+
+    node_archive(
+        name = "nodejs22_amd64",
+        sha256 = "74bb0f3a80307c529421c3ed84517b8f543867709f41e53cd73df99e6442af4d",
+        strip_prefix = "node-v22.0.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v22.0.0/node-v22.0.0-linux-x64.tar.gz"],
+        version = "22.0.0",
+        architecture = "amd64",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs22_arm64",
+        sha256 = "1d3547226be7e59aceee5c7d01a9f8fc18de67e015c5a15d8cf385b6e02d062b",
+        strip_prefix = "node-v22.0.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v22.0.0/node-v22.0.0-linux-arm64.tar.gz"],
+        version = "22.0.0",
+        architecture = "arm64",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs22_arm",
+        sha256 = "d21db7f57c5ce182aec2b9a83e3295abc37e1731abb73995d3d573e04409977c",
+        strip_prefix = "node-v22.0.0-linux-armv7l/",
+        urls = ["https://nodejs.org/dist/v22.0.0/node-v22.0.0-linux-armv7l.tar.gz"],
+        version = "22.0.0",
+        architecture = "arm",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs22_ppc64le",
+        sha256 = "3b098dccf56d446bbb80845d35bbecbdb74612860d1690f3a216387c99c9d620",
+        strip_prefix = "node-v22.0.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v22.0.0/node-v22.0.0-linux-ppc64le.tar.gz"],
+        version = "22.0.0",
+        architecture = "ppc64le",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs22_s390x",
+        sha256 = "7ec5fdad0c819eea17900eb43c1de948d620a783b1ac94062caa438778a92b30",
+        strip_prefix = "node-v22.0.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v22.0.0/node-v22.0.0-linux-s390x.tar.gz"],
+        version = "22.0.0",
+        architecture = "s390x",
+        control = "//nodejs:control",
+    )
