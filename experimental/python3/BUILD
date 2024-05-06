@@ -146,15 +146,28 @@ DISTRO_VERSION = {
 ]
 
 [
+    filegroup(
+        name = "python3_root_" + arch + "_debian11_tarball_tar",
+        srcs = ["python3_root_" + arch + "_debian11_tarball"],
+        output_group = "tarball",
+        tags = [
+            "manual",
+            arch,
+        ],
+    )
+    for arch in ARCHITECTURES
+]
+
+[
     genrule(
         name = "ld_so_cache_" + arch + "_new",
-        srcs = [":python3_root_" + arch + "_debian11_tarball"],
+        srcs = [":python3_root_" + arch + "_debian11_tarball_tar"],
         outs = ["ld.so.cache." + arch + ".new"],
         cmd = """
 #!/usr/bin/env bash
 set -o errexit
 
-TARBALL="$(location :python3_root_{arch}_debian11_tarball)"
+TARBALL="$(location :python3_root_{arch}_debian11_tarball_tar)"
 TAG="distroless/gen/python3_root_{arch}_debian11_tarball:gen"
 DOCKER="docker"
 

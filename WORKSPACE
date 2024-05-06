@@ -2,6 +2,22 @@ workspace(name = "distroless")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# rules_oci setup
+http_archive(
+    name = "rules_oci",
+    # ssha256 = "d8d3e64a814ff76f59b29467a8760112cbfe18e6b3d864e97011b072c805b7b0",
+    strip_prefix = "rules_oci-42be2648051e78a76cc400490150368a58fbec28",
+    url = "https://github.com/bazel-contrib/rules_oci/archive/42be2648051e78a76cc400490150368a58fbec28.tar.gz",
+)
+
+load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
+
+rules_oci_dependencies()
+
+load("@rules_oci//oci:repositories.bzl", "oci_register_toolchains")
+
+oci_register_toolchains(name = "oci")
+
 # rules_distroless setup
 http_archive(
     name = "rules_distroless",
@@ -18,26 +34,6 @@ load("@rules_distroless//distroless:toolchains.bzl", "distroless_register_toolch
 
 distroless_register_toolchains()
 
-# rules_oci setup
-http_archive(
-    name = "rules_oci",
-    sha256 = "56d5499025d67a6b86b2e6ebae5232c72104ae682b5a21287770bd3bf0661abf",
-    strip_prefix = "rules_oci-1.7.5",
-    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v1.7.5/rules_oci-v1.7.5.tar.gz",
-)
-
-load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
-
-rules_oci_dependencies()
-
-load("@rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "LATEST_ZOT_VERSION", "oci_register_toolchains")
-
-oci_register_toolchains(
-    name = "oci",
-    crane_version = LATEST_CRANE_VERSION,
-    zot_version = LATEST_ZOT_VERSION,
-)
-
 load("@rules_oci//cosign:repositories.bzl", "cosign_register_toolchains")
 
 cosign_register_toolchains(name = "oci_cosign")
@@ -45,9 +41,9 @@ cosign_register_toolchains(name = "oci_cosign")
 # setup container_structure_test
 http_archive(
     name = "container_structure_test",
-    sha256 = "2da13da4c4fec9d4627d4084b122be0f4d118bd02dfa52857ff118fde88e4faa",
-    strip_prefix = "container-structure-test-1.16.0",
-    urls = ["https://github.com/GoogleContainerTools/container-structure-test/archive/v1.16.0.zip"],
+    sha256 = "4fd1e0d4974fb95e06d0e94e6ceaae126382bf958524062db4e582232590b863",
+    strip_prefix = "container-structure-test-1.16.1",
+    urls = ["https://github.com/GoogleContainerTools/container-structure-test/archive/v1.16.1.zip"],
 )
 
 load("@container_structure_test//:repositories.bzl", "container_structure_test_register_toolchain")
