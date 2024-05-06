@@ -6,8 +6,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "rules_oci",
     # ssha256 = "d8d3e64a814ff76f59b29467a8760112cbfe18e6b3d864e97011b072c805b7b0",
-    strip_prefix = "rules_oci-42be2648051e78a76cc400490150368a58fbec28",
-    url = "https://github.com/bazel-contrib/rules_oci/archive/42be2648051e78a76cc400490150368a58fbec28.tar.gz",
+    strip_prefix = "rules_oci-1f93e493dc5b620f7ebcaedf1c5766cd7f39a9b8",
+    url = "https://github.com/bazel-contrib/rules_oci/archive/1f93e493dc5b620f7ebcaedf1c5766cd7f39a9b8.tar.gz",
 )
 
 load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")

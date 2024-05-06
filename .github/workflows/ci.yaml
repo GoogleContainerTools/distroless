@@ -51,7 +51,7 @@ jobs:
 
   ci-images:
     name: CI image tests
-    runs-on: ubuntu-20.04 # most compatible with debian 11
+    runs-on: distroless-ci-large-ubuntu-20.04 # most compatible with debian 11
     steps:
       - uses: actions/checkout@v4
       - name: Mount bazel caches
