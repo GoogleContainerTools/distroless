@@ -99,10 +99,10 @@ def repositories():
 
     node_archive(
         name = "nodejs20_s390x",
-        sha256 = "29fe0d5142a3f3d7957d6ccf03cc08cd1c76c41d0460c92dd5800d46caa08d31",
-        strip_prefix = "node-v20.12.2-linux-s390x/",
-        urls = ["https://nodejs.org/dist/v20.12.2/node-v20.12.2-linux-s390x.tar.gz"],
-        version = "20.12.2",
+        sha256 = "911d4c0ff6632594508d404d84b8c0e80bbe6ec3a44babb9a9f907306d03385f",
+        strip_prefix = "node-v20.13.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v20.13.0/node-v20.13.0-linux-s390x.tar.gz"],
+        version = "20.13.0",
         architecture = "s390x",
         control = "//nodejs:control",
     )
