@@ -1,0 +1,31 @@
+# debian 12
+version: 1
+
+sources:
+  - channel: bookworm main
+    url: https://snapshot-cloudflare.debian.org/archive/debian/20240507T205337Z
+  - channel: bookworm-updates main
+    url: https://snapshot-cloudflare.debian.org/archive/debian/20240507T205337Z
+  - channel: bookworm-security main
+    url: https://snapshot-cloudflare.debian.org/archive/debian-security/20240507T205337Z
+
+archs:
+  - amd64
+  - arm64
+  - armhf
+  - s390x
+  - ppc64el
+
+packages:
+  - base-files
+  - ca-certificates
+  - libc6
+  - libc-bin
+  - libssl3
+  - netbase
+  - openssl
+  - tzdata
+  # c++
+  - libgcc-s1
+  - libgomp1
+  - libstdc++6

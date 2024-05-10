@@ -11,16 +11,14 @@ pkg_files(
     srcs = glob(
         ["output/**/*"],
     ),
-    excludes = ["_bin_dir", "_cacerts"],
+    excludes = ["_executables", "_cacerts"],
     strip_prefix = "output",
 )
 
-# special rules for bin files to make them executable
+# special rules for bin files to make them executable and other executables
 pkg_files(
-    name = "_bin_dir",
-    srcs = glob(
-        ["output/bin/*"],
-    ),
+    name = "_executables",
+    srcs = glob(["output/bin/*"]) + ["output/lib/jexec", "output/lib/jspawnhelper"],
     attributes = pkg_attributes(
         mode = "0755",
         user = "root",
@@ -32,7 +30,7 @@ pkg_files(
 # everything that needs to go into the jvm install dir
 pkg_filegroup(
     name = "_jvm_dir",
-    srcs = ["_bin_dir", "_most_files"],
+    srcs = ["_executables", "_most_files"],
     prefix = "/usr/lib/jvm/{name}",
 )
 

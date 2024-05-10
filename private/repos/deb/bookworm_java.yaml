@@ -1,0 +1,39 @@
+# debian 12, limited architectures, java only
+version: 1
+
+sources:
+  - channel: bookworm main
+    url: https://snapshot-cloudflare.debian.org/archive/debian/20240507T205337Z
+  - channel: bookworm-updates main
+    url: https://snapshot-cloudflare.debian.org/archive/debian/20240507T205337Z
+  - channel: bookworm-security main
+    url: https://snapshot-cloudflare.debian.org/archive/debian-security/20240507T205337Z
+
+archs:
+  - amd64
+  - arm64
+  - s390x
+  - ppc64el
+
+packages:
+  - fontconfig-config
+  - fonts-dejavu-core
+  - libbrotli1
+  - libcrypt1 # TODO: glibc library for -lcrypt; maybe should be in cc?
+  - libexpat1
+  - libfontconfig1
+  - libfreetype6
+  - libglib2.0-0
+  - libgraphite2-3
+  - libharfbuzz0b
+  - libjpeg62-turbo
+  - liblcms2-2
+  - libpcre2-8-0
+  - libpng16-16
+  - libuuid1
+  - openjdk-17-jdk-headless
+  - openjdk-17-jre-headless
+  - zlib1g
+  # TODO(appu): these two were coming from base yamls
+  - libgcc-s1
+  - libstdc++6

@@ -2,11 +2,13 @@ name: update-snapshots
 on:
   # will send emails to last editor of this cron syntax (distroless-bot)
   schedule:
-    - cron:  '30 20 * * *'
-  
+    - cron: "35 20 * * *"
+  # allow this workflow to be manually run
+  workflow_dispatch:
+
 permissions:
   contents: read
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,27 +17,50 @@ jobs:
       pull-requests: write
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v5
-      with:
-        go-version: '1.20'
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.20"
 
-    - name: Run update script
-      run: ./updateWorkspaceSnapshots.sh
+      - name: Update snapshots
+        run: ./knife github-update-snapshots
 
-    - name: Run update sboms script
-      run: |
-        for i in $(seq 5); do
-          bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //private/pkg/test/oci_image:test_sboms && break || sleep 20;
-        done
-        bazel run @//private/pkg/test/oci_image:test_sboms
-    
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
-      with:
-        token: ${{ secrets.ACTIONS_TOKEN }}
-        commit-message: "Bumping packages to latest stable versions"
-        author: "Distroless Bot <distroless-bot@google.com>"
-        title: "Bumping packages to latest stable versions"
-        body: "Bumping packages to latest stable versions"
-        branch: "update-snapshots"
+      - name: Run update sboms script
+        if: env.DISTROLESS_DIFF
+        run: |
+          for i in $(seq 5); do
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //private/pkg/test/oci_image:test_sboms && break || sleep 20;
+          done
+          bazel run @//private/pkg/test/oci_image:test_sboms
+
+      - name: Create commits
+        if: env.DISTROLESS_DIFF
+        id: create-commits
+        run: |
+          git checkout -b update-snapshots
+
+          # Set identity.
+          git config --global user.email "distroless-bot@google.com"
+          git config --global user.name "Distroless Bot"
+
+          # Commit changes
+          git add .
+          git commit -s -m "Bumping packages to latest stable versions"
+          git push --force origin HEAD
+
+      - name: Create Pull Request
+        if: env.DISTROLESS_DIFF
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+        run: |
+          BODY_FILE=$(mktemp)
+          printf "Bumping packages to latest stable version\n\`\`\`diff\n$DISTROLESS_DIFF\n\`\`\`\n" >> $BODY_FILE
+          if ! OUTPUT=$(gh pr create -B main -H update-snapshots -t "Bumping packages to latest stable versions" --body-file "$BODY_FILE" 2>&1) ; then
+            echo $OUTPUT
+            if [[ "${OUTPUT}" =~ "already exists" ]]; then
+              echo "PR already exists and it was updated. Ending successfully";
+              exit 0;
+            else
+              exit 1;
+            fi
+          fi

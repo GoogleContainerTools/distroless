@@ -1,4 +1,4 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_oci//oci:defs.bzl", "oci_image")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 def java_image(name, srcs, main_class, base):

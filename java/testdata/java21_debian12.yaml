@@ -3,11 +3,11 @@ commandTests:
   - name: java
     command: "/usr/lib/jvm/temurin21_jre_amd64/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "21.0.1"']
+    expectedError: ['openjdk version "21.0.2"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "21.0.1"']
+    expectedError: ['openjdk version "21.0.2"']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
@@ -25,7 +25,15 @@ fileExistenceTests:
   - name: no-javac
     path: "/usr/lib/jvm/temurin21_jre_amd64/bin/javac"
     shouldExist: false
+  - name: jexec-executable
+    path: "/usr/lib/jvm/temurin21_jre_amd64/lib/jexec"
+    shouldExist: true
+    isExecutableBy: "any"
+  - name: jspawnhelper-executable
+    path: "/usr/lib/jvm/temurin21_jre_amd64/lib/jspawnhelper"
+    shouldExist: true
+    isExecutableBy: "any"
 metadataTest:
   envVars:
     - key: 'JAVA_VERSION'
-      value: '21.0.1'
+      value: '21.0.2'

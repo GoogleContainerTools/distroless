@@ -1,7 +1,8 @@
-load("@contrib_rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball", "structure_test")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//base:base.bzl", "deb_pkg")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
+load("//private/util:deb.bzl", "deb")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -56,30 +57,30 @@ DISTRO_VERSION = {
         # Use UTF-8 encoding for file system: match modern Linux
         env = {"LANG": "C.UTF-8"},
         tars = [
-            deb_pkg(arch, distro, "libbz2-1.0"),
-            deb_pkg(arch, distro, "libdb5.3"),
-            deb_pkg(arch, distro, "libexpat1"),
-            deb_pkg(arch, distro, "liblzma5"),
-            deb_pkg(arch, distro, "libsqlite3-0"),
-            deb_pkg(arch, distro, "libuuid1"),
-            deb_pkg(arch, distro, "libncursesw6"),
-            deb_pkg(arch, distro, "libtinfo6"),
-            deb_pkg(arch, distro, "python3-distutils"),
-            deb_pkg(arch, distro, "zlib1g"),
-            deb_pkg(arch, distro, "libcom-err2"),
-            deb_pkg(arch, distro, "libcrypt1"),
-            deb_pkg(arch, distro, "libgssapi-krb5-2"),
-            deb_pkg(arch, distro, "libk5crypto3"),
-            deb_pkg(arch, distro, "libkeyutils1"),
-            deb_pkg(arch, distro, "libkrb5-3"),
-            deb_pkg(arch, distro, "libkrb5support0"),
-            deb_pkg(arch, distro, "libnsl2"),
-            deb_pkg(arch, distro, "libreadline8"),
-            deb_pkg(arch, distro, "libtirpc3"),
-            deb_pkg(arch, distro, "libffi8"),
-            deb_pkg(arch, distro, "libpython3.11-minimal"),
-            deb_pkg(arch, distro, "libpython3.11-stdlib"),
-            deb_pkg(arch, distro, "python3.11-minimal"),
+            deb.package(arch, distro, "libbz2-1.0"),
+            deb.package(arch, distro, "libdb5.3"),
+            deb.package(arch, distro, "libexpat1"),
+            deb.package(arch, distro, "liblzma5"),
+            deb.package(arch, distro, "libsqlite3-0"),
+            deb.package(arch, distro, "libuuid1"),
+            deb.package(arch, distro, "libncursesw6"),
+            deb.package(arch, distro, "libtinfo6"),
+            deb.package(arch, distro, "python3-distutils"),
+            deb.package(arch, distro, "zlib1g"),
+            deb.package(arch, distro, "libcom-err2"),
+            deb.package(arch, distro, "libcrypt1"),
+            deb.package(arch, distro, "libgssapi-krb5-2"),
+            deb.package(arch, distro, "libk5crypto3"),
+            deb.package(arch, distro, "libkeyutils1"),
+            deb.package(arch, distro, "libkrb5-3"),
+            deb.package(arch, distro, "libkrb5support0"),
+            deb.package(arch, distro, "libnsl2"),
+            deb.package(arch, distro, "libreadline8"),
+            deb.package(arch, distro, "libtirpc3"),
+            deb.package(arch, distro, "libffi8"),
+            deb.package(arch, distro, "libpython3.11-minimal"),
+            deb.package(arch, distro, "libpython3.11-stdlib"),
+            deb.package(arch, distro, "python3.11-minimal"),
             ":python_aliases_%s" % distro,
         ],
     )
@@ -93,10 +94,10 @@ DISTRO_VERSION = {
 ]
 
 [
-    structure_test(
+    container_structure_test(
         name = "python3_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
-        config = ["testdata/python3.yaml"],
+        configs = ["testdata/python3.yaml"],
         image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",
@@ -110,10 +111,10 @@ DISTRO_VERSION = {
 
 # tests for version-specific things
 [
-    structure_test(
+    container_structure_test(
         name = "version_specific_" + user + "_" + arch + "_" + distro + "_test",
         size = "medium",
-        config = ["testdata/" + distro + ".yaml"],
+        configs = ["testdata/" + distro + ".yaml"],
         image = ":python3_" + user + "_" + arch + "_" + distro,
         tags = [
             "manual",

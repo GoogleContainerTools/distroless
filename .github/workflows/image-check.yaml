@@ -1,0 +1,97 @@
+name: Image Check
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  diff:
+    runs-on: distroless-ci-large-ubuntu-20.04 # custom runner most compatible with debian 11
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/bazel-repo
+          key: bazel-cache-deps-ci2-${{ github.sha }}
+          restore-keys: |
+            bazel-cache-deps-ci2-${{ github.sha }}
+            bazel-cache-deps-ci2-
+
+      - name: Build all images
+        run: bazel build //:sign_and_push
+
+      - name: Install Deps
+        run: |
+          go install github.com/google/go-containerregistry/cmd/crane@main
+          go install github.com/reproducible-containers/diffoci/cmd/diffoci@master
+          go install filippo.io/mkcert@master
+          sudo curl -fsSL "https://github.com/project-zot/zot/releases/download/v2.0.2-rc2/zot-linux-amd64-minimal" > /usr/local/bin/zot
+          sudo chmod +x /usr/local/bin/zot
+
+      - name: Diff All Images
+        id: diff
+        run: |
+          ./private/tools/diff.bash \
+            --query-bazel --registry-spawn-https \
+            --head-ref ${{ github.head_ref }} \
+            --base-ref ${{ github.event.pull_request.base.ref }} \
+            --set-github-output-on-diff \
+            --skip-image-index \
+            --jobs $(($(nproc --all) * 2)) \
+            --logs ./verbose.log \
+            --report ./report.log
+
+      - uses: actions/upload-artifact@v4
+        id: report
+        with:
+          name: "Report"
+          path: |
+            ./verbose.log
+            ./report.log
+
+      - uses: peter-evans/find-comment@v3
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: 🌳 🔄 Image Check
+
+      - name: Report diff
+        if: ${{ steps.diff.outputs.changed_targets }}
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🌳 🔄 Image Check
+
+            This pull request has modified the following images:
+
+            ```starlark
+            ${{steps.diff.outputs.changed_targets}}
+            ```
+
+            You can check the details in the report [here](${{steps.report.outputs.artifact-url}})
+          edit-mode: replace
+
+      - name: Report no diff
+        if: ${{ !steps.diff.outputs.changed_targets }}
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🌳 🔄 Image Check
+            This pull request doesn't make any changes to the images. 👍
+            You can check the details in the report [here](${{steps.report.outputs.artifact-url}})
+          edit-mode: replace
