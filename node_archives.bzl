@@ -139,10 +139,10 @@ def repositories():
 
     node_archive(
         name = "nodejs22_ppc64le",
-        sha256 = "df47c5506bc865b093cfa0411b4adbb66187da00decd05a83c22b9d5ffdca088",
-        strip_prefix = "node-v22.1.0-linux-ppc64le/",
-        urls = ["https://nodejs.org/dist/v22.1.0/node-v22.1.0-linux-ppc64le.tar.gz"],
-        version = "22.1.0",
+        sha256 = "e70cb8c5dde31c5e0ee998124f74f7fb7dc7efd7e1549fa162e7fbc20bd937cc",
+        strip_prefix = "node-v22.2.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v22.2.0/node-v22.2.0-linux-ppc64le.tar.gz"],
+        version = "22.2.0",
         architecture = "ppc64le",
         control = "//nodejs:control",
     )
