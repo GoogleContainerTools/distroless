@@ -54,7 +54,7 @@ USER = [
         configs = [
             "testdata/nodejs" + major_version + ".yaml",
             "testdata/check_npm.yaml",
-			"testdata/check_headers.yaml"
+            "testdata/check_headers.yaml"
         ],
         image = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
         tags = [
