@@ -1,0 +1,5 @@
+schemaVersion: "2.0.0"
+fileExistenceTests:
+  - name: npm
+    path: '/nodejs/include/node/node.h'
+    shouldExist: false
