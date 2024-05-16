@@ -129,10 +129,10 @@ def repositories():
 
     node_archive(
         name = "nodejs22_arm",
-        sha256 = "e2d46a045ab4e14e7234162c8167bed96c71ac82fbfae1feac21d77ea44c62d0",
-        strip_prefix = "node-v22.1.0-linux-armv7l/",
-        urls = ["https://nodejs.org/dist/v22.1.0/node-v22.1.0-linux-armv7l.tar.gz"],
-        version = "22.1.0",
+        sha256 = "eb14ff993a1a4b6c0417b5f086b1629c82a3665edfa1c83f3b5ab1250b721307",
+        strip_prefix = "node-v22.2.0-linux-armv7l/",
+        urls = ["https://nodejs.org/dist/v22.2.0/node-v22.2.0-linux-armv7l.tar.gz"],
+        version = "22.2.0",
         architecture = "arm",
         control = "//nodejs:control",
     )
