@@ -9,16 +9,9 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 pkg_tar(
     name = "data",
     srcs = glob(
-        ["output/**/*"],
-        exclude = [
-            "output/lib/node_modules/corepack/**",
-            "output/lib/node_modules/npm/**",
-            "output/bin/corepack",
-            "output/bin/npm",
-            "output/bin/npx",
-            "output/CHANGELOG.md",
-            "output/README.md",
-            "output/include/**",
+        [
+            "output/bin/node",
+            "output/LICENSE",
         ],
     ),
     package_dir = "/nodejs",
