@@ -61,8 +61,8 @@ def repositories():
         name = "bookworm",
         package_template = _PACKAGE_TMPL,
         resolve_transitive = False,
-        lock = "//private/repos/deb:bookworm.lock.json",
-        manifest = "//private/repos/deb:bookworm.yaml",
+        lock = "@distroless//private/repos/deb:bookworm.lock.json",
+        manifest = "@distroless//private/repos/deb:bookworm.yaml",
     )
 
     # bookworm java only
@@ -70,8 +70,8 @@ def repositories():
         name = "bookworm_java",
         package_template = _PACKAGE_TMPL,
         resolve_transitive = False,
-        lock = "//private/repos/deb:bookworm_java.lock.json",
-        manifest = "//private/repos/deb:bookworm_java.yaml",
+        lock = "@distroless//private/repos/deb:bookworm_java.lock.json",
+        manifest = "@distroless//private/repos/deb:bookworm_java.yaml",
     )
 
     # bookworm python only
@@ -79,8 +79,8 @@ def repositories():
         name = "bookworm_python",
         package_template = _PACKAGE_TMPL,
         resolve_transitive = False,
-        lock = "//private/repos/deb:bookworm_python.lock.json",
-        manifest = "//private/repos/deb:bookworm_python.yaml",
+        lock = "@distroless//private/repos/deb:bookworm_python.lock.json",
+        manifest = "@distroless//private/repos/deb:bookworm_python.yaml",
     )
 
     # bullseye
@@ -88,8 +88,8 @@ def repositories():
         name = "bullseye",
         package_template = _PACKAGE_TMPL,
         resolve_transitive = False,
-        lock = "//private/repos/deb:bullseye.lock.json",
-        manifest = "//private/repos/deb:bullseye.yaml",
+        lock = "@distroless//private/repos/deb:bullseye.lock.json",
+        manifest = "@distroless//private/repos/deb:bullseye.yaml",
     )
 
     # bullseye java only
@@ -97,8 +97,8 @@ def repositories():
         name = "bullseye_java",
         package_template = _PACKAGE_TMPL,
         resolve_transitive = False,
-        lock = "//private/repos/deb:bullseye_java.lock.json",
-        manifest = "//private/repos/deb:bullseye_java.yaml",
+        lock = "@distroless//private/repos/deb:bullseye_java.lock.json",
+        manifest = "@distroless//private/repos/deb:bullseye_java.yaml",
     )
 
     # bullseye python only
@@ -106,19 +106,19 @@ def repositories():
         name = "bullseye_python",
         package_template = _PACKAGE_TMPL,
         resolve_transitive = False,
-        lock = "//private/repos/deb:bullseye_python.lock.json",
-        manifest = "//private/repos/deb:bullseye_python.yaml",
+        lock = "@distroless//private/repos/deb:bullseye_python.lock.json",
+        manifest = "@distroless//private/repos/deb:bullseye_python.yaml",
     )
 
     # versions generated from lockfiles
     versions(
         name = "versions",
         locks = {
-            "//private/repos/deb:bullseye_python.lock.json": "bullseye_python",
-            "//private/repos/deb:bullseye_java.lock.json": "bullseye_java",
-            "//private/repos/deb:bullseye.lock.json": "bullseye",
-            "//private/repos/deb:bookworm_python.lock.json": "bookworm_python",
-            "//private/repos/deb:bookworm_java.lock.json": "bookworm_java",
-            "//private/repos/deb:bookworm.lock.json": "bookworm",
+            "@distroless//private/repos/deb:bullseye_python.lock.json": "bullseye_python",
+            "@distroless//private/repos/deb:bullseye_java.lock.json": "bullseye_java",
+            "@distroless//private/repos/deb:bullseye.lock.json": "bullseye",
+            "@distroless//private/repos/deb:bookworm_python.lock.json": "bookworm_python",
+            "@distroless//private/repos/deb:bookworm_java.lock.json": "bookworm_java",
+            "@distroless//private/repos/deb:bookworm.lock.json": "bookworm",
         },
     )
