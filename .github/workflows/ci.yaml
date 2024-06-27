@@ -3,9 +3,9 @@ name: CI
 on:
   workflow_dispatch: # Allow manual runs.
   pull_request:
-    branches: [ 'main' ]
+    branches: ["main"]
   push:
-    branches: [ 'main' ]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -19,12 +19,12 @@ jobs:
       - name: Mount bazel caches
         uses: actions/cache@v4
         with:
-            path: |
-                ~/.cache/bazel-repo
-            key: bazel-cache-deps-ci1-${{ github.sha }}
-            restore-keys: |
-                bazel-cache-deps-ci1-${{ github.sha }}
-                bazel-cache-deps-ci1-
+          path: |
+            ~/.cache/bazel-repo
+          key: bazel-cache-deps-ci1-${{ github.sha }}
+          restore-keys: |
+            bazel-cache-deps-ci1-${{ github.sha }}
+            bazel-cache-deps-ci1-
       - name: Free space
         run: |
           sudo apt-get remove -y '^dotnet-.*'
@@ -51,18 +51,18 @@ jobs:
 
   ci-images:
     name: CI image tests
-    runs-on: ubuntu-20.04 # most compatible with debian 11
+    runs-on: distroless-ci-large-ubuntu-20.04 # most compatible with debian 11
     steps:
       - uses: actions/checkout@v4
       - name: Mount bazel caches
         uses: actions/cache@v4
         with:
-            path: |
-                ~/.cache/bazel-repo
-            key: bazel-cache-deps-ci2-${{ github.sha }}
-            restore-keys: |
-                bazel-cache-deps-ci2-${{ github.sha }}
-                bazel-cache-deps-ci2-
+          path: |
+            ~/.cache/bazel-repo
+          key: bazel-cache-deps-ci2-${{ github.sha }}
+          restore-keys: |
+            bazel-cache-deps-ci2-${{ github.sha }}
+            bazel-cache-deps-ci2-
       - name: Free space
         run: |
           sudo apt-get remove -y '^dotnet-.*'
