@@ -44,7 +44,7 @@ function find_latest_snapshot() {
     local current="$(date -d '-1 day' +%Y-%m-%d)"
     local tmp=$(mktemp)
     local q=$(date -d "$current" +"year=%Y&month=%m")
-    if curl -fs "https://snapshot-cloudflare.debian.org/archive/debian/?$q" | grep -ohE "([0-9]+T[0-9]+Z)" > $tmp; then
+    if curl -fs "https://snapshot-mlm-01.debian.org/archive/debian/?$q" | grep -ohE "([0-9]+T[0-9]+Z)" > $tmp; then
       # same logic as above, find the newest snapshot that isn't "today"
       today=$(date +"%Y%m%dT")
       cat $tmp | grep -v $today | tail -n1
