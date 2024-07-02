@@ -27,6 +27,12 @@ jobs:
             bazel-cache-deps-ci2-${{ github.sha }}
             bazel-cache-deps-ci2-
 
+      - name: Fetch
+        run: |
+          for i in $(seq 10); do 
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'kind(merge_providers, deps(kind(oci_image, ...)))' --output=label --config=release && break || sleep 20;
+          done
+
       - name: Build all images
         run: bazel build //:sign_and_push
 
