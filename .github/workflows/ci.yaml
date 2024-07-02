@@ -3,9 +3,9 @@ name: CI
 on:
   workflow_dispatch: # Allow manual runs.
   pull_request:
-    branches: [ 'main' ]
+    branches: ["main"]
   push:
-    branches: [ 'main' ]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -19,12 +19,12 @@ jobs:
       - name: Mount bazel caches
         uses: actions/cache@v4
         with:
-            path: |
-                ~/.cache/bazel-repo
-            key: bazel-cache-deps-ci1-${{ github.sha }}
-            restore-keys: |
-                bazel-cache-deps-ci1-${{ github.sha }}
-                bazel-cache-deps-ci1-
+          path: |
+            ~/.cache/bazel-repo
+          key: bazel-cache-deps-ci1-${{ github.sha }}
+          restore-keys: |
+            bazel-cache-deps-ci1-${{ github.sha }}
+            bazel-cache-deps-ci1-
       - name: Free space
         run: |
           sudo apt-get remove -y '^dotnet-.*'
@@ -57,12 +57,12 @@ jobs:
       - name: Mount bazel caches
         uses: actions/cache@v4
         with:
-            path: |
-                ~/.cache/bazel-repo
-            key: bazel-cache-deps-ci2-${{ github.sha }}
-            restore-keys: |
-                bazel-cache-deps-ci2-${{ github.sha }}
-                bazel-cache-deps-ci2-
+          path: |
+            ~/.cache/bazel-repo
+          key: bazel-cache-deps-ci2-${{ github.sha }}
+          restore-keys: |
+            bazel-cache-deps-ci2-${{ github.sha }}
+            bazel-cache-deps-ci2-
       - name: Free space
         run: |
           sudo apt-get remove -y '^dotnet-.*'
@@ -72,10 +72,13 @@ jobs:
           sudo apt-get autoremove -y
           sudo apt-get clean
           rm -rf /usr/share/dotnet/
+
       - name: Fetch
         run: |
-          for i in $(seq 5); do 
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch $(bazel query 'attr(tags, "amd64", ...)') && break || sleep 20;
+          for i in $(seq 20); do 
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc query $(bazel query 'attr(tags, "amd64", ...)') && break
+            sleep 10;
           done
+
       - name: Image Tests
         run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test $(bazel query 'attr(tags, "amd64", ...)')
