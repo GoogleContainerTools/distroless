@@ -7,7 +7,13 @@ package(default_visibility = ["//visibility:public"])
 [oci_image(
     name = rule_name,
     base = base_image,
-    cmd = ["/tomcat/bin/catalina.sh","run"],
+    entrypoint = ["/usr/bin/java"],
+    cmd = [
+        "-cp",
+        "/tomcat/lib/*:/tomcat/bin/bootstrap.jar:/tomcat/bin/tomcat-juli.jar",
+        "org.apache.catalina.startup.Bootstrap",
+        "start",
+    ],
     tars = ["@tomcat//:tomcat"],
     workdir = "/tomcat",
     # We expect users to add their WAR under /tomcat/webapps.
