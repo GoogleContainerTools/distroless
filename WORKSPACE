@@ -133,6 +133,17 @@ http_archive(
     urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.53.v20231009/jetty-distribution-9.4.53.v20231009.tar.gz"],
 )
 
+# For Tomcat
+http_archive(
+    name = "tomcat",
+    add_prefix = "output",
+    build_file = "//java:BUILD.tomcat",
+    sha256 = "f1240a32b879c445a4a4419c9b6dd87581bdb96f8a51f7b0ca1935164bb1e842",
+    strip_prefix = "apache-tomcat-10.1.25/",
+    type = "tar.gz",
+    urls = ["https://repo1.maven.org/maven2/org/apache/tomcat/tomcat/10.1.25/tomcat-10.1.25.tar.gz"],
+)
+
 # rules_pkg setup
 http_archive(
     name = "rules_pkg",

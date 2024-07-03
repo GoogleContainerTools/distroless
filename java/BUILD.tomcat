@@ -1,0 +1,13 @@
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+package(default_visibility = ["//visibility:public"])
+
+pkg_tar(
+    name = "tomcat",
+    srcs = glob(
+        include = ["output/**/*"],
+        exclude = ["output/webapps/**"],
+    ),
+    package_dir = "/tomcat",
+    strip_prefix = "external/tomcat/output",
+)

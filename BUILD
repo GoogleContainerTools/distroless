@@ -394,6 +394,19 @@ JETTY = {
     "{REGISTRY}/{PROJECT_ID}/java-debian11/jetty:java11-debug": "//java/jetty:jetty_java11_debug_debian11",
 }
 
+
+## TOMCAT
+TOMCAT = {
+    "{REGISTRY}/{PROJECT_ID}/java/tomcat:latest": "//java/tomcat:tomcat_java11_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java/tomcat:debug": "//java/tomcat:tomcat_java11_debug_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java/tomcat:java11": "//java/tomcat:tomcat_java11_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java/tomcat:java11-debug": "//java/tomcat:tomcat_java11_debug_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-debian11/tomcat:latest": "//java/tomcat:tomcat_java11_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-debian11/tomcat:java11": "//java/tomcat:tomcat_java11_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-debian11/tomcat:debug": "//java/tomcat:tomcat_java11_debug_debian11",
+    "{REGISTRY}/{PROJECT_ID}/java-debian11/tomcat:java11-debug": "//java/tomcat:tomcat_java11_debug_debian11",
+}
+
 ALL = {}
 
 ALL |= STATIC
@@ -417,6 +430,8 @@ ALL |= JAVA17
 ALL |= JAVA21
 
 ALL |= JETTY
+
+ALL |= TOMCAT
 
 sign_and_push_all(
     name = "sign_and_push",

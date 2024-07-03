@@ -18,3 +18,5 @@
 # ignore user bazelrc
 .bazelrc.user
 *.log
+# Ignore the virtual environment directory.
+venv/
