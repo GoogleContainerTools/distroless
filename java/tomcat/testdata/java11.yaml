@@ -1,8 +1,9 @@
 schemaVersion: "2.0.0"
 commandTests:
   - name: tomcat
-    command: "/tomcat/bin/version.sh"
-    expectedOutput: ['.*CATALINA_.*']
+    command: "/usr/bin/java"
+    args: ["-classpath", "/tomcat/lib/catalina.jar", "org.apache.catalina.util.ServerInfo"]
+    expectedOutput: ['.*Server.*Tomcat.*']
   - name: java
     command: "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
     args: ["-version"]
