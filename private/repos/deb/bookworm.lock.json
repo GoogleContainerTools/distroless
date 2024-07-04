@@ -3,11 +3,11 @@
     {
       "arch": "amd64",
       "dependencies": [],
-      "key": "base-files_12.4-p-deb12u5_amd64",
+      "key": "base-files_12.4-p-deb12u6_amd64",
       "name": "base-files",
-      "sha256": "6c11268757a89f45c22d7a7a9e1153f1545016987531bf3068765a221e0af86c",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/b/base-files/base-files_12.4+deb12u5_amd64.deb",
-      "version": "12.4+deb12u5"
+      "sha256": "6de342750e6a3940b321a5d056d0e17512d5ad3eb2fcf1fa6dbd783fcb4b7f0e",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/b/base-files/base-files_12.4+deb12u6_amd64.deb",
+      "version": "12.4+deb12u6"
     },
     {
       "arch": "amd64",
@@ -15,7 +15,7 @@
       "key": "ca-certificates_20230311_amd64",
       "name": "ca-certificates",
       "sha256": "5308b9bd88eebe2a48be3168cb3d87677aaec5da9c63ad0cf561a29b8219115c",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
       "version": "20230311"
     },
     {
@@ -24,7 +24,7 @@
       "key": "libc6_2.36-9-p-deb12u7_amd64",
       "name": "libc6",
       "sha256": "eba944bd99c2f5142baf573e6294a70f00758083bc3c2dca4c9e445943a3f8e6",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_amd64.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_amd64.deb",
       "version": "2.36-9+deb12u7"
     },
     {
@@ -33,17 +33,17 @@
       "key": "libc-bin_2.36-9-p-deb12u7_amd64",
       "name": "libc-bin",
       "sha256": "687687d1ace90565cc451b1be527914246123968b747c823e276cd7f8b57ba3d",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_amd64.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_amd64.deb",
       "version": "2.36-9+deb12u7"
     },
     {
       "arch": "amd64",
       "dependencies": [],
-      "key": "libssl3_3.0.11-1~deb12u2_amd64",
+      "key": "libssl3_3.0.13-1~deb12u1_amd64",
       "name": "libssl3",
-      "sha256": "6e129c5814812b3516a656ae5b664b9970e2f8823250cd5b98190f21c0de2bca",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_amd64.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "8e88b98b3fc634721d0899f498d4cf2e62405faaab6582123c7923b1ec8129e1",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/libssl3_3.0.13-1~deb12u1_amd64.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "amd64",
@@ -51,17 +51,17 @@
       "key": "netbase_6.4_amd64",
       "name": "netbase",
       "sha256": "29b23c48c0fe6f878e56c5ddc9f65d1c05d729360f3690a593a8c795031cd867",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/n/netbase/netbase_6.4_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/n/netbase/netbase_6.4_all.deb",
       "version": "6.4"
     },
     {
       "arch": "amd64",
       "dependencies": [],
-      "key": "openssl_3.0.11-1~deb12u2_amd64",
+      "key": "openssl_3.0.13-1~deb12u1_amd64",
       "name": "openssl",
-      "sha256": "ea063646d4f70d15be5ed52b67b5ac95d68dda823c60d808c7c25439c6d14e4d",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_amd64.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "262faebdc38b64e9e0553388e8608b0b6ae1b56871e7a8b09737ab0f2df11f8c",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/openssl_3.0.13-1~deb12u1_amd64.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "amd64",
@@ -69,7 +69,7 @@
       "key": "tzdata_2024a-0-p-deb12u1_amd64",
       "name": "tzdata",
       "sha256": "0ca0baec1fca55df56039047a631fc1541c5a44c1c4879d553aaa3a70844eb12",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
       "version": "2024a-0+deb12u1"
     },
     {
@@ -78,7 +78,7 @@
       "key": "libgcc-s1_12.2.0-14_amd64",
       "name": "libgcc-s1",
       "sha256": "f3d1d48c0599aea85b7f2077a01d285badc42998c1a1e7473935d5cf995c8141",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_amd64.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_amd64.deb",
       "version": "12.2.0-14"
     },
     {
@@ -87,7 +87,7 @@
       "key": "libgomp1_12.2.0-14_amd64",
       "name": "libgomp1",
       "sha256": "1dbc499d2055cb128fa4ed678a7adbcced3d882b3509e26d5aa3742a4b9e5b2f",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_amd64.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_amd64.deb",
       "version": "12.2.0-14"
     },
     {
@@ -96,17 +96,17 @@
       "key": "libstdc-p--p-6_12.2.0-14_amd64",
       "name": "libstdc++6",
       "sha256": "9b1b269020cec6aced3b39f096f7b67edd1f0d4ab24f412cb6506d0800e19cbf",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_amd64.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_amd64.deb",
       "version": "12.2.0-14"
     },
     {
       "arch": "arm64",
       "dependencies": [],
-      "key": "base-files_12.4-p-deb12u5_arm64",
+      "key": "base-files_12.4-p-deb12u6_arm64",
       "name": "base-files",
-      "sha256": "ca5e69b38214de267d7d59bf4d0c1abd10987abacb5c9bfaf72b178bee883d1b",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/b/base-files/base-files_12.4+deb12u5_arm64.deb",
-      "version": "12.4+deb12u5"
+      "sha256": "85f1a6ca96ad1eae13ac706a635bf5bdd0d840828c89479222b0dcdda159355b",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/b/base-files/base-files_12.4+deb12u6_arm64.deb",
+      "version": "12.4+deb12u6"
     },
     {
       "arch": "arm64",
@@ -114,7 +114,7 @@
       "key": "ca-certificates_20230311_arm64",
       "name": "ca-certificates",
       "sha256": "5308b9bd88eebe2a48be3168cb3d87677aaec5da9c63ad0cf561a29b8219115c",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
       "version": "20230311"
     },
     {
@@ -123,7 +123,7 @@
       "key": "libc6_2.36-9-p-deb12u7_arm64",
       "name": "libc6",
       "sha256": "84f9a8f8fa182c17e998c6094293ff0f4d504bfdb9b856802cf28b5d272ed303",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_arm64.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_arm64.deb",
       "version": "2.36-9+deb12u7"
     },
     {
@@ -132,17 +132,17 @@
       "key": "libc-bin_2.36-9-p-deb12u7_arm64",
       "name": "libc-bin",
       "sha256": "576e40fa477d01d2b35742594641d8e18a43cbb24752085146b286fe739f5a48",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_arm64.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_arm64.deb",
       "version": "2.36-9+deb12u7"
     },
     {
       "arch": "arm64",
       "dependencies": [],
-      "key": "libssl3_3.0.11-1~deb12u2_arm64",
+      "key": "libssl3_3.0.13-1~deb12u1_arm64",
       "name": "libssl3",
-      "sha256": "4e05dfa7319f72c5598f29a39eaf568203e2ae2314d5ef434dbf764de6448462",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_arm64.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "aeffbc4770e2da3a356eb3c8369e79f89623ffc4bc14eb18d6ff29d9bdcb1fba",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/libssl3_3.0.13-1~deb12u1_arm64.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "arm64",
@@ -150,17 +150,17 @@
       "key": "netbase_6.4_arm64",
       "name": "netbase",
       "sha256": "29b23c48c0fe6f878e56c5ddc9f65d1c05d729360f3690a593a8c795031cd867",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/n/netbase/netbase_6.4_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/n/netbase/netbase_6.4_all.deb",
       "version": "6.4"
     },
     {
       "arch": "arm64",
       "dependencies": [],
-      "key": "openssl_3.0.11-1~deb12u2_arm64",
+      "key": "openssl_3.0.13-1~deb12u1_arm64",
       "name": "openssl",
-      "sha256": "ef8ec413c2bd866dbe7ab068cd45b28d22e6c586e3ab0bd8de127a3e8dfe650b",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_arm64.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "fe4726cd05854fd6db1efe869e158b34b23789d0742144d2313e060331001dc3",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/openssl_3.0.13-1~deb12u1_arm64.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "arm64",
@@ -168,7 +168,7 @@
       "key": "tzdata_2024a-0-p-deb12u1_arm64",
       "name": "tzdata",
       "sha256": "0ca0baec1fca55df56039047a631fc1541c5a44c1c4879d553aaa3a70844eb12",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
       "version": "2024a-0+deb12u1"
     },
     {
@@ -177,7 +177,7 @@
       "key": "libgcc-s1_12.2.0-14_arm64",
       "name": "libgcc-s1",
       "sha256": "6fce2268d8f3152a4e84634f5a24133d3c62903b2f9b11b9c59235cbbc1b23a8",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_arm64.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_arm64.deb",
       "version": "12.2.0-14"
     },
     {
@@ -186,7 +186,7 @@
       "key": "libgomp1_12.2.0-14_arm64",
       "name": "libgomp1",
       "sha256": "a2fd2803bf03384ac90a54f1179a29f2fb3c192f3ff483a3dd8ec6c3351ce5d0",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_arm64.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_arm64.deb",
       "version": "12.2.0-14"
     },
     {
@@ -195,17 +195,17 @@
       "key": "libstdc-p--p-6_12.2.0-14_arm64",
       "name": "libstdc++6",
       "sha256": "21e971c5d3506f783b89efe8e12ac85081ddd9213e4f6529262bcfe95c326670",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_arm64.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_arm64.deb",
       "version": "12.2.0-14"
     },
     {
       "arch": "armhf",
       "dependencies": [],
-      "key": "base-files_12.4-p-deb12u5_armhf",
+      "key": "base-files_12.4-p-deb12u6_armhf",
       "name": "base-files",
-      "sha256": "b55ea04d6a70edb08fddb419655e692a5592fb19cd148cd83966a7e303e6346f",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/b/base-files/base-files_12.4+deb12u5_armhf.deb",
-      "version": "12.4+deb12u5"
+      "sha256": "b74e24ae136767236ffb7ec148a2e683ea3ddbdf0da74594b1146b738441d610",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/b/base-files/base-files_12.4+deb12u6_armhf.deb",
+      "version": "12.4+deb12u6"
     },
     {
       "arch": "armhf",
@@ -213,7 +213,7 @@
       "key": "ca-certificates_20230311_armhf",
       "name": "ca-certificates",
       "sha256": "5308b9bd88eebe2a48be3168cb3d87677aaec5da9c63ad0cf561a29b8219115c",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
       "version": "20230311"
     },
     {
@@ -222,7 +222,7 @@
       "key": "libc6_2.36-9-p-deb12u7_armhf",
       "name": "libc6",
       "sha256": "2e837cab99a0dabcc1672b19829c15f8b16b61e52196d97513bb179bf41a6b03",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_armhf.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_armhf.deb",
       "version": "2.36-9+deb12u7"
     },
     {
@@ -231,17 +231,17 @@
       "key": "libc-bin_2.36-9-p-deb12u7_armhf",
       "name": "libc-bin",
       "sha256": "5c23240e963128e14c5522894aab4ec64082a9c7bed9b4f0f796137ac7a0a73f",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_armhf.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_armhf.deb",
       "version": "2.36-9+deb12u7"
     },
     {
       "arch": "armhf",
       "dependencies": [],
-      "key": "libssl3_3.0.11-1~deb12u2_armhf",
+      "key": "libssl3_3.0.13-1~deb12u1_armhf",
       "name": "libssl3",
-      "sha256": "e22f668aaa42fe6e14ecfbf7ab0ff152ef610956ee60ddf28800a994f7c26a7d",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_armhf.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "6e8e4d91089bef182e27561bd4d5dec62bc1331605446a3aeb497530ced1c2af",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/libssl3_3.0.13-1~deb12u1_armhf.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "armhf",
@@ -249,17 +249,17 @@
       "key": "netbase_6.4_armhf",
       "name": "netbase",
       "sha256": "29b23c48c0fe6f878e56c5ddc9f65d1c05d729360f3690a593a8c795031cd867",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/n/netbase/netbase_6.4_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/n/netbase/netbase_6.4_all.deb",
       "version": "6.4"
     },
     {
       "arch": "armhf",
       "dependencies": [],
-      "key": "openssl_3.0.11-1~deb12u2_armhf",
+      "key": "openssl_3.0.13-1~deb12u1_armhf",
       "name": "openssl",
-      "sha256": "fa601d4b63af41d80e80e4f1bee2c776f24f9160ee542b27113da7379e036009",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_armhf.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "ec6352907a7989e395a7f8f6775a08e6b9de5bb6c97635d38e25e143cc4a21a6",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/openssl_3.0.13-1~deb12u1_armhf.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "armhf",
@@ -267,7 +267,7 @@
       "key": "tzdata_2024a-0-p-deb12u1_armhf",
       "name": "tzdata",
       "sha256": "0ca0baec1fca55df56039047a631fc1541c5a44c1c4879d553aaa3a70844eb12",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
       "version": "2024a-0+deb12u1"
     },
     {
@@ -276,7 +276,7 @@
       "key": "libgcc-s1_12.2.0-14_armhf",
       "name": "libgcc-s1",
       "sha256": "6eee90afd6976f6a4f34e288fc98a57f72fbffac442ab28d860630d85a15e5d7",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_armhf.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_armhf.deb",
       "version": "12.2.0-14"
     },
     {
@@ -285,7 +285,7 @@
       "key": "libgomp1_12.2.0-14_armhf",
       "name": "libgomp1",
       "sha256": "59135191d9054cfa01e6f005a27e2e3dbe571ee3b4e4d76e4283a723c894ecae",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_armhf.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_armhf.deb",
       "version": "12.2.0-14"
     },
     {
@@ -294,17 +294,17 @@
       "key": "libstdc-p--p-6_12.2.0-14_armhf",
       "name": "libstdc++6",
       "sha256": "50729c9e7c78ad33529dff20f55d6eb3299055079016973ef068ca2c5eb08eff",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_armhf.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_armhf.deb",
       "version": "12.2.0-14"
     },
     {
       "arch": "s390x",
       "dependencies": [],
-      "key": "base-files_12.4-p-deb12u5_s390x",
+      "key": "base-files_12.4-p-deb12u6_s390x",
       "name": "base-files",
-      "sha256": "1c6dd70eab979779b5b28cf10f4d47b6821e47eb6a3630081b7d467a8983aa9e",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/b/base-files/base-files_12.4+deb12u5_s390x.deb",
-      "version": "12.4+deb12u5"
+      "sha256": "cda54653561690fdf6e52c2f2a36358aa67a08f50d3c3b620bddaf9113923098",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/b/base-files/base-files_12.4+deb12u6_s390x.deb",
+      "version": "12.4+deb12u6"
     },
     {
       "arch": "s390x",
@@ -312,7 +312,7 @@
       "key": "ca-certificates_20230311_s390x",
       "name": "ca-certificates",
       "sha256": "5308b9bd88eebe2a48be3168cb3d87677aaec5da9c63ad0cf561a29b8219115c",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
       "version": "20230311"
     },
     {
@@ -321,7 +321,7 @@
       "key": "libc6_2.36-9-p-deb12u7_s390x",
       "name": "libc6",
       "sha256": "194f5265a70115331be41c3e15430189f75d71f5d7c075521cac4ee3cfef762b",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_s390x.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_s390x.deb",
       "version": "2.36-9+deb12u7"
     },
     {
@@ -330,17 +330,17 @@
       "key": "libc-bin_2.36-9-p-deb12u7_s390x",
       "name": "libc-bin",
       "sha256": "0c0deb29a60c0b2a18c1fbba6780ab27566b8bb32a76413bfcc6d77155b4a7e5",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_s390x.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_s390x.deb",
       "version": "2.36-9+deb12u7"
     },
     {
       "arch": "s390x",
       "dependencies": [],
-      "key": "libssl3_3.0.11-1~deb12u2_s390x",
+      "key": "libssl3_3.0.13-1~deb12u1_s390x",
       "name": "libssl3",
-      "sha256": "39046c25476b3a20def5db5cfbef5d885d01d2df1ff2e56d2f5cadaeeadc2606",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_s390x.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "dbff0b6dd68903264d23f679549b9bb90e411bb055ddc7f84e7062199ff7dc73",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/libssl3_3.0.13-1~deb12u1_s390x.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "s390x",
@@ -348,17 +348,17 @@
       "key": "netbase_6.4_s390x",
       "name": "netbase",
       "sha256": "29b23c48c0fe6f878e56c5ddc9f65d1c05d729360f3690a593a8c795031cd867",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/n/netbase/netbase_6.4_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/n/netbase/netbase_6.4_all.deb",
       "version": "6.4"
     },
     {
       "arch": "s390x",
       "dependencies": [],
-      "key": "openssl_3.0.11-1~deb12u2_s390x",
+      "key": "openssl_3.0.13-1~deb12u1_s390x",
       "name": "openssl",
-      "sha256": "d696a48af727ebc8d0587771e3e2a5bca817f4786504ea196017bd58bf3506b4",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_s390x.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "b34650086036d3ff5ab4822e7c460b8304c04c4e02edb753a95e113c6f584316",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/openssl_3.0.13-1~deb12u1_s390x.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "s390x",
@@ -366,7 +366,7 @@
       "key": "tzdata_2024a-0-p-deb12u1_s390x",
       "name": "tzdata",
       "sha256": "0ca0baec1fca55df56039047a631fc1541c5a44c1c4879d553aaa3a70844eb12",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
       "version": "2024a-0+deb12u1"
     },
     {
@@ -375,7 +375,7 @@
       "key": "libgcc-s1_12.2.0-14_s390x",
       "name": "libgcc-s1",
       "sha256": "beb6ead3623332a8d65523293b45c6770fe0f8396e13f9d9da2b38a905ef822b",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_s390x.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_s390x.deb",
       "version": "12.2.0-14"
     },
     {
@@ -384,7 +384,7 @@
       "key": "libgomp1_12.2.0-14_s390x",
       "name": "libgomp1",
       "sha256": "c2c6111858661a8136ae8c41f465c851469740e6ae3e70b4d842b076a9c1eaf1",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_s390x.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_s390x.deb",
       "version": "12.2.0-14"
     },
     {
@@ -393,17 +393,17 @@
       "key": "libstdc-p--p-6_12.2.0-14_s390x",
       "name": "libstdc++6",
       "sha256": "04dbe0085f54cc8383a79fa0e77e5dd380738b0f5a29b72d8d189acc43be86d9",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_s390x.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_s390x.deb",
       "version": "12.2.0-14"
     },
     {
       "arch": "ppc64el",
       "dependencies": [],
-      "key": "base-files_12.4-p-deb12u5_ppc64el",
+      "key": "base-files_12.4-p-deb12u6_ppc64el",
       "name": "base-files",
-      "sha256": "7a20f4811f21c89cbaef413f26a7d1e597f640a95ebb5d82212a71235a50ae43",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/b/base-files/base-files_12.4+deb12u5_ppc64el.deb",
-      "version": "12.4+deb12u5"
+      "sha256": "d7be6c8ea7dcd04d65f190597e520089a3f55130ed7031ac205da162ec210ba1",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/b/base-files/base-files_12.4+deb12u6_ppc64el.deb",
+      "version": "12.4+deb12u6"
     },
     {
       "arch": "ppc64el",
@@ -411,7 +411,7 @@
       "key": "ca-certificates_20230311_ppc64el",
       "name": "ca-certificates",
       "sha256": "5308b9bd88eebe2a48be3168cb3d87677aaec5da9c63ad0cf561a29b8219115c",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/c/ca-certificates/ca-certificates_20230311_all.deb",
       "version": "20230311"
     },
     {
@@ -420,7 +420,7 @@
       "key": "libc6_2.36-9-p-deb12u7_ppc64el",
       "name": "libc6",
       "sha256": "b25dd4f5ad282be5f414570fcf3612c39b48fd809db421f79637578ceea84c90",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_ppc64el.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc6_2.36-9+deb12u7_ppc64el.deb",
       "version": "2.36-9+deb12u7"
     },
     {
@@ -429,17 +429,17 @@
       "key": "libc-bin_2.36-9-p-deb12u7_ppc64el",
       "name": "libc-bin",
       "sha256": "a44081348db5c9a1b44ad3c6a7551fbfc642b7495153f180a62dde8589156927",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_ppc64el.deb",
+      "url": "https://snapshot.debian.org/archive/debian-security/20240703T202521Z/pool/updates/main/g/glibc/libc-bin_2.36-9+deb12u7_ppc64el.deb",
       "version": "2.36-9+deb12u7"
     },
     {
       "arch": "ppc64el",
       "dependencies": [],
-      "key": "libssl3_3.0.11-1~deb12u2_ppc64el",
+      "key": "libssl3_3.0.13-1~deb12u1_ppc64el",
       "name": "libssl3",
-      "sha256": "62fefa777c0c508c52630a9ba53c8492f2ee7dbc3f23eb58ad932b34795d2b70",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/libssl3_3.0.11-1~deb12u2_ppc64el.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "9bdcb57976f750908e03d06bc07eded462625467dab301160efed8a7c3eb65d3",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/libssl3_3.0.13-1~deb12u1_ppc64el.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "ppc64el",
@@ -447,17 +447,17 @@
       "key": "netbase_6.4_ppc64el",
       "name": "netbase",
       "sha256": "29b23c48c0fe6f878e56c5ddc9f65d1c05d729360f3690a593a8c795031cd867",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/n/netbase/netbase_6.4_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/n/netbase/netbase_6.4_all.deb",
       "version": "6.4"
     },
     {
       "arch": "ppc64el",
       "dependencies": [],
-      "key": "openssl_3.0.11-1~deb12u2_ppc64el",
+      "key": "openssl_3.0.13-1~deb12u1_ppc64el",
       "name": "openssl",
-      "sha256": "ef72ad09481309d5af359b29bbc6670d6bf1b30d68257e6573a7f9ffc8e5e035",
-      "url": "https://snapshot.debian.org/archive/debian-security/20240509T203919Z/pool/updates/main/o/openssl/openssl_3.0.11-1~deb12u2_ppc64el.deb",
-      "version": "3.0.11-1~deb12u2"
+      "sha256": "18e8942cf0eb42f8bb08d276eefe740b27710a96b193691fd91962932807968b",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/o/openssl/openssl_3.0.13-1~deb12u1_ppc64el.deb",
+      "version": "3.0.13-1~deb12u1"
     },
     {
       "arch": "ppc64el",
@@ -465,7 +465,7 @@
       "key": "tzdata_2024a-0-p-deb12u1_ppc64el",
       "name": "tzdata",
       "sha256": "0ca0baec1fca55df56039047a631fc1541c5a44c1c4879d553aaa3a70844eb12",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/t/tzdata/tzdata_2024a-0+deb12u1_all.deb",
       "version": "2024a-0+deb12u1"
     },
     {
@@ -474,7 +474,7 @@
       "key": "libgcc-s1_12.2.0-14_ppc64el",
       "name": "libgcc-s1",
       "sha256": "1cdcfe462d116a33797ec9867519c0f1f4b7819b8914b6ec70faaaf8369d1e40",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_ppc64el.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_ppc64el.deb",
       "version": "12.2.0-14"
     },
     {
@@ -483,7 +483,7 @@
       "key": "libgomp1_12.2.0-14_ppc64el",
       "name": "libgomp1",
       "sha256": "846fd545da0298a750d57f52ec59689d219c79d9693f15a1dfd6e141ff173e1e",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_ppc64el.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libgomp1_12.2.0-14_ppc64el.deb",
       "version": "12.2.0-14"
     },
     {
@@ -492,7 +492,7 @@
       "key": "libstdc-p--p-6_12.2.0-14_ppc64el",
       "name": "libstdc++6",
       "sha256": "87e77916ddf0ac175e8fff101dfc93a3348187d87b0eba8089c6dc320e34ec20",
-      "url": "https://snapshot.debian.org/archive/debian/20240509T203919Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_ppc64el.deb",
+      "url": "https://snapshot.debian.org/archive/debian/20240703T202521Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_ppc64el.deb",
       "version": "12.2.0-14"
     }
   ],
