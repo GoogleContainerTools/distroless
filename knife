@@ -29,8 +29,15 @@ function cmd_lock() {
     repos=$(bazel query "kind('deb_package_index', //external:*)" --output=label 2>/dev/null | cut -d: -f2)
 
     for repo in $repos; do
-        echo "🔑 Locking $repo"
-        bazel run "@${repo}//:lock" &>/dev/null
+      for i in $(seq 10); do
+        echo "🔑 Locking $repo (attempt ${i})"
+        bazel run "@${repo}//:lock" && break || sleep 20;
+        if [[ $i -eq 10 ]]; then
+          echo ""
+          echo "Failed to lock $repo after 10 attempts" >&2
+          exit 1
+        fi
+      done
     done
 }
 
@@ -39,7 +46,7 @@ function find_latest_snapshot() {
     # If it's the first of the month, look at the last month, otherwise this -1 day has no effect since searches
     # occur at the "month" level. This is an intentional buffer added to get the snapshots fully hydrated. We
     # intentionally don't include complicated logic for the case where it's after the 1st and no snapshots are
-    # availalbe for the month (it's extremely unlikely for our updater to run into this situation unless the 
+    # availalbe for the month (it's extremely unlikely for our updater to run into this situation unless the
     # snapshot serving infrastructure is acting up).
     local current="$(date -d '-1 day' +%Y-%m-%d)"
     local tmp=$(mktemp)
@@ -59,15 +66,15 @@ function cmd_update_snapshots() {
         echo ""
         echo "could not find any snapshots for debian or debian-security"
         exit 1
-    fi 
+    fi
     echo ""
     echo "🎯 Found snapshots"
-    echo "   debian: $latest" 
+    echo "   debian: $latest"
     echo "   security: $latest_security"
     echo ""
 
     # if tty ask for approval
-    if [ -t 1 ]; then 
+    if [ -t 1 ]; then
         read -p "Do you want to continue? (y/n) " -n 1 -r
         sleep 0.5
         echo $'\n'
@@ -81,16 +88,16 @@ function cmd_update_snapshots() {
         current=$(grep -oE "debian/([0-9]+T[0-9]+Z)" $mpath | cut -d/ -f2 | head -n1)
         current_security=$(grep -oE "debian-security/([0-9]+T[0-9]+Z)" $mpath | cut -d/ -f2 | head -n1)
 
-        if [[ "$current" == "$latest" && "$current_security" == "$latest_security" ]]; then 
+        if [[ "$current" == "$latest" && "$current_security" == "$latest_security" ]]; then
             echo "🎖️ $mpath is up to date."
             continue
         fi
         echo "🗞️ $mpath"
-        if [[ "$current" != "$latest" ]]; then 
+        if [[ "$current" != "$latest" ]]; then
             sed -i -E "s/(debian\/)([0-9]+T[0-9]+Z)/\1$latest/" "$mpath"
             echo "   debian: $current -> $latest"
-        fi 
-        if [[ "$current_security" != "$latest_security" ]]; then 
+        fi
+        if [[ "$current_security" != "$latest_security" ]]; then
             sed -i -E "s/(debian-security\/)([0-9]+T[0-9]+Z)/\1$latest_security/" "$mpath"
             echo "   debian-security: $current_security -> $latest_security"
         fi
@@ -113,9 +120,9 @@ function cmd_github_update_snapshots() {
 function cmd_lint () {
     echo "🧹 Linting"
     echo ""
-    if ! which buildifier > /dev/null; then 
+    if ! which buildifier > /dev/null; then
         echo "🧱 No buildifier executable was found."
-        echo " Did you follow the ./CONTRIBUTING.md ?" 
+        echo " Did you follow the ./CONTRIBUTING.md ?"
         exit 1
     fi
     buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
@@ -123,7 +130,7 @@ function cmd_lint () {
 
 function cmd_test () {
     echo "🧪 Testing"
-    echo "" 
+    echo ""
 
     local arch=$(uname -m)
 
