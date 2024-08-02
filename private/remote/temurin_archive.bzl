@@ -1,14 +1,12 @@
 "temurin archive repository rule"
 
 STATIC_MTREE = """\
-./etc time=946684800.0 mode=755 gid=0 uid=0 type=dir
-./etc/ssl time=946684800.0 mode=755 gid=0 uid=0 type=dir
 ./etc/ssl/certs time=946684800.0 mode=755 gid=0 uid=0 type=dir
 ./etc/ssl/certs/java time=946684800.0 mode=755 gid=0 uid=0 type=dir
-./usr time=946684800.0 mode=755 gid=0 uid=0 type=dir
-./usr/lib time=946684800.0 mode=755 gid=0 uid=0 type=dir
 ./usr/lib/jvm time=946684800.0 mode=755 gid=0 uid=0 type=dir
-./usr/lib/jvm/%s/lib/security/cacerts nlink=0 time=946684800.0 mode=777 gid=0 uid=0 type=link link=/etc/ssl/certs/java/cacerts 
+# NOTE: cacerts is moved to ./etc/ssl/certs/java/cacerts via the awk mutation hence 
+# a symlink created in the original location for completeness.
+./usr/lib/jvm/%s/lib/security/cacerts nlink=0 time=946684800.0 mode=777 gid=0 uid=0 type=link link=/etc/ssl/certs/java/cacerts
 """
 
 AWK = """\
@@ -16,7 +14,19 @@ AWK = """\
     sub("^"  "output/lib/security/cacerts", "./etc/ssl/certs/java/cacerts")
     sub("^"  "output", "./usr/lib/jvm/%s")
     sub(/time=[0-9\\.]+/, "time=946684800.0");
-    sub("mode=0755", "")
+    if ($1 ~ ".*legal/.*" || $1 ~ ".*conf/.*") {    
+        # keep it as 0755
+        # or 0644 if its a file
+        if ($0 ~ ".*type=file.*") {  
+            sub("mode=0755", "mode=0644")
+        } 
+    } else if ($1 ~ ".*\\.jsa") {    
+        sub("mode=0755", "mode=0644")
+    } if ($0 ~ ".*type=dir.*") {  
+        # keep the 0755 permission override
+    } else {
+        sub("mode=0755", "")
+    }
     print
 }
 """
