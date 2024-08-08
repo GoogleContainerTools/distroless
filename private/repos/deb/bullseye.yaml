@@ -3,11 +3,11 @@ version: 1
 
 sources:
   - channel: bullseye main
-    url: https://snapshot.debian.org/archive/debian/20240706T203757Z
+    url: https://snapshot.debian.org/archive/debian/20240806T205814Z
   - channel: bullseye-updates main
-    url: https://snapshot.debian.org/archive/debian/20240706T203757Z
+    url: https://snapshot.debian.org/archive/debian/20240806T205814Z
   - channel: bullseye-security main
-    url: https://snapshot.debian.org/archive/debian-security/20240706T203757Z
+    url: https://snapshot.debian.org/archive/debian-security/20240806T205814Z
 
 archs:
   - amd64
