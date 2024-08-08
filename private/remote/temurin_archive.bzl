@@ -1,12 +1,12 @@
 "temurin archive repository rule"
 
 STATIC_MTREE = """\
-./etc/ssl/certs time=946684800.0 mode=755 gid=0 uid=0 type=dir
-./etc/ssl/certs/java time=946684800.0 mode=755 gid=0 uid=0 type=dir
-./usr/lib/jvm time=946684800.0 mode=755 gid=0 uid=0 type=dir
+etc/ssl/certs/ time=946684800.0 mode=755 gid=0 uid=0 type=dir
+etc/ssl/certs/java/ time=946684800.0 mode=755 gid=0 uid=0 type=dir
+usr/lib/jvm/ time=946684800.0 mode=755 gid=0 uid=0 type=dir
 # NOTE: cacerts is moved to ./etc/ssl/certs/java/cacerts via the awk mutation hence 
 # a symlink created in the original location for completeness.
-./usr/lib/jvm/%s/lib/security/cacerts nlink=0 time=946684800.0 mode=777 gid=0 uid=0 type=link link=/etc/ssl/certs/java/cacerts
+usr/lib/jvm/%s/lib/security/cacerts nlink=0 time=946684800.0 mode=777 gid=0 uid=0 type=link link=/etc/ssl/certs/java/cacerts
 """
 
 AWK = """\
@@ -27,6 +27,9 @@ AWK = """\
     } else {
         sub("mode=0755", "")
     }
+    # pkg_tar strips the leading ./ so we do too to avoid 
+    # `duplicates of file paths not supported` error
+    sub("^"  "./", "")
     print
 }
 """
