@@ -67,13 +67,14 @@ jobs:
 
       - uses: peter-evans/find-comment@v3
         id: fc
+        if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: "github-actions[bot]"
           body-includes: 🌳 🔄 Image Check
 
       - name: Report diff
-        if: ${{ steps.diff.outputs.changed_targets }}
+        if: ${{ !github.event.pull_request.head.repo.fork && steps.diff.outputs.changed_targets }}
         uses: peter-evans/create-or-update-comment@v4
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
@@ -91,7 +92,7 @@ jobs:
           edit-mode: replace
 
       - name: Report no diff
-        if: ${{ !steps.diff.outputs.changed_targets }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !steps.diff.outputs.changed_targets }}
         uses: peter-evans/create-or-update-comment@v4
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
