@@ -61,7 +61,7 @@ def _impl(rctx):
     rctx.file(
         "BUILD.bazel",
         content = BUILD_TMPL.format(
-            name = rctx.attr.name,
+            name = rctx.attr.name.split("~")[-1],
             package_name = rctx.attr.package_name,
             spdx_id = rctx.attr.name,
             urls = ",".join(['"%s"' % url for url in rctx.attr.urls]),

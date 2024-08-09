@@ -333,7 +333,7 @@
     },
     "//private/extensions:node.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "Le6PCrq9rUqbHCVCea/qDubuLixoGfqPsZG3ntuSqGI=",
+        "bzlTransitiveDigest": "FDGnf5YFCzFd1WjCXz4T6DM2ZnqbCKsw8Y2ugVKujz4=",
         "usagesDigest": "jfY8t0NjCRCd6EHCzjWx/9/crrCpG+yo9QCR6Xgp4YY=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -577,7 +577,7 @@
     },
     "//private/extensions:version.bzl%version": {
       "general": {
-        "bzlTransitiveDigest": "BJ+KMjA6x5Ok2pVOe4u1YI/GePoP2qstmnvU+wMfmxk=",
+        "bzlTransitiveDigest": "ECpP4aEr95iOnhuXei39aHR4amFYZWshD1lbdHEqcFk=",
         "usagesDigest": "cHeQ23cNiFMTBnLK/0QunuErohibAeauc5ErpxnYB3c=",
         "recordedFileInputs": {
           "@@//private/repos/deb/bullseye_python.lock.json": "f60ebb6dbb80780274d8942e60924970d160cdaa16ed3fc892170ab75610d664",
