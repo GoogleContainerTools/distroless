@@ -124,7 +124,7 @@
   "moduleExtensions": {
     "//private/extensions:busybox.bzl%busybox": {
       "general": {
-        "bzlTransitiveDigest": "Ql33fxou1Tmu5x8VpK+wh5sTUX/3r8Aqt3DCVfU2Nwg=",
+        "bzlTransitiveDigest": "TZ+vRqDv8pp1rfByv5tFA+ZhPeRLuZoWUAGZIVkuO+o=",
         "usagesDigest": "OeiUaebmMEoBaZCZ/yl0V9cKp+gYKSW08xHIpacr3to=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -224,7 +224,7 @@
     },
     "//private/extensions:java.bzl%java": {
       "general": {
-        "bzlTransitiveDigest": "wb9XKAAO97PrF+fyxnG5ABWEoOQV4KOi/58OKvjE01c=",
+        "bzlTransitiveDigest": "mLFXROKZ0KpwD5TiKCWxt677pCzTlOV+FyqFc1PvRAg=",
         "usagesDigest": "FtQ3JqB3M2ulaw/D6Kcu09xvvKP9CVM7CVAEBvnjyQI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

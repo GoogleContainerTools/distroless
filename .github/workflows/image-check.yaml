@@ -30,7 +30,8 @@ jobs:
       - name: Fetch
         run: |
           for i in $(seq 10); do 
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'kind(merge_providers, deps(kind(oci_image, ...)))' --output=label --config=release && break || sleep 20;
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'attr(tags, "amd64", ...)' && break
+            sleep 10;
           done
 
       - name: Build all images

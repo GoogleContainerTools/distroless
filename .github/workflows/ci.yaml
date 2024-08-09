@@ -76,7 +76,7 @@ jobs:
       - name: Fetch
         run: |
           for i in $(seq 20); do 
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc query $(bazel query 'attr(tags, "amd64", ...)') && break
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'attr(tags, "amd64", ...)' && break
             sleep 10;
           done
 
