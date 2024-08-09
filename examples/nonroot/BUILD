@@ -2,7 +2,7 @@
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
 load("@container_structure_test//:defs.bzl", "container_structure_test")
-load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_distroless//distroless:defs.bzl", "home", "passwd")
 load("@rules_oci//oci:defs.bzl", "oci_image")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
