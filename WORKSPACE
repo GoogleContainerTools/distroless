@@ -5,9 +5,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # rules_oci setup
 http_archive(
     name = "rules_oci",
-    # ssha256 = "d8d3e64a814ff76f59b29467a8760112cbfe18e6b3d864e97011b072c805b7b0",
-    strip_prefix = "rules_oci-1f93e493dc5b620f7ebcaedf1c5766cd7f39a9b8",
-    url = "https://github.com/bazel-contrib/rules_oci/archive/1f93e493dc5b620f7ebcaedf1c5766cd7f39a9b8.tar.gz",
+    sha256 = "311e78803a4161688cc79679c0fb95c56445a893868320a3caf174ff6e2c383b",
+    strip_prefix = "rules_oci-2.0.0-beta2",
+    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v2.0.0-beta2/rules_oci-v2.0.0-beta2.tar.gz",
 )
 
 load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
