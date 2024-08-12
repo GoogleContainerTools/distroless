@@ -1,5 +1,5 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
-load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_load")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", ARCHITECTURES = "BASE_ARCHITECTURES")
 load("//base:distro.bzl", DISTROS = "LANGUAGE_DISTROS")
@@ -133,7 +133,7 @@ DISTRO_VERSION = {
 ]
 
 [
-    oci_tarball(
+    oci_load(
         name = "python3_root_" + arch + "_debian11_tarball",
         image = ":python3_root_" + arch + "_debian11",
         repo_tags = ["distroless/gen/python3_root_%s_debian11_tarball:gen" % arch],

@@ -1,7 +1,7 @@
 # Public notice: this file is for internal documentation, testing, and
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
-load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//base:distro.bzl", "DISTROS")
 
@@ -36,10 +36,10 @@ oci_image(
 )
 
 # Run
-# podman load -i bazel-bin/examples/python3/tarball/tarball.tar
+# bazel run //examples/python3/tarball
 # podman run localhost/distroless/examples/py:latest
 [
-    oci_tarball(
+    oci_load(
         name = "tarball_" + distro,
         image = ":hello_" + distro,
         repo_tags = ["distroless/examples/py:latest"],
