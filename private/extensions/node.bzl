@@ -15,7 +15,7 @@ pkg_tar(
         ],
     ),
     package_dir = "/nodejs",
-    strip_prefix = "external/{name}/output"
+    strip_prefix = "external/{canonical_name}/output"
 )
 
 pkg_tar(
@@ -61,6 +61,7 @@ def _impl(rctx):
     rctx.file(
         "BUILD.bazel",
         content = BUILD_TMPL.format(
+            canonical_name = rctx.attr.name,
             name = rctx.attr.name.split("~")[-1],
             package_name = rctx.attr.package_name,
             spdx_id = rctx.attr.name,
