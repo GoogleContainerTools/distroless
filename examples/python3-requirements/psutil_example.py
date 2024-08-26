@@ -13,8 +13,7 @@ def mib(total_bytes):
 def main():
     current_process = psutil.Process()
     memory = current_process.memory_info()
-    print('RSS: {:.1f} MiB;  SHARED: {:.1f} MiB; VIRTUAL: {:.1f} MiB'.format(
-        mib(memory.rss), mib(memory.shared), mib(memory.vms)))
+    print(f'RSS: {mib(memory.rss):.1f} MiB;  SHARED: {mib(memory.shared):.1f} MiB; VIRTUAL: {mib(memory.vms):.1f} MiB')
 
 
 if __name__ == '__main__':
