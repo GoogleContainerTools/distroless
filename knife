@@ -128,6 +128,14 @@ function cmd_lint () {
     buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
 }
 
+function cmd_update_java_archives () {
+    source scripts/update_java_archives.sh
+    old_version=$(get_version)
+    generate_java_archives > java_archives.bzl
+    new_version=$(get_version)
+    update_test_versions_java21 $old_version $new_version
+}
+
 function cmd_test () {
     echo "🧪 Testing"
     echo ""
@@ -159,6 +167,9 @@ github-update-snapshots)
     ;;
 test)
     cmd_test
+    ;;
+update-java-archives)
+    cmd_update_java_archives
     ;;
 ~~nocmd) # no command provided
     echo "provide a command: lock, update-snapshots, github-update-snapshots, test"
