@@ -1,0 +1,53 @@
+name: update-snapshots
+on:
+  # will send emails to last editor of this cron syntax (distroless-bot)
+  schedule:
+    - cron: "35 20 * * *"
+  # allow this workflow to be manually run
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update snapshots
+        run: ./knife update-java-archives
+
+      - name: Create commits
+        if: env.DISTROLESS_DIFF
+        id: create-commits
+        run: |
+          git checkout -b update-java-archives
+
+          # Set identity.
+          git config --global user.email "distroless-bot@google.com"
+          git config --global user.name "Distroless Bot"
+
+          # Commit changes
+          git add .
+          git commit -s -m "Bumping temurin archives to latest stable versions"
+          git push --force origin HEAD
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+        run: |
+          BODY_FILE=$(mktemp)
+          if ! OUTPUT=$(gh pr create -B main -H update-snapshots -t "Bumping temurin archives to latest stable versions" 2>&1) ; then
+            echo $OUTPUT
+            if [[ "${OUTPUT}" =~ "already exists" ]]; then
+              echo "PR already exists and it was updated. Ending successfully";
+              exit 0;
+            else
+              exit 1;
+            fi
+          fi
