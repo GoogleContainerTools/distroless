@@ -172,7 +172,7 @@ update-java-archives)
     cmd_update_java_archives
     ;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock, update-snapshots, github-update-snapshots, test"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-java-archives, test"
     exit 1
     ;;
 *) # unknown command
