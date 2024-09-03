@@ -122,17 +122,6 @@ load(":java_archives.bzl", java_repositories = "repositories")
 
 java_repositories()
 
-# For Jetty
-http_archive(
-    name = "jetty",
-    add_prefix = "output",
-    build_file = "//java:BUILD.jetty",
-    sha256 = "b04b4cd45f3bf3c09a26bdf7f4e8d1a67e1a0f224ef4539534a0719b2c701088",
-    strip_prefix = "jetty-distribution-9.4.53.v20231009/",
-    type = "tar.gz",
-    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.53.v20231009/jetty-distribution-9.4.53.v20231009.tar.gz"],
-)
-
 # rules_pkg setup
 http_archive(
     name = "rules_pkg",

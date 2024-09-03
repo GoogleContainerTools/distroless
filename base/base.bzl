@@ -108,25 +108,12 @@ def base_images(distro):
                 ],
             )
 
-            # base image distribution-specific deb dependencies
-            BASE_DISTRO_DEBS = {
-                "debian11": [
-                    "libssl1.1",
-                    "openssl",
-                ],
-                "debian12": [
-                    "libssl3",
-                ],
-            }
-
             oci_image(
                 name = "base_" + user + "_" + arch + "_" + distro,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
                     deb.package(arch, distro, "libc6"),
-                ] + [
-                    deb.package(arch, distro, pkg)
-                    for pkg in BASE_DISTRO_DEBS[distro]
+                    deb.package(arch, distro, "libssl3"),
                 ],
             )
 
@@ -192,17 +179,6 @@ def base_images(distro):
             image = ":check_certs_image_" + arch + "_" + distro,
             tags = ["manual", arch],
         )
-
-        ##########################################################################################
-        # Check that we can invoke openssl in the base image to check certificates (only debian11).
-        ##########################################################################################
-        if distro == "debian11":
-            container_structure_test(
-                name = "openssl_" + arch + "_" + distro + "_test",
-                configs = ["testdata/certs.yaml"],
-                image = ":base_root_" + arch + "_" + distro,
-                tags = ["manual", arch],
-            )
 
         ##########################################################################################
         # Check for common base files.

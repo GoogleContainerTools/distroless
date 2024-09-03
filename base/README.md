@@ -21,7 +21,6 @@ of the packages in `gcr.io/distroless/static`, and
 
 * glibc
 * libssl
-* openssl (only debian11, removed from debian12 onward)
 
 ## Usage
 
