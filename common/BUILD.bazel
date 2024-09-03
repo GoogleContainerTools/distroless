@@ -48,12 +48,7 @@ tar(
 [
     locale(
         name = "locale_%s_%s" % (distro, arch),
-        # From Debian 12 the C.UTF-8 locale has been renamed into C.utf8:
-        # https://metadata.ftp-master.debian.org/changelogs//main/g/glibc/glibc_2.36-9+deb12u1_changelog
-        # >   * debian/debhelper.in/libc-bin.install, debian/rules.d/build.mk,
-        # >     debian/rules: rename the C.UTF-8 locale into C.utf8 to match upstream
-        # >     naming.
-        charset = "C.UTF-8" if distro == "debian11" else "C.utf8",
+        charset = "C.utf8",
         package = deb.data(arch, distro, "libc-bin"),
         time = MTIME,
     )

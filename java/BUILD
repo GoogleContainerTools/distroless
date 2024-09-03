@@ -30,8 +30,6 @@ JAVA_21_ARCHITECTURES = [
 ]
 
 JAVA_VERSIONS_PER_DISTRO = [
-    ("11", "debian11"),
-    ("17", "debian11"),
     ("17", "debian12"),
 ]
 
@@ -144,16 +142,6 @@ JAVA_VERSIONS_PER_DISTRO = [
     for arch in JAVA_ARCHITECTURES
 ]
 
-# libpcre is a dependency for libharfbuzz (so this is specifically for common java_base)
-DISTRO_SPECIFIC_LIBRARIES = {
-    "debian11": [
-        "libpcre3",
-    ],
-    "debian12": [
-        "libpcre2-8-0",
-    ],
-}
-
 [
     oci_image(
         name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
@@ -163,8 +151,9 @@ DISTRO_SPECIFIC_LIBRARIES = {
             deb.package(arch, distro, "libharfbuzz0b"),
             deb.package(arch, distro, "libgraphite2-3"),
             deb.package(arch, distro, "libglib2.0-0"),
+            deb.package(arch, distro, "libpcre2-8-0"),  # required for libharfbuzz0b but remove for temurin installs
             ":cacerts_java_" + arch + "_" + distro,
-        ] + [deb.package(arch, distro, library) for library in DISTRO_SPECIFIC_LIBRARIES[distro]],
+        ],
     )
     for mode in [
         "",
@@ -378,11 +367,7 @@ DISTRO_SPECIFIC_LIBRARIES = {
 ]
 
 RULE_NAMES = [
-    ("java11_root_debian11", "java11_root_amd64_debian11"),
-    ("java11_nonroot_debian11", "java11_nonroot_amd64_debian11"),
-    ("java17_root_debian11", "java17_root_amd64_debian11"),
     ("java17_root_debian12", "java17_root_amd64_debian12"),
-    ("java17_nonroot_debian11", "java17_nonroot_amd64_debian11"),
     ("java17_nonroot_debian12", "java17_nonroot_amd64_debian12"),
     ("java21_root_debian12", "java21_root_amd64_debian12"),
     ("java21_nonroot_debian12", "java21_nonroot_amd64_debian12"),

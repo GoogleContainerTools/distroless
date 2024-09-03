@@ -8,7 +8,7 @@ oci_image(
     architecture = "arm64",
     os = "linux",
     tars = [
-        deb.package("arm64", "debian11", "base-files"),
+        deb.package("arm64", "debian12", "base-files"),
     ],
 )
 
@@ -22,7 +22,7 @@ oci_image(
     architecture = "amd64",
     os = "linux",
     tars = [
-        deb.package("amd64", "debian11", "netbase"),
+        deb.package("amd64", "debian12", "netbase"),
     ],
 )
 

@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN npm ci --omit=dev
 
-FROM gcr.io/distroless/nodejs20-debian11
+FROM gcr.io/distroless/nodejs20-debian12
 COPY --from=build-env /app /app
 WORKDIR /app
 CMD ["hello.js"]

@@ -3,7 +3,7 @@
 load("@versions//:versions.bzl", "version")
 
 DIST_ALIAS = dict(
-    # bullseye
+    # bullseye (deprecated)
     debian11 = "bullseye",
     bullseye = "debian11",
     # bookworm

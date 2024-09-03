@@ -17,7 +17,7 @@ and other tech giants that have used containers in production for many years.
 It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
 
 Distroless images are _very small_.
-The smallest distroless image, `gcr.io/distroless/static-debian11`, is around 2 MiB.
+The smallest distroless image, `gcr.io/distroless/static-debian12`, is around 2 MiB.
 That's about 50% of the size of `alpine` (~5 MiB), and less than 2% of the size of `debian` (124 MiB).
 
 ## How do I use distroless images?
@@ -43,22 +43,7 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs22-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 
-#### Debian 11
-
-| Image                                 | Tags                                  | Architecture Suffixes             |
-| ------------------------------------- | ------------------------------------- | --------------------------------- |
-| gcr.io/distroless/static-debian11     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-debian11       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-nossl-debian11 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/cc-debian11         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/python3-debian11    | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
-| gcr.io/distroless/java-base-debian11  | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java11-debian11     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java17-debian11     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/nodejs18-debian11   | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
-| gcr.io/distroless/nodejs20-debian11   | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
-
-These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian11:latest-amd64`
+These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian12:latest-amd64`
 
 Any other tags are considered deprecated and are no longer updated
 
@@ -117,27 +102,6 @@ Docker multi-stage builds make using distroless images easy.
 Follow these steps to get started:
 
 - Pick the right base image for your application stack.
-  We publish the following distroless base images on `gcr.io`:
-  - [gcr.io/distroless/static-debian12](base/README.md)
-  - [gcr.io/distroless/static-debian11](base/README.md)
-  - [gcr.io/distroless/base-nossl-debian12](base/README.md)
-  - [gcr.io/distroless/base-nossl-debian11](base/README.md)
-  - [gcr.io/distroless/base-debian12](base/README.md)
-  - [gcr.io/distroless/base-debian11](base/README.md)
-  - [gcr.io/distroless/java11-debian11](java/README.md)
-  - [gcr.io/distroless/java17-debian12](java/README.md)
-  - [gcr.io/distroless/java17-debian11](java/README.md)
-  - [gcr.io/distroless/cc-debian12](cc/README.md)
-  - [gcr.io/distroless/cc-debian11](cc/README.md)
-  - [gcr.io/distroless/nodejs18-debian12](nodejs/README.md)
-  - [gcr.io/distroless/nodejs18-debian11](nodejs/README.md)
-  - [gcr.io/distroless/nodejs20-debian12](nodejs/README.md)
-  - [gcr.io/distroless/nodejs20-debian11](nodejs/README.md)
-  - [gcr.io/distroless/nodejs22-debian12](nodejs/README.md)
-  - [gcr.io/distroless/nodejs22-debian11](nodejs/README.md)
-  - [gcr.io/distroless/python3-debian12](python3/README.md)
-- The following images are also published on `gcr.io`, but are considered experimental and not recommended for production usage:
-  - [gcr.io/distroless/python3-debian11](experimental/python3/README.md)
 - Write a multi-stage docker file.
   Note: This requires Docker 17.05 or higher.
 
@@ -159,7 +123,7 @@ RUN go mod download
 RUN CGO_ENABLED=0 go build -o /go/bin/app
 
 # Now copy it into our base image.
-FROM gcr.io/distroless/static-debian11
+FROM gcr.io/distroless/static-debian12
 COPY --from=build /go/bin/app /
 CMD ["/app"]
 ```
@@ -218,7 +182,7 @@ See here for more information on how these images are [built and released](RELEA
 
 ### Base Operating System
 
-Distroless images are based on Debian 11 (bullseye) and Debian 12 (bookworm). Images are explicitly tagged with Debian version suffixes (e.g. `-debian11`). Specifying an image without the distribution will currently select `-debian11` images, but that will change in the future to a newer version of Debian. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
+Distroless images are based on Debian 12 (bookworm). Images are explicitly tagged with Debian version suffixes (e.g. `-debian12`). Specifying an image without the distribution will currently select `-debian12` images, but that will change in the future to a newer version of Debian. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
 
 ### Operating System Updates for Security Fixes and CVEs
 
@@ -256,7 +220,7 @@ $ docker run --entrypoint=sh -ti my_debug_image
 BUILD       Dockerfile  hello.py
 ```
 
-> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java17-debian11:nonroot`, use the tag `debug-<existing tag>` instead, for example `gcr.io/distroless/java17-debian11:debug-nonroot`.
+> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java17-debian12:nonroot`, use the tag `debug-<existing tag>` instead, for example `gcr.io/distroless/java17-debian12:debug-nonroot`.
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
 

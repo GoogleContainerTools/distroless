@@ -9,7 +9,7 @@ package(default_visibility = ["//visibility:public"])
 go_image(
     name = "go_example",
     srcs = ["main.go"],
-    base = "//base:base_root_amd64_debian11",
+    base = "//base:base_root_amd64_debian12",
 )
 
 # Run
