@@ -61,10 +61,10 @@ EOM
       arch=${archs[arch_index]}
       arch_deb=${archs_deb[arch_index]}
       name="OpenJDK21U-${variant}_${arch}_linux_hotspot_$(underscore_encode "${version}").tar.gz"
-      archive_url=$(echo "$latest_release" | jq -r --arg NAME "$name" '.assets.[] | select(.name==$NAME) | .browser_download_url')
+      archive_url=$(echo "$latest_release" | jq -r --arg NAME "$name" '.assets | .[] | select(.name==$NAME) | .browser_download_url')
       [ "$archive_url" ] || { echo "no url found for ${name}"; exit 1; }
       sha256_name="${name}.sha256.txt"
-      sha256_url=$(echo "$latest_release" | jq -r --arg NAME "$sha256_name" '.assets.[] | select(.name==$NAME) | .browser_download_url')
+      sha256_url=$(echo "$latest_release" | jq -r --arg NAME "$sha256_name" '.assets | .[] | select(.name==$NAME) | .browser_download_url')
       [ "$sha256_url" ] || { echo "no url found for ${sha256_name}"; exit 1; }
       sha256=$(curl -sSL "$sha256_url" | cut -d' '  -f1)
       [ "$sha256" ] || { echo "no sha256 downloaded for ${name}"; exit 1; }
