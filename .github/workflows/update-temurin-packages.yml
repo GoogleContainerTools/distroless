@@ -42,7 +42,7 @@ jobs:
           GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
         run: |
           BODY_FILE=$(mktemp)
-          if ! OUTPUT=$(gh pr create -B main -H update-snapshots -t "Bumping temurin archives to latest stable versions" 2>&1) ; then
+          if ! OUTPUT=$(gh pr create -B main -H update-java-archives --fill 2>&1) ; then
             echo $OUTPUT
             if [[ "${OUTPUT}" =~ "already exists" ]]; then
               echo "PR already exists and it was updated. Ending successfully";
