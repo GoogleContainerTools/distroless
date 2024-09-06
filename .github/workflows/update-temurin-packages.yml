@@ -26,6 +26,14 @@ jobs:
         if: env.DISTROLESS_DIFF
         id: create-commits
         run: |
+          git status
+          if [[ $(git status --porcelain) ]]; then 
+            echo "DISTROLESS_DIFF=true" >> "$GITHUB_ENV"
+          else
+            echo "No changes detected"
+            exit 0
+          fi
+          
           git checkout -b update-java-archives
 
           # Set identity.
@@ -38,6 +46,7 @@ jobs:
           git push --force origin HEAD
 
       - name: Create Pull Request
+        if: env.DISTROLESS_DIFF
         env:
           GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
         run: |
