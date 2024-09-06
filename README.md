@@ -50,31 +50,11 @@ Any other tags are considered deprecated and are no longer updated
 
 ## How do I verify distroless images?
 
-All distroless images are signed by [cosign](https://github.com/sigstore/cosign).
-We recommend verifying any distroless image you use before building your image.
-
-#### Keyless
-
-Distroless images are signed with cosign in keyless mode, this is the only supported mechanism starting November 2023. You can verify the keyless signature of any distroless image with:
+All distroless images are signed by [cosign](https://github.com/sigstore/cosign) with emphemeral keys (keyless) -- this is the only supported mechanism starting November 2023.
+We recommend verifying any distroless image you use before building your image. You can verify the keyless signature of any distroless image with:
 
 ```
 cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com  --certificate-identity keyless@distroless.iam.gserviceaccount.com
-```
-
-#### Key (DEPRECATED)
-
-Verifying using the distroless keys is deprecated in favor of keyless. These signing events are not uploaded to the transparency log. You can use the [distroless public key](cosign.pub) to verify any distroless image with:
-
-Images built after November 2023 will not be verifiable with `cosign.pub`, use keyless signature verification
-
-```
-cat cosign.pub
------BEGIN PUBLIC KEY-----
-MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEWZzVzkb8A+DbgDpaJId/bOmV8n7Q
-OqxYbK0Iro6GzSmOzxkn+N2AKawLyXi84WSwJQBK//psATakCgAQKkNTAA==
------END PUBLIC KEY-----
-
-cosign verify --key cosign.pub $IMAGE_NAME --insecure-ignore-tlog
 ```
 
 ### Entrypoints
