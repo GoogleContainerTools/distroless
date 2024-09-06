@@ -40,9 +40,7 @@ busybox.archive()
 use_repo(busybox, "busybox_amd64", "busybox_arm", "busybox_arm64", "busybox_ppc64le", "busybox_s390x")
 
 ### JAVA ###
-java = use_extension("//private/extensions:java.bzl", "java")
-java.archive()
-use_repo(java, "temurin21_jdk_amd64", "temurin21_jdk_arm64", "temurin21_jdk_ppc64le", "temurin21_jre_amd64", "temurin21_jre_arm64", "temurin21_jre_ppc64le")
+include("//private/repos:java.MODULE.bazel")
 
 ### NODE ###
 node = use_extension("//private/extensions:node.bzl", "node")

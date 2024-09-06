@@ -3,15 +3,6 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 load("//experimental/busybox:commands.bzl", "BUSYBOX_ARCHIVE_BUILD")
 
-JAVA_RELEASE_VERSIONS = {
-    "temurin21_jre_amd64": "21.0.2",
-    "temurin21_jdk_amd64": "21.0.2",
-    "temurin21_jre_arm64": "21.0.2",
-    "temurin21_jdk_arm64": "21.0.2",
-    "temurin21_jre_ppc64le": "21.0.2",
-    "temurin21_jdk_ppc64le": "21.0.2",
-}
-
 def _busybox_impl(module_ctx):
     mod = module_ctx.modules[0]
 

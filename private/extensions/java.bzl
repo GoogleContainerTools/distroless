@@ -1,14 +1,5 @@
 "java"
 
-JAVA_RELEASE_VERSIONS = {
-    "temurin21_jre_amd64": "21.0.2",
-    "temurin21_jdk_amd64": "21.0.2",
-    "temurin21_jre_arm64": "21.0.2",
-    "temurin21_jdk_arm64": "21.0.2",
-    "temurin21_jre_ppc64le": "21.0.2",
-    "temurin21_jdk_ppc64le": "21.0.2",
-}
-
 STATIC_MTREE = """\
 etc/ssl/certs/ time=946684800.0 mode=755 gid=0 uid=0 type=dir
 etc/ssl/certs/java/ time=946684800.0 mode=755 gid=0 uid=0 type=dir
@@ -98,7 +89,6 @@ def _impl(rctx):
     rctx.download_and_extract(
         url = rctx.attr.urls,
         sha256 = rctx.attr.sha256,
-        type = rctx.attr.type,
         stripPrefix = rctx.attr.strip_prefix,
         output = "output",
     )
@@ -130,7 +120,6 @@ temurin_archive = repository_rule(
     attrs = {
         "urls": attr.string_list(mandatory = True),
         "sha256": attr.string(mandatory = True),
-        "type": attr.string(default = ".tar.gz"),
         "strip_prefix": attr.string(),
         "package_name": attr.string(default = "temurin"),
         "version": attr.string(mandatory = True),
@@ -138,6 +127,20 @@ temurin_archive = repository_rule(
         # control is only used to populate the sbom, see https://github.com/GoogleContainerTools/distroless/issues/1373
         # for why writing debian control files to the image is incompatible with scanners.
         "control": attr.label(),
+    },
+)
+
+def _version_repo_impl(rctx):
+    rctx.file(
+        "versions.bzl",
+        content = "JAVA_RELEASE_VERSIONS={}".format(rctx.attr.versions),
+    )
+    rctx.file("BUILD.bazel", 'exports_files(["versions.bzl"])')
+
+version_repo = repository_rule(
+    implementation = _version_repo_impl,
+    attrs = {
+        "versions": attr.string_dict(),
     },
 )
 
@@ -149,79 +152,43 @@ def _java_impl(module_ctx):
     if not mod.is_root:
         fail("java.archive should be called from root module only.")
 
-    temurin_archive(
-        name = "temurin21_jre_amd64",
-        sha256 = "51141204fe01a9f9dd74eab621d5eca7511eac67315c9975dbde5f2625bdca55",
-        strip_prefix = "jdk-21.0.2+13-jre",
-        urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jre_x64_linux_hotspot_21.0.2_13.tar.gz"],
-        version = "21.0.2+13",
-        architecture = "amd64",
-        control = "//java:control",
-    )
+    direct_deps = ["java_versions"]
+    versions = {}
 
-    temurin_archive(
-        name = "temurin21_jdk_amd64",
-        sha256 = "454bebb2c9fe48d981341461ffb6bf1017c7b7c6e15c6b0c29b959194ba3aaa5",
-        strip_prefix = "jdk-21.0.2+13",
-        urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz"],
-        version = "21.0.2+13",
-        architecture = "amd64",
-        control = "//java:control",
-    )
+    for mod in module_ctx.modules:
+        for archive in mod.tags.archive:
+            direct_deps.append(archive.name)
+            versions[archive.name] = archive.version
+            temurin_archive(
+                name = archive.name,
+                urls = archive.urls,
+                sha256 = archive.sha256,
+                strip_prefix = archive.strip_prefix,
+                package_name = archive.package_name,
+                version = archive.version,
+                architecture = archive.architecture,
+                control = "//java:control",
+            )
 
-    temurin_archive(
-        name = "temurin21_jre_arm64",
-        sha256 = "64c78854184c92a4da5cda571c8e357043bfaf03a03434eef58550cc3410d8a4",
-        strip_prefix = "jdk-21.0.2+13-jre",
-        urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jre_aarch64_linux_hotspot_21.0.2_13.tar.gz"],
-        version = "21.0.2+13",
-        architecture = "arm64",
-        control = "//java:control",
-    )
-
-    temurin_archive(
-        name = "temurin21_jdk_arm64",
-        sha256 = "3ce6a2b357e2ef45fd6b53d6587aa05bfec7771e7fb982f2c964f6b771b7526a",
-        strip_prefix = "jdk-21.0.2+13",
-        urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.2_13.tar.gz"],
-        version = "21.0.2+13",
-        architecture = "arm64",
-        control = "//java:control",
-    )
-
-    temurin_archive(
-        name = "temurin21_jre_ppc64le",
-        sha256 = "caaf48e50787b80b810dc08ee91bd4ffe0d0696bd14906a92f05bf8c14aabb22",
-        strip_prefix = "jdk-21.0.2+13-jre",
-        urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jre_ppc64le_linux_hotspot_21.0.2_13.tar.gz"],
-        version = "21.0.2+13",
-        architecture = "ppc64le",
-        control = "//java:control",
-    )
-
-    temurin_archive(
-        name = "temurin21_jdk_ppc64le",
-        sha256 = "d08de863499d8851811c893e8915828f2cd8eb67ed9e29432a6b4e222d80a12f",
-        strip_prefix = "jdk-21.0.2+13",
-        urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.2_13.tar.gz"],
-        version = "21.0.2+13",
-        architecture = "ppc64le",
-        control = "//java:control",
+    version_repo(
+        name = "java_versions",
+        versions = versions,
     )
 
     return module_ctx.extension_metadata(
-        root_module_direct_deps = [
-            "temurin21_jre_amd64",
-            "temurin21_jdk_amd64",
-            "temurin21_jre_arm64",
-            "temurin21_jdk_arm64",
-            "temurin21_jre_ppc64le",
-            "temurin21_jdk_ppc64le",
-        ],
+        root_module_direct_deps = direct_deps,
         root_module_direct_dev_deps = [],
     )
 
-_archive = tag_class(attrs = {})
+_archive = tag_class(attrs = {
+    "name": attr.string(mandatory = True),
+    "urls": attr.string_list(mandatory = True),
+    "sha256": attr.string(mandatory = True),
+    "strip_prefix": attr.string(),
+    "package_name": attr.string(default = "temurin"),
+    "version": attr.string(mandatory = True),
+    "architecture": attr.string(mandatory = True),
+})
 
 java = module_extension(
     implementation = _java_impl,

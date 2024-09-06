@@ -22,43 +22,10 @@ apt.install(
     package_template = "//private/repos/deb:package.BUILD.tmpl",
     resolve_transitive = False,
 )
-apt.install(
-    name = "bullseye",
-    lock = "//private/repos/deb:bullseye.lock.json",
-    manifest = "//private/repos/deb:bullseye.yaml",
-    package_template = "//private/repos/deb:package.BUILD.tmpl",
-    resolve_transitive = False,
-)
-apt.install(
-    name = "bullseye_java",
-    lock = "//private/repos/deb:bullseye_java.lock.json",
-    manifest = "//private/repos/deb:bullseye_java.yaml",
-    package_template = "//private/repos/deb:package.BUILD.tmpl",
-    resolve_transitive = False,
-)
-apt.install(
-    name = "bullseye_python",
-    lock = "//private/repos/deb:bullseye_python.lock.json",
-    manifest = "//private/repos/deb:bullseye_python.yaml",
-    package_template = "//private/repos/deb:package.BUILD.tmpl",
-    resolve_transitive = False,
-)
-use_repo(apt, "bookworm", "bookworm_java", "bookworm_python", "bullseye", "bullseye_java", "bullseye_python")
+use_repo(apt, "bookworm", "bookworm_java", "bookworm_python")
 
 ### VERSIONS HUB REPO ###
 version = use_extension("//private/extensions:version.bzl", "version")
-version.from_lock(
-    lock = "//private/repos/deb:bullseye_python.lock.json",
-    repo_name = "bullseye_python",
-)
-version.from_lock(
-    lock = "//private/repos/deb:bullseye_java.lock.json",
-    repo_name = "bullseye_java",
-)
-version.from_lock(
-    lock = "//private/repos/deb:bullseye.lock.json",
-    repo_name = "bullseye",
-)
 version.from_lock(
     lock = "//private/repos/deb:bookworm_python.lock.json",
     repo_name = "bookworm_python",
