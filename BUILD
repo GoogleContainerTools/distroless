@@ -1,5 +1,6 @@
 load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
 load("//base:distro.bzl", "DISTROS")
+load("//private/oci:defs.bzl", "sign_and_push_all")
 
 package(default_visibility = ["//visibility:public"])
 
