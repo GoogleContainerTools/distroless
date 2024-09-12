@@ -123,6 +123,7 @@ temurin_archive = repository_rule(
         "strip_prefix": attr.string(),
         "package_name": attr.string(default = "temurin"),
         "version": attr.string(mandatory = True),
+        "plain_version": attr.string(mandatory = True),
         "architecture": attr.string(mandatory = True),
         # control is only used to populate the sbom, see https://github.com/GoogleContainerTools/distroless/issues/1373
         # for why writing debian control files to the image is incompatible with scanners.
@@ -158,7 +159,7 @@ def _java_impl(module_ctx):
     for mod in module_ctx.modules:
         for archive in mod.tags.archive:
             direct_deps.append(archive.name)
-            versions[archive.name] = archive.version
+            versions[archive.name] = archive.plain_version
             temurin_archive(
                 name = archive.name,
                 urls = archive.urls,
@@ -166,6 +167,7 @@ def _java_impl(module_ctx):
                 strip_prefix = archive.strip_prefix,
                 package_name = archive.package_name,
                 version = archive.version,
+                plain_version = archive.plain_version,
                 architecture = archive.architecture,
                 control = "//java:control",
             )
@@ -187,6 +189,7 @@ _archive = tag_class(attrs = {
     "strip_prefix": attr.string(),
     "package_name": attr.string(default = "temurin"),
     "version": attr.string(mandatory = True),
+    "plain_version": attr.string(mandatory = True),
     "architecture": attr.string(mandatory = True),
 })
 

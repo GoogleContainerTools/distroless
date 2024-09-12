@@ -16,7 +16,7 @@ set -o pipefail -o errexit -o nounset
 
 # a collection of functions to use when updating java archives from the knife utility
 
-function get_version() {
+function get_java_version() {
   grep "#VERSION " ./private/repos/java.MODULE.bazel | cut -d" " -f2
 }
 
@@ -43,9 +43,6 @@ cat << EOM
 
 java = use_extension("//private/extensions:java.bzl", "java")
 EOM
-  exit 1
-
-
 
   for arch_index in "${!archs[@]}"; do
     for variant in "${variants[@]}"; do
@@ -74,12 +71,17 @@ java.archive(
     strip_prefix = "${release_name}${strip_prefix_suffix}",
     urls = ["${archive_url}"],
     version = "${version}",
+    plain_version = "${plain_version}",
     architecture = "${arch_deb}",
 )
 EOM
-      break
+
     done
   done
+
+cat << EOM
+use_repo(java, "java_versions", "temurin21_jdk_amd64", "temurin21_jdk_arm64", "temurin21_jdk_ppc64le", "temurin21_jre_amd64", "temurin21_jre_arm64", "temurin21_jre_ppc64le")
+EOM
 }
 
 function update_test_versions_java21() {

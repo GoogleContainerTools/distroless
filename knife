@@ -130,9 +130,9 @@ function cmd_lint () {
 
 function cmd_update_java_archives () {
     source scripts/update_java_archives.sh
-    old_version=$(get_version)
-    generate_java_archives > java_archives.bzl
-    new_version=$(get_version)
+    old_version=$(get_java_version)
+    generate_java_archives > private/repos/java.MODULE.bazel
+    new_version=$(get_java_version)
     update_test_versions_java21 $old_version $new_version
 }
 
