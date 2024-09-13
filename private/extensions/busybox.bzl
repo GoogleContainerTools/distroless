@@ -1,10 +1,15 @@
-"repositories for busybox"
+"busybox"
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 load("//experimental/busybox:commands.bzl", "BUSYBOX_ARCHIVE_BUILD")
 
-def repositories():
-    "For the debug image"
+def _busybox_impl(module_ctx):
+    mod = module_ctx.modules[0]
+
+    if len(module_ctx.modules) > 1:
+        fail("busybox.archive should be called only once")
+    if not mod.is_root:
+        fail("busybox.archive should be called from root module only.")
 
     # To update amd64 busybox binary (#1014)
     # Get the latest commit hash from dist-amd64 branch of docker-library repo. You can also view it
@@ -55,3 +60,23 @@ def repositories():
         urls = ["https://github.com/docker-library/busybox/raw/aa059e43d48801abcb012dfa965a432fa12c385d/latest/musl/busybox.tar.xz"],
         build_file_content = BUSYBOX_ARCHIVE_BUILD,
     )
+
+    return module_ctx.extension_metadata(
+        root_module_direct_deps = [
+            "busybox_amd64",
+            "busybox_arm",
+            "busybox_arm64",
+            "busybox_s390x",
+            "busybox_ppc64le",
+        ],
+        root_module_direct_dev_deps = [],
+    )
+
+_archive = tag_class(attrs = {})
+
+busybox = module_extension(
+    implementation = _busybox_impl,
+    tag_classes = {
+        "archive": _archive,
+    },
+)

@@ -1,0 +1,41 @@
+"debian dependencies"
+
+apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
+apt.install(
+    name = "bookworm",
+    lock = "//private/repos/deb:bookworm.lock.json",
+    manifest = "//private/repos/deb:bookworm.yaml",
+    package_template = "//private/repos/deb:package.BUILD.tmpl",
+    resolve_transitive = False,
+)
+apt.install(
+    name = "bookworm_java",
+    lock = "//private/repos/deb:bookworm_java.lock.json",
+    manifest = "//private/repos/deb:bookworm_java.yaml",
+    package_template = "//private/repos/deb:package.BUILD.tmpl",
+    resolve_transitive = False,
+)
+apt.install(
+    name = "bookworm_python",
+    lock = "//private/repos/deb:bookworm_python.lock.json",
+    manifest = "//private/repos/deb:bookworm_python.yaml",
+    package_template = "//private/repos/deb:package.BUILD.tmpl",
+    resolve_transitive = False,
+)
+use_repo(apt, "bookworm", "bookworm_java", "bookworm_python")
+
+### VERSIONS HUB REPO ###
+version = use_extension("//private/extensions:version.bzl", "version")
+version.from_lock(
+    lock = "//private/repos/deb:bookworm_python.lock.json",
+    repo_name = "bookworm_python",
+)
+version.from_lock(
+    lock = "//private/repos/deb:bookworm_java.lock.json",
+    repo_name = "bookworm_java",
+)
+version.from_lock(
+    lock = "//private/repos/deb:bookworm.lock.json",
+    repo_name = "bookworm",
+)
+use_repo(version, "versions")

@@ -16,8 +16,8 @@ set -o pipefail -o errexit -o nounset
 
 # a collection of functions to use when updating java archives from the knife utility
 
-function get_version() {
-  grep "temurin21_jre_amd64\":" ./java_archives.bzl | cut -d":" -f2 | sed 's/[ ,"]//g'
+function get_java_version() {
+  grep "#VERSION " ./private/repos/java.MODULE.bazel | cut -d" " -f2
 }
 
 function underscore_encode() {
@@ -39,19 +39,9 @@ function generate_java_archives() {
 cat << EOM
 "repositories for java"
 
-load("//private/remote:temurin_archive.bzl", "temurin_archive")
+#VERSION ${plain_version}
 
-JAVA_RELEASE_VERSIONS = {
-    "temurin21_jre_amd64": "${plain_version}",
-    "temurin21_jdk_amd64": "${plain_version}",
-    "temurin21_jre_arm64": "${plain_version}",
-    "temurin21_jdk_arm64": "${plain_version}",
-    "temurin21_jre_ppc64le": "${plain_version}",
-    "temurin21_jdk_ppc64le": "${plain_version}",
-}
-
-def repositories():
-    "java archives"
+java = use_extension("//private/extensions:java.bzl", "java")
 EOM
 
   for arch_index in "${!archs[@]}"; do
@@ -75,19 +65,23 @@ EOM
       fi
 
 cat << EOM
-    temurin_archive(
-        name = "temurin21_${variant}_${arch_deb}",
-        sha256 = "${sha256}",
-        strip_prefix = "${release_name}${strip_prefix_suffix}",
-        urls = ["${archive_url}"],
-        version = "${version}",
-        architecture = "${arch_deb}",
-        control = "//java:control",
-    )
+java.archive(
+    name = "temurin21_${variant}_${arch_deb}",
+    sha256 = "${sha256}",
+    strip_prefix = "${release_name}${strip_prefix_suffix}",
+    urls = ["${archive_url}"],
+    version = "${version}",
+    plain_version = "${plain_version}",
+    architecture = "${arch_deb}",
+)
 EOM
 
     done
   done
+
+cat << EOM
+use_repo(java, "java_versions", "temurin21_jdk_amd64", "temurin21_jdk_arm64", "temurin21_jdk_ppc64le", "temurin21_jre_amd64", "temurin21_jre_arm64", "temurin21_jre_ppc64le")
+EOM
 }
 
 function update_test_versions_java21() {

@@ -51,7 +51,7 @@ jobs:
 
   ci-images:
     name: CI image tests
-    runs-on: ubuntu-20.04 # most compatible with debian 11
+    runs-on: distroless-ci-large-ubuntu-20.04 # most compatible with debian 11
     steps:
       - uses: actions/checkout@v4
       - name: Mount bazel caches
@@ -76,7 +76,7 @@ jobs:
       - name: Fetch
         run: |
           for i in $(seq 20); do 
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc query $(bazel query 'attr(tags, "amd64", ...)') && break
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'attr(tags, "amd64", ...)' && break
             sleep 10;
           done
 

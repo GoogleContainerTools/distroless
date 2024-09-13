@@ -1,4 +1,4 @@
-"temurin archive repository rule"
+"java"
 
 STATIC_MTREE = """\
 etc/ssl/certs/ time=946684800.0 mode=755 gid=0 uid=0 type=dir
@@ -84,16 +84,16 @@ merge_providers(
 """
 
 def _impl(rctx):
+    name = rctx.attr.name.split("~")[-1]
     rctx.report_progress("Fetching {}".format(rctx.attr.package_name))
     rctx.download_and_extract(
         url = rctx.attr.urls,
         sha256 = rctx.attr.sha256,
-        type = rctx.attr.type,
         stripPrefix = rctx.attr.strip_prefix,
         output = "output",
     )
-    rctx.file("static.mtree", STATIC_MTREE % rctx.attr.name)
-    rctx.file("mutate.awk", AWK % rctx.attr.name)
+    rctx.file("static.mtree", STATIC_MTREE % name)
+    rctx.file("mutate.awk", AWK % name)
     rctx.template(
         "control",
         rctx.attr.control,
@@ -106,7 +106,7 @@ def _impl(rctx):
     rctx.file(
         "BUILD.bazel",
         content = BUILD_TMPL.format(
-            name = rctx.attr.name,
+            name = name,
             package_name = rctx.attr.package_name,
             version = rctx.attr.version,
             spdx_id = rctx.attr.name,
@@ -120,13 +120,82 @@ temurin_archive = repository_rule(
     attrs = {
         "urls": attr.string_list(mandatory = True),
         "sha256": attr.string(mandatory = True),
-        "type": attr.string(default = ".tar.gz"),
         "strip_prefix": attr.string(),
         "package_name": attr.string(default = "temurin"),
         "version": attr.string(mandatory = True),
+        "plain_version": attr.string(mandatory = True),
         "architecture": attr.string(mandatory = True),
         # control is only used to populate the sbom, see https://github.com/GoogleContainerTools/distroless/issues/1373
         # for why writing debian control files to the image is incompatible with scanners.
         "control": attr.label(),
+    },
+)
+
+def _version_repo_impl(rctx):
+    rctx.file(
+        "versions.bzl",
+        content = "JAVA_RELEASE_VERSIONS={}".format(rctx.attr.versions),
+    )
+    rctx.file("BUILD.bazel", 'exports_files(["versions.bzl"])')
+
+version_repo = repository_rule(
+    implementation = _version_repo_impl,
+    attrs = {
+        "versions": attr.string_dict(),
+    },
+)
+
+def _java_impl(module_ctx):
+    mod = module_ctx.modules[0]
+
+    if len(module_ctx.modules) > 1:
+        fail("java.archive should be called only once")
+    if not mod.is_root:
+        fail("java.archive should be called from root module only.")
+
+    direct_deps = ["java_versions"]
+    versions = {}
+
+    for mod in module_ctx.modules:
+        for archive in mod.tags.archive:
+            direct_deps.append(archive.name)
+            versions[archive.name] = archive.plain_version
+            temurin_archive(
+                name = archive.name,
+                urls = archive.urls,
+                sha256 = archive.sha256,
+                strip_prefix = archive.strip_prefix,
+                package_name = archive.package_name,
+                version = archive.version,
+                plain_version = archive.plain_version,
+                architecture = archive.architecture,
+                control = "//java:control",
+            )
+
+    version_repo(
+        name = "java_versions",
+        versions = versions,
+    )
+
+    return module_ctx.extension_metadata(
+        root_module_direct_deps = direct_deps,
+        root_module_direct_dev_deps = [],
+    )
+
+_archive = tag_class(attrs = {
+    "name": attr.string(mandatory = True),
+    "urls": attr.string_list(mandatory = True),
+    "sha256": attr.string(mandatory = True),
+    "strip_prefix": attr.string(),
+    "package_name": attr.string(default = "temurin"),
+    "version": attr.string(mandatory = True),
+    "plain_version": attr.string(mandatory = True),
+    "architecture": attr.string(mandatory = True),
+})
+
+java = module_extension(
+    implementation = _java_impl,
+    tag_classes = {
+        "archive": _archive,
     },
 )

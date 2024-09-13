@@ -1,7 +1,7 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@java_versions//:versions.bzl", "JAVA_RELEASE_VERSIONS")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//:java_archives.bzl", "JAVA_RELEASE_VERSIONS")
 load("//base:distro.bzl", "DISTROS")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", "java_image")
