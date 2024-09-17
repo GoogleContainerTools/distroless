@@ -15,6 +15,7 @@ bazel_dep(name = "rules_distroless", version = "0.3.7")
 bazel_dep(name = "rules_python", version = "0.35.0")
 
 ### PYTHON ###
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     ignore_root_user_error = True,
     python_version = "3.11",
