@@ -33,6 +33,10 @@ jobs:
           done
           bazel run @//private/pkg/test/oci_image:test_sboms
 
+      - name: Run update lockfile
+        if: env.DISTROLESS_DIFF
+        run: bazel mod deps --lockfile_mode=update
+
       - name: Create commits
         if: env.DISTROLESS_DIFF
         id: create-commits
