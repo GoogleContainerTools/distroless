@@ -11,6 +11,14 @@ permissions:
   contents: read
 
 jobs:
+  lockfile:
+    name: Check lockfile up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check lockfile
+        run: bazel mod deps --lockfile_mode=error
+
   ci-build-test:
     name: CI build and unit test
     runs-on: distroless-ci-large-ubuntu-20.04 # custom runner most compatible with debian 11

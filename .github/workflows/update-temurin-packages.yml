@@ -45,6 +45,10 @@ jobs:
           git commit -s -m "Bumping temurin archives to latest stable versions"
           git push --force origin HEAD
 
+      - name: Run update lockfile
+        if: env.DISTROLESS_DIFF
+        run: bazel mod deps --lockfile_mode=update
+
       - name: Create Pull Request
         if: env.DISTROLESS_DIFF
         env:
