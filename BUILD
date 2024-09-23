@@ -15,11 +15,6 @@ STATIC_VARIANTS = [
 ]
 
 STATIC = {
-    "{REGISTRY}/{PROJECT_ID}/static:{COMMIT_SHA}": "//base:static_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/static-debian12:{COMMIT_SHA}": "//base:static_root_amd64_debian12",
-}
-
-STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
     for arch in ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
@@ -54,11 +49,6 @@ BASE_VARIANTS = [
 ]
 
 BASE = {
-    "{REGISTRY}/{PROJECT_ID}/base:{COMMIT_SHA}": "//base:base_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/base-debian12:{COMMIT_SHA}": "//base:base_root_amd64_debian12",
-}
-
-BASE |= {
     "{REGISTRY}/{PROJECT_ID}/base:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
     for arch in ARCHITECTURES
     for (tag_base, label, user) in BASE_VARIANTS
@@ -93,11 +83,6 @@ BASE_NOSSL_VARIANTS = [
 ]
 
 BASE_NOSSL = {
-    "{REGISTRY}/{PROJECT_ID}/base-nossl:{COMMIT_SHA}": "//base:base_nossl_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/base-nossl-debian12:{COMMIT_SHA}": "//base:base_nossl_root_amd64_debian12",
-}
-
-BASE_NOSSL |= {
     "{REGISTRY}/{PROJECT_ID}/base-nossl:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
     for arch in ARCHITECTURES
     for (tag_base, label, user) in BASE_NOSSL_VARIANTS
@@ -132,11 +117,6 @@ CC_VARIANTS = [
 ]
 
 CC = {
-    "{REGISTRY}/{PROJECT_ID}/cc:{COMMIT_SHA}": "//cc:cc_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/cc-debian12:{COMMIT_SHA}": "//cc:cc_root_amd64_debian12",
-}
-
-CC |= {
     "{REGISTRY}/{PROJECT_ID}/cc:" + tag_base + "-" + arch: "//cc:" + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
     for arch in ARCHITECTURES
     for (tag_base, label, user) in CC_VARIANTS
@@ -297,7 +277,7 @@ JAVA17 |= {
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
-## JAVA 21 (experimental for now)
+## JAVA 21 from temurin
 JAVA_21_ARCHITECTURES = [
     "amd64",
     "arm64",
@@ -340,6 +320,17 @@ ALL |= JAVA_BASE
 ALL |= JAVA17
 
 ALL |= JAVA21
+
+# create additional tags by appending COMMIT_SHA to all tags
+# remove "latest" if they contain it (this is brittle if we make funky changes):
+# - image:latest -> image:{COMMIT_SHA}
+# - image:latest-xyz -> image:xyz-{COMMIT_SHA}
+COMMIT_SUFFIXED_TAGS = {
+    (image_ref.replace("latest", "") + "-{COMMIT_SHA}").replace(":-", ":"): build_target
+    for (image_ref, build_target) in ALL.items()
+}
+
+ALL |= COMMIT_SUFFIXED_TAGS
 
 sign_and_push_all(
     name = "sign_and_push",
