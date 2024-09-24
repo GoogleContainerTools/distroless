@@ -23,10 +23,16 @@ if [ $(uname) == "Darwin" ]; then
 fi
 
 function cmd_lock() {
-    echo "🚧 Querying for repos"
+    echo "🚧 Querying for repos (temporarily using hardcoded repos)"
     echo ""
-    local repos=
-    repos=$(bazel query "kind('deb_package_index', //external:*)" --output=label 2>/dev/null | cut -d: -f2)
+    # temporarily hardcode right now (query doesn't work after bzl mod)
+    local repos=$(cat <<EOL
+bookworm
+bookworm_java
+bookworm_python
+EOL
+)
+    #repos=$(bazel query "kind('deb_package_index', //external:*)" --output=label 2>/dev/null | cut -d: -f2)
 
     for repo in $repos; do
       for i in $(seq 10); do
