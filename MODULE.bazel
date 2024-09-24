@@ -11,7 +11,7 @@ bazel_dep(name = "rules_pkg", version = "1.0.1")
 bazel_dep(name = "rules_rust", version = "0.49.1")
 bazel_dep(name = "container_structure_test", version = "1.16.0")
 bazel_dep(name = "rules_oci", version = "1.7.5")
-bazel_dep(name = "rules_distroless", version = "0.3.7")
+bazel_dep(name = "rules_distroless", version = "0.3.8")
 bazel_dep(name = "rules_python", version = "0.35.0")
 
 ### PYTHON ###
