@@ -21,7 +21,7 @@ jobs:
 
   ci-build-test:
     name: CI build and unit test
-    runs-on: distroless-ci-large-ubuntu-20.04 # custom runner most compatible with debian 11
+    runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Mount bazel caches
@@ -38,7 +38,7 @@ jobs:
           sudo apt-get remove -y '^dotnet-.*'
           sudo apt-get remove -y '^llvm-.*'
           sudo apt-get remove -y 'php.*'
-          sudo apt-get remove -y azure-cli google-cloud-cli hhvm google-chrome-stable firefox powershell mono-devel
+          sudo apt-get remove -y azure-cli google-cloud-cli google-chrome-stable firefox powershell mono-devel
           sudo apt-get autoremove -y
           sudo apt-get clean
           rm -rf /usr/share/dotnet/
@@ -59,7 +59,7 @@ jobs:
 
   ci-images:
     name: CI image tests
-    runs-on: distroless-ci-large-ubuntu-20.04 # most compatible with debian 11
+    runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Mount bazel caches
@@ -76,7 +76,7 @@ jobs:
           sudo apt-get remove -y '^dotnet-.*'
           sudo apt-get remove -y '^llvm-.*'
           sudo apt-get remove -y 'php.*'
-          sudo apt-get remove -y azure-cli google-cloud-cli hhvm google-chrome-stable firefox powershell mono-devel
+          sudo apt-get remove -y azure-cli google-cloud-cli google-chrome-stable firefox powershell mono-devel
           sudo apt-get autoremove -y
           sudo apt-get clean
           rm -rf /usr/share/dotnet/
