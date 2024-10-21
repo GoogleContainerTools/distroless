@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   diff:
-    runs-on: distroless-ci-large-ubuntu-20.04 # custom runner most compatible with debian 11
+    runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Set up Go
