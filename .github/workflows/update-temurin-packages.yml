@@ -23,7 +23,6 @@ jobs:
         run: ./knife update-java-archives
 
       - name: Check for changes
-        id: check-changes
         run: |
           git status
           if [[ $(git status --porcelain) ]]; then 
@@ -39,7 +38,6 @@ jobs:
 
       - name: Create commits
         if: env.DISTROLESS_DIFF
-        id: create commits
         run: |
           git checkout -b update-java-archives
 
