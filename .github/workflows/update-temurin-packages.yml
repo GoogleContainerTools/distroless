@@ -22,8 +22,8 @@ jobs:
       - name: Update snapshots
         run: ./knife update-java-archives
 
-      - name: Create commits
-        id: create-commits
+      - name: Check for changes
+        id: check-changes
         run: |
           git status
           if [[ $(git status --porcelain) ]]; then 
@@ -32,7 +32,15 @@ jobs:
             echo "No changes detected"
             exit 0
           fi
-          
+
+      - name: Run update lockfile
+        if: env.DISTROLESS_DIFF
+        run: bazel mod deps --lockfile_mode=update
+
+      - name: Create commits
+        if: env.DISTROLESS_DIFF
+        id: create commits
+        run: |
           git checkout -b update-java-archives
 
           # Set identity.
@@ -43,10 +51,6 @@ jobs:
           git add .
           git commit -s -m "Bumping temurin archives to latest stable versions"
           git push --force origin HEAD
-
-      - name: Run update lockfile
-        if: env.DISTROLESS_DIFF
-        run: bazel mod deps --lockfile_mode=update
 
       - name: Create Pull Request
         if: env.DISTROLESS_DIFF
