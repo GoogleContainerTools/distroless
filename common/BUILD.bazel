@@ -143,8 +143,8 @@ home(
         },
         {
             "home": "/home",
-            "uid": NONROOT,
-            "gid": NONROOT,
+            "uid": ROOT,
+            "gid": ROOT,
             "mode": 755,
         },
         {
