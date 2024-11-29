@@ -138,10 +138,9 @@ This should expose the Express application to your localhost:3000
 
 For full documentation on how to use bazel to generate Container images, see the [bazel-contrib/rules_oci](https://github.com/bazel-contrib/rules_oci) repository.
 
-For documentation and example on how to use the go-based debian package manager (current) to generate bazel config, see [./debian_package_manager](./debian_package_manager)
-For documentation and examples on how to use the bazel package manager rules (not used in this repo), see [./package_manager](./package_manager)
+For documentation and example on how to create custom container images, see the [GoogleContainerTools/rules_distroless](https://github.com/GoogleContainerTools/rules_distroless) repository.
 
-Examples can be found in this repository in the [examples](examples/) directory.
+Examples can be found in the [GoogleContainerTools/rules_distroless](https://github.com/GoogleContainerTools/rules_distroless/tree/main/examples) repository.
 
 #### Examples with Bazel
 
