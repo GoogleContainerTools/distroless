@@ -26,7 +26,7 @@ These images are built using [bazel](https://bazel.build), but they can also be 
 
 ### What images are available?
 
-The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY](<[url](https://github.com/GoogleContainerTools/distroless/blob/main/SUPPORT_POLICY.md)>) for support timelines)
+The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY.md](SUPPORT_POLICY.md) for support timelines)
 
 #### Debian 12
 
@@ -213,7 +213,7 @@ BUILD       Dockerfile  hello.py
 
 If your project uses Distroless, send a PR to add your project here!
 
-# Community Discussion
+## Community Discussion
 
 - [distroless-users Google Group](https://groups.google.com/forum/#!forum/distroless-users)
 - [Kubernetes slack #distroless channel](https://slack.k8s.io/)
