@@ -2,17 +2,11 @@
 set -o pipefail -o errexit -o nounset
 
 KEYLESS="${KEYLESS:-}"
-EXPORT=""
 
 while (( $# > 0 )); do
   case $1 in
     (--keyless)
       KEYLESS="$2"
-      shift
-      shift;;
-    (--export)
-      EXPORT="$2"
-      echo -n "" > $EXPORT
       shift
       shift;;
     (*) 
@@ -41,6 +35,8 @@ function stamp() {
     echo "$str"
 }
 
+
+export GOOGLE_SERVICE_ACCOUNT_NAME="${KEYLESS}"
 
 {{CMDS}}
 
