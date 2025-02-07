@@ -176,7 +176,7 @@ stamp_origin() {
 }
 
 function test_image() {
-    IFS=" " read -r repo tag push_label image_label <<<"$1"
+    IFS=" " read -r repo image_label <<<"$1"
 
     if [[ "${ONLY}" != "" && "${ONLY}" != "$image_label" ]]; then
         return 
@@ -184,31 +184,31 @@ function test_image() {
 
     repo_origin=$(stamp_origin "$repo")
     repo_stage=$(stamp_stage "$repo")
-    tag_stamped=$(stamp_origin "$tag")
 
     if [[ "${SKIP_INDEX}" == "1" ]]; then
-        if ! crane manifest "$repo_origin:$tag_stamped" | jq -e '.mediaType == "application/vnd.oci.image.manifest.v1+json"' > /dev/null; then  
-            echo "⏭️ Skipping image index $repo_origin:$tag_stamped "
+        if ! crane manifest "$repo_origin" | jq -e '.mediaType == "application/vnd.oci.image.manifest.v1+json"' > /dev/null; then  
+            echo "⏭️ Skipping image index $repo_origin"
             return
         fi
     fi
 
     echo ""
-    echo "🚧 Diffing $repo_origin:$tag_stamped against $repo_stage:$tag_stamped"
+    echo "🚧 Diffing $repo_origin against $repo_stage"
     echo ""
 
-    bazel run $push_label -- --repository $repo_stage --tag $tag_stamped
-    if ! diffoci diff --pull=always --all-platforms --semantic "$repo_origin:$tag_stamped" "$repo_stage:$tag_stamped"; then
+    bazel build "$image_label"
+    crane push "$(bazel cquery --output=files $image_label)" "$repo_stage"
+    if ! diffoci diff --pull=always --all-platforms --semantic "$repo_origin" "$repo_stage"; then
         echo ""
         echo "      🔬 To reproduce: bazel run //private/tools:diff -- --only $image_label"
         echo ""
-        echo "👎 $repo_origin:$tag_stamped and $repo_stage:$tag_stamped are different."
+        echo "👎 $repo_origin and $repo_stage are different."
         if [[ "${SET_GITHUB_OUTPUT}" == "1" ]]; then
             echo "$image_label" >> "$CHANGED_IMAGES_FILE"
         fi
     else
         echo ""
-        echo "👍 $repo_origin:$tag_stamped and $repo_stage:$tag_stamped are identical."
+        echo "👍 $repo_origin and $repo_stage are identical."
     fi
 }
 
