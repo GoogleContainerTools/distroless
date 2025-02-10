@@ -4,7 +4,7 @@
 
 Distroless currently tracks debian 12 ([bookworm](https://packages.debian.org/bookworm)) packages.
 
-Debian tracking information at https://github.com/GoogleContainerTools/distroless/blob/main/debian_archives.bzl and generally is updated within 48 hours of debian publishing an update.
+Debian package versions used for the current build are found in https://github.com/GoogleContainerTools/distroless/blob/main/private/repos/deb. It can be parsed and printed into simple json data by invoking `./knife deb-versions` at the root of this project.
 
 ## Reporting a Vulnerability
 

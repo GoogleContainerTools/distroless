@@ -157,6 +157,12 @@ function cmd_test () {
     bazel test --test_timeout=900 //... $arch_specific_targets
 }
 
+function cmd_deb_versions () {
+    echo "🔧 Printing .deb Versions (bookworm) from private/repos/deb/bookworm*.lock.json"
+    echo ""
+
+    jq -n '[inputs.packages[]] | group_by(.arch) | map({(.[0].arch): map({package: .name, version: .version})})' private/repos/deb/bookworm*.lock.json
+}
 
 case "${1:-"~~nocmd"}" in
 lock)
@@ -177,8 +183,11 @@ test)
 update-java-archives)
     cmd_update_java_archives
     ;;
+deb-versions)
+    cmd_deb_versions
+    ;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-java-archives, test"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-java-archives, test, deb-versions"
     exit 1
     ;;
 *) # unknown command
