@@ -53,7 +53,7 @@ Any other tags are considered deprecated and are no longer updated
 All distroless images are signed by [cosign](https://github.com/sigstore/cosign) with emphemeral keys (keyless) -- this is the only supported mechanism starting November 2023.
 We recommend verifying any distroless image you use before building your image. You can verify the keyless signature of any distroless image with:
 
-```
+```sh
 cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com  --certificate-identity keyless@distroless.iam.gserviceaccount.com
 ```
 
@@ -64,13 +64,13 @@ That means the Dockerfile `ENTRYPOINT` command, when defined, must be specified 
 
 This works:
 
-```
+```dockerfile
 ENTRYPOINT ["myapp"]
 ```
 
 But this does not work:
 
-```
+```dockerfile
 ENTRYPOINT "myapp"
 ```
 
@@ -117,22 +117,22 @@ You can find other examples here:
 - [Node.js](examples/nodejs/Dockerfile)
 - [Rust](examples/rust/Dockerfile)
 
-To run any example, go to the directory for the language and run
+To run any example, go to the directory for the language and run:
 
-```
+```sh
 docker build -t myapp .
 docker run -t myapp
 ```
 
-To run the Node.js Express app [node-express](examples/nodejs/node-express) and expose the container's ports:
+To run the [Node.js Express example app](examples/nodejs/node-express) and expose the container's ports:
 
-```
+```sh
 npm install # Install express and its transitive dependencies
 docker build -t myexpressapp . # Normal build command
 docker run -p 3000:3000 -t myexpressapp
 ```
 
-This should expose the Express application to your localhost:3000
+This should expose the Express application to your `localhost:3000`
 
 ### Bazel
 
@@ -174,7 +174,7 @@ Distroless images are minimal and lack shell access. The `:debug` image set for 
 
 For example:
 
-```
+```sh
 cd examples/python3/
 ```
 
@@ -187,13 +187,13 @@ WORKDIR /app
 CMD ["hello.py", "/etc"]
 ```
 
-then build and launch with an shell entrypoint:
+then build and launch with a shell entrypoint:
 
-```
-$ docker build -t my_debug_image .
+```sh
+docker build -t my_debug_image .
 ```
 
-```
+```sh
 $ docker run --entrypoint=sh -ti my_debug_image
 
 /app # ls
