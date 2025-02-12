@@ -7,18 +7,20 @@ load(":digest.bzl", "digest")
 PUSH_AND_SIGN_CMD = """\
 # Push {IMAGE}
 repository="$(stamp "{REPOSITORY}")"
+tag="$(stamp "{TAG}")"
 digest="$(cat {DIGEST})"
 echo "Pushing $repository@$digest"
 {CRANE} push {IMAGE} "$repository@$digest"
 {COSIGN} attest "$repository@$digest" --predicate "{SBOM}" --type "spdx" --yes
 {COSIGN} sign "$repository@$digest" --yes
+{CRANE} tag "$repository@$digest" "$tag"
 """
 
 TAG_CMD = """\
 # Tag {IMAGE}
 from="$(stamp "{FROM}")"
-to="$(stamp "{TO}")"
-{CRANE} copy "$from" "$to"
+tag="$(stamp "{TAG}")"
+{CRANE} tag "$from" "$tag"
 """
 
 def _sign_and_push_impl(ctx):
@@ -45,11 +47,12 @@ def _sign_and_push_impl(ctx):
         )
 
         for ref in all_refs[1:]:
+            repository_and_tag = ref.split(":")
             cmds.append(
                 TAG_CMD.format(
                     IMAGE = image,
                     FROM = first_ref,
-                    TO = ref,
+                    TAG = repository_and_tag[1],
                     CRANE = ctx.file._crane.short_path,
                 ),
             )
