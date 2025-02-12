@@ -128,6 +128,7 @@ JAVA_VERSIONS_PER_DISTRO = [
             deb.package(arch, distro, "libuuid1"),
             deb.package(arch, distro, "libbrotli1"),
             deb.package(arch, distro, "libcrypt1"),
+            deb.package(arch, distro, "gcc-12-base"),
             deb.package(arch, distro, "libstdc++6"),
             deb.package(arch, distro, "libgcc-s1"),
             "//common:locale_" + distro + "_" + arch,

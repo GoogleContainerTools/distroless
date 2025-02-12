@@ -3,11 +3,11 @@ version: 1
 
 sources:
   - channel: bookworm main
-    url: https://snapshot.debian.org/archive/debian/20250203T205752Z
+    url: https://snapshot.debian.org/archive/debian/20250211T205324Z
   - channel: bookworm-updates main
-    url: https://snapshot.debian.org/archive/debian/20250203T205752Z
+    url: https://snapshot.debian.org/archive/debian/20250211T205324Z
   - channel: bookworm-security main
-    url: https://snapshot.debian.org/archive/debian-security/20250203T205752Z
+    url: https://snapshot.debian.org/archive/debian-security/20250211T205324Z
 
 archs:
   - amd64
@@ -34,6 +34,7 @@ packages:
   - openjdk-17-jdk-headless
   - openjdk-17-jre-headless
   - zlib1g
-  # TODO(appu): these two were coming from base yamls
+  # java image builds off base (not cc)
+  - gcc-12-base
   - libgcc-s1
   - libstdc++6
