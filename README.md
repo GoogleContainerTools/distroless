@@ -48,6 +48,10 @@ These images refer to image indexes with references to all supported architectur
 
 Any other tags are considered deprecated and are no longer updated
 
+## Why is distroless still using gcr.io instead of pkg.dev?
+
+Distroless's serving infrastructure has moved to artifact registry but we still use the gcr.io domain. Users will get the the benefits of the newer infrasture without changing their builds.
+
 ## How do I verify distroless images?
 
 All distroless images are signed by [cosign](https://github.com/sigstore/cosign) with emphemeral keys (keyless) -- this is the only supported mechanism starting November 2023.
