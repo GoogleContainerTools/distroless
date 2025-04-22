@@ -3,11 +3,11 @@ commandTests:
   - name: java
     command: "/usr/lib/jvm/temurin21_jre_amd64/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "21.0.6"']
+    expectedError: ['openjdk version "21.0.7"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "21.0.6"']
+    expectedError: ['openjdk version "21.0.7"']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
@@ -36,4 +36,4 @@ fileExistenceTests:
 metadataTest:
   envVars:
     - key: 'JAVA_VERSION'
-      value: '21.0.6'
+      value: '21.0.7'
