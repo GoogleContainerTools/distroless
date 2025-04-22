@@ -1,60 +1,60 @@
 "repositories for java"
 
-#VERSION 21.0.6
+#VERSION 21.0.7
 
 java = use_extension("//private/extensions:java.bzl", "java")
 java.archive(
     name = "temurin21_jre_amd64",
-    sha256 = "7fc9d6837da5fa1f12e0f41901fd70a73154914b8c8ecbbcad2d44176a989937",
-    strip_prefix = "jdk-21.0.6+7-jre",
-    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jre_x64_linux_hotspot_21.0.6_7.tar.gz"],
-    version = "21.0.6+7",
-    plain_version = "21.0.6",
+    sha256 = "6d48379e00d47e6fdd417e96421e973898ac90765ea8ff2d09ae0af6d5d6a1c6",
+    strip_prefix = "jdk-21.0.7+6-jre",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.7%2B6/OpenJDK21U-jre_x64_linux_hotspot_21.0.7_6.tar.gz"],
+    version = "21.0.7+6",
+    plain_version = "21.0.7",
     architecture = "amd64",
 )
 java.archive(
     name = "temurin21_jdk_amd64",
-    sha256 = "a2650fba422283fbed20d936ce5d2a52906a5414ec17b2f7676dddb87201dbae",
-    strip_prefix = "jdk-21.0.6+7",
-    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz"],
-    version = "21.0.6+7",
-    plain_version = "21.0.6",
+    sha256 = "974d3acef0b7193f541acb61b76e81670890551366625d4f6ca01b91ac152ce0",
+    strip_prefix = "jdk-21.0.7+6",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.7%2B6/OpenJDK21U-jdk_x64_linux_hotspot_21.0.7_6.tar.gz"],
+    version = "21.0.7+6",
+    plain_version = "21.0.7",
     architecture = "amd64",
 )
 java.archive(
     name = "temurin21_jre_arm64",
-    sha256 = "f1b78f2bd6d505d5e0539261737740ad11ade3233376b4ca52e6c72fbefd2bf6",
-    strip_prefix = "jdk-21.0.6+7-jre",
-    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jre_aarch64_linux_hotspot_21.0.6_7.tar.gz"],
-    version = "21.0.6+7",
-    plain_version = "21.0.6",
+    sha256 = "ab455a401d25e0cd20e652d2ee72e9f56beba0d9faac5a5c62c9b27a19df804b",
+    strip_prefix = "jdk-21.0.7+6-jre",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.7%2B6/OpenJDK21U-jre_aarch64_linux_hotspot_21.0.7_6.tar.gz"],
+    version = "21.0.7+6",
+    plain_version = "21.0.7",
     architecture = "arm64",
 )
 java.archive(
     name = "temurin21_jdk_arm64",
-    sha256 = "04fe1273f624187d927f1b466e8cdb630d70786db07bee7599bfa5153060afd3",
-    strip_prefix = "jdk-21.0.6+7",
-    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.6_7.tar.gz"],
-    version = "21.0.6+7",
-    plain_version = "21.0.6",
+    sha256 = "31dba70ba928c78c20d62049ac000f79f7a7ab11f9d9c11e703f52d60aa64f93",
+    strip_prefix = "jdk-21.0.7+6",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.7%2B6/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.7_6.tar.gz"],
+    version = "21.0.7+6",
+    plain_version = "21.0.7",
     architecture = "arm64",
 )
 java.archive(
     name = "temurin21_jre_ppc64le",
-    sha256 = "381e31581af3858d4c471829c3da3263e83dfe8ac5d36b58403babb57f6e202c",
-    strip_prefix = "jdk-21.0.6+7-jre",
-    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jre_ppc64le_linux_hotspot_21.0.6_7.tar.gz"],
-    version = "21.0.6+7",
-    plain_version = "21.0.6",
+    sha256 = "721d3b374cb333269d487e7f99e2d247576c989d2e08a2842738ef62f432bcbd",
+    strip_prefix = "jdk-21.0.7+6-jre",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.7%2B6/OpenJDK21U-jre_ppc64le_linux_hotspot_21.0.7_6.tar.gz"],
+    version = "21.0.7+6",
+    plain_version = "21.0.7",
     architecture = "ppc64le",
 )
 java.archive(
     name = "temurin21_jdk_ppc64le",
-    sha256 = "163724b70b86d5a8461f85092165a9cc5a098ed900fee90d1b0c0be9607ae3d2",
-    strip_prefix = "jdk-21.0.6+7",
-    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.6_7.tar.gz"],
-    version = "21.0.6+7",
-    plain_version = "21.0.6",
+    sha256 = "2ddc0dc14b07d9e853875aac7f84c23826fff18b9cea618c93efe0bcc8f419c2",
+    strip_prefix = "jdk-21.0.7+6",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.7%2B6/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.7_6.tar.gz"],
+    version = "21.0.7+6",
+    plain_version = "21.0.7",
     architecture = "ppc64le",
 )
 use_repo(java, "java_versions", "temurin21_jdk_amd64", "temurin21_jdk_arm64", "temurin21_jdk_ppc64le", "temurin21_jre_amd64", "temurin21_jre_arm64", "temurin21_jre_ppc64le")
