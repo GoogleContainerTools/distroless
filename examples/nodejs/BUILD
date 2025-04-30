@@ -29,7 +29,7 @@ pkg_tar(
 [
     oci_image(
         name = "hello_" + user + "_" + arch + "_" + distro,
-        base = "//nodejs:nodejs18_" + user + "_" + arch + "_" + distro,
+        base = "//nodejs:nodejs22_" + user + "_" + arch + "_" + distro,
         cmd = ["hello.js"],
         tars = [":hello_tar"],
     )
@@ -44,7 +44,7 @@ pkg_tar(
 [
     oci_image(
         name = "hello_http_" + user + "_" + arch + "_" + distro,
-        base = "//nodejs:nodejs18_" + user + "_" + arch + "_" + distro,
+        base = "//nodejs:nodejs22_" + user + "_" + arch + "_" + distro,
         cmd = ["hello_http.js"],
         tars = [":hello_http_tar"],
     )
