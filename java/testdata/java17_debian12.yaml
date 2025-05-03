@@ -3,11 +3,11 @@ commandTests:
   - name: java
     command: "/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "17.0.14"']
+    expectedError: ['openjdk version "17.0.15"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "17.0.14"']
+    expectedError: ['openjdk version "17.0.15"']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
@@ -24,4 +24,4 @@ fileExistenceTests:
 metadataTest:
   envVars:
     - key: 'JAVA_VERSION'
-      value: '17.0.14'
+      value: '17.0.15'
