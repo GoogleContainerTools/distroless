@@ -98,18 +98,27 @@ Here's a quick example for go:
 
 ```dockerfile
 # Start by building the application.
-FROM golang:1.18 as build
+FROM node:18 As Builder
 
-WORKDIR /go/src/app
-COPY . .
+WORKDIR app/
 
-RUN go mod download
-RUN CGO_ENABLED=0 go build -o /go/bin/app
+COPY package*.json ./
+
+RUN npm install
+
+COPY .  .
 
 # Now copy it into our base image.
-FROM gcr.io/distroless/static-debian12
-COPY --from=build /go/bin/app /
-CMD ["/app"]
+
+FROM gcr.io/distroless/nodejs20-debian12
+
+WORKDIR app/
+
+COPY --from=builder /app .
+
+EXPOSE 5173
+
+ENTRYPOINT [“npm”, "run", “dev”]
 ```
 
 You can find other examples here:
@@ -127,15 +136,14 @@ docker build -t myapp .
 docker run -t myapp
 ```
 
-To run the [Node.js Express example app](examples/nodejs/node-express) and expose the container's ports:
+To run the [Node.js online example app](examples/nodejs/node-express) and expose the container's ports:
 
 ```sh
 npm install # Install express and its transitive dependencies
-docker build -t myexpressapp . # Normal build command
-docker run -p 3000:3000 -t myexpressapp
+docker build -t online-app . # Normal build command
 ```
 
-This should expose the Express application to your `localhost:3000`
+This should expose the online application to your `localhost:5173`
 
 ### Bazel
 
@@ -184,10 +192,10 @@ cd examples/python3/
 edit the `Dockerfile` to change the final image to `:debug`:
 
 ```dockerfile
-FROM gcr.io/distroless/python3-debian12:debug
+FROM (gcr.io/distroless/nodejs20-debian12)
 COPY . /app
 WORKDIR /app
-CMD ["hello.py", "/etc"]
+CMD ["npm", "run" "dev"]
 ```
 
 then build and launch with a shell entrypoint:
@@ -209,7 +217,8 @@ BUILD       Dockerfile  hello.py
 
 ### Who uses Distroless?
 
-- [Kubernetes](https://github.com/kubernetes/enhancements/blob/master/keps/sig-release/1729-rebase-images-to-distroless/README.md), since v1.15
+- [Kubernetes]https://github.com/kubernetes/enhancements/blob/master/keps/sig-release/1729-rebase-images-to-distroless 
+since v1.15
 - [Knative](https://knative.dev)
 - [Tekton](https://tekton.dev)
 - [Teleport](https://goteleport.com)
@@ -220,3 +229,6 @@ If your project uses Distroless, send a PR to add your project here!
 
 - [distroless-users Google Group](https://groups.google.com/forum/#!forum/distroless-users)
 - [Kubernetes slack #distroless channel](https://slack.k8s.io/)
+
+# github project repo 
+https://github.com/pooja-bhavani/distroless
