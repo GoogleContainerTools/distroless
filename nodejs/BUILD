@@ -6,7 +6,7 @@ load("//base:distro.bzl", "DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
-NODEJS_MAJOR_VERISONS = ("20", "22")
+NODEJS_MAJOR_VERISONS = ("20", "22", "24")
 
 MODE = [
     "",

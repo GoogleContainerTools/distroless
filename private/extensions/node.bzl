@@ -197,6 +197,56 @@ def _node_impl(module_ctx):
         control = "//nodejs:control",
     )
 
+    node_archive(
+        name = "nodejs24_amd64",
+        sha256 = "b760ed6de40c35a25eb011b3cf5943d35d7a76f0c8c331d5a801e10925826cb3",
+        strip_prefix = "node-v24.0.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v24.0.0/node-v24.0.0-linux-x64.tar.gz"],
+        version = "24.0.0",
+        architecture = "amd64",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs24_arm64",
+        sha256 = "4104136ddd3d2f167d799f1b21bac72ccf500d80c24be849195f831df6371b83",
+        strip_prefix = "node-v24.0.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v24.0.0/node-v24.0.0-linux-arm64.tar.gz"],
+        version = "24.0.0",
+        architecture = "arm64",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs24_arm",
+        sha256 = "3521021a2e875fbc52ae82e2a3fea5024d507bbc919f504ca8521292c3fe14d3",
+        strip_prefix = "node-v24.0.0-linux-armv7l/",
+        urls = ["https://nodejs.org/dist/v24.0.0/node-v24.0.0-linux-armv7l.tar.gz"],
+        version = "24.0.0",
+        architecture = "arm",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs24_ppc64le",
+        sha256 = "04654c22d8f9fc3021a27f37a95c16f820870908a49cd361f4cf74ed14509a10",
+        strip_prefix = "node-v24.0.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v24.0.0/node-v24.0.0-linux-ppc64le.tar.gz"],
+        version = "24.0.0",
+        architecture = "ppc64le",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs24_s390x",
+        sha256 = "aa6fa7c5dc7d699116a39a781eb1685a68e3843d2d95bcd98527fd28922de63a",
+        strip_prefix = "node-v24.0.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v24.0.0/node-v24.0.0-linux-s390x.tar.gz"],
+        version = "24.0.0",
+        architecture = "s390x",
+        control = "//nodejs:control",
+    )
+
     return module_ctx.extension_metadata(
         root_module_direct_deps = [
             "nodejs20_amd64",
@@ -209,6 +259,11 @@ def _node_impl(module_ctx):
             "nodejs22_arm",
             "nodejs22_ppc64le",
             "nodejs22_s390x",
+            "nodejs24_amd64",
+            "nodejs24_arm64",
+            "nodejs24_arm",
+            "nodejs24_ppc64le",
+            "nodejs24_s390x",
         ],
         root_module_direct_dev_deps = [],
     )
