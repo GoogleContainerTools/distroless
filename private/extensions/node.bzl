@@ -218,16 +218,6 @@ def _node_impl(module_ctx):
     )
 
     node_archive(
-        name = "nodejs24_arm",
-        sha256 = "3521021a2e875fbc52ae82e2a3fea5024d507bbc919f504ca8521292c3fe14d3",
-        strip_prefix = "node-v24.0.0-linux-armv7l/",
-        urls = ["https://nodejs.org/dist/v24.0.0/node-v24.0.0-linux-armv7l.tar.gz"],
-        version = "24.0.0",
-        architecture = "arm",
-        control = "//nodejs:control",
-    )
-
-    node_archive(
         name = "nodejs24_ppc64le",
         sha256 = "04654c22d8f9fc3021a27f37a95c16f820870908a49cd361f4cf74ed14509a10",
         strip_prefix = "node-v24.0.0-linux-ppc64le/",
@@ -261,7 +251,6 @@ def _node_impl(module_ctx):
             "nodejs22_s390x",
             "nodejs24_amd64",
             "nodejs24_arm64",
-            "nodejs24_arm",
             "nodejs24_ppc64le",
             "nodejs24_s390x",
         ],
