@@ -18,12 +18,18 @@ USER = [
     "nonroot",
 ]
 
+# Function to filter architectures based on Node.js version
+def filter_architectures(major_version):
+    if int(major_version) >= 24:
+        return [arch for arch in ARCHITECTURES if arch != "arm"]
+    return ARCHITECTURES
+
 [
     oci_image_index(
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + distro,
         images = [
             "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro
-            for arch in ARCHITECTURES
+            for arch in filter_architectures(major_version)
         ],
     )
     for mode in MODE
@@ -44,7 +50,7 @@ USER = [
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for arch in filter_architectures(major_version)
     for distro in DISTROS
 ]
 
@@ -65,7 +71,7 @@ USER = [
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for arch in filter_architectures(major_version)
     for distro in DISTROS
 ]
 
@@ -85,7 +91,7 @@ pkg_tar(
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for arch in filter_architectures(major_version)
     for distro in DISTROS
 ]
 
@@ -102,6 +108,6 @@ pkg_tar(
     for mode in MODE
     for user in USER
     for major_version in NODEJS_MAJOR_VERISONS
-    for arch in ARCHITECTURES
+    for arch in filter_architectures(major_version)
     for distro in DISTROS
 ]
