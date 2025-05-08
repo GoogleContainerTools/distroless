@@ -58,7 +58,7 @@ include("//private/repos:java.MODULE.bazel")
 ### NODE ###
 node = use_extension("//private/extensions:node.bzl", "node")
 node.archive()
-use_repo(node, "nodejs20_amd64", "nodejs20_arm", "nodejs20_arm64", "nodejs20_ppc64le", "nodejs20_s390x", "nodejs22_amd64", "nodejs22_arm", "nodejs22_arm64", "nodejs22_ppc64le", "nodejs22_s390x")
+use_repo(node, "nodejs20_amd64", "nodejs20_arm", "nodejs20_arm64", "nodejs20_ppc64le", "nodejs20_s390x", "nodejs22_amd64", "nodejs22_arm", "nodejs22_arm64", "nodejs22_ppc64le", "nodejs22_s390x", "nodejs24_amd64", "nodejs24_arm64", "nodejs24_ppc64le", "nodejs24_s390x")
 
 ### DEBIAN ###
 include("//private/repos/deb:deb.MODULE.bazel")

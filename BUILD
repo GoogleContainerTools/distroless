@@ -1,6 +1,7 @@
 load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
 load("//base:distro.bzl", "DISTROS")
 load("//private/oci:defs.bzl", "sign_and_push_all")
+load("//nodejs:node_arch.bzl", "node_arch")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -179,6 +180,7 @@ PYTHON3 |= {
 NODEJS_VERSIONS = [
     "20",
     "22",
+    "24",
 ]
 
 NODEJS_VARIATIONS = [
@@ -190,9 +192,9 @@ NODEJS_VARIATIONS = [
 
 NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + distro
-    for arch in ARCHITECTURES
-    for distro in DISTROS
     for version in NODEJS_VERSIONS
+    for arch in node_arch(version)
+    for distro in DISTROS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
 
@@ -206,8 +208,8 @@ NODEJS |= {
 
 NODEJS |= {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
-    for arch in ARCHITECTURES
     for version in NODEJS_VERSIONS
+    for arch in node_arch(version)
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
 

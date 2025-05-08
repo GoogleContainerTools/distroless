@@ -21,7 +21,7 @@ The current estimation of end of life for images with the pattern:
 Java will only support current LTS version distributed by debian [see here](https://wiki.debian.org/Java).
 
 ### Node
-Node version support is for even numbered releases (20, 22, etc) that are current, active or in LTS maintenance. For more information, [see here](https://nodejs.org/en/about/previous-releases#release-schedule).
+Node version support is for even numbered releases (20, 22, 24, etc) that are current, active or in LTS maintenance. For more information, [see here](https://nodejs.org/en/about/previous-releases#release-schedule).
 
 ### Images no longer supported (TBD)
 A list of supported image tags is available here: https://github.com/GoogleContainerTools/distroless#what-images-are-available
