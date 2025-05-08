@@ -208,8 +208,8 @@ NODEJS |= {
 
 NODEJS |= {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
-    for arch in node_arch(version)
     for version in NODEJS_VERSIONS
+    for arch in node_arch(version)
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
 
