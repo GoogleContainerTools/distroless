@@ -1,6 +1,7 @@
 load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
 load("//base:distro.bzl", "DISTROS")
 load("//private/oci:defs.bzl", "sign_and_push_all")
+load("//nodejs:node_arch.bzl", "node_arch")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -191,7 +192,7 @@ NODEJS_VARIATIONS = [
 
 NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + distro
-    for arch in ARCHITECTURES
+    for arch in node_arch(version)
     for distro in DISTROS
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
@@ -207,7 +208,7 @@ NODEJS |= {
 
 NODEJS |= {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
-    for arch in ARCHITECTURES
+    for arch in node_arch(version)
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
