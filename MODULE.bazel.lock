@@ -373,7 +373,7 @@
     },
     "//private/extensions:node.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "DQmLxFeTcBvr1M5+oc7umaf7yDmIuqxkQeutziDIRyA=",
+        "bzlTransitiveDigest": "EDX+FIkJQvb/qPSYS8tNnYCl3QPlqhK4ejSeJFVujj4=",
         "usagesDigest": "oo4hnOxowfXXa21Wd8roJmpRdyG7Fy97FBO9vJoyK/M=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -547,20 +547,6 @@
               "control": "@@//nodejs:control"
             }
           },
-          "nodejs24_arm": {
-            "bzlFile": "@@//private/extensions:node.bzl",
-            "ruleClassName": "node_archive",
-            "attributes": {
-              "sha256": "3521021a2e875fbc52ae82e2a3fea5024d507bbc919f504ca8521292c3fe14d3",
-              "strip_prefix": "node-v24.0.0-linux-armv7l/",
-              "urls": [
-                "https://nodejs.org/dist/v24.0.0/node-v24.0.0-linux-armv7l.tar.gz"
-              ],
-              "version": "24.0.0",
-              "architecture": "arm",
-              "control": "@@//nodejs:control"
-            }
-          },
           "nodejs24_ppc64le": {
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
@@ -604,7 +590,6 @@
             "nodejs22_s390x",
             "nodejs24_amd64",
             "nodejs24_arm64",
-            "nodejs24_arm",
             "nodejs24_ppc64le",
             "nodejs24_s390x"
           ],
