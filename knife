@@ -142,6 +142,35 @@ function cmd_update_java_archives () {
     update_test_versions_java21 $old_version $new_version
 }
 
+function cmd_update_node_archives () {
+	if ! which jq > /dev/null; then
+		echo "🧱 No jq executable was found"
+		exit 1
+    fi
+	if ! which curl > /dev/null; then
+		echo "🧱 No curl executable was found"
+		exit 1
+	fi
+	if ! which node > /dev/null; then
+		echo "🧱 No node executable was found"
+		exit 1
+	fi
+
+    versions=()
+    for major in 20 22 24; do
+        latest_version=$(curl -sSL https://nodejs.org/dist/index.json | jq -r --arg major "v$major" '
+            map(select(.version | startswith($major)))
+            | sort_by(.date) | reverse | .[0].version
+        ')
+        latest_nov=$(echo "$latest_version" | sed 's/^v//')
+        versions+=("$latest_nov")
+    done
+
+    joined_versions=$(IFS=, ; echo "${versions[*]}")
+    node scripts/update_node_archives.js "$joined_versions"
+}
+
+
 function cmd_test () {
     echo "🧪 Testing"
     echo ""
@@ -186,8 +215,11 @@ update-java-archives)
 deb-versions)
     cmd_deb_versions
     ;;
+update-node-archives)
+	cmd_update_node_archives
+	;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-java-archives, test, deb-versions"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-java-archives, test, deb-versions, update-node-archives"
     exit 1
     ;;
 *) # unknown command

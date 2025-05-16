@@ -1,0 +1,68 @@
+name: update-node-packages
+on:
+  # will send emails to last editor of this cron syntax (distroless-bot)
+  schedule:
+    - cron: "35 20 * * *"
+  # allow this workflow to be manually run
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+
+      - name: Update node archives
+        run: ./knife update-node-archives
+
+      - name: Check for changes
+        run: |
+          git status
+          if [[ $(git status --porcelain) ]]; then
+            echo "DISTROLESS_DIFF=true" >> "$GITHUB_ENV"
+          else
+            echo "No changes detected"
+            exit 0
+          fi
+
+      - name: Run update lockfile
+        if: env.DISTROLESS_DIFF
+        run: bazel mod deps --lockfile_mode=update
+
+      - name: Create commits
+        if: env.DISTROLESS_DIFF
+        run: |
+          git checkout -b update-node-archives
+
+          # Set identity.
+          git config --global user.email "distroless-bot@google.com"
+          git config --global user.name "Distroless Bot"
+
+          # Commit changes
+          git add .
+          git commit -s -m "Bumping node archives to latest stable versions"
+          git push --force origin HEAD
+
+      - name: Create Pull Request
+        if: env.DISTROLESS_DIFF
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+        run: |
+          BODY_FILE=$(mktemp)
+          if ! OUTPUT=$(gh pr create -B main -H update-node-archives --fill 2>&1) ; then
+            echo $OUTPUT
+            if [[ "${OUTPUT}" =~ "already exists" ]]; then
+              echo "PR already exists and it was updated. Ending successfully";
+              exit 0;
+            else
+              exit 1;
+            fi
+          fi
