@@ -6,7 +6,7 @@
 			"key": "fontconfig-config_2.14.1-4_amd64",
 			"name": "fontconfig-config",
 			"sha256": "281c66e46b95f045a0282a6c7a03b33de0e9a08d016897a759aaf4a04adfddbe",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fontconfig/fontconfig-config_2.14.1-4_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fontconfig/fontconfig-config_2.14.1-4_amd64.deb",
 			"version": "2.14.1-4"
 		},
 		{
@@ -15,7 +15,7 @@
 			"key": "fonts-dejavu-core_2.37-6_amd64",
 			"name": "fonts-dejavu-core",
 			"sha256": "8892669e51aab4dc56682c8e39d8ddb7d70fad83c369344e1e240bf3ca22bb76",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-6_all.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-6_all.deb",
 			"version": "2.37-6"
 		},
 		{
@@ -24,7 +24,7 @@
 			"key": "libbrotli1_1.0.9-2-p-b6_amd64",
 			"name": "libbrotli1",
 			"sha256": "563b4caec1aa5e876bd3355b36e7a38e1484baf5a293b48d1e8bd22db786e4d7",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_amd64.deb",
 			"version": "1.0.9-2+b6"
 		},
 		{
@@ -33,7 +33,7 @@
 			"key": "libcrypt1_1-4.4.33-2_amd64",
 			"name": "libcrypt1",
 			"sha256": "f5f60a5cdfd4e4eaa9438ade5078a57741a7a78d659fcb0c701204f523e8bd29",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_amd64.deb",
 			"version": "1:4.4.33-2"
 		},
 		{
@@ -42,7 +42,7 @@
 			"key": "libexpat1_2.5.0-1-p-deb12u1_amd64",
 			"name": "libexpat1",
 			"sha256": "c2bd305125bcece5816b2521f293a99499d674cd2dd744416caa4952158ad99d",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/e/expat/libexpat1_2.5.0-1+deb12u1_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/e/expat/libexpat1_2.5.0-1+deb12u1_amd64.deb",
 			"version": "2.5.0-1+deb12u1"
 		},
 		{
@@ -51,7 +51,7 @@
 			"key": "libfontconfig1_2.14.1-4_amd64",
 			"name": "libfontconfig1",
 			"sha256": "16ee38d374e064f534116dc442b086ef26f9831f1c0af7e5fb4fe4512e700649",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fontconfig/libfontconfig1_2.14.1-4_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fontconfig/libfontconfig1_2.14.1-4_amd64.deb",
 			"version": "2.14.1-4"
 		},
 		{
@@ -60,17 +60,17 @@
 			"key": "libfreetype6_2.12.1-p-dfsg-5-p-deb12u4_amd64",
 			"name": "libfreetype6",
 			"sha256": "8043e479f73f29992d652e3f9dfe8b17f9780c7ea6330afe379ec5f9f188ac44",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/f/freetype/libfreetype6_2.12.1+dfsg-5+deb12u4_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/f/freetype/libfreetype6_2.12.1+dfsg-5+deb12u4_amd64.deb",
 			"version": "2.12.1+dfsg-5+deb12u4"
 		},
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "libglib2.0-0_2.74.6-2-p-deb12u5_amd64",
+			"key": "libglib2.0-0_2.74.6-2-p-deb12u6_amd64",
 			"name": "libglib2.0-0",
-			"sha256": "1ff3d82f1baa190ec206d4e9f6e9da5cb70b7a9a68ecebc93158139580d46f81",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/glib2.0/libglib2.0-0_2.74.6-2+deb12u5_amd64.deb",
-			"version": "2.74.6-2+deb12u5"
+			"sha256": "2eda0da6027dd90313949176b662885ee820a725471057bfc6b144a866f66ee5",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/glib2.0/libglib2.0-0_2.74.6-2+deb12u6_amd64.deb",
+			"version": "2.74.6-2+deb12u6"
 		},
 		{
 			"arch": "amd64",
@@ -78,7 +78,7 @@
 			"key": "libgraphite2-3_1.3.14-1_amd64",
 			"name": "libgraphite2-3",
 			"sha256": "31113b9e20c89d3b923da0540d6f30535b8d14f32e5904de89e34537fa87d59a",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_amd64.deb",
 			"version": "1.3.14-1"
 		},
 		{
@@ -87,7 +87,7 @@
 			"key": "libharfbuzz0b_6.0.0-p-dfsg-3_amd64",
 			"name": "libharfbuzz0b",
 			"sha256": "bfce132b7ee67b9c2d2166075b1936a25c8cc6866b6a049f99b8e94baa916e71",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/h/harfbuzz/libharfbuzz0b_6.0.0+dfsg-3_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/h/harfbuzz/libharfbuzz0b_6.0.0+dfsg-3_amd64.deb",
 			"version": "6.0.0+dfsg-3"
 		},
 		{
@@ -96,7 +96,7 @@
 			"key": "libjpeg62-turbo_1-2.1.5-2_amd64",
 			"name": "libjpeg62-turbo",
 			"sha256": "95ec30140789a342add8f8371ed018924de51b539056522b66f207b25cba9cad",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_amd64.deb",
 			"version": "1:2.1.5-2"
 		},
 		{
@@ -105,7 +105,7 @@
 			"key": "liblcms2-2_2.14-2_amd64",
 			"name": "liblcms2-2",
 			"sha256": "8b417407302ca99e5d5f70bacece70bda54f8cd0bb6d59b478b6411c27c1366a",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/l/lcms2/liblcms2-2_2.14-2_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/l/lcms2/liblcms2-2_2.14-2_amd64.deb",
 			"version": "2.14-2"
 		},
 		{
@@ -114,7 +114,7 @@
 			"key": "libpcre2-8-0_10.42-1_amd64",
 			"name": "libpcre2-8-0",
 			"sha256": "030db54f4d76cdfe2bf0e8eb5f9efea0233ab3c7aa942d672c7b63b52dbaf935",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/p/pcre2/libpcre2-8-0_10.42-1_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/p/pcre2/libpcre2-8-0_10.42-1_amd64.deb",
 			"version": "10.42-1"
 		},
 		{
@@ -123,7 +123,7 @@
 			"key": "libpng16-16_1.6.39-2_amd64",
 			"name": "libpng16-16",
 			"sha256": "dc32727dca9a87ba317da7989572011669f568d10159b9d8675ed7aedd26d686",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_amd64.deb",
 			"version": "1.6.39-2"
 		},
 		{
@@ -132,7 +132,7 @@
 			"key": "libuuid1_2.38.1-5-p-deb12u3_amd64",
 			"name": "libuuid1",
 			"sha256": "5fff398321da62d28a842bcbabd193d72ae21724962c029dc32b1dc6b2deaeaf",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/u/util-linux/libuuid1_2.38.1-5+deb12u3_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/u/util-linux/libuuid1_2.38.1-5+deb12u3_amd64.deb",
 			"version": "2.38.1-5+deb12u3"
 		},
 		{
@@ -141,7 +141,7 @@
 			"key": "openjdk-17-jdk-headless_17.0.15-p-6-1_deb12u1_amd64",
 			"name": "openjdk-17-jdk-headless",
 			"sha256": "3959629d0b537d18f5af3798203299895f1eb801c95243a98147ccae32b99518",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.15+6-1~deb12u1_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.15+6-1~deb12u1_amd64.deb",
 			"version": "17.0.15+6-1~deb12u1"
 		},
 		{
@@ -150,7 +150,7 @@
 			"key": "openjdk-17-jre-headless_17.0.15-p-6-1_deb12u1_amd64",
 			"name": "openjdk-17-jre-headless",
 			"sha256": "11f60b9b048643d7a40d7ec1840bec26eafb761d8cd58b54c0cfdcb3c6ff40ae",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.15+6-1~deb12u1_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.15+6-1~deb12u1_amd64.deb",
 			"version": "17.0.15+6-1~deb12u1"
 		},
 		{
@@ -159,35 +159,35 @@
 			"key": "zlib1g_1-1.2.13.dfsg-1_amd64",
 			"name": "zlib1g",
 			"sha256": "d7dd1d1411fedf27f5e27650a6eff20ef294077b568f4c8c5e51466dc7c08ce4",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_amd64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_amd64.deb",
 			"version": "1:1.2.13.dfsg-1"
 		},
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "gcc-12-base_12.2.0-14_amd64",
+			"key": "gcc-12-base_12.2.0-14-p-deb12u1_amd64",
 			"name": "gcc-12-base",
-			"sha256": "1a03df5a57833d65b5bb08cfa19d50e76f29088dc9e64fb934af42d9023a0807",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14_amd64.deb",
-			"version": "12.2.0-14"
+			"sha256": "1896a2aacf4ad681ff5eacc24a5b0ca4d5d9c9b9c9e4b6de5197bc1e116ea619",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14+deb12u1_amd64.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "libgcc-s1_12.2.0-14_amd64",
+			"key": "libgcc-s1_12.2.0-14-p-deb12u1_amd64",
 			"name": "libgcc-s1",
-			"sha256": "f3d1d48c0599aea85b7f2077a01d285badc42998c1a1e7473935d5cf995c8141",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_amd64.deb",
-			"version": "12.2.0-14"
+			"sha256": "3016e62cb4b7cd8038822870601f5ed131befe942774d0f745622cc77d8a88f7",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14+deb12u1_amd64.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "libstdc-p--p-6_12.2.0-14_amd64",
+			"key": "libstdc-p--p-6_12.2.0-14-p-deb12u1_amd64",
 			"name": "libstdc++6",
-			"sha256": "9b1b269020cec6aced3b39f096f7b67edd1f0d4ab24f412cb6506d0800e19cbf",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_amd64.deb",
-			"version": "12.2.0-14"
+			"sha256": "5cd3171216d4ab0fc911cfe9c35509bf2dd8f47761c43b7f6a4296701551a24d",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14+deb12u1_amd64.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "arm64",
@@ -195,7 +195,7 @@
 			"key": "fontconfig-config_2.14.1-4_arm64",
 			"name": "fontconfig-config",
 			"sha256": "297b5a63f9214ffebe08892cdf2effdaf2b408e719811d5e8e98870f710cd35c",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fontconfig/fontconfig-config_2.14.1-4_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fontconfig/fontconfig-config_2.14.1-4_arm64.deb",
 			"version": "2.14.1-4"
 		},
 		{
@@ -204,7 +204,7 @@
 			"key": "fonts-dejavu-core_2.37-6_arm64",
 			"name": "fonts-dejavu-core",
 			"sha256": "8892669e51aab4dc56682c8e39d8ddb7d70fad83c369344e1e240bf3ca22bb76",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-6_all.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-6_all.deb",
 			"version": "2.37-6"
 		},
 		{
@@ -213,7 +213,7 @@
 			"key": "libbrotli1_1.0.9-2-p-b6_arm64",
 			"name": "libbrotli1",
 			"sha256": "3137de7f71952e710ee9f0df05026b3c6f463be9369a502d57c7696732f1ed22",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_arm64.deb",
 			"version": "1.0.9-2+b6"
 		},
 		{
@@ -222,7 +222,7 @@
 			"key": "libcrypt1_1-4.4.33-2_arm64",
 			"name": "libcrypt1",
 			"sha256": "eea0ad76ea5eb507127fea0c291622ea4ecdbb71c4b9a8ed9c76ae33fc1a0127",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_arm64.deb",
 			"version": "1:4.4.33-2"
 		},
 		{
@@ -231,7 +231,7 @@
 			"key": "libexpat1_2.5.0-1-p-deb12u1_arm64",
 			"name": "libexpat1",
 			"sha256": "01e2a9ebd2197b1466283723ee1795713de765a3c3cef29549e6136e4c77d65e",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/e/expat/libexpat1_2.5.0-1+deb12u1_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/e/expat/libexpat1_2.5.0-1+deb12u1_arm64.deb",
 			"version": "2.5.0-1+deb12u1"
 		},
 		{
@@ -240,7 +240,7 @@
 			"key": "libfontconfig1_2.14.1-4_arm64",
 			"name": "libfontconfig1",
 			"sha256": "4836d9deca824883f0de33d4f8f3718ba776c6e7c80cd7c418b5a0f86c009b9e",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fontconfig/libfontconfig1_2.14.1-4_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fontconfig/libfontconfig1_2.14.1-4_arm64.deb",
 			"version": "2.14.1-4"
 		},
 		{
@@ -249,17 +249,17 @@
 			"key": "libfreetype6_2.12.1-p-dfsg-5-p-deb12u4_arm64",
 			"name": "libfreetype6",
 			"sha256": "b8d32e54ebc9020637f8fa16b6afa64a5731e40845a6e01880d38d6f632237c9",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/f/freetype/libfreetype6_2.12.1+dfsg-5+deb12u4_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/f/freetype/libfreetype6_2.12.1+dfsg-5+deb12u4_arm64.deb",
 			"version": "2.12.1+dfsg-5+deb12u4"
 		},
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "libglib2.0-0_2.74.6-2-p-deb12u5_arm64",
+			"key": "libglib2.0-0_2.74.6-2-p-deb12u6_arm64",
 			"name": "libglib2.0-0",
-			"sha256": "f4fa8b274bca9ac5d527a93ed41272426023f203aafbfa357461a0295a2540d1",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/glib2.0/libglib2.0-0_2.74.6-2+deb12u5_arm64.deb",
-			"version": "2.74.6-2+deb12u5"
+			"sha256": "9b0ad828114b43d1ded9f3c1a32851de665cd9963196d1b4f8d47483a05c3524",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/glib2.0/libglib2.0-0_2.74.6-2+deb12u6_arm64.deb",
+			"version": "2.74.6-2+deb12u6"
 		},
 		{
 			"arch": "arm64",
@@ -267,7 +267,7 @@
 			"key": "libgraphite2-3_1.3.14-1_arm64",
 			"name": "libgraphite2-3",
 			"sha256": "473362a74ba74ae630fc43675460fb5a1058564a635a301875e00f1c6f9b27cb",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_arm64.deb",
 			"version": "1.3.14-1"
 		},
 		{
@@ -276,7 +276,7 @@
 			"key": "libharfbuzz0b_6.0.0-p-dfsg-3_arm64",
 			"name": "libharfbuzz0b",
 			"sha256": "64b1d4aa672dc4eda5e11b9ff8061122060fc7aba6ad16908c89a269ffa174ee",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/h/harfbuzz/libharfbuzz0b_6.0.0+dfsg-3_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/h/harfbuzz/libharfbuzz0b_6.0.0+dfsg-3_arm64.deb",
 			"version": "6.0.0+dfsg-3"
 		},
 		{
@@ -285,7 +285,7 @@
 			"key": "libjpeg62-turbo_1-2.1.5-2_arm64",
 			"name": "libjpeg62-turbo",
 			"sha256": "de66f186f3ff3c1d10c2e75ae056b019b3f7f091f51096a06cade48b2dea875b",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_arm64.deb",
 			"version": "1:2.1.5-2"
 		},
 		{
@@ -294,7 +294,7 @@
 			"key": "liblcms2-2_2.14-2_arm64",
 			"name": "liblcms2-2",
 			"sha256": "1e48b6846b0e7cdce7675da6b0f8bc5fef3f5170fd2470d17d65dc3d8c009720",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/l/lcms2/liblcms2-2_2.14-2_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/l/lcms2/liblcms2-2_2.14-2_arm64.deb",
 			"version": "2.14-2"
 		},
 		{
@@ -303,7 +303,7 @@
 			"key": "libpcre2-8-0_10.42-1_arm64",
 			"name": "libpcre2-8-0",
 			"sha256": "b2448d0a8a3db7fbeac231e7ef93811346c1fb5f96ccf6f631701d8a4eb39206",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/p/pcre2/libpcre2-8-0_10.42-1_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/p/pcre2/libpcre2-8-0_10.42-1_arm64.deb",
 			"version": "10.42-1"
 		},
 		{
@@ -312,7 +312,7 @@
 			"key": "libpng16-16_1.6.39-2_arm64",
 			"name": "libpng16-16",
 			"sha256": "ae87c6251a03fbe466228a058fcbaa5b6a44f156166c1ba5118024ac4bf65b75",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_arm64.deb",
 			"version": "1.6.39-2"
 		},
 		{
@@ -321,7 +321,7 @@
 			"key": "libuuid1_2.38.1-5-p-deb12u3_arm64",
 			"name": "libuuid1",
 			"sha256": "3b2d19df0f3190108cf54228c4cfc822226c06d8f3615a5ab16a7dffb1f58aed",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/u/util-linux/libuuid1_2.38.1-5+deb12u3_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/u/util-linux/libuuid1_2.38.1-5+deb12u3_arm64.deb",
 			"version": "2.38.1-5+deb12u3"
 		},
 		{
@@ -330,7 +330,7 @@
 			"key": "openjdk-17-jdk-headless_17.0.15-p-6-1_deb12u1_arm64",
 			"name": "openjdk-17-jdk-headless",
 			"sha256": "b1832c860a7edc4dc496d56a971a0bfce2457bf3f26a48e7b3f559c56c2948d2",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.15+6-1~deb12u1_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.15+6-1~deb12u1_arm64.deb",
 			"version": "17.0.15+6-1~deb12u1"
 		},
 		{
@@ -339,7 +339,7 @@
 			"key": "openjdk-17-jre-headless_17.0.15-p-6-1_deb12u1_arm64",
 			"name": "openjdk-17-jre-headless",
 			"sha256": "4f9f37e8b3fc3bef159336da82572ad1b315f771fbd8d8491bb0f3ca0f5677ec",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.15+6-1~deb12u1_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.15+6-1~deb12u1_arm64.deb",
 			"version": "17.0.15+6-1~deb12u1"
 		},
 		{
@@ -348,35 +348,35 @@
 			"key": "zlib1g_1-1.2.13.dfsg-1_arm64",
 			"name": "zlib1g",
 			"sha256": "52b8b8a145bbe1956bba82034f77022cbef0c3d0885c9e32d9817a7932fe1913",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_arm64.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_arm64.deb",
 			"version": "1:1.2.13.dfsg-1"
 		},
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "gcc-12-base_12.2.0-14_arm64",
+			"key": "gcc-12-base_12.2.0-14-p-deb12u1_arm64",
 			"name": "gcc-12-base",
-			"sha256": "e1f2fb7212546c0e360af8df26303608f7b09e123ac9c96e15872d1ec1ce3275",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14_arm64.deb",
-			"version": "12.2.0-14"
+			"sha256": "674cf6cba6d432bd200c45fe866c1652c7a53523cc2e7a613e05bc4abf7b5440",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14+deb12u1_arm64.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "libgcc-s1_12.2.0-14_arm64",
+			"key": "libgcc-s1_12.2.0-14-p-deb12u1_arm64",
 			"name": "libgcc-s1",
-			"sha256": "6fce2268d8f3152a4e84634f5a24133d3c62903b2f9b11b9c59235cbbc1b23a8",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_arm64.deb",
-			"version": "12.2.0-14"
+			"sha256": "576926b283613db80168ddf76380a3bd877602778cf0d226caa7bfbfa71eacf3",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14+deb12u1_arm64.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "libstdc-p--p-6_12.2.0-14_arm64",
+			"key": "libstdc-p--p-6_12.2.0-14-p-deb12u1_arm64",
 			"name": "libstdc++6",
-			"sha256": "21e971c5d3506f783b89efe8e12ac85081ddd9213e4f6529262bcfe95c326670",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_arm64.deb",
-			"version": "12.2.0-14"
+			"sha256": "26e138c677a985775331373828a6c286c551ff397cb735d00e2383cb273d1cb2",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14+deb12u1_arm64.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "s390x",
@@ -384,7 +384,7 @@
 			"key": "fontconfig-config_2.14.1-4_s390x",
 			"name": "fontconfig-config",
 			"sha256": "ffaa7963a752f238557ca4ffe101d513d9b81923132e6b2ecf5b40d52966fa34",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fontconfig/fontconfig-config_2.14.1-4_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fontconfig/fontconfig-config_2.14.1-4_s390x.deb",
 			"version": "2.14.1-4"
 		},
 		{
@@ -393,7 +393,7 @@
 			"key": "fonts-dejavu-core_2.37-6_s390x",
 			"name": "fonts-dejavu-core",
 			"sha256": "8892669e51aab4dc56682c8e39d8ddb7d70fad83c369344e1e240bf3ca22bb76",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-6_all.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-6_all.deb",
 			"version": "2.37-6"
 		},
 		{
@@ -402,7 +402,7 @@
 			"key": "libbrotli1_1.0.9-2-p-b6_s390x",
 			"name": "libbrotli1",
 			"sha256": "738a3bf125b58288da858228194e294708398ea4a44af2ef16f92569ecf57fd0",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_s390x.deb",
 			"version": "1.0.9-2+b6"
 		},
 		{
@@ -411,7 +411,7 @@
 			"key": "libcrypt1_1-4.4.33-2_s390x",
 			"name": "libcrypt1",
 			"sha256": "9c7fc22abd79945ee813450f7929f9349bd370bcdc979c4e128e884344169e1f",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_s390x.deb",
 			"version": "1:4.4.33-2"
 		},
 		{
@@ -420,7 +420,7 @@
 			"key": "libexpat1_2.5.0-1-p-deb12u1_s390x",
 			"name": "libexpat1",
 			"sha256": "727d97e22948242f9dcea0f2681d59be0bb75e25781dc6581509d2356afdf04d",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/e/expat/libexpat1_2.5.0-1+deb12u1_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/e/expat/libexpat1_2.5.0-1+deb12u1_s390x.deb",
 			"version": "2.5.0-1+deb12u1"
 		},
 		{
@@ -429,7 +429,7 @@
 			"key": "libfontconfig1_2.14.1-4_s390x",
 			"name": "libfontconfig1",
 			"sha256": "da6af54263ec32a709523001b07d69fe4c5e7e5ef712cc13b46c4c0dfb5f58ff",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fontconfig/libfontconfig1_2.14.1-4_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fontconfig/libfontconfig1_2.14.1-4_s390x.deb",
 			"version": "2.14.1-4"
 		},
 		{
@@ -438,17 +438,17 @@
 			"key": "libfreetype6_2.12.1-p-dfsg-5-p-deb12u4_s390x",
 			"name": "libfreetype6",
 			"sha256": "84aaedefb2954f1440cddfcbbdc4fc259b5d557a4f0352800302501d2ff2e6f9",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/f/freetype/libfreetype6_2.12.1+dfsg-5+deb12u4_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/f/freetype/libfreetype6_2.12.1+dfsg-5+deb12u4_s390x.deb",
 			"version": "2.12.1+dfsg-5+deb12u4"
 		},
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "libglib2.0-0_2.74.6-2-p-deb12u5_s390x",
+			"key": "libglib2.0-0_2.74.6-2-p-deb12u6_s390x",
 			"name": "libglib2.0-0",
-			"sha256": "27179769e06325e4baf2b938f7ba0a4b3bf8c1fbbad974819d6172bdfe858d47",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/glib2.0/libglib2.0-0_2.74.6-2+deb12u5_s390x.deb",
-			"version": "2.74.6-2+deb12u5"
+			"sha256": "4447b5ed93b54284fcc68e81a1d2db4eea451ce4f6da8dcc0627d6492173b263",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/glib2.0/libglib2.0-0_2.74.6-2+deb12u6_s390x.deb",
+			"version": "2.74.6-2+deb12u6"
 		},
 		{
 			"arch": "s390x",
@@ -456,7 +456,7 @@
 			"key": "libgraphite2-3_1.3.14-1_s390x",
 			"name": "libgraphite2-3",
 			"sha256": "5d11b4ffb8f9559b77b3b6981f3c59df5a446a075b2bcc0f6184c0d9ba8c4b1c",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_s390x.deb",
 			"version": "1.3.14-1"
 		},
 		{
@@ -465,7 +465,7 @@
 			"key": "libharfbuzz0b_6.0.0-p-dfsg-3_s390x",
 			"name": "libharfbuzz0b",
 			"sha256": "fcff4fc71a54a60e741d560fad3c5cf9465f6887294ab2e3b68d990bb9f59e63",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/h/harfbuzz/libharfbuzz0b_6.0.0+dfsg-3_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/h/harfbuzz/libharfbuzz0b_6.0.0+dfsg-3_s390x.deb",
 			"version": "6.0.0+dfsg-3"
 		},
 		{
@@ -474,7 +474,7 @@
 			"key": "libjpeg62-turbo_1-2.1.5-2_s390x",
 			"name": "libjpeg62-turbo",
 			"sha256": "1274a8aaa6bd5c64a3380eba30f5cbbb8abf0ef083d7809b4a5bb006d862e09d",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_s390x.deb",
 			"version": "1:2.1.5-2"
 		},
 		{
@@ -483,7 +483,7 @@
 			"key": "liblcms2-2_2.14-2_s390x",
 			"name": "liblcms2-2",
 			"sha256": "5c972b0d2cdc722ebc796ff22c3bd7e01cd6767e1b5e0d11b2d468c4012a5efc",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/l/lcms2/liblcms2-2_2.14-2_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/l/lcms2/liblcms2-2_2.14-2_s390x.deb",
 			"version": "2.14-2"
 		},
 		{
@@ -492,7 +492,7 @@
 			"key": "libpcre2-8-0_10.42-1_s390x",
 			"name": "libpcre2-8-0",
 			"sha256": "f7e39d23b97e7c30a0294c810b3df6bf4e974e9555cdaf8c1dc274195443fc32",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/p/pcre2/libpcre2-8-0_10.42-1_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/p/pcre2/libpcre2-8-0_10.42-1_s390x.deb",
 			"version": "10.42-1"
 		},
 		{
@@ -501,7 +501,7 @@
 			"key": "libpng16-16_1.6.39-2_s390x",
 			"name": "libpng16-16",
 			"sha256": "d936268159447ccda49e12760c7a482ba763207a7e1a220fd224a56acbf653f0",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_s390x.deb",
 			"version": "1.6.39-2"
 		},
 		{
@@ -510,7 +510,7 @@
 			"key": "libuuid1_2.38.1-5-p-deb12u3_s390x",
 			"name": "libuuid1",
 			"sha256": "82ed4472b7ba875aeceb7538f6f56e29c8514b22eb893e1220ff33669e573706",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/u/util-linux/libuuid1_2.38.1-5+deb12u3_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/u/util-linux/libuuid1_2.38.1-5+deb12u3_s390x.deb",
 			"version": "2.38.1-5+deb12u3"
 		},
 		{
@@ -519,7 +519,7 @@
 			"key": "openjdk-17-jdk-headless_17.0.15-p-6-1_deb12u1_s390x",
 			"name": "openjdk-17-jdk-headless",
 			"sha256": "04c73a16d5e01d0d93f1cfea1c5d9680e42135f344858d6e6ef13167e95fef72",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.15+6-1~deb12u1_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.15+6-1~deb12u1_s390x.deb",
 			"version": "17.0.15+6-1~deb12u1"
 		},
 		{
@@ -528,7 +528,7 @@
 			"key": "openjdk-17-jre-headless_17.0.15-p-6-1_deb12u1_s390x",
 			"name": "openjdk-17-jre-headless",
 			"sha256": "c89ca1a252a931241f77b1fdadb9f1f0820c90544448e7441e089748467333f4",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.15+6-1~deb12u1_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.15+6-1~deb12u1_s390x.deb",
 			"version": "17.0.15+6-1~deb12u1"
 		},
 		{
@@ -537,35 +537,35 @@
 			"key": "zlib1g_1-1.2.13.dfsg-1_s390x",
 			"name": "zlib1g",
 			"sha256": "aaa18b6281d1e5a5ba82bdb951d1b0fed43829f52a285f351dc5352880e3ef7e",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_s390x.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_s390x.deb",
 			"version": "1:1.2.13.dfsg-1"
 		},
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "gcc-12-base_12.2.0-14_s390x",
+			"key": "gcc-12-base_12.2.0-14-p-deb12u1_s390x",
 			"name": "gcc-12-base",
-			"sha256": "cc202d7b9e4620b01ab7acdbd2ad12b0a1333e8bfdb75ab98d92feddbedcdcc2",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14_s390x.deb",
-			"version": "12.2.0-14"
+			"sha256": "95394971de33e2d3c04c8e77c5cab1ddcba3924692749513be19d8c65b4a3001",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14+deb12u1_s390x.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "libgcc-s1_12.2.0-14_s390x",
+			"key": "libgcc-s1_12.2.0-14-p-deb12u1_s390x",
 			"name": "libgcc-s1",
-			"sha256": "beb6ead3623332a8d65523293b45c6770fe0f8396e13f9d9da2b38a905ef822b",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_s390x.deb",
-			"version": "12.2.0-14"
+			"sha256": "58f31fb42eecc42510d5b5022f03aa7e302350637a5643b1773361c0da97f905",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14+deb12u1_s390x.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "libstdc-p--p-6_12.2.0-14_s390x",
+			"key": "libstdc-p--p-6_12.2.0-14-p-deb12u1_s390x",
 			"name": "libstdc++6",
-			"sha256": "04dbe0085f54cc8383a79fa0e77e5dd380738b0f5a29b72d8d189acc43be86d9",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_s390x.deb",
-			"version": "12.2.0-14"
+			"sha256": "b0521cbe2cd1de442a468373bdfe323ed83e04aa729d5a3f554beefba4049e68",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14+deb12u1_s390x.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "ppc64el",
@@ -573,7 +573,7 @@
 			"key": "fontconfig-config_2.14.1-4_ppc64el",
 			"name": "fontconfig-config",
 			"sha256": "7e9d4b15907cd56ba1fe1ab48c2f344621d506b54e1e3a1d444d276209eec9f3",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fontconfig/fontconfig-config_2.14.1-4_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fontconfig/fontconfig-config_2.14.1-4_ppc64el.deb",
 			"version": "2.14.1-4"
 		},
 		{
@@ -582,7 +582,7 @@
 			"key": "fonts-dejavu-core_2.37-6_ppc64el",
 			"name": "fonts-dejavu-core",
 			"sha256": "8892669e51aab4dc56682c8e39d8ddb7d70fad83c369344e1e240bf3ca22bb76",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-6_all.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-6_all.deb",
 			"version": "2.37-6"
 		},
 		{
@@ -591,7 +591,7 @@
 			"key": "libbrotli1_1.0.9-2-p-b6_ppc64el",
 			"name": "libbrotli1",
 			"sha256": "b9449bc0f0acd7c3a861e20c8de0812a153e10a8df96e9fad9532056fb988798",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/b/brotli/libbrotli1_1.0.9-2+b6_ppc64el.deb",
 			"version": "1.0.9-2+b6"
 		},
 		{
@@ -600,7 +600,7 @@
 			"key": "libcrypt1_1-4.4.33-2_ppc64el",
 			"name": "libcrypt1",
 			"sha256": "c5825784746727b7f8338c4de6caaa0d5945737628420f9a7cd8f0fc582372e6",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libx/libxcrypt/libcrypt1_4.4.33-2_ppc64el.deb",
 			"version": "1:4.4.33-2"
 		},
 		{
@@ -609,7 +609,7 @@
 			"key": "libexpat1_2.5.0-1-p-deb12u1_ppc64el",
 			"name": "libexpat1",
 			"sha256": "4dd7db69361384c5ee43a7453db3141a642074c012f933b569483e7fbb4c376c",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/e/expat/libexpat1_2.5.0-1+deb12u1_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/e/expat/libexpat1_2.5.0-1+deb12u1_ppc64el.deb",
 			"version": "2.5.0-1+deb12u1"
 		},
 		{
@@ -618,7 +618,7 @@
 			"key": "libfontconfig1_2.14.1-4_ppc64el",
 			"name": "libfontconfig1",
 			"sha256": "b3b30e067d65ddf18540155bbb06ed60f9dde22d2e84009a3088b173a4e6027f",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/f/fontconfig/libfontconfig1_2.14.1-4_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/f/fontconfig/libfontconfig1_2.14.1-4_ppc64el.deb",
 			"version": "2.14.1-4"
 		},
 		{
@@ -627,17 +627,17 @@
 			"key": "libfreetype6_2.12.1-p-dfsg-5-p-deb12u4_ppc64el",
 			"name": "libfreetype6",
 			"sha256": "3c32b891b00e86b0908219bda9ee35dcf5d3bfed86c0fec9434ce42526b4e308",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/f/freetype/libfreetype6_2.12.1+dfsg-5+deb12u4_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/f/freetype/libfreetype6_2.12.1+dfsg-5+deb12u4_ppc64el.deb",
 			"version": "2.12.1+dfsg-5+deb12u4"
 		},
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
-			"key": "libglib2.0-0_2.74.6-2-p-deb12u5_ppc64el",
+			"key": "libglib2.0-0_2.74.6-2-p-deb12u6_ppc64el",
 			"name": "libglib2.0-0",
-			"sha256": "e1b81d13beeb6eb0ff8be82aa06a6ef9d9abe9b78c1e92ddad37a2b111a7da92",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/glib2.0/libglib2.0-0_2.74.6-2+deb12u5_ppc64el.deb",
-			"version": "2.74.6-2+deb12u5"
+			"sha256": "43d6db45477d42a50758f09bfd41c361bfc93093d4317f1ffb5108f7612e6b98",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/glib2.0/libglib2.0-0_2.74.6-2+deb12u6_ppc64el.deb",
+			"version": "2.74.6-2+deb12u6"
 		},
 		{
 			"arch": "ppc64el",
@@ -645,7 +645,7 @@
 			"key": "libgraphite2-3_1.3.14-1_ppc64el",
 			"name": "libgraphite2-3",
 			"sha256": "6998cf0f9dd4c0d09ce0521e26ed967f596fc1e8b394edbc49fc0cd4a969a3d2",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-1_ppc64el.deb",
 			"version": "1.3.14-1"
 		},
 		{
@@ -654,7 +654,7 @@
 			"key": "libharfbuzz0b_6.0.0-p-dfsg-3_ppc64el",
 			"name": "libharfbuzz0b",
 			"sha256": "f022385face7e537c51d69b7c4c159f90cbd0f2f04064ab7d442839f41e4df0c",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/h/harfbuzz/libharfbuzz0b_6.0.0+dfsg-3_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/h/harfbuzz/libharfbuzz0b_6.0.0+dfsg-3_ppc64el.deb",
 			"version": "6.0.0+dfsg-3"
 		},
 		{
@@ -663,7 +663,7 @@
 			"key": "libjpeg62-turbo_1-2.1.5-2_ppc64el",
 			"name": "libjpeg62-turbo",
 			"sha256": "adae34f22d413f7e47d6b5dc82a21b85e5df70c0a0119ef8e39b2e8a5c6a0864",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-2_ppc64el.deb",
 			"version": "1:2.1.5-2"
 		},
 		{
@@ -672,7 +672,7 @@
 			"key": "liblcms2-2_2.14-2_ppc64el",
 			"name": "liblcms2-2",
 			"sha256": "b4cd31cf86fa0ebcfd55effa35d3396c3500d44dcefee39d1e54263b7c6beabc",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/l/lcms2/liblcms2-2_2.14-2_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/l/lcms2/liblcms2-2_2.14-2_ppc64el.deb",
 			"version": "2.14-2"
 		},
 		{
@@ -681,7 +681,7 @@
 			"key": "libpcre2-8-0_10.42-1_ppc64el",
 			"name": "libpcre2-8-0",
 			"sha256": "13cfe079e615d5bba2b73bf856fcac7ffe8ad8ff94d5eaac7ba899f69fb2c748",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/p/pcre2/libpcre2-8-0_10.42-1_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/p/pcre2/libpcre2-8-0_10.42-1_ppc64el.deb",
 			"version": "10.42-1"
 		},
 		{
@@ -690,7 +690,7 @@
 			"key": "libpng16-16_1.6.39-2_ppc64el",
 			"name": "libpng16-16",
 			"sha256": "1589b8540bdd8f45380664be564350761bf78a913d2e490df498567da3204697",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/libp/libpng1.6/libpng16-16_1.6.39-2_ppc64el.deb",
 			"version": "1.6.39-2"
 		},
 		{
@@ -699,7 +699,7 @@
 			"key": "libuuid1_2.38.1-5-p-deb12u3_ppc64el",
 			"name": "libuuid1",
 			"sha256": "b4809162dbfee9e5f4576dbce4301349026cb8c33a4e314ad5a96392d219cd0c",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/u/util-linux/libuuid1_2.38.1-5+deb12u3_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/u/util-linux/libuuid1_2.38.1-5+deb12u3_ppc64el.deb",
 			"version": "2.38.1-5+deb12u3"
 		},
 		{
@@ -708,7 +708,7 @@
 			"key": "openjdk-17-jdk-headless_17.0.15-p-6-1_deb12u1_ppc64el",
 			"name": "openjdk-17-jdk-headless",
 			"sha256": "a833bbfce25e2e2821e345a9bf7de1d1cf843f91f03728d2f4035699545699db",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.15+6-1~deb12u1_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/o/openjdk-17/openjdk-17-jdk-headless_17.0.15+6-1~deb12u1_ppc64el.deb",
 			"version": "17.0.15+6-1~deb12u1"
 		},
 		{
@@ -717,7 +717,7 @@
 			"key": "openjdk-17-jre-headless_17.0.15-p-6-1_deb12u1_ppc64el",
 			"name": "openjdk-17-jre-headless",
 			"sha256": "bc3ad5abb0bb38c9acb7755540e6c125b089f972c0fdb449efa4719cee95e161",
-			"url": "https://snapshot.debian.org/archive/debian-security/20250501T203212Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.15+6-1~deb12u1_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian-security/20250517T203043Z/pool/updates/main/o/openjdk-17/openjdk-17-jre-headless_17.0.15+6-1~deb12u1_ppc64el.deb",
 			"version": "17.0.15+6-1~deb12u1"
 		},
 		{
@@ -726,35 +726,35 @@
 			"key": "zlib1g_1-1.2.13.dfsg-1_ppc64el",
 			"name": "zlib1g",
 			"sha256": "4a512679756d8dadc91d37ecf353b868d526c007e8860b6618640812efbc51d1",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_ppc64el.deb",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_ppc64el.deb",
 			"version": "1:1.2.13.dfsg-1"
 		},
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
-			"key": "gcc-12-base_12.2.0-14_ppc64el",
+			"key": "gcc-12-base_12.2.0-14-p-deb12u1_ppc64el",
 			"name": "gcc-12-base",
-			"sha256": "ba3e53b27c61493e5e00d4c623929cb601429ee42a801bb76f338fc39c29f32a",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14_ppc64el.deb",
-			"version": "12.2.0-14"
+			"sha256": "2703f8a9087f18cc73b2d6c3c0adcd568e9302451335dad627392517019200b5",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14+deb12u1_ppc64el.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
-			"key": "libgcc-s1_12.2.0-14_ppc64el",
+			"key": "libgcc-s1_12.2.0-14-p-deb12u1_ppc64el",
 			"name": "libgcc-s1",
-			"sha256": "1cdcfe462d116a33797ec9867519c0f1f4b7819b8914b6ec70faaaf8369d1e40",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14_ppc64el.deb",
-			"version": "12.2.0-14"
+			"sha256": "ced4a668899fc6b13e87b2ffa44b0e819797f9b36fcff5c1709094d653cd9b2f",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14+deb12u1_ppc64el.deb",
+			"version": "12.2.0-14+deb12u1"
 		},
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
-			"key": "libstdc-p--p-6_12.2.0-14_ppc64el",
+			"key": "libstdc-p--p-6_12.2.0-14-p-deb12u1_ppc64el",
 			"name": "libstdc++6",
-			"sha256": "87e77916ddf0ac175e8fff101dfc93a3348187d87b0eba8089c6dc320e34ec20",
-			"url": "https://snapshot.debian.org/archive/debian/20250501T203212Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14_ppc64el.deb",
-			"version": "12.2.0-14"
+			"sha256": "290e4a488a2911b230df0b03c19591a5663a7136f8cc5ceba946880ff7dbf047",
+			"url": "https://snapshot.debian.org/archive/debian/20250517T203043Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14+deb12u1_ppc64el.deb",
+			"version": "12.2.0-14+deb12u1"
 		}
 	],
 	"version": 1
