@@ -55,9 +55,6 @@ Distroless images intentionally omit several files found in standard Debian imag
 
 ### Rationale
 
-- **Minimalism:**  
-    Distroless images remove unnecessary files to reduce image size and attack surface.
-
 - **CVE Scanning Compatibility:**  
     The provided metadata is sufficient for most vulnerability scanners to identify installed packages and their versions.
 
@@ -70,3 +67,6 @@ Distroless images intentionally omit several files found in standard Debian imag
 - Use `<package>` files for package details.
 - Use `<package>.md5sums` for file checksums and file lists.
 - Do not expect `/var/lib/dpkg/status` or `/var/lib/dpkg/info/` files.
+
+## Non-debian packages
+TODO
