@@ -199,40 +199,40 @@ def _node_impl(module_ctx):
 
     node_archive(
         name = "nodejs24_amd64",
-        sha256 = "4d2beaa55d962c1b31d6a4663cc831087f79f83f304a066963b65c8f4495843f",
-        strip_prefix = "node-v24.1.0-linux-x64/",
-        urls = ["https://nodejs.org/dist/v24.1.0/node-v24.1.0-linux-x64.tar.gz"],
-        version = "24.1.0",
+        sha256 = "074e93576f2b0f0f689d12b5d71314c5cdc384b6efc315e264120f6a9dd348af",
+        strip_prefix = "node-v24.2.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-x64.tar.gz"],
+        version = "24.2.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs24_arm64",
-        sha256 = "4ed15737d3781baa7d69b6a2e576507666229208fd25c83d58abf8d95b6a56f3",
-        strip_prefix = "node-v24.1.0-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v24.1.0/node-v24.1.0-linux-arm64.tar.gz"],
-        version = "24.1.0",
+        sha256 = "e82b44212eb10ebf4de9bd945b2fcf950786117f6578581bcde0abf4d471af4a",
+        strip_prefix = "node-v24.2.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-arm64.tar.gz"],
+        version = "24.2.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs24_ppc64le",
-        sha256 = "62777e5245ec46c151409111172adb7f30f2ef9d006ff5ba11c7cae76b9e91ee",
-        strip_prefix = "node-v24.1.0-linux-ppc64le/",
-        urls = ["https://nodejs.org/dist/v24.1.0/node-v24.1.0-linux-ppc64le.tar.gz"],
-        version = "24.1.0",
+        sha256 = "21a12614b868523799860b8f91462d6c947571d7da16675965cd5584077fa950",
+        strip_prefix = "node-v24.2.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-ppc64le.tar.gz"],
+        version = "24.2.0",
         architecture = "ppc64le",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs24_s390x",
-        sha256 = "83fcab77f7feafa235da6d9d8496adb4c6411b7a9468538447ea27f078decf31",
-        strip_prefix = "node-v24.1.0-linux-s390x/",
-        urls = ["https://nodejs.org/dist/v24.1.0/node-v24.1.0-linux-s390x.tar.gz"],
-        version = "24.1.0",
+        sha256 = "32e493596dddb956da2388243159e6d22980a0c0439a0387cb7710106f402247",
+        strip_prefix = "node-v24.2.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-s390x.tar.gz"],
+        version = "24.2.0",
         architecture = "s390x",
         control = "//nodejs:control",
     )
