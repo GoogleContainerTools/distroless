@@ -373,7 +373,7 @@
     },
     "//private/extensions:node.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "B5Vwl2TaqYQOvwmMTArBGjuyNdgSWq+uAWMIMDX2tZM=",
+        "bzlTransitiveDigest": "mKcaCInTn/4oG8vo0J7QJjhJtiHf7uSdZ5aVTjSnTXQ=",
         "usagesDigest": "oo4hnOxowfXXa21Wd8roJmpRdyG7Fy97FBO9vJoyK/M=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -453,12 +453,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "fb870226119d47378fa9c92c4535389c72dae14fcc7b47e6fdcc82c43de5a547",
-              "strip_prefix": "node-v22.16.0-linux-x64/",
+              "sha256": "0fa01328a0f3d10800623f7107fbcd654a60ec178fab1ef5b9779e94e0419e1a",
+              "strip_prefix": "node-v22.17.0-linux-x64/",
               "urls": [
-                "https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-x64.tar.gz"
+                "https://nodejs.org/dist/v22.17.0/node-v22.17.0-linux-x64.tar.gz"
               ],
-              "version": "22.16.0",
+              "version": "22.17.0",
               "architecture": "amd64",
               "control": "@@//nodejs:control"
             }
@@ -467,12 +467,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "1725602e9fb150eb8b8220a899085190e1c04d1a5f3862b01c3dc1dfce0157f9",
-              "strip_prefix": "node-v22.16.0-linux-arm64/",
+              "sha256": "3e99df8b01b27dc8b334a2a30d1cd500442b3b0877d217b308fd61a9ccfc33d4",
+              "strip_prefix": "node-v22.17.0-linux-arm64/",
               "urls": [
-                "https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-arm64.tar.gz"
+                "https://nodejs.org/dist/v22.17.0/node-v22.17.0-linux-arm64.tar.gz"
               ],
-              "version": "22.16.0",
+              "version": "22.17.0",
               "architecture": "arm64",
               "control": "@@//nodejs:control"
             }
@@ -481,12 +481,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "d4c3d8b6862208f0e0d6e20726a8dc5fb019cba8333c72dfd97b34ceed8d22a4",
-              "strip_prefix": "node-v22.16.0-linux-armv7l/",
+              "sha256": "ce120efe921de3eaaba2394edaacfab3e61376a56199cb93fc7e9bf0b3f14a16",
+              "strip_prefix": "node-v22.17.0-linux-armv7l/",
               "urls": [
-                "https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-armv7l.tar.gz"
+                "https://nodejs.org/dist/v22.17.0/node-v22.17.0-linux-armv7l.tar.gz"
               ],
-              "version": "22.16.0",
+              "version": "22.17.0",
               "architecture": "arm",
               "control": "@@//nodejs:control"
             }
@@ -495,12 +495,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "b4eec15ffd2d738ae34566057a6928e789e02a0f47176f4af8520f1248c63aab",
-              "strip_prefix": "node-v22.16.0-linux-ppc64le/",
+              "sha256": "c3a49ac3d56404290a66afdd9b149d87201fa1dc52740c21cf70b182cf8dfc4c",
+              "strip_prefix": "node-v22.17.0-linux-ppc64le/",
               "urls": [
-                "https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-ppc64le.tar.gz"
+                "https://nodejs.org/dist/v22.17.0/node-v22.17.0-linux-ppc64le.tar.gz"
               ],
-              "version": "22.16.0",
+              "version": "22.17.0",
               "architecture": "ppc64le",
               "control": "@@//nodejs:control"
             }
@@ -509,12 +509,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "668a5c65ade42f08d921c48a1c14437d10d026291e381d2541c2b0a585724567",
-              "strip_prefix": "node-v22.16.0-linux-s390x/",
+              "sha256": "394f839554bfd8c7e8db006a4de7604553bc478c26e6082749731f6d612c6f78",
+              "strip_prefix": "node-v22.17.0-linux-s390x/",
               "urls": [
-                "https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-s390x.tar.gz"
+                "https://nodejs.org/dist/v22.17.0/node-v22.17.0-linux-s390x.tar.gz"
               ],
-              "version": "22.16.0",
+              "version": "22.17.0",
               "architecture": "s390x",
               "control": "@@//nodejs:control"
             }
@@ -523,12 +523,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "074e93576f2b0f0f689d12b5d71314c5cdc384b6efc315e264120f6a9dd348af",
-              "strip_prefix": "node-v24.2.0-linux-x64/",
+              "sha256": "bbeb5fb8113b44fc30f5a5887dbc0ab66af8e56139f5f9fbe7c7a1aa056246dc",
+              "strip_prefix": "node-v24.3.0-linux-x64/",
               "urls": [
-                "https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-x64.tar.gz"
+                "https://nodejs.org/dist/v24.3.0/node-v24.3.0-linux-x64.tar.gz"
               ],
-              "version": "24.2.0",
+              "version": "24.3.0",
               "architecture": "amd64",
               "control": "@@//nodejs:control"
             }
@@ -537,12 +537,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "e82b44212eb10ebf4de9bd945b2fcf950786117f6578581bcde0abf4d471af4a",
-              "strip_prefix": "node-v24.2.0-linux-arm64/",
+              "sha256": "371fc060d5dd4de565586c3cc70034956db67a8f3dae0f0e5724fa56147c472a",
+              "strip_prefix": "node-v24.3.0-linux-arm64/",
               "urls": [
-                "https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-arm64.tar.gz"
+                "https://nodejs.org/dist/v24.3.0/node-v24.3.0-linux-arm64.tar.gz"
               ],
-              "version": "24.2.0",
+              "version": "24.3.0",
               "architecture": "arm64",
               "control": "@@//nodejs:control"
             }
@@ -551,12 +551,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "21a12614b868523799860b8f91462d6c947571d7da16675965cd5584077fa950",
-              "strip_prefix": "node-v24.2.0-linux-ppc64le/",
+              "sha256": "2f3979aa58e30b78205a319f2bcb4c21f849d1f4a31acb753c63a0508046e87f",
+              "strip_prefix": "node-v24.3.0-linux-ppc64le/",
               "urls": [
-                "https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-ppc64le.tar.gz"
+                "https://nodejs.org/dist/v24.3.0/node-v24.3.0-linux-ppc64le.tar.gz"
               ],
-              "version": "24.2.0",
+              "version": "24.3.0",
               "architecture": "ppc64le",
               "control": "@@//nodejs:control"
             }
@@ -565,12 +565,12 @@
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
             "attributes": {
-              "sha256": "32e493596dddb956da2388243159e6d22980a0c0439a0387cb7710106f402247",
-              "strip_prefix": "node-v24.2.0-linux-s390x/",
+              "sha256": "bb5ca45bab065d7a23cdfda7e682b0aa6c64a3756c92bfc2bf13831731cd6324",
+              "strip_prefix": "node-v24.3.0-linux-s390x/",
               "urls": [
-                "https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-s390x.tar.gz"
+                "https://nodejs.org/dist/v24.3.0/node-v24.3.0-linux-s390x.tar.gz"
               ],
-              "version": "24.2.0",
+              "version": "24.3.0",
               "architecture": "s390x",
               "control": "@@//nodejs:control"
             }

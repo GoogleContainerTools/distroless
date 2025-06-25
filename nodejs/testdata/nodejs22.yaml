@@ -3,4 +3,4 @@ commandTests:
   - name: nodejs
     command: "/nodejs/bin/node"
     args: ["--version"]
-    expectedOutput: ["v22.16.0"]
+    expectedOutput: ["v22.17.0"]
