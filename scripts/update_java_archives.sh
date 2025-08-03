@@ -52,12 +52,12 @@ EOM
       arch_deb=${archs_deb[arch_index]}
       name="OpenJDK21U-${variant}_${arch}_linux_hotspot_$(underscore_encode "${version}").tar.gz"
       archive_url=$(echo "$latest_release" | jq -r --arg NAME "$name" '.assets | .[] | select(.name==$NAME) | .browser_download_url')
-      [ "$archive_url" ] || { echo "no url found for ${name}"; exit 1; }
+      : ${archive_url:?"no url found for '${name}'"}
       sha256_name="${name}.sha256.txt"
       sha256_url=$(echo "$latest_release" | jq -r --arg NAME "$sha256_name" '.assets | .[] | select(.name==$NAME) | .browser_download_url')
-      [ "$sha256_url" ] || { echo "no url found for ${sha256_name}"; exit 1; }
+      : ${sha256_url:?"no url found for '${sha256_name}'"}
       sha256=$(curl -sSL "$sha256_url" | cut -d' '  -f1)
-      [ "$sha256" ] || { echo "no sha256 downloaded for ${name}"; exit 1; }
+      : ${sha256?:"no sha256 downloaded for ${name}"}
 
       strip_prefix_suffix="-jre"
       if [[ ${variant} == "jdk" ]]; then
@@ -85,9 +85,7 @@ EOM
 }
 
 function update_test_versions_java21() {
-  [ "$1" ] || { echo "no old version set in param 1"; exit 1; }
-  [ "$2" ] || { echo "no new version set in param 2"; exit 1; }
-  old_version=$1
-  new_version=$2
+  local old_version=${1?:"no old version set in param 1"}
+  local new_version=${2?:"no new version set in param 2"}
   sed -i -e "s/$old_version/$new_version/g" java/testdata/java21_*
 }
