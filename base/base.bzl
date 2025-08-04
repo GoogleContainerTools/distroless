@@ -82,6 +82,7 @@ def base_images(distro):
                     deb.package(arch, distro, "base-files"),
                     deb.package(arch, distro, "netbase"),
                     deb.package(arch, distro, "tzdata"),
+                    deb.package(arch, distro, "media-types"),
                     "//common:rootfs",
                     "//common:passwd",
                     "//common:home",
