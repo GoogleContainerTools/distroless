@@ -75,6 +75,15 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
+			"key": "media-types_10.0.0_amd64",
+			"name": "media-types",
+			"sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd",
+			"url": "https://snapshot.debian.org/archive/debian/20250731T202225Z/pool/main/m/media-types/media-types_10.0.0_all.deb",
+			"version": "10.0.0"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
 			"key": "gcc-12-base_12.2.0-14-p-deb12u1_amd64",
 			"name": "gcc-12-base",
 			"sha256": "1896a2aacf4ad681ff5eacc24a5b0ca4d5d9c9b9c9e4b6de5197bc1e116ea619",
@@ -179,6 +188,15 @@
 			"sha256": "a17042cb951b80d0c9462a73dec6ad31fc6adeae4ed92209601dc97d1019d7f2",
 			"url": "https://snapshot.debian.org/archive/debian/20250731T202225Z/pool/main/t/tzdata/tzdata_2025b-0+deb12u1_all.deb",
 			"version": "2025b-0+deb12u1"
+		},
+		{
+			"arch": "arm64",
+			"dependencies": [],
+			"key": "media-types_10.0.0_arm64",
+			"name": "media-types",
+			"sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd",
+			"url": "https://snapshot.debian.org/archive/debian/20250731T202225Z/pool/main/m/media-types/media-types_10.0.0_all.deb",
+			"version": "10.0.0"
 		},
 		{
 			"arch": "arm64",
@@ -291,6 +309,15 @@
 		{
 			"arch": "armhf",
 			"dependencies": [],
+			"key": "media-types_10.0.0_armhf",
+			"name": "media-types",
+			"sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd",
+			"url": "https://snapshot.debian.org/archive/debian/20250731T202225Z/pool/main/m/media-types/media-types_10.0.0_all.deb",
+			"version": "10.0.0"
+		},
+		{
+			"arch": "armhf",
+			"dependencies": [],
 			"key": "gcc-12-base_12.2.0-14-p-deb12u1_armhf",
 			"name": "gcc-12-base",
 			"sha256": "aa50f90c440377b9219830ed3e658aedcb0a1c1bb47733eb05cf65545012f563",
@@ -399,6 +426,15 @@
 		{
 			"arch": "s390x",
 			"dependencies": [],
+			"key": "media-types_10.0.0_s390x",
+			"name": "media-types",
+			"sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd",
+			"url": "https://snapshot.debian.org/archive/debian/20250731T202225Z/pool/main/m/media-types/media-types_10.0.0_all.deb",
+			"version": "10.0.0"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
 			"key": "gcc-12-base_12.2.0-14-p-deb12u1_s390x",
 			"name": "gcc-12-base",
 			"sha256": "95394971de33e2d3c04c8e77c5cab1ddcba3924692749513be19d8c65b4a3001",
@@ -503,6 +539,15 @@
 			"sha256": "a17042cb951b80d0c9462a73dec6ad31fc6adeae4ed92209601dc97d1019d7f2",
 			"url": "https://snapshot.debian.org/archive/debian/20250731T202225Z/pool/main/t/tzdata/tzdata_2025b-0+deb12u1_all.deb",
 			"version": "2025b-0+deb12u1"
+		},
+		{
+			"arch": "ppc64el",
+			"dependencies": [],
+			"key": "media-types_10.0.0_ppc64el",
+			"name": "media-types",
+			"sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd",
+			"url": "https://snapshot.debian.org/archive/debian/20250731T202225Z/pool/main/m/media-types/media-types_10.0.0_all.deb",
+			"version": "10.0.0"
 		},
 		{
 			"arch": "ppc64el",

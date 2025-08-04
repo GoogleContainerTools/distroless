@@ -4,3 +4,7 @@ commandTests:
 - name: certs
   command: ["/check_certs"]
   exitCode: 0
+fileExistenceTests:
+- name: mime-types
+  path: '/etc/mime.types'
+  shouldExist: true

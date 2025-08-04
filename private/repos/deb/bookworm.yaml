@@ -25,6 +25,7 @@ packages:
   - netbase
   - openssl
   - tzdata
+  - media-types
   # c++
   - gcc-12-base
   - libgcc-s1
