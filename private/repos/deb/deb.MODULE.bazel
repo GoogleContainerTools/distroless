@@ -1,52 +1,36 @@
 "debian dependencies"
 
+REPOS = [
+    "trixie",
+    "bookworm",
+    "bookworm_java",
+    "bookworm_python",
+]
+
 apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
-apt.install(
-    name = "trixie",
-    lock = "//private/repos/deb:trixie.lock.json",
-    manifest = "//private/repos/deb:trixie.yaml",
-    package_template = "//private/repos/deb:package.BUILD.tmpl",
-    resolve_transitive = False,
-)
-apt.install(
-    name = "bookworm",
-    lock = "//private/repos/deb:bookworm.lock.json",
-    manifest = "//private/repos/deb:bookworm.yaml",
-    package_template = "//private/repos/deb:package.BUILD.tmpl",
-    resolve_transitive = False,
-)
-apt.install(
-    name = "bookworm_java",
-    lock = "//private/repos/deb:bookworm_java.lock.json",
-    manifest = "//private/repos/deb:bookworm_java.yaml",
-    package_template = "//private/repos/deb:package.BUILD.tmpl",
-    resolve_transitive = False,
-)
-apt.install(
-    name = "bookworm_python",
-    lock = "//private/repos/deb:bookworm_python.lock.json",
-    manifest = "//private/repos/deb:bookworm_python.yaml",
-    package_template = "//private/repos/deb:package.BUILD.tmpl",
-    resolve_transitive = False,
-)
-use_repo(apt, "trixie", "bookworm", "bookworm_java", "bookworm_python")
+
+[
+    apt.install(
+        name = repo,
+        lock = "//private/repos/deb:{}.lock.json".format(repo),
+        manifest = "//private/repos/deb:{}.yaml".format(repo),
+        package_template = "//private/repos/deb:package.BUILD.tmpl",
+        resolve_transitive = False,
+    )
+    for repo in REPOS
+]
+
+use_repo(apt, "bookworm", "bookworm_java", "bookworm_python", "trixie")
 
 ### VERSIONS HUB REPO ###
 version = use_extension("//private/extensions:version.bzl", "version")
-version.from_lock(
-    lock = "//private/repos/deb:bookworm_python.lock.json",
-    repo_name = "bookworm_python",
-)
-version.from_lock(
-    lock = "//private/repos/deb:bookworm_java.lock.json",
-    repo_name = "bookworm_java",
-)
-version.from_lock(
-    lock = "//private/repos/deb:bookworm.lock.json",
-    repo_name = "bookworm",
-)
-version.from_lock(
-    lock = "//private/repos/deb:trixie.lock.json",
-    repo_name = "trixie",
-)
+
+[
+    version.from_lock(
+        lock = "//private/repos/deb:{}.lock.json".format(repo),
+        repo_name = repo,
+    )
+    for repo in REPOS
+]
+
 use_repo(version, "versions")
