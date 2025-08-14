@@ -114,7 +114,7 @@ def base_images(distro):
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
                     deb.package(arch, distro, "libc6"),
-                    deb.package(arch, distro, "libssl3"),
+                    deb.package(arch, distro, "libssl3" if distro == "debian12" else "libssl3t64"),
                 ],
             )
 

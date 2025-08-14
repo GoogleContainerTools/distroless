@@ -22,7 +22,14 @@ apt.install(
     package_template = "//private/repos/deb:package.BUILD.tmpl",
     resolve_transitive = False,
 )
-use_repo(apt, "bookworm", "bookworm_java", "bookworm_python")
+use_repo(apt, "bookworm", "bookworm_java", "bookworm_python", "trixie")
+apt.install(
+    name = "trixie",
+    lock = "//private/repos/deb:trixie.lock.json",
+    manifest = "//private/repos/deb:trixie.yaml",
+    package_template = "//private/repos/deb:package.BUILD.tmpl",
+    resolve_transitive = False,
+)
 
 ### VERSIONS HUB REPO ###
 version = use_extension("//private/extensions:version.bzl", "version")
@@ -37,5 +44,9 @@ version.from_lock(
 version.from_lock(
     lock = "//private/repos/deb:bookworm.lock.json",
     repo_name = "bookworm",
+)
+version.from_lock(
+    lock = "//private/repos/deb:trixie.lock.json",
+    repo_name = "trixie",
 )
 use_repo(version, "versions")
