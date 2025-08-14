@@ -43,6 +43,11 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs22-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs24-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le |
+
+#### Debian 13
+
+| Image                                 | Tags                                  | Architecture Suffixes             |
+| ------------------------------------- | ------------------------------------- | --------------------------------- |
 | gcr.io/distroless/static-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-debian13       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
