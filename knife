@@ -27,6 +27,7 @@ function cmd_lock() {
     echo ""
     # temporarily hardcode right now (query doesn't work after bzl mod)
     local repos=$(cat <<EOL
+trixie
 bookworm
 bookworm_java
 bookworm_python

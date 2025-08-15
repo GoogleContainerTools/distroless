@@ -9,6 +9,9 @@ DIST_ALIAS = dict(
     # bookworm
     debian12 = "bookworm",
     bookworm = "debian12",
+    # trixie
+    debian13 = "trixie",
+    trixie = "debian13",
 )
 
 ARCH_ALIAS = dict(

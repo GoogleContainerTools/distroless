@@ -5,6 +5,7 @@ ARCHITECTURES = BASE_ARCHITECTURES + ["arm", "s390x", "ppc64le"]
 VERSIONS = [
     ("debian11", "bullseye", "11"),  # deprecated
     ("debian12", "bookworm", "12"),
+    ("debian13", "trixie", "13"),
 ]
 
 VARIANTS = {

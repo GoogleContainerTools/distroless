@@ -1,1 +1,1 @@
-DISTROS = ["debian12"]
+DISTROS = ["debian12", "debian13"]
