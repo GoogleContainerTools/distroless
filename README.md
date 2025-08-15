@@ -1,4 +1,4 @@
-# "Distroless" Container Images
+# "Distroless" Container Images.
 
 [![CI Build Status](https://github.com/GoogleContainerTools/distroless/actions/workflows/ci.yaml/badge.svg)](https://github.com/GoogleContainerTools/distroless/actions/workflows/ci.yaml)
 
@@ -43,15 +43,6 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs22-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs24-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le |
-
-#### Debian 13
-
-| Image                                 | Tags                                  | Architecture Suffixes             |
-| ------------------------------------- | ------------------------------------- | --------------------------------- |
-| gcr.io/distroless/static-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-debian13       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/cc-debian13         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 
 These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian12:latest-amd64`
 
@@ -175,7 +166,7 @@ See here for more information on how these images are [built and released](RELEA
 
 ### Base Operating System
 
-Distroless images are based on Debian 12 (bookworm) and Debian 13 (trixie). Images are explicitly tagged with Debian version suffixes (e.g. `-debian12`). Specifying an image without the distribution will currently select `-debian12` images, but that will change in the future to a newer version of Debian. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
+Distroless images are based on Debian 12 (bookworm). Images are explicitly tagged with Debian version suffixes (e.g. `-debian12`). Specifying an image without the distribution will currently select `-debian12` images, but that will change in the future to a newer version of Debian. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
 
 ### Operating System Updates for Security Fixes and CVEs
 
