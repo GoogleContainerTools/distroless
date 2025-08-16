@@ -17,7 +17,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Update snapshots
         run: ./knife update-java-archives

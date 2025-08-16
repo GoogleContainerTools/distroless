@@ -15,7 +15,7 @@ jobs:
     name: Check lockfile up to date
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check lockfile
         run: bazel mod deps --lockfile_mode=error
 
@@ -23,7 +23,7 @@ jobs:
     name: CI build and unit test
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Mount bazel caches
         uses: actions/cache@v4
         with:
@@ -61,7 +61,7 @@ jobs:
     name: CI image tests
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Mount bazel caches
         uses: actions/cache@v4
         with:
