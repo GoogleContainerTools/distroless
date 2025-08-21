@@ -48,6 +48,16 @@ These images refer to image indexes with references to all supported architectur
 
 Any other tags are considered deprecated and are no longer updated
 
+#### Debian 13 Preview
+
+These images are not considered stable and may change in subtle ways that break your application. They are made available to allow testing of your systems before upgrading. We will stabilize these in the near future at which point you should revalidate with the latest releases.
+
+| Image                                 | Tags                                  | Architecture Suffixes             |
+| ------------------------------------- | ------------------------------------- | --------------------------------- |
+| gcr.io/distroless/static-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-debian13       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+
 ## Why is distroless still using gcr.io instead of pkg.dev?
 
 Distroless's serving infrastructure has moved to artifact registry but we still use the gcr.io domain. Users will get the benefits of the newer infrastructure without changing their builds.
@@ -58,7 +68,7 @@ All distroless images are signed by [cosign](https://github.com/sigstore/cosign)
 We recommend verifying any distroless image you use before building your image. You can verify the keyless signature of any distroless image with:
 
 ```sh
-cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com  --certificate-identity keyless@distroless.iam.gserviceaccount.com
+cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com --certificate-identity keyless@distroless.iam.gserviceaccount.com
 ```
 
 ### Entrypoints
