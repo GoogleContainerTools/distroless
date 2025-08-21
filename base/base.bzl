@@ -109,12 +109,16 @@ def base_images(distro):
                 ],
             )
 
+            LIBSSL = {
+                "debian12": "libssl3",
+                "debian13": "libssl3t64",
+            }
             oci_image(
                 name = "base_" + user + "_" + arch + "_" + distro,
                 base = ":static_" + user + "_" + arch + "_" + distro,
                 tars = [
                     deb.package(arch, distro, "libc6"),
-                    deb.package(arch, distro, "libssl3"),
+                    deb.package(arch, distro, LIBSSL[distro]),
                 ],
             )
 
