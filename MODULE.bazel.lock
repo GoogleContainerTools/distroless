@@ -242,7 +242,7 @@
     "//private/extensions:java.bzl%java": {
       "general": {
         "bzlTransitiveDigest": "xA9/9EmgDlmI4ZuH2MBFL7dcaYOBIX93jKc1bXXdBLc=",
-        "usagesDigest": "ATQmEz7b8eMtBJzMRc8pYogIJ4cBjVN9IflYltDjXYI=",
+        "usagesDigest": "IfaWsqnYQnHnf4XjhFEJ323hjIB3HTlNN8yNstrbwSg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
