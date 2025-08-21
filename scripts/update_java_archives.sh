@@ -67,12 +67,12 @@ EOM
 cat << EOM
 java.archive(
     name = "temurin21_${variant}_${arch_deb}",
+    architecture = "${arch_deb}",
+    plain_version = "${plain_version}",
     sha256 = "${sha256}",
     strip_prefix = "${release_name}${strip_prefix_suffix}",
     urls = ["${archive_url}"],
     version = "${version}",
-    plain_version = "${plain_version}",
-    architecture = "${arch_deb}",
 )
 EOM
 
