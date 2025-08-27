@@ -1,4 +1,4 @@
-"repositories for java"
+"repositories for java 21"
 
 #VERSION 21.0.8
 
@@ -57,4 +57,3 @@ java.archive(
     urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.8_9.tar.gz"],
     version = "21.0.8+9",
 )
-use_repo(java, "java_versions", "temurin21_jdk_amd64", "temurin21_jdk_arm64", "temurin21_jdk_ppc64le", "temurin21_jre_amd64", "temurin21_jre_arm64", "temurin21_jre_ppc64le")
