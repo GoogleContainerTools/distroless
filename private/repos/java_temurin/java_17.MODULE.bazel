@@ -1,0 +1,59 @@
+"repositories for java 17"
+
+#VERSION 17.0.16
+
+java = use_extension("//private/extensions:java.bzl", "java")
+java.archive(
+    name = "temurin17_jre_amd64",
+    architecture = "amd64",
+    plain_version = "17.0.16",
+    sha256 = "2885b944da3793144d4a86a29524f4d7b68ba155f5c08afa444a3b40f7071892",
+    strip_prefix = "jdk-17.0.16+8-jre",
+    urls = ["https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.16%2B8/OpenJDK17U-jre_x64_linux_hotspot_17.0.16_8.tar.gz"],
+    version = "17.0.16+8",
+)
+java.archive(
+    name = "temurin17_jdk_amd64",
+    architecture = "amd64",
+    plain_version = "17.0.16",
+    sha256 = "166774efcf0f722f2ee18eba0039de2d685b350ee14d7b69e6f83437dafd2af1",
+    strip_prefix = "jdk-17.0.16+8",
+    urls = ["https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.16%2B8/OpenJDK17U-jdk_x64_linux_hotspot_17.0.16_8.tar.gz"],
+    version = "17.0.16+8",
+)
+java.archive(
+    name = "temurin17_jre_arm64",
+    architecture = "arm64",
+    plain_version = "17.0.16",
+    sha256 = "98f9d60be880b6ec551f5f1fcd784971aa573e8d8f5b9923fb0148c25afcd161",
+    strip_prefix = "jdk-17.0.16+8-jre",
+    urls = ["https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.16%2B8/OpenJDK17U-jre_aarch64_linux_hotspot_17.0.16_8.tar.gz"],
+    version = "17.0.16+8",
+)
+java.archive(
+    name = "temurin17_jdk_arm64",
+    architecture = "arm64",
+    plain_version = "17.0.16",
+    sha256 = "423416447885d9e45f96dd9e0b2c1367da5e1b0353e187cfdf9388c9820ac147",
+    strip_prefix = "jdk-17.0.16+8",
+    urls = ["https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.16%2B8/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.16_8.tar.gz"],
+    version = "17.0.16+8",
+)
+java.archive(
+    name = "temurin17_jre_ppc64le",
+    architecture = "ppc64le",
+    plain_version = "17.0.16",
+    sha256 = "a0a3e94b278a869a2a03802cd549ca0ecdfe1f568175a8ddac113613ee9a8bb9",
+    strip_prefix = "jdk-17.0.16+8-jre",
+    urls = ["https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.16%2B8/OpenJDK17U-jre_ppc64le_linux_hotspot_17.0.16_8.tar.gz"],
+    version = "17.0.16+8",
+)
+java.archive(
+    name = "temurin17_jdk_ppc64le",
+    architecture = "ppc64le",
+    plain_version = "17.0.16",
+    sha256 = "eb020f74e00870379522be0b44fc6322c2214e77971c258400c8b5af704d5c0a",
+    strip_prefix = "jdk-17.0.16+8",
+    urls = ["https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.16%2B8/OpenJDK17U-jdk_ppc64le_linux_hotspot_17.0.16_8.tar.gz"],
+    version = "17.0.16+8",
+)

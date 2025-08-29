@@ -17,7 +17,9 @@ set -o pipefail -o errexit -o nounset
 # a collection of functions to use when updating java archives from the knife utility
 
 function get_java_version() {
-  grep "#VERSION " ./private/repos/java.MODULE.bazel | cut -d" " -f2
+  : "${1:?Error: java major version required}"
+  local major_version=$1
+  grep "#VERSION " "./private/repos/java_temurin/java_${major_version}.MODULE.bazel" | cut -d" " -f2
 }
 
 function underscore_encode() {
@@ -25,9 +27,12 @@ function underscore_encode() {
 }
 
 function generate_java_archives() {
+  : "${1:?Error: java major version required}"
   local releases latest_release release_name version plain_version archs archs_deb variants
 
-  releases=$(curl -sSL https://api.github.com/repos/adoptium/temurin21-binaries/releases)
+  local major_version=$1
+
+  releases=$(curl -sSL "https://api.github.com/repos/adoptium/temurin${major_version}-binaries/releases")
   latest_release=$(echo "$releases" | jq -r 'map(select(.name | test("jdk-([0-9.]+)(\\+([0-9]+))?"))) | sort_by(.published_at) | last')
   release_name=$(echo "$latest_release" | jq -r '.name')
   version=${release_name#jdk-}
@@ -37,7 +42,7 @@ function generate_java_archives() {
   variants=("jre" "jdk")
 
 cat << EOM
-"repositories for java"
+"repositories for java ${major_version}"
 
 #VERSION ${plain_version}
 
@@ -50,7 +55,7 @@ EOM
 
       arch=${archs[arch_index]}
       arch_deb=${archs_deb[arch_index]}
-      name="OpenJDK21U-${variant}_${arch}_linux_hotspot_$(underscore_encode "${version}").tar.gz"
+      name="OpenJDK${major_version}U-${variant}_${arch}_linux_hotspot_$(underscore_encode "${version}").tar.gz"
       archive_url=$(echo "$latest_release" | jq -r --arg NAME "$name" '.assets | .[] | select(.name==$NAME) | .browser_download_url')
       : ${archive_url:?"no url found for '${name}'"}
       sha256_name="${name}.sha256.txt"
@@ -66,7 +71,7 @@ EOM
 
 cat << EOM
 java.archive(
-    name = "temurin21_${variant}_${arch_deb}",
+    name = "temurin${major_version}_${variant}_${arch_deb}",
     architecture = "${arch_deb}",
     plain_version = "${plain_version}",
     sha256 = "${sha256}",
@@ -78,14 +83,16 @@ EOM
 
     done
   done
-
-cat << EOM
-use_repo(java, "java_versions", "temurin21_jdk_amd64", "temurin21_jdk_arm64", "temurin21_jdk_ppc64le", "temurin21_jre_amd64", "temurin21_jre_arm64", "temurin21_jre_ppc64le")
-EOM
 }
 
 function update_test_versions_java21() {
   local old_version=${1?:"no old version set in param 1"}
   local new_version=${2?:"no new version set in param 2"}
   sed -i -e "s/$old_version/$new_version/g" java/testdata/java21_*
+}
+
+function update_test_versions_java17() {
+  local old_version=${1?:"no old version set in param 1"}
+  local new_version=${2?:"no new version set in param 2"}
+  sed -i -e "s/$old_version/$new_version/g" java/testdata/java17_debian13
 }

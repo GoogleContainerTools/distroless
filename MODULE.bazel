@@ -36,25 +36,13 @@ go_deps.module(
 )
 use_repo(go_deps, "com_github_spdx_tools_golang")
 
-### JETTY ###
-http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-http_archive(
-    name = "jetty",
-    add_prefix = "output",
-    build_file = "//java:BUILD.jetty",
-    sha256 = "b04b4cd45f3bf3c09a26bdf7f4e8d1a67e1a0f224ef4539534a0719b2c701088",
-    strip_prefix = "jetty-distribution-9.4.53.v20231009/",
-    urls = ["https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.53.v20231009/jetty-distribution-9.4.53.v20231009.tar.gz"],
-)
-
 ### BUSYBOX ###
 busybox = use_extension("//private/extensions:busybox.bzl", "busybox")
 busybox.archive()
 use_repo(busybox, "busybox_amd64", "busybox_arm", "busybox_arm64", "busybox_ppc64le", "busybox_s390x")
 
 ### JAVA ###
-include("//private/repos:java.MODULE.bazel")
+include("//private/repos/java_temurin:java.MODULE.bazel")
 
 ### NODE ###
 node = use_extension("//private/extensions:node.bzl", "node")

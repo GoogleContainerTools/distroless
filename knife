@@ -136,11 +136,14 @@ function cmd_lint () {
 }
 
 function cmd_update_java_archives () {
-    source scripts/update_java_archives.sh
-    old_version=$(get_java_version)
-    generate_java_archives > private/repos/java.MODULE.bazel
-    new_version=$(get_java_version)
+    source knife.d/update_java_archives.sh
+    old_version=$(get_java_version 21)
+    generate_java_archives 21 > private/repos/java_temurin/java_21.MODULE.bazel
+    new_version=$(get_java_version 21)
     update_test_versions_java21 $old_version $new_version
+
+    # java 17 set up
+    generate_java_archives 17 > private/repos/java_temurin/java_17.MODULE.bazel
 }
 
 function cmd_update_node_archives () {
@@ -168,7 +171,7 @@ function cmd_update_node_archives () {
     done
 
     joined_versions=$(IFS=, ; echo "${versions[*]}")
-    node scripts/update_node_archives.js "$joined_versions"
+    node knife.d/update_node_archives.js "$joined_versions"
 }
 
 
@@ -177,6 +180,9 @@ function cmd_test () {
     echo ""
 
     local arch=$(uname -m)
+    if [ ${arch} == "x86_64" ]; then
+      arch="amd64"
+    fi
 
     echo "💡 only including image tests for $arch"
     echo ""
