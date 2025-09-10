@@ -1,5 +1,5 @@
 load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
-load("//base:distro.bzl", "DISTROS")
+load("//base:distro.bzl", "DISTROS", "PREVIEW_DISTROS")
 load("//private/oci:defs.bzl", "sign_and_push_all")
 load("//nodejs:node_arch.bzl", "node_arch")
 
@@ -31,14 +31,14 @@ STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 # oci_image_index
 STATIC |= {
     "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base: "//base:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in STATIC_VARIANTS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 ## BASE
@@ -65,14 +65,14 @@ BASE |= {
     "{REGISTRY}/{PROJECT_ID}/base-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in ARCHITECTURES
     for (tag_base, label, user) in BASE_VARIANTS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 # oci_image_index
 BASE |= {
     "{REGISTRY}/{PROJECT_ID}/base-" + distro + ":" + tag_base: "//base:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in BASE_VARIANTS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 ## BASE NOSSL
@@ -99,14 +99,14 @@ BASE_NOSSL |= {
     "{REGISTRY}/{PROJECT_ID}/base-nossl-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in ARCHITECTURES
     for (tag_base, label, user) in BASE_NOSSL_VARIANTS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 # oci_image_index
 BASE_NOSSL |= {
     "{REGISTRY}/{PROJECT_ID}/base-nossl-" + distro + ":" + tag_base: "//base:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in BASE_NOSSL_VARIANTS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 ## CC
