@@ -18,6 +18,7 @@ bazel_dep(name = "rules_cc", version = "0.2.8")
 ### OCI ###
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 oci.toolchains(crane_version = "v0.18.0")
+use_repo(oci, "oci_crane_toolchains")
 
 ### PYTHON ###
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
