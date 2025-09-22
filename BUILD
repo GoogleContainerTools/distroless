@@ -1,7 +1,7 @@
 load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
 load("//base:distro.bzl", "DISTROS")
-load("//private/oci:defs.bzl", "sign_and_push_all")
 load("//nodejs:node_arch.bzl", "node_arch")
+load("//private/oci:defs.bzl", "sign_and_push_all")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -279,16 +279,10 @@ JAVA17 |= {
 }
 
 ## JAVA 21 from temurin
-JAVA_21_ARCHITECTURES = [
-    "amd64",
-    "arm64",
-    "ppc64le",
-]
-
 JAVA21 = {
     "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base + "-" + arch: "//java:java21_" + label + "_" + arch + "_debian12"
     for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_21_ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
 }
 
 # oci_image_index
@@ -299,6 +293,24 @@ JAVA21 |= {
 
 JAVA21 |= {
     "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base: "//java:java21_" + label + "_debian12"
+    for (tag_base, label) in JAVA_VARIATIONS
+}
+
+## Java 25 from temurin
+JAVA25 = {
+    "{REGISTRY}/{PROJECT_ID}/java25-debian12:" + tag_base + "-" + arch: "//java:java25_" + label + "_" + arch + "_debian12"
+    for (tag_base, label) in JAVA_VARIATIONS
+    for arch in JAVA_ARCHITECTURES
+}
+
+# oci_image_index
+JAVA25 |= {
+    "{REGISTRY}/{PROJECT_ID}/java25:" + tag_base: "//java:java25_" + label + "_" + DEFAULT_DISTRO
+    for (tag_base, label) in JAVA_VARIATIONS
+}
+
+JAVA25 |= {
+    "{REGISTRY}/{PROJECT_ID}/java25-debian12:" + tag_base: "//java:java25_" + label + "_debian12"
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
@@ -321,6 +333,8 @@ ALL |= JAVA_BASE
 ALL |= JAVA17
 
 ALL |= JAVA21
+
+ALL |= JAVA25
 
 # create additional tags by appending COMMIT_SHA to all tags
 # remove "latest" if they contain it (this is brittle if we make funky changes):

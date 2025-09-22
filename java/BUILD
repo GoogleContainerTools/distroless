@@ -22,13 +22,6 @@ JAVA_ARCHITECTURES = [
     "ppc64le",
 ]
 
-JAVA_21_ARCHITECTURES = [
-    "amd64",
-    "arm64",
-    # "s390x", adoptium doesn't have a build yet
-    "ppc64le",
-]
-
 JAVA_VERSIONS_PER_DISTRO = [
     ("17", "debian12"),
 ]
@@ -60,7 +53,7 @@ JAVA_VERSIONS_PER_DISTRO = [
     for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
-# special case for java 21, we will start using temurin, the goal is to slowly transition all builds
+# special case for java 21 and 25, we will start using temurin, the goal is to slowly transition all builds
 # to temurin, to also back support java 11 on debian12.
 [
     pkg_tar(
@@ -72,8 +65,8 @@ JAVA_VERSIONS_PER_DISTRO = [
             "@temurin" + java_version + "_jre_" + arch,
         ],
     )
-    for arch in JAVA_21_ARCHITECTURES
-    for java_version in ["21"]
+    for arch in JAVA_ARCHITECTURES
+    for java_version in ["21", "25"]
 ]
 
 [
@@ -86,8 +79,8 @@ JAVA_VERSIONS_PER_DISTRO = [
             "@temurin" + java_version + "_jdk_" + arch,
         ],
     )
-    for arch in JAVA_21_ARCHITECTURES
-    for java_version in ["21"]
+    for arch in JAVA_ARCHITECTURES
+    for java_version in ["21", "25"]
 ]
 
 # Base
@@ -248,17 +241,17 @@ JAVA_VERSIONS_PER_DISTRO = [
     for java_version, distro in JAVA_VERSIONS_PER_DISTRO
 ]
 
-# Temurin Java 21
+# Temurin Java 21 & 25
 [
     oci_image_index(
         name = "java" + java_version + "_" + user + "_" + distro,
         images = [
             "java" + java_version + "_" + user + "_" + arch + "_" + distro
-            for arch in JAVA_21_ARCHITECTURES
+            for arch in JAVA_ARCHITECTURES
         ],
     )
     for user in USERS
-    for java_version, distro in [("21", "debian12")]
+    for java_version, distro in [("21", "debian12"), ("25", "debian12")]
 ]
 
 [
@@ -278,22 +271,22 @@ JAVA_VERSIONS_PER_DISTRO = [
             ":temurin_jre_" + java_version + "_" + arch,
         ],
     )
-    for arch in JAVA_21_ARCHITECTURES
+    for arch in JAVA_ARCHITECTURES
     for user in USERS
-    for java_version, distro in [("21", "debian12")]
+    for java_version, distro in [("21", "debian12"), ("25", "debian12")]
 ]
 
-# Temurin Java 21 Debug
+# Temurin Java 21 & 25 Debug
 [
     oci_image_index(
         name = "java" + java_version + "_debug_" + user + "_" + distro,
         images = [
             "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro
-            for arch in JAVA_21_ARCHITECTURES
+            for arch in JAVA_ARCHITECTURES
         ],
     )
     for user in USERS
-    for java_version, distro in [("21", "debian12")]
+    for java_version, distro in [("21", "debian12"), ("25", "debian12")]
 ]
 
 [
@@ -314,8 +307,8 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for arch in JAVA_21_ARCHITECTURES
-    for java_version, distro in [("21", "debian12")]
+    for arch in JAVA_ARCHITECTURES
+    for java_version, distro in [("21", "debian12"), ("25", "debian12")]
 ]
 
 [
@@ -348,8 +341,8 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12")]
-    for arch in (JAVA_ARCHITECTURES if java_version != "21" else JAVA_21_ARCHITECTURES)
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12"), ("25", "debian12")]
+    for arch in JAVA_ARCHITECTURES
 ]
 
 [
@@ -363,8 +356,8 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12")]
-    for arch in (JAVA_ARCHITECTURES if java_version != "21" else JAVA_21_ARCHITECTURES)
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12") , ("25", "debian12")]
+    for arch in JAVA_ARCHITECTURES
 ]
 
 RULE_NAMES = [
@@ -372,6 +365,8 @@ RULE_NAMES = [
     ("java17_nonroot_debian12", "java17_nonroot_amd64_debian12"),
     ("java21_root_debian12", "java21_root_amd64_debian12"),
     ("java21_nonroot_debian12", "java21_nonroot_amd64_debian12"),
+    ("java25_root_debian12", "java25_root_amd64_debian12"),
+    ("java25_nonroot_debian12", "java25_nonroot_amd64_debian12"),
 ]
 
 [
