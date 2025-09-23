@@ -221,9 +221,13 @@ NODEJS |= {
 }
 
 ## JAVA_BASE
-JAVA_ARCHITECTURES = BASE_ARCHITECTURES + [
+JAVA_OPENJDK_ARCHITECTURES = BASE_ARCHITECTURES + [
     "s390x",
     "ppc64le",
+]
+
+JAVA_TEMURIN_ARCHITECTURES = JAVA_OPENJDK_ARCHITECTURES + [
+    "riscv64",
 ]
 
 JAVA_VARIATIONS = [
@@ -246,7 +250,7 @@ JAVA_BASE = {
 
 JAVA_BASE |= {
     "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian12"
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
@@ -270,7 +274,7 @@ JAVA17 = {
 JAVA17 |= {
     "{REGISTRY}/{PROJECT_ID}/java17-debian12:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian12"
     for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
 }
 
 JAVA17 |= {
@@ -282,7 +286,7 @@ JAVA17 |= {
 JAVA21 = {
     "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base + "-" + arch: "//java:java21_" + label + "_" + arch + "_debian12"
     for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_TEMURIN_ARCHITECTURES
 }
 
 # oci_image_index
@@ -297,12 +301,10 @@ JAVA21 |= {
 }
 
 ## Java 25 from temurin, available on debian13
-JAVA_25_ARCHITECTURES = JAVA_ARCHITECTURES + ["riscv64"]
-
 JAVA25 = {
     "{REGISTRY}/{PROJECT_ID}/java25-debian13:" + tag_base + "-" + arch: "//java:java25_" + label + "_" + arch + "_debian13"
     for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_25_ARCHITECTURES
+    for arch in JAVA_TEMURIN_ARCHITECTURES
 }
 
 # oci_image_index
