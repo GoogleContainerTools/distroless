@@ -296,9 +296,9 @@ JAVA21 |= {
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
-## Java 25 from temurin
+## Java 25 from temurin, available on debian13
 JAVA25 = {
-    "{REGISTRY}/{PROJECT_ID}/java25-debian12:" + tag_base + "-" + arch: "//java:java25_" + label + "_" + arch + "_debian12"
+    "{REGISTRY}/{PROJECT_ID}/java25-debian13:" + tag_base + "-" + arch: "//java:java25_" + label + "_" + arch + "_debian13"
     for (tag_base, label) in JAVA_VARIATIONS
     for arch in JAVA_ARCHITECTURES
 }
@@ -310,7 +310,7 @@ JAVA25 |= {
 }
 
 JAVA25 |= {
-    "{REGISTRY}/{PROJECT_ID}/java25-debian12:" + tag_base: "//java:java25_" + label + "_debian12"
+    "{REGISTRY}/{PROJECT_ID}/java25-debian13:" + tag_base: "//java:java25_" + label + "_debian13"
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
