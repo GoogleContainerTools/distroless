@@ -49,16 +49,17 @@ java.archive(
     name = "temurin21_jre_s390x",
     architecture = "s390x",
     plain_version = "21.0.8",
-    sha256 = "d4b8f3e2c1a4b5e6f7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8g9h0",
+    sha256 = "7f2f9e48cc0e970b671b4ee8c69bf98002e27e4546e0c33071a2ecac38a8154c",
     strip_prefix = "jdk-21.0.8+9-jre",
     urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jre_s390x_linux_hotspot_21.0.8_9.tar.gz"],
+    version = "21.0.8+9",
 )
 java.archive(
     name = "temurin21_jdk_s390x",
     architecture = "s390x",
     plain_version = "21.0.8",
     sha256 = "a84e3cbf8bb5f8a313e06b790c7bc388687ba00262e981f5e33432ebd4d34356",
-    strip_prefix = "jdk-21.0.8+9-jre",
+    strip_prefix = "jdk-21.0.8+9",
     urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_s390x_linux_hotspot_21.0.8_9.tar.gz"],
     version = "21.0.8+9",
 )
