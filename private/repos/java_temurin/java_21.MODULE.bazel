@@ -82,3 +82,23 @@ java.archive(
     urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.8_9.tar.gz"],
     version = "21.0.8+9",
 )
+
+# riscv64 JRE and JDK
+java.archive(
+    name = "temurin21_jre_riscv64",
+    architecture = "riscv64",
+    plain_version = "21.0.8",
+    sha256 = "1c87410971cd7c3cd175bfe81cfecbe83462a64291caf1055cdcc0feb56e907d",
+    strip_prefix = "jdk-21.0.8+9-jre",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jre_riscv64_linux_hotspot_21.0.8_9.tar.gz"],
+    version = "21.0.8+9",
+)
+java.archive(
+    name = "temurin21_jdk_riscv64",
+    architecture = "riscv64",
+    plain_version = "21.0.8",
+    sha256 = "8171d95189e675e297b5cb96c7ac6247ab4e9f48da82b13f491fc46ef5d97836",
+    strip_prefix = "jdk-21.0.8+9",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_riscv64_linux_hotspot_21.0.8_9.tar.gz"],
+    version = "21.0.8+9",
+)

@@ -83,3 +83,23 @@ java.archive(
     urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jdk_ppc64le_linux_hotspot_25_36.tar.gz"],
     version = "25+36",
 )
+
+# riscv64 JRE and JDK
+java.archive(
+    name = "temurin25_jre_riscv64",
+    architecture = "riscv64",
+    plain_version = "25",
+    sha256 = "3ec1d5906104fb273821a5865235b673fcd2b55674c5aee68d15b429fdc7837c",
+    strip_prefix = "jdk-25+36-jre",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jre_riscv64_linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)
+java.archive(
+    name = "temurin25_jdk_riscv64",
+    architecture = "riscv64",
+    plain_version = "25",
+    sha256 = "3fc35759502b620f010a9cd2b3da8454f8a49a156ceaebb00de1fd8335682d40",
+    strip_prefix = "jdk-25+36",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jdk_riscv64_linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)

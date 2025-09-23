@@ -297,15 +297,17 @@ JAVA21 |= {
 }
 
 ## Java 25 from temurin, available on debian13
+JAVA_25_ARCHITECTURES = JAVA_ARCHITECTURES + ["riscv64"]
+
 JAVA25 = {
     "{REGISTRY}/{PROJECT_ID}/java25-debian13:" + tag_base + "-" + arch: "//java:java25_" + label + "_" + arch + "_debian13"
     for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_25_ARCHITECTURES
 }
 
 # oci_image_index
 JAVA25 |= {
-    "{REGISTRY}/{PROJECT_ID}/java25:" + tag_base: "//java:java25_" + label + "_" + DEFAULT_DISTRO
+    "{REGISTRY}/{PROJECT_ID}/java25:" + tag_base: "//java:java25_" + label + "_debian13"
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
