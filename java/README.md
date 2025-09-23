@@ -8,7 +8,7 @@ Specifically, the image contains everything in the [base image](../base/README.m
 
 * OpenJDK 17 (`gcr.io/distroless/java17-debian12`) and its dependencies.
 * Temurin OpenJDK 21 (`gcr.io/distroless/java21-debian12`) and its dependencies
-* Temurin OpenJDK 25 (`gcr.io/distroless/java25-debian12`) and its dependencies
+* Temurin OpenJDK 25 (`gcr.io/distroless/java25-debian13`) and its dependencies
 
 ## Usage
 

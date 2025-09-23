@@ -251,7 +251,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for java_version, distro in [("21", "debian12"), ("25", "debian12")]
+    for java_version, distro in [("21", "debian12"), ("25", "debian13")]
 ]
 
 [
@@ -273,7 +273,7 @@ JAVA_VERSIONS_PER_DISTRO = [
     )
     for arch in JAVA_ARCHITECTURES
     for user in USERS
-    for java_version, distro in [("21", "debian12"), ("25", "debian12")]
+    for java_version, distro in [("21", "debian12"), ("25", "debian13")]
 ]
 
 # Temurin Java 21 & 25 Debug
@@ -286,7 +286,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for java_version, distro in [("21", "debian12"), ("25", "debian12")]
+    for java_version, distro in [("21", "debian12"), ("25", "debian13")]
 ]
 
 [
@@ -308,7 +308,7 @@ JAVA_VERSIONS_PER_DISTRO = [
     )
     for user in USERS
     for arch in JAVA_ARCHITECTURES
-    for java_version, distro in [("21", "debian12"), ("25", "debian12")]
+    for java_version, distro in [("21", "debian12"), ("25", "debian13")]
 ]
 
 [
@@ -341,7 +341,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12"), ("25", "debian12")]
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12"), ("25", "debian13")]
     for arch in JAVA_ARCHITECTURES
 ]
 
@@ -356,7 +356,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12") , ("25", "debian12")]
+    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12") , ("25", "debian13")]
     for arch in JAVA_ARCHITECTURES
 ]
 
@@ -365,8 +365,8 @@ RULE_NAMES = [
     ("java17_nonroot_debian12", "java17_nonroot_amd64_debian12"),
     ("java21_root_debian12", "java21_root_amd64_debian12"),
     ("java21_nonroot_debian12", "java21_nonroot_amd64_debian12"),
-    ("java25_root_debian12", "java25_root_amd64_debian12"),
-    ("java25_nonroot_debian12", "java25_nonroot_amd64_debian12"),
+    ("java25_root_debian13", "java25_root_amd64_debian13"),
+    ("java25_nonroot_debian13", "java25_nonroot_amd64_debian13"),
 ]
 
 [
