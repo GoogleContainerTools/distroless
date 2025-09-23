@@ -2,6 +2,7 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@java_versions//:versions.bzl", "JAVA_RELEASE_VERSIONS")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//:checksums.bzl", "BASE_ARCHITECTURES")
 load("//base:distro.bzl", "DISTROS")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", "java_image")
@@ -15,22 +16,28 @@ USERS = [
     "nonroot",
 ]
 
-JAVA_ARCHITECTURES = [
-    "amd64",
-    "arm64",
+JAVA_OPENJDK_ARCHITECTURES = BASE_ARCHITECTURES + [
     "s390x",
     "ppc64le",
 ]
 
-JAVA_21_ARCHITECTURES = [
-    "amd64",
-    "arm64",
-    # "s390x", adoptium doesn't have a build yet
-    "ppc64le",
+JAVA_OPENJDK_VERSIONS_PER_DISTRO = [
+    ("17", "debian12"),
 ]
 
-JAVA_VERSIONS_PER_DISTRO = [
-    ("17", "debian12"),
+# Temurin related variables
+JAVA_TEMURIN_ARCHITECTURES = JAVA_OPENJDK_ARCHITECTURES + [
+    "riscv64",
+]
+
+JAVA_TEMURIN_VERSIONS = [
+    "21",
+    "25",
+]
+
+JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
+    ("21", "debian12"),
+    ("25", "debian13"),
 ]
 
 [
@@ -39,7 +46,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         archive = "//common:cacerts_" + distro + "_" + arch,
     )
     for distro in DISTROS
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
 ]
 
 [
@@ -56,11 +63,11 @@ JAVA_VERSIONS_PER_DISTRO = [
             ),
         ],
     )
-    for arch in JAVA_ARCHITECTURES
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
+    for arch in JAVA_OPENJDK_ARCHITECTURES
+    for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO
 ]
 
-# special case for java 21, we will start using temurin, the goal is to slowly transition all builds
+# special case for java 21 and 25, we will start using temurin, the goal is to slowly transition all builds
 # to temurin, to also back support java 11 on debian12.
 [
     pkg_tar(
@@ -72,8 +79,8 @@ JAVA_VERSIONS_PER_DISTRO = [
             "@temurin" + java_version + "_jre_" + arch,
         ],
     )
-    for arch in JAVA_21_ARCHITECTURES
-    for java_version in ["21"]
+    for arch in JAVA_TEMURIN_ARCHITECTURES
+    for java_version in JAVA_TEMURIN_VERSIONS
 ]
 
 [
@@ -86,8 +93,8 @@ JAVA_VERSIONS_PER_DISTRO = [
             "@temurin" + java_version + "_jdk_" + arch,
         ],
     )
-    for arch in JAVA_21_ARCHITECTURES
-    for java_version in ["21"]
+    for arch in JAVA_TEMURIN_ARCHITECTURES
+    for java_version in JAVA_TEMURIN_VERSIONS
 ]
 
 # Base
@@ -96,7 +103,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         name = "java_base" + mode + "_" + user + "_" + distro,
         images = [
             "java_base" + mode + "_" + user + "_" + arch + "_" + distro
-            for arch in JAVA_ARCHITECTURES
+            for arch in JAVA_OPENJDK_ARCHITECTURES
         ],
     )
     for mode in [
@@ -140,7 +147,7 @@ JAVA_VERSIONS_PER_DISTRO = [
     ]
     for user in USERS
     for distro in DISTROS
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
 ]
 
 [
@@ -162,7 +169,7 @@ JAVA_VERSIONS_PER_DISTRO = [
     ]
     for user in USERS
     for distro in DISTROS
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
 ]
 
 # Java JRE Headless
@@ -171,11 +178,11 @@ JAVA_VERSIONS_PER_DISTRO = [
         name = "java" + java_version + "_" + user + "_" + distro,
         images = [
             "java" + java_version + "_" + user + "_" + arch + "_" + distro
-            for arch in JAVA_ARCHITECTURES
+            for arch in JAVA_OPENJDK_ARCHITECTURES
         ],
     )
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
+    for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -199,9 +206,9 @@ JAVA_VERSIONS_PER_DISTRO = [
             ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
         ],
     )
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
+    for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO
 ]
 
 # Java JRE Headless - Debug
@@ -210,11 +217,11 @@ JAVA_VERSIONS_PER_DISTRO = [
         name = "java" + java_version + "_debug_" + user + "_" + distro,
         images = [
             "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro
-            for arch in JAVA_ARCHITECTURES
+            for arch in JAVA_OPENJDK_ARCHITECTURES
         ],
     )
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
+    for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -244,21 +251,21 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for arch in JAVA_ARCHITECTURES
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO
+    for arch in JAVA_OPENJDK_ARCHITECTURES
+    for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO
 ]
 
-# Temurin Java 21
+# Temurin Java 21 & 25
 [
     oci_image_index(
         name = "java" + java_version + "_" + user + "_" + distro,
         images = [
             "java" + java_version + "_" + user + "_" + arch + "_" + distro
-            for arch in JAVA_21_ARCHITECTURES
+            for arch in JAVA_TEMURIN_ARCHITECTURES
         ],
     )
     for user in USERS
-    for java_version, distro in [("21", "debian12")]
+    for java_version, distro in JAVA_TEMURIN_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -278,22 +285,22 @@ JAVA_VERSIONS_PER_DISTRO = [
             ":temurin_jre_" + java_version + "_" + arch,
         ],
     )
-    for arch in JAVA_21_ARCHITECTURES
+    for arch in JAVA_TEMURIN_ARCHITECTURES
     for user in USERS
-    for java_version, distro in [("21", "debian12")]
+    for java_version, distro in JAVA_TEMURIN_VERSIONS_PER_DISTRO
 ]
 
-# Temurin Java 21 Debug
+# Temurin Java 21 & 25 Debug
 [
     oci_image_index(
         name = "java" + java_version + "_debug_" + user + "_" + distro,
         images = [
             "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro
-            for arch in JAVA_21_ARCHITECTURES
+            for arch in JAVA_TEMURIN_ARCHITECTURES
         ],
     )
     for user in USERS
-    for java_version, distro in [("21", "debian12")]
+    for java_version, distro in JAVA_TEMURIN_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -314,8 +321,8 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for arch in JAVA_21_ARCHITECTURES
-    for java_version, distro in [("21", "debian12")]
+    for arch in JAVA_TEMURIN_ARCHITECTURES
+    for java_version, distro in JAVA_TEMURIN_VERSIONS_PER_DISTRO
 ]
 
 [
@@ -332,7 +339,7 @@ JAVA_VERSIONS_PER_DISTRO = [
         "",
         "_debug",
     ]
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
     for user in USERS
     for distro in DISTROS
 ]
@@ -348,8 +355,8 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12")]
-    for arch in (JAVA_ARCHITECTURES if java_version != "21" else JAVA_21_ARCHITECTURES)
+    for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO + JAVA_TEMURIN_VERSIONS_PER_DISTRO
+    for arch in JAVA_OPENJDK_ARCHITECTURES
 ]
 
 [
@@ -363,8 +370,8 @@ JAVA_VERSIONS_PER_DISTRO = [
         ],
     )
     for user in USERS
-    for java_version, distro in JAVA_VERSIONS_PER_DISTRO + [("21", "debian12")]
-    for arch in (JAVA_ARCHITECTURES if java_version != "21" else JAVA_21_ARCHITECTURES)
+    for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO + JAVA_TEMURIN_VERSIONS_PER_DISTRO
+    for arch in JAVA_OPENJDK_ARCHITECTURES
 ]
 
 RULE_NAMES = [
@@ -372,6 +379,8 @@ RULE_NAMES = [
     ("java17_nonroot_debian12", "java17_nonroot_amd64_debian12"),
     ("java21_root_debian12", "java21_root_amd64_debian12"),
     ("java21_nonroot_debian12", "java21_nonroot_amd64_debian12"),
+    ("java25_root_debian13", "java25_root_amd64_debian13"),
+    ("java25_nonroot_debian13", "java25_nonroot_amd64_debian13"),
 ]
 
 [
