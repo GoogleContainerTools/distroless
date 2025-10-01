@@ -3,7 +3,7 @@ load("@java_versions//:versions.bzl", "JAVA_RELEASE_VERSIONS")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:checksums.bzl", "BASE_ARCHITECTURES")
-load("//base:distro.bzl", "DISTROS")
+load("//base:distro.bzl", "DISTROS", "PREVIEW_DISTROS")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", "java_image")
 load("//private/util:deb.bzl", "deb")
@@ -27,7 +27,7 @@ JAVA_OPENJDK_VERSIONS_PER_DISTRO = [
 
 # Temurin related variables
 JAVA_TEMURIN_ARCHITECTURES = JAVA_OPENJDK_ARCHITECTURES + [
-    "riscv64",
+    # "riscv64" not handled in common/base for now
 ]
 
 JAVA_TEMURIN_VERSIONS = [
@@ -45,8 +45,8 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
         name = "cacerts_java_" + arch + "_" + distro,
         archive = "//common:cacerts_" + distro + "_" + arch,
     )
-    for distro in DISTROS
-    for arch in JAVA_OPENJDK_ARCHITECTURES
+    for distro in DISTROS + PREVIEW_DISTROS
+    for arch in JAVA_TEMURIN_ARCHITECTURES
 ]
 
 [
@@ -67,7 +67,7 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
     for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO
 ]
 
-# special case for java 21 and 25, we will start using temurin, the goal is to slowly transition all builds
+# Starting from java 21, we're using temurin, the goal is to slowly transition all builds
 # to temurin, to also back support java 11 on debian12.
 [
     pkg_tar(
@@ -103,7 +103,7 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
         name = "java_base" + mode + "_" + user + "_" + distro,
         images = [
             "java_base" + mode + "_" + user + "_" + arch + "_" + distro
-            for arch in JAVA_OPENJDK_ARCHITECTURES
+            for arch in JAVA_TEMURIN_ARCHITECTURES
         ],
     )
     for mode in [
@@ -111,7 +111,7 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
         "_debug",
     ]
     for user in USERS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 ]
 
 # a build-base that isn't published, but used to generate our publishable base and as a base for temurin
@@ -146,8 +146,8 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
         "_debug",
     ]
     for user in USERS
-    for distro in DISTROS
-    for arch in JAVA_OPENJDK_ARCHITECTURES
+    for distro in DISTROS + PREVIEW_DISTROS
+    for arch in JAVA_TEMURIN_ARCHITECTURES
 ]
 
 [
@@ -168,11 +168,11 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
         "_debug",
     ]
     for user in USERS
-    for distro in DISTROS
-    for arch in JAVA_OPENJDK_ARCHITECTURES
+    for distro in DISTROS + PREVIEW_DISTROS
+    for arch in JAVA_TEMURIN_ARCHITECTURES
 ]
 
-# Java JRE Headless
+# Java JRE Headless (only for OpenJDK 17)
 [
     oci_image_index(
         name = "java" + java_version + "_" + user + "_" + distro,
@@ -211,7 +211,7 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
     for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO
 ]
 
-# Java JRE Headless - Debug
+# Java JRE Headless - Debug (only for OpenJDK 17)
 [
     oci_image_index(
         name = "java" + java_version + "_debug_" + user + "_" + distro,
@@ -255,7 +255,7 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
     for java_version, distro in JAVA_OPENJDK_VERSIONS_PER_DISTRO
 ]
 
-# Temurin Java 21 & 25
+# Temurin Java 21+ JRE LTS
 [
     oci_image_index(
         name = "java" + java_version + "_" + user + "_" + distro,
@@ -290,7 +290,7 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
     for java_version, distro in JAVA_TEMURIN_VERSIONS_PER_DISTRO
 ]
 
-# Temurin Java 21 & 25 Debug
+# Temurin Java 21+ JDK Debug LTS
 [
     oci_image_index(
         name = "java" + java_version + "_debug_" + user + "_" + distro,
@@ -339,7 +339,7 @@ JAVA_TEMURIN_VERSIONS_PER_DISTRO = [
         "",
         "_debug",
     ]
-    for arch in JAVA_OPENJDK_ARCHITECTURES
+    for arch in JAVA_TEMURIN_ARCHITECTURES
     for user in USERS
     for distro in DISTROS
 ]

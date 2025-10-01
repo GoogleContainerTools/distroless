@@ -227,7 +227,7 @@ JAVA_OPENJDK_ARCHITECTURES = BASE_ARCHITECTURES + [
 ]
 
 JAVA_TEMURIN_ARCHITECTURES = JAVA_OPENJDK_ARCHITECTURES + [
-    "riscv64",
+    # "riscv64" Not handled in common/base for now
 ]
 
 JAVA_VARIATIONS = [
