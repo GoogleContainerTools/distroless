@@ -6,7 +6,7 @@ load("//nodejs:node_arch.bzl", "node_arch")
 
 package(default_visibility = ["//visibility:public"])
 
-NODEJS_MAJOR_VERISONS = ("20", "22", "24")
+NODEJS_MAJOR_VERSIONS = ("20", "22", "24")
 
 MODE = [
     "",
@@ -28,7 +28,7 @@ USER = [
     )
     for mode in MODE
     for user in USER
-    for major_version in NODEJS_MAJOR_VERISONS
+    for major_version in NODEJS_MAJOR_VERSIONS
     for distro in DISTROS
 ]
 
@@ -43,7 +43,7 @@ USER = [
     )
     for mode in MODE
     for user in USER
-    for major_version in NODEJS_MAJOR_VERISONS
+    for major_version in NODEJS_MAJOR_VERSIONS
     for arch in node_arch(major_version)
     for distro in DISTROS
 ]
@@ -64,7 +64,7 @@ USER = [
     )
     for mode in MODE
     for user in USER
-    for major_version in NODEJS_MAJOR_VERISONS
+    for major_version in NODEJS_MAJOR_VERSIONS
     for arch in node_arch(major_version)
     for distro in DISTROS
 ]
@@ -84,7 +84,7 @@ pkg_tar(
     )
     for mode in MODE
     for user in USER
-    for major_version in NODEJS_MAJOR_VERISONS
+    for major_version in NODEJS_MAJOR_VERSIONS
     for arch in node_arch(major_version)
     for distro in DISTROS
 ]
@@ -101,7 +101,7 @@ pkg_tar(
     )
     for mode in MODE
     for user in USER
-    for major_version in NODEJS_MAJOR_VERISONS
+    for major_version in NODEJS_MAJOR_VERSIONS
     for arch in node_arch(major_version)
     for distro in DISTROS
 ]
