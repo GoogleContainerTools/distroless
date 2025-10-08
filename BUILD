@@ -133,14 +133,14 @@ CC |= {
     "{REGISTRY}/{PROJECT_ID}/cc-" + distro + ":" + tag_base + "-" + arch: "//cc:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in ARCHITECTURES
     for (tag_base, label, user) in CC_VARIANTS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 # oci_image_index
 CC |= {
     "{REGISTRY}/{PROJECT_ID}/cc-" + distro + ":" + tag_base: "//cc:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in CC_VARIANTS
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 ## PYTHON3
