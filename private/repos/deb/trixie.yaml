@@ -27,7 +27,7 @@ packages:
   - tzdata
   - media-types
   # c++
-  - gcc-12-base
+  - gcc-14-base
   - libgcc-s1
   - libgomp1
   - libstdc++6

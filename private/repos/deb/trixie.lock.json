@@ -102,13 +102,13 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "gcc-12-base_12.4.0-5_amd64",
-			"name": "gcc-12-base",
-			"sha256": "df84249e59643841cd2ccc7faec7c836da4c567520d76d5b5e380d2a8f7aa30b",
+			"key": "gcc-14-base_14.2.0-19_amd64",
+			"name": "gcc-14-base",
+			"sha256": "5b6825de4263824b78c4c51f6476414f3b4e89c2ab63e81dc8b9b5501e867cf6",
 			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-12/gcc-12-base_12.4.0-5_amd64.deb"
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-14/gcc-14-base_14.2.0-19_amd64.deb"
 			],
-			"version": "12.4.0-5"
+			"version": "14.2.0-19"
 		},
 		{
 			"arch": "amd64",
@@ -245,13 +245,13 @@
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "gcc-12-base_12.4.0-5_arm64",
-			"name": "gcc-12-base",
-			"sha256": "df5b56a2e55197bc7944a95103ab4c2a886ab53b6f5cafd7e5ce9a312c3a0f40",
+			"key": "gcc-14-base_14.2.0-19_arm64",
+			"name": "gcc-14-base",
+			"sha256": "34ee90679b018c0e64234747a4c4c0ae6b7f63541115037465a8627c2dfbc594",
 			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-12/gcc-12-base_12.4.0-5_arm64.deb"
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-14/gcc-14-base_14.2.0-19_arm64.deb"
 			],
-			"version": "12.4.0-5"
+			"version": "14.2.0-19"
 		},
 		{
 			"arch": "arm64",
@@ -388,13 +388,13 @@
 		{
 			"arch": "armhf",
 			"dependencies": [],
-			"key": "gcc-12-base_12.4.0-5_armhf",
-			"name": "gcc-12-base",
-			"sha256": "da9ae9b45aa56a77230d78a4c246ed7fba09300a2666509b258a6c1a07880e9b",
+			"key": "gcc-14-base_14.2.0-19_armhf",
+			"name": "gcc-14-base",
+			"sha256": "0f702fdd5e5471efda9fece892e09ce73e3447968083e1f8c341f8b66b1fb340",
 			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-12/gcc-12-base_12.4.0-5_armhf.deb"
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-14/gcc-14-base_14.2.0-19_armhf.deb"
 			],
-			"version": "12.4.0-5"
+			"version": "14.2.0-19"
 		},
 		{
 			"arch": "armhf",
@@ -531,13 +531,13 @@
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "gcc-12-base_12.4.0-5_s390x",
-			"name": "gcc-12-base",
-			"sha256": "d6ed8f87bd781f4fe9912d1e4a6689321066980f8ac7f920bc894d50129f7e28",
+			"key": "gcc-14-base_14.2.0-19_s390x",
+			"name": "gcc-14-base",
+			"sha256": "7db20fd710eadefff128e82b4d4de68b466ce2aa1c53255004eb1d3d1d168495",
 			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-12/gcc-12-base_12.4.0-5_s390x.deb"
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-14/gcc-14-base_14.2.0-19_s390x.deb"
 			],
-			"version": "12.4.0-5"
+			"version": "14.2.0-19"
 		},
 		{
 			"arch": "s390x",
@@ -674,13 +674,13 @@
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
-			"key": "gcc-12-base_12.4.0-5_ppc64el",
-			"name": "gcc-12-base",
-			"sha256": "30cb4d16c260634daada2ed34a19f2920bbd7172c0acce1000b37abb00435ac9",
+			"key": "gcc-14-base_14.2.0-19_ppc64el",
+			"name": "gcc-14-base",
+			"sha256": "ebb80291fedd8db88488eef76573df0b4a1a11648a16406d9a0c0d4aaf229593",
 			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-12/gcc-12-base_12.4.0-5_ppc64el.deb"
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-14/gcc-14-base_14.2.0-19_ppc64el.deb"
 			],
-			"version": "12.4.0-5"
+			"version": "14.2.0-19"
 		},
 		{
 			"arch": "ppc64el",
