@@ -31,3 +31,4 @@ packages:
   - libgcc-s1
   - libgomp1
   - libstdc++6
+  - zlib1g
