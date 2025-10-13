@@ -69,7 +69,7 @@ jobs:
             ./verbose.log
             ./report.log
 
-      - uses: peter-evans/find-comment@v3
+      - uses: peter-evans/find-comment@v4
         id: fc
         if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
@@ -79,7 +79,7 @@ jobs:
 
       - name: Report diff
         if: ${{ !github.event.pull_request.head.repo.fork && steps.diff.outputs.changed_targets }}
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -97,7 +97,7 @@ jobs:
 
       - name: Report no diff
         if: ${{ !github.event.pull_request.head.repo.fork && !steps.diff.outputs.changed_targets }}
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}

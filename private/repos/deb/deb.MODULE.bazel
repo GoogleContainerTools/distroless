@@ -17,9 +17,8 @@ apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
         manifest = "//private/repos/deb:{}.yaml".format(repo),
         package_template = "//private/repos/deb:package.BUILD.tmpl",
         resolve_transitive = False,
-        ### TODO: trixie should add merged-usr support. It's added to rules_distroless but not released yet.
-        ### Once released, bump the version and enable the following line.
-        # mergedusr = repo == "trixie",
+        ## merged usr fs is only enabled on debian13+, remove this line once we remove debian12 builds
+        mergedusr = repo == "trixie",
     )
     for repo in REPOS
 ]
