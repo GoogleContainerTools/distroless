@@ -205,7 +205,7 @@
   "moduleExtensions": {
     "//private/extensions:busybox.bzl%busybox": {
       "general": {
-        "bzlTransitiveDigest": "MMn1Rq9fZ92FPOIXpvIYY+gM2pkKFvtUmai4StpCunE=",
+        "bzlTransitiveDigest": "Iz5oDmteknfbugVnj4BHVPqRviEVl3Qlr7hhkvjwRcQ=",
         "usagesDigest": "UCTBBIE9+u3oELYh8ApcyzAQkd2fqSup4Dt7wKNQjRY=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -219,7 +219,7 @@
               "urls": [
                 "https://github.com/docker-library/busybox/raw/09ee80aedec1d8c604f104e8bec41ed19274620a/latest/musl/busybox.tar.xz"
               ],
-              "build_file_content": "filegroup(\r\n    name = \"file\",\r\n    srcs = [\"bin/busybox\"],\r\n    visibility = [\"//visibility:public\"]\r\n)\r\n"
+              "build_file_content": "filegroup(\n    name = \"file\",\n    srcs = [\"bin/busybox\"],\n    visibility = [\"//visibility:public\"]\n)\n"
             }
           },
           "busybox_arm": {
@@ -241,7 +241,7 @@
               "urls": [
                 "https://github.com/docker-library/busybox/raw/e5e22cb0710fe54da4beaa6a72c1bd56b8fc9c54/latest/musl/busybox.tar.xz"
               ],
-              "build_file_content": "filegroup(\r\n    name = \"file\",\r\n    srcs = [\"bin/busybox\"],\r\n    visibility = [\"//visibility:public\"]\r\n)\r\n"
+              "build_file_content": "filegroup(\n    name = \"file\",\n    srcs = [\"bin/busybox\"],\n    visibility = [\"//visibility:public\"]\n)\n"
             }
           },
           "busybox_s390x": {
@@ -263,7 +263,7 @@
               "urls": [
                 "https://github.com/docker-library/busybox/raw/aa059e43d48801abcb012dfa965a432fa12c385d/latest/musl/busybox.tar.xz"
               ],
-              "build_file_content": "filegroup(\r\n    name = \"file\",\r\n    srcs = [\"bin/busybox\"],\r\n    visibility = [\"//visibility:public\"]\r\n)\r\n"
+              "build_file_content": "filegroup(\n    name = \"file\",\n    srcs = [\"bin/busybox\"],\n    visibility = [\"//visibility:public\"]\n)\n"
             }
           }
         },

@@ -18,7 +18,7 @@ apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
         package_template = "//private/repos/deb:package.BUILD.tmpl",
         resolve_transitive = False,
         ## merged usr fs is only enabled on debian13+, remove this line once we remove debian12 builds
-        mergedusr = repo == "trixie",
+        mergedusr = repo.startswith("trixie"),
     )
     for repo in REPOS
 ]
