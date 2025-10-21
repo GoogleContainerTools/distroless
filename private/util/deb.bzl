@@ -20,7 +20,6 @@ ARCH_ALIAS = dict(
     arm64 = "arm64",
     amd64 = "amd64",
     s390x = "s390x",
-    # riscv64 = "riscv64" (might be added later for Java)
 )
 
 def _get_dist_arch_alias(arch, dist):

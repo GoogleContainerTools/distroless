@@ -27,7 +27,6 @@ JAVA_OPENJDK_VERSIONS_PER_DISTRO = [
 
 # Temurin related variables
 JAVA_TEMURIN_ARCHITECTURES = JAVA_OPENJDK_ARCHITECTURES + [
-    # "riscv64" not handled in common/base for now
 ]
 
 JAVA_TEMURIN_VERSIONS = [

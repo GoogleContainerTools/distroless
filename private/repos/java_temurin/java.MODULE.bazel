@@ -18,20 +18,16 @@ use_repo(
     "temurin21_jdk_arm64",
     "temurin21_jdk_s390x",
     "temurin21_jdk_ppc64le",
-    "temurin21_jdk_riscv64",
     "temurin21_jre_amd64",
     "temurin21_jre_arm64",
     "temurin21_jre_s390x",
     "temurin21_jre_ppc64le",
-    "temurin21_jre_riscv64",
     "temurin25_jdk_amd64",
     "temurin25_jdk_arm64",
     "temurin25_jdk_s390x",
     "temurin25_jdk_ppc64le",
-    "temurin25_jdk_riscv64",
     "temurin25_jre_amd64",
     "temurin25_jre_arm64",
     "temurin25_jre_s390x",
-    "temurin25_jre_ppc64le",
-    "temurin25_jre_riscv64"   
+    "temurin25_jre_ppc64le"
 )
