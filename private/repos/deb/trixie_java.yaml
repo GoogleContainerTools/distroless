@@ -35,6 +35,6 @@ packages:
   - openjdk-17-jre-headless
   - zlib1g
   # java image builds off base (not cc)
-  - gcc-12-base
+  - gcc-14-base
   - libgcc-s1
   - libstdc++6
