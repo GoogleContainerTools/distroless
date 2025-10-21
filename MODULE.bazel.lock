@@ -325,7 +325,7 @@
     },
     "//private/extensions:java.bzl%java": {
       "general": {
-        "bzlTransitiveDigest": "WUvylU655EVX8jJ00kGzn6stfpYOUUfjpXkavHcZlZg=",
+        "bzlTransitiveDigest": "xA9/9EmgDlmI4ZuH2MBFL7dcaYOBIX93jKc1bXXdBLc=",
         "usagesDigest": "tOizCfnmKKaq9LgNeI8bdYkZypAlOHnAhaB2ypSQc8c=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -978,14 +978,14 @@
     },
     "//private/extensions:version.bzl%version": {
       "general": {
-        "bzlTransitiveDigest": "Qx3ndA1zTBsLtAfNf4Kxu2hNhZnZ4r8HNG1j03ShHzY=",
+        "bzlTransitiveDigest": "R4DFvckkDacLf0S49tnqO4V7fVVx3CJjcV84+PwKBM4=",
         "usagesDigest": "57mfiVCas9cbKi4jFpTkDwxLcrnXzmW6x8Ej/YNQh9k=",
         "recordedFileInputs": {
-          "@@//private/repos/deb/trixie.lock.json": "6a9cd3535d335344c652b53d05d67a41c5dba0c003fb257a31b21d239d568d0d",
-          "@@//private/repos/deb/bookworm.lock.json": "ed26cda0ca311ebc578696b4324ce79497ff3b200a0ed415a951e4a498baddfe",
-          "@@//private/repos/deb/trixie_java.lock.json": "236f9b9c024ae827ab53f53b662fcf7a706744e415680d68f3070b19994fdf5b",
-          "@@//private/repos/deb/bookworm_java.lock.json": "043f5e009d6350ccfa79eb61d1eac8ce3c786bcc39cffaf7cbd7646cfd8f2ec7",
-          "@@//private/repos/deb/bookworm_python.lock.json": "bcdee82fca326903c3289a0a95f1520df477b73144229fa82f38dbb129264d38"
+          "@@//private/repos/deb/trixie.lock.json": "2366f6d5be1c639e1c7ccc295dbdf18e410d36e6446f42a4e9396c50906e5f1e",
+          "@@//private/repos/deb/bookworm.lock.json": "b3681188885bbc34c2e0b184efc7d7b6c7a4cdff5f7d49d457523e1bd22c763f",
+          "@@//private/repos/deb/trixie_java.lock.json": "67c090e0351e5a526f7b24b3b839da3b2955e501a9c16184b7716d272450492c",
+          "@@//private/repos/deb/bookworm_java.lock.json": "a1e1bd8c976adca355e27438b8556df06d96243560d698d49fc0e0d36329ad1d",
+          "@@//private/repos/deb/bookworm_python.lock.json": "0ecf5a7d56114caac22d5025ce7fe69103ff244a84cdbbc1c45219de2b5c153f"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
