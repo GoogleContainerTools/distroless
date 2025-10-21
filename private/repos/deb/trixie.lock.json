@@ -144,6 +144,17 @@
 			"version": "14.2.0-19"
 		},
 		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_amd64",
+			"name": "zlib1g",
+			"sha256": "015be740d6236ad114582dea500c1d907f29e16d6db00566ca32fb68d71ac90d",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_amd64.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
 			"arch": "arm64",
 			"dependencies": [],
 			"key": "base-files_13.8-p-deb13u1_arm64",
@@ -285,6 +296,17 @@
 				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_arm64.deb"
 			],
 			"version": "14.2.0-19"
+		},
+		{
+			"arch": "arm64",
+			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_arm64",
+			"name": "zlib1g",
+			"sha256": "209aa5cf671e97b9eb0410844fa6df4cae2e75b0c72e7802ab6c8ece13e6ddef",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_arm64.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
 		},
 		{
 			"arch": "armhf",
@@ -430,6 +452,17 @@
 			"version": "14.2.0-19"
 		},
 		{
+			"arch": "armhf",
+			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_armhf",
+			"name": "zlib1g",
+			"sha256": "81c55a59e1570477ecef6a449bf6dce44dad67ba4ce9e04760451d4cfe200534",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_armhf.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
 			"arch": "s390x",
 			"dependencies": [],
 			"key": "base-files_13.8-p-deb13u1_s390x",
@@ -573,6 +606,17 @@
 			"version": "14.2.0-19"
 		},
 		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_s390x",
+			"name": "zlib1g",
+			"sha256": "e38a94c60e944dfcf1937a12b02785afbbb2bedf356da18984c4dac0acc47ed9",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_s390x.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
 			"arch": "ppc64el",
 			"dependencies": [],
 			"key": "base-files_13.8-p-deb13u1_ppc64el",
@@ -714,6 +758,17 @@
 				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_ppc64el.deb"
 			],
 			"version": "14.2.0-19"
+		},
+		{
+			"arch": "ppc64el",
+			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_ppc64el",
+			"name": "zlib1g",
+			"sha256": "f526e830310db11983cf51cfde95a74bc449a7bdc44b6ce68827d78802f1b4ae",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251001T203719Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_ppc64el.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
 		}
 	],
 	"version": 1
