@@ -749,7 +749,7 @@
     },
     "//private/extensions:node.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "1cNekdKtqbtRqt7fNhBAZ6CojpEVj3zqFaLFGFkFyrA=",
+        "bzlTransitiveDigest": "4Sx5PAGDAEE9Oxv104gfKPiU//3q7hepLObXsFnTnqs=",
         "usagesDigest": "oo4hnOxowfXXa21Wd8roJmpRdyG7Fy97FBO9vJoyK/M=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
