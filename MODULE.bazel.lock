@@ -325,8 +325,8 @@
     },
     "//private/extensions:java.bzl%java": {
       "general": {
-        "bzlTransitiveDigest": "xA9/9EmgDlmI4ZuH2MBFL7dcaYOBIX93jKc1bXXdBLc=",
-        "usagesDigest": "hvNWOZxNrBn7IsWO8fFEfvRJwAlmvgAhpzHYR6u8nqc=",
+        "bzlTransitiveDigest": "WUvylU655EVX8jJ00kGzn6stfpYOUUfjpXkavHcZlZg=",
+        "usagesDigest": "tOizCfnmKKaq9LgNeI8bdYkZypAlOHnAhaB2ypSQc8c=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -555,38 +555,6 @@
               "control": "@@//java:control"
             }
           },
-          "temurin21_jre_riscv64": {
-            "bzlFile": "@@//private/extensions:java.bzl",
-            "ruleClassName": "temurin_archive",
-            "attributes": {
-              "urls": [
-                "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jre_riscv64_linux_hotspot_21.0.8_9.tar.gz"
-              ],
-              "sha256": "1c87410971cd7c3cd175bfe81cfecbe83462a64291caf1055cdcc0feb56e907d",
-              "strip_prefix": "jdk-21.0.8+9-jre",
-              "package_name": "temurin",
-              "version": "21.0.8+9",
-              "plain_version": "21.0.8",
-              "architecture": "riscv64",
-              "control": "@@//java:control"
-            }
-          },
-          "temurin21_jdk_riscv64": {
-            "bzlFile": "@@//private/extensions:java.bzl",
-            "ruleClassName": "temurin_archive",
-            "attributes": {
-              "urls": [
-                "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_riscv64_linux_hotspot_21.0.8_9.tar.gz"
-              ],
-              "sha256": "8171d95189e675e297b5cb96c7ac6247ab4e9f48da82b13f491fc46ef5d97836",
-              "strip_prefix": "jdk-21.0.8+9",
-              "package_name": "temurin",
-              "version": "21.0.8+9",
-              "plain_version": "21.0.8",
-              "architecture": "riscv64",
-              "control": "@@//java:control"
-            }
-          },
           "temurin25_jre_amd64": {
             "bzlFile": "@@//private/extensions:java.bzl",
             "ruleClassName": "temurin_archive",
@@ -715,38 +683,6 @@
               "control": "@@//java:control"
             }
           },
-          "temurin25_jre_riscv64": {
-            "bzlFile": "@@//private/extensions:java.bzl",
-            "ruleClassName": "temurin_archive",
-            "attributes": {
-              "urls": [
-                "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jre_riscv64_linux_hotspot_25_36.tar.gz"
-              ],
-              "sha256": "3ec1d5906104fb273821a5865235b673fcd2b55674c5aee68d15b429fdc7837c",
-              "strip_prefix": "jdk-25+36-jre",
-              "package_name": "temurin",
-              "version": "25+36",
-              "plain_version": "25",
-              "architecture": "riscv64",
-              "control": "@@//java:control"
-            }
-          },
-          "temurin25_jdk_riscv64": {
-            "bzlFile": "@@//private/extensions:java.bzl",
-            "ruleClassName": "temurin_archive",
-            "attributes": {
-              "urls": [
-                "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jdk_riscv64_linux_hotspot_25_36.tar.gz"
-              ],
-              "sha256": "3fc35759502b620f010a9cd2b3da8454f8a49a156ceaebb00de1fd8335682d40",
-              "strip_prefix": "jdk-25+36",
-              "package_name": "temurin",
-              "version": "25+36",
-              "plain_version": "25",
-              "architecture": "riscv64",
-              "control": "@@//java:control"
-            }
-          },
           "java_versions": {
             "bzlFile": "@@//private/extensions:java.bzl",
             "ruleClassName": "version_repo",
@@ -766,8 +702,6 @@
                 "temurin21_jdk_s390x": "21.0.8",
                 "temurin21_jre_ppc64le": "21.0.8",
                 "temurin21_jdk_ppc64le": "21.0.8",
-                "temurin21_jre_riscv64": "21.0.8",
-                "temurin21_jdk_riscv64": "21.0.8",
                 "temurin25_jre_amd64": "25",
                 "temurin25_jdk_amd64": "25",
                 "temurin25_jre_arm64": "25",
@@ -775,9 +709,7 @@
                 "temurin25_jre_s390x": "25",
                 "temurin25_jdk_s390x": "25",
                 "temurin25_jre_ppc64le": "25",
-                "temurin25_jdk_ppc64le": "25",
-                "temurin25_jre_riscv64": "25",
-                "temurin25_jdk_riscv64": "25"
+                "temurin25_jdk_ppc64le": "25"
               }
             }
           }
@@ -799,8 +731,6 @@
             "temurin21_jdk_s390x",
             "temurin21_jre_ppc64le",
             "temurin21_jdk_ppc64le",
-            "temurin21_jre_riscv64",
-            "temurin21_jdk_riscv64",
             "temurin25_jre_amd64",
             "temurin25_jdk_amd64",
             "temurin25_jre_arm64",
@@ -808,9 +738,7 @@
             "temurin25_jre_s390x",
             "temurin25_jdk_s390x",
             "temurin25_jre_ppc64le",
-            "temurin25_jdk_ppc64le",
-            "temurin25_jre_riscv64",
-            "temurin25_jdk_riscv64"
+            "temurin25_jdk_ppc64le"
           ],
           "explicitRootModuleDirectDevDeps": [],
           "useAllRepos": "NO",
@@ -1050,14 +978,14 @@
     },
     "//private/extensions:version.bzl%version": {
       "general": {
-        "bzlTransitiveDigest": "R4DFvckkDacLf0S49tnqO4V7fVVx3CJjcV84+PwKBM4=",
+        "bzlTransitiveDigest": "Qx3ndA1zTBsLtAfNf4Kxu2hNhZnZ4r8HNG1j03ShHzY=",
         "usagesDigest": "57mfiVCas9cbKi4jFpTkDwxLcrnXzmW6x8Ej/YNQh9k=",
         "recordedFileInputs": {
-          "@@//private/repos/deb/trixie.lock.json": "4366b25b0fc310a5a6321e1e68bbe3ea22b129bf7a6245f737e7bd023aa86b0d",
-          "@@//private/repos/deb/bookworm.lock.json": "b3681188885bbc34c2e0b184efc7d7b6c7a4cdff5f7d49d457523e1bd22c763f",
-          "@@//private/repos/deb/trixie_java.lock.json": "67c090e0351e5a526f7b24b3b839da3b2955e501a9c16184b7716d272450492c",
-          "@@//private/repos/deb/bookworm_java.lock.json": "a1e1bd8c976adca355e27438b8556df06d96243560d698d49fc0e0d36329ad1d",
-          "@@//private/repos/deb/bookworm_python.lock.json": "0ecf5a7d56114caac22d5025ce7fe69103ff244a84cdbbc1c45219de2b5c153f"
+          "@@//private/repos/deb/trixie.lock.json": "d05e563d8552042629ff37864fd8f147894837565c2c752eba9500b888e562ca",
+          "@@//private/repos/deb/bookworm.lock.json": "ed26cda0ca311ebc578696b4324ce79497ff3b200a0ed415a951e4a498baddfe",
+          "@@//private/repos/deb/trixie_java.lock.json": "236f9b9c024ae827ab53f53b662fcf7a706744e415680d68f3070b19994fdf5b",
+          "@@//private/repos/deb/bookworm_java.lock.json": "043f5e009d6350ccfa79eb61d1eac8ce3c786bcc39cffaf7cbd7646cfd8f2ec7",
+          "@@//private/repos/deb/bookworm_python.lock.json": "bcdee82fca326903c3289a0a95f1520df477b73144229fa82f38dbb129264d38"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
