@@ -1,0 +1,85 @@
+"repositories for java 25"
+
+#Version 25
+
+java = use_extension("//private/extensions:java.bzl", "java")
+
+# amd64 JRE and JDK
+java.archive(
+    name = "temurin25_jre_amd64",
+    architecture = "amd64",
+    plain_version = "25",
+    sha256 = "5e3de13a1487ecc90f8b0cddc83a6cd4e053b4cd48ddcfe5d1f19178e6089fba",
+    strip_prefix = "jdk-25+36-jre",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jre_x64_linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)
+java.archive(
+    name = "temurin25_jdk_amd64",
+    architecture = "amd64",
+    plain_version = "25",
+    sha256 = "ee04de95ab9da7287d40bd2173076ecc2a6dd662f007bedfc6eb0380c0ef90e8",
+    strip_prefix = "jdk-25+36",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jdk_x64_linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)
+
+# arm64 JRE and JDK
+java.archive(
+    name = "temurin25_jre_arm64",
+    architecture = "arm64",
+    plain_version = "25",
+    sha256 = "e88496ca31d2e0a0cdeeba385ab4ea668bbb53a03018f30c8933e97f4f9fda47",
+    strip_prefix = "jdk-25+36-jre",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jre_aarch64_alpine-linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)
+java.archive(
+    name = "temurin25_jdk_arm64",
+    architecture = "arm64",
+    plain_version = "25",
+    sha256 = "1f18ba69ca7d674724307a66928a9b80049748b4276c629450935543db2cdfb1",
+    strip_prefix = "jdk-25+36",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jdk_aarch64_alpine-linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)
+
+# s390x JRE and JDK
+java.archive(
+    name = "temurin25_jre_s390x",
+    architecture = "s390x",
+    plain_version = "25",
+    sha256 = "485af5746df1bf3cd46da4e7f771e6d1eae5a31db695ab819c4c2401688a6871",
+    strip_prefix = "jdk-25+36-jre",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jre_s390x_linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)
+java.archive(
+    name = "temurin25_jdk_s390x",
+    architecture = "s390x",
+    plain_version = "25",
+    sha256 = "3e476e40f920ccfb1915d200bc7a1fba9d68c4adcc0358c5968d15613690b915",
+    strip_prefix = "jdk-25+36",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jdk_s390x_linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)
+
+# ppc64le JRE and JDK
+java.archive(
+    name = "temurin25_jre_ppc64le",
+    architecture = "ppc64le",
+    plain_version = "25",
+    sha256 = "f593d6c435f6498cfbdb1ca07d7b1fa33829b159abb31b992b6234c324794dad",
+    strip_prefix = "jdk-25+36-jre",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jre_ppc64le_linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)
+java.archive(
+    name = "temurin25_jdk_ppc64le",
+    architecture = "ppc64le",
+    plain_version = "25",
+    sha256 = "b060bb12b3a192a0599f03ebb9495492f78c48cb61e291e336a8b00e7798ffb0",
+    strip_prefix = "jdk-25+36",
+    urls = ["https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25%2B36/OpenJDK25U-jdk_ppc64le_linux_hotspot_25_36.tar.gz"],
+    version = "25+36",
+)

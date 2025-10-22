@@ -3,6 +3,8 @@
 #VERSION 21.0.8
 
 java = use_extension("//private/extensions:java.bzl", "java")
+
+# amd64 JRE and JDK
 java.archive(
     name = "temurin21_jre_amd64",
     architecture = "amd64",
@@ -21,6 +23,8 @@ java.archive(
     urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_x64_linux_hotspot_21.0.8_9.tar.gz"],
     version = "21.0.8+9",
 )
+
+# arm64 JRE and JDK
 java.archive(
     name = "temurin21_jre_arm64",
     architecture = "arm64",
@@ -39,6 +43,28 @@ java.archive(
     urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.8_9.tar.gz"],
     version = "21.0.8+9",
 )
+
+# s390x JRE and JDK
+java.archive(
+    name = "temurin21_jre_s390x",
+    architecture = "s390x",
+    plain_version = "21.0.8",
+    sha256 = "7f2f9e48cc0e970b671b4ee8c69bf98002e27e4546e0c33071a2ecac38a8154c",
+    strip_prefix = "jdk-21.0.8+9-jre",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jre_s390x_linux_hotspot_21.0.8_9.tar.gz"],
+    version = "21.0.8+9",
+)
+java.archive(
+    name = "temurin21_jdk_s390x",
+    architecture = "s390x",
+    plain_version = "21.0.8",
+    sha256 = "a84e3cbf8bb5f8a313e06b790c7bc388687ba00262e981f5e33432ebd4d34356",
+    strip_prefix = "jdk-21.0.8+9",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_s390x_linux_hotspot_21.0.8_9.tar.gz"],
+    version = "21.0.8+9",
+)
+
+# ppc64le JRE and JDK
 java.archive(
     name = "temurin21_jre_ppc64le",
     architecture = "ppc64le",

@@ -2,6 +2,7 @@
 
 REPOS = [
     "trixie",
+    "trixie_java",
     "bookworm",
     "bookworm_java",
     "bookworm_python",
@@ -17,12 +18,12 @@ apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
         package_template = "//private/repos/deb:package.BUILD.tmpl",
         resolve_transitive = False,
         ## merged usr fs is only enabled on debian13+, remove this line once we remove debian12 builds
-        mergedusr = repo == "trixie",
+        mergedusr = repo.startswith("trixie"),
     )
     for repo in REPOS
 ]
 
-use_repo(apt, "bookworm", "bookworm_java", "bookworm_python", "trixie")
+use_repo(apt, "bookworm", "bookworm_java", "bookworm_python", "trixie", "trixie_java")
 
 ### VERSIONS HUB REPO ###
 version = use_extension("//private/extensions:version.bzl", "version")

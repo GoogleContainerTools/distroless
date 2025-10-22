@@ -221,9 +221,12 @@ NODEJS |= {
 }
 
 ## JAVA_BASE
-JAVA_ARCHITECTURES = BASE_ARCHITECTURES + [
+JAVA_OPENJDK_ARCHITECTURES = BASE_ARCHITECTURES + [
     "s390x",
     "ppc64le",
+]
+
+JAVA_TEMURIN_ARCHITECTURES = JAVA_OPENJDK_ARCHITECTURES + [
 ]
 
 JAVA_VARIATIONS = [
@@ -246,7 +249,7 @@ JAVA_BASE = {
 
 JAVA_BASE |= {
     "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian12"
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
@@ -270,7 +273,7 @@ JAVA17 = {
 JAVA17 |= {
     "{REGISTRY}/{PROJECT_ID}/java17-debian12:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian12"
     for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_ARCHITECTURES
+    for arch in JAVA_OPENJDK_ARCHITECTURES
 }
 
 JAVA17 |= {
@@ -279,16 +282,10 @@ JAVA17 |= {
 }
 
 ## JAVA 21 from temurin
-JAVA_21_ARCHITECTURES = [
-    "amd64",
-    "arm64",
-    "ppc64le",
-]
-
 JAVA21 = {
     "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base + "-" + arch: "//java:java21_" + label + "_" + arch + "_debian12"
     for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_21_ARCHITECTURES
+    for arch in JAVA_TEMURIN_ARCHITECTURES
 }
 
 # oci_image_index
@@ -299,6 +296,24 @@ JAVA21 |= {
 
 JAVA21 |= {
     "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base: "//java:java21_" + label + "_debian12"
+    for (tag_base, label) in JAVA_VARIATIONS
+}
+
+## Java 25 from temurin, available on debian13
+JAVA25 = {
+    "{REGISTRY}/{PROJECT_ID}/java25-debian13:" + tag_base + "-" + arch: "//java:java25_" + label + "_" + arch + "_debian13"
+    for (tag_base, label) in JAVA_VARIATIONS
+    for arch in JAVA_TEMURIN_ARCHITECTURES
+}
+
+# oci_image_index
+JAVA25 |= {
+    "{REGISTRY}/{PROJECT_ID}/java25:" + tag_base: "//java:java25_" + label + "_debian13"
+    for (tag_base, label) in JAVA_VARIATIONS
+}
+
+JAVA25 |= {
+    "{REGISTRY}/{PROJECT_ID}/java25-debian13:" + tag_base: "//java:java25_" + label + "_debian13"
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
@@ -321,6 +336,8 @@ ALL |= JAVA_BASE
 ALL |= JAVA17
 
 ALL |= JAVA21
+
+ALL |= JAVA25
 
 # create additional tags by appending COMMIT_SHA to all tags
 # remove "latest" if they contain it (this is brittle if we make funky changes):
