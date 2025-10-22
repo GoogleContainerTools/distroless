@@ -18,8 +18,8 @@ def _busybox_impl(module_ctx):
     # Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
     http_archive(
         name = "busybox_amd64",
-        sha256 = "c69cfb3f9b07df5f5a73dafc28105e85211c399cfc336c59bfde5db1828c9f68",
-        urls = ["https://github.com/docker-library/busybox/raw/e5b5178110ca0332364a77d5eb4fff87b0e2ba3f/latest/musl/busybox.tar.gz"],
+        sha256 = "8e7bef4a92afca21c56c9f85e4e63885b320f1da8f8f82a1cf87af359faf57d3",
+        urls = ["https://raw.githubusercontent.com/docker-library/busybox/e5b5178110ca0332364a77d5eb4fff87b0e2ba3f/latest/musl/amd64/rootfs.tar.gz"],
         build_file_content = BUSYBOX_ARCHIVE_BUILD,
     )
 
@@ -37,8 +37,8 @@ def _busybox_impl(module_ctx):
     # Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
     http_archive(
         name = "busybox_arm64",
-        sha256 = "1ff157891238ef0869d5d733ccf067686507cb1e6125599381a843f9c454effa",
-        urls = ["https://github.com/docker-library/busybox/raw/f30de561de9bf38da10058620e9c4c383ec8a905/latest/musl/busybox.tar.gz"],
+        sha256 = "07b73337cea2a5d87c21278f251e1e742e253232ebd035d6a4a6d2cb4612e462",
+        urls = ["https://raw.githubusercontent.com/docker-library/busybox/f30de561de9bf38da10058620e9c4c383ec8a905/latest/musl/arm64v8/rootfs.tar.gz"],
         build_file_content = BUSYBOX_ARCHIVE_BUILD,
     )
 
@@ -56,8 +56,8 @@ def _busybox_impl(module_ctx):
     # Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
     http_archive(
         name = "busybox_ppc64le",
-        sha256 = "38efcacb714c7725323c83b04790f22befca841bc593cf9e6870117a6f02f4f3",
-        urls = ["https://github.com/docker-library/busybox/raw/149c39d6036d77a55679c6b9e0c946ba2ad38555/latest/musl/busybox.tar.gz"],
+        sha256 = "f3f5d636887b8d56aabe29047a58ef074511f5252c722b1e476b7f79fd35fb7f",
+        urls = ["https://raw.githubusercontent.com/docker-library/busybox/149c39d6036d77a55679c6b9e0c946ba2ad38555/latest/musl/ppc64le/rootfs.tar.gz"],
         build_file_content = BUSYBOX_ARCHIVE_BUILD,
     )
 
