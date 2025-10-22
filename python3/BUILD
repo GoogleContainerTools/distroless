@@ -50,7 +50,7 @@ DISTRO_VERSION = {
     oci_image(
         name = ("python3" if (not mode) else mode[1:]) + "_" + user + "_" + arch + "_" + distro,
         # Based on //cc so that C extensions work properly.
-        base = "//cc" + (mode if mode else ":cc") + "_" + user + "_" + arch + "_" + distro,
+        base = "//cc" + (":cc_debug" if mode else ":cc") + "_" + user + "_" + arch + "_" + distro,
         entrypoint = [
             "/usr/bin/python" + DISTRO_VERSION[distro],
         ],

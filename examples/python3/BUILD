@@ -3,7 +3,7 @@
 # repository code at any time.
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//base:distro.bzl", "DISTROS")
+load("//:distro.bzl", "DISTROS")
 
 pkg_tar(
     name = "hello_py",

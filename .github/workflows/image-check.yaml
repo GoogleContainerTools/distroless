@@ -69,6 +69,12 @@ jobs:
             ./verbose.log
             ./report.log
 
+      - name: Write diff to job output for forks
+        if: ${{ github.event.pull_request.head.repo.fork && steps.diff.outputs.changed_targets }}
+        run: |
+          echo "This pull request has modified the following images:"
+          echo ${{ steps.diff.outputs.changed_targets }}
+
       - uses: peter-evans/find-comment@v4
         id: fc
         if: ${{ !github.event.pull_request.head.repo.fork }}

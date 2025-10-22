@@ -1,7 +1,7 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//base:distro.bzl", "DISTROS")
+load("//:distro.bzl", "DISTROS")
 load("//nodejs:node_arch.bzl", "node_arch")
 
 package(default_visibility = ["//visibility:public"])
@@ -35,7 +35,7 @@ USER = [
 [
     oci_image(
         name = "nodejs" + major_version + ("" if (not mode) else mode) + "_" + user + "_" + arch + "_" + distro,
-        base = ("//cc:cc" if (not ("debug" in mode)) else "//cc:debug") + "_" + user + "_" + arch + "_" + distro,
+        base = "//cc:cc" + mode + "_" + user + "_" + arch + "_" + distro,
         entrypoint = ["/nodejs/bin/node"],
         tars = [
             "@nodejs" + major_version + "_" + arch,
