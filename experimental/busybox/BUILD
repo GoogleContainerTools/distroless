@@ -4,11 +4,13 @@ load(":commands.bzl", "busybox_layer")
 package(default_visibility = ["//base:__subpackages__"])
 
 # This works for all architectures because it is just files.
-# Ppc64le/Arm64/Amd64 needs special case as there is no direct working binary file available.
+# Ppc64le/Arm/Arm64/Amd64/s390x needs special case as there is no direct working binary file available.
 SPECIAL_CASE_ARCH = [
     "ppc64le",
+    "arm",
     "arm64",
     "amd64",
+    "s390x",
 ]
 
 [

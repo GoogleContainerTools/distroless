@@ -7,4 +7,4 @@ fileExistenceTests:
 commandTests:
   - name: busybox
     command: ["/busybox/busybox"]
-    expectedOutput: ['BusyBox v1\.36\.1']
+    expectedOutput: ['BusyBox v1\.37\.0']
