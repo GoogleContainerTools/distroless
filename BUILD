@@ -237,20 +237,20 @@ JAVA_VARIATIONS = [
 ]
 
 JAVA_BASE = {
-    "{REGISTRY}/{PROJECT_ID}/java-base:latest": "//java:java_base_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java-base:nonroot": "//java:java_base_nonroot_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java-base:debug": "//java:java_base_debug_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java-base:debug-nonroot": "//java:java_base_debug_nonroot_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:latest": "//java:java_base_root_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:nonroot": "//java:java_base_nonroot_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:debug": "//java:java_base_debug_root_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian12",
+    "{REGISTRY}/{PROJECT_ID}/java-base:" + tag_base: "//java:java_base_" + label + "_amd64_" + DEFAULT_DISTRO
+    for (tag_base, label) in JAVA_VARIATIONS
+}
+JAVA_BASE |= {
+    "{REGISTRY}/{PROJECT_ID}/java-base-" + distro + ":" + tag_base: "//java:java_base_" + label + "_amd64_" + distro
+    for (tag_base, label) in JAVA_VARIATIONS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 JAVA_BASE |= {
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian12"
+    "{REGISTRY}/{PROJECT_ID}/java-base-" + distro + ":" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_" + distro
     for arch in JAVA_OPENJDK_ARCHITECTURES
     for (tag_base, label) in JAVA_VARIATIONS
+    for distro in DISTROS + PREVIEW_DISTROS
 }
 
 JAVA_BASE |= {
