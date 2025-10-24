@@ -1,5 +1,5 @@
 load("//:checksums.bzl", "ARCHITECTURES", "BASE_ARCHITECTURES")
-load("//base:distro.bzl", "DISTROS", "PREVIEW_DISTROS")
+load("//:distro.bzl", "DISTROS", "PREVIEW_DISTROS")
 load("//private/oci:defs.bzl", "sign_and_push_all")
 load("//nodejs:node_arch.bzl", "node_arch")
 
@@ -16,19 +16,19 @@ STATIC_VARIANTS = [
 ]
 
 STATIC = {
-    "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
+    "{REGISTRY}/{PROJECT_ID}/static:" + tag_base + "-" + arch: "//static:" + label + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
     for arch in ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
 }
 
 # oci_image_index
 STATIC |= {
-    "{REGISTRY}/{PROJECT_ID}/static:" + tag_base: "//base:" + label + "_" + user + "_" + DEFAULT_DISTRO
+    "{REGISTRY}/{PROJECT_ID}/static:" + tag_base: "//static:" + label + "_" + user + "_" + DEFAULT_DISTRO
     for (tag_base, label, user) in STATIC_VARIANTS
 }
 
 STATIC |= {
-    "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base + "-" + arch: "//static:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
     for distro in DISTROS + PREVIEW_DISTROS
@@ -36,7 +36,7 @@ STATIC |= {
 
 # oci_image_index
 STATIC |= {
-    "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base: "//base:" + label + "_" + user + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base: "//static:" + label + "_" + user + "_" + distro
     for (tag_base, label, user) in STATIC_VARIANTS
     for distro in DISTROS + PREVIEW_DISTROS
 }
@@ -45,8 +45,8 @@ STATIC |= {
 BASE_VARIANTS = [
     ("latest", "base", "root"),
     ("nonroot", "base", "nonroot"),
-    ("debug", "debug", "root"),
-    ("debug-nonroot", "debug", "nonroot"),
+    ("debug", "base_debug", "root"),
+    ("debug-nonroot", "base_debug", "nonroot"),
 ]
 
 BASE = {
@@ -113,8 +113,8 @@ BASE_NOSSL |= {
 CC_VARIANTS = [
     ("latest", "cc", "root"),
     ("nonroot", "cc", "nonroot"),
-    ("debug", "debug", "root"),
-    ("debug-nonroot", "debug", "nonroot"),
+    ("debug", "cc_debug", "root"),
+    ("debug-nonroot", "cc_debug", "nonroot"),
 ]
 
 CC = {

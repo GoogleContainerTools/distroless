@@ -1,7 +1,7 @@
 load("//:checksums.bzl", "ARCHITECTURES")
 load(":commands.bzl", "busybox_layer")
 
-package(default_visibility = ["//base:__subpackages__"])
+package(default_visibility = ["//static:__subpackages__"])
 
 # This works for all architectures because it is just files.
 # Ppc64le/Arm/Arm64/Amd64/s390x needs special case as there is no direct working binary file available.
