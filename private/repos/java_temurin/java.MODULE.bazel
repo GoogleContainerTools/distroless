@@ -1,19 +1,11 @@
 "repositories for java"
 
-include("//private/repos/java_temurin:java_17.MODULE.bazel")
 include("//private/repos/java_temurin:java_21.MODULE.bazel")
-include("//private/repos/java_temurin:java_25.MODULE.bazel")
 
 java = use_extension("//private/extensions:java.bzl", "java")
 use_repo(
     java,
     "java_versions",
-    "temurin17_jdk_amd64",
-    "temurin17_jdk_arm64",
-    "temurin17_jdk_ppc64le",
-    "temurin17_jre_amd64",
-    "temurin17_jre_arm64",
-    "temurin17_jre_ppc64le",
     "temurin21_jdk_amd64",
     "temurin21_jdk_arm64",
     "temurin21_jdk_s390x",
@@ -22,12 +14,4 @@ use_repo(
     "temurin21_jre_arm64",
     "temurin21_jre_s390x",
     "temurin21_jre_ppc64le",
-    "temurin25_jdk_amd64",
-    "temurin25_jdk_arm64",
-    "temurin25_jdk_s390x",
-    "temurin25_jdk_ppc64le",
-    "temurin25_jre_amd64",
-    "temurin25_jre_arm64",
-    "temurin25_jre_s390x",
-    "temurin25_jre_ppc64le"
 )
