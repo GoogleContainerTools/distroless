@@ -1,15 +1,15 @@
 schemaVersion: "2.0.0"
 commandTests:
   - name: java
-    command: "/usr/lib/jvm/temurin25_jdk_amd64/bin/java"
+    command: "/usr/lib/jvm/temurin-25-jdk-amd64/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "25"']
+    expectedError: ['openjdk version "25.0.1"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "25"']
+    expectedError: ['openjdk version "25.0.1"']
   - name: javac
-    command: "/usr/lib/jvm/temurin25_jdk_amd64/bin/javac"
+    command: "/usr/lib/jvm/temurin-25-jdk-amd64/bin/javac"
     args: ["-version"]
     expectedOutput: ['javac 25']
 fileExistenceTests:
@@ -17,7 +17,11 @@ fileExistenceTests:
     path: "/etc/ssl/certs/java/cacerts"
     shouldExist: true
   - name: certs
-    path: "/usr/lib/jvm/temurin25_jdk_amd64/lib/security/cacerts"
+    path: "/etc/ssl/certs/adoptium/cacerts"
+    permissions: 'Lrwxrwxrwx'
+    shouldExist: true
+  - name: certs
+    path: "/usr/lib/jvm/temurin-25-jdk-amd64/lib/security/cacerts"
     permissions: 'Lrwxrwxrwx'
     shouldExist: true
   - name: busybox
@@ -29,4 +33,4 @@ fileExistenceTests:
 metadataTest:
   envVars:
     - key: 'JAVA_VERSION'
-      value: '25'
+      value: '25.0.1'

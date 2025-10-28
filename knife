@@ -28,6 +28,7 @@ function cmd_lock() {
     # temporarily hardcode right now (query doesn't work after bzl mod)
     local repos=$(cat <<EOL
 trixie
+trixie_java
 bookworm
 bookworm_java
 bookworm_python
@@ -135,15 +136,13 @@ function cmd_lint () {
     buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
 }
 
+# deprecate with debian12
 function cmd_update_java_archives () {
     source knife.d/update_java_archives.sh
     old_version=$(get_java_version 21)
     generate_java_archives 21 > private/repos/java_temurin/java_21.MODULE.bazel
     new_version=$(get_java_version 21)
     update_test_versions_java21 $old_version $new_version
-
-    # java 17 set up
-    generate_java_archives 17 > private/repos/java_temurin/java_17.MODULE.bazel
 }
 
 function cmd_update_node_archives () {

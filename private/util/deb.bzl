@@ -29,7 +29,7 @@ def _get_dist_arch_alias(arch, dist):
     rel = native.package_name()
     if rel == "java":
         dist += "_java"
-    elif rel == "experimental/python3" or rel == "python3":
+    elif rel == "python3":
         dist += "_python"
 
     return (arch, dist)

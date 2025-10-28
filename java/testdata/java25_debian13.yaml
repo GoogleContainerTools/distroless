@@ -1,19 +1,23 @@
 schemaVersion: "2.0.0"
 commandTests:
   - name: java
-    command: "/usr/lib/jvm/temurin25_jre_amd64/bin/java"
+    command: "/usr/lib/jvm/temurin-25-jre-amd64/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "25"']
+    expectedError: ['openjdk version "25.0.1"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "25"']
+    expectedError: ['openjdk version "25.0.1"']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
     shouldExist: true
   - name: certs
-    path: "/usr/lib/jvm/temurin25_jre_amd64/lib/security/cacerts"
+    path: "/etc/ssl/certs/adoptium/cacerts"
+    permissions: 'Lrwxrwxrwx'
+    shouldExist: true
+  - name: certs
+    path: "/usr/lib/jvm/temurin-25-jre-amd64/lib/security/cacerts"
     permissions: 'Lrwxrwxrwx'
     shouldExist: true
   - name: no-busybox
@@ -23,17 +27,17 @@ fileExistenceTests:
     path: "/bin/sh"
     shouldExist: false
   - name: no-javac
-    path: "/usr/lib/jvm/temurin25_jre_amd64/bin/javac"
+    path: "/usr/lib/jvm/temurin-25-jre-amd64/bin/javac"
     shouldExist: false
   - name: jexec-executable
-    path: "/usr/lib/jvm/temurin25_jre_amd64/lib/jexec"
+    path: "/usr/lib/jvm/temurin-25-jre-amd64/lib/jexec"
     shouldExist: true
     isExecutableBy: "any"
   - name: jspawnhelper-executable
-    path: "/usr/lib/jvm/temurin25_jre_amd64/lib/jspawnhelper"
+    path: "/usr/lib/jvm/temurin-25-jre-amd64/lib/jspawnhelper"
     shouldExist: true
     isExecutableBy: "any"
 metadataTest:
   envVars:
     - key: 'JAVA_VERSION'
-      value: '25'
+      value: '25.0.1'
