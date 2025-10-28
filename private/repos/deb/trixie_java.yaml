@@ -3,11 +3,11 @@ version: 1
 
 sources:
   - channel: trixie main
-    url: https://snapshot.debian.org/archive/debian/20251025T204106Z
+    url: https://snapshot.debian.org/archive/debian/20251027T203421Z
   - channel: trixie-updates main
-    url: https://snapshot.debian.org/archive/debian/20251025T204106Z
+    url: https://snapshot.debian.org/archive/debian/20251027T203421Z
   - channel: trixie-security main
-    url: https://snapshot.debian.org/archive/debian-security/20251025T204106Z
+    url: https://snapshot.debian.org/archive/debian-security/20251027T203421Z
   # adoptium
   - channel: trixie main
     url: https://packages.adoptium.net/artifactory/deb
