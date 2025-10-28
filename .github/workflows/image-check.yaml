@@ -61,7 +61,7 @@ jobs:
             --logs ./verbose.log \
             --report ./report.log
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         id: report
         with:
           name: "Report"
