@@ -208,7 +208,7 @@
   "moduleExtensions": {
     "//private/extensions:busybox.bzl%busybox": {
       "general": {
-        "bzlTransitiveDigest": "oM7aYrJr2F5dixo+LMdU2z36qMAPkGKvDbDhsbeCBa8=",
+        "bzlTransitiveDigest": "7aHSdmB5kibQXja50Q6aq3VxgqNhSSwn1b13j+1gxdc=",
         "usagesDigest": "UCTBBIE9+u3oELYh8ApcyzAQkd2fqSup4Dt7wKNQjRY=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1536,7 +1536,7 @@
     },
     "@@rules_rust~//crate_universe/private:internal_extensions.bzl%cu_nr": {
       "general": {
-        "bzlTransitiveDigest": "LEzA8XT4ZtqdSKS2c0rincPNM2xKNMn4NXAgX6l5kug=",
+        "bzlTransitiveDigest": "1xQ+4N0/DhjvxeGXWTUBbixiU7Q0QfLjmfvzVxKpDnU=",
         "usagesDigest": "eUZj9uHI3emsS58APzca8Gg5litVtqdtsY3lqHH7VS0=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

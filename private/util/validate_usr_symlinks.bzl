@@ -1,4 +1,4 @@
-"a utility that extracts files from tar"
+"Bazel aspect to validate merged-usr conventions in tar files."
 
 load("@aspect_bazel_lib//lib:tar.bzl", "tar_lib")
 
