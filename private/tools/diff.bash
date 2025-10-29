@@ -185,6 +185,14 @@ function test_image() {
     repo_origin=$(stamp_origin "$repo")
     repo_stage=$(stamp_stage "$repo")
 
+    if ! crane manifest "$repo_origin" > /dev/null; then
+        echo "🆕 New image will be added to $repo_origin"
+        if [[ "${SET_GITHUB_OUTPUT}" == "1" ]]; then
+            echo "$image_label (new)" >> "$CHANGED_IMAGES_FILE"
+        fi
+        return
+    fi
+
     if [[ "${SKIP_INDEX}" == "1" ]]; then
         if ! crane manifest "$repo_origin" | jq -e '.mediaType == "application/vnd.oci.image.manifest.v1+json"' > /dev/null; then  
             echo "⏭️ Skipping image index $repo_origin"

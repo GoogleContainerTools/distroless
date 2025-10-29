@@ -194,14 +194,14 @@ NODEJS = {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base + "-" + arch: "//nodejs:nodejs" + version + label + "_" + user + "_" + arch + "_" + distro
     for version in NODEJS_VERSIONS
     for arch in node_arch(version)
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
 
 # oci_image_index
 NODEJS |= {
     "{REGISTRY}/{PROJECT_ID}/nodejs" + version + "-" + distro + ":" + tag_base: "//nodejs:nodejs" + version + label + "_" + user + "_" + distro
-    for distro in DISTROS
+    for distro in DISTROS + PREVIEW_DISTROS
     for version in NODEJS_VERSIONS
     for (tag_base, label, user) in NODEJS_VARIATIONS
 }
