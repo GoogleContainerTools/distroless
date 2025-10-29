@@ -2,10 +2,10 @@
 # Take care to document any settings that you expect users to apply.
 # Settings that apply only to CI are in .github/workflows/ci.bazelrc
 
-# Allow DOCKER_HOST env to leak into test actions. 
+# Allow DOCKER_HOST env to leak into test actions.
 test --test_env=DOCKER_HOST
 
-# Stamp 
+# Stamp
 build:release --workspace_status_command=./private/stamp.bash --stamp
 run:release --workspace_status_command=./private/stamp.bash --stamp
 test:release --workspace_status_command=./private/stamp.bash --stamp
@@ -24,6 +24,11 @@ build --java_runtime_version=remotejdk_11
 # See: https://github.com/bazelbuild/bazel/issues/3236
 # https://github.com/GoogleContainerTools/rules_distroless/actions/runs/7118944984/job/19382981899?pr=9#step:8:51
 common:linux --sandbox_tmpfs_path=/tmp
+
+
+# Attach validation actions to layers that end up in the final oci_image targets
+# to catch potential merged-usr errors.
+common --aspects=//private/util:validate_usr_symlinks.bzl%validate_usr_symlinks
 
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members
