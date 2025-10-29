@@ -221,28 +221,6 @@
 			"version": "14.2.0-19"
 		},
 		{
-			"arch": "amd64",
-			"dependencies": [],
-			"key": "temurin-25-jre_25.0.1.0.0-p-8-0_amd64",
-			"name": "temurin-25-jre",
-			"sha256": "1e9bcd6b8f04d52d873cc2d7a6fd6acfca4c113332199b7d93d90d7ba23b4c81",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.1.0.0+8-0_amd64.deb"
-			],
-			"version": "25.0.1.0.0+8-0"
-		},
-		{
-			"arch": "amd64",
-			"dependencies": [],
-			"key": "temurin-25-jdk_25.0.1.0.0-p-8-0_amd64",
-			"name": "temurin-25-jdk",
-			"sha256": "07f40a8d947daa219f3e055350667e1eed9a8613f2f28c30ee512c6725a529b0",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.1.0.0+8-0_amd64.deb"
-			],
-			"version": "25.0.1.0.0+8-0"
-		},
-		{
 			"arch": "arm64",
 			"dependencies": [],
 			"key": "fontconfig-config_2.15.0-2.3_arm64",
@@ -461,28 +439,6 @@
 				"https://snapshot.debian.org/archive/debian/20251025T204106Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_arm64.deb"
 			],
 			"version": "14.2.0-19"
-		},
-		{
-			"arch": "arm64",
-			"dependencies": [],
-			"key": "temurin-25-jre_25.0.0.0.0-p-36-0_arm64",
-			"name": "temurin-25-jre",
-			"sha256": "c8d0d8c2109a202f1c1a375c2da503512075103f7b8c50f7adccc26620fc0877",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.0.0.0+36-0_arm64.deb"
-			],
-			"version": "25.0.0.0.0+36-0"
-		},
-		{
-			"arch": "arm64",
-			"dependencies": [],
-			"key": "temurin-25-jdk_25.0.0.0.0-p-36-0_arm64",
-			"name": "temurin-25-jdk",
-			"sha256": "87f6dc200d368adafe9cd5cb7aaf430f73e467ef0ac1c2f10061e19bee9ca4bd",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.0.0.0+36-0_arm64.deb"
-			],
-			"version": "25.0.0.0.0+36-0"
 		},
 		{
 			"arch": "s390x",
@@ -705,28 +661,6 @@
 			"version": "14.2.0-19"
 		},
 		{
-			"arch": "s390x",
-			"dependencies": [],
-			"key": "temurin-25-jre_25.0.1.0.0-p-8-0_s390x",
-			"name": "temurin-25-jre",
-			"sha256": "23d540398ec631be9fff83942b63190559b7781518236534fb0ec77ca3d3419d",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.1.0.0+8-0_s390x.deb"
-			],
-			"version": "25.0.1.0.0+8-0"
-		},
-		{
-			"arch": "s390x",
-			"dependencies": [],
-			"key": "temurin-25-jdk_25.0.1.0.0-p-8-0_s390x",
-			"name": "temurin-25-jdk",
-			"sha256": "8fcdb2eee762aaac4bbb0ea5ea135add8dad2db1cb3cd3dc42c3058262139a28",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.1.0.0+8-0_s390x.deb"
-			],
-			"version": "25.0.1.0.0+8-0"
-		},
-		{
 			"arch": "ppc64el",
 			"dependencies": [],
 			"key": "fontconfig-config_2.15.0-2.3_ppc64el",
@@ -945,28 +879,6 @@
 				"https://snapshot.debian.org/archive/debian/20251025T204106Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_ppc64el.deb"
 			],
 			"version": "14.2.0-19"
-		},
-		{
-			"arch": "ppc64el",
-			"dependencies": [],
-			"key": "temurin-25-jre_25.0.0.0.0-p-36-0_ppc64el",
-			"name": "temurin-25-jre",
-			"sha256": "193f646166bb7dd5dc15b9ebe2f18bfa7b8d2fc2baee72245bbd5dc09b06e235",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.0.0.0+36-0_ppc64el.deb"
-			],
-			"version": "25.0.0.0.0+36-0"
-		},
-		{
-			"arch": "ppc64el",
-			"dependencies": [],
-			"key": "temurin-25-jdk_25.0.0.0.0-p-36-0_ppc64el",
-			"name": "temurin-25-jdk",
-			"sha256": "9cfc8b38378c89ccc97a50f6156eacc1a0ed5e523fe54c375bc1d0d1fdbbbeb0",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.0.0.0+36-0_ppc64el.deb"
-			],
-			"version": "25.0.0.0.0+36-0"
 		}
 	],
 	"version": 1

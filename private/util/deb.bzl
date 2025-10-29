@@ -22,28 +22,25 @@ ARCH_ALIAS = dict(
     s390x = "s390x",
 )
 
-def _get_dist_arch_alias(arch, dist):
+def _get_dist_arch_alias(arch, dist, repo_suffix):
     dist = DIST_ALIAS[dist]
     arch = ARCH_ALIAS[arch]
 
-    rel = native.package_name()
-    if rel == "java":
-        dist += "_java"
-    elif rel == "python3":
-        dist += "_python"
+    if repo_suffix != None:
+        dist += "_" + repo_suffix
 
     return (arch, dist)
 
-def _package(arch, dist, package):
-    (arch, dist) = _get_dist_arch_alias(arch, dist)
+def _package(arch, dist, package, repo_suffix = None):
+    (arch, dist) = _get_dist_arch_alias(arch, dist, repo_suffix)
     return "@{dist}//{package}/{arch}".format(arch = arch, dist = dist, package = package)
 
-def _data(arch, dist, package):
-    (arch, dist) = _get_dist_arch_alias(arch, dist)
+def _data(arch, dist, package, repo_suffix = None):
+    (arch, dist) = _get_dist_arch_alias(arch, dist, repo_suffix)
     return "@{dist}//{package}/{arch}:data".format(arch = arch, dist = dist, package = package)
 
-def _version(arch, dist, package):
-    (arch, dist) = _get_dist_arch_alias(arch, dist)
+def _version(arch, dist, package, repo_suffix = None):
+    (arch, dist) = _get_dist_arch_alias(arch, dist, repo_suffix)
     return version(dist, arch, package).raw
 
 deb = struct(

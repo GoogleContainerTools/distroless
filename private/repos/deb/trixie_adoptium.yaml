@@ -1,0 +1,17 @@
+# debian 13, java from adoptium repositories
+version: 1
+
+sources:
+  # adoptium
+  - channel: trixie main
+    url: https://packages.adoptium.net/artifactory/deb
+
+archs:
+  - amd64
+  - arm64
+  - s390x
+  - ppc64el
+
+packages:
+  - temurin-25-jre
+  - temurin-25-jdk

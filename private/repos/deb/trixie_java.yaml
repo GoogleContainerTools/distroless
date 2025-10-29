@@ -8,9 +8,6 @@ sources:
     url: https://snapshot.debian.org/archive/debian/20251025T204106Z
   - channel: trixie-security main
     url: https://snapshot.debian.org/archive/debian-security/20251025T204106Z
-  # adoptium
-  - channel: trixie main
-    url: https://packages.adoptium.net/artifactory/deb
 
 archs:
   - amd64
@@ -40,6 +37,3 @@ packages:
   - gcc-14-base
   - libgcc-s1
   - libstdc++6
-  # adoptium
-  - temurin-25-jre
-  - temurin-25-jdk
