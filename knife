@@ -22,20 +22,27 @@ if [ $(uname) == "Darwin" ]; then
     export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 fi
 
-function cmd_lock() {
-    echo "🚧 Querying for repos (temporarily using hardcoded repos)"
-    echo ""
-    # temporarily hardcode right now (query doesn't work after bzl mod)
-    local repos=$(cat <<EOL
-trixie
-trixie_java
-bookworm
-bookworm_java
-bookworm_python
-EOL
-)
-    #repos=$(bazel query "kind('deb_package_index', //external:*)" --output=label 2>/dev/null | cut -d: -f2)
+function cmd_lock_all() {
+    cmd_lock_snapshots
+    cmd_lock_non_snapshots
+}
 
+function cmd_lock_snapshots() {
+    echo "🚧 Querying for snapshot repos"
+    echo ""
+    local repos=$(grep -l snapshot.debian.org ./private/repos/deb/*.yaml | xargs -L 1 basename | cut -d. -f 1)
+    _cmd_lock "$repos"
+}
+
+function cmd_lock_non_snapshots() {
+    echo "🚧 Querying for non_snapshot repos"
+    echo ""
+    local repos=$(grep -lL snapshot.debian.org ./private/repos/deb/*.yaml | xargs -L 1 basename | cut -d. -f 1)
+    _cmd_lock "$repos"
+}
+
+function _cmd_lock() {
+    local repos="$1"
     for repo in $repos; do
       for i in $(seq 10); do
         echo "🔑 Locking $repo (attempt ${i})"
@@ -93,6 +100,11 @@ function cmd_update_snapshots() {
     fi
 
     for mpath in "./private/repos/deb/"*.yaml; do
+        if ! grep -q "snapshot.debian.org" "$mpath"; then
+            echo "ignoring non-snapshot repo $mpath"
+            continue
+        fi
+
         current=$(grep -oE "debian/([0-9]+T[0-9]+Z)" $mpath | cut -d/ -f2 | head -n1)
         current_security=$(grep -oE "debian-security/([0-9]+T[0-9]+Z)" $mpath | cut -d/ -f2 | head -n1)
 
@@ -120,7 +132,7 @@ function cmd_github_update_snapshots() {
     local tmp=$(mktemp -d)
     jq -nr 'inputs.packages[] | .key + " " + .sha256' ./private/repos/deb/*.lock.json | sort > "$tmp/old.hashes"
     cmd_update_snapshots
-    cmd_lock
+    cmd_lock_snapshots
     jq -nr 'inputs.packages[] | .key + " " + .sha256' ./private/repos/deb/*.lock.json | sort > "$tmp/new.hashes"
     diff "$tmp/old.hashes" "$tmp/new.hashes" | tee "$tmp/diff" || printf "DISTROLESS_DIFF<<EOF\n$(<$tmp/diff)\nEOF" >> "$GITHUB_ENV"
 }
@@ -201,10 +213,13 @@ function cmd_deb_versions () {
 
 case "${1:-"~~nocmd"}" in
 lock)
-    cmd_lock
+    cmd_lock_all
     ;;
 update-snapshots)
     cmd_update_snapshots
+    ;;
+update-non-snapshots)
+    cmd_lock_non_snapshots
     ;;
 lint)
     cmd_lint

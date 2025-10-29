@@ -65,21 +65,21 @@ def java_build_base_image(distro, arch):
             base = ("//base:base_nossl" if (not ("debug" in mode)) else "//base:base_nossl_debug") + "_" + user + "_" + arch + "_" + distro,
             env = {"LANG": "C.UTF-8"},
             tars = [
-                deb.package(arch, distro, "zlib1g"),
-                deb.package(arch, distro, "libjpeg62-turbo"),
-                deb.package(arch, distro, "liblcms2-2"),
-                deb.package(arch, distro, "libfreetype6"),
-                deb.package(arch, distro, "fonts-dejavu-core"),
-                deb.package(arch, distro, "fontconfig-config"),
-                deb.package(arch, distro, "libexpat1"),
-                deb.package(arch, distro, "libfontconfig1"),
-                deb.package(arch, distro, "libuuid1"),
-                deb.package(arch, distro, "libbrotli1"),
-                deb.package(arch, distro, "libcrypt1"),
-                deb.package(arch, distro, "libstdc++6"),
-                deb.package(arch, distro, "libgcc-s1"),
+                deb.package(arch, distro, "zlib1g", "java"),
+                deb.package(arch, distro, "libjpeg62-turbo", "java"),
+                deb.package(arch, distro, "liblcms2-2", "java"),
+                deb.package(arch, distro, "libfreetype6", "java"),
+                deb.package(arch, distro, "fonts-dejavu-core", "java"),
+                deb.package(arch, distro, "fontconfig-config", "java"),
+                deb.package(arch, distro, "libexpat1", "java"),
+                deb.package(arch, distro, "libfontconfig1", "java"),
+                deb.package(arch, distro, "libuuid1", "java"),
+                deb.package(arch, distro, "libbrotli1", "java"),
+                deb.package(arch, distro, "libcrypt1", "java"),
+                deb.package(arch, distro, "libstdc++6", "java"),
+                deb.package(arch, distro, "libgcc-s1", "java"),
                 "//common:locale_" + distro + "_" + arch,
-            ] + [deb.package(arch, distro, library) for library in DISTRO_SPECIFIC_LIBRARIES["build_base"][distro]],
+            ] + [deb.package(arch, distro, library, "java") for library in DISTRO_SPECIFIC_LIBRARIES["build_base"][distro]],
         )
         for mode in DEBUG_MODE
         for user in USERS
@@ -122,11 +122,11 @@ def java_base_image(distro, arch):
             base = "java_build_base" + mode + "_" + user + "_" + arch + "_" + distro,
             env = {"LANG": "C.UTF-8"},
             tars = [
-                deb.package(arch, distro, "libharfbuzz0b"),
-                deb.package(arch, distro, "libgraphite2-3"),
-                deb.package(arch, distro, "libpcre2-8-0"),  # required for libharfbuzz0b but remove for temurin installs
+                deb.package(arch, distro, "libharfbuzz0b", "java"),
+                deb.package(arch, distro, "libgraphite2-3", "java"),
+                deb.package(arch, distro, "libpcre2-8-0", "java"),  # required for libharfbuzz0b but remove for temurin installs
                 ":cacerts_java_" + arch + "_" + distro,
-            ] + [deb.package(arch, distro, library) for library in DISTRO_SPECIFIC_LIBRARIES["base"][distro]],
+            ] + [deb.package(arch, distro, library, "java") for library in DISTRO_SPECIFIC_LIBRARIES["base"][distro]],
         )
         for mode in DEBUG_MODE
         for user in USERS
@@ -280,6 +280,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
                 arch,
                 distro,
                 "temurin-" + java_version + "-jre",
+                "adoptium",
             ),
         ],
     )
@@ -296,6 +297,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
                 arch,
                 distro,
                 "temurin-" + java_version + "-jdk",
+                "adoptium",
             ),
         ],
     )
@@ -316,6 +318,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
                     arch,
                     distro,
                     "temurin-" + java_version + "-jre",
+                    "adoptium",
                 )),
             },
             tars = [
@@ -344,6 +347,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
                     arch,
                     distro,
                     "temurin-" + java_version + "-jdk",
+                    "adoptium",
                 )),
             },
             tars = [
@@ -378,6 +382,7 @@ def java_openjdk_image(distro, java_version, arch):
                 arch,
                 distro,
                 "openjdk-" + java_version + "-jre-headless",
+                "java",
             ),
         ],
     )
@@ -398,6 +403,7 @@ def java_openjdk_image(distro, java_version, arch):
                     arch,
                     distro,
                     "openjdk-" + java_version + "-jre-headless",
+                    "java",
                 )),
             },
             tars = [
@@ -423,6 +429,7 @@ def java_openjdk_image(distro, java_version, arch):
                     arch,
                     distro,
                     "openjdk-" + java_version + "-jre-headless",
+                    "java",
                 )),
             },
             tars = [
@@ -431,6 +438,7 @@ def java_openjdk_image(distro, java_version, arch):
                     arch,
                     distro,
                     "openjdk-" + java_version + "-jdk-headless",
+                    "java",
                 ),
             ],
         )
