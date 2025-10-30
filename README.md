@@ -59,10 +59,13 @@ These images are not considered stable and may change in subtle ways that break 
 | gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/cc-debian13         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/java25-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/nodejs20-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/nodejs22-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/nodejs24-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
 
-## Why is distroless still using gcr.io instead of pkg.dev?
+## Why is distroless still using `gcr.io` instead of `pkg.dev`?
 
-Distroless's serving infrastructure has moved to artifact registry but we still use the gcr.io domain. Users will get the benefits of the newer infrastructure without changing their builds.
+Distroless's serving infrastructure has moved to artifact registry but we still use the `gcr.io` domain. Users will get the benefits of the newer infrastructure without changing their builds.
 
 ## How do I verify distroless images?
 
