@@ -2,7 +2,7 @@
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
 load("@container_structure_test//:defs.bzl", "container_structure_test")
-load("//:distro.bzl", "DISTROS")
+load("//cc:config.bzl", DISTROS = "CC_DISTROS")
 load("//private/oci:defs.bzl", "cc_image")
 
 package(default_visibility = ["//visibility:public"])

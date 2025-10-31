@@ -1,28 +1,25 @@
-load(":java.bzl", "java_base_image", "java_base_image_index", "java_image_index", "java_openjdk_image", "java_temurin_image_from_adoptium_debs", "java_temurin_image_from_github_releases")
-load("//:distro.bzl", "DISTROS", "PREVIEW_DISTROS")
+load(":java.bzl", "java_base_image", "java_base_image_index", "java_build_base_image", "java_image_index", "java_openjdk_image", "java_temurin_image_from_adoptium_debs", "java_temurin_image_from_github_releases")
+load(":config.bzl", "JAVA_ARCHITECTURES", "JAVA_BASE_PACKAGES", "JAVA_BUILD_BASE_PACKAGES", "JAVA_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
-JAVA_DISTROS = DISTROS + PREVIEW_DISTROS
-
-JAVA_ARCHITECTURES = {
-    "debian12": [
-        "amd64",
-        "arm64",
-        "s390x",
-        "ppc64le",
-    ],
-    "debian13": [
-        "amd64",
-        "arm64",
-        "s390x",
-        "ppc64le",
-    ],
-}
+# unpublished build-base images (deprecated)
+[
+    java_build_base_image(
+        "debian12",
+        arch,
+        JAVA_BUILD_BASE_PACKAGES["debian12"],
+    )
+    for arch in JAVA_ARCHITECTURES["debian12"]
+]
 
 # publishable java base images
 [
-    java_base_image(distro, arch)
+    java_base_image(
+        distro,
+        arch,
+        JAVA_BASE_PACKAGES[distro],
+    )
     for distro in JAVA_DISTROS
     for arch in JAVA_ARCHITECTURES[distro]
 ]
@@ -35,7 +32,7 @@ JAVA_ARCHITECTURES = {
     for distro in JAVA_DISTROS
 ]
 
-# publishable java temurin images from github releases
+# publishable java temurin images from github releases (deprecated)
 ADOPTIUM_GH_PER_DISTRO = [
     ("21", "debian12"),
 ]
@@ -58,7 +55,7 @@ ADOPTIUM_DEB_PER_DISTRO = [
     for arch in JAVA_ARCHITECTURES[distro]
 ]
 
-# publishable java openjdk (from debian) images
+# publishable java openjdk (from debian) images (deprecated)
 JAVA_OPENJDK_VERSIONS_PER_DISTRO = [
     ("17", "debian12"),
 ]

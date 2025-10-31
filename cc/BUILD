@@ -1,25 +1,21 @@
 load(":cc.bzl", "cc_image", "cc_image_index")
-load("//:distro.bzl", "DISTROS", "PREVIEW_DISTROS")
-load("//:checksums.bzl", "ARCHITECTURES")
+load(":config.bzl", "CC_ARCHITECTURES", "CC_DISTROS", "CC_PACKAGES")
 
 package(default_visibility = ["//visibility:public"])
-
-CC_DISTROS = DISTROS + PREVIEW_DISTROS
-
-CC_ARCHITECTURES = ARCHITECTURES
 
 [
     cc_image(
         arch = arch,
         distro = distro,
+        packages = CC_PACKAGES[distro],
     )
     for distro in CC_DISTROS
-    for arch in CC_ARCHITECTURES
+    for arch in CC_ARCHITECTURES[distro]
 ]
 
 [
     cc_image_index(
-        architectures = CC_ARCHITECTURES,
+        architectures = CC_ARCHITECTURES[distro],
         distro = distro,
     )
     for distro in CC_DISTROS

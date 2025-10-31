@@ -1,0 +1,92 @@
+name: Config Check
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  pull-requests: write
+  
+jobs:
+  diff:
+    runs-on: distroless-ci-large-ubuntu-22.04
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: pr_branch
+
+      - name: Build :sign_and_push.query for PR
+        run: |
+          cd pr_branch
+          bazel build :sign_and_push.query
+          cp bazel-bin/sign_and_push_query ../pr_query_output.txt
+          cd ..
+
+      - name: Checkout main Branch
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          path: main_branch
+
+      - name: Build :sign_and_push.query for main
+        run: |
+          cd main_branch
+          bazel build :sign_and_push.query
+          cp bazel-bin/sign_and_push_query ../main_query_output.txt
+          cd ..
+
+      - name: Diff the query outputs
+        id: diff
+        run: |
+          # diff may exit with non-zero
+          DIFF_OUTPUT=$(diff -u <(sort main_query_output.txt) <(sort pr_query_output.txt)) || true
+          
+          if [ "$DIFF_OUTPUT" ]; then
+            echo "$DIFF_OUTPUT"
+            echo "changed_build<<EOF" >> $GITHUB_OUTPUT
+            echo "$DIFF_OUTPUT" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: peter-evans/find-comment@v4
+        id: fc
+        if: ${{ !github.event.pull_request.head.repo.fork }}
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: 🌳 🔧 Config Check
+
+      - name: Report diff
+        if: ${{ !github.event.pull_request.head.repo.fork && steps.diff.outputs.changed_build }}
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🌳 🔧 Config Check
+
+            This pull request has modified the root BUILD
+
+            ```diff
+            ${{steps.diff.outputs.changed_build}}
+            ```
+          edit-mode: replace
+
+      - name: Report no diff
+        if: ${{ !github.event.pull_request.head.repo.fork && !steps.diff.outputs.changed_build }}
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🌳 🔧 Config Check
+
+            This pull request has not modified the root BUILD
+          edit-mode: replace

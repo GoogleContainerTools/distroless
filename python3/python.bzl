@@ -2,9 +2,7 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//private/util:deb.bzl", "deb")
-
-USERS = ["root", "nonroot"]
-DEBUG_MODE = ["", "_debug"]
+load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 
 DISTRO_VERSION = {
     "debian12": "3.11",

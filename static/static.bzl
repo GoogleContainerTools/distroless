@@ -4,12 +4,11 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//:checksums.bzl", "VARIANTS")
-load("//common:variables.bzl", "NONROOT")
+load("//:distro.bzl", "VARIANTS")
+load("//common:variables.bzl", "DEBUG_MODE", "NONROOT")
 load("//private/util:deb.bzl", "deb")
 
 USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
-DEBUG_MODE = ["", "_debug"]
 
 def static_image_index(distro, architectures):
     """Build image index for a distro

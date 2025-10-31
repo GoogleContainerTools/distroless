@@ -2,36 +2,11 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@java_versions//:versions.bzl", "JAVA_RELEASE_VERSIONS")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//:distro.bzl", "DISTROS", "PREVIEW_DISTROS")
+load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", "java_image")
 load("//private/util:deb.bzl", "deb")
 load("//private/util:java_cacerts.bzl", "java_cacerts")
-
-DEBUG_MODE = ["", "_debug"]
-USERS = ["root", "nonroot"]
-
-DISTRO_SPECIFIC_LIBRARIES = {
-    "build_base": {
-        "debian12": [
-            "gcc-12-base",
-            "libpng16-16",
-        ],
-        "debian13": [
-            "gcc-14-base",
-            "libpng16-16t64",
-            "libbz2-1.0",
-        ],
-    },
-    "base": {
-        "debian12": [
-            "libglib2.0-0",
-        ],
-        "debian13": [
-            "libglib2.0-0t64",
-        ],
-    },
-}
 
 def ca_certs(distro, arch):
     """java ca certs for a specific arch and distro
@@ -45,7 +20,8 @@ def ca_certs(distro, arch):
         archive = "//common:cacerts_" + distro + "_" + arch,
     )
 
-def java_build_base_image(distro, arch):
+# deprecated, remove with debian12 removal
+def java_build_base_image(distro, arch, packages):
     """a base image that isn't published for building temurin and debian sourced java images
        temurin ships with libharfbuzz and certs but debian distributed ones do not include it
        libharfbuzz depends on libpcre,libglib,libgraphite
@@ -53,33 +29,20 @@ def java_build_base_image(distro, arch):
     Args:
         distro: name of distribution
         arch: the target architecture
+        packages: to add to the image (from a debianX_java repo)
     """
-
-    # check if we already made these
-    if native.existing_rule("java_build_base_" + USERS[0] + "_" + arch + "_" + distro):
-        return
 
     [
         oci_image(
             name = "java_build_base" + mode + "_" + user + "_" + arch + "_" + distro,
-            base = ("//base:base_nossl" if (not ("debug" in mode)) else "//base:base_nossl_debug") + "_" + user + "_" + arch + "_" + distro,
+            base = "//base:base_nossl" + mode + "_" + user + "_" + arch + "_" + distro,
             env = {"LANG": "C.UTF-8"},
             tars = [
-                deb.package(arch, distro, "zlib1g", "java"),
-                deb.package(arch, distro, "libjpeg62-turbo", "java"),
-                deb.package(arch, distro, "liblcms2-2", "java"),
-                deb.package(arch, distro, "libfreetype6", "java"),
-                deb.package(arch, distro, "fonts-dejavu-core", "java"),
-                deb.package(arch, distro, "fontconfig-config", "java"),
-                deb.package(arch, distro, "libexpat1", "java"),
-                deb.package(arch, distro, "libfontconfig1", "java"),
-                deb.package(arch, distro, "libuuid1", "java"),
-                deb.package(arch, distro, "libbrotli1", "java"),
-                deb.package(arch, distro, "libcrypt1", "java"),
-                deb.package(arch, distro, "libstdc++6", "java"),
-                deb.package(arch, distro, "libgcc-s1", "java"),
+                deb.package(arch, distro, pkg, "java")
+                for pkg in packages
+            ] + [
                 "//common:locale_" + distro + "_" + arch,
-            ] + [deb.package(arch, distro, library, "java") for library in DISTRO_SPECIFIC_LIBRARIES["build_base"][distro]],
+            ],
         )
         for mode in DEBUG_MODE
         for user in USERS
@@ -104,29 +67,30 @@ def java_base_image_index(distro, architectures):
         for user in USERS
     ]
 
-def java_base_image(distro, arch):
+def java_base_image(distro, arch, packages):
     """java base for a distro/arch
 
     Args:
         distro: name of distribution
         arch: the target arch
+        packages: to add to the image (from a debianX_java repo)
     """
 
     # pre-req
-    java_build_base_image(distro, arch)
     ca_certs(distro, arch)
 
     [
         oci_image(
             name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
-            base = "java_build_base" + mode + "_" + user + "_" + arch + "_" + distro,
+            base = "//base:base_nossl" + mode + "_" + user + "_" + arch + "_" + distro,
             env = {"LANG": "C.UTF-8"},
             tars = [
-                deb.package(arch, distro, "libharfbuzz0b", "java"),
-                deb.package(arch, distro, "libgraphite2-3", "java"),
-                deb.package(arch, distro, "libpcre2-8-0", "java"),  # required for libharfbuzz0b but remove for temurin installs
+                deb.package(arch, distro, pkg, "java")
+                for pkg in packages
+            ] + [
+                "//common:locale_" + distro + "_" + arch,
                 ":cacerts_java_" + arch + "_" + distro,
-            ] + [deb.package(arch, distro, library, "java") for library in DISTRO_SPECIFIC_LIBRARIES["base"][distro]],
+            ],
         )
         for mode in DEBUG_MODE
         for user in USERS
@@ -166,6 +130,7 @@ def java_image_index(distro, java_version, architectures):
         for mode in DEBUG_MODE
     ]
 
+# deprecated, remove with debian12 removal
 def temurin_jre_prep(java_version, arch):
     rule_name = "temurin_jre_" + java_version + "_" + arch
     if native.existing_rule(rule_name):
@@ -181,6 +146,7 @@ def temurin_jre_prep(java_version, arch):
         ],
     )
 
+# deprecated, remove with debian12 removal
 def temurin_jdk_prep(java_version, arch):
     rule_name = "temurin_jdk_" + java_version + "_" + arch
     if native.existing_rule(rule_name):
@@ -196,6 +162,7 @@ def temurin_jdk_prep(java_version, arch):
         ],
     )
 
+# deprecated, remove with debian12 removal
 def java_temurin_image_from_github_releases(distro, java_version, arch):
     """java images from temurin distributions downloaded from github releases.
        This approach is used for debian12 and is deprecated for newer distributions
@@ -207,8 +174,6 @@ def java_temurin_image_from_github_releases(distro, java_version, arch):
         arch: the target arch
     """
 
-    # pre-req
-    java_build_base_image(distro, arch)
     temurin_jdk_prep(java_version, arch)
     temurin_jre_prep(java_version, arch)
 
@@ -265,9 +230,6 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
         arch: the target arch
     """
 
-    # pre-req
-    java_build_base_image(distro, arch)
-
     # intermediary rule to configure jre symlinks
     pkg_tar(
         name = "temurin_" + java_version + "_jre_" + arch + "_" + distro,
@@ -306,7 +268,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
     [
         oci_image(
             name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
-            base = ":java_build_base_" + user + "_" + arch + "_" + distro,
+            base = ":java_base_" + user + "_" + arch + "_" + distro,
             # We expect users to use:
             # cmd = ["/path/to/deploy.jar", "--option1", ...]
             entrypoint = [
@@ -324,7 +286,6 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
             tars = [
                 # we use system certs, but we might want to pull this out of the distro
                 # like we did for the github released temurin
-                ":cacerts_java_" + arch + "_" + distro,
                 ":temurin_" + java_version + "_jre_" + arch + "_" + distro,
             ],
         )
@@ -335,7 +296,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
     [
         oci_image(
             name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
-            base = ":java_build_base_debug_" + user + "_" + arch + "_" + distro,
+            base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
             # We expect users to use:
             # cmd = ["/path/to/deploy.jar", "--option1", ...]
             entrypoint = [

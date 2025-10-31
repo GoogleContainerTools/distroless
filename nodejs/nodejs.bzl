@@ -1,11 +1,7 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-
-NODEJS_MAJOR_VERSIONS = ("20", "22", "24")
-
-DEBUG_MODE = ["", "_debug"]
-USERS = ["root", "nonroot"]
+load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 
 def nodejs_image_index(distro, major_version, architectures):
     """nodejs image index for a distro

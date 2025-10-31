@@ -4,12 +4,8 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//:checksums.bzl", "VARIANTS")
-load("//common:variables.bzl", "NONROOT")
+load("//common:variables.bzl", "DEBUG_MODE", "NONROOT", "USERS")
 load("//private/util:deb.bzl", "deb")
-
-USERS = ["root", "nonroot"]
-DEBUG_MODE = ["", "_debug"]
 
 def base_nossl_image_index(distro, architectures):
     """base nossl image index for a distro
@@ -49,7 +45,7 @@ def base_image_index(distro, architectures):
         for mode in DEBUG_MODE
     ]
 
-def base_nossl_image(distro, arch):
+def base_nossl_image(distro, arch, packages):
     """base nossl and debug images and tests for a distro/arch
 
     Args:
@@ -62,7 +58,8 @@ def base_nossl_image(distro, arch):
             name = "base_nossl" + mode + "_" + user + "_" + arch + "_" + distro,
             base = "//static:static" + mode + "_" + user + "_" + arch + "_" + distro,
             tars = [
-                deb.package(arch, distro, "libc6"),
+                deb.package(arch, distro, pkg)
+                for pkg in packages
             ],
         )
         for user in USERS
@@ -85,7 +82,7 @@ def base_nossl_image(distro, arch):
         tags = ["manual", arch],
     )
 
-def base_image(distro, arch):
+def base_image(distro, arch, packages):
     """base and debug images and tests for a distro/arch
 
     Args:
@@ -102,8 +99,8 @@ def base_image(distro, arch):
             name = "base" + mode + "_" + user + "_" + arch + "_" + distro,
             base = "//static:static" + mode + "_" + user + "_" + arch + "_" + distro,
             tars = [
-                deb.package(arch, distro, "libc6"),
-                deb.package(arch, distro, LIBSSL[distro]),
+                deb.package(arch, distro, pkg)
+                for pkg in packages
             ],
         )
         for user in USERS

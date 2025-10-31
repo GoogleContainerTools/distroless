@@ -1,11 +1,14 @@
 load("@aspect_bazel_lib//lib:tar.bzl", "tar")
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
-load("//:checksums.bzl", "ARCHITECTURES", "VERSIONS")
-load("//:distro.bzl", "DISTROS", "PREVIEW_DISTROS")
+load("//:distro.bzl", "ALL_ARCHITECTURES", "ALL_DISTROS", "VERSIONS")
 load("//private/util:deb.bzl", "deb")
 load(":variables.bzl", "MTIME", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT", "quote")
 
 package(default_visibility = ["//visibility:public"])
+
+COMMON_ARCHITECTURES = ALL_ARCHITECTURES
+
+COMMON_DISTROS = ALL_DISTROS
 
 tar(
     name = "rootfs",
@@ -52,8 +55,8 @@ tar(
         package = deb.data(arch, distro, "libc-bin"),
         time = MTIME,
     )
-    for arch in ARCHITECTURES
-    for distro in DISTROS + PREVIEW_DISTROS
+    for arch in COMMON_ARCHITECTURES
+    for distro in COMMON_DISTROS
 ]
 
 [
@@ -62,8 +65,8 @@ tar(
         package = deb.data(arch, distro, "ca-certificates"),
         time = MTIME,
     )
-    for arch in ARCHITECTURES
-    for distro in DISTROS + PREVIEW_DISTROS
+    for arch in COMMON_ARCHITECTURES
+    for distro in COMMON_DISTROS
 ]
 
 # create /etc/group with the root, tty, and staff groups
