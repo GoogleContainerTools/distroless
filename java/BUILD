@@ -48,6 +48,7 @@ ADOPTIUM_GH_PER_DISTRO = [
 
 # publishable java temurin images from adoptium deb repository
 ADOPTIUM_DEB_PER_DISTRO = [
+    ("21", "debian13"),
     ("25", "debian13"),
 ]
 
