@@ -147,8 +147,8 @@ CC |= {
 PYTHON3_VARIATIONS = [
     ("latest", "python3", "root"),
     ("nonroot", "python3", "nonroot"),
-    ("debug", "debug", "root"),
-    ("debug-nonroot", "debug", "nonroot"),
+    ("debug", "python3_debug", "root"),
+    ("debug-nonroot", "python3_debug", "nonroot"),
 ]
 
 PYTHON3 = {
