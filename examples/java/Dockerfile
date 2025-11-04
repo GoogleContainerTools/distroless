@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim AS build-env
+FROM eclipse-temurin:17-jdk AS build-env
 COPY . /app/examples
 WORKDIR /app
 RUN javac examples/*.java
