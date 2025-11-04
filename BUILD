@@ -278,9 +278,9 @@ JAVA17 |= {
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
-## JAVA 21 from temurin
+## JAVA 21
 JAVA21 = {
-    "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base + "-" + arch: "//java:java21_" + label + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/java21-" + distro + ":" + tag_base + "-" + arch: "//java:java21_" + label + "_" + arch + "_" + distro
     for (tag_base, label) in JAVA_VARIATIONS
     for arch in JAVA_ARCHITECTURES
     for distro in DISTROS + PREVIEW_DISTROS
@@ -293,7 +293,7 @@ JAVA21 |= {
 }
 
 JAVA21 |= {
-    "{REGISTRY}/{PROJECT_ID}/java21-debian12:" + tag_base: "//java:java21_" + label + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/java21-" + distro + ":" + tag_base: "//java:java21_" + label + "_" + distro
     for (tag_base, label) in JAVA_VARIATIONS
     for distro in DISTROS + PREVIEW_DISTROS
 }
