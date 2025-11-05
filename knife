@@ -15,6 +15,9 @@ set -o pipefail -o errexit -o nounset
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+source knife.d/update_java_versions.sh
+source knife.d/update_java_archives.sh
+
 if [ $(uname) == "Darwin" ]; then
     echo "WARNING: You are on a macos, you need to run 'brew install coreutils gnu-sed' to install required packages."
     echo ""
@@ -32,6 +35,7 @@ function cmd_lock_snapshots() {
     echo ""
     local repos=$(grep -l snapshot.debian.org ./private/repos/deb/*.yaml | xargs -L 1 basename | cut -d. -f 1)
     _cmd_lock "$repos"
+    update_java_versions_debian12
 }
 
 function cmd_lock_non_snapshots() {
@@ -39,6 +43,7 @@ function cmd_lock_non_snapshots() {
     echo ""
     local repos=$(grep -lL snapshot.debian.org ./private/repos/deb/*.yaml | xargs -L 1 basename | cut -d. -f 1)
     _cmd_lock "$repos"
+    update_java_versions_debian13
 }
 
 function _cmd_lock() {
@@ -150,11 +155,8 @@ function cmd_lint () {
 
 # deprecate with debian12
 function cmd_update_java_archives () {
-    source knife.d/update_java_archives.sh
-    old_version=$(get_java_version 21)
     generate_java_archives 21 > private/repos/java_temurin/java_21.MODULE.bazel
-    new_version=$(get_java_version 21)
-    update_test_versions_java21 $old_version $new_version
+    update_test_versions_java21_debian12
 }
 
 function cmd_update_node_archives () {
@@ -240,7 +242,7 @@ update-node-archives)
 	cmd_update_node_archives
 	;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-java-archives, test, deb-versions, update-node-archives"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, update-java-archives, test, deb-versions, update-node-archives"
     exit 1
     ;;
 *) # unknown command

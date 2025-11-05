@@ -57,7 +57,7 @@ jobs:
           GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
         run: |
           BODY_FILE=$(mktemp)
-          printf "Bumping non-snapshot packages to latest stable version\n\`\`\`diff\n$DISTROLESS_DIFF\n\`\`\`\n" >> $BODY_FILE
+          printf "Bumping non-snapshot packages to latest stable version\n" >> $BODY_FILE
           if ! OUTPUT=$(gh pr create -B main -H update-non-snapshots -t "Bumping packages to latest stable versions" --body-file "$BODY_FILE" 2>&1) ; then
             echo $OUTPUT
             if [[ "${OUTPUT}" =~ "already exists" ]]; then
