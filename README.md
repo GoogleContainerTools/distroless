@@ -174,8 +174,8 @@ See here for:
 See here for examples on how to complete some common tasks in your image:
 
 - [Adding and running as a non-root user](examples/nonroot)
-- [Including Debian Packages](https://github.com/GoogleContainerTools/rules_distroless/blob/main/docs/apt.md)
-- [Including CA certificates](https://github.com/GoogleContainerTools/rules_distroless/blob/main/docs/rules.md#cacerts)
+- [Including Debian Packages](https://registry.bazel.build/docs/rules_distroless#module_extension-apt)
+- [Including CA certificates](https://registry.bazel.build/docs/rules_distroless#rule-cacerts)
 
 See here for more information on how these images are [built and released](RELEASES.md).
 
