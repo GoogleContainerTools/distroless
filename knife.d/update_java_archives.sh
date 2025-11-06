@@ -17,9 +17,7 @@ set -o pipefail -o errexit -o nounset
 # a collection of functions to use when updating java archives from the knife utility
 
 function get_java_version() {
-  : "${1:?Error: java major version required}"
-  local major_version=$1
-  grep "#VERSION " "./private/repos/java_temurin/java_${major_version}.MODULE.bazel" | cut -d" " -f2
+  grep "#VERSION " "./private/repos/java_temurin/java_21.MODULE.bazel" | cut -d" " -f2
 }
 
 function underscore_encode() {
@@ -37,8 +35,8 @@ function generate_java_archives() {
   release_name=$(echo "$latest_release" | jq -r '.name')
   version=${release_name#jdk-}
   plain_version=$([[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] && echo "${BASH_REMATCH[0]}")
-  archs=("x64" "aarch64" "ppc64le")
-  archs_deb=("amd64" "arm64" "ppc64le")
+  archs=("x64" "aarch64" "s390x" "ppc64le")
+  archs_deb=("amd64" "arm64" "s390x" "ppc64le")
   variants=("jre" "jdk")
 
 cat << EOM
@@ -85,14 +83,7 @@ EOM
   done
 }
 
-function update_test_versions_java21() {
-  local old_version=${1?:"no old version set in param 1"}
-  local new_version=${2?:"no new version set in param 2"}
-  sed -i -e "s/$old_version/$new_version/g" java/testdata/java21_*
-}
-
-function update_test_versions_java17() {
-  local old_version=${1?:"no old version set in param 1"}
-  local new_version=${2?:"no new version set in param 2"}
-  sed -i -e "s/$old_version/$new_version/g" java/testdata/java17_debian13
+function update_test_versions_java21_debian12() {
+  local new_version=$(get_java_version)
+  sed -i -r -e "s/21\\.[0-9]+\\.[0-9]+/${new_version}/g" java/testdata/java21*debian12.yaml
 }
