@@ -14,6 +14,7 @@ bazel_dep(name = "rules_oci", version = "1.8.0")
 bazel_dep(name = "rules_distroless", version = "0.5.3")
 bazel_dep(name = "rules_python", version = "1.5.3")
 bazel_dep(name = "rules_cc", version = "0.2.0")
+bazel_dep(name = "gawk", version = "5.3.2.bcr.3")
 
 ### OCI ###
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
