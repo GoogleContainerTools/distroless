@@ -12,6 +12,9 @@ BASE_PACKAGES = {
     "debian13": [
         "libc6",
         "libssl3t64",
+        "libzstd1",
+        "zlib1g",
+        "openssl-provider-legacy",
     ],
 }
 

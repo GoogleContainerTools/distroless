@@ -102,6 +102,39 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_amd64",
+			"name": "zlib1g",
+			"sha256": "015be740d6236ad114582dea500c1d907f29e16d6db00566ca32fb68d71ac90d",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_amd64.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libzstd1_1.5.7-p-dfsg-1_amd64",
+			"name": "libzstd1",
+			"sha256": "2f6a2aeacfc925eba8b00ac9139bc4bfccf8cacb09eb93de067074b26948eef9",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/libz/libzstd/libzstd1_1.5.7+dfsg-1_amd64.deb"
+			],
+			"version": "1.5.7+dfsg-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_amd64",
+			"name": "openssl-provider-legacy",
+			"sha256": "0a4003bfd2442b86908e1a626cf46159af35aa78308abd3186515fdf8c7f056b",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_amd64.deb"
+			],
+			"version": "3.5.4-1~deb13u1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
 			"key": "gcc-14-base_14.2.0-19_amd64",
 			"name": "gcc-14-base",
 			"sha256": "5b6825de4263824b78c4c51f6476414f3b4e89c2ab63e81dc8b9b5501e867cf6",
@@ -142,17 +175,6 @@
 				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_amd64.deb"
 			],
 			"version": "14.2.0-19"
-		},
-		{
-			"arch": "amd64",
-			"dependencies": [],
-			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_amd64",
-			"name": "zlib1g",
-			"sha256": "015be740d6236ad114582dea500c1d907f29e16d6db00566ca32fb68d71ac90d",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_amd64.deb"
-			],
-			"version": "1:1.3.dfsg+really1.3.1-1+b1"
 		},
 		{
 			"arch": "arm64",
@@ -256,6 +278,39 @@
 		{
 			"arch": "arm64",
 			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_arm64",
+			"name": "zlib1g",
+			"sha256": "209aa5cf671e97b9eb0410844fa6df4cae2e75b0c72e7802ab6c8ece13e6ddef",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_arm64.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
+			"arch": "arm64",
+			"dependencies": [],
+			"key": "libzstd1_1.5.7-p-dfsg-1_arm64",
+			"name": "libzstd1",
+			"sha256": "924540bd59fdbfa77a0604360efdaca54411a43daf11c7e002a3c64791b67448",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/libz/libzstd/libzstd1_1.5.7+dfsg-1_arm64.deb"
+			],
+			"version": "1.5.7+dfsg-1"
+		},
+		{
+			"arch": "arm64",
+			"dependencies": [],
+			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_arm64",
+			"name": "openssl-provider-legacy",
+			"sha256": "53bbd0f1dcc6aff96d79a2f726f839c60dc95df681dcf1427f564e184fb6fc7f",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_arm64.deb"
+			],
+			"version": "3.5.4-1~deb13u1"
+		},
+		{
+			"arch": "arm64",
+			"dependencies": [],
 			"key": "gcc-14-base_14.2.0-19_arm64",
 			"name": "gcc-14-base",
 			"sha256": "34ee90679b018c0e64234747a4c4c0ae6b7f63541115037465a8627c2dfbc594",
@@ -296,17 +351,6 @@
 				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_arm64.deb"
 			],
 			"version": "14.2.0-19"
-		},
-		{
-			"arch": "arm64",
-			"dependencies": [],
-			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_arm64",
-			"name": "zlib1g",
-			"sha256": "209aa5cf671e97b9eb0410844fa6df4cae2e75b0c72e7802ab6c8ece13e6ddef",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_arm64.deb"
-			],
-			"version": "1:1.3.dfsg+really1.3.1-1+b1"
 		},
 		{
 			"arch": "armhf",
@@ -410,6 +454,39 @@
 		{
 			"arch": "armhf",
 			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_armhf",
+			"name": "zlib1g",
+			"sha256": "81c55a59e1570477ecef6a449bf6dce44dad67ba4ce9e04760451d4cfe200534",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_armhf.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
+			"arch": "armhf",
+			"dependencies": [],
+			"key": "libzstd1_1.5.7-p-dfsg-1_armhf",
+			"name": "libzstd1",
+			"sha256": "da5238dd84fc51f782f39d435821bff556409b3dbc82d232e4e81f427fb1ca65",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/libz/libzstd/libzstd1_1.5.7+dfsg-1_armhf.deb"
+			],
+			"version": "1.5.7+dfsg-1"
+		},
+		{
+			"arch": "armhf",
+			"dependencies": [],
+			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_armhf",
+			"name": "openssl-provider-legacy",
+			"sha256": "b6f060484c7717b937f64c56b6317e5e1d8a286f04627451a3f6e7e6ed39d2fd",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_armhf.deb"
+			],
+			"version": "3.5.4-1~deb13u1"
+		},
+		{
+			"arch": "armhf",
+			"dependencies": [],
 			"key": "gcc-14-base_14.2.0-19_armhf",
 			"name": "gcc-14-base",
 			"sha256": "0f702fdd5e5471efda9fece892e09ce73e3447968083e1f8c341f8b66b1fb340",
@@ -450,17 +527,6 @@
 				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_armhf.deb"
 			],
 			"version": "14.2.0-19"
-		},
-		{
-			"arch": "armhf",
-			"dependencies": [],
-			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_armhf",
-			"name": "zlib1g",
-			"sha256": "81c55a59e1570477ecef6a449bf6dce44dad67ba4ce9e04760451d4cfe200534",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_armhf.deb"
-			],
-			"version": "1:1.3.dfsg+really1.3.1-1+b1"
 		},
 		{
 			"arch": "s390x",
@@ -564,6 +630,39 @@
 		{
 			"arch": "s390x",
 			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_s390x",
+			"name": "zlib1g",
+			"sha256": "e38a94c60e944dfcf1937a12b02785afbbb2bedf356da18984c4dac0acc47ed9",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_s390x.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "libzstd1_1.5.7-p-dfsg-1_s390x",
+			"name": "libzstd1",
+			"sha256": "ed6bd13718360720b0a03d62e2440bd926b1db3b7443f46314fe3deb7e69989e",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/libz/libzstd/libzstd1_1.5.7+dfsg-1_s390x.deb"
+			],
+			"version": "1.5.7+dfsg-1"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_s390x",
+			"name": "openssl-provider-legacy",
+			"sha256": "98613108a9c745a8b09364b7b59b2da55f6ee3e9fb0c6f7e695fe15d21080390",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_s390x.deb"
+			],
+			"version": "3.5.4-1~deb13u1"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
 			"key": "gcc-14-base_14.2.0-19_s390x",
 			"name": "gcc-14-base",
 			"sha256": "7db20fd710eadefff128e82b4d4de68b466ce2aa1c53255004eb1d3d1d168495",
@@ -604,17 +703,6 @@
 				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_s390x.deb"
 			],
 			"version": "14.2.0-19"
-		},
-		{
-			"arch": "s390x",
-			"dependencies": [],
-			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_s390x",
-			"name": "zlib1g",
-			"sha256": "e38a94c60e944dfcf1937a12b02785afbbb2bedf356da18984c4dac0acc47ed9",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_s390x.deb"
-			],
-			"version": "1:1.3.dfsg+really1.3.1-1+b1"
 		},
 		{
 			"arch": "ppc64el",
@@ -718,6 +806,39 @@
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_ppc64el",
+			"name": "zlib1g",
+			"sha256": "f526e830310db11983cf51cfde95a74bc449a7bdc44b6ce68827d78802f1b4ae",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_ppc64el.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
+			"arch": "ppc64el",
+			"dependencies": [],
+			"key": "libzstd1_1.5.7-p-dfsg-1_ppc64el",
+			"name": "libzstd1",
+			"sha256": "1cdefa11a7d31bb36b610d4e44551870a44dfc6cac8359ebe9f9061a4f830773",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/libz/libzstd/libzstd1_1.5.7+dfsg-1_ppc64el.deb"
+			],
+			"version": "1.5.7+dfsg-1"
+		},
+		{
+			"arch": "ppc64el",
+			"dependencies": [],
+			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_ppc64el",
+			"name": "openssl-provider-legacy",
+			"sha256": "badc4f2d1552b72a96b59c15f93e418d86f0b0953c414f53b141028b960c1ba4",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_ppc64el.deb"
+			],
+			"version": "3.5.4-1~deb13u1"
+		},
+		{
+			"arch": "ppc64el",
+			"dependencies": [],
 			"key": "gcc-14-base_14.2.0-19_ppc64el",
 			"name": "gcc-14-base",
 			"sha256": "ebb80291fedd8db88488eef76573df0b4a1a11648a16406d9a0c0d4aaf229593",
@@ -758,17 +879,6 @@
 				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_ppc64el.deb"
 			],
 			"version": "14.2.0-19"
-		},
-		{
-			"arch": "ppc64el",
-			"dependencies": [],
-			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_ppc64el",
-			"name": "zlib1g",
-			"sha256": "f526e830310db11983cf51cfde95a74bc449a7bdc44b6ce68827d78802f1b4ae",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_ppc64el.deb"
-			],
-			"version": "1:1.3.dfsg+really1.3.1-1+b1"
 		}
 	],
 	"version": 1
