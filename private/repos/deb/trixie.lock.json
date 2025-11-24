@@ -124,17 +124,6 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_amd64",
-			"name": "openssl-provider-legacy",
-			"sha256": "0a4003bfd2442b86908e1a626cf46159af35aa78308abd3186515fdf8c7f056b",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_amd64.deb"
-			],
-			"version": "3.5.4-1~deb13u1"
-		},
-		{
-			"arch": "amd64",
-			"dependencies": [],
 			"key": "gcc-14-base_14.2.0-19_amd64",
 			"name": "gcc-14-base",
 			"sha256": "5b6825de4263824b78c4c51f6476414f3b4e89c2ab63e81dc8b9b5501e867cf6",
@@ -296,17 +285,6 @@
 				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/libz/libzstd/libzstd1_1.5.7+dfsg-1_arm64.deb"
 			],
 			"version": "1.5.7+dfsg-1"
-		},
-		{
-			"arch": "arm64",
-			"dependencies": [],
-			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_arm64",
-			"name": "openssl-provider-legacy",
-			"sha256": "53bbd0f1dcc6aff96d79a2f726f839c60dc95df681dcf1427f564e184fb6fc7f",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_arm64.deb"
-			],
-			"version": "3.5.4-1~deb13u1"
 		},
 		{
 			"arch": "arm64",
@@ -476,17 +454,6 @@
 		{
 			"arch": "armhf",
 			"dependencies": [],
-			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_armhf",
-			"name": "openssl-provider-legacy",
-			"sha256": "b6f060484c7717b937f64c56b6317e5e1d8a286f04627451a3f6e7e6ed39d2fd",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_armhf.deb"
-			],
-			"version": "3.5.4-1~deb13u1"
-		},
-		{
-			"arch": "armhf",
-			"dependencies": [],
 			"key": "gcc-14-base_14.2.0-19_armhf",
 			"name": "gcc-14-base",
 			"sha256": "0f702fdd5e5471efda9fece892e09ce73e3447968083e1f8c341f8b66b1fb340",
@@ -652,17 +619,6 @@
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_s390x",
-			"name": "openssl-provider-legacy",
-			"sha256": "98613108a9c745a8b09364b7b59b2da55f6ee3e9fb0c6f7e695fe15d21080390",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_s390x.deb"
-			],
-			"version": "3.5.4-1~deb13u1"
-		},
-		{
-			"arch": "s390x",
-			"dependencies": [],
 			"key": "gcc-14-base_14.2.0-19_s390x",
 			"name": "gcc-14-base",
 			"sha256": "7db20fd710eadefff128e82b4d4de68b466ce2aa1c53255004eb1d3d1d168495",
@@ -824,17 +780,6 @@
 				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/libz/libzstd/libzstd1_1.5.7+dfsg-1_ppc64el.deb"
 			],
 			"version": "1.5.7+dfsg-1"
-		},
-		{
-			"arch": "ppc64el",
-			"dependencies": [],
-			"key": "openssl-provider-legacy_3.5.4-1_deb13u1_ppc64el",
-			"name": "openssl-provider-legacy",
-			"sha256": "badc4f2d1552b72a96b59c15f93e418d86f0b0953c414f53b141028b960c1ba4",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20251115T203127Z/pool/main/o/openssl/openssl-provider-legacy_3.5.4-1~deb13u1_ppc64el.deb"
-			],
-			"version": "3.5.4-1~deb13u1"
 		},
 		{
 			"arch": "ppc64el",

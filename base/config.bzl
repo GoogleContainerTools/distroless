@@ -14,7 +14,6 @@ BASE_PACKAGES = {
         "libssl3t64",
         "libzstd1",
         "zlib1g",
-        "openssl-provider-legacy",
     ],
 }
 

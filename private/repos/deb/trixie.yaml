@@ -28,7 +28,6 @@ packages:
   - media-types
   - zlib1g
   - libzstd1
-  - openssl-provider-legacy
   # c++
   - gcc-14-base
   - libgcc-s1
