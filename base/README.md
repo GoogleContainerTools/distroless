@@ -21,6 +21,11 @@ of the packages in `gcr.io/distroless/static`, and
 
 * glibc
 * libssl
+  * for Debian 13 or later, libssl dependencies (zlib, libzstd) are also included.
+
+Note: Debian 13 base image does not include [OpenSSL legacy algorithms](https://docs.openssl.org/3.5/man7/OSSL_PROVIDER-legacy/#operations-and-algorithms).
+
+If you want to use them, you will need to add `openssl-legacy-provider` yourself.
 
 ## Usage
 
