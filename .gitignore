@@ -18,3 +18,5 @@
 # ignore user bazelrc
 .bazelrc.user
 *.log
+# ignore macos files
+.DS_Store

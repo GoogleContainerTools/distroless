@@ -1,0 +1,6 @@
+schemaVersion: "2.0.0"
+commandTests:
+  - name: bun
+    command: "/bun/bun"
+    args: ["--version"]
+    expectedOutput: ["1.3.3"]

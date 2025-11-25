@@ -43,6 +43,7 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs22-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs24-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/bun-debian12        | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
 
 These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian12:latest-amd64`
 
@@ -62,6 +63,7 @@ These images are not considered stable and may change in subtle ways that break 
 | gcr.io/distroless/nodejs20-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs22-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs24-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| gcr.io/distroless/bun-debian13        | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
 
 ## Why is distroless still using `gcr.io` instead of `pkg.dev`?
 
@@ -134,6 +136,7 @@ You can find other examples here:
 - [Python 3](examples/python3/Dockerfile)
 - [Go](examples/go/Dockerfile)
 - [Node.js](examples/nodejs/Dockerfile)
+- [Bun](examples/bun/Dockerfile)
 - [Rust](examples/rust/Dockerfile)
 
 To run any example, go to the directory for the language and run:
@@ -170,6 +173,7 @@ See here for:
 - [Python 3](examples/python3/BUILD)
 - [Go](examples/go/BUILD)
 - [Node.js](examples/nodejs/BUILD)
+- [Bun](examples/bun/BUILD)
 
 See here for examples on how to complete some common tasks in your image:
 

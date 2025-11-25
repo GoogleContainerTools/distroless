@@ -1,5 +1,5 @@
-load(":java.bzl", "java_base_image", "java_base_image_index", "java_build_base_image", "java_image_index", "java_openjdk_image", "java_temurin_image_from_adoptium_debs", "java_temurin_image_from_github_releases")
 load(":config.bzl", "JAVA_ARCHITECTURES", "JAVA_BASE_PACKAGES", "JAVA_BUILD_BASE_PACKAGES", "JAVA_DISTROS")
+load(":java.bzl", "java_base_image", "java_base_image_index", "java_build_base_image", "java_image_index", "java_openjdk_image", "java_temurin_image_from_adoptium_debs", "java_temurin_image_from_github_releases")
 
 package(default_visibility = ["//visibility:public"])
 

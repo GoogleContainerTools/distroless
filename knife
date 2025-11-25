@@ -187,6 +187,24 @@ function cmd_update_node_archives () {
     node knife.d/update_node_archives.js "$joined_versions"
 }
 
+function cmd_update_bun_archives () {
+	if ! which jq > /dev/null; then
+		echo "🧱 No jq executable was found"
+		exit 1
+    fi
+	if ! which curl > /dev/null; then
+		echo "🧱 No curl executable was found"
+		exit 1
+	fi
+	if ! which node > /dev/null; then
+		echo "🧱 No node executable was found"
+		exit 1
+	fi
+
+    version=$(curl -s https://api.github.com/repos/oven-sh/bun/releases/latest \
+      | jq -r '.tag_name | sub("^bun-v"; "")')
+    node knife.d/update_bun_archives.js "$version"
+}
 
 function cmd_test () {
     echo "🧪 Testing"
@@ -241,8 +259,11 @@ deb-versions)
 update-node-archives)
 	cmd_update_node_archives
 	;;
+update-bun-archives)
+	cmd_update_bun_archives
+	;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, update-java-archives, test, deb-versions, update-node-archives"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, update-java-archives, test, deb-versions, update-node-archives, update-bun-archives"
     exit 1
     ;;
 *) # unknown command

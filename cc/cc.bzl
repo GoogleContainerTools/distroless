@@ -1,6 +1,6 @@
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//private/util:deb.bzl", "deb")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
+load("//private/util:deb.bzl", "deb")
 
 def cc_image_index(distro, architectures):
     """cc image index for a distro

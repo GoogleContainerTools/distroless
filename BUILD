@@ -1,10 +1,11 @@
-load("//private/oci:defs.bzl", "sign_and_push_all")
-load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 load("//base:config.bzl", "BASE_ARCHITECTURES", "BASE_DISTROS")
+load("//bun:config.bzl", "BUN_ARCHITECTURES", "BUN_DISTROS")
 load("//cc:config.bzl", "CC_ARCHITECTURES", "CC_DISTROS")
-load("//nodejs:config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS")
 load("//java:config.bzl", "JAVA_ARCHITECTURES", "JAVA_DISTROS")
+load("//nodejs:config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS")
+load("//private/oci:defs.bzl", "sign_and_push_all")
 load("//python3:config.bzl", "PYTHON_ARCHITECTURES", "PYTHON_DISTROS")
+load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -196,6 +197,35 @@ NODEJS |= {
     for (tag_base, debug_mode, user) in VARIANTS
 }
 
+###############
+# BUN         #
+###############
+BUN = {
+    "{REGISTRY}/{PROJECT_ID}/bun" + "-" + distro + ":" + tag_base + "-" + arch: "//bun:bun" + debug_mode + "_" + user + "_" + arch + "_" + distro
+    for distro in BUN_DISTROS
+    for arch in BUN_ARCHITECTURES[distro]
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
+# oci_image_index
+BUN |= {
+    "{REGISTRY}/{PROJECT_ID}/bun" + "-" + distro + ":" + tag_base: "//bun:bun" + debug_mode + "_" + user + "_" + distro
+    for distro in BUN_DISTROS
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
+BUN |= {
+    "{REGISTRY}/{PROJECT_ID}/bun" + ":" + tag_base + "-" + arch: "//bun:bun" + debug_mode + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
+    for arch in BUN_ARCHITECTURES[DEFAULT_DISTRO]
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
+# oci_image_index
+BUN |= {
+    "{REGISTRY}/{PROJECT_ID}/bun" + ":" + tag_base: "//bun:bun" + debug_mode + "_" + user + "_" + DEFAULT_DISTRO
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
 ##############################################################################
 # Java will remain a bit bizzare as we clean it up post debian12 deprecation #
 # - make all things multi-arch                                               #
@@ -297,6 +327,8 @@ ALL = {}
 ALL |= STATIC
 
 ALL |= BASE
+
+ALL |= BUN
 
 ALL |= BASE_NOSSL
 

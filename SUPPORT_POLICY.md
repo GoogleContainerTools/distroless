@@ -12,6 +12,7 @@ The current estimation of end of life for images with the pattern:
 | cc          | Sept 2026      | debian 14 release day + 1yr |
 | java*       | Jan 2026       | debian 14 release day + 3mo |
 | node*       | Jan 2026       | debian 14 release day + 3mo |
+| bun*        | Jan 2026       | debian 14 release day + 3mo |
 | python*     | Jan 2026       | debian 14 release day + 3mo |
 
 \* see below for language specific runtime notes
@@ -22,6 +23,9 @@ Java will only support current LTS version distributed by debian [see here](http
 
 ### Node
 Node version support is for even numbered releases (20, 22, 24, etc) that are current, active or in LTS maintenance. For more information, [see here](https://nodejs.org/en/about/previous-releases#release-schedule).
+
+### Bun
+Bun does not have a LTS version, the latest stable release will be supported.
 
 ### Python (TBD)
 

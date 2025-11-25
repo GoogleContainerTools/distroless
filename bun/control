@@ -1,0 +1,10 @@
+Package: bun
+Version: {{VERSION}}
+Architecture: {{ARCHITECTURE}}
+Maintainer: Bun team <https://bun.sh>
+Homepage: https://bun.sh
+SHA256: {{SHA256}}
+Description: Bun - a fast, incrementally adoptable all-in-one JavaScript,
+  TypeScript & JSX toolkit.
+  It is a bundler, test runner, and package manager.
+  Bun aims for 100% Node.js compatibility.

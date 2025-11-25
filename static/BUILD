@@ -1,5 +1,5 @@
-load(":static.bzl", "static_image", "static_image_index")
 load(":config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
+load(":static.bzl", "static_image", "static_image_index")
 
 package(default_visibility = ["//visibility:public"])
 
