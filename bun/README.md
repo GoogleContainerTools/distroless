@@ -1,4 +1,4 @@
-# Documentation for `gcr.io/distroless/nodejs`
+# Documentation for `gcr.io/distroless/bun`
 
 ## Image Contents
 
