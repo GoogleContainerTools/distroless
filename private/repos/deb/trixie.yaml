@@ -26,9 +26,10 @@ packages:
   - openssl
   - tzdata
   - media-types
+  - zlib1g
+  - libzstd1
   # c++
   - gcc-14-base
   - libgcc-s1
   - libgomp1
   - libstdc++6
-  - zlib1g

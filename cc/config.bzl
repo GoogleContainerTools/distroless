@@ -16,6 +16,5 @@ CC_PACKAGES = {
         "libstdc++6",
         "libgcc-s1",
         "gcc-14-base",
-        "zlib1g",
     ],
 }
