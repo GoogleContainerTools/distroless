@@ -17,7 +17,7 @@ jobs:
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - name: Checkout PR Branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: pr_branch
@@ -30,7 +30,7 @@ jobs:
           cd ..
 
       - name: Checkout main Branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: main
           path: main_branch
