@@ -221,14 +221,16 @@ JAVA_BASE = {
 }
 
 JAVA_BASE |= {
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_debian12"
-    for arch in JAVA_ARCHITECTURES["debian12"]
+    "{REGISTRY}/{PROJECT_ID}/java-base-" + distro + ":" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_" + distro
+    for distro in JAVA_DISTROS
+    for arch in JAVA_ARCHITECTURES[distro]
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
 JAVA_BASE |= {
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:" + tag_base: "//java:java_base_" + label + "_debian12"
+    "{REGISTRY}/{PROJECT_ID}/java-base-" + distro + ":" + tag_base: "//java:java_base_" + label + "_" + distro
     for (tag_base, label) in JAVA_VARIATIONS
+    for distro in JAVA_DISTROS
 }
 
 ## JAVA17
