@@ -50,7 +50,7 @@ Any other tags are considered deprecated and are no longer updated
 
 #### Debian 13
 
-Debian 13 distroless images use the debian [UsrMerge](https://wiki.debian.org/UsrMerge) scheme. If you use `rules_distroless` to add packges to an image, set `mergedusr = True` in [`apt.install`](https://registry.bazel.build/docs/rules_distroless#apt-extensions-bzl).
+Debian 13 distroless images use the debian [UsrMerge](https://wiki.debian.org/UsrMerge) scheme. If you use `rules_distroless` to add packages to an image, set `mergedusr = True` in [`apt.install`](https://registry.bazel.build/docs/rules_distroless#apt_install).
 
 | Image                                 | Tags                                  | Architecture Suffixes             |
 | ------------------------------------- | ------------------------------------- | --------------------------------- |
