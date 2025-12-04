@@ -206,7 +206,7 @@ function test_image() {
 
     bazel build "$image_label"
     crane push "$(bazel cquery --output=files $image_label)" "$repo_stage"
-    if ! diffoci diff --pull=always --all-platforms --semantic "$repo_origin" "$repo_stage"; then
+    if ! diffoci diff --pull=always --all-platforms "$repo_origin" "$repo_stage"; then
         echo ""
         echo "      🔬 To reproduce: bazel run //private/tools:diff -- --only $image_label"
         echo ""
