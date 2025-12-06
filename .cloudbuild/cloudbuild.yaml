@@ -1,7 +1,7 @@
 timeout: 10800s  # 3 hours
 
 options:
-  machineType: N1_HIGHCPU_8
+  machineType: E2_HIGHCPU_32
   logging: CLOUD_LOGGING_ONLY
 
 artifacts:
@@ -10,7 +10,7 @@ artifacts:
     paths: ['.logs/*.log']
 
 steps:
-  - name: gcr.io/cloud-builders/bazel@sha256:e82204cf0715edb80e4957fa55f944b9dd06b0b1c4eb4b0ca0022de7839726f6
+  - name: gcr.io/cloud-builders/bazel@sha256:05a39d8254df537c87bd6272f5c9f5ac8c77305c3e6dea9527c563da9016d0c3
     env:
       - PROJECT_ID=${PROJECT_ID}
       - COMMIT_SHA=${COMMIT_SHA}
