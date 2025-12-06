@@ -28,6 +28,10 @@ These images are built using [bazel](https://bazel.build), but they can also be 
 
 The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY.md](SUPPORT_POLICY.md) for support timelines)
 
+These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian12:latest-amd64`
+
+Any other tags are considered deprecated and are no longer updated
+
 #### Debian 12
 
 | Image                                 | Tags                                  | Architecture Suffixes             |
@@ -44,13 +48,9 @@ The following images are currently published and updated by the distroless proje
 | gcr.io/distroless/nodejs22-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs24-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
 
-These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian12:latest-amd64`
+#### Debian 13
 
-Any other tags are considered deprecated and are no longer updated
-
-#### Debian 13 Preview
-
-These images are not considered stable and may change in subtle ways that break your application. They are made available to allow testing of your systems before upgrading. We will stabilize these in the near future at which point you should revalidate with the latest releases.
+Debian 13 distroless images use the debian [UsrMerge](https://wiki.debian.org/UsrMerge) scheme. If you use `rules_distroless` to add packages to an image, set `mergedusr = True` in [`apt.install`](https://registry.bazel.build/docs/rules_distroless#apt_install).
 
 | Image                                 | Tags                                  | Architecture Suffixes             |
 | ------------------------------------- | ------------------------------------- | --------------------------------- |
@@ -58,6 +58,7 @@ These images are not considered stable and may change in subtle ways that break 
 | gcr.io/distroless/base-debian13       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/cc-debian13         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
+| gcr.io/distroless/java21-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
 | gcr.io/distroless/java25-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
 | gcr.io/distroless/nodejs20-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/nodejs22-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
