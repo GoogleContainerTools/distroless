@@ -12,7 +12,7 @@ The current estimation of end of life for images with the pattern:
 | cc          | Sept 2026      | debian 14 release day + 1yr |
 | java*       | Jan 2026       | debian 14 release day + 3mo |
 | node*       | Jan 2026       | debian 14 release day + 3mo |
-| python*     | Jan 2026       | debian 14 release day + 3mo |
+| python*     | TBD H1 2026    | debian 14 release day + 3mo |
 
 \* see below for language specific runtime notes
 
