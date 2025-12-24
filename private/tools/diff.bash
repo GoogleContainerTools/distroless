@@ -22,7 +22,11 @@ on_exit() {
         fi
     fi
     pkill -P $$ || true
-    rm -rf "$SECURE_TMP"
+    
+    # Robust cleanup with existence guard
+    if [[ -n "${SECURE_TMP:-}" && -d "$SECURE_TMP" ]]; then
+        rm -rf "$SECURE_TMP"
+    fi
 }
 trap "on_exit" EXIT
 
