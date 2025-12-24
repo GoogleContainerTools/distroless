@@ -3,23 +3,30 @@ set -o pipefail -o errexit -o nounset
 
 # ./private/tools/diff.bash --head-ref test --base-ref test --query-bazel --registry-spawn --report ./report.log
 
-STDERR=$(mktemp)
+# Secure temporary directory setup
+SECURE_TMP=$(mktemp -d -t distroless-diff.XXXXXXXXXX)
+chmod 700 "$SECURE_TMP"
 
-# Upon exiting, stop the registry and print STDERR on non-zero exit code.
+# Upon exiting, stop the registry, clean up, and print STDERR on non-zero exit code.
 on_exit() {
     last_exit_code=$?
     set +o errexit
     if [[ $last_exit_code != 0 ]]; then
         echo ""
         echo "💥 Something went wrong."
-        if [[ $(wc -c <"${STDERR}") -gt 0 ]]; then
+        if [[ -f "${STDERR:-}" && $(wc -c <"${STDERR}") -gt 0 ]]; then
             echo ""
             echo "Here's the STDERR:"
             echo ""
-            cat $STDERR
+            cat "$STDERR"
         fi
     fi
-    pkill -P $$
+    pkill -P $$ || true
+    
+    # Robust cleanup with existence guard
+    if [[ -n "${SECURE_TMP:-}" && -d "$SECURE_TMP" ]]; then
+        rm -rf "$SECURE_TMP"
+    fi
 }
 trap "on_exit" EXIT
 
@@ -30,8 +37,8 @@ QUERY_FILE=
 REPORT_FILE=
 REGISTRY=
 JOBS=
-STDERR=$(mktemp)
-CHANGED_IMAGES_FILE=$(mktemp)
+STDERR=$(mktemp -p "$SECURE_TMP")
+CHANGED_IMAGES_FILE=$(mktemp -p "$SECURE_TMP")
 SET_GITHUB_OUTPUT="0"
 ONLY=
 SKIP_INDEX="0"
@@ -88,7 +95,7 @@ while (($# > 0)); do
         shift 2
         ;;
     --cd-into-workspace)
-        cd $BUILD_WORKSPACE_DIRECTORY
+        cd "$BUILD_WORKSPACE_DIRECTORY"
         shift
         ;;
     --skip-image-index)
@@ -125,7 +132,7 @@ fi
 # Redirect stderr to the $STDERR temp file for the rest of the script.
 exec 2>>"${STDERR}"
 
-DISK_STORAGE="/tmp/diff-storage"
+DISK_STORAGE="$SECURE_TMP/diff-storage"
 
 if [[ "${QUERY_FILE}" == "bazel" ]]; then
     bazel build :sign_and_push.query
@@ -133,30 +140,40 @@ if [[ "${QUERY_FILE}" == "bazel" ]]; then
 fi
 
 if [[ "${REGISTRY}" == "spawn_https" ]]; then
-    # Make a self signed cert
-    rm -f /tmp/localhost.pem /tmp/localhost-key.pem
-    rm -rf $DISK_STORAGE
+    # Define paths within secure temporary directory
+    CERT_FILE="$SECURE_TMP/localhost.pem"
+    KEY_FILE="$SECURE_TMP/localhost-key.pem"
+    CFG_JSON="$SECURE_TMP/cfg.json"
+
+    # Ensure clean state for spawn_https
+    rm -rf "$DISK_STORAGE"
+    
+    # Generate self-signed certs securely
     mkcert -install
-    (cd /tmp && mkcert localhost)
-    echo '{
-        "http":{
-            "address":"127.0.0.1", "port":"4564",
-            "tls": {
-                "cert":"/tmp/localhost.pem",
-                "key":"/tmp/localhost-key.pem"
-            }
-        },
-        "log": { "level": "info" },
-        "storage":{"rootDirectory":"/tmp/diff-storage"}
-    }' >/tmp/cfg.json
+    (cd "$SECURE_TMP" && mkcert localhost)
+
+    # Securely write the configuration file using the temporary paths
+    cat <<EOF >"$CFG_JSON"
+{
+    "http":{
+        "address":"127.0.0.1", "port":"4564",
+        "tls": {
+            "cert":"$CERT_FILE",
+            "key":"$KEY_FILE"
+        }
+    },
+    "log": { "level": "info" },
+    "storage":{"rootDirectory":"$DISK_STORAGE"}
+}
+EOF
     REGISTRY="localhost:4564"
-    zot serve /tmp/cfg.json 1>&2 &
+    zot serve "$CFG_JSON" 1>&2 &
     sleep 1
 fi
 
 if [[ "${REGISTRY}" == "spawn" ]]; then
-    rm -rf $DISK_STORAGE
-    mkdir $DISK_STORAGE
+    rm -rf "$DISK_STORAGE"
+    mkdir -p "$DISK_STORAGE"
     REGISTRY="localhost:4564"
     crane registry serve --address "$REGISTRY" --disk "$DISK_STORAGE" &
 fi
@@ -179,7 +196,7 @@ function test_image() {
     IFS=" " read -r repo image_label <<<"$1"
 
     if [[ "${ONLY}" != "" && "${ONLY}" != "$image_label" ]]; then
-        return 
+        return
     fi
 
     repo_origin=$(stamp_origin "$repo")
@@ -194,7 +211,7 @@ function test_image() {
     fi
 
     if [[ "${SKIP_INDEX}" == "1" ]]; then
-        if ! crane manifest "$repo_origin" | jq -e '.mediaType == "application/vnd.oci.image.manifest.v1+json"' > /dev/null; then  
+        if ! crane manifest "$repo_origin" | jq -e '.mediaType == "application/vnd.oci.image.manifest.v1+json"' > /dev/null; then
             echo "⏭️ Skipping image index $repo_origin"
             return
         fi
@@ -222,14 +239,14 @@ function test_image() {
 
 if [[ -n "${REPORT_FILE}" ]]; then
     echo "Report can be found in: $REPORT_FILE"
-    echo -n "" >$REPORT_FILE
+    echo -n "" > "$REPORT_FILE"
     sleep 1
     # Redirect rest of the file into both report file and stdout
     exec 1> >(tee -a "${REPORT_FILE}")
 fi
 
 # Parallelize using gnu parallel
-if [[ "${JOBS}" -gt 0 ]]; then
+if [[ "${JOBS:-0}" -gt 0 ]]; then
     export HEAD_REF BASE_REF REGISTRY REPORT_FILE SET_GITHUB_OUTPUT ONLY CHANGED_IMAGES_FILE SKIP_INDEX
     export -f stamp_origin stamp_stage test_image
     cat "${QUERY_FILE}" | parallel --eta --progress --jobs "${JOBS}" "set -o pipefail -o errexit -o nounset && test_image"
