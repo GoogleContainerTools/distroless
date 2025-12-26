@@ -3,7 +3,7 @@ set -o pipefail -o errexit -o nounset
 
 # ./private/tools/diff.bash --head-ref test --base-ref test --query-bazel --registry-spawn --report ./report.log
 
-STDERR=$(mktemp)
+REGISTRY_TMPDIR=
 
 # Upon exiting, stop the registry and print STDERR on non-zero exit code.
 on_exit() {
@@ -16,8 +16,11 @@ on_exit() {
             echo ""
             echo "Here's the STDERR:"
             echo ""
-            cat $STDERR
+            cat "${STDERR}"
         fi
+    fi
+    if [[ -n "${REGISTRY_TMPDIR:-}" && -d "${REGISTRY_TMPDIR}" ]]; then
+        rm -rf "${REGISTRY_TMPDIR}"
     fi
     pkill -P $$
 }
@@ -88,7 +91,7 @@ while (($# > 0)); do
         shift 2
         ;;
     --cd-into-workspace)
-        cd $BUILD_WORKSPACE_DIRECTORY
+        cd "${BUILD_WORKSPACE_DIRECTORY}"
         shift
         ;;
     --skip-image-index)
@@ -125,8 +128,6 @@ fi
 # Redirect stderr to the $STDERR temp file for the rest of the script.
 exec 2>>"${STDERR}"
 
-DISK_STORAGE="/tmp/diff-storage"
-
 if [[ "${QUERY_FILE}" == "bazel" ]]; then
     bazel build :sign_and_push.query
     QUERY_FILE=$(bazel cquery --output=files :sign_and_push.query)
@@ -134,29 +135,40 @@ fi
 
 if [[ "${REGISTRY}" == "spawn_https" ]]; then
     # Make a self signed cert
-    rm -f /tmp/localhost.pem /tmp/localhost-key.pem
-    rm -rf $DISK_STORAGE
+    umask 077
+    REGISTRY_TMPDIR="$(mktemp -d)"
+    DISK_STORAGE="${REGISTRY_TMPDIR}/diff-storage"
+    CFG_JSON="${REGISTRY_TMPDIR}/cfg.json"
+    CERT_PATH="${REGISTRY_TMPDIR}/localhost.pem"
+    KEY_PATH="${REGISTRY_TMPDIR}/localhost-key.pem"
+    rm -rf "${DISK_STORAGE}"
+    mkdir -p "${DISK_STORAGE}"
     mkcert -install
-    (cd /tmp && mkcert localhost)
-    echo '{
-        "http":{
-            "address":"127.0.0.1", "port":"4564",
-            "tls": {
-                "cert":"/tmp/localhost.pem",
-                "key":"/tmp/localhost-key.pem"
-            }
-        },
-        "log": { "level": "info" },
-        "storage":{"rootDirectory":"/tmp/diff-storage"}
-    }' >/tmp/cfg.json
+    mkcert -cert-file "${CERT_PATH}" -key-file "${KEY_PATH}" localhost
+    cat >"${CFG_JSON}" <<EOF
+{
+  "http": {
+    "address": "127.0.0.1",
+    "port": "4564",
+    "tls": {
+      "cert": "${CERT_PATH}",
+      "key": "${KEY_PATH}"
+    }
+  },
+  "log": { "level": "info" },
+  "storage": { "rootDirectory": "${DISK_STORAGE}" }
+}
+EOF
     REGISTRY="localhost:4564"
-    zot serve /tmp/cfg.json 1>&2 &
+    zot serve "${CFG_JSON}" 1>&2 &
     sleep 1
 fi
 
 if [[ "${REGISTRY}" == "spawn" ]]; then
-    rm -rf $DISK_STORAGE
-    mkdir $DISK_STORAGE
+    umask 077
+    REGISTRY_TMPDIR="$(mktemp -d)"
+    DISK_STORAGE="${REGISTRY_TMPDIR}/diff-storage"
+    mkdir -p "${DISK_STORAGE}"
     REGISTRY="localhost:4564"
     crane registry serve --address "$REGISTRY" --disk "$DISK_STORAGE" &
 fi
@@ -165,14 +177,14 @@ stamp_stage() {
     local str="$1"
     str=${str/"{COMMIT_SHA}"/"${HEAD_REF}"}
     str=${str/"{REGISTRY}"/"${REGISTRY}"}
-    echo ${str/"{PROJECT_ID}"/"stage"}
+    echo "${str/"{PROJECT_ID}"/"stage"}"
 }
 
 stamp_origin() {
-    local str=$1
+    local str="$1"
     str=${str/"{COMMIT_SHA}"/"${BASE_REF}"}
     str=${str/"{REGISTRY}"/"gcr.io"}
-    echo ${str/"{PROJECT_ID}"/"distroless"}
+    echo "${str/"{PROJECT_ID}"/"distroless"}"
 }
 
 function test_image() {
@@ -205,7 +217,7 @@ function test_image() {
     echo ""
 
     bazel build "$image_label"
-    crane push "$(bazel cquery --output=files $image_label)" "$repo_stage"
+    crane push "$(bazel cquery --output=files "${image_label}")" "$repo_stage"
     if ! diffoci diff --pull=always --all-platforms "$repo_origin" "$repo_stage"; then
         echo ""
         echo "      🔬 To reproduce: bazel run //private/tools:diff -- --only $image_label"
@@ -222,7 +234,7 @@ function test_image() {
 
 if [[ -n "${REPORT_FILE}" ]]; then
     echo "Report can be found in: $REPORT_FILE"
-    echo -n "" >$REPORT_FILE
+    echo -n "" >"${REPORT_FILE}"
     sleep 1
     # Redirect rest of the file into both report file and stdout
     exec 1> >(tee -a "${REPORT_FILE}")
