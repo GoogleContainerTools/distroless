@@ -4,6 +4,10 @@ set -o pipefail -o errexit -o nounset
 # ./private/tools/diff.bash --head-ref test --base-ref test --query-bazel --registry-spawn --report ./report.log
 
 REGISTRY_TMPDIR=
+STDERR=$(mktemp)
+STDERR_IS_TEMP="1"
+CHANGED_IMAGES_FILE=$(mktemp)
+CHANGED_IMAGES_FILE_IS_TEMP="1"
 
 # Upon exiting, stop the registry and print STDERR on non-zero exit code.
 on_exit() {
@@ -22,6 +26,12 @@ on_exit() {
     if [[ -n "${REGISTRY_TMPDIR:-}" && -d "${REGISTRY_TMPDIR}" ]]; then
         rm -rf "${REGISTRY_TMPDIR}"
     fi
+    if [[ "${STDERR_IS_TEMP:-0}" == "1" ]]; then
+        rm -f "${STDERR}"
+    fi
+    if [[ "${CHANGED_IMAGES_FILE_IS_TEMP:-0}" == "1" ]]; then
+        rm -f "${CHANGED_IMAGES_FILE}"
+    fi
     pkill -P $$
 }
 trap "on_exit" EXIT
@@ -33,8 +43,6 @@ QUERY_FILE=
 REPORT_FILE=
 REGISTRY=
 JOBS=
-STDERR=$(mktemp)
-CHANGED_IMAGES_FILE=$(mktemp)
 SET_GITHUB_OUTPUT="0"
 ONLY=
 SKIP_INDEX="0"
@@ -84,6 +92,7 @@ while (($# > 0)); do
         ;;
     --logs)
         STDERR="$2"
+        STDERR_IS_TEMP="0"
         shift 2
         ;;
     --only)
@@ -133,16 +142,19 @@ if [[ "${QUERY_FILE}" == "bazel" ]]; then
     QUERY_FILE=$(bazel cquery --output=files :sign_and_push.query)
 fi
 
-if [[ "${REGISTRY}" == "spawn_https" ]]; then
-    # Make a self signed cert
+if [[ "${REGISTRY}" == "spawn_https" || "${REGISTRY}" == "spawn" ]]; then
     umask 077
     REGISTRY_TMPDIR="$(mktemp -d)"
     DISK_STORAGE="${REGISTRY_TMPDIR}/diff-storage"
+    mkdir -p "${DISK_STORAGE}"
+    REGISTRY="localhost:4564"
+fi
+
+if [[ "${REGISTRY}" == "spawn_https" ]]; then
+    # Make a self signed cert
     CFG_JSON="${REGISTRY_TMPDIR}/cfg.json"
     CERT_PATH="${REGISTRY_TMPDIR}/localhost.pem"
     KEY_PATH="${REGISTRY_TMPDIR}/localhost-key.pem"
-    rm -rf "${DISK_STORAGE}"
-    mkdir -p "${DISK_STORAGE}"
     mkcert -install
     mkcert -cert-file "${CERT_PATH}" -key-file "${KEY_PATH}" localhost
     cat >"${CFG_JSON}" <<EOF
@@ -159,17 +171,11 @@ if [[ "${REGISTRY}" == "spawn_https" ]]; then
   "storage": { "rootDirectory": "${DISK_STORAGE}" }
 }
 EOF
-    REGISTRY="localhost:4564"
     zot serve "${CFG_JSON}" 1>&2 &
     sleep 1
 fi
 
 if [[ "${REGISTRY}" == "spawn" ]]; then
-    umask 077
-    REGISTRY_TMPDIR="$(mktemp -d)"
-    DISK_STORAGE="${REGISTRY_TMPDIR}/diff-storage"
-    mkdir -p "${DISK_STORAGE}"
-    REGISTRY="localhost:4564"
     crane registry serve --address "$REGISTRY" --disk "$DISK_STORAGE" &
 fi
 
