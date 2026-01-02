@@ -51,7 +51,7 @@ jobs:
       - name: Diff All Images
         id: diff
         run: |
-          ./private/tools/diff.bash \
+          ./private/tools/diff/diff.bash \
             --query-bazel --registry-spawn-https \
             --head-ref ${{ github.head_ref }} \
             --base-ref ${{ github.event.pull_request.base.ref }} \

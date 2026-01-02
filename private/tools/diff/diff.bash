@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -o pipefail -o errexit -o nounset
 
-# ./private/tools/diff.bash --head-ref test --base-ref test --query-bazel --registry-spawn --report ./report.log
+# ./private/tools/diff/diff.bash --head-ref test --base-ref test --query-bazel --registry-spawn --report ./report.log
 
 STDERR=$(mktemp)
 
@@ -208,7 +208,7 @@ function test_image() {
     crane push "$(bazel cquery --output=files $image_label)" "$repo_stage"
     if ! diffoci diff --pull=always --all-platforms "$repo_origin" "$repo_stage"; then
         echo ""
-        echo "      🔬 To reproduce: bazel run //private/tools:diff -- --only $image_label"
+        echo "      🔬 To reproduce: bazel run //private/tools/diff:diff -- --only $image_label"
         echo ""
         echo "👎 $repo_origin and $repo_stage are different."
         if [[ "${SET_GITHUB_OUTPUT}" == "1" ]]; then
