@@ -1,0 +1,3 @@
+"rules to deal with auto_vm lifecycle tagging"
+
+exports_files(["tag.sh"])
