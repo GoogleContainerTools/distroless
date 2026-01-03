@@ -1,4 +1,5 @@
 load("//private/oci:defs.bzl", "sign_and_push_all")
+load("//private/tools/lifecycle:defs.bzl", "attach_lifecycle_tags")
 load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 load("//base:config.bzl", "BASE_ARCHITECTURES", "BASE_DISTROS")
 load("//cc:config.bzl", "CC_ARCHITECTURES", "CC_DISTROS")
@@ -329,5 +330,10 @@ ALL |= COMMIT_SUFFIXED_TAGS
 
 sign_and_push_all(
     name = "sign_and_push",
+    images = ALL,
+)
+
+attach_lifecycle_tags(
+    name = "attach_lifecycle_tags",
     images = ALL,
 )
