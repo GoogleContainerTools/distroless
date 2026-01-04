@@ -56,8 +56,17 @@ consider using `python:<version>-slim` images instead.
 
 ### Execution Model
 
-Distroless images do not include a shell or PATH resolution. Commands must use
-absolute paths when invoking the Python interpreter:
+### Execution Model
+
+Distroless images do not include a shell.
+
+The `python3` image provides a default ENTRYPOINT that invokes the Python
+interpreter, which allows users to supply a script directly via `CMD`
+(as demonstrated in the `examples/python3` directory).
+
+However, for maximum clarity and to avoid ambiguity—especially in more complex
+container configurations—it is often preferable to explicitly invoke the
+interpreter using an absolute path:
 
 ```dockerfile
 CMD ["/usr/bin/python3", "-m", "your_module"]
