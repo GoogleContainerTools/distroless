@@ -43,6 +43,8 @@ function tag_update() {
       (($now | tonumber) - (.value.timeUploadedMs | tonumber) > 172800000)
     ) | .key
   ');
+  background_pid=$!
+  wait "$background_pid"
 
   echo "tagging ${#targets[@]} images of $image"
 
@@ -58,14 +60,17 @@ function tag_deprecate() {
   images_json=$(gcrane ls "$image" --json)
 
   # get all hashes for all images don't have the deprecated tag
+  # this is only for wholesale deprecation of an image
   readarray -t targets < <(echo "$images_json" | jq -er '
     .manifest | to_entries | sort_by(.value.timeUploadedMs|tonumber) | .[] | select(
       .value.tag // [] | all(test("deprecated-public-image-[a-f0-9]{64}$") | not)
     ) | .key
   ');
+  background_pid=$!
+  wait "$background_pid"
 
   echo "tagging ${#targets[@]} images of $image"
-  echo "disabled for now, edit out comment"
+  echo "disabled for now, edit out comment, be careful about builds happening, this doesn't account for them"
   # exec_tag "$image" "$tag_prefix" targets
 }
 
