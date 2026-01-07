@@ -10,7 +10,7 @@ artifacts:
     paths: ['.logs/*.log']
 
 steps:
-  - name: gcr.io/cloud-builders/bazel@sha256:05a39d8254df537c87bd6272f5c9f5ac8c77305c3e6dea9527c563da9016d0c3
+  - name: gcr.io/cloud-builders/bazel@sha256:70e96d9faec4bab40a9d8d55d6b86ce2657927d8bca6bdc2dcb21a82b66dbdf7 # 5.4.0
     env:
       - PROJECT_ID=${PROJECT_ID}
       - COMMIT_SHA=${COMMIT_SHA}
