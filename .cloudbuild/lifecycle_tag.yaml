@@ -1,0 +1,13 @@
+timeout: 1800s # 30 minutes
+
+options:
+  machineType: E2_MEDIUM
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  - name: gcr.io/cloud-builders/bazel@sha256:70e96d9faec4bab40a9d8d55d6b86ce2657927d8bca6bdc2dcb21a82b66dbdf7 # 5.4.0
+    env:
+      - PROJECT_ID=${PROJECT_ID}
+      - REGISTRY=gcr.io
+    entrypoint: bash
+    args: [".cloudbuild/lifecycle_tag.sh"]
