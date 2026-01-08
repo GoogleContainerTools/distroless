@@ -36,7 +36,7 @@ function tag_update() {
   # jq behavior for all(test(pattern)) matches the empty list []
   # or are older than 2 days (we don't want to accidentally mess with any
   # ongoing builds)
-  readarray -t targets < <(echo "$images_json" | jq -er --arg now "$NOW" '
+  readarray -t targets < <(echo "$images_json" | jq -r --arg now "$NOW" '
     .manifest | to_entries | sort_by(.value.timeUploadedMs|tonumber) | .[] | select(
       (.value.tag // [] | all(test(".*-[a-f0-9]{40}$|^[a-f0-9]{40}$")))
       and
@@ -61,7 +61,7 @@ function tag_deprecate() {
 
   # get all hashes for all images don't have the deprecated tag
   # this is only for wholesale deprecation of an image
-  readarray -t targets < <(echo "$images_json" | jq -er '
+  readarray -t targets < <(echo "$images_json" | jq -r '
     .manifest | to_entries | sort_by(.value.timeUploadedMs|tonumber) | .[] | select(
       .value.tag // [] | all(test("deprecated-public-image-[a-f0-9]{64}$") | not)
     ) | .key
