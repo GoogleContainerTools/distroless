@@ -6,6 +6,7 @@ load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 
 DISTRO_VERSION = {
     "debian12": "3.11",
+    "debian13": "3.13",
 }
 
 def python_alias(distro):
@@ -39,7 +40,7 @@ def python3_image_index(distro, architectures):
         for user in USERS
     ]
 
-def python3_image(distro, arch):
+def python3_image(distro, arch, packages):
     python_alias(distro)
 
     [
@@ -53,32 +54,9 @@ def python3_image(distro, arch):
             # Use UTF-8 encoding for file system: match modern Linux
             env = {"LANG": "C.UTF-8"},
             tars = [
-                deb.package(arch, distro, "libbz2-1.0", "python"),
-                deb.package(arch, distro, "libdb5.3", "python"),
-                deb.package(arch, distro, "libexpat1", "python"),
-                deb.package(arch, distro, "liblzma5", "python"),
-                deb.package(arch, distro, "libsqlite3-0", "python"),
-                deb.package(arch, distro, "libuuid1", "python"),
-                deb.package(arch, distro, "libncursesw6", "python"),
-                deb.package(arch, distro, "libtinfo6", "python"),
-                deb.package(arch, distro, "python3-distutils", "python"),
-                deb.package(arch, distro, "zlib1g", "python"),
-                deb.package(arch, distro, "libcom-err2", "python"),
-                deb.package(arch, distro, "libcrypt1", "python"),
-                deb.package(arch, distro, "libgssapi-krb5-2", "python"),
-                deb.package(arch, distro, "libk5crypto3", "python"),
-                deb.package(arch, distro, "libkeyutils1", "python"),
-                deb.package(arch, distro, "libkrb5-3", "python"),
-                deb.package(arch, distro, "libkrb5support0", "python"),
-                deb.package(arch, distro, "libnsl2", "python"),
-                deb.package(arch, distro, "libreadline8", "python"),
-                deb.package(arch, distro, "libtirpc3", "python"),
-                deb.package(arch, distro, "libffi8", "python"),
-                deb.package(arch, distro, "libpython3.11-minimal", "python"),
-                deb.package(arch, distro, "libpython3.11-stdlib", "python"),
-                deb.package(arch, distro, "python3.11-minimal", "python"),
-                ":python_aliases_%s" % distro,
-            ],
+                deb.package(arch, distro, pkg, "python")
+                for pkg in packages
+            ] + [":python_aliases_%s" % distro],
         )
         for mode in DEBUG_MODE
         for user in USERS

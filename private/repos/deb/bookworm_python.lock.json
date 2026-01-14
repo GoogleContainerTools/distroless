@@ -3,17 +3,6 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "dash_0.5.12-2_amd64",
-			"name": "dash",
-			"sha256": "33ea40061da2f1a861ec46212b2b6a34f0776a049b1a3f0abce2fb8cb994258f",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20260110T225955Z/pool/main/d/dash/dash_0.5.12-2_amd64.deb"
-			],
-			"version": "0.5.12-2"
-		},
-		{
-			"arch": "amd64",
-			"dependencies": [],
 			"key": "libbz2-1.0_1.0.8-5-p-b1_amd64",
 			"name": "libbz2-1.0",
 			"sha256": "54149da3f44b22d523b26b692033b84503d822cc5122fed606ea69cc83ca5aeb",
@@ -274,28 +263,6 @@
 				"https://snapshot.debian.org/archive/debian/20260110T225955Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_amd64.deb"
 			],
 			"version": "1:1.2.13.dfsg-1"
-		},
-		{
-			"arch": "amd64",
-			"dependencies": [],
-			"key": "libc-bin_2.36-9-p-deb12u13_amd64",
-			"name": "libc-bin",
-			"sha256": "3f7a7caf9a34875fb076f08d168430ad8c338c71b0b7e6c02d19e914d7bc4277",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20260110T225955Z/pool/main/g/glibc/libc-bin_2.36-9+deb12u13_amd64.deb"
-			],
-			"version": "2.36-9+deb12u13"
-		},
-		{
-			"arch": "arm64",
-			"dependencies": [],
-			"key": "dash_0.5.12-2_arm64",
-			"name": "dash",
-			"sha256": "c1358e2a8054eb93efd460adf480224a16ea9e0b4d7b4c6cbcf8c8c91902a1d7",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20260110T225955Z/pool/main/d/dash/dash_0.5.12-2_arm64.deb"
-			],
-			"version": "0.5.12-2"
 		},
 		{
 			"arch": "arm64",
@@ -560,17 +527,6 @@
 				"https://snapshot.debian.org/archive/debian/20260110T225955Z/pool/main/z/zlib/zlib1g_1.2.13.dfsg-1_arm64.deb"
 			],
 			"version": "1:1.2.13.dfsg-1"
-		},
-		{
-			"arch": "arm64",
-			"dependencies": [],
-			"key": "libc-bin_2.36-9-p-deb12u13_arm64",
-			"name": "libc-bin",
-			"sha256": "1199da233e4c893e0a44e81b2024667241c19f93eb12f4ec1e29585117270a85",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20260110T225955Z/pool/main/g/glibc/libc-bin_2.36-9+deb12u13_arm64.deb"
-			],
-			"version": "2.36-9+deb12u13"
 		}
 	],
 	"version": 1

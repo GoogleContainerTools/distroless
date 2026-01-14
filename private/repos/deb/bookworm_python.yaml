@@ -1,4 +1,4 @@
-# debian 12, limited architectures, java only
+# debian 12, limited architectures, python only
 version: 1
 
 sources:
@@ -14,7 +14,6 @@ archs:
   - arm64
 
 packages:
-  - dash
   - libbz2-1.0
   - libcom-err2
   - libcrypt1 # TODO: glibc library for -lcrypt; maybe should be in cc?
@@ -39,4 +38,3 @@ packages:
   - python3-distutils
   - python3.11-minimal
   - zlib1g
-  - libc-bin

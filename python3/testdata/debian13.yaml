@@ -2,16 +2,10 @@ schemaVersion: "1.0.0"
 commandTests:
   - name: version
     command: ["/usr/bin/python3", "--version"]
-    expectedOutput: ["Python 3.11.2"]
+    expectedOutput: ["Python 3.13.5"]
   - name: symlink
     command: ["/usr/bin/python", "--version"]
-    expectedOutput: ["Python 3.11.2"]
-
-  # debian 12's default python3 includes a partial version of distutils causing virtualenv to fail
-  # ensure we have the full version so virtualenvs work with distroless
-  - name: distutils_works
-    command: ["/usr/bin/python3", "-c", "import distutils.dist"]
-    exitCode: 0
+    expectedOutput: ["Python 3.13.5"]
 
   # import every module installed with the Python package
   - name: import_everything
@@ -37,10 +31,20 @@ commandTests:
           'encodings.mbcs',
           'encodings.oem',
           'multiprocessing.popen_spawn_win32',
+          '_pyrepl.windows_console',
           'winreg',
 
           # Python regression tests "for internal use by Python only"
           'test',
+
+          # no ios support
+          '_ios_support',
+
+          # pyrepl things
+          '_pyrepl._minimal_curses',
+
+          # i thought distutils was gone?
+          '_distutils_system_mod',
 
           # calls sys.exit
           'unittest.__main__',
@@ -60,8 +64,8 @@ commandTests:
           if module_name in skip_modules or module_name.startswith('test.'):
             continue
 
+          print('importing {}'.format(module_name))
           __import__(module_name)
           print('imported {}'.format(module_name))
 
-        # ensures some module does not exit early (e.g unittest.__main__)
         print('FINISHED ENTIRE SCRIPT')
