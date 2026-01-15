@@ -149,9 +149,8 @@ PYTHON3 |= {
     for (tag_base, debug_mode, user) in VARIANTS
 }
 
-# python on debian12 has moved out of experimental
 PYTHON3 |= {
-    "{REGISTRY}/{PROJECT_ID}/python3-debian12:" + tag_base + "-" + arch: "//python3:python3" + debug_mode + "_" + user + "_" + arch + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/python3-" + distro + ":" + tag_base + "-" + arch: "//python3:python3" + debug_mode + "_" + user + "_" + arch + "_" + distro
     for distro in PYTHON_DISTROS
     for arch in PYTHON_ARCHITECTURES[distro]
     for (tag_base, debug_mode, user) in VARIANTS
@@ -159,7 +158,7 @@ PYTHON3 |= {
 
 # oci_image_index
 PYTHON3 |= {
-    "{REGISTRY}/{PROJECT_ID}/python3-debian12:" + tag_base: "//python3:python3" + debug_mode + "_" + user + "_" + distro
+    "{REGISTRY}/{PROJECT_ID}/python3-" + distro + ":" + tag_base: "//python3:python3" + debug_mode + "_" + user + "_" + distro
     for distro in PYTHON_DISTROS
     for (tag_base, debug_mode, user) in VARIANTS
 }

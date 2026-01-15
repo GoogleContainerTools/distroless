@@ -7,7 +7,10 @@ This image contains a minimal Linux, Python-based runtime.
 Specifically, the image contains everything in the [base image](../base/README.md), plus:
 
 * Python 3 and its dependencies.
+    * 3.11 on debian 12
+    * 3.13 on debian 13
 * No shell and no support for ctypes
+
 
 ## Usage
 
