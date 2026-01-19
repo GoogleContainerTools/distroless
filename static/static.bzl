@@ -34,7 +34,6 @@ def static_image(distro, arch):
         distro: name of the distribution
         arch: the target architecture
     """
-
     for (user, uid, workdir) in USER_VARIANTS:
         oci_image(
             name = "static_" + user + "_" + arch + "_" + distro,
@@ -57,7 +56,7 @@ def static_image(distro, arch):
                 # Create /tmp, too many things assume it exists.
                 # tmp.tar has a /tmp with the correct permissions 01777
                 "//common:tmp",
-                ":nsswitch.tar",
+                ":nsswitch.tar.gz",
                 "//common:os_release_" + distro,
                 "//common:cacerts_" + distro + "_" + arch,
             ],
