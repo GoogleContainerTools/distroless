@@ -10,14 +10,15 @@ bazel_dep(name = "gazelle", version = "0.38.0")
 bazel_dep(name = "rules_pkg", version = "1.1.0")
 bazel_dep(name = "rules_rust", version = "0.63.0")
 bazel_dep(name = "container_structure_test", version = "1.19.1")
-bazel_dep(name = "rules_oci", version = "1.8.0")
+bazel_dep(name = "rules_oci", version = "2.2.7")
 bazel_dep(name = "rules_distroless", version = "0.5.3")
 bazel_dep(name = "rules_python", version = "1.5.3")
 bazel_dep(name = "rules_cc", version = "0.2.0")
 
 ### OCI ###
+# Note: rules_oci registers toolchains in its MODULE.bazel
+# We import the repos to use crane in sign_and_push rule
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
-oci.toolchains(crane_version = "v0.18.0")
 use_repo(oci, "oci_crane_toolchains")
 
 ### PYTHON ###
