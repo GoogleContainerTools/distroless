@@ -24,6 +24,7 @@ dpkg_statusd(
 
 pkg_tar(
     name = "data_statusd",
+    extension = "tar.gz",
     # workaround for https://github.com/bazelbuild/rules_pkg/issues/652
     package_dir = "./",
     deps = [

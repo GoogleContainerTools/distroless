@@ -324,7 +324,7 @@
     },
     "//private/extensions:java.bzl%java": {
       "general": {
-        "bzlTransitiveDigest": "xA9/9EmgDlmI4ZuH2MBFL7dcaYOBIX93jKc1bXXdBLc=",
+        "bzlTransitiveDigest": "qI+WD4TSW0TZGD63m1ouanjWbOOjvdhBNvmZ6CnT9Aw=",
         "usagesDigest": "Wc70wStdr/PiXtidOWU+lZRsYzH9YCtlJzyRMR1x9dM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

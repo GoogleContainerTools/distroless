@@ -17,17 +17,15 @@ def static_image_index(distro, architectures):
         distro: name of distribution
         architectures: all architectures included in index
     """
-    [
-        oci_image_index(
-            name = "static" + mode + "_" + user + "_" + distro,
-            images = [
-                "static" + mode + "_" + user + "_" + arch + "_" + distro
-                for arch in architectures
-            ],
-        )
-        for (user, _, _) in USER_VARIANTS
-        for mode in DEBUG_MODE
-    ]
+    for (user, _, _) in USER_VARIANTS:
+        for mode in DEBUG_MODE:
+            oci_image_index(
+                name = "static" + mode + "_" + user + "_" + distro,
+                images = [
+                    "static" + mode + "_" + user + "_" + arch + "_" + distro
+                    for arch in architectures
+                ],
+            )
 
 def static_image(distro, arch):
     """static and debug images and tests for a distro/arch
@@ -93,6 +91,7 @@ def static_image(distro, arch):
 
     pkg_tar(
         name = "check_certs_" + arch + "_" + distro + "_tar",
+        extension = "tar.gz",
         srcs = ["check_certs_" + arch + "_" + distro],
         symlinks = {
             "/check_certs": "check_certs_" + arch + "_" + distro,
