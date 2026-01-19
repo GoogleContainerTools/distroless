@@ -27,7 +27,7 @@ pkg_tar(
 ]
 
 # Run
-# podman load -i bazel-bin/examples/python3/tarball/tarball.tar
+# bazel run //examples/python3:tarball_debian12
 # podman run localhost/distroless/examples/py:latest
 [
     oci_load(
