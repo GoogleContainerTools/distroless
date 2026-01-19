@@ -58,18 +58,20 @@ genrule(
 tar(
     name = "data",
     srcs = SRCS,
-    mtree = "out.mtree"
+    mtree = "out.mtree",
+    compress = "gzip",
 )
 
 pkg_tar(
     name = "_control",
+    extension = "tar.gz",
     srcs = ["control"],
 )
 
 debian_spdx(
     name = "spdx",
-    control = ":_control.tar",
-    data = ":data.tar",
+    control = ":_control.tar.gz",
+    data = ":data.tar.gz",
     package_name = "{package_name}",
     spdx_id = "{spdx_id}",
     sha256 = "{sha256}",
