@@ -13,8 +13,7 @@ go_image(
 )
 
 # Run
-# bazel build //examples/go:tarball
-# podman load -i bazel-bin/examples/go/tarball/tarball.tar
+# bazel run //examples/go:tarball
 # podman run localhost/distroless/examples/go:latest
 oci_load(
     name = "tarball",
