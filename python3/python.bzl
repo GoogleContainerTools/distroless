@@ -2,7 +2,7 @@
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "pkg_tar")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 load("//private/util:deb.bzl", "deb")
 

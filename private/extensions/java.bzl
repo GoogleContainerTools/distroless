@@ -39,7 +39,7 @@ BUILD_TMPL = """\
 load("@distroless//private/pkg:debian_spdx.bzl", "debian_spdx")
 load("@distroless//private/util:merge_providers.bzl", "merge_providers")
 load("@aspect_bazel_lib//lib:tar.bzl", "tar", "mtree_spec")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("@distroless//private/util:tar.bzl", "pkg_tar")
 
 SRCS = glob(["output/**/*"])
 mtree_spec(

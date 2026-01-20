@@ -2,7 +2,7 @@
 
 load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_oci//oci:defs.bzl", "oci_image")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "pkg_tar")
 
 def go_image(name, srcs, base, arch = "amd64", os = "linux"):
     go_binary(
