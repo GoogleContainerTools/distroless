@@ -3,12 +3,29 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:distro.bzl", "VARIANTS")
 load("//common:variables.bzl", "DEBUG_MODE", "NONROOT")
 load("//private/util:deb.bzl", "deb")
+load("//private/util:tar.bzl", "pkg_tar")
 
 USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
+
+def _nsswitch():
+    """Create compressed nsswitch tarball matching crane's compression.
+
+    Uses a genrule to directly compress the original nsswitch.tar with pigz,
+    preserving the exact tar structure without adding directory entries.
+    """
+    if native.existing_rule("nsswitch"):
+        return
+
+    native.genrule(
+        name = "nsswitch",
+        srcs = [":nsswitch.tar"],
+        outs = ["nsswitch.tar.gz"],
+        cmd = "$(execpath @pigz) -1 -n -T -c $< > $@",
+        tools = ["@pigz"],
+    )
 
 def static_image_index(distro, architectures):
     """Build image index for a distro
@@ -34,6 +51,8 @@ def static_image(distro, arch):
         distro: name of the distribution
         arch: the target architecture
     """
+    _nsswitch()
+
     for (user, uid, workdir) in USER_VARIANTS:
         oci_image(
             name = "static_" + user + "_" + arch + "_" + distro,
@@ -56,7 +75,7 @@ def static_image(distro, arch):
                 # Create /tmp, too many things assume it exists.
                 # tmp.tar has a /tmp with the correct permissions 01777
                 "//common:tmp",
-                ":nsswitch.tar.gz",
+                ":nsswitch",
                 "//common:os_release_" + distro,
                 "//common:cacerts_" + distro + "_" + arch,
             ],
