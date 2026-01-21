@@ -23,8 +23,8 @@ def _nsswitch():
         name = "nsswitch",
         srcs = [":nsswitch.tar"],
         outs = ["nsswitch.tar.gz"],
-        cmd = "$(execpath @pigz) -1 -n -T -c $< > $@",
-        tools = ["@pigz"],
+        cmd = "$(execpath @@pigz~//:pigz) -1 -n -T -c $< > $@",
+        tools = ["@@pigz~//:pigz"],
     )
 
 def static_image_index(distro, architectures):

@@ -3,7 +3,7 @@
 load("@@//private/pkg:debian_spdx.bzl", "debian_spdx")
 load("@@//private/util:merge_providers.bzl", "merge_providers")
 load("@@rules_distroless~//apt:defs.bzl", "dpkg_statusd")
-load("@@rules_pkg~//:pkg.bzl", "pkg_tar")
+load("@@//private/util:tar.bzl", "pkg_tar")
 
 alias(
     name = "control",

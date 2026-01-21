@@ -119,8 +119,6 @@
     "https://bcr.bazel.build/modules/rules_cc/0.2.0/MODULE.bazel": "b5c17f90458caae90d2ccd114c81970062946f49f355610ed89bebf954f5783c",
     "https://bcr.bazel.build/modules/rules_cc/0.2.4/MODULE.bazel": "1ff1223dfd24f3ecf8f028446d4a27608aa43c3f41e346d22838a4223980b8cc",
     "https://bcr.bazel.build/modules/rules_cc/0.2.4/source.json": "2bd87ef9b41d4753eadf65175745737135cba0e70b479bdc204ef0c67404d0c4",
-    "https://bcr.bazel.build/modules/rules_distroless/0.6.1/MODULE.bazel": "ce96d59d70695eadf53f45d752fef38f7ac59c117f5db32bb61767a732fe090b",
-    "https://bcr.bazel.build/modules/rules_distroless/0.6.1/source.json": "bdea3dd4883fed8478564675d7bcc15eb3bd366245ec51c6d317d100c6af59b5",
     "https://bcr.bazel.build/modules/rules_foreign_cc/0.9.0/MODULE.bazel": "c9e8c682bf75b0e7c704166d79b599f93b72cfca5ad7477df596947891feeef6",
     "https://bcr.bazel.build/modules/rules_fuzzing/0.5.2/MODULE.bazel": "40c97d1144356f52905566c55811f13b299453a14ac7769dfba2ac38192337a8",
     "https://bcr.bazel.build/modules/rules_fuzzing/0.5.2/source.json": "c8b1e2c717646f1702290959a3302a178fb639d987ab61d548105019f11e527e",
@@ -1490,7 +1488,7 @@
     "@@yq.bzl~//yq:extensions.bzl%yq": {
       "general": {
         "bzlTransitiveDigest": "61Uz+o5PnlY0jJfPZEUNqsKxnM/UCLeWsn5VVCc8u5Y=",
-        "usagesDigest": "ALXSoxbN+REUCm51legyG8u6qQMPDLRn99rOp68BBqM=",
+        "usagesDigest": "jAxikaWUjg2k1/vDr6ATtAQknatKod/hpawBG95JeYQ=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},

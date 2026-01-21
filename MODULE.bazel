@@ -12,6 +12,12 @@ bazel_dep(name = "rules_rust", version = "0.63.0")
 bazel_dep(name = "container_structure_test", version = "1.19.1")
 bazel_dep(name = "rules_oci", version = "2.2.7")
 bazel_dep(name = "rules_distroless", version = "0.6.1")
+git_override(
+    module_name = "rules_distroless",
+    commit = "e5462519a49e3884bf56a205f1bdea10c538353a",
+    remote = "https://github.com/bazel-contrib/rules_distroless.git",
+)
+
 bazel_dep(name = "rules_python", version = "1.5.3")
 bazel_dep(name = "rules_cc", version = "0.2.0")
 bazel_dep(name = "pigz", version = "2.8")

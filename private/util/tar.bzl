@@ -17,7 +17,7 @@ def pkg_tar(name, extension = "tar.gz", **kwargs):
         _pkg_tar(
             name = name,
             extension = extension,
-            compressor = "@pigz",
+            compressor = "@@pigz~//:pigz",
             compressor_args = "-1 -n -T",
             **kwargs
         )
