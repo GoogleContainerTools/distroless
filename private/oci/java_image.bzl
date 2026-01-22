@@ -1,7 +1,7 @@
 "java_image rule for creating Java container images"
 
 load("@rules_oci//oci:defs.bzl", "oci_image")
-load("//private/util:tar.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 
 def java_image(name, srcs, main_class, base):
     native.java_binary(
@@ -10,7 +10,7 @@ def java_image(name, srcs, main_class, base):
         main_class = main_class,
     )
 
-    pkg_tar(
+    tar(
         name = "%s_layer" % name,
         extension = "tar.gz",
         srcs = [

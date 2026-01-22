@@ -2,7 +2,7 @@
 
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("@rules_oci//oci:defs.bzl", "oci_image")
-load("//private/util:tar.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 
 def cc_image(name, srcs, base):
     cc_binary(
@@ -10,7 +10,7 @@ def cc_image(name, srcs, base):
         srcs = srcs,
     )
 
-    pkg_tar(
+    tar(
         name = "%s_layer" % name,
         extension = "tar.gz",
         srcs = [

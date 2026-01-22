@@ -6,25 +6,21 @@ load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("//:distro.bzl", "VARIANTS")
 load("//common:variables.bzl", "DEBUG_MODE", "NONROOT")
 load("//private/util:deb.bzl", "deb")
-load("//private/util:tar.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 
 USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
 
 def _nsswitch():
-    """Create compressed nsswitch tarball matching crane's compression.
-
-    Uses a genrule to directly compress the original nsswitch.tar with pigz,
-    preserving the exact tar structure without adding directory entries.
-    """
+    """Create compressed nsswitch tarball."""
     if native.existing_rule("nsswitch"):
         return
 
-    native.genrule(
+    tar(
         name = "nsswitch",
-        srcs = [":nsswitch.tar"],
-        outs = ["nsswitch.tar.gz"],
-        cmd = "$(execpath @@pigz~//:pigz) -1 -n -T -c $< > $@",
-        tools = ["@@pigz~//:pigz"],
+        srcs = [":nsswitch.conf"],
+        strip_prefix = "static",
+        package_dir = "/etc",
+        extension = "tar.gz",
     )
 
 def static_image_index(distro, architectures):
@@ -107,7 +103,7 @@ def static_image(distro, arch):
         pure = "on",
     )
 
-    pkg_tar(
+    tar(
         name = "check_certs_" + arch + "_" + distro + "_tar",
         extension = "tar.gz",
         srcs = ["check_certs_" + arch + "_" + distro],

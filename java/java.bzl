@@ -3,7 +3,7 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@java_versions//:versions.bzl", "JAVA_RELEASE_VERSIONS")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//private/util:tar.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", "java_image")
@@ -128,7 +128,7 @@ def temurin_jre_prep(java_version, arch):
     if native.existing_rule(rule_name):
         return
 
-    pkg_tar(
+    tar(
         name = rule_name,
         extension = "tar.gz",
         symlinks = {
@@ -145,7 +145,7 @@ def temurin_jdk_prep(java_version, arch):
     if native.existing_rule(rule_name):
         return
 
-    pkg_tar(
+    tar(
         name = rule_name,
         extension = "tar.gz",
         symlinks = {
@@ -222,7 +222,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
     """
 
     # intermediary rule to configure jre symlinks
-    pkg_tar(
+    tar(
         name = "temurin_" + java_version + "_jre_" + arch + "_" + distro,
         extension = "tar.gz",
         symlinks = {
@@ -240,7 +240,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
     )
 
     # intermediary rules to configure jdk symlinks
-    pkg_tar(
+    tar(
         name = "temurin_" + java_version + "_jdk_" + arch + "_" + distro,
         extension = "tar.gz",
         symlinks = {
@@ -322,7 +322,7 @@ def java_openjdk_image(distro, java_version, arch):
     """
 
     # intermediary rule to configure symlinks
-    pkg_tar(
+    tar(
         name = "openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
         extension = "tar.gz",
         symlinks = {
