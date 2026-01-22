@@ -2,7 +2,7 @@
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//private/util:tar.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 load("//private/util:deb.bzl", "deb")
 
@@ -15,7 +15,7 @@ def python_alias(distro):
     if native.existing_rule("python_aliases_" + distro):
         return
 
-    pkg_tar(
+    tar(
         name = "python_aliases_" + distro,
         extension = "tar.gz",
         symlinks = {

@@ -2,10 +2,10 @@
 # reference only. Note that repo maintainers can freely change any part of the
 # repository code at any time.
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 load("//python3:config.bzl", DISTROS = "PYTHON_DISTROS")
 
-pkg_tar(
+tar(
     name = "hello_py",
     srcs = ["hello.py"],
 )

@@ -1,7 +1,7 @@
 "rust_image rule for creating Rust container images"
 
 load("@rules_oci//oci:defs.bzl", "oci_image")
-load("//private/util:tar.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 load("@rules_rust//rust:defs.bzl", "rust_binary")
 
 def rust_image(name, srcs, base, tags):
@@ -11,7 +11,7 @@ def rust_image(name, srcs, base, tags):
         tags = tags,
     )
 
-    pkg_tar(
+    tar(
         name = "%s_layer" % name,
         extension = "tar.gz",
         srcs = [

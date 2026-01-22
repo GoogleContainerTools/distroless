@@ -2,7 +2,7 @@
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//private/util:tar.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 
 def nodejs_image_index(distro, major_version, architectures):
@@ -28,7 +28,7 @@ def _check_certificates_tar():
     if native.existing_rule("check_certificate"):
         return
 
-    pkg_tar(
+    tar(
         name = "check_certificate",
         extension = "tar.gz",
         srcs = ["testdata/check_certificate.js"],
