@@ -2,6 +2,7 @@
 
 load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_oci//oci:defs.bzl", "oci_image")
+load("//private/util:tar.bzl", "tar")
 
 def go_image(name, srcs, base, arch = "amd64", os = "linux"):
     go_binary(
@@ -12,7 +13,7 @@ def go_image(name, srcs, base, arch = "amd64", os = "linux"):
         pure = "on",
     )
 
-    pkg_tar(
+    tar(
         name = "{}_layer".format(name),
         extension = "tar.gz",
         srcs = ["{}_binary".format(name)],
