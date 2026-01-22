@@ -71,8 +71,8 @@ tar_gz(
 
 debian_spdx(
     name = "spdx",
-    control = ":_control.tar.gz",
-    data = ":data.tar.gz",
+    control = ":_control",
+    data = ":data",
     package_name = "{package_name}",
     spdx_id = "{spdx_id}",
     sha256 = "{sha256}",
