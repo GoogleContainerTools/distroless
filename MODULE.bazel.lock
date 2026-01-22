@@ -331,7 +331,7 @@
     },
     "//private/extensions:java.bzl%java": {
       "general": {
-        "bzlTransitiveDigest": "revIhv0Zh9eNkam/MJWs6jG8ziydQnGlSWsfJvI1QLo=",
+        "bzlTransitiveDigest": "zHjVCc8Zu6tnse/apDkFYnZg6WzJZTZc6FmkN4l342s=",
         "usagesDigest": "Wc70wStdr/PiXtidOWU+lZRsYzH9YCtlJzyRMR1x9dM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -503,7 +503,7 @@
     },
     "//private/extensions:node.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "8rTLGLThjShRakPOMnf6oNnzaqmYJZwl+TihZin1dhM=",
+        "bzlTransitiveDigest": "j4RxqfZMl0sOz0cnIfbp/XWaFdk1s44o4fOuGNTT7jM=",
         "usagesDigest": "oo4hnOxowfXXa21Wd8roJmpRdyG7Fy97FBO9vJoyK/M=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
