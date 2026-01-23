@@ -4,6 +4,7 @@ load(":config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
+# Build uncompressed tar with correct format
 tar(
     name = "nsswitch",
     srcs = ["nsswitch.conf"],
@@ -13,7 +14,7 @@ tar(
         "-b",
         "20",
     ],
-    extension = "tar",
+    extension = "tar.gz",
     mtree = ["etc/nsswitch.conf uid=0 gid=0 uname=root gname=root mode=0644 time=1514722362 type=file content=$(location nsswitch.conf)"],
 )
 
