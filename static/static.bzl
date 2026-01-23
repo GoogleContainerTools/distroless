@@ -10,19 +10,6 @@ load("//private/util:tar.bzl", "tar")
 
 USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
 
-def _nsswitch():
-    """Create compressed nsswitch tarball."""
-    if native.existing_rule("nsswitch"):
-        return
-
-    tar(
-        name = "nsswitch",
-        srcs = [":nsswitch.conf"],
-        strip_prefix = "static",
-        package_dir = "/etc",
-        extension = "tar.gz",
-    )
-
 def static_image_index(distro, architectures):
     """Build image index for a distro
 
@@ -47,8 +34,6 @@ def static_image(distro, arch):
         distro: name of the distribution
         arch: the target architecture
     """
-    _nsswitch()
-
     for (user, uid, workdir) in USER_VARIANTS:
         oci_image(
             name = "static_" + user + "_" + arch + "_" + distro,

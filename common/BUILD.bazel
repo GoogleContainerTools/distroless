@@ -1,4 +1,4 @@
-load("@tar.bzl//tar:tar.bzl", "tar")
+load("@aspect_bazel_lib//lib:tar.bzl", "tar")
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
 load("//:distro.bzl", "ALL_ARCHITECTURES", "ALL_DISTROS", "VERSIONS")
 load("//private/util:deb.bzl", "deb")
