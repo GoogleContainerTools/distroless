@@ -256,6 +256,19 @@ JAVA17 |= {
     for (tag_base, label) in JAVA_VARIATIONS
 }
 
+## JAVA 17 on debian13
+JAVA17 |= {
+    "{REGISTRY}/{PROJECT_ID}/java17-debian13:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian13"
+    for (tag_base, label) in JAVA_VARIATIONS
+    for arch in JAVA_ARCHITECTURES["debian13"]
+}
+
+## oci_image_index (skipping java17 distro suffix covered above - fix post 17 deprecation)
+JAVA17 |= {
+    "{REGISTRY}/{PROJECT_ID}/java17-debian13:" + tag_base: "//java:java17_" + label + "_debian13"
+    for (tag_base, label) in JAVA_VARIATIONS
+}
+
 ## JAVA 21
 JAVA21 = {
     "{REGISTRY}/{PROJECT_ID}/java21-" + distro + ":" + tag_base + "-" + arch: "//java:java21_" + label + "_" + arch + "_" + distro

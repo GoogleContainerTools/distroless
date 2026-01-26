@@ -18,7 +18,7 @@ set -o pipefail -o errexit -o nounset
 
 
 function update_java_versions_debian13() {
-  local java_versions=("21" "25")
+  local java_versions=("17" "21" "25")
 
   for java_version in "${java_versions[@]}"; do
     local version=$(jq -r --arg jv "temurin-${java_version}-jre" '.packages.[] | select((.arch=="amd64") and (.name==$jv)) | .version | split(".") | .[0:3] | join(".")' private/repos/deb/trixie_adoptium.lock.json)
