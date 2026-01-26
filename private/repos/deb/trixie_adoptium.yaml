@@ -13,6 +13,8 @@ archs:
   - ppc64el
 
 packages:
+  - temurin-17-jre
+  - temurin-17-jdk
   - temurin-21-jre
   - temurin-21-jdk
   - temurin-25-jre
