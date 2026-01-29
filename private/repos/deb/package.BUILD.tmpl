@@ -3,7 +3,7 @@
 load("@@//private/pkg:debian_spdx.bzl", "debian_spdx")
 load("@@//private/util:merge_providers.bzl", "merge_providers")
 load("@@rules_distroless~//apt:defs.bzl", "dpkg_statusd")
-load("@@rules_pkg~//:pkg.bzl", "pkg_tar")
+load("@@//private/util:tar.bzl", "tar")
 
 alias(
     name = "control",
@@ -22,9 +22,9 @@ dpkg_statusd(
     package_name = "{name}"
 )
 
-pkg_tar(
+tar(
     name = "data_statusd",
-    # workaround for https://github.com/bazelbuild/rules_pkg/issues/652
+    extension = "tar.gz",
     package_dir = "./",
     deps = [
         ":data",

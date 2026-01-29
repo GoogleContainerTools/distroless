@@ -3,10 +3,10 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//:distro.bzl", "VARIANTS")
 load("//common:variables.bzl", "DEBUG_MODE", "NONROOT")
 load("//private/util:deb.bzl", "deb")
+load("//private/util:tar.bzl", "tar")
 
 USER_VARIANTS = [("root", 0, "/"), ("nonroot", NONROOT, "/home/nonroot")]
 
@@ -17,17 +17,15 @@ def static_image_index(distro, architectures):
         distro: name of distribution
         architectures: all architectures included in index
     """
-    [
-        oci_image_index(
-            name = "static" + mode + "_" + user + "_" + distro,
-            images = [
-                "static" + mode + "_" + user + "_" + arch + "_" + distro
-                for arch in architectures
-            ],
-        )
-        for (user, _, _) in USER_VARIANTS
-        for mode in DEBUG_MODE
-    ]
+    for (user, _, _) in USER_VARIANTS:
+        for mode in DEBUG_MODE:
+            oci_image_index(
+                name = "static" + mode + "_" + user + "_" + distro,
+                images = [
+                    "static" + mode + "_" + user + "_" + arch + "_" + distro
+                    for arch in architectures
+                ],
+            )
 
 def static_image(distro, arch):
     """static and debug images and tests for a distro/arch
@@ -36,7 +34,6 @@ def static_image(distro, arch):
         distro: name of the distribution
         arch: the target architecture
     """
-
     for (user, uid, workdir) in USER_VARIANTS:
         oci_image(
             name = "static_" + user + "_" + arch + "_" + distro,
@@ -59,7 +56,7 @@ def static_image(distro, arch):
                 # Create /tmp, too many things assume it exists.
                 # tmp.tar has a /tmp with the correct permissions 01777
                 "//common:tmp",
-                ":nsswitch.tar",
+                ":nsswitch",
                 "//common:os_release_" + distro,
                 "//common:cacerts_" + distro + "_" + arch,
             ],
@@ -91,8 +88,9 @@ def static_image(distro, arch):
         pure = "on",
     )
 
-    pkg_tar(
+    tar(
         name = "check_certs_" + arch + "_" + distro + "_tar",
+        extension = "tar.gz",
         srcs = ["check_certs_" + arch + "_" + distro],
         symlinks = {
             "/check_certs": "check_certs_" + arch + "_" + distro,

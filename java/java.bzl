@@ -1,7 +1,9 @@
+"java image definitions"
+
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@java_versions//:versions.bzl", "JAVA_RELEASE_VERSIONS")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", "java_image")
@@ -22,31 +24,29 @@ def ca_certs(distro, arch):
 
 # deprecated, remove with debian12 removal
 def java_build_base_image(distro, arch, packages):
-    """a base image that isn't published for building temurin and debian sourced java images
-       temurin ships with libharfbuzz and certs but debian distributed ones do not include it
-       libharfbuzz depends on libpcre,libglib,libgraphite
+    """Build base image for temurin and debian sourced java images (deprecated).
+
+    Temurin ships with libharfbuzz and certs but debian distributed ones do not include it.
+    libharfbuzz depends on libpcre,libglib,libgraphite.
 
     Args:
         distro: name of distribution
         arch: the target architecture
         packages: to add to the image (from a debianX_java repo)
     """
-
-    [
-        oci_image(
-            name = "java_build_base" + mode + "_" + user + "_" + arch + "_" + distro,
-            base = "//base:base_nossl" + mode + "_" + user + "_" + arch + "_" + distro,
-            env = {"LANG": "C.UTF-8"},
-            tars = [
-                deb.package(arch, distro, pkg, "java")
-                for pkg in packages
-            ] + [
-                "//common:locale_" + distro + "_" + arch,
-            ],
-        )
-        for mode in DEBUG_MODE
-        for user in USERS
-    ]
+    for mode in DEBUG_MODE:
+        for user in USERS:
+            oci_image(
+                name = "java_build_base" + mode + "_" + user + "_" + arch + "_" + distro,
+                base = "//base:base_nossl" + mode + "_" + user + "_" + arch + "_" + distro,
+                env = {"LANG": "C.UTF-8"},
+                tars = [
+                    deb.package(arch, distro, pkg, "java")
+                    for pkg in packages
+                ] + [
+                    "//common:locale_" + distro + "_" + arch,
+                ],
+            )
 
 def java_base_image_index(distro, architectures):
     """java base image index for a distro
@@ -55,17 +55,15 @@ def java_base_image_index(distro, architectures):
         distro: name of distribution
         architectures: all architectures included in index
     """
-    [
-        oci_image_index(
-            name = "java_base" + mode + "_" + user + "_" + distro,
-            images = [
-                "java_base" + mode + "_" + user + "_" + arch + "_" + distro
-                for arch in architectures
-            ],
-        )
-        for mode in DEBUG_MODE
-        for user in USERS
-    ]
+    for mode in DEBUG_MODE:
+        for user in USERS:
+            oci_image_index(
+                name = "java_base" + mode + "_" + user + "_" + distro,
+                images = [
+                    "java_base" + mode + "_" + user + "_" + arch + "_" + distro
+                    for arch in architectures
+                ],
+            )
 
 def java_base_image(distro, arch, packages):
     """java base for a distro/arch
@@ -79,36 +77,32 @@ def java_base_image(distro, arch, packages):
     # pre-req
     ca_certs(distro, arch)
 
-    [
-        oci_image(
-            name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
-            base = "//base:base_nossl" + mode + "_" + user + "_" + arch + "_" + distro,
-            env = {"LANG": "C.UTF-8"},
-            tars = [
-                deb.package(arch, distro, pkg, "java")
-                for pkg in packages
-            ] + [
-                "//common:locale_" + distro + "_" + arch,
-                ":cacerts_java_" + arch + "_" + distro,
-            ],
-        )
-        for mode in DEBUG_MODE
-        for user in USERS
-    ]
+    for mode in DEBUG_MODE:
+        for user in USERS:
+            oci_image(
+                name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro,
+                base = "//base:base_nossl" + mode + "_" + user + "_" + arch + "_" + distro,
+                env = {"LANG": "C.UTF-8"},
+                tars = [
+                    deb.package(arch, distro, pkg, "java")
+                    for pkg in packages
+                ] + [
+                    "//common:locale_" + distro + "_" + arch,
+                    ":cacerts_java_" + arch + "_" + distro,
+                ],
+            )
 
-    [
-        container_structure_test(
-            name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro + "_test",
-            configs = ["testdata/java_base" + mode + ".yaml"],
-            image = ":java_base" + mode + "_" + user + "_" + arch + "_" + distro,
-            tags = [
-                arch,
-                "manual",
-            ],
-        )
-        for mode in DEBUG_MODE
-        for user in USERS
-    ]
+    for mode in DEBUG_MODE:
+        for user in USERS:
+            container_structure_test(
+                name = "java_base" + mode + "_" + user + "_" + arch + "_" + distro + "_test",
+                configs = ["testdata/java_base" + mode + ".yaml"],
+                image = ":java_base" + mode + "_" + user + "_" + arch + "_" + distro,
+                tags = [
+                    arch,
+                    "manual",
+                ],
+            )
 
 def java_image_index(distro, java_version, architectures):
     """java and debug image indexes (applies to all java_image builds)
@@ -118,17 +112,15 @@ def java_image_index(distro, java_version, architectures):
         java_version: version of java
         architectures: all architectures included in index
     """
-    [
-        oci_image_index(
-            name = "java" + java_version + mode + "_" + user + "_" + distro,
-            images = [
-                "java" + java_version + mode + "_" + user + "_" + arch + "_" + distro
-                for arch in architectures
-            ],
-        )
-        for user in USERS
-        for mode in DEBUG_MODE
-    ]
+    for user in USERS:
+        for mode in DEBUG_MODE:
+            oci_image_index(
+                name = "java" + java_version + mode + "_" + user + "_" + distro,
+                images = [
+                    "java" + java_version + mode + "_" + user + "_" + arch + "_" + distro
+                    for arch in architectures
+                ],
+            )
 
 # deprecated, remove with debian12 removal
 def temurin_jre_prep(java_version, arch):
@@ -136,8 +128,9 @@ def temurin_jre_prep(java_version, arch):
     if native.existing_rule(rule_name):
         return
 
-    pkg_tar(
+    tar(
         name = rule_name,
+        extension = "tar.gz",
         symlinks = {
             "usr/bin/java": "/usr/lib/jvm/temurin" + java_version + "_jre_" + arch + "/bin/java",
         },
@@ -152,8 +145,9 @@ def temurin_jdk_prep(java_version, arch):
     if native.existing_rule(rule_name):
         return
 
-    pkg_tar(
+    tar(
         name = rule_name,
+        extension = "tar.gz",
         symlinks = {
             "usr/bin/java": "/usr/lib/jvm/temurin" + java_version + "_jdk_" + arch + "/bin/java",
         },
@@ -164,9 +158,10 @@ def temurin_jdk_prep(java_version, arch):
 
 # deprecated, remove with debian12 removal
 def java_temurin_image_from_github_releases(distro, java_version, arch):
-    """java images from temurin distributions downloaded from github releases.
-       This approach is used for debian12 and is deprecated for newer distributions
-       in favor of using adoptium debs.
+    """Java images from temurin distributions downloaded from github releases (deprecated).
+
+    This approach is used for debian12 and is deprecated for newer distributions
+    in favor of using adoptium debs.
 
     Args:
         distro: name of distribution
@@ -178,7 +173,7 @@ def java_temurin_image_from_github_releases(distro, java_version, arch):
     temurin_jre_prep(java_version, arch)
 
     # standard image builds
-    [
+    for user in USERS:
         oci_image(
             name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
             base = ":java_build_base_" + user + "_" + arch + "_" + distro,
@@ -195,11 +190,9 @@ def java_temurin_image_from_github_releases(distro, java_version, arch):
                 ":temurin_jre_" + java_version + "_" + arch,
             ],
         )
-        for user in USERS
-    ]
 
     # debug image builds
-    [
+    for user in USERS:
         oci_image(
             name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
             base = ":java_build_base_debug_" + user + "_" + arch + "_" + distro,
@@ -216,8 +209,6 @@ def java_temurin_image_from_github_releases(distro, java_version, arch):
                 ":temurin_jdk_" + java_version + "_" + arch,
             ],
         )
-        for user in USERS
-    ]
 
     java_tests(distro, java_version, arch)
 
@@ -231,8 +222,9 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
     """
 
     # intermediary rule to configure jre symlinks
-    pkg_tar(
+    tar(
         name = "temurin_" + java_version + "_jre_" + arch + "_" + distro,
+        extension = "tar.gz",
         symlinks = {
             "/usr/bin/java": "/usr/lib/jvm/temurin-" + java_version + "-jre-" + arch + "/bin/java",
             "/etc/ssl/certs/adoptium/cacerts": "/etc/ssl/certs/java/cacerts",
@@ -248,8 +240,9 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
     )
 
     # intermediary rules to configure jdk symlinks
-    pkg_tar(
+    tar(
         name = "temurin_" + java_version + "_jdk_" + arch + "_" + distro,
+        extension = "tar.gz",
         symlinks = {
             "/usr/bin/java": "/usr/lib/jvm/temurin-" + java_version + "-jdk-" + arch + "/bin/java",
             "/etc/ssl/certs/adoptium/cacerts": "/etc/ssl/certs/java/cacerts",
@@ -265,7 +258,7 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
     )
 
     # standard image builds
-    [
+    for user in USERS:
         oci_image(
             name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
             base = ":java_base_" + user + "_" + arch + "_" + distro,
@@ -289,11 +282,9 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
                 ":temurin_" + java_version + "_jre_" + arch + "_" + distro,
             ],
         )
-        for user in USERS
-    ]
 
     # debug image builds
-    [
+    for user in USERS:
         oci_image(
             name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
             base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
@@ -318,8 +309,6 @@ def java_temurin_image_from_adoptium_debs(distro, java_version, arch):
                 ":temurin_" + java_version + "_jdk_" + arch + "_" + distro,
             ],
         )
-        for user in USERS
-    ]
 
     java_tests(distro, java_version, arch)
 
@@ -333,8 +322,9 @@ def java_openjdk_image(distro, java_version, arch):
     """
 
     # intermediary rule to configure symlinks
-    pkg_tar(
+    tar(
         name = "openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
+        extension = "tar.gz",
         symlinks = {
             "/usr/bin/java": "/usr/lib/jvm/java-" + java_version + "-openjdk-" + arch + "/bin/java",
         },
@@ -349,7 +339,7 @@ def java_openjdk_image(distro, java_version, arch):
     )
 
     # image rule
-    [
+    for user in USERS:
         oci_image(
             name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
             base = ":java_base_" + user + "_" + arch + "_" + distro,
@@ -371,11 +361,9 @@ def java_openjdk_image(distro, java_version, arch):
                 ":openjdk_jre_headless_" + java_version + "_" + arch + "_" + distro,
             ],
         )
-        for user in USERS
-    ]
 
     # debug image
-    [
+    for user in USERS:
         oci_image(
             name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
             base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
@@ -403,13 +391,18 @@ def java_openjdk_image(distro, java_version, arch):
                 ),
             ],
         )
-        for user in USERS
-    ]
 
     java_tests(distro, java_version, arch)
 
 def java_tests(distro, java_version, arch):
-    [
+    """Tests for java images.
+
+    Args:
+        distro: name of distribution
+        java_version: version of java
+        arch: the target arch
+    """
+    for user in USERS:
         container_structure_test(
             name = "java" + java_version + "_" + user + "_" + arch + "_" + distro + "_test",
             configs = ["testdata/java" + java_version + "_" + distro + ".yaml"],
@@ -419,10 +412,8 @@ def java_tests(distro, java_version, arch):
                 "manual",
             ],
         )
-        for user in USERS
-    ]
 
-    [
+    for user in USERS:
         container_structure_test(
             name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro + "_test",
             configs = ["testdata/java" + java_version + "_debug" + "_" + distro + ".yaml"],
@@ -432,21 +423,17 @@ def java_tests(distro, java_version, arch):
                 "manual",
             ],
         )
-        for user in USERS
-    ]
 
     if arch == "amd64":
-        [
+        for user in USERS:
             java_image(
                 name = "check_certs_java" + java_version + "_" + user + "_" + distro,
                 srcs = ["testdata/CheckCerts.java"],
                 base = "//java:java" + java_version + "_" + user + "_amd64_" + distro,
                 main_class = "testdata.CheckCerts",
             )
-            for user in USERS
-        ]
 
-        [
+        for user in USERS:
             container_structure_test(
                 name = "check_certs_java" + java_version + "_" + user + "_" + distro + "_test",
                 configs = ["testdata/java_certs.yaml"],
@@ -456,20 +443,16 @@ def java_tests(distro, java_version, arch):
                     "manual",
                 ],
             )
-            for user in USERS
-        ]
 
-        [
+        for user in USERS:
             java_image(
                 name = "check_encoding_java" + java_version + "_" + user + "_" + distro,
                 srcs = ["testdata/CheckEncoding.java"],
                 base = "//java:java" + java_version + "_" + user + "_amd64_" + distro,
                 main_class = "testdata.CheckEncoding",
             )
-            for user in USERS
-        ]
 
-        [
+        for user in USERS:
             container_structure_test(
                 name = "check_encoding_java" + java_version + "_" + user + "_" + distro + "_test",
                 configs = ["testdata/java_encoding.yaml"],
@@ -479,20 +462,16 @@ def java_tests(distro, java_version, arch):
                     "manual",
                 ],
             )
-            for user in USERS
-        ]
 
-        [
+        for user in USERS:
             java_image(
                 name = "check_libharfbuzz_java" + java_version + "_" + user + "_" + distro,
                 srcs = ["testdata/CheckLibharfbuzz.java"],
                 base = "//java:java" + java_version + "_" + user + "_amd64_" + distro,
                 main_class = "testdata.CheckLibharfbuzz",
             )
-            for user in USERS
-        ]
 
-        [
+        for user in USERS:
             container_structure_test(
                 name = "check_libharfbuzz_java" + java_version + "_" + user + "_" + distro + "_test",
                 configs = ["testdata/java_libharfbuzz.yaml"],
@@ -502,5 +481,3 @@ def java_tests(distro, java_version, arch):
                     "manual",
                 ],
             )
-            for user in USERS
-        ]

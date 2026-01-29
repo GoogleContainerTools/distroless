@@ -8,10 +8,10 @@ use_repo(
     "java_versions",
     "temurin21_jdk_amd64",
     "temurin21_jdk_arm64",
-    "temurin21_jdk_s390x",
     "temurin21_jdk_ppc64le",
+    "temurin21_jdk_s390x",
     "temurin21_jre_amd64",
     "temurin21_jre_arm64",
-    "temurin21_jre_s390x",
     "temurin21_jre_ppc64le",
+    "temurin21_jre_s390x",
 )
