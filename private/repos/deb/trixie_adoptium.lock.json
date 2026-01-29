@@ -69,24 +69,24 @@
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "temurin-17-jre_17.0.17.0.0-p-10-0_arm64",
+			"key": "temurin-17-jre_17.0.18.0.0-p-8-0_arm64",
 			"name": "temurin-17-jre",
-			"sha256": "c0c988151de7451a92399889091b9164831a2957e36edffd6d05cceed49fbdf5",
+			"sha256": "54581ac52cde67e6d1dfa214777aa2bbe818b4fda4f0b2c8d1d4d644f9322487",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.17.0.0+10-0_arm64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.18.0.0+8-0_arm64.deb"
 			],
-			"version": "17.0.17.0.0+10-0"
+			"version": "17.0.18.0.0+8-0"
 		},
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "temurin-17-jdk_17.0.17.0.0-p-10-0_arm64",
+			"key": "temurin-17-jdk_17.0.18.0.0-p-8-0_arm64",
 			"name": "temurin-17-jdk",
-			"sha256": "ec28517ddd1e24737d1512f3128fd11d872da45fa8933211a11c83943fcef6e8",
+			"sha256": "2410ea398569b5981e436626f148b1fcfebd0dfe61b1d8a73e63959c313a6ba4",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.17.0.0+10-0_arm64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.18.0.0+8-0_arm64.deb"
 			],
-			"version": "17.0.17.0.0+10-0"
+			"version": "17.0.18.0.0+8-0"
 		},
 		{
 			"arch": "arm64",
@@ -113,24 +113,24 @@
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "temurin-25-jre_25.0.1.0.0-p-8-0_arm64",
+			"key": "temurin-25-jre_25.0.2.0.0-p-10-0_arm64",
 			"name": "temurin-25-jre",
-			"sha256": "ff4cc726e043a7749a5c45961f02150f037a21b7d5669edef985db12401cebb2",
+			"sha256": "7472db63d005e331f9311ebb93798ac94d8ac247ee0b5266c13206c21058800c",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.1.0.0+8-0_arm64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-25-jre_25.0.2.0.0+10-0_arm64.deb"
 			],
-			"version": "25.0.1.0.0+8-0"
+			"version": "25.0.2.0.0+10-0"
 		},
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "temurin-25-jdk_25.0.1.0.0-p-8-0_arm64",
+			"key": "temurin-25-jdk_25.0.2.0.0-p-10-0_arm64",
 			"name": "temurin-25-jdk",
-			"sha256": "b79f2cbfd80fe8eb8577795268d617adadb93737877e8c11e4501f6fd15ee16b",
+			"sha256": "346d974fa90fcaca91260ead05f08b6b2cc3d2c4f324d3619a6d2080d8211103",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.1.0.0+8-0_arm64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-25-jdk_25.0.2.0.0+10-0_arm64.deb"
 			],
-			"version": "25.0.1.0.0+8-0"
+			"version": "25.0.2.0.0+10-0"
 		},
 		{
 			"arch": "s390x",
@@ -157,24 +157,24 @@
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "temurin-21-jre_21.0.9.0.0-p-10-0_s390x",
+			"key": "temurin-21-jre_21.0.10.0.0-p-7-0_s390x",
 			"name": "temurin-21-jre",
-			"sha256": "b573177fd6ac2e71f9d1e0ca3128ec3450d7dae016683112b9979f4f36438423",
+			"sha256": "0da663187c25289add32f65fddf13604542b5d32d359a6d5e13ab345a7ab544c",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-21/temurin-21-jre_21.0.9.0.0+10-0_s390x.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-21/temurin-21-jre_21.0.10.0.0+7-0_s390x.deb"
 			],
-			"version": "21.0.9.0.0+10-0"
+			"version": "21.0.10.0.0+7-0"
 		},
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "temurin-21-jdk_21.0.9.0.0-p-10-0_s390x",
+			"key": "temurin-21-jdk_21.0.10.0.0-p-7-0_s390x",
 			"name": "temurin-21-jdk",
-			"sha256": "ec60ebfaeca6a99d04e7c86955f5a9163b9b6401ebf355d695d26b93a9cd680f",
+			"sha256": "ef9b01f844c2523eb2c26e9c585ce2669d2e781b874ed33514bd15aa254c18c7",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-21/temurin-21-jdk_21.0.9.0.0+10-0_s390x.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-21/temurin-21-jdk_21.0.10.0.0+7-0_s390x.deb"
 			],
-			"version": "21.0.9.0.0+10-0"
+			"version": "21.0.10.0.0+7-0"
 		},
 		{
 			"arch": "s390x",
