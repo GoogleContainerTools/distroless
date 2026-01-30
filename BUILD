@@ -4,12 +4,12 @@ load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 load("//base:config.bzl", "BASE_ARCHITECTURES", "BASE_DISTROS")
 load("//cc:config.bzl", "CC_ARCHITECTURES", "CC_DISTROS")
 load("//nodejs:config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS")
-load("//java:config.bzl", "JAVA_ARCHITECTURES", "JAVA_DISTROS")
+load("//java:config.bzl", "JAVA_ARCHITECTURES", "JAVA_DISTROS", "JAVA_MAJOR_VERSIONS")
 load("//python3:config.bzl", "PYTHON_ARCHITECTURES", "PYTHON_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
-DEFAULT_DISTRO = "debian12"
+DEFAULT_DISTRO = "debian13"
 
 VARIANTS = [
     ("latest", "", "root"),
@@ -196,115 +196,64 @@ NODEJS |= {
     for (tag_base, debug_mode, user) in VARIANTS
 }
 
-##############################################################################
-# Java will remain a bit bizzare as we clean it up post debian12 deprecation #
-# - make all things multi-arch                                               #
-# - use the standard variants                                                #
-##############################################################################
-## JAVA_BASE
-JAVA_VARIATIONS = [
-    ("latest", "root"),
-    ("nonroot", "nonroot"),
-    ("debug", "debug_root"),
-    ("debug-nonroot", "debug_nonroot"),
-]
-
+###############
+# JAVA_BASE   #
+###############
 JAVA_BASE = {
-    "{REGISTRY}/{PROJECT_ID}/java-base:latest": "//java:java_base_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java-base:nonroot": "//java:java_base_nonroot_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java-base:debug": "//java:java_base_debug_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java-base:debug-nonroot": "//java:java_base_debug_nonroot_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:latest": "//java:java_base_root_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:nonroot": "//java:java_base_nonroot_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:debug": "//java:java_base_debug_root_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java-base-debian12:debug-nonroot": "//java:java_base_debug_nonroot_amd64_debian12",
+    "{REGISTRY}/{PROJECT_ID}/java-base:" + tag_base + "-" + arch: "//java:java_base" + debug_mode + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
+    for arch in JAVA_ARCHITECTURES[DEFAULT_DISTRO]
+    for (tag_base, debug_mode, user) in VARIANTS
 }
 
 JAVA_BASE |= {
-    "{REGISTRY}/{PROJECT_ID}/java-base-" + distro + ":" + tag_base + "-" + arch: "//java:java_base_" + label + "_" + arch + "_" + distro
-    for distro in JAVA_DISTROS
-    for arch in JAVA_ARCHITECTURES[distro]
-    for (tag_base, label) in JAVA_VARIATIONS
+    "{REGISTRY}/{PROJECT_ID}/java-base:" + tag_base: "//java:java_base" + debug_mode + "_" + user + "_" + DEFAULT_DISTRO
+    for (tag_base, debug_mode, user) in VARIANTS
 }
 
 JAVA_BASE |= {
-    "{REGISTRY}/{PROJECT_ID}/java-base-" + distro + ":" + tag_base: "//java:java_base_" + label + "_" + distro
-    for (tag_base, label) in JAVA_VARIATIONS
-    for distro in JAVA_DISTROS
-}
-
-## JAVA17
-JAVA17 = {
-    "{REGISTRY}/{PROJECT_ID}/java17:latest": "//java:java17_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java17:nonroot": "//java:java17_nonroot_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java17:debug": "//java:java17_debug_root_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java17:debug-nonroot": "//java:java17_debug_nonroot_amd64_" + DEFAULT_DISTRO,
-    "{REGISTRY}/{PROJECT_ID}/java17-debian12:latest": "//java:java17_root_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java17-debian12:nonroot": "//java:java17_nonroot_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java17-debian12:debug": "//java:java17_debug_root_amd64_debian12",
-    "{REGISTRY}/{PROJECT_ID}/java17-debian12:debug-nonroot": "//java:java17_debug_nonroot_amd64_debian12",
-}
-
-JAVA17 |= {
-    "{REGISTRY}/{PROJECT_ID}/java17-debian12:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian12"
-    for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_ARCHITECTURES["debian12"]
-}
-
-JAVA17 |= {
-    "{REGISTRY}/{PROJECT_ID}/java17-debian12:" + tag_base: "//java:java17_" + label + "_debian12"
-    for (tag_base, label) in JAVA_VARIATIONS
-}
-
-## JAVA 17 on debian13
-JAVA17 |= {
-    "{REGISTRY}/{PROJECT_ID}/java17-debian13:" + tag_base + "-" + arch: "//java:java17_" + label + "_" + arch + "_debian13"
-    for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_ARCHITECTURES["debian13"]
-}
-
-## oci_image_index (skipping java17 distro suffix covered above - fix post 17 deprecation)
-JAVA17 |= {
-    "{REGISTRY}/{PROJECT_ID}/java17-debian13:" + tag_base: "//java:java17_" + label + "_debian13"
-    for (tag_base, label) in JAVA_VARIATIONS
-}
-
-## JAVA 21
-JAVA21 = {
-    "{REGISTRY}/{PROJECT_ID}/java21-" + distro + ":" + tag_base + "-" + arch: "//java:java21_" + label + "_" + arch + "_" + distro
-    for (tag_base, label) in JAVA_VARIATIONS
+    "{REGISTRY}/{PROJECT_ID}/java-base-" + distro + ":" + tag_base + "-" + arch: "//java:java_base" + debug_mode + "_" + user + "_" + arch + "_" + distro
     for distro in JAVA_DISTROS
     for arch in JAVA_ARCHITECTURES[distro]
+    for (tag_base, debug_mode, user) in VARIANTS
 }
 
-# oci_image_index
-JAVA21 |= {
-    "{REGISTRY}/{PROJECT_ID}/java21:" + tag_base: "//java:java21_" + label + "_" + DEFAULT_DISTRO
-    for (tag_base, label) in JAVA_VARIATIONS
-}
-
-JAVA21 |= {
-    "{REGISTRY}/{PROJECT_ID}/java21-" + distro + ":" + tag_base: "//java:java21_" + label + "_" + distro
-    for (tag_base, label) in JAVA_VARIATIONS
+JAVA_BASE |= {
+    "{REGISTRY}/{PROJECT_ID}/java-base-" + distro + ":" + tag_base: "//java:java_base" + debug_mode + "_" + user + "_" + distro
+    for (tag_base, debug_mode, user) in VARIANTS
     for distro in JAVA_DISTROS
 }
 
-## Java 25 from temurin, available on debian13
-JAVA25 = {
-    "{REGISTRY}/{PROJECT_ID}/java25-debian13:" + tag_base + "-" + arch: "//java:java25_" + label + "_" + arch + "_debian13"
-    for (tag_base, label) in JAVA_VARIATIONS
-    for arch in JAVA_ARCHITECTURES["debian13"]
+###############
+# JAVA        #
+###############
+JAVA = {
+    "{REGISTRY}/{PROJECT_ID}/java" + version + ":" + tag_base + "-" + arch: "//java:java" + version + debug_mode + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
+    for version in JAVA_MAJOR_VERSIONS[DEFAULT_DISTRO]
+    for arch in JAVA_ARCHITECTURES[DEFAULT_DISTRO]
+    for (tag_base, debug_mode, user) in VARIANTS
 }
 
 # oci_image_index
-JAVA25 |= {
-    "{REGISTRY}/{PROJECT_ID}/java25:" + tag_base: "//java:java25_" + label + "_debian13"
-    for (tag_base, label) in JAVA_VARIATIONS
+JAVA |= {
+    "{REGISTRY}/{PROJECT_ID}/java" + version + ":" + tag_base: "//java:java" + version + debug_mode + "_" + user + "_" + DEFAULT_DISTRO
+    for version in JAVA_MAJOR_VERSIONS[DEFAULT_DISTRO]
+    for (tag_base, debug_mode, user) in VARIANTS
 }
 
-JAVA25 |= {
-    "{REGISTRY}/{PROJECT_ID}/java25-debian13:" + tag_base: "//java:java25_" + label + "_debian13"
-    for (tag_base, label) in JAVA_VARIATIONS
+JAVA |= {
+    "{REGISTRY}/{PROJECT_ID}/java" + version + "-" + distro + ":" + tag_base + "-" + arch: "//java:java" + version + debug_mode + "_" + user + "_" + arch + "_" + distro
+    for distro in JAVA_DISTROS
+    for version in JAVA_MAJOR_VERSIONS[distro]
+    for arch in JAVA_ARCHITECTURES[distro]
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
+# oci_image_index
+JAVA |= {
+    "{REGISTRY}/{PROJECT_ID}/java" + version + "-" + distro + ":" + tag_base: "//java:java" + version + debug_mode + "_" + user + "_" + distro
+    for (tag_base, debug_mode, user) in VARIANTS
+    for distro in JAVA_DISTROS
+    for version in JAVA_MAJOR_VERSIONS[distro]
 }
 
 ALL = {}
@@ -323,11 +272,7 @@ ALL |= NODEJS
 
 ALL |= JAVA_BASE
 
-ALL |= JAVA17
-
-ALL |= JAVA21
-
-ALL |= JAVA25
+ALL |= JAVA
 
 # create additional tags by appending COMMIT_SHA to all tags
 # remove "latest" if they contain it (this is brittle if we make funky changes):
