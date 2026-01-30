@@ -9,7 +9,8 @@ Specifically, the image contains everything in the [base image](../base/README.m
 * Python 3 and its dependencies.
     * 3.11 on debian 12
     * 3.13 on debian 13
-* No shell and no support for ctypes
+* No shell
+* No support for ldconfig based functions like `ctypes.util.find_library()` (potential [workaround](../../../issues/1854))
 
 
 ## Usage
