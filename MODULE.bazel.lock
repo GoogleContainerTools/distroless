@@ -731,7 +731,7 @@
         "recordedFileInputs": {
           "@@//private/repos/deb/trixie_python.lock.json": "eedcb930273a1278b7b5b96c47e6ec6307fe82a989c41fa8d09064cee8f94de4",
           "@@//private/repos/deb/trixie.lock.json": "1742a021c2361793a54b1d92f4178623131918349be75914fa87aa4b38a9ee4b",
-          "@@//private/repos/deb/trixie_adoptium.lock.json": "99049ce85709b6ed6286a61bf5b165673e952eba34eb2aca5d8950c0d4815950",
+          "@@//private/repos/deb/trixie_adoptium.lock.json": "a783a7af5aabf2aa03091bfc2981dad025400fcf4c9efd68d8b97b05676b2792",
           "@@//private/repos/deb/bookworm.lock.json": "c45c794cf66cc58ed0da4a94d993fab3fcbe83ef4404baf66a3940e42a68acf0",
           "@@//private/repos/deb/trixie_java.lock.json": "3f740fae04eff5df90b02f80a31029bb59a84fbc1bb967404cc7718893a3a5cd",
           "@@//private/repos/deb/bookworm_java.lock.json": "c2936c4c4ef8878097dec0f48b7a53b03265c4ff1c2607fe6d3945c0dcb15b60",

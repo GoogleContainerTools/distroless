@@ -117,7 +117,7 @@
 			"name": "temurin-25-jre",
 			"sha256": "7472db63d005e331f9311ebb93798ac94d8ac247ee0b5266c13206c21058800c",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-25-jre_25.0.2.0.0+10-0_arm64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.2.0.0+10-0_arm64.deb"
 			],
 			"version": "25.0.2.0.0+10-0"
 		},
@@ -128,7 +128,7 @@
 			"name": "temurin-25-jdk",
 			"sha256": "346d974fa90fcaca91260ead05f08b6b2cc3d2c4f324d3619a6d2080d8211103",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-25-jdk_25.0.2.0.0+10-0_arm64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.2.0.0+10-0_arm64.deb"
 			],
 			"version": "25.0.2.0.0+10-0"
 		},
