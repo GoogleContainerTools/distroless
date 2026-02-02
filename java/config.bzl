@@ -3,6 +3,10 @@ JAVA_ARCHITECTURES = {
     "debian12": ["amd64", "arm64", "s390x", "ppc64le"],
     "debian13": ["amd64", "arm64", "s390x", "ppc64le"],
 }
+JAVA_MAJOR_VERSIONS = {
+    "debian12": ["17", "21"],
+    "debian13": ["17", "21", "25"],
+}
 
 # deprecated, remove with debian12 deprecation
 JAVA_BUILD_BASE_PACKAGES = {
