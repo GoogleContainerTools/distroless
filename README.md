@@ -7,9 +7,6 @@ They do not contain package managers, shells or any other programs you would exp
 
 For more information, see this [talk](https://swampup2017.sched.com/event/A6CW/distroless-docker-containerizing-apps-not-vms?iframe=no&w=100%&sidebar=yes&bg=no) ([video](https://www.youtube.com/watch?v=lviLZFciDv4)).
 
-**Since March 2023, Distroless images use oci manifests, if you see errors referencing `application/vnd.oci.image.manifest.v1+json`
-or `application/vnd.oci.image.index.v1+json`, update your container tooling (docker, jib, etc) to latest.**
-
 ## Why should I use distroless images?
 
 Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google
@@ -72,8 +69,7 @@ Distroless's serving infrastructure has moved to artifact registry but we still 
 
 ## How do I verify distroless images?
 
-All distroless images are signed by [cosign](https://github.com/sigstore/cosign) with ephemeral keys (keyless) -- this is the only supported mechanism starting November 2023.
-We recommend verifying any distroless image you use before building your image. You can verify the keyless signature of any distroless image with:
+All distroless images are signed by [cosign](https://github.com/sigstore/cosign) with ephemeral keys (keyless). We recommend verifying any distroless image you use before building your image. You can verify the keyless signature of any distroless image with:
 
 ```sh
 cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com --certificate-identity keyless@distroless.iam.gserviceaccount.com
