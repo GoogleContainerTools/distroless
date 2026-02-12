@@ -13,7 +13,7 @@ bazel_dep(name = "container_structure_test", version = "1.19.1")
 bazel_dep(name = "rules_oci", version = "1.8.0")
 bazel_dep(name = "rules_distroless", version = "0.6.2")
 bazel_dep(name = "rules_python", version = "1.5.3")
-bazel_dep(name = "rules_cc", version = "0.2.0")
+bazel_dep(name = "rules_cc", version = "0.2.4")
 
 ### OCI ###
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
