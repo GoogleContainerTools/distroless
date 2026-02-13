@@ -18,7 +18,7 @@ tar(
         "gnutar",
     ],
     compress = "gzip",
-    mtree = ["./ type=dir uid=0 gid=0 time=0.0"],
+    mtree = ["./ type=dir uid=0 gid=0 mode=0755 time=0.0"],
 )
 
 tar(
