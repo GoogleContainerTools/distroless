@@ -15,6 +15,7 @@ archs:
   - armhf
   - s390x
   - ppc64el
+  - riscv64
 
 packages:
   - base-files
