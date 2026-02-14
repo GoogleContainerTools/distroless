@@ -5,7 +5,7 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_distroless//distroless:defs.bzl", "home", "passwd")
 load("@rules_oci//oci:defs.bzl", "oci_image")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 load("//:distro.bzl", DISTROS = "ALL_DISTROS")
 
 # Create a passwd file and home directory with a nonroot user and uid.
@@ -56,7 +56,7 @@ go_binary(
     pure = "on",
 )
 
-pkg_tar(
+tar(
     name = "user_tar",
     srcs = [":user"],
 )

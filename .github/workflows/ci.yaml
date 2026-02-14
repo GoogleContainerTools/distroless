@@ -33,18 +33,10 @@ jobs:
           restore-keys: |
             bazel-cache-deps-ci1-${{ github.sha }}
             bazel-cache-deps-ci1-
-      - name: Free space
-        run: |
-          sudo apt-get remove -y '^dotnet-.*'
-          sudo apt-get remove -y '^llvm-.*'
-          sudo apt-get remove -y 'php.*'
-          sudo apt-get remove -y azure-cli google-cloud-cli google-chrome-stable firefox powershell mono-devel
-          sudo apt-get autoremove -y
-          sudo apt-get clean
-          rm -rf /usr/share/dotnet/
+
       - name: Fetch # this can take a long time if there are a lot of errors
         run: |
-          for i in $(seq 10); do 
+          for i in $(seq 10); do
             bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //... && break || sleep 180;
           done
       - name: Build All Images
@@ -71,19 +63,10 @@ jobs:
           restore-keys: |
             bazel-cache-deps-ci2-${{ github.sha }}
             bazel-cache-deps-ci2-
-      - name: Free space
-        run: |
-          sudo apt-get remove -y '^dotnet-.*'
-          sudo apt-get remove -y '^llvm-.*'
-          sudo apt-get remove -y 'php.*'
-          sudo apt-get remove -y azure-cli google-cloud-cli google-chrome-stable firefox powershell mono-devel
-          sudo apt-get autoremove -y
-          sudo apt-get clean
-          rm -rf /usr/share/dotnet/
 
       - name: Fetch
         run: |
-          for i in $(seq 20); do 
+          for i in $(seq 20); do
             bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'attr(tags, "amd64", ...)' && break
             sleep 10;
           done
