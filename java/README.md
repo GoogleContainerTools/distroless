@@ -16,7 +16,7 @@ The entrypoint of this image is set to the equivalent of "java -jar", so this im
 
 ## Add another JAVA version
 
-To support JAVA version you need to do the following steps:
+To support a new JAVA version, you need to do the following steps:
 - Create a new file `java_{newVersion}.MODULE.bazel` in the [java_temurin](private/repos/java_temurin) folder based on the latest created.
 - In the file, you must specify the tar.gz files used to build the images, ideally from this URL: `https://github.com/adoptium/temurin{newVersion}-binaries/releases`.
 - Add the new names in the [java.MODULE.bazel](private/repos/java_temurin/java.MODULE.bazel) file.
