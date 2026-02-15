@@ -40,7 +40,7 @@ def static_image(distro, arch):
             env = {
                 "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
                 # allows openssl to find the certificates by default
-                # TODO: We should run update-ca-certifaces, but that requires "openssl rehash"
+                # TODO: We should run update-ca-certificates, but that requires "openssl rehash"
                 # which would probably need to be run inside the container
                 "SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt",
             },
