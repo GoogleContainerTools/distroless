@@ -75,3 +75,22 @@ java.archive(
     urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.10_7.tar.gz"],
     version = "21.0.10+7",
 )
+java.archive(
+    name = "temurin21_jre_riscv64",
+    architecture = "riscv64",
+    plain_version = "21.0.10",
+    sha256 = "02cf763836c14bad4d689eb3b4efd691657de753dba07193cd1fb8691c8fe7b8",
+    strip_prefix = "jdk-21.0.10+7-jre",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jre_riscv64_linux_hotspot_21.0.10_7.tar.gz"],
+    version = "21.0.10+7",
+)
+java.archive(
+    name = "temurin21_jdk_riscv64",
+    architecture = "riscv64",
+    plain_version = "21.0.10",
+    sha256 = "a57fd486c3c24ed615eb91ef9421ddd38c720e7398df5a161872fb26ad825936",
+    strip_prefix = "jdk-21.0.10+7",
+    urls = ["https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_riscv64_linux_hotspot_21.0.10_7.tar.gz"],
+    version = "21.0.10+7",
+)
+use_repo(java, "temurin21_jdk_riscv64", "temurin21_jre_riscv64")
