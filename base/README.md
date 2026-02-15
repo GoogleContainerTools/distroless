@@ -25,7 +25,7 @@ of the packages in `gcr.io/distroless/static`, and
 
 Note: Debian 13 base image does not include [OpenSSL legacy algorithms](https://docs.openssl.org/3.5/man7/OSSL_PROVIDER-legacy/#operations-and-algorithms).
 
-If you want to use them, you will need to add `openssl-legacy-provider` yourself.
+If you want to use them, you will need to add the `openssl-legacy-provider` package yourself.
 
 ## Usage
 
