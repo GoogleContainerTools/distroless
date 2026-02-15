@@ -184,7 +184,7 @@ See here for more information on how these images are [built and released](RELEA
 
 ### Base Operating System
 
-Distroless images are based on Debian 12 (bookworm). Images are explicitly tagged with Debian version suffixes (e.g. `-debian12`). Specifying an image without the distribution will currently select `-debian12` images, but that will change in the future to a newer version of Debian. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
+Distroless images are based on Debian 13 (trixie). Images are explicitly tagged with Debian version suffixes (e.g. `-debian13`). Specifying an image without the distribution will currently select `-debian13` images. It can be useful to reference the distribution explicitly, to prevent breaking builds when the next Debian version is released.
 
 ### Operating System Updates for Security Fixes and CVEs
 
