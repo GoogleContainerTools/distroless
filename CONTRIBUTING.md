@@ -39,7 +39,7 @@ bazel run //:local_build
 
 Whenever a change made to `common/*.yaml` manifests, the locking step has to be performed to regenerate lock files.
 
-This can be done by running; `./knife lock`
+This can be done by running: `./knife lock`
 
 ## Code style
 
