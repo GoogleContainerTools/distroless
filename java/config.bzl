@@ -1,7 +1,7 @@
 JAVA_DISTROS = ["debian12", "debian13"]
 JAVA_ARCHITECTURES = {
     "debian12": ["amd64", "arm64", "s390x", "ppc64le"],
-    "debian13": ["amd64", "arm64", "s390x", "ppc64le"],
+    "debian13": ["amd64", "arm64", "s390x", "ppc64le", "riscv64"],
 }
 JAVA_MAJOR_VERSIONS = {
     "debian12": ["17", "21"],

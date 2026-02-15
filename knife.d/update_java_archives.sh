@@ -35,8 +35,8 @@ function generate_java_archives() {
   release_name=$(echo "$latest_release" | jq -r '.name')
   version=${release_name#jdk-}
   plain_version=$([[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] && echo "${BASH_REMATCH[0]}")
-  archs=("x64" "aarch64" "s390x" "ppc64le")
-  archs_deb=("amd64" "arm64" "s390x" "ppc64le")
+  archs=("x64" "aarch64" "s390x" "ppc64le" "riscv64")
+  archs_deb=("amd64" "arm64" "s390x" "ppc64le" "riscv64")
   variants=("jre" "jdk")
 
 cat << EOM

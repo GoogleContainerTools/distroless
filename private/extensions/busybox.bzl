@@ -71,6 +71,18 @@ def _busybox_impl(module_ctx):
         build_file_content = BUSYBOX_ARCHIVE_BUILD,
     )
 
+    # To update riscv64 busybox binary
+    # Get the latest commit hash from dist-riscv64 branch of docker-library repo. You can also view it
+    # at https://github.com/docker-library/official-images/blob/master/library/busybox
+    # Substitute it in the link: https://github.com/docker-library/busybox/raw/<latest-commit-hash>/latest/musl/busybox.tar.gz
+    # Update the sha256 value. Since github api doesn't give sha256 value, it can be obtained using sha256sum command.
+    http_archive(
+        name = "busybox_riscv64",
+        sha256 = "17737180c892fb9eac75524ae789040f0b01415e6e05e063bc2b8f982b340d97",
+        urls = ["https://raw.githubusercontent.com/docker-library/busybox/eabe7cf678f2abbc0477a8603428519771ede877/latest/musl/riscv64/rootfs.tar.gz"],
+        build_file_content = BUSYBOX_ARCHIVE_BUILD,
+    )
+
     return module_ctx.extension_metadata(
         root_module_direct_deps = [
             "busybox_amd64",
@@ -78,6 +90,7 @@ def _busybox_impl(module_ctx):
             "busybox_arm64",
             "busybox_s390x",
             "busybox_ppc64le",
+            "busybox_riscv64",
         ],
         root_module_direct_dev_deps = [],
     )
