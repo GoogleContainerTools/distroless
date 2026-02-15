@@ -224,7 +224,7 @@ BUILD       Dockerfile  hello.py
 
 > Note: If the image you are using already has a tag, for example `gcr.io/distroless/java17-debian12:nonroot`, use the tag `debug-<existing tag>` instead, for example `gcr.io/distroless/java17-debian12:debug-nonroot`.
 
-> Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
+> Note: [ldd](https://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
 
 ### Who uses Distroless?
 
