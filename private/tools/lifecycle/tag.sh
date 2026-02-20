@@ -34,13 +34,13 @@ function tag_update() {
 
   # get all hashes for images that have no tags (or just the commit hash tag)
   # jq behavior for all(test(pattern)) matches the empty list []
-  # or are older than 2 days (we don't want to accidentally mess with any
+  # or are older than 24 hours (we don't want to accidentally mess with any
   # ongoing builds)
   readarray -t targets < <(echo "$images_json" | jq -r --arg now "$NOW" '
     .manifest | to_entries | sort_by(.value.timeUploadedMs|tonumber) | .[] | select(
       (.value.tag // [] | all(test(".*-[a-f0-9]{40}$|^[a-f0-9]{40}$")))
       and
-      (($now | tonumber) - (.value.timeUploadedMs | tonumber) > 172800000)
+      (($now | tonumber) - (.value.timeUploadedMs | tonumber) > 86400000)
     ) | .key
   ');
   background_pid=$!
