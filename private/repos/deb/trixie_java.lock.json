@@ -879,6 +879,226 @@
 				"https://snapshot.debian.org/archive/debian/20260218T203007Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_ppc64el.deb"
 			],
 			"version": "14.2.0-19"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "fontconfig-config_2.15.0-2.3_riscv64",
+			"name": "fontconfig-config",
+			"sha256": "4fd18a83b8d86f3493ad7ab714a77bfdb18ca19139168aea7161231a420963b5",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/f/fontconfig/fontconfig-config_2.15.0-2.3_riscv64.deb"
+			],
+			"version": "2.15.0-2.3"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "fonts-dejavu-core_2.37-8_riscv64",
+			"name": "fonts-dejavu-core",
+			"sha256": "86635b3d25b3655fc11cb3ecc3af59f0bf19643b02b94f2de48bd10253cdba12",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-8_all.deb"
+			],
+			"version": "2.37-8"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libbrotli1_1.1.0-2-p-b7_riscv64",
+			"name": "libbrotli1",
+			"sha256": "c18cc200551f11cc2e22514c1625c12e83a2c4155ddee78f77fb1f2c26fe3c6a",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/b/brotli/libbrotli1_1.1.0-2+b7_riscv64.deb"
+			],
+			"version": "1.1.0-2+b7"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libbz2-1.0_1.0.8-6_riscv64",
+			"name": "libbz2-1.0",
+			"sha256": "27c7937eb4d2e314e1f0a57a99a20c141c55f720e5ee93d2244de432fd247a55",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/b/bzip2/libbz2-1.0_1.0.8-6_riscv64.deb"
+			],
+			"version": "1.0.8-6"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libcrypt1_1-4.4.38-1_riscv64",
+			"name": "libcrypt1",
+			"sha256": "85ae0d868b2a27043249ca332dac782a1a67e3171139b0f57d63414eaf4ec887",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/libx/libxcrypt/libcrypt1_4.4.38-1_riscv64.deb"
+			],
+			"version": "1:4.4.38-1"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libexpat1_2.7.1-2_riscv64",
+			"name": "libexpat1",
+			"sha256": "73d5d2aae20867ccd38d92e68f04ec63887964d1704836a6e3ee550142218b76",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/e/expat/libexpat1_2.7.1-2_riscv64.deb"
+			],
+			"version": "2.7.1-2"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libfontconfig1_2.15.0-2.3_riscv64",
+			"name": "libfontconfig1",
+			"sha256": "dc06597ba8578cccf2e39ef1aa0cb281e805b3c51588ffa185dc83d5d5fa8a89",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/f/fontconfig/libfontconfig1_2.15.0-2.3_riscv64.deb"
+			],
+			"version": "2.15.0-2.3"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libfreetype6_2.13.3-p-dfsg-1_riscv64",
+			"name": "libfreetype6",
+			"sha256": "60f12a364d14006ac3db690d48bfb612aad9a63b7a48c984b46d64d5c8efd7d1",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/f/freetype/libfreetype6_2.13.3+dfsg-1_riscv64.deb"
+			],
+			"version": "2.13.3+dfsg-1"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libglib2.0-0t64_2.84.4-3_deb13u2_riscv64",
+			"name": "libglib2.0-0t64",
+			"sha256": "871f0878240b26721d952d348fdb76b4bcc31ef97a65260e40fd5ae6d5a8040a",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/g/glib2.0/libglib2.0-0t64_2.84.4-3~deb13u2_riscv64.deb"
+			],
+			"version": "2.84.4-3~deb13u2"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libgraphite2-3_1.3.14-2-p-b1_riscv64",
+			"name": "libgraphite2-3",
+			"sha256": "e53a9debf6b8e2fafe9d22952c3a6de720b318ff592ef67dc354c748c810ba40",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/g/graphite2/libgraphite2-3_1.3.14-2+b1_riscv64.deb"
+			],
+			"version": "1.3.14-2+b1"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libharfbuzz0b_10.2.0-1-p-b1_riscv64",
+			"name": "libharfbuzz0b",
+			"sha256": "1982c5b99ec2ed7dff65482ad816966dbffb35818a81ddb453b226d48cee2c0b",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/h/harfbuzz/libharfbuzz0b_10.2.0-1+b1_riscv64.deb"
+			],
+			"version": "10.2.0-1+b1"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libjpeg62-turbo_1-2.1.5-4_riscv64",
+			"name": "libjpeg62-turbo",
+			"sha256": "859970b9a4379c1cdef6127fcdc21fd6a445f0188e9bd8a35199d2d6bcd49a3b",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_2.1.5-4_riscv64.deb"
+			],
+			"version": "1:2.1.5-4"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "liblcms2-2_2.16-2_riscv64",
+			"name": "liblcms2-2",
+			"sha256": "9bebcd4f35358b340c3c4b2006df7cbf0bc7461ddfbae3d9f3ce7ce5c095b4e0",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/l/lcms2/liblcms2-2_2.16-2_riscv64.deb"
+			],
+			"version": "2.16-2"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libpcre2-8-0_10.46-1_deb13u1_riscv64",
+			"name": "libpcre2-8-0",
+			"sha256": "862091023de3e70cf4e4f80347e54873800169a2f39d8111f5faa6c7a7f5009c",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/p/pcre2/libpcre2-8-0_10.46-1~deb13u1_riscv64.deb"
+			],
+			"version": "10.46-1~deb13u1"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libpng16-16t64_1.6.48-1-p-deb13u1_riscv64",
+			"name": "libpng16-16t64",
+			"sha256": "262cb5a1859323c813ef5e34538af47293e71b7dfadaab97b2a590ca3ec3b190",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian-security/20260127T202811Z/pool/updates/main/libp/libpng1.6/libpng16-16t64_1.6.48-1+deb13u1_riscv64.deb"
+			],
+			"version": "1.6.48-1+deb13u1"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libuuid1_2.41-5_riscv64",
+			"name": "libuuid1",
+			"sha256": "01e0da9223fe9963270227f532f1bb57c01013ede0411710836181ab72192839",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/u/util-linux/libuuid1_2.41-5_riscv64.deb"
+			],
+			"version": "2.41-5"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "zlib1g_1-1.3.dfsg-p-really1.3.1-1-p-b1_riscv64",
+			"name": "zlib1g",
+			"sha256": "38c52eef58e5fc9b13d93f8a7d0a0549c32b4f00402a778d39a135254f554314",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+b1_riscv64.deb"
+			],
+			"version": "1:1.3.dfsg+really1.3.1-1+b1"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "gcc-14-base_14.2.0-19_riscv64",
+			"name": "gcc-14-base",
+			"sha256": "bb871e84c5c108463fa6a858e72f15cbf809f3888442b89941fc625449874206",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/g/gcc-14/gcc-14-base_14.2.0-19_riscv64.deb"
+			],
+			"version": "14.2.0-19"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libgcc-s1_14.2.0-19_riscv64",
+			"name": "libgcc-s1",
+			"sha256": "16d3f9f534028615413d23f649e5d246baef48fe7db739ad564ef8b9a6e5587c",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/g/gcc-14/libgcc-s1_14.2.0-19_riscv64.deb"
+			],
+			"version": "14.2.0-19"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libstdc-p--p-6_14.2.0-19_riscv64",
+			"name": "libstdc++6",
+			"sha256": "f285313f34e0d8f65463c669fac8eb29760a3f3fd6459005dd3110cdd2b10fd7",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260127T202811Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_riscv64.deb"
+			],
+			"version": "14.2.0-19"
 		}
 	],
 	"version": 1

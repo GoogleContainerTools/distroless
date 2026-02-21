@@ -52,19 +52,19 @@ Any other tags are considered deprecated and are no longer updated
 
 Debian 13 distroless images use the debian [UsrMerge](https://wiki.debian.org/UsrMerge) scheme. If you use `rules_distroless` to add packages to an image, set `mergedusr = True` in [`apt.install`](https://registry.bazel.build/docs/rules_distroless#apt_install).
 
-| Image                                 | Tags                                  | Architecture Suffixes             |
-| ------------------------------------- | ------------------------------------- | --------------------------------- |
-| gcr.io/distroless/static-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-debian13       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/cc-debian13         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/java-base-debian13  | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java21-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java25-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/nodejs20-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/nodejs22-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/nodejs24-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/python3-debian13    | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
+| Image                                 | Tags                                  | Architecture Suffixes                      |
+| ------------------------------------- | ------------------------------------- | ------------------------------------------ |
+| gcr.io/distroless/static-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le, riscv64 |
+| gcr.io/distroless/base-debian13       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le, riscv64 |
+| gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le, riscv64 |
+| gcr.io/distroless/cc-debian13         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le, riscv64 |
+| gcr.io/distroless/java-base-debian13  | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
+| gcr.io/distroless/java21-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
+| gcr.io/distroless/java25-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
+| gcr.io/distroless/nodejs20-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le          |
+| gcr.io/distroless/nodejs22-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le          |
+| gcr.io/distroless/nodejs24-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le               |
+| gcr.io/distroless/python3-debian13    | latest, nonroot, debug, debug-nonroot | amd64, arm64                               |
 
 ## Why is distroless still using `gcr.io` instead of `pkg.dev`?
 

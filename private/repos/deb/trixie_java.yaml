@@ -14,6 +14,7 @@ archs:
   - arm64
   - s390x
   - ppc64el
+  - riscv64
 
 packages:
   - fontconfig-config
