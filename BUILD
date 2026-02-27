@@ -1,11 +1,11 @@
-load("//private/oci:defs.bzl", "sign_and_push_all")
-load("//private/tools/lifecycle:defs.bzl", "attach_lifecycle_tags")
-load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 load("//base:config.bzl", "BASE_ARCHITECTURES", "BASE_DISTROS")
 load("//cc:config.bzl", "CC_ARCHITECTURES", "CC_DISTROS")
-load("//nodejs:config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS")
 load("//java:config.bzl", "JAVA_ARCHITECTURES", "JAVA_DISTROS", "JAVA_MAJOR_VERSIONS")
+load("//nodejs:config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS")
+load("//private/oci:defs.bzl", "sign_and_push_all")
+load("//private/tools/lifecycle:defs.bzl", "attach_lifecycle_tags")
 load("//python3:config.bzl", "PYTHON_ARCHITECTURES", "PYTHON_DISTROS")
+load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 

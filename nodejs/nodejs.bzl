@@ -2,8 +2,8 @@
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//private/util:tar.bzl", "tar")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
+load("//private/util:tar.bzl", "tar")
 
 def nodejs_image_index(distro, major_version, architectures):
     """nodejs image index for a distro.

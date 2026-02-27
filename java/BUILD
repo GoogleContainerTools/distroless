@@ -1,5 +1,5 @@
-load(":java.bzl", "java_base_image", "java_base_image_index", "java_image", "java_image_index")
 load(":config.bzl", "JAVA_ARCHITECTURES", "JAVA_BASE_PACKAGES", "JAVA_DISTROS")
+load(":java.bzl", "java_base_image", "java_base_image_index", "java_image", "java_image_index")
 
 package(default_visibility = ["//visibility:public"])
 

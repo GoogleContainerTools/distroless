@@ -141,6 +141,10 @@ function cmd_github_update_snapshots() {
 }
 
 function cmd_lint () {
+    local mode="fix"
+    if [[ "${1:-}" == "--check" ]]; then
+        mode="check"
+    fi
     echo "🧹 Linting"
     echo ""
     if ! which buildifier > /dev/null; then
@@ -148,7 +152,7 @@ function cmd_lint () {
         echo " Did you follow the ./CONTRIBUTING.md ?"
         exit 1
     fi
-    buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
+    buildifier -mode=$mode $(find . -type f \( -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' \))
 }
 
 function cmd_update_node_archives () {
@@ -216,7 +220,7 @@ update-non-snapshots)
     cmd_lock_non_snapshots
     ;;
 lint)
-    cmd_lint
+    cmd_lint "${@:2}"
     ;;
 github-update-snapshots)
     cmd_github_update_snapshots
