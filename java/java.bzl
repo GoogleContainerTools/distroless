@@ -2,12 +2,12 @@
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//private/util:tar.bzl", "tar")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", oci_java_image = "java_image")
 load("//private/util:deb.bzl", "deb")
 load("//private/util:java_cacerts.bzl", "java_cacerts")
+load("//private/util:tar.bzl", "tar")
 
 def ca_certs(distro, arch):
     """java ca certs for a specific arch and distro

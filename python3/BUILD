@@ -1,7 +1,7 @@
-load(":config.bzl", "PYTHON_ARCHITECTURES", "PYTHON_DISTROS", "PYTHON_PACKAGES")
-load(":python.bzl", "python3_image", "python3_image_index")
 load("//private/util:tar.bzl", "tar")
+load(":config.bzl", "PYTHON_ARCHITECTURES", "PYTHON_DISTROS", "PYTHON_PACKAGES")
 load(":ldconfig.bzl", "python3_ldconfig")
+load(":python.bzl", "python3_image", "python3_image_index")
 
 package(default_visibility = ["//visibility:public"])
 
