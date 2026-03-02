@@ -1,0 +1,6 @@
+sh_test(
+    name = "runner_probe_test",
+    srcs = ["runner_probe_test.sh"],
+    tags = ["amd64"],
+    timeout = "short",
+)
