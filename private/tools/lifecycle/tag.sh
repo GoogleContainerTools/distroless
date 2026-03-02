@@ -76,7 +76,7 @@ function tag_deprecate() {
 
   echo "tagging ${#targets[@]} images of $image"
   echo "1. Careful about builds happening, this doesn't account for them."
-  echo -e "2. Be sure images are not in the currently supported list at:\n\thttps://github.com/GoogleContainerTools/distroless/?tab=readme-ov-file#what-images-are-available"
+  printf "2. Be sure images are not in the currently supported list at:\n\thttps://github.com/GoogleContainerTools/distroless/?tab=readme-ov-file#what-images-are-available\n"
 
   read -r -p "Continue? [y/N] " response
   if [[ ! "$response" =~ ^[Yy]$ ]]; then
