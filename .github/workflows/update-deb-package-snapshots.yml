@@ -25,6 +25,14 @@ jobs:
       - name: Update snapshots
         run: ./knife github-update-snapshots
 
+      - name: Set up QEMU
+        if: env.DISTROLESS_DIFF
+        uses: docker/setup-qemu-action@v4
+
+      - name: Update ldconfig
+        if: env.DISTROLESS_DIFF
+        run: bazel run //python3:update_ldconfig
+
       - name: Run update sboms script
         if: env.DISTROLESS_DIFF
         run: |
