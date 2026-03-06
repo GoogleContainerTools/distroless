@@ -60,18 +60,30 @@ function tag_deprecate() {
   images_json=$(gcrane ls "$image" --json)
 
   # get all hashes for all images don't have the deprecated tag
-  # this is only for wholesale deprecation of an image
+  # also skip images that already have an update-available tag
+  # this is only for wholesale deprecation of an image, it also
+  # will deprecate all cosign tag based signatures by nature of select(...)
+  # automatically adding deprecation tags to sha256.*(att|sig).
   readarray -t targets < <(echo "$images_json" | jq -r '
     .manifest | to_entries | sort_by(.value.timeUploadedMs|tonumber) | .[] | select(
-      .value.tag // [] | all(test("deprecated-public-image-[a-f0-9]{64}$") | not)
+      (.value.tag // [] | all(test("deprecated-public-image-[a-f0-9]{64}$") | not))
+      and
+      (.value.tag // [] | all(test("update-available-") | not))
     ) | .key
   ');
   background_pid=$!
   wait "$background_pid"
 
   echo "tagging ${#targets[@]} images of $image"
-  echo "disabled for now, edit out comment, be careful about builds happening, this doesn't account for them"
-  # exec_tag "$image" "$tag_prefix" targets
+  echo "1. Careful about builds happening, this doesn't account for them."
+  printf "2. Be sure images are not in the currently supported list at:\n\thttps://github.com/GoogleContainerTools/distroless/?tab=readme-ov-file#what-images-are-available\n"
+
+  read -r -p "Continue? [y/N] " response
+  if [[ ! "$response" =~ ^[Yy]$ ]]; then
+    echo "Aborted."
+    exit 1
+  fi
+  exec_tag "$image" "$tag_prefix" targets
 }
 
 dry_run=${DRY_RUN:-true}
