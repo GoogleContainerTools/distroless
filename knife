@@ -64,7 +64,7 @@ function find_latest_snapshot() {
     # If it's the first of the month, look at the last month, otherwise this -1 day has no effect since searches
     # occur at the "month" level. This is an intentional buffer added to get the snapshots fully hydrated. We
     # intentionally don't include complicated logic for the case where it's after the 1st and no snapshots are
-    # availalbe for the month (it's extremely unlikely for our updater to run into this situation unless the
+    # available for the month (it's extremely unlikely for our updater to run into this situation unless the
     # snapshot serving infrastructure is acting up).
     local current="$(date -d '-1 day' +%Y-%m-%d)"
     local tmp=$(mktemp)
