@@ -231,3 +231,4 @@ If your project uses Distroless, send a PR to add your project here!
 
 - [distroless-users Google Group](https://groups.google.com/forum/#!forum/distroless-users)
 - [Kubernetes slack #distroless channel](https://slack.k8s.io/)
+# Supply-chain test comment - safe to ignore
