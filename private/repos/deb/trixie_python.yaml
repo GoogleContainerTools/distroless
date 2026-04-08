@@ -12,6 +12,7 @@ sources:
 archs:
   - amd64
   - arm64
+  - riscv64
 
 packages:
   - libbz2-1.0
