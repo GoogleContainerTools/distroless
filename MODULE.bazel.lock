@@ -344,82 +344,12 @@
     },
     "//private/extensions:node.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "XPG7mmj1w2JeWOpPfCt53gI44RsUyM+SbjzH6sh5S5E=",
+        "bzlTransitiveDigest": "+TaDMEEh3DzRHNaUPs7A8DxTrnXccxj0NkPbcihD0gY=",
         "usagesDigest": "oo4hnOxowfXXa21Wd8roJmpRdyG7Fy97FBO9vJoyK/M=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "nodejs20_amd64": {
-            "bzlFile": "@@//private/extensions:node.bzl",
-            "ruleClassName": "node_archive",
-            "attributes": {
-              "sha256": "19e56f0825510207dd904f087fe52faa0a4eb6b2aab5f0ea7a33830d04888b8b",
-              "strip_prefix": "node-v20.20.2-linux-x64/",
-              "urls": [
-                "https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-x64.tar.gz"
-              ],
-              "version": "20.20.2",
-              "architecture": "amd64",
-              "control": "@@//nodejs:control"
-            }
-          },
-          "nodejs20_arm64": {
-            "bzlFile": "@@//private/extensions:node.bzl",
-            "ruleClassName": "node_archive",
-            "attributes": {
-              "sha256": "47ef73d543ecf6eb19435f6c03a0ac4809b3bf0dd6b26c7c571efc2a6572a74d",
-              "strip_prefix": "node-v20.20.2-linux-arm64/",
-              "urls": [
-                "https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-arm64.tar.gz"
-              ],
-              "version": "20.20.2",
-              "architecture": "arm64",
-              "control": "@@//nodejs:control"
-            }
-          },
-          "nodejs20_arm": {
-            "bzlFile": "@@//private/extensions:node.bzl",
-            "ruleClassName": "node_archive",
-            "attributes": {
-              "sha256": "8e15f121e721c9354132053188d4c1a18ea9e345c019ee440fb256e3dda7df15",
-              "strip_prefix": "node-v20.20.2-linux-armv7l/",
-              "urls": [
-                "https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-armv7l.tar.gz"
-              ],
-              "version": "20.20.2",
-              "architecture": "arm",
-              "control": "@@//nodejs:control"
-            }
-          },
-          "nodejs20_ppc64le": {
-            "bzlFile": "@@//private/extensions:node.bzl",
-            "ruleClassName": "node_archive",
-            "attributes": {
-              "sha256": "5f2fd0e0cd67aeac0db800b334151cae6ea70ea337487b26f79ac90e3fe126e1",
-              "strip_prefix": "node-v20.20.2-linux-ppc64le/",
-              "urls": [
-                "https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-ppc64le.tar.gz"
-              ],
-              "version": "20.20.2",
-              "architecture": "ppc64le",
-              "control": "@@//nodejs:control"
-            }
-          },
-          "nodejs20_s390x": {
-            "bzlFile": "@@//private/extensions:node.bzl",
-            "ruleClassName": "node_archive",
-            "attributes": {
-              "sha256": "ee1ca1193e75a6d31b6007c575deca11b116e84a6bda136ae0e0dbe19399889c",
-              "strip_prefix": "node-v20.20.2-linux-s390x/",
-              "urls": [
-                "https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-s390x.tar.gz"
-              ],
-              "version": "20.20.2",
-              "architecture": "s390x",
-              "control": "@@//nodejs:control"
-            }
-          },
           "nodejs22_amd64": {
             "bzlFile": "@@//private/extensions:node.bzl",
             "ruleClassName": "node_archive",
@@ -549,11 +479,6 @@
         },
         "moduleExtensionMetadata": {
           "explicitRootModuleDirectDeps": [
-            "nodejs20_amd64",
-            "nodejs20_arm64",
-            "nodejs20_arm",
-            "nodejs20_ppc64le",
-            "nodejs20_s390x",
             "nodejs22_amd64",
             "nodejs22_arm64",
             "nodejs22_arm",

@@ -100,56 +100,6 @@ def _node_impl(module_ctx):
     # Follow Node's maintainence schedule and support all LTS versions that are not end of life
 
     node_archive(
-        name = "nodejs20_amd64",
-        sha256 = "19e56f0825510207dd904f087fe52faa0a4eb6b2aab5f0ea7a33830d04888b8b",
-        strip_prefix = "node-v20.20.2-linux-x64/",
-        urls = ["https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-x64.tar.gz"],
-        version = "20.20.2",
-        architecture = "amd64",
-        control = "//nodejs:control",
-    )
-
-    node_archive(
-        name = "nodejs20_arm64",
-        sha256 = "47ef73d543ecf6eb19435f6c03a0ac4809b3bf0dd6b26c7c571efc2a6572a74d",
-        strip_prefix = "node-v20.20.2-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-arm64.tar.gz"],
-        version = "20.20.2",
-        architecture = "arm64",
-        control = "//nodejs:control",
-    )
-
-    node_archive(
-        name = "nodejs20_arm",
-        sha256 = "8e15f121e721c9354132053188d4c1a18ea9e345c019ee440fb256e3dda7df15",
-        strip_prefix = "node-v20.20.2-linux-armv7l/",
-        urls = ["https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-armv7l.tar.gz"],
-        version = "20.20.2",
-        architecture = "arm",
-        control = "//nodejs:control",
-    )
-
-    node_archive(
-        name = "nodejs20_ppc64le",
-        sha256 = "5f2fd0e0cd67aeac0db800b334151cae6ea70ea337487b26f79ac90e3fe126e1",
-        strip_prefix = "node-v20.20.2-linux-ppc64le/",
-        urls = ["https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-ppc64le.tar.gz"],
-        version = "20.20.2",
-        architecture = "ppc64le",
-        control = "//nodejs:control",
-    )
-
-    node_archive(
-        name = "nodejs20_s390x",
-        sha256 = "ee1ca1193e75a6d31b6007c575deca11b116e84a6bda136ae0e0dbe19399889c",
-        strip_prefix = "node-v20.20.2-linux-s390x/",
-        urls = ["https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-s390x.tar.gz"],
-        version = "20.20.2",
-        architecture = "s390x",
-        control = "//nodejs:control",
-    )
-
-    node_archive(
         name = "nodejs22_amd64",
         sha256 = "978978a635eef872fa68beae09f0aad0bbbae6757e444da80b570964a97e62a3",
         strip_prefix = "node-v22.22.2-linux-x64/",
@@ -241,11 +191,6 @@ def _node_impl(module_ctx):
 
     return module_ctx.extension_metadata(
         root_module_direct_deps = [
-            "nodejs20_amd64",
-            "nodejs20_arm64",
-            "nodejs20_arm",
-            "nodejs20_ppc64le",
-            "nodejs20_s390x",
             "nodejs22_amd64",
             "nodejs22_arm64",
             "nodejs22_arm",

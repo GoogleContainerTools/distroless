@@ -53,7 +53,6 @@ Debian 13 distroless images use the debian [UsrMerge](https://wiki.debian.org/Us
 | gcr.io/distroless/java17-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
 | gcr.io/distroless/java21-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
 | gcr.io/distroless/java25-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
-| gcr.io/distroless/nodejs20-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le          |
 | gcr.io/distroless/nodejs22-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le          |
 | gcr.io/distroless/nodejs24-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le               |
 | gcr.io/distroless/python3-debian13    | latest, nonroot, debug, debug-nonroot | amd64, arm64, riscv64                      |

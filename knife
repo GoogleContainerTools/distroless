@@ -170,7 +170,7 @@ function cmd_update_node_archives () {
 	fi
 
     versions=()
-    for major in 20 22 24; do
+    for major in 22 24; do
         latest_version=$(curl -sSL https://nodejs.org/dist/index.json | jq -r --arg major "v$major" '
             map(select(.version | startswith($major)))
             | sort_by(.date) | reverse | .[0].version
