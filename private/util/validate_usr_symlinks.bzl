@@ -9,7 +9,7 @@ load("@aspect_bazel_lib//lib:tar.bzl", "tar_lib")
 # https://salsa.debian.org/md/usrmerge/-/tree/master/debian?ref_type=heads
 _VALIDATE_SYMLINKS = """\
 BEGIN {
-    prefixes = "./bin|./sbin|./usr/sbin|./lib|./lib32|./lib64|./libx32"
+    prefixes = "./bin|./sbin|./lib|./lib32|./lib64|./libx32"
 }
 {
     if ($0 ~ "^(" prefixes ")" && $0 !~ /type=link/) {
