@@ -18,6 +18,9 @@ BEGIN {
     expected["./lib32"]  = "usr/lib32"
     expected["./lib64"]  = "usr/lib64"
     expected["./libx32"] = "usr/libx32"
+    # rules_distroless does not merge /usr/sbin into /usr/bin, so ./sbin -> usr/sbin
+    # is also accepted until that is fixed upstream.
+    alt["./sbin"] = "usr/sbin"
     prefixes = "./bin|./sbin|./lib|./lib32|./lib64|./libx32"
 }
 {
@@ -25,7 +28,7 @@ BEGIN {
     if (path in expected) {
         if ($0 !~ /type=link/) {
             VIOLATIONS[path] = path " is not a symlink (must link to " expected[path] ")"
-        } else if (match($0, / link=([^ \\t]+)/, dest) && dest[1] != expected[path]) {
+        } else if (match($0, / link=([^ \\t]+)/, dest) && dest[1] != expected[path] && dest[1] != alt[path]) {
             VIOLATIONS[path] = path " symlinks to '" dest[1] "' instead of '" expected[path] "'"
         }
     } else if ($0 ~ ("^(" prefixes ")/")) {
