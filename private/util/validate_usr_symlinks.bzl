@@ -9,29 +9,44 @@ load("@aspect_bazel_lib//lib:tar.bzl", "tar_lib")
 # https://salsa.debian.org/md/usrmerge/-/tree/master/debian?ref_type=heads
 _VALIDATE_SYMLINKS = """\
 BEGIN {
+    # Mapping from root-level path to expected symlink destination.
+    # Taken from https://github.com/floppym/merge-usr/blob/15dd02207bdee7ca6720d7024e8c0ffdc166ed23/merge-usr#L17-L25
+    # Note: both /bin and /sbin must point to usr/bin on Debian (sbin is merged into bin).
+    expected["./bin"]    = "usr/bin"
+    expected["./sbin"]   = "usr/bin"
+    expected["./lib"]    = "usr/lib"
+    expected["./lib32"]  = "usr/lib32"
+    expected["./lib64"]  = "usr/lib64"
+    expected["./libx32"] = "usr/libx32"
     prefixes = "./bin|./sbin|./lib|./lib32|./lib64|./libx32"
 }
 {
-    if ($0 ~ "^(" prefixes ")" && $0 !~ /type=link/) {
-        VIOLATIONS[$0] = $1
-        next
+    path = $1
+    if (path in expected) {
+        if ($0 !~ /type=link/) {
+            VIOLATIONS[path] = path " is not a symlink (must link to " expected[path] ")"
+        } else if (match($0, / link=([^ \\t]+)/, dest) && dest[1] != expected[path]) {
+            VIOLATIONS[path] = path " symlinks to '" dest[1] "' instead of '" expected[path] "'"
+        }
+    } else if ($0 ~ ("^(" prefixes ")/")) {
+        VIOLATIONS[path] = path " found under a merged-usr symlink path (should not exist)"
     }
 }
 END {
     for (violation in VIOLATIONS) {
-      print "VIOLATION: " VIOLATIONS[violation]  " violates usr-merge convention."
-      print violation
+        print "VIOLATION: " VIOLATIONS[violation] " violates usr-merge convention."
+        print violation
     }
     if (length(VIOLATIONS) > 0) {
         exit 1
     }
-    print "" > "{validation_output}"
+    print "" > validation_output_file
 }
 
 """
 
 def _validate_usr_symlink_impl(target, ctx):
-    if target.label.name.find("debian13") == -1:
+    if target.label.name.find("debian12") != -1:
         return []
 
     if not hasattr(ctx.rule.files, "tars"):
@@ -61,7 +76,9 @@ def _validate_usr_symlink_impl(target, ctx):
         inputs = [output],
         outputs = [validation_output],
         arguments = [
-            _VALIDATE_SYMLINKS.replace("{validation_output}", validation_output.path),
+            "-v",
+            "validation_output_file=" + validation_output.path,
+            _VALIDATE_SYMLINKS,
             output.path,
         ],
         mnemonic = "ValidateUsrSymlinks",
