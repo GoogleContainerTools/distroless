@@ -14,7 +14,7 @@ bazel_dep(name = "rules_oci", version = "2.2.7")
 bazel_dep(name = "rules_distroless", version = "0.8.0")
 bazel_dep(name = "rules_python", version = "1.5.3")
 bazel_dep(name = "rules_cc", version = "0.2.4")
-bazel_dep(name = "gawk", version = "5.3.2.bcr.3")
+bazel_dep(name = "gawk", version = "5.3.2.bcr.5")
 
 ### OCI ###
 # Note: rules_oci registers toolchains in its MODULE.bazel
