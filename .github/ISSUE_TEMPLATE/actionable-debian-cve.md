@@ -6,7 +6,8 @@ labels: ''
 assignees: ''
 
 ---
-- [ ] I am using a [currently supported image](https://github.com/GoogleContainerTools/distroless?tab=readme-ov-file#what-images-are-available)
+
+- [ ] I am using a [currently supported image](https://github.com/GoogleContainerTools/distroless#what-images-are-available)
 - [ ] I have read the [SECURITY.md](https://github.com/GoogleContainerTools/distroless/blob/main/SECURITY.md)
 - [ ] I understand that this repo tracks debian package releases and cannot fix debian CVEs on its own
 - [ ] this CVE shows a fix is available in the appropriate debian version (trixie, bookworm) and channel (main, security) *and* it has been more than 48 hours.
