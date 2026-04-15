@@ -161,7 +161,7 @@ def _node_impl(module_ctx):
         fail("node.archive should be called from root module only.")
 
     # Node (https://nodejs.org/en/about/releases/)
-    # Follow Node's maintainence schedule and support all LTS versions that are not end of life`;
+    # Follow Node's maintenance schedule and support all LTS versions that are not end of life`;
 
   for (const nodeVersion of versions) {
     const major = parseInt(nodeVersion.split(".")[0]);
