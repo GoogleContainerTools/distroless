@@ -7,46 +7,6 @@ load("@aspect_bazel_lib//lib:tar.bzl", "tar_lib")
 # https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/
 # Mapping taken from https://github.com/floppym/merge-usr/blob/15dd02207bdee7ca6720d7024e8c0ffdc166ed23/merge-usr#L17-L25
 # https://salsa.debian.org/md/usrmerge/-/tree/master/debian?ref_type=heads
-_VALIDATE_SYMLINKS = """\
-BEGIN {
-    # Mapping from root-level path to expected symlink destination.
-    # Taken from https://github.com/floppym/merge-usr/blob/15dd02207bdee7ca6720d7024e8c0ffdc166ed23/merge-usr#L17-L25
-    # Note: both /bin and /sbin must point to usr/bin on Debian (sbin is merged into bin).
-    expected["./bin"]    = "usr/bin"
-    expected["./sbin"]   = "usr/bin"
-    expected["./lib"]    = "usr/lib"
-    expected["./lib32"]  = "usr/lib32"
-    expected["./lib64"]  = "usr/lib64"
-    expected["./libx32"] = "usr/libx32"
-    # rules_distroless does not merge /usr/sbin into /usr/bin, so ./sbin -> usr/sbin
-    # is also accepted until that is fixed upstream.
-    alt["./sbin"] = "usr/sbin"
-    prefixes = "./bin|./sbin|./lib|./lib32|./lib64|./libx32"
-}
-{
-    path = $1
-    if (path in expected) {
-        if ($0 !~ /type=link/) {
-            VIOLATIONS[path] = path " is not a symlink (must link to " expected[path] ")"
-        } else if (match($0, / link=([^ \\t]+)/, dest) && dest[1] != expected[path] && dest[1] != alt[path]) {
-            VIOLATIONS[path] = path " symlinks to '" dest[1] "' instead of '" expected[path] "'"
-        }
-    } else if ($0 ~ ("^(" prefixes ")/")) {
-        VIOLATIONS[path] = path " found under a merged-usr symlink path (should not exist)"
-    }
-}
-END {
-    for (violation in VIOLATIONS) {
-        print "VIOLATION: " VIOLATIONS[violation] " violates usr-merge convention."
-        print violation
-    }
-    if (length(VIOLATIONS) > 0) {
-        exit 1
-    }
-    print "" > validation_output_file
-}
-
-"""
 
 def _validate_usr_symlink_impl(target, ctx):
     if target.label.name.find("debian12") != -1:
@@ -76,12 +36,13 @@ def _validate_usr_symlink_impl(target, ctx):
     validation_output = ctx.actions.declare_file(target.label.name + ".validation")
     ctx.actions.run(
         executable = ctx.executable._awk,
-        inputs = [output],
+        inputs = [output, ctx.file._validate_symlinks],
         outputs = [validation_output],
         arguments = [
             "-v",
             "validation_output_file=" + validation_output.path,
-            _VALIDATE_SYMLINKS,
+            "-f",
+            ctx.file._validate_symlinks.path,
             output.path,
         ],
         mnemonic = "ValidateUsrSymlinks",
@@ -95,6 +56,10 @@ validate_usr_symlinks = aspect(
     implementation = _validate_usr_symlink_impl,
     attrs = {
         "_awk": attr.label(default = "@gawk//:gawk", cfg = "exec", executable = True),
+        "_validate_symlinks": attr.label(
+            default = "//private/util:validate_usr_symlinks.awk",
+            allow_single_file = True,
+        ),
     },
     attr_aspects = ["tars"],
     toolchains = [tar_lib.toolchain_type],
