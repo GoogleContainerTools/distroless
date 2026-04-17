@@ -26,6 +26,13 @@ build --java_runtime_version=remotejdk_11
 # https://github.com/GoogleContainerTools/rules_distroless/actions/runs/7118944984/job/19382981899?pr=9#step:8:51
 common:linux --sandbox_tmpfs_path=/tmp
 
+
+# Attach validation actions to catch merged-usr convention errors in image layers.
+# The aspect uses attr_aspects = ["tars"], so it propagates along the tars dependency
+# chain of every oci_image target: oci_image -> pkg_tar/tar -> individual packages.
+# Bazel automatically requests the _validation output group at the end of the build.
+common --aspects=//private/util:validate_usr_symlinks.bzl%validate_usr_symlinks
+
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members
 # This needs to be last statement in this
