@@ -43,10 +43,19 @@ run "./lib64 type=link mode=0777 nlink=1 uid=0 gid=0 link=usr/lib64
 ./usr/bin/ls type=file mode=0755 nlink=1 uid=0 gid=0 size=12345" \
   || fail "content under ./usr/ alongside valid symlinks should pass"
 
+run "/home/user/bin type=dir mode=0755 nlink=2 uid=1000 gid=1000" \
+  || fail "deep paths containing 'bin' should pass"
+
 # --- failing cases ---
 
 run "./bin type=dir mode=0755 nlink=2 uid=0 gid=0" \
   && fail "./bin as a directory should fail" || true
+
+run "//bin type=dir mode=0755 nlink=2 uid=0 gid=0" \
+  && fail "//bin as a directory should fail" || true
+
+run "././bin type=dir mode=0755 nlink=2 uid=0 gid=0" \
+  && fail "././bin as a directory should fail" || true
 
 run "./bin type=link mode=0777 nlink=1 uid=0 gid=0 link=usr/sbin" \
   && fail "./bin -> usr/sbin should fail" || true
@@ -56,6 +65,12 @@ run "bin type=link mode=0777 nlink=1 uid=0 gid=0 link=usr/fin" \
 
 run "/bin type=link mode=0777 nlink=1 uid=0 gid=0 link=usr/fin" \
   && fail "/bin -> usr/fin should fail" || true
+
+run "//bin type=link mode=0777 nlink=1 uid=0 gid=0 link=usr/fin" \
+  && fail "//bin -> usr/fin should fail" || true
+
+run "././bin type=link mode=0777 nlink=1 uid=0 gid=0 link=usr/fin" \
+  && fail "././bin -> usr/fin should fail" || true
 
 run "./sbin type=link mode=0777 nlink=1 uid=0 gid=0 link=usr/bin" \
   && fail "./sbin -> usr/bin should fail (Debian keeps sbin separate)" || true
