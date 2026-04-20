@@ -7,7 +7,7 @@ load("//private/oci:defs.bzl", "java_image")
 package(default_visibility = ["//visibility:public"])
 
 JAVA_VERSIONS_PER_DISTRO = [
-    ("17", "debian12"),
+    ("17", "debian13"),
 ]
 
 [

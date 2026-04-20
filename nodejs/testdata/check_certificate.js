@@ -8,6 +8,7 @@ const options = {
 
 const req = https.request(options, res => {
   console.log(`statusCode: ${res.statusCode}`)
+  res.resume()
 })
 
 req.end()

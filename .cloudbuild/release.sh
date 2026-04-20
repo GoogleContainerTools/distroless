@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 set -o errexit -o xtrace -o pipefail
 
+BAZEL_REMOTE_VERSION="2.6.1"
+BAZEL_REMOTE_SHA256="025d53aeb03a7fdd4a0e76262a5ae9eeee9f64d53ca510deff1c84cf3f276784"
+BAZELISK_VERSION="1.27.0"
+BAZELISK_SHA256="e1508323f347ad1465a887bc5d2bfb91cffc232d11e8e997b623227c6b32fb76"
+
 # setup remote cache
-curl -fsSL https://github.com/buchgr/bazel-remote/releases/download/v2.4.0/bazel-remote-2.4.0-linux-x86_64 -o bazel-remote
-echo '717a44dd526c574b0a0edda1159f5795cc1b2257db1d519280a3d7a9c5addde5 bazel-remote' | sha256sum --check
+curl -fsSL "https://github.com/buchgr/bazel-remote/releases/download/v${BAZEL_REMOTE_VERSION}/bazel-remote-${BAZEL_REMOTE_VERSION}-linux-amd64" -o bazel-remote
+echo "${BAZEL_REMOTE_SHA256} bazel-remote" | sha256sum --check
 chmod +x bazel-remote
 mkdir .logs
 ./bazel-remote --max_size 8 --dir ~/.cache/bazel-remote --experimental_remote_asset_api --grpc_address 0.0.0.0:4700 --gcs_proxy.bucket $REMOTE_CACHE_GCS --gcs_proxy.use_default_credentials > .logs/bazel-remote.log 2>&1 &
 
 # install bazelisk (TODO: there's probably a better way to do this)
-curl -fsSL https://github.com/bazelbuild/bazelisk/releases/download/v1.21.0/bazelisk-linux-amd64 -o bazelisk
-echo '655a5c675dacf3b7ef4970688b6a54598aa30cbaa0b9e717cd1412c1ef9ec5a7 bazelisk' | sha256sum --check
+curl -fsSL "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-linux-amd64" -o bazelisk
+echo "${BAZELISK_SHA256} bazelisk" | sha256sum --check
 chmod a+x bazelisk
 
 # setup remote caching and remote asset API.

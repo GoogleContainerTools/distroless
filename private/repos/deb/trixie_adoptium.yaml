@@ -11,8 +11,11 @@ archs:
   - arm64
   - s390x
   - ppc64el
+  - riscv64
 
 packages:
+  - temurin-17-jre
+  - temurin-17-jdk
   - temurin-21-jre
   - temurin-21-jdk
   - temurin-25-jre

@@ -1,5 +1,5 @@
-load(":nodejs.bzl", "nodejs_image", "nodejs_image_index")
 load(":config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS")
+load(":nodejs.bzl", "nodejs_image", "nodejs_image_index")
 
 package(default_visibility = ["//visibility:public"])
 

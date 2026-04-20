@@ -46,8 +46,8 @@ def _impl(ctx):
 debian_spdx = rule(
     implementation = _impl,
     attrs = {
-        "control": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz"]),
-        "data": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz"]),
+        "control": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz", "tar.zst"]),
+        "data": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz", "tar.zst"]),
         "package_name": attr.string(mandatory = True),
         "spdx_id": attr.string(mandatory = True),
         "urls": attr.string_list(mandatory = True),

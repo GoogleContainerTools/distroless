@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: "1.25"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: |
             ~/.cache/bazel-repo
@@ -50,18 +50,21 @@ jobs:
 
       - name: Diff All Images
         id: diff
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
           ./private/tools/diff/diff.bash \
             --query-bazel --registry-spawn-https \
-            --head-ref ${{ github.head_ref }} \
-            --base-ref ${{ github.event.pull_request.base.ref }} \
+            --head-ref "$HEAD_REF" \
+            --base-ref "$BASE_REF" \
             --set-github-output-on-diff \
             --skip-image-index \
             --jobs $(($(nproc --all) * 2)) \
             --logs ./verbose.log \
             --report ./report.log
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7.0.1
         id: report
         with:
           name: "Report"

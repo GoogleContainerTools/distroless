@@ -1,0 +1,24 @@
+name: Check ldconfig cache
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  check-ldconfig:
+    name: Check ldconfig cache up to date
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Check ldconfig caches
+        run: bazel test //python3:check_ldconfig_tests

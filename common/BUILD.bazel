@@ -1,14 +1,30 @@
 load("@aspect_bazel_lib//lib:tar.bzl", "tar")
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
-load("//:distro.bzl", "ALL_ARCHITECTURES", "ALL_DISTROS", "VERSIONS")
+load("//:distro.bzl", "ALL_DISTROS", "VERSIONS")
 load("//private/util:deb.bzl", "deb")
 load(":variables.bzl", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT", "quote")
 
 package(default_visibility = ["//visibility:public"])
 
-COMMON_ARCHITECTURES = ALL_ARCHITECTURES
-
 COMMON_DISTROS = ALL_DISTROS
+
+COMMON_ARCHITECTURES = {
+    "debian12": [
+        "amd64",
+        "arm64",
+        "arm",
+        "s390x",
+        "ppc64le",
+    ],
+    "debian13": [
+        "amd64",
+        "arm64",
+        "arm",
+        "s390x",
+        "ppc64le",
+        "riscv64",
+    ],
+}
 
 tar(
     name = "rootfs",
@@ -18,7 +34,7 @@ tar(
         "gnutar",
     ],
     compress = "gzip",
-    mtree = ["./ type=dir uid=0 gid=0 time=0.0"],
+    mtree = ["./ type=dir uid=0 gid=0 mode=0755 time=0.0"],
 )
 
 tar(
@@ -53,8 +69,8 @@ tar(
         charset = "C.utf8",
         package = deb.data(arch, distro, "libc-bin"),
     )
-    for arch in COMMON_ARCHITECTURES
     for distro in COMMON_DISTROS
+    for arch in COMMON_ARCHITECTURES[distro]
 ]
 
 [
@@ -62,8 +78,8 @@ tar(
         name = "cacerts_%s_%s" % (distro, arch),
         package = deb.data(arch, distro, "ca-certificates"),
     )
-    for arch in COMMON_ARCHITECTURES
     for distro in COMMON_DISTROS
+    for arch in COMMON_ARCHITECTURES[distro]
 ]
 
 # create /etc/group with the root, tty, and staff groups

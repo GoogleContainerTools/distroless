@@ -34,15 +34,17 @@ function tag_update() {
 
   # get all hashes for images that have no tags (or just the commit hash tag)
   # jq behavior for all(test(pattern)) matches the empty list []
-  # or are older than 2 days (we don't want to accidentally mess with any
+  # or are older than 24 hours (we don't want to accidentally mess with any
   # ongoing builds)
-  readarray -t targets < <(echo "$images_json" | jq -er --arg now "$NOW" '
+  readarray -t targets < <(echo "$images_json" | jq -r --arg now "$NOW" '
     .manifest | to_entries | sort_by(.value.timeUploadedMs|tonumber) | .[] | select(
       (.value.tag // [] | all(test(".*-[a-f0-9]{40}$|^[a-f0-9]{40}$")))
       and
-      (($now | tonumber) - (.value.timeUploadedMs | tonumber) > 172800000)
+      (($now | tonumber) - (.value.timeUploadedMs | tonumber) > 86400000)
     ) | .key
   ');
+  background_pid=$!
+  wait "$background_pid"
 
   echo "tagging ${#targets[@]} images of $image"
 
@@ -58,15 +60,30 @@ function tag_deprecate() {
   images_json=$(gcrane ls "$image" --json)
 
   # get all hashes for all images don't have the deprecated tag
-  readarray -t targets < <(echo "$images_json" | jq -er '
+  # also skip images that already have an update-available tag
+  # this is only for wholesale deprecation of an image, it also
+  # will deprecate all cosign tag based signatures by nature of select(...)
+  # automatically adding deprecation tags to sha256.*(att|sig).
+  readarray -t targets < <(echo "$images_json" | jq -r '
     .manifest | to_entries | sort_by(.value.timeUploadedMs|tonumber) | .[] | select(
-      .value.tag // [] | all(test("deprecated-public-image-[a-f0-9]{64}$") | not)
+      (.value.tag // [] | all(test("deprecated-public-image-[a-f0-9]{64}$") | not))
+      and
+      (.value.tag // [] | all(test("update-available-") | not))
     ) | .key
   ');
+  background_pid=$!
+  wait "$background_pid"
 
   echo "tagging ${#targets[@]} images of $image"
-  echo "disabled for now, edit out comment"
-  # exec_tag "$image" "$tag_prefix" targets
+  echo "1. Careful about builds happening, this doesn't account for them."
+  printf "2. Be sure images are not in the currently supported list at:\n\thttps://github.com/GoogleContainerTools/distroless/?tab=readme-ov-file#what-images-are-available\n"
+
+  read -r -p "Continue? [y/N] " response
+  if [[ ! "$response" =~ ^[Yy]$ ]]; then
+    echo "Aborted."
+    exit 1
+  fi
+  exec_tag "$image" "$tag_prefix" targets
 }
 
 dry_run=${DRY_RUN:-true}

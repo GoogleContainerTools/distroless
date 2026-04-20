@@ -11,8 +11,13 @@ tag="$(stamp "{TAG}")"
 digest="$(cat {DIGEST})"
 echo "Pushing $repository@$digest"
 {CRANE} push {IMAGE} "$repository@$digest"
-{COSIGN} attest "$repository@$digest" --predicate "{SBOM}" --type "spdx" --yes
-{COSIGN} sign "$repository@$digest" --yes
+
+# Check for signature and skip signing/sbom if present
+if ! {COSIGN} verify "$repository@$digest" --certificate-oidc-issuer https://accounts.google.com --certificate-identity "${{KEYLESS}}" > /dev/null; then
+    {COSIGN} attest "$repository@$digest" --predicate "{SBOM}" --type "spdx" --yes
+    {COSIGN} sign "$repository@$digest" --yes
+fi
+
 {CRANE} tag "$repository@$digest" "$tag"
 """
 

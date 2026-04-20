@@ -7,9 +7,6 @@ They do not contain package managers, shells or any other programs you would exp
 
 For more information, see this [talk](https://swampup2017.sched.com/event/A6CW/distroless-docker-containerizing-apps-not-vms?iframe=no&w=100%&sidebar=yes&bg=no) ([video](https://www.youtube.com/watch?v=lviLZFciDv4)).
 
-**Since March 2023, Distroless images use oci manifests, if you see errors referencing `application/vnd.oci.image.manifest.v1+json`
-or `application/vnd.oci.image.index.v1+json`, update your container tooling (docker, jib, etc) to latest.**
-
 ## Why should I use distroless images?
 
 Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google
@@ -41,29 +38,25 @@ Any other tags are considered deprecated and are no longer updated
 | gcr.io/distroless/base-nossl-debian12 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/cc-debian12         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 | gcr.io/distroless/python3-debian12    | latest, nonroot, debug, debug-nonroot | amd64, arm64                      |
-| gcr.io/distroless/java-base-debian12  | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java17-debian12     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java21-debian12     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/nodejs20-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/nodejs22-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/nodejs24-debian12   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
 
 #### Debian 13
 
 Debian 13 distroless images use the debian [UsrMerge](https://wiki.debian.org/UsrMerge) scheme. If you use `rules_distroless` to add packages to an image, set `mergedusr = True` in [`apt.install`](https://registry.bazel.build/docs/rules_distroless#apt_install).
 
-| Image                                 | Tags                                  | Architecture Suffixes             |
-| ------------------------------------- | ------------------------------------- | --------------------------------- |
-| gcr.io/distroless/static-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-debian13       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/cc-debian13         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/java-base-debian13  | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java21-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/java25-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
-| gcr.io/distroless/nodejs20-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/nodejs22-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/nodejs24-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le      |
+| Image                                 | Tags                                  | Architecture Suffixes                      |
+| ------------------------------------- | ------------------------------------- | ------------------------------------------ |
+| gcr.io/distroless/static-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le, riscv64 |
+| gcr.io/distroless/base-debian13       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le, riscv64 |
+| gcr.io/distroless/base-nossl-debian13 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le, riscv64 |
+| gcr.io/distroless/cc-debian13         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le, riscv64 |
+| gcr.io/distroless/java-base-debian13  | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
+| gcr.io/distroless/java17-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
+| gcr.io/distroless/java21-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
+| gcr.io/distroless/java25-debian13     | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le, riscv64      |
+| gcr.io/distroless/nodejs20-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le          |
+| gcr.io/distroless/nodejs22-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le          |
+| gcr.io/distroless/nodejs24-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le               |
+| gcr.io/distroless/python3-debian13    | latest, nonroot, debug, debug-nonroot | amd64, arm64, riscv64                      |
 
 ## Why is distroless still using `gcr.io` instead of `pkg.dev`?
 
@@ -71,8 +64,7 @@ Distroless's serving infrastructure has moved to artifact registry but we still 
 
 ## How do I verify distroless images?
 
-All distroless images are signed by [cosign](https://github.com/sigstore/cosign) with ephemeral keys (keyless) -- this is the only supported mechanism starting November 2023.
-We recommend verifying any distroless image you use before building your image. You can verify the keyless signature of any distroless image with:
+All distroless images are signed by [cosign](https://github.com/sigstore/cosign) with ephemeral keys (keyless). We recommend verifying any distroless image you use before building your image. You can verify the keyless signature of any distroless image with:
 
 ```sh
 cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com --certificate-identity keyless@distroless.iam.gserviceaccount.com
@@ -221,7 +213,7 @@ $ docker run --entrypoint=sh -ti my_debug_image
 BUILD       Dockerfile  hello.py
 ```
 
-> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java17-debian12:nonroot`, use the tag `debug-<existing tag>` instead, for example `gcr.io/distroless/java17-debian12:debug-nonroot`.
+> Note: If the image you are using already has a tag, for example `gcr.io/distroless/java17-debian13:nonroot`, use the tag `debug-<existing tag>` instead, for example `gcr.io/distroless/java17-debian13:debug-nonroot`.
 
 > Note: [ldd](http://man7.org/linux/man-pages/man1/ldd.1.html) is not installed in the base image as it's a shell script, you can copy it in or download it.
 

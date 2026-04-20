@@ -2,16 +2,17 @@
 # Take care to document any settings that you expect users to apply.
 # Settings that apply only to CI are in .github/workflows/ci.bazelrc
 
-# Allow DOCKER_HOST env to leak into test actions. 
+# Allow DOCKER_HOST env to leak into test actions.
 test --test_env=DOCKER_HOST
 
-# Stamp 
+# Stamp
 build:release --workspace_status_command=./private/stamp.bash --stamp
 run:release --workspace_status_command=./private/stamp.bash --stamp
 test:release --workspace_status_command=./private/stamp.bash --stamp
 
 # Allow external dependencies to be retried. debian snapshot is unreliable and needs retries.
 common --experimental_repository_downloader_retries=20
+common --experimental_downloader_config=downloader.cfg
 common --http_timeout_scaling=2.0
 
 # Enable platform specific options
@@ -24,6 +25,13 @@ build --java_runtime_version=remotejdk_11
 # See: https://github.com/bazelbuild/bazel/issues/3236
 # https://github.com/GoogleContainerTools/rules_distroless/actions/runs/7118944984/job/19382981899?pr=9#step:8:51
 common:linux --sandbox_tmpfs_path=/tmp
+
+
+# Attach validation actions to catch merged-usr convention errors in image layers.
+# The aspect uses attr_aspects = ["tars"], so it propagates along the tars dependency
+# chain of every oci_image target: oci_image -> pkg_tar/tar -> individual packages.
+# Bazel automatically requests the _validation output group at the end of the build.
+common --aspects=//private/util:validate_usr_symlinks.bzl%validate_usr_symlinks
 
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members

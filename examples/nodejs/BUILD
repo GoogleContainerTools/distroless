@@ -3,7 +3,7 @@
 # repository code at any time.
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//private/util:tar.bzl", "tar")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -13,21 +13,20 @@ ARCHITECTURES = [
 ]
 
 DISTROS = [
-    "debian12",
     "debian13",
 ]
 
 # These examples are adapted from:
 # https://howtonode.org/hello-node
 
-pkg_tar(
+tar(
     name = "hello_tar",
     srcs = [
         "hello.js",
     ],
 )
 
-pkg_tar(
+tar(
     name = "hello_http_tar",
     srcs = [
         "hello_http.js",

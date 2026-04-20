@@ -3,11 +3,11 @@ version: 1
 
 sources:
   - channel: trixie main
-    url: https://snapshot.debian.org/archive/debian/20251210T204223Z
+    url: https://snapshot.debian.org/archive/debian/20260408T203914Z
   - channel: trixie-updates main
-    url: https://snapshot.debian.org/archive/debian/20251210T204223Z
+    url: https://snapshot.debian.org/archive/debian/20260408T203914Z
   - channel: trixie-security main
-    url: https://snapshot.debian.org/archive/debian-security/20251210T204223Z
+    url: https://snapshot.debian.org/archive/debian-security/20260408T203914Z
 
 archs:
   - amd64
@@ -15,6 +15,7 @@ archs:
   - armhf
   - s390x
   - ppc64el
+  - riscv64
 
 packages:
   - base-files
@@ -25,6 +26,7 @@ packages:
   - netbase
   - openssl
   - tzdata
+  - tzdata-legacy
   - media-types
   - zlib1g
   - libzstd1
