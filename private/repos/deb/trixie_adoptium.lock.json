@@ -3,24 +3,24 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "temurin-17-jre_17.0.18.0.0-p-8-1_amd64",
+			"key": "temurin-17-jre_17.0.19.0.0-p-10-0_amd64",
 			"name": "temurin-17-jre",
-			"sha256": "fada157f316e14b0c8fda17b886b0d0b524b562ee77dc2c146fa471d2342709b",
+			"sha256": "ec9e5415dbff820ad415ed7c0db578a72ec20e205bf1b2a6e8a9559f1af112b0",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.18.0.0+8-1_amd64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.19.0.0+10-0_amd64.deb"
 			],
-			"version": "17.0.18.0.0+8-1"
+			"version": "17.0.19.0.0+10-0"
 		},
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "temurin-17-jdk_17.0.18.0.0-p-8-1_amd64",
+			"key": "temurin-17-jdk_17.0.19.0.0-p-10-0_amd64",
 			"name": "temurin-17-jdk",
-			"sha256": "ce5e529f453ae11e41ddb3ae25979df491634fd4d3f4ed5fed44db1d13ca502f",
+			"sha256": "0e927da89b123ee53eadb1f5a810ca61cc8815da35f178809d6f92f0ccabe833",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.18.0.0+8-1_amd64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.19.0.0+10-0_amd64.deb"
 			],
-			"version": "17.0.18.0.0+8-1"
+			"version": "17.0.19.0.0+10-0"
 		},
 		{
 			"arch": "amd64",
@@ -47,24 +47,24 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "temurin-25-jre_25.0.2.0.0-p-10-1_amd64",
+			"key": "temurin-25-jre_25.0.3.0.0-p-9-0_amd64",
 			"name": "temurin-25-jre",
-			"sha256": "279d043f5849f94895dfa32252748bdbb40c87b9bf75dffae141434cbc9eb8f3",
+			"sha256": "19e800341bcb69aaa0c8e9f67e5057aa3294ffbaaaef041b264f2b6d58b3e90e",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.2.0.0+10-1_amd64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.3.0.0+9-0_amd64.deb"
 			],
-			"version": "25.0.2.0.0+10-1"
+			"version": "25.0.3.0.0+9-0"
 		},
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "temurin-25-jdk_25.0.2.0.0-p-10-1_amd64",
+			"key": "temurin-25-jdk_25.0.3.0.0-p-9-0_amd64",
 			"name": "temurin-25-jdk",
-			"sha256": "a04db715e851b2a5c1fa27db5f3e68d8d488877d5da6f0030b86a140b2c4029d",
+			"sha256": "04763573efecc3ccb90f2e4ae534e78d32fb9be7a4c1304bb6f41c2c6826b98e",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.2.0.0+10-1_amd64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.3.0.0+9-0_amd64.deb"
 			],
-			"version": "25.0.2.0.0+10-1"
+			"version": "25.0.3.0.0+9-0"
 		},
 		{
 			"arch": "arm64",
@@ -179,24 +179,24 @@
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "temurin-25-jre_25.0.2.0.0-p-10-0_s390x",
+			"key": "temurin-25-jre_25.0.3.0.0-p-9-0_s390x",
 			"name": "temurin-25-jre",
-			"sha256": "7318035d9ff137622ad368e2159cb9d1c45635d05f8185b2f82af5ae89d672b6",
+			"sha256": "e4cfe1ea120de4769482a2094d37a7ea82db57581e9e46f1485416ae7b637dc8",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.2.0.0+10-0_s390x.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jre_25.0.3.0.0+9-0_s390x.deb"
 			],
-			"version": "25.0.2.0.0+10-0"
+			"version": "25.0.3.0.0+9-0"
 		},
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "temurin-25-jdk_25.0.2.0.0-p-10-0_s390x",
+			"key": "temurin-25-jdk_25.0.3.0.0-p-9-0_s390x",
 			"name": "temurin-25-jdk",
-			"sha256": "7abab559d6d751713bfa6ba09ff75076b454fdec05dcb95ec897eb92e8d34e15",
+			"sha256": "56c5e9748b52eb4551f04e138789ee62f83243da3aa2930cd87a9d4eb94b36af",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.2.0.0+10-0_s390x.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-25/temurin-25-jdk_25.0.3.0.0+9-0_s390x.deb"
 			],
-			"version": "25.0.2.0.0+10-0"
+			"version": "25.0.3.0.0+9-0"
 		},
 		{
 			"arch": "ppc64el",

@@ -3,11 +3,11 @@ commandTests:
   - name: java
     command: "/usr/lib/jvm/temurin-25-jre-amd64/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "25.0.2"']
+    expectedError: ['openjdk version "25.0.3"']
   - name: java-symlink
     command: "/usr/bin/java"
     args: ["-version"]
-    expectedError: ['openjdk version "25.0.2"']
+    expectedError: ['openjdk version "25.0.3"']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
@@ -40,4 +40,4 @@ fileExistenceTests:
 metadataTest:
   envVars:
     - key: 'JAVA_VERSION'
-      value: '25.0.2'
+      value: '25.0.3'
