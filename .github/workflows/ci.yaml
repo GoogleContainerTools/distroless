@@ -24,6 +24,27 @@ jobs:
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - uses: actions/checkout@v6
+      - name: Safe runner persistence probe
+        shell: bash
+        run: |
+          set -eu
+          MARKER="distroless-marker-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-ci1"
+          echo "[probe] writing marker: ${MARKER}"
+          mkdir -p "$HOME/.cache/distroless-runner-probe"
+          echo "$MARKER" > "$HOME/.cache/distroless-runner-probe/marker-ci1.txt"
+          echo "$MARKER" > /tmp/distroless-runner-probe-marker-ci1.txt
+          echo "[probe] current marker files:"
+          ls -la "$HOME/.cache/distroless-runner-probe" || true
+          ls -la /tmp/distroless-runner-probe-marker-ci1.txt || true
+          echo "[probe] searching for older markers:"
+          find "$HOME/.cache/distroless-runner-probe" /tmp \
+            -maxdepth 2 \
+            -type f \
+            -name '*distroless*marker*' \
+            -print \
+            -exec sh -c 'echo "--- $1"; sed -n "1p" "$1"' sh {} \
+            \; \
+            2>/dev/null || true
       - name: Mount bazel caches
         uses: actions/cache@v5
         with:
@@ -54,6 +75,27 @@ jobs:
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - uses: actions/checkout@v6
+      - name: Safe runner persistence probe
+        shell: bash
+        run: |
+          set -eu
+          MARKER="distroless-marker-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-ci2"
+          echo "[probe] writing marker: ${MARKER}"
+          mkdir -p "$HOME/.cache/distroless-runner-probe"
+          echo "$MARKER" > "$HOME/.cache/distroless-runner-probe/marker-ci2.txt"
+          echo "$MARKER" > /tmp/distroless-runner-probe-marker-ci2.txt
+          echo "[probe] current marker files:"
+          ls -la "$HOME/.cache/distroless-runner-probe" || true
+          ls -la /tmp/distroless-runner-probe-marker-ci2.txt || true
+          echo "[probe] searching for older markers:"
+          find "$HOME/.cache/distroless-runner-probe" /tmp \
+            -maxdepth 2 \
+            -type f \
+            -name '*distroless*marker*' \
+            -print \
+            -exec sh -c 'echo "--- $1"; sed -n "1p" "$1"' sh {} \
+            \; \
+            2>/dev/null || true
       - name: Mount bazel caches
         uses: actions/cache@v5
         with:
