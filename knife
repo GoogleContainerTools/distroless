@@ -203,10 +203,54 @@ function cmd_test () {
 }
 
 function cmd_deb_versions () {
-    echo "🔧 Printing .deb Versions (bookworm) from private/repos/deb/bookworm*.lock.json"
-    echo ""
+    local architecture=""
+    local package=""
+    local codename=""
+    local opt
+    local OPTIND=1
 
-    jq -n '[inputs.packages[]] | group_by(.arch) | map({(.[0].arch): map({package: .name, version: .version})})' private/repos/deb/bookworm*.lock.json
+    while getopts "a:p:c:" opt; do
+        case "$opt" in
+            a)
+                architecture="$OPTARG"
+                ;;
+            p)
+                package="$OPTARG"
+                ;;
+            c)
+                codename="$OPTARG"
+                ;;
+            *)
+                echo "Usage: ./knife deb-versions [-a architecture] [-p package] [-c codename]" >&2
+                exit 1
+                ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    local files=()
+    if [[ -n "$codename" ]]; then
+        files=("private/repos/deb/${codename}"*.lock.json)
+        # Check if files exist to avoid passing unexpanded glob if codename is invalid
+        if [[ ! -e "${files[0]}" ]]; then
+             echo "Error: No lock files found for codename '$codename'" >&2
+             exit 1
+        fi
+    else
+        files=(private/repos/deb/*.lock.json)
+    fi
+
+    echo "🔧 Printing .deb Versions from private/repos/deb/*.lock.json" >&2
+    [[ -n "$codename" ]] && echo "   Filtering by codename: $codename" >&2
+    [[ -n "$architecture" ]] && echo "   Filtering by architecture: $architecture" >&2
+    [[ -n "$package" ]] && echo "   Filtering by package: $package" >&2
+    echo "" >&2
+
+    jq -n \
+        --arg arch "$architecture" \
+        --arg pkg "$package" \
+        '[inputs.packages[] | select(($arch == "" or .arch == $arch) and ($pkg == "" or (.name | contains($pkg))))] | group_by(.arch) | map({(.[0].arch): map({package: .name, version: .version})})' \
+        "${files[@]}"
 }
 
 case "${1:-"~~nocmd"}" in
@@ -229,7 +273,7 @@ test)
     cmd_test
     ;;
 deb-versions)
-    cmd_deb_versions
+    cmd_deb_versions "${@:2}"
     ;;
 update-node-archives)
 	cmd_update_node_archives
