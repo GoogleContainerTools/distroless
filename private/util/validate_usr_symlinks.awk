@@ -13,9 +13,9 @@ BEGIN {
 {
     original_path = $1
     path = original_path
-    # Normalize: strip leading ./ or /
-    sub(/^\.\//, "", path)
-    sub(/^\//, "", path)
+    # Normalize: strip any combination of leading ./ and /
+    # This ensures ./bin, /bin, bin, and even //bin are treated the same.
+    sub(/^(\.\/|\/)+/, "", path)
 
     if (path in expected) {
         if ($0 !~ /type=link/) {
