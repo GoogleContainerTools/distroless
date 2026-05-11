@@ -7,7 +7,6 @@ load("//private/util:deb.bzl", "deb")
 load("//private/util:tar.bzl", "tar")
 
 DISTRO_VERSION = {
-    "debian12": "3.11",
     "debian13": "3.13",
 }
 

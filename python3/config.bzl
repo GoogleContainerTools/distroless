@@ -1,36 +1,9 @@
-PYTHON_DISTROS = ["debian12", "debian13"]
+PYTHON_DISTROS = ["debian13"]
 PYTHON_ARCHITECTURES = {
-    "debian12": ["amd64", "arm64"],
     "debian13": ["amd64", "arm64", "riscv64"],
 }
 
 PYTHON_PACKAGES = {
-    "debian12": [
-        "libbz2-1.0",
-        "libdb5.3",
-        "libexpat1",
-        "liblzma5",
-        "libsqlite3-0",
-        "libuuid1",
-        "libncursesw6",
-        "libtinfo6",
-        "python3-distutils",
-        "zlib1g",
-        "libcom-err2",
-        "libcrypt1",
-        "libgssapi-krb5-2",
-        "libk5crypto3",
-        "libkeyutils1",
-        "libkrb5-3",
-        "libkrb5support0",
-        "libnsl2",
-        "libreadline8",
-        "libtirpc3",
-        "libffi8",
-        "libpython3.11-minimal",
-        "libpython3.11-stdlib",
-        "python3.11-minimal",
-    ],
     "debian13": [
         "libbz2-1.0",
         "libdb5.3t64",

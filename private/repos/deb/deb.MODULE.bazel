@@ -6,7 +6,6 @@ REPOS = [
     "trixie_adoptium",
     "trixie_python",
     "bookworm",
-    "bookworm_python",
 ]
 
 apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
@@ -24,7 +23,7 @@ apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
     for repo in REPOS
 ]
 
-use_repo(apt, "bookworm", "bookworm_python", "trixie", "trixie_adoptium", "trixie_java", "trixie_python")
+use_repo(apt, "bookworm", "trixie", "trixie_adoptium", "trixie_java", "trixie_python")
 
 ### VERSIONS HUB REPO ###
 version = use_extension("//private/extensions:version.bzl", "version")

@@ -42,12 +42,12 @@ Identifies images that have not yet been marked as deprecated.
 By default, the script only prints what it *would* do.
 
 ```bash
-./tag.sh update gcr.io/distroless/python3-debian12
+./tag.sh update gcr.io/distroless/python3-debian13
 ```
 
 **Live Execution:**
 To actually apply tags to the registry, set `DRY_RUN` to `false`.
 
 ```bash
-DRY_RUN=false ./tag.sh update gcr.io/distroless/python3-debian12
+DRY_RUN=false ./tag.sh update gcr.io/distroless/python3-debian13
 ```
