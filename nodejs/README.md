@@ -6,9 +6,9 @@ These images contain a minimal Linux, Node.js-based runtime. The supported versi
 
 Specifically, these images contain everything in the [cc image](../cc/README.md), plus one of:
 
-- Node.js v20 (`gcr.io/distroless/nodejs20-debian13`) and its dependencies.
 - Node.js v22 (`gcr.io/distroless/nodejs22-debian13`) and its dependencies.
 - Node.js v24 (`gcr.io/distroless/nodejs24-debian13`) and its dependencies.
+- Node.js v26 (`gcr.io/distroless/nodejs26-debian13`) and its dependencies.
 
 ## Usage
 

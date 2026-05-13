@@ -177,6 +177,17 @@
 			"version": "14.2.0-19"
 		},
 		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libatomic1_14.2.0-19_amd64",
+			"name": "libatomic1",
+			"sha256": "212b399aae2f7299203d261a57e49372e09565a9a5ea971905f94a3960366c05",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libatomic1_14.2.0-19_amd64.deb"
+			],
+			"version": "14.2.0-19"
+		},
+		{
 			"arch": "arm64",
 			"dependencies": [],
 			"key": "base-files_13.8-p-deb13u4_arm64",
@@ -349,6 +360,17 @@
 			"sha256": "6669b0c52a2e7c6af9adfdabce3ff6e286065cdfbc7b85280862b5f799daebee",
 			"urls": [
 				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_arm64.deb"
+			],
+			"version": "14.2.0-19"
+		},
+		{
+			"arch": "arm64",
+			"dependencies": [],
+			"key": "libatomic1_14.2.0-19_arm64",
+			"name": "libatomic1",
+			"sha256": "7ccff90234484bf21ae5ecb79d25b6a84b2f4038f65dd139085b2e3a937cd8dc",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libatomic1_14.2.0-19_arm64.deb"
 			],
 			"version": "14.2.0-19"
 		},
@@ -529,6 +551,17 @@
 			"version": "14.2.0-19"
 		},
 		{
+			"arch": "armhf",
+			"dependencies": [],
+			"key": "libatomic1_14.2.0-19_armhf",
+			"name": "libatomic1",
+			"sha256": "e4a4dc17913ded43f2a8571f9c8c214d05534632fc5a41705d6b39acd8d5f4a4",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libatomic1_14.2.0-19_armhf.deb"
+			],
+			"version": "14.2.0-19"
+		},
+		{
 			"arch": "s390x",
 			"dependencies": [],
 			"key": "base-files_13.8-p-deb13u4_s390x",
@@ -701,6 +734,17 @@
 			"sha256": "6a91f4a1c8c30dc6d0a23ad7ead8a56271b9f6966d6d74734f4b423cdfe5c21b",
 			"urls": [
 				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_s390x.deb"
+			],
+			"version": "14.2.0-19"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "libatomic1_14.2.0-19_s390x",
+			"name": "libatomic1",
+			"sha256": "79ce585c987c08702360d5d973fa6f4c596a5c4802d7e3f06294b46f03b0456a",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libatomic1_14.2.0-19_s390x.deb"
 			],
 			"version": "14.2.0-19"
 		},
@@ -881,6 +925,17 @@
 			"version": "14.2.0-19"
 		},
 		{
+			"arch": "ppc64el",
+			"dependencies": [],
+			"key": "libatomic1_14.2.0-19_ppc64el",
+			"name": "libatomic1",
+			"sha256": "fd421018c73e8f5a2628f233ff1d277d1ebf797b9e204a59e34ed6072167544a",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libatomic1_14.2.0-19_ppc64el.deb"
+			],
+			"version": "14.2.0-19"
+		},
+		{
 			"arch": "riscv64",
 			"dependencies": [],
 			"key": "base-files_13.8-p-deb13u4_riscv64",
@@ -1053,6 +1108,17 @@
 			"sha256": "f285313f34e0d8f65463c669fac8eb29760a3f3fd6459005dd3110cdd2b10fd7",
 			"urls": [
 				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libstdc++6_14.2.0-19_riscv64.deb"
+			],
+			"version": "14.2.0-19"
+		},
+		{
+			"arch": "riscv64",
+			"dependencies": [],
+			"key": "libatomic1_14.2.0-19_riscv64",
+			"name": "libatomic1",
+			"sha256": "ebaf12b2de00a4b567f70c629c0ff744dc92491029b3219d59c05c733f200c65",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260510T204219Z/pool/main/g/gcc-14/libatomic1_14.2.0-19_riscv64.deb"
 			],
 			"version": "14.2.0-19"
 		}

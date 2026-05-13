@@ -3,6 +3,7 @@
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("//common:variables.bzl", "DEBUG_MODE", "USERS")
+load("//private/util:deb.bzl", "deb")
 load("//private/util:tar.bzl", "tar")
 
 def nodejs_image_index(distro, major_version, architectures):
@@ -42,6 +43,13 @@ def nodejs_image(distro, major_version, arch):
         major_version: version of nodejs
         arch: the target arch
     """
+
+    # node 26 dynamically links libatomic.so.1, which isn't in the cc base image.
+    # Layer libatomic1 onto the nodejs26 image only so we don't bloat other images.
+    extra_tars = []
+    if major_version == "26":
+        extra_tars = [deb.package(arch, distro, "libatomic1")]
+
     for mode in DEBUG_MODE:
         for user in USERS:
             oci_image(
@@ -50,7 +58,7 @@ def nodejs_image(distro, major_version, arch):
                 entrypoint = ["/nodejs/bin/node"],
                 tars = [
                     "@nodejs" + major_version + "_" + arch,
-                ],
+                ] + extra_tars,
             )
 
     _check_certificates_tar()
