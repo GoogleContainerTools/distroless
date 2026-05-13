@@ -44,10 +44,10 @@ def nodejs_image(distro, major_version, arch):
         arch: the target arch
     """
 
-    # node 26 dynamically links libatomic.so.1, which isn't in the cc base image.
-    # Layer libatomic1 onto the nodejs26 image only so we don't bloat other images.
+    # node 26 and later dynamically link libatomic.so.1, which isn't in the cc base image.
+    # Layer libatomic1 onto the nodejs26+ images only so we don't bloat other images.
     extra_tars = []
-    if major_version == "26":
+    if int(major_version) >= 26:
         extra_tars = [deb.package(arch, distro, "libatomic1")]
 
     for mode in DEBUG_MODE:
