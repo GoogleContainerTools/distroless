@@ -13,7 +13,7 @@ Follow either of the two links above to access the appropriate CLA and instructi
 
 ## How to Build and Test
 
-1. `bazel build //...` to build the whole project or ex:`bazel build //base:static_root_amd64_debian17` for a single image
+1. `bazel build //...` to build the whole project or ex:`bazel build //base:base_root_amd64_debian13` for a single image
 
 2. For running tests, check `./knife test`. (`bazel test //...` will NOT run all tests, as many tests are marked "manual".)
 
@@ -24,7 +24,7 @@ load("@rules_oci//oci:defs.bzl", "oci_load")
 
 oci_load(
   name = "local_build",
-  image = "//base:static_root_amd64_debian17",
+  image = "//base:base_root_amd64_debian13",
   repo_tags = [],
 )
 ```
@@ -47,7 +47,7 @@ For styling Bazel files, install and run `buildifier` with:
 
 ```shell
 # Install buildifier version 3.2.0
-go install github.com/bazelbuild/buildtools/buildifier@latest
+go install github.com/bazelbuild/buildtools/buildifier@3.2.0
 
 # This will automatically fix files.
 buildifier -mode=fix $(find . -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' -type f)
