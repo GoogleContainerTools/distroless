@@ -7,3 +7,11 @@ NODEJS_ARCHITECTURES = {
     },
 }
 NODEJS_MAJOR_VERSIONS = ["22", "24", "26"]
+
+NODEJS_PACKAGES = {
+    "22": [],
+    "24": [],
+    "26": [
+        "libatomic1",
+    ],
+}
