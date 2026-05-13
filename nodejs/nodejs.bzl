@@ -35,20 +35,15 @@ def _check_certificates_tar():
         srcs = ["testdata/check_certificate.js"],
     )
 
-def nodejs_image(distro, major_version, arch):
+def nodejs_image(distro, major_version, arch, packages):
     """nodejs and debug image with tests.
 
     Args:
         distro: name of distribution
         major_version: version of nodejs
         arch: the target arch
+        packages: any deb packages to add to the image
     """
-
-    # node 26 and later dynamically link libatomic.so.1, which isn't in the cc base image.
-    # Layer libatomic1 onto the nodejs26+ images only so we don't bloat other images.
-    extra_tars = []
-    if int(major_version) >= 26:
-        extra_tars = [deb.package(arch, distro, "libatomic1")]
 
     for mode in DEBUG_MODE:
         for user in USERS:
@@ -57,8 +52,11 @@ def nodejs_image(distro, major_version, arch):
                 base = "//cc:cc" + mode + "_" + user + "_" + arch + "_" + distro,
                 entrypoint = ["/nodejs/bin/node"],
                 tars = [
+                    deb.package(arch, distro, pkg)
+                    for pkg in packages
+                ] + [
                     "@nodejs" + major_version + "_" + arch,
-                ] + extra_tars,
+                ],
             )
 
     _check_certificates_tar()

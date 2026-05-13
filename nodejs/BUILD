@@ -1,4 +1,4 @@
-load(":config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS")
+load(":config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS", "NODEJS_PACKAGES")
 load(":nodejs.bzl", "nodejs_image", "nodejs_image_index")
 
 package(default_visibility = ["//visibility:public"])
@@ -8,6 +8,7 @@ package(default_visibility = ["//visibility:public"])
         arch = arch,
         distro = distro,
         major_version = major_version,
+        packages = NODEJS_PACKAGES[major_version],
     )
     for distro in NODEJS_DISTROS
     for major_version in NODEJS_MAJOR_VERSIONS
