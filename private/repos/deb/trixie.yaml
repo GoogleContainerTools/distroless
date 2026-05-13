@@ -35,3 +35,5 @@ packages:
   - libgcc-s1
   - libgomp1
   - libstdc++6
+  # node26
+  - libatomic1

@@ -3,6 +3,7 @@ NODEJS_ARCHITECTURES = {
     "debian13": {
         "22": ["amd64", "arm64", "arm", "s390x", "ppc64le"],
         "24": ["amd64", "arm64", "s390x", "ppc64le"],
+        "26": ["amd64", "arm64", "s390x", "ppc64le"],
     },
 }
-NODEJS_MAJOR_VERSIONS = ["22", "24"]
+NODEJS_MAJOR_VERSIONS = ["22", "24", "26"]

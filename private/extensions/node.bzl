@@ -189,6 +189,46 @@ def _node_impl(module_ctx):
         control = "//nodejs:control",
     )
 
+    node_archive(
+        name = "nodejs26_amd64",
+        sha256 = "62d555c329e05e3625109f2e3a8b5195b368d5ef38266292469d32f63cd98ffd",
+        strip_prefix = "node-v26.1.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v26.1.0/node-v26.1.0-linux-x64.tar.gz"],
+        version = "26.1.0",
+        architecture = "amd64",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs26_arm64",
+        sha256 = "fcb4c339eef70c909cae72091008a6497278e2d0fcd221c0653068cf4ea4f0c7",
+        strip_prefix = "node-v26.1.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v26.1.0/node-v26.1.0-linux-arm64.tar.gz"],
+        version = "26.1.0",
+        architecture = "arm64",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs26_ppc64le",
+        sha256 = "f3ee72a29d3d25a626bae1672667a500b12c284fcfc00f5d6162e3762ebf173f",
+        strip_prefix = "node-v26.1.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v26.1.0/node-v26.1.0-linux-ppc64le.tar.gz"],
+        version = "26.1.0",
+        architecture = "ppc64le",
+        control = "//nodejs:control",
+    )
+
+    node_archive(
+        name = "nodejs26_s390x",
+        sha256 = "6e381e4a3b353f335d297abfe4c7d9485459247519df10445b17cc89d8c7f7a5",
+        strip_prefix = "node-v26.1.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v26.1.0/node-v26.1.0-linux-s390x.tar.gz"],
+        version = "26.1.0",
+        architecture = "s390x",
+        control = "//nodejs:control",
+    )
+
     return module_ctx.extension_metadata(
         root_module_direct_deps = [
             "nodejs22_amd64",
@@ -200,6 +240,10 @@ def _node_impl(module_ctx):
             "nodejs24_arm64",
             "nodejs24_ppc64le",
             "nodejs24_s390x",
+            "nodejs26_amd64",
+            "nodejs26_arm64",
+            "nodejs26_ppc64le",
+            "nodejs26_s390x",
         ],
         root_module_direct_dev_deps = [],
     )
