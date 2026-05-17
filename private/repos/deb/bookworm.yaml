@@ -3,11 +3,11 @@ version: 1
 
 sources:
   - channel: bookworm main
-    url: https://snapshot.debian.org/archive/debian/20260510T204219Z
+    url: https://snapshot.debian.org/archive/debian/20260516T202624Z
   - channel: bookworm-updates main
-    url: https://snapshot.debian.org/archive/debian/20260510T204219Z
+    url: https://snapshot.debian.org/archive/debian/20260516T202624Z
   - channel: bookworm-security main
-    url: https://snapshot.debian.org/archive/debian-security/20260510T204219Z
+    url: https://snapshot.debian.org/archive/debian-security/20260516T173124Z
 
 archs:
   - amd64
