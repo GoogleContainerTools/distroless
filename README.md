@@ -23,7 +23,7 @@ These images are built using [bazel](https://bazel.build), but they can also be 
 
 ### What images are available?
 
-The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY.md](SUPPORT_POLICY.md) for support timelines)
+The following images are currently published and updated by the distroless project (see [SUPPORT_POLICY.md](SUPPORT_POLICY.md) for support timelines).
 
 These images refer to image indexes with references to all supported architectures. Architecture specific images can be directly referenced using an additional architecture suffix on the tag, like `gcr.io/distroless/static-debian13:latest-amd64`
 
