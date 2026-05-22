@@ -14,6 +14,9 @@ permissions:
 
 jobs:
   diff:
+    # Restrict to non-fork PRs: self-hosted runner has GCP credentials; fork
+    # code (BUILD files, diff.bash) would execute on it without this guard.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - uses: actions/checkout@v6

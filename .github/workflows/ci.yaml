@@ -21,6 +21,8 @@ jobs:
 
   ci-build-test:
     name: CI build and unit test
+    # Restrict to non-fork PRs: self-hosted runner has access to GCP credentials.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - uses: actions/checkout@v6
@@ -51,6 +53,7 @@ jobs:
 
   ci-images:
     name: CI image tests
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
       - uses: actions/checkout@v6
