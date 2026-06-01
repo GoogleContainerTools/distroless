@@ -191,40 +191,40 @@ def _node_impl(module_ctx):
 
     node_archive(
         name = "nodejs26_amd64",
-        sha256 = "8e5b4b969bb2414aca2ff84d2b99608511aedca32bf8a8427e6187dbdd703bbe",
-        strip_prefix = "node-v26.2.0-linux-x64/",
-        urls = ["https://nodejs.org/dist/v26.2.0/node-v26.2.0-linux-x64.tar.gz"],
-        version = "26.2.0",
+        sha256 = "a6e65cc653e40c1653b77742f9185dbce3ff1f99fa2746d211bddb53530ef206",
+        strip_prefix = "node-v26.3.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v26.3.0/node-v26.3.0-linux-x64.tar.gz"],
+        version = "26.3.0",
         architecture = "amd64",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs26_arm64",
-        sha256 = "bf52461d25017479cdc549642c4e7a2303ac5c5395d7c3d026d5d8b3fa283c05",
-        strip_prefix = "node-v26.2.0-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v26.2.0/node-v26.2.0-linux-arm64.tar.gz"],
-        version = "26.2.0",
+        sha256 = "b2e01f65905c24cb5dd19c4cfbfefe0118e0504c170cc18beac343a2abbb59bd",
+        strip_prefix = "node-v26.3.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v26.3.0/node-v26.3.0-linux-arm64.tar.gz"],
+        version = "26.3.0",
         architecture = "arm64",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs26_ppc64le",
-        sha256 = "4b52429b35a049a0cf574360cd1b11cbc9f03201d13876f26897c9863d25ec49",
-        strip_prefix = "node-v26.2.0-linux-ppc64le/",
-        urls = ["https://nodejs.org/dist/v26.2.0/node-v26.2.0-linux-ppc64le.tar.gz"],
-        version = "26.2.0",
+        sha256 = "0e6cc9a223539be027378865d959aee55bf8e941c9bf690b2082b78bfcc0e4ef",
+        strip_prefix = "node-v26.3.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v26.3.0/node-v26.3.0-linux-ppc64le.tar.gz"],
+        version = "26.3.0",
         architecture = "ppc64le",
         control = "//nodejs:control",
     )
 
     node_archive(
         name = "nodejs26_s390x",
-        sha256 = "9d064914e38a5b3e6a3074647407198116f7bc724fce5a9600cece84ac7da671",
-        strip_prefix = "node-v26.2.0-linux-s390x/",
-        urls = ["https://nodejs.org/dist/v26.2.0/node-v26.2.0-linux-s390x.tar.gz"],
-        version = "26.2.0",
+        sha256 = "b1880e13a957430f454cb82ba987fcaf82cc4413c742827c04bb5ec20799d426",
+        strip_prefix = "node-v26.3.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v26.3.0/node-v26.3.0-linux-s390x.tar.gz"],
+        version = "26.3.0",
         architecture = "s390x",
         control = "//nodejs:control",
     )
