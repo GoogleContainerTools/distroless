@@ -3,15 +3,51 @@ const crypto = require("crypto");
 const https = require("https");
 const fs = require("fs");
 
-if (process.argv.length < 3) {
-  console.error("Usage: node nodeChecksum.js <nodejs_version>");
-  process.exit(1);
-}
-
-const versions = process.argv[2].split(",");
+let versions = [];
 const architectures = ["amd64", "arm64", "arm", "ppc64le", "s390x"];
+const NODE_VERSION_RE = /^[0-9]+\.[0-9]+\.[0-9]+$/;
+const ARCHIVE_SUFFIX_RE = /^(x64|arm64|armv7l|ppc64le|s390x)$/;
+const DISTROLESS_ARCH_RE = /^(amd64|arm64|arm|ppc64le|s390x)$/;
+const SHA256_RE = /^[0-9a-f]{64}$/;
 
 const nodeVersions = {};
+
+const starlarkString = (value) => {
+  return `"${String(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, "\\n")
+    .replace(/\r/g, "\\r")
+    .replace(/\t/g, "\\t")}"`;
+};
+
+const validateNodeVersion = (version) => {
+  if (!NODE_VERSION_RE.test(version)) {
+    throw new Error(`Invalid Node.js version: ${version}`);
+  }
+  return version;
+};
+
+const validateArchiveSuffix = (suffix) => {
+  if (!ARCHIVE_SUFFIX_RE.test(suffix)) {
+    throw new Error(`Invalid Node.js archive suffix: ${suffix}`);
+  }
+  return suffix;
+};
+
+const validateDistrolessArch = (arch) => {
+  if (!DISTROLESS_ARCH_RE.test(arch)) {
+    throw new Error(`Invalid distroless architecture: ${arch}`);
+  }
+  return arch;
+};
+
+const validateSha256 = (sha256) => {
+  if (!SHA256_RE.test(sha256)) {
+    throw new Error(`Invalid SHA256 checksum: ${sha256}`);
+  }
+  return sha256;
+};
 
 const calculateChecksum = (url) => {
   return new Promise((resolve, reject) => {
@@ -33,6 +69,7 @@ const calculateChecksum = (url) => {
 
 const fetchChecksums = async () => {
   for (const nodeVersion of versions) {
+    validateNodeVersion(nodeVersion);
     const major = parseInt(nodeVersion.split(".")[0]);
     nodeVersions[nodeVersion] = {};
     await Promise.all(
@@ -46,6 +83,7 @@ const fetchChecksums = async () => {
         } else if (key === "arm") {
           arch = "armv7l";
         }
+        validateArchiveSuffix(arch);
         const url = `https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-${arch}.tar.gz`;
         try {
           const checksum = await calculateChecksum(url);
@@ -61,7 +99,14 @@ const fetchChecksums = async () => {
   }
 };
 
-fetchChecksums().then(() => {
+const main = async () => {
+  if (process.argv.length < 3) {
+    console.error("Usage: node nodeChecksum.js <nodejs_version>");
+    process.exit(1);
+  }
+  versions = process.argv[2].split(",");
+  await fetchChecksums();
+
   let nodeArchives = `"node"
 
 BUILD_TMPL = """\\
@@ -172,16 +217,19 @@ def _node_impl(module_ctx):
       }
       const arch = nodeVersions[nodeVersion][key];
       const url = `https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-${arch.suffix}.tar.gz`;
+      validateDistrolessArch(key);
+      validateArchiveSuffix(arch.suffix);
+      validateSha256(arch.checksum);
 
       nodeArchives += "\n";
       nodeArchives += `
     node_archive(
-        name = "nodejs${major}_${key}",
-        sha256 = "${arch.checksum}",
-        strip_prefix = "node-v${nodeVersion}-linux-${arch.suffix}/",
-        urls = ["${url}"],
-        version = "${nodeVersion}",
-        architecture = "${key}",
+        name = ${starlarkString(`nodejs${major}_${key}`)},
+        sha256 = ${starlarkString(arch.checksum)},
+        strip_prefix = ${starlarkString(`node-v${nodeVersion}-linux-${arch.suffix}/`)},
+        urls = [${starlarkString(url)}],
+        version = ${starlarkString(nodeVersion)},
+        architecture = ${starlarkString(key)},
         control = "//nodejs:control",
     )`;
     }
@@ -212,7 +260,7 @@ commandTests:
         continue;
       }
       nodeArchives += `
-            "nodejs${major}_${arch}",`;
+            ${starlarkString(`nodejs${major}_${arch}`)},`;
     }
   }
 
@@ -237,4 +285,19 @@ node = module_extension(
       console.error(err);
     }
   });
-});
+};
+
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+module.exports = {
+  starlarkString,
+  validateArchiveSuffix,
+  validateDistrolessArch,
+  validateNodeVersion,
+  validateSha256,
+};
