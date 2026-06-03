@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 const assert = require("node:assert/strict");
+const { EventEmitter } = require("node:events");
+const https = require("https");
 
 const {
+  calculateChecksum,
   starlarkString,
   validateArchiveSuffix,
   validateDistrolessArch,
@@ -35,4 +38,45 @@ assert.equal(
 );
 assert.equal(starlarkString("line1\nline2"), '"line1\\nline2"');
 
-console.log("update_node_archives validation tests passed");
+const withMockedHttpsGet = async (mock, fn) => {
+  const originalGet = https.get;
+  https.get = mock;
+  try {
+    await fn();
+  } finally {
+    https.get = originalGet;
+  }
+};
+
+const mockHttpsGetStatus = (statusCode) => (_url, onResponse) => {
+  const req = new EventEmitter();
+  process.nextTick(() => {
+    const res = new EventEmitter();
+    res.statusCode = statusCode;
+    res.resume = () => {};
+    onResponse(res);
+    process.nextTick(() => {
+      res.emit("data", Buffer.from("error body"));
+      res.emit("end");
+    });
+  });
+  return req;
+};
+
+const runAsyncTests = async () => {
+  await withMockedHttpsGet(mockHttpsGetStatus(404), async () => {
+    await assert.rejects(
+      calculateChecksum("https://nodejs.org/dist/not-found.tar.gz"),
+      /Request failed with status code 404/
+    );
+  });
+};
+
+runAsyncTests()
+  .then(() => {
+    console.log("update_node_archives validation tests passed");
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });

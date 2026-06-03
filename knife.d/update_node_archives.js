@@ -53,6 +53,11 @@ const calculateChecksum = (url) => {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
+        if (res.statusCode !== 200) {
+          res.resume();
+          reject(new Error(`Request failed with status code ${res.statusCode}`));
+          return;
+        }
         const hash = crypto.createHash("sha256");
         res.on("data", (data) => {
           hash.update(data);
@@ -304,6 +309,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  calculateChecksum,
   starlarkString,
   validateArchiveSuffix,
   validateDistrolessArch,
