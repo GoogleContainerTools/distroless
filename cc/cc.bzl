@@ -1,5 +1,5 @@
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//common:variables.bzl", "DEBUG_MODE", "USERS")
+load("//common:variables.bzl", "DEBUG_MODE", "OS_RELEASE", "USERS")
 load("//private/util:deb.bzl", "deb")
 
 def cc_image_index(distro, architectures):
@@ -36,6 +36,7 @@ def cc_image(distro, arch, packages):
                 deb.package(arch, distro, pkg)
                 for pkg in packages
             ],
+            annotations = {"org.opencontainers.image.source": OS_RELEASE["HOME_URL"]},
         )
         for mode in DEBUG_MODE
         for user in USERS

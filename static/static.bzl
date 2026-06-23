@@ -4,7 +4,7 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_go//go:def.bzl", "go_binary")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("//:distro.bzl", "VARIANTS")
-load("//common:variables.bzl", "DEBUG_MODE", "NONROOT")
+load("//common:variables.bzl", "DEBUG_MODE", "NONROOT", "OS_RELEASE")
 load("//private/util:deb.bzl", "deb")
 load("//private/util:tar.bzl", "tar")
 
@@ -65,6 +65,7 @@ def static_image(distro, arch, packages):
             os = "linux",
             architecture = arch,
             variant = VARIANTS.get(arch),
+            annotations = {"org.opencontainers.image.source": OS_RELEASE["HOME_URL"]},
         )
 
         # A static debug image with busybox available.
@@ -74,6 +75,7 @@ def static_image(distro, arch, packages):
             entrypoint = ["/busybox/sh"],
             env = {"PATH": "$PATH:/busybox"},
             tars = ["//experimental/busybox:busybox_" + arch],
+            annotations = {"org.opencontainers.image.source": OS_RELEASE["HOME_URL"]},
         )
 
     ##########################################################################################

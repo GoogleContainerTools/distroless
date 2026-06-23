@@ -152,6 +152,24 @@ node_archive = repository_rule(
     },
 )
 
+_NODE_VERSIONS_TMPL = """\\
+"node versions"
+
+# AUTO GENERATED. DO NOT EDIT.
+NODEJS_VERSIONS = {versions}
+"""
+
+def _node_versions_repo_impl(rctx):
+    rctx.file("versions.bzl", _NODE_VERSIONS_TMPL.format(versions = str(rctx.attr.versions)))
+    rctx.file("BUILD.bazel", 'exports_files(["versions.bzl"])')
+
+node_versions_repo = repository_rule(
+    implementation = _node_versions_repo_impl,
+    attrs = {
+        "versions": attr.string_dict(),
+    },
+)
+
 def _node_impl(module_ctx):
     mod = module_ctx.modules[0]
 
@@ -202,8 +220,28 @@ commandTests:
   }
   nodeArchives += `
 
+    node_versions_repo(
+        name = "node_versions",
+        versions = {`;
+
+  for (const nodeVersion of versions) {
+    const major = parseInt(nodeVersion.split(".")[0]);
+    for (const arch of architectures) {
+      if (major > 22 && arch === "arm") {
+        continue;
+      }
+      nodeArchives += `
+            "${major}_${arch}": "${nodeVersion}",`;
+    }
+  }
+
+  nodeArchives += `
+        },
+    )
+
     return module_ctx.extension_metadata(
-        root_module_direct_deps = [`;
+        root_module_direct_deps = [
+            "node_versions",`;
 
   for (const nodeVersion of versions) {
     const major = parseInt(nodeVersion.split(".")[0]);
