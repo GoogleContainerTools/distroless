@@ -2,7 +2,7 @@
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//common:variables.bzl", "DEBUG_MODE", "USERS")
+load("//common:variables.bzl", "DEBUG_MODE", "OS_RELEASE", "USERS")
 load("//private/util:deb.bzl", "deb")
 
 def base_nossl_image_index(distro, architectures):
@@ -59,6 +59,7 @@ def base_nossl_image(distro, arch, packages):
                 deb.package(arch, distro, pkg)
                 for pkg in packages
             ],
+            annotations = {"org.opencontainers.image.source": OS_RELEASE["HOME_URL"]},
         )
         for user in USERS
         for mode in DEBUG_MODE
@@ -100,6 +101,7 @@ def base_image(distro, arch, packages):
                 deb.package(arch, distro, pkg)
                 for pkg in packages
             ],
+            annotations = {"org.opencontainers.image.source": OS_RELEASE["HOME_URL"]},
         )
         for user in USERS
         for mode in DEBUG_MODE

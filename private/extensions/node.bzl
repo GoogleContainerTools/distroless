@@ -88,6 +88,24 @@ node_archive = repository_rule(
     },
 )
 
+_NODE_VERSIONS_TMPL = """\
+"node versions"
+
+# AUTO GENERATED. DO NOT EDIT.
+NODEJS_VERSIONS = {versions}
+"""
+
+def _node_versions_repo_impl(rctx):
+    rctx.file("versions.bzl", _NODE_VERSIONS_TMPL.format(versions = str(rctx.attr.versions)))
+    rctx.file("BUILD.bazel", 'exports_files(["versions.bzl"])')
+
+node_versions_repo = repository_rule(
+    implementation = _node_versions_repo_impl,
+    attrs = {
+        "versions": attr.string_dict(),
+    },
+)
+
 def _node_impl(module_ctx):
     mod = module_ctx.modules[0]
 
@@ -229,8 +247,28 @@ def _node_impl(module_ctx):
         control = "//nodejs:control",
     )
 
+    node_versions_repo(
+        name = "node_versions",
+        versions = {
+            "22_amd64": "22.23.1",
+            "22_arm64": "22.23.1",
+            "22_arm": "22.23.1",
+            "22_ppc64le": "22.23.1",
+            "22_s390x": "22.23.1",
+            "24_amd64": "24.18.0",
+            "24_arm64": "24.18.0",
+            "24_ppc64le": "24.18.0",
+            "24_s390x": "24.18.0",
+            "26_amd64": "26.4.0",
+            "26_arm64": "26.4.0",
+            "26_ppc64le": "26.4.0",
+            "26_s390x": "26.4.0",
+        },
+    )
+
     return module_ctx.extension_metadata(
         root_module_direct_deps = [
+            "node_versions",
             "nodejs22_amd64",
             "nodejs22_arm64",
             "nodejs22_arm",

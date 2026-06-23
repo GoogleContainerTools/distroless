@@ -1,8 +1,9 @@
 "nodejs image definitions"
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@node_versions//:versions.bzl", "NODEJS_VERSIONS")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//common:variables.bzl", "DEBUG_MODE", "USERS")
+load("//common:variables.bzl", "DEBUG_MODE", "OS_RELEASE", "USERS")
 load("//private/util:deb.bzl", "deb")
 load("//private/util:tar.bzl", "tar")
 
@@ -45,6 +46,14 @@ def nodejs_image(distro, major_version, arch, packages):
         packages: any deb packages to add to the image
     """
 
+    _version_key = major_version + "_" + arch
+    if _version_key not in NODEJS_VERSIONS:
+        fail("No version found for Node.js major version/arch: " + _version_key)
+    _annotations = {
+        "org.opencontainers.image.source": OS_RELEASE["HOME_URL"],
+        "com.google.distroless.nodejs.version": NODEJS_VERSIONS[_version_key],
+    }
+
     for mode in DEBUG_MODE:
         for user in USERS:
             oci_image(
@@ -57,6 +66,7 @@ def nodejs_image(distro, major_version, arch, packages):
                 ] + [
                     "@nodejs" + major_version + "_" + arch,
                 ],
+                annotations = _annotations,
             )
 
     _check_certificates_tar()
