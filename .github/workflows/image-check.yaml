@@ -42,9 +42,9 @@ jobs:
 
       - name: Install Deps
         run: |
-          go install github.com/google/go-containerregistry/cmd/crane@main
-          go install github.com/reproducible-containers/diffoci/cmd/diffoci@master
-          go install filippo.io/mkcert@master
+          go install github.com/google/go-containerregistry/cmd/crane@v0.21.6
+          go install github.com/reproducible-containers/diffoci/cmd/diffoci@v0.1.8
+          go install filippo.io/mkcert@latest
           sudo curl -fsSL "https://github.com/project-zot/zot/releases/download/v2.0.2-rc2/zot-linux-amd64-minimal" > /usr/local/bin/zot
           sudo chmod +x /usr/local/bin/zot
 
