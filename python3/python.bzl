@@ -2,7 +2,7 @@
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//common:variables.bzl", "DEBUG_MODE", "USERS")
+load("//common:variables.bzl", "DEBUG_MODE", "OS_RELEASE", "USERS")
 load("//private/util:deb.bzl", "deb")
 load("//private/util:tar.bzl", "tar")
 
@@ -65,6 +65,7 @@ def python3_image(distro, arch, packages):
                     deb.package(arch, distro, pkg, "python")
                     for pkg in packages
                 ] + [":python_aliases_%s" % distro] + ([":ldconfig_cache_" + arch] if distro == "debian13" else []),
+                annotations = {"org.opencontainers.image.source": OS_RELEASE["HOME_URL"]},
             )
 
     for user in USERS:

@@ -2,7 +2,7 @@
 
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
-load("//common:variables.bzl", "DEBUG_MODE", "USERS")
+load("//common:variables.bzl", "DEBUG_MODE", "OS_RELEASE", "USERS")
 load("//java:jre_ver.bzl", "jre_ver")
 load("//private/oci:defs.bzl", oci_java_image = "java_image")
 load("//private/util:deb.bzl", "deb")
@@ -142,6 +142,12 @@ def java_image(distro, java_version, arch):
 
     # standard image builds
     for user in USERS:
+        _jre_version = jre_ver(deb.version(
+            arch,
+            distro,
+            "temurin-" + java_version + "-jre",
+            "adoptium",
+        ))
         oci_image(
             name = "java" + java_version + "_" + user + "_" + arch + "_" + distro,
             base = ":java_base_" + user + "_" + arch + "_" + distro,
@@ -151,13 +157,12 @@ def java_image(distro, java_version, arch):
                 "/usr/bin/java",
                 "-jar",
             ],
+            annotations = {
+                "org.opencontainers.image.source": OS_RELEASE["HOME_URL"],
+                "com.google.distroless.java.version": _jre_version,
+            },
             env = {
-                "JAVA_VERSION": jre_ver(deb.version(
-                    arch,
-                    distro,
-                    "temurin-" + java_version + "-jre",
-                    "adoptium",
-                )),
+                "JAVA_VERSION": _jre_version,
             },
             tars = [
                 # we use system certs, but we might want to pull this out of the distro
@@ -168,6 +173,12 @@ def java_image(distro, java_version, arch):
 
     # debug image builds
     for user in USERS:
+        _jdk_version = jre_ver(deb.version(
+            arch,
+            distro,
+            "temurin-" + java_version + "-jdk",
+            "adoptium",
+        ))
         oci_image(
             name = "java" + java_version + "_debug_" + user + "_" + arch + "_" + distro,
             base = ":java_base_debug_" + user + "_" + arch + "_" + distro,
@@ -177,13 +188,12 @@ def java_image(distro, java_version, arch):
                 "/usr/bin/java",
                 "-jar",
             ],
+            annotations = {
+                "org.opencontainers.image.source": OS_RELEASE["HOME_URL"],
+                "com.google.distroless.java.version": _jdk_version,
+            },
             env = {
-                "JAVA_VERSION": jre_ver(deb.version(
-                    arch,
-                    distro,
-                    "temurin-" + java_version + "-jdk",
-                    "adoptium",
-                )),
+                "JAVA_VERSION": _jdk_version,
             },
             tars = [
                 # we use system certs, but we might want to pull this out of the distro
