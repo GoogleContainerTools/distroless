@@ -48,7 +48,7 @@ use_repo(busybox, "busybox_amd64", "busybox_arm", "busybox_arm64", "busybox_ppc6
 ### NODE ###
 node = use_extension("//private/extensions:node.bzl", "node")
 node.archive()
-use_repo(node, "nodejs22_amd64", "nodejs22_arm", "nodejs22_arm64", "nodejs22_ppc64le", "nodejs22_s390x", "nodejs24_amd64", "nodejs24_arm64", "nodejs24_ppc64le", "nodejs24_s390x", "nodejs26_amd64", "nodejs26_arm64", "nodejs26_ppc64le", "nodejs26_s390x")
+use_repo(node, "node_versions", "nodejs22_amd64", "nodejs22_arm", "nodejs22_arm64", "nodejs22_ppc64le", "nodejs22_s390x", "nodejs24_amd64", "nodejs24_arm64", "nodejs24_ppc64le", "nodejs24_s390x", "nodejs26_amd64", "nodejs26_arm64", "nodejs26_ppc64le", "nodejs26_s390x")
 
 ### DEBIAN ###
 include("//private/repos/deb:deb.MODULE.bazel")
