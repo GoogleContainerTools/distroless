@@ -5,6 +5,7 @@ load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 load("//common:variables.bzl", "DEBUG_MODE", "OS_RELEASE", "USERS")
 load("//private/util:deb.bzl", "deb")
 load("//private/util:tar.bzl", "tar")
+load(":version.bzl", "clean_python_version")
 
 DISTRO_VERSION = {
     "debian13": "3.13",
@@ -50,6 +51,13 @@ def python3_image(distro, arch, packages):
     """
     python_alias(distro)
 
+    _python_version = clean_python_version(deb.version(
+        arch,
+        distro,
+        "python" + DISTRO_VERSION[distro] + "-minimal",
+        "python",
+    ))
+
     for mode in DEBUG_MODE:
         for user in USERS:
             oci_image(
@@ -65,7 +73,10 @@ def python3_image(distro, arch, packages):
                     deb.package(arch, distro, pkg, "python")
                     for pkg in packages
                 ] + [":python_aliases_%s" % distro] + ([":ldconfig_cache_" + arch] if distro == "debian13" else []),
-                annotations = {"org.opencontainers.image.source": OS_RELEASE["HOME_URL"]},
+                annotations = {
+                    "org.opencontainers.image.source": OS_RELEASE["HOME_URL"],
+                    "com.google.distroless.python.version": _python_version,
+                },
             )
 
     for user in USERS:

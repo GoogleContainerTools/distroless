@@ -2,6 +2,7 @@ load("//private/util:tar.bzl", "tar")
 load(":config.bzl", "PYTHON_ARCHITECTURES", "PYTHON_DISTROS", "PYTHON_PACKAGES")
 load(":ldconfig.bzl", "python3_ldconfig")
 load(":python.bzl", "python3_image", "python3_image_index")
+load(":version_test.bzl", "clean_python_version_test")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -42,3 +43,5 @@ python3_ldconfig(
     architectures = PYTHON_ARCHITECTURES["debian13"],
     distro = "debian13",
 )
+
+clean_python_version_test(name = "clean_python_version_test")
