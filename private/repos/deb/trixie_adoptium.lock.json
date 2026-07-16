@@ -1,17 +1,4 @@
 {
-	"packages": [
-		{
-			"arch": "amd64",
-			"dependencies": [],
-			"key": "temurin-17-jre_17.0.19.0.0-p-10-1_amd64",
-			"name": "temurin-17-jre",
-			"sha256": "64dfc18214e454cac20a4426ad5e55ab1d53152e90b0354684bc29de5edbdfa3",
-			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.19.0.0+10-1_amd64.deb"
-			],
-			"version": "17.0.19.0.0+10-1"
-		},
-		{
 			"arch": "amd64",
 			"dependencies": [],
 			"key": "temurin-17-jdk_17.0.19.0.0-p-10-1_amd64",
