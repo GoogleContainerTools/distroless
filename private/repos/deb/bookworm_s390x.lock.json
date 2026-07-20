@@ -1,0 +1,148 @@
+{
+	"packages": [
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "base-files_12.4-p-deb12u15_s390x",
+			"name": "base-files",
+			"sha256": "def7ce0ba67ae463f736ef468add53a4b5ced871683a6ff2729f9b77aa880ed2",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/b/base-files/base-files_12.4+deb12u15_s390x.deb"
+			],
+			"version": "12.4+deb12u15"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "ca-certificates_20230311-p-deb12u1_s390x",
+			"name": "ca-certificates",
+			"sha256": "0d5f444f594e48c1e16a41d8fc628a09b24c658916a1274025c2330f2a802bed",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/c/ca-certificates/ca-certificates_20230311+deb12u1_all.deb"
+			],
+			"version": "20230311+deb12u1"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "libc6_2.36-9-p-deb12u14_s390x",
+			"name": "libc6",
+			"sha256": "bbca8c91bad7f799114fe865233af0018f58b903da11c1c58a7f2d2484103d45",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/g/glibc/libc6_2.36-9+deb12u14_s390x.deb"
+			],
+			"version": "2.36-9+deb12u14"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "libc-bin_2.36-9-p-deb12u14_s390x",
+			"name": "libc-bin",
+			"sha256": "6c663aeea7de0f5c6334ab1fc25f464de75cfd143608a1f47cad5416d06933e5",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/g/glibc/libc-bin_2.36-9+deb12u14_s390x.deb"
+			],
+			"version": "2.36-9+deb12u14"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "libssl3_3.0.20-1_deb12u2_s390x",
+			"name": "libssl3",
+			"sha256": "8f842575b6670d2241dffbd6ec95547cd55b129d0014ce7a6ab024e6d94399ef",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/o/openssl/libssl3_3.0.20-1~deb12u2_s390x.deb"
+			],
+			"version": "3.0.20-1~deb12u2"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "netbase_6.4_s390x",
+			"name": "netbase",
+			"sha256": "29b23c48c0fe6f878e56c5ddc9f65d1c05d729360f3690a593a8c795031cd867",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/n/netbase/netbase_6.4_all.deb"
+			],
+			"version": "6.4"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "openssl_3.0.20-1_deb12u2_s390x",
+			"name": "openssl",
+			"sha256": "1aea087c353a2b52946d607c791f8e816cc6ebdc7d959ddb5ebe9003af851cb2",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/o/openssl/openssl_3.0.20-1~deb12u2_s390x.deb"
+			],
+			"version": "3.0.20-1~deb12u2"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "tzdata_2026b-0-p-deb12u1_s390x",
+			"name": "tzdata",
+			"sha256": "0edb49f4dffe0d5608069f7e4ba4d69544d3b9e86fc314dd8b75e9958d8e5e98",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/t/tzdata/tzdata_2026b-0+deb12u1_all.deb"
+			],
+			"version": "2026b-0+deb12u1"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "media-types_10.0.0_s390x",
+			"name": "media-types",
+			"sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/m/media-types/media-types_10.0.0_all.deb"
+			],
+			"version": "10.0.0"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "gcc-12-base_12.2.0-14-p-deb12u1_s390x",
+			"name": "gcc-12-base",
+			"sha256": "95394971de33e2d3c04c8e77c5cab1ddcba3924692749513be19d8c65b4a3001",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/g/gcc-12/gcc-12-base_12.2.0-14+deb12u1_s390x.deb"
+			],
+			"version": "12.2.0-14+deb12u1"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "libgcc-s1_12.2.0-14-p-deb12u1_s390x",
+			"name": "libgcc-s1",
+			"sha256": "58f31fb42eecc42510d5b5022f03aa7e302350637a5643b1773361c0da97f905",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/g/gcc-12/libgcc-s1_12.2.0-14+deb12u1_s390x.deb"
+			],
+			"version": "12.2.0-14+deb12u1"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "libgomp1_12.2.0-14-p-deb12u1_s390x",
+			"name": "libgomp1",
+			"sha256": "57527a0d71f4ba47e384d69c3bb2d5647dcddc4b49cd098a2fd46d59492eaefc",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/g/gcc-12/libgomp1_12.2.0-14+deb12u1_s390x.deb"
+			],
+			"version": "12.2.0-14+deb12u1"
+		},
+		{
+			"arch": "s390x",
+			"dependencies": [],
+			"key": "libstdc-p--p-6_12.2.0-14-p-deb12u1_s390x",
+			"name": "libstdc++6",
+			"sha256": "b0521cbe2cd1de442a468373bdfe323ed83e04aa729d5a3f554beefba4049e68",
+			"urls": [
+				"https://snapshot.debian.org/archive/debian/20260719T202153Z/pool/main/g/gcc-12/libstdc++6_12.2.0-14+deb12u1_s390x.deb"
+			],
+			"version": "12.2.0-14+deb12u1"
+		}
+	],
+	"version": 1
+}

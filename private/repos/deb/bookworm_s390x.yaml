@@ -1,39 +1,27 @@
-# debian 13
+# debian 12, s390x only, no security updates
 version: 1
 
 sources:
-  - channel: trixie main
+  - channel: bookworm main
     url: https://snapshot.debian.org/archive/debian/20260719T202153Z
-  - channel: trixie-updates main
+  - channel: bookworm-updates main
     url: https://snapshot.debian.org/archive/debian/20260719T202153Z
-  - channel: trixie-security main
-    url: https://snapshot.debian.org/archive/debian-security/20260719T185716Z
 
 archs:
-  - amd64
-  - arm64
-  - armhf
   - s390x
-  - ppc64el
-  - riscv64
 
 packages:
   - base-files
   - ca-certificates
   - libc6
   - libc-bin
-  - libssl3t64
+  - libssl3
   - netbase
   - openssl
   - tzdata
-  - tzdata-legacy
   - media-types
-  - zlib1g
-  - libzstd1
   # c++
-  - gcc-14-base
+  - gcc-12-base
   - libgcc-s1
   - libgomp1
   - libstdc++6
-  # node26
-  - libatomic1

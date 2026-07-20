@@ -3,17 +3,16 @@ version: 1
 
 sources:
   - channel: bookworm main
-    url: https://snapshot.debian.org/archive/debian/20260712T202631Z
+    url: https://snapshot.debian.org/archive/debian/20260719T202153Z
   - channel: bookworm-updates main
-    url: https://snapshot.debian.org/archive/debian/20260712T202631Z
+    url: https://snapshot.debian.org/archive/debian/20260719T202153Z
   - channel: bookworm-security main
-    url: https://snapshot.debian.org/archive/debian-security/20260712T194830Z
+    url: https://snapshot.debian.org/archive/debian-security/20260719T185716Z
 
 archs:
   - amd64
   - arm64
   - armhf
-  - s390x
   - ppc64el
 
 packages:
