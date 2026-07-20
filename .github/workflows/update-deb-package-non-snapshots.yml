@@ -18,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.ACTIONS_TOKEN }}
 
       - name: Update non-snapshots
         run: ./knife update-non-snapshots

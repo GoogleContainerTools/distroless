@@ -18,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.ACTIONS_TOKEN }}
       - uses: actions/setup-node@v7
 
       - name: Update node archives
