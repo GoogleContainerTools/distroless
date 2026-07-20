@@ -16,12 +16,14 @@ jobs:
   diff:
     runs-on: distroless-ci-large-ubuntu-22.04
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Set up Go
-        uses: actions/setup-go@v7
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
         with:
           go-version: "1.25"
-      - uses: actions/cache@v6
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: |
             ~/.cache/bazel-repo
@@ -64,7 +66,7 @@ jobs:
             --logs ./verbose.log \
             --report ./report.log
 
-      - uses: actions/upload-artifact@v7.0.1
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         id: report
         with:
           name: "Report"
@@ -80,40 +82,57 @@ jobs:
           echo "This pull request has modified the following images:"
           echo "$CHANGED"
 
-      - uses: peter-evans/find-comment@v4
+      - name: Find Comment
         id: fc
         if: ${{ !github.event.pull_request.head.repo.fork }}
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: 🌳 🔄 Image Check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          COMMENT_ID=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq '.[] | select(.user.login=="github-actions[bot]" and (.body | contains("🌳 🔄 Image Check"))) | .id' | head -n 1)
+          echo "comment-id=$COMMENT_ID" >> "$GITHUB_OUTPUT"
 
       - name: Report diff
         if: ${{ !github.event.pull_request.head.repo.fork && steps.diff.outputs.changed_targets }}
-        uses: peter-evans/create-or-update-comment@v5
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            🌳 🔄 Image Check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENT_ID: ${{ steps.fc.outputs.comment-id }}
+          CHANGED: ${{ steps.diff.outputs.changed_targets }}
+          REPORT_URL: ${{ steps.report.outputs.artifact-url }}
+        run: |
+          BODY=$(cat <<EOF
+          🌳 🔄 Image Check
 
-            This pull request has modified the following images:
+          This pull request has modified the following images:
 
-            ```starlark
-            ${{steps.diff.outputs.changed_targets}}
-            ```
+          \`\`\`starlark
+          $CHANGED
+          \`\`\`
 
-            You can check the details in the report [here](${{steps.report.outputs.artifact-url}})
-          edit-mode: replace
+          You can check the details in the report [here]($REPORT_URL)
+          EOF
+          )
+          if [ -n "$COMMENT_ID" ]; then
+            gh api -X PATCH repos/${{ github.repository }}/issues/comments/$COMMENT_ID -f body="$BODY"
+          else
+            gh api -X POST repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments -f body="$BODY"
+          fi
 
       - name: Report no diff
         if: ${{ !github.event.pull_request.head.repo.fork && !steps.diff.outputs.changed_targets }}
-        uses: peter-evans/create-or-update-comment@v5
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            🌳 🔄 Image Check
-            This pull request doesn't make any changes to the images. 👍
-            You can check the details in the report [here](${{steps.report.outputs.artifact-url}})
-          edit-mode: replace
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENT_ID: ${{ steps.fc.outputs.comment-id }}
+          REPORT_URL: ${{ steps.report.outputs.artifact-url }}
+        run: |
+          BODY=$(cat <<EOF
+          🌳 🔄 Image Check
+          This pull request doesn't make any changes to the images. 👍
+          You can check the details in the report [here]($REPORT_URL)
+          EOF
+          )
+          if [ -n "$COMMENT_ID" ]; then
+            gh api -X PATCH repos/${{ github.repository }}/issues/comments/$COMMENT_ID -f body="$BODY"
+          else
+            gh api -X POST repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments -f body="$BODY"
+          fi

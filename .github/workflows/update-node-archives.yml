@@ -17,10 +17,10 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          token: ${{ secrets.ACTIONS_TOKEN }}
-      - uses: actions/setup-node@v7
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
 
       - name: Update node archives
         run: ./knife update-node-archives
@@ -41,6 +41,8 @@ jobs:
 
       - name: Create commits
         if: env.DISTROLESS_DIFF
+        env:
+          ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
         run: |
           git checkout -b update-node-archives
 
@@ -51,6 +53,7 @@ jobs:
           # Commit changes
           git add .
           git commit -s -m "Bumping node archives to latest stable versions"
+          git remote set-url origin https://x-access-token:${ACTIONS_TOKEN}@github.com/${{ github.repository }}.git
           git push --force origin HEAD
 
       - name: Create Pull Request

@@ -17,9 +17,9 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          token: ${{ secrets.ACTIONS_TOKEN }}
+          persist-credentials: false
 
       - name: Update non-snapshots
         run: ./knife update-non-snapshots
@@ -41,6 +41,8 @@ jobs:
       - name: Create commits
         if: env.DISTROLESS_DIFF
         id: create-commits
+        env:
+          ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
         run: |
           git checkout -b update-non-snapshots
 
@@ -51,6 +53,7 @@ jobs:
           # Commit changes
           git add .
           git commit -s -m "Bumping non-snapshot packages to latest stable versions"
+          git remote set-url origin https://x-access-token:${ACTIONS_TOKEN}@github.com/${{ github.repository }}.git
           git push --force origin HEAD
 
       - name: Create Pull Request
