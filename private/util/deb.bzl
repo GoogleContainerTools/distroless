@@ -27,6 +27,9 @@ def _get_dist_arch_alias(arch, dist, repo_suffix):
     dist = DIST_ALIAS[dist]
     arch = ARCH_ALIAS[arch]
 
+    if dist == "bookworm" and arch == "s390x" and repo_suffix == None:
+        dist = "bookworm_s390x"
+
     if repo_suffix != None:
         dist += "_" + repo_suffix
 

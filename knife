@@ -108,19 +108,19 @@ function cmd_update_snapshots() {
             continue
         fi
 
-        current=$(grep -oE "debian/([0-9]+T[0-9]+Z)" $mpath | cut -d/ -f2 | head -n1)
-        current_security=$(grep -oE "debian-security/([0-9]+T[0-9]+Z)" $mpath | cut -d/ -f2 | head -n1)
+        current=$(sed -n -E '/debian\/([0-9]+T[0-9]+Z)/{s/.*debian\/([0-9]+T[0-9]+Z).*/\1/p;q}' "$mpath")
+        current_security=$(sed -n -E '/debian-security\/([0-9]+T[0-9]+Z)/{s/.*debian-security\/([0-9]+T[0-9]+Z).*/\1/p;q}' "$mpath")
 
-        if [[ "$current" == "$latest" && "$current_security" == "$latest_security" ]]; then
+        if [[ "$current" == "$latest" && ( -z "$current_security" || "$current_security" == "$latest_security" ) ]]; then
             echo "🎖️ $mpath is up to date."
             continue
         fi
         echo "🗞️ $mpath"
-        if [[ "$current" != "$latest" ]]; then
+        if [[ -n "$current" && "$current" != "$latest" ]]; then
             sed -i -E "s/(debian\/)([0-9]+T[0-9]+Z)/\1$latest/" "$mpath"
             echo "   debian: $current -> $latest"
         fi
-        if [[ "$current_security" != "$latest_security" ]]; then
+        if [[ -n "$current_security" && "$current_security" != "$latest_security" ]]; then
             sed -i -E "s/(debian-security\/)([0-9]+T[0-9]+Z)/\1$latest_security/" "$mpath"
             echo "   debian-security: $current_security -> $latest_security"
         fi
