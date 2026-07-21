@@ -176,6 +176,10 @@ function cmd_update_node_archives () {
             | sort_by(.date) | reverse | .[0].version
         ')
         latest_nov=$(echo "$latest_version" | sed 's/^v//')
+        if [[ ! "$latest_nov" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid Node.js version from release index: $latest_version" >&2
+            exit 1
+        fi
         versions+=("$latest_nov")
     done
 
