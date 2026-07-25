@@ -21,8 +21,14 @@ function update_java_versions_debian13() {
   local java_versions=("17" "21" "25")
 
   for java_version in "${java_versions[@]}"; do
-    local version=$(jq -r --arg jv "temurin-${java_version}-jre" '.packages.[] | select((.arch=="amd64") and (.name==$jv)) | .version | split(".") | .[0:3] | join(".")' private/repos/deb/trixie_adoptium.lock.json)
-    local major_version=$(echo "$version" | cut -d. -f 1)
-    sed -i -r -e "s/${major_version}\\.[0-9]+\\.[0-9]+/${version}/g" java/testdata/java${major_version}*debian13.yaml
+    local jre_version=$(jq -r --arg jv "temurin-${java_version}-jre" '.packages.[] | select((.arch=="amd64") and (.name==$jv)) | .version | split(".") | .[0:3] | join(".")' private/repos/deb/trixie_adoptium.lock.json)
+    if [[ -n "$jre_version" && "$jre_version" != "null" ]]; then
+      sed -i -r -e "s/${java_version}\\.[0-9]+\\.[0-9]+/${jre_version}/g" "java/testdata/java${java_version}_debian13.yaml"
+    fi
+
+    local jdk_version=$(jq -r --arg jv "temurin-${java_version}-jdk" '.packages.[] | select((.arch=="amd64") and (.name==$jv)) | .version | split(".") | .[0:3] | join(".")' private/repos/deb/trixie_adoptium.lock.json)
+    if [[ -n "$jdk_version" && "$jdk_version" != "null" ]]; then
+      sed -i -r -e "s/${java_version}\\.[0-9]+\\.[0-9]+/${jdk_version}/g" "java/testdata/java${java_version}_debug_debian13.yaml"
+    fi
   done
 }
