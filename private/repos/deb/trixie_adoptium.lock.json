@@ -25,13 +25,13 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "temurin-21-jre_21.0.11.0.0-p-10-1_amd64",
+			"key": "temurin-21-jre_21.0.12.0.0-p-8-0_amd64",
 			"name": "temurin-21-jre",
-			"sha256": "6a4a1d3d40182645b358bcede5ce1fee11682cbcb37e734a785a8c5848e092de",
+			"sha256": "246eb029cb1fe72e1f025ad758c1f213a9f8956e48ca192b12db943eb5501165",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-21/temurin-21-jre_21.0.11.0.0+10-1_amd64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-21/temurin-21-jre_21.0.12.0.0+8-0_amd64.deb"
 			],
-			"version": "21.0.11.0.0+10-1"
+			"version": "21.0.12.0.0+8-0"
 		},
 		{
 			"arch": "amd64",
@@ -267,24 +267,24 @@
 		{
 			"arch": "riscv64",
 			"dependencies": [],
-			"key": "temurin-17-jre_17.0.19.0.0-p-10-1_riscv64",
+			"key": "temurin-17-jre_17.0.20.0.0-p-8-0_riscv64",
 			"name": "temurin-17-jre",
-			"sha256": "c76ef4e914ff2ea8ca9ca0bd5b6b1be30bd176fe9e64c3c28a51a3e6a946cb37",
+			"sha256": "ce4c9ae663ca53d73b72bb08b0bbd083931fda1bc121d7216780d97a750af54d",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.19.0.0+10-1_riscv64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.20.0.0+8-0_riscv64.deb"
 			],
-			"version": "17.0.19.0.0+10-1"
+			"version": "17.0.20.0.0+8-0"
 		},
 		{
 			"arch": "riscv64",
 			"dependencies": [],
-			"key": "temurin-17-jdk_17.0.19.0.0-p-10-1_riscv64",
+			"key": "temurin-17-jdk_17.0.20.0.0-p-8-0_riscv64",
 			"name": "temurin-17-jdk",
-			"sha256": "ad8ef8cda349678453f80dea6aadd7d8c9b91c2567c5897b0dc57f4038171a6f",
+			"sha256": "d0d0464060f73c2dea633280594bb77ae8f35bcfdf21a3114af2c859ce6e3cb6",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.19.0.0+10-1_riscv64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.20.0.0+8-0_riscv64.deb"
 			],
-			"version": "17.0.19.0.0+10-1"
+			"version": "17.0.20.0.0+8-0"
 		},
 		{
 			"arch": "riscv64",
