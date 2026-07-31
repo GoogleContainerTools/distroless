@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net/url" // ADDED: URL validation ke liye
 	"os"
 	"regexp"
 	"strings"
@@ -18,7 +19,6 @@ import (
 func pkgId(id string) string {
 	id = strings.ReplaceAll(id, "/", "-slash-")
 	id = strings.ReplaceAll(id, "_", "-underscore-")
-	id = strings.ReplaceAll(id, "_", "-underscore-")
 	id = strings.ReplaceAll(id, ":", "-colon-")
 	id = strings.ReplaceAll(id, "@", "-at-")
 	return id
@@ -29,9 +29,9 @@ func parseDebControl(r io.Reader) (map[string]string, error) {
 	const (
 		separator = ":"
 	)
+
 	var currentKey string
 	var currentEntry = map[string]string{}
-
 	continuation := regexp.MustCompile(`^\s`)
 	s := bufio.NewScanner(r)
 
@@ -44,7 +44,6 @@ func parseDebControl(r io.Reader) (map[string]string, error) {
 	for s.Scan() {
 		line := s.Text()
 		ln++
-
 		if continuation.MatchString(line) {
 			if currentKey == "" || len(currentEntry) == 0 {
 				return nil, fmt.Errorf("bad indentation on line %d: %q", ln, line)
@@ -53,14 +52,15 @@ func parseDebControl(r io.Reader) (map[string]string, error) {
 		} else if strings.Contains(line, separator) {
 			sp := strings.SplitN(line, separator, 2)
 			currentKey = strings.TrimSpace(sp[0])
+
 			if _, ok := currentEntry[currentKey]; ok {
 				return nil, fmt.Errorf("duplicate key %q on line %d: %q", currentKey, ln, line)
 			}
 			currentEntry[currentKey] = strings.TrimSpace(sp[1])
+
 		} else {
 			return nil, fmt.Errorf("no indentation or delimiter on line %d: %q", ln, line)
 		}
-
 	}
 	if s.Err() != nil {
 		return nil, s.Err()
@@ -70,7 +70,9 @@ func parseDebControl(r io.Reader) (map[string]string, error) {
 }
 
 func main() {
-	var control, output, sha256, url, id, copyright, generates string
+	// FIX: Changed variable name from 'url' to 'downloadUrl' to avoid shadowing the 'net/url' package
+	var control, output, sha256, downloadUrl, id, copyright, generates string
+
 	flag.StringVar(&control, "control", "", "")
 	flag.StringVar(&output, "output", "", "")
 	flag.StringVar(&sha256, "sha256", "", "")
@@ -78,8 +80,28 @@ func main() {
 	flag.StringVar(&copyright, "copyright", "", "")
 	flag.StringVar(&generates, "generates", "", "")
 	// TODO: multiple urls. it is not required at the moment since .deb are fetched without a fallback mirror.
-	flag.StringVar(&url, "url", "", "")
+	flag.StringVar(&downloadUrl, "url", "", "")
+
 	flag.Parse()
+
+	// ---------------------------------------------------------
+	// FIX START: Strict URL Scheme Validation
+	// ---------------------------------------------------------
+	if downloadUrl != "" && downloadUrl != "NOASSERTION" {
+		parsedUrl, err := url.Parse(downloadUrl)
+		if err != nil {
+			log.Fatalf("Error parsing URL: %v\n", err)
+		}
+
+		scheme := strings.ToLower(parsedUrl.Scheme)
+		// Only allow safe schemes (http, https, ftp). Reject javascript:, data:, etc.
+		if scheme != "http" && scheme != "https" && scheme != "ftp" {
+			log.Fatalf("Security Error: Invalid URL scheme '%s'. Only http, https, and ftp are allowed.\n", parsedUrl.Scheme)
+		}
+	}
+	// ---------------------------------------------------------
+	// FIX END
+	// ---------------------------------------------------------
 
 	read, err := os.Open(control)
 	if err != nil {
@@ -100,6 +122,7 @@ func main() {
 	}
 
 	supplier := &common.Supplier{}
+
 	if mp["Maintainer"] != "" {
 		supplier.Supplier = mp["Maintainer"]
 		supplier.SupplierType = "Person"
@@ -115,7 +138,7 @@ func main() {
 		PackageHomePage:         mp["Homepage"],
 		BuiltDate:               mp["Date"],
 		ReleaseDate:             mp["Date"],
-		PackageDownloadLocation: url,
+		PackageDownloadLocation: downloadUrl, // FIX: Using renamed variable
 		PackageSupplier:         supplier,
 		PackageCopyrightText:    copyrightText,
 		PackageChecksums: []common.Checksum{
@@ -126,13 +149,13 @@ func main() {
 		},
 		PackageExternalReferences: []*v2_3.PackageExternalReference{
 			{
-
 				Category: "PACKAGE-MANAGER",
 				Locator:  fmt.Sprintf("pkg:deb/debian/%s@%s?arch=%s", mp["Package"], mp["Version"], mp["Architecture"]),
 				RefType:  common.TypePackageManagerPURL,
 			},
 		},
 	}
+
 	gen := &v2_3.Package{
 		PackageSPDXIdentifier:   common.ElementID(pkgId(generates)),
 		PackageName:             generates,
@@ -140,6 +163,7 @@ func main() {
 		PackageDownloadLocation: "NOASSERTION",
 		PackageCopyrightText:    "NOASSERTION",
 	}
+
 	doc := &v2_3.Document{
 		SPDXIdentifier: gen.PackageSPDXIdentifier,
 		Packages: []*v2_3.Package{
@@ -154,6 +178,7 @@ func main() {
 			},
 		},
 	}
+
 	outputFile, err := os.Create(output)
 	if err != nil {
 		log.Fatalln(err)
