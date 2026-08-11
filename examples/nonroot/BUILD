@@ -37,7 +37,7 @@ home(
 # Include it in our image as a tar.
 oci_image(
     name = "passwd_image",
-    base = "//base:base_root_amd64_debian12",
+    base = "//base:base_root_amd64_debian13",
     tars = [
         ":passwd",
         ":home",
