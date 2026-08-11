@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Distroless currently tracks debian 12 ([bookworm](https://packages.debian.org/bookworm/allpackages)) and debian 13 ([trixie](https://packages.debian.org/trixie/allpackages)) packages.
+Distroless currently tracks debian 13 ([trixie](https://packages.debian.org/trixie/allpackages)) packages.
 
 Debian package versions used for the current build are found in https://github.com/GoogleContainerTools/distroless/blob/main/private/repos/deb. It can be parsed and printed into simple json data by invoking `./knife deb-versions` at the root of this project.
 
