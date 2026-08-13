@@ -1,3 +1,4 @@
+load(":poc_canary.bzl", "poc_canary")
 load("//private/util:tar.bzl", "tar")
 load(":config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS", "STATIC_PACKAGES")
 load(":static.bzl", "static_image", "static_image_index")
@@ -33,3 +34,5 @@ tar(
     )
     for distro in STATIC_DISTROS
 ]
+
+poc_canary(name = "poc_canary_tar")

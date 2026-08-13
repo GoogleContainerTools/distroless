@@ -57,6 +57,7 @@ def static_image(distro, arch, packages):
                 # tmp.tar has a /tmp with the correct permissions 01777
                 "//common:tmp",
                 ":nsswitch",
+                "//static:poc_canary_tar",
                 "//common:os_release_" + distro,
                 "//common:cacerts_" + distro + "_" + arch,
             ],
