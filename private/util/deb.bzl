@@ -6,9 +6,6 @@ DIST_ALIAS = dict(
     # bullseye (deprecated)
     debian11 = "bullseye",
     bullseye = "debian11",
-    # bookworm
-    debian12 = "bookworm",
-    bookworm = "debian12",
     # trixie
     debian13 = "trixie",
     trixie = "debian13",
@@ -26,9 +23,6 @@ ARCH_ALIAS = dict(
 def _get_dist_arch_alias(arch, dist, repo_suffix):
     dist = DIST_ALIAS[dist]
     arch = ARCH_ALIAS[arch]
-
-    if dist == "bookworm" and arch == "s390x" and repo_suffix == None:
-        dist = "bookworm_s390x"
 
     if repo_suffix != None:
         dist += "_" + repo_suffix

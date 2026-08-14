@@ -88,10 +88,6 @@ def base_image(distro, arch, packages):
         distro: name of the distribution
         arch: the target architecture
     """
-    LIBSSL = {
-        "debian12": "libssl3",
-        "debian13": "libssl3t64",
-    }
 
     [
         oci_image(

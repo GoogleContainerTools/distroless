@@ -48,14 +48,6 @@ Debian 13 distroless images use the debian [UsrMerge](https://wiki.debian.org/Us
 | gcr.io/distroless/nodejs26-debian13   | latest, nonroot, debug, debug-nonroot | amd64, arm64, s390x, ppc64le               |
 | gcr.io/distroless/python3-debian13    | latest, nonroot, debug, debug-nonroot | amd64, arm64, riscv64                      |
 
-#### Debian 12
-
-| Image                                 | Tags                                  | Architecture Suffixes             |
-| ------------------------------------- | ------------------------------------- | --------------------------------- |
-| gcr.io/distroless/static-debian12     | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-debian12       | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/base-nossl-debian12 | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
-| gcr.io/distroless/cc-debian12         | latest, nonroot, debug, debug-nonroot | amd64, arm64, arm, s390x, ppc64le |
 
 ## Why is distroless still using `gcr.io` instead of `pkg.dev`?
 
