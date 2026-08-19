@@ -18,3 +18,9 @@
 # ignore user bazelrc
 .bazelrc.user
 *.log
+# local bazel caches
+.gocache/
+/.gotmp
+
+# rendered image reconstruction (regenerable via bazel)
+/python/Dockerfile
