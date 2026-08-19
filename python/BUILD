@@ -25,6 +25,7 @@ sh_test(
     data = [
         ":config.bzl",
         ":gen_pbs_sbom.py",
+        ":pbs_embedded_versions.py",
         ":update_python_archives_test.sh",
         "testdata/python3.13.yaml",
         "testdata/python3.14.yaml",
