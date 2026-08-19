@@ -193,7 +193,7 @@ function cmd_update_python_archives () {
 		case "$out" in
 		*MUTATED_PARTIAL*)
 			echo "update failed mid-mutation; files may be partially updated." >&2
-			echo "  git checkout -- private/extensions/python.bzl python/config.bzl python/testdata python/update_python_archives_test.sh MODULE.bazel.lock" >&2
+			echo "  git checkout -- private/extensions/python.bzl python/config.bzl python/testdata python/update_python_archives_test.sh python/pbs-sbom.spdx.json MODULE.bazel.lock" >&2
 			;;
 		*)
 			echo "update failed; no files were mutated (pre-flight validation)." >&2
@@ -212,7 +212,7 @@ function cmd_update_python_archives () {
 	echo "updated python archives to release $out"
 	if ! update_test_versions_python "$old_versions"; then
 		echo "testdata update failed; extension/config.bzl were already updated." >&2
-		echo "  git checkout -- private/extensions/python.bzl python/config.bzl python/testdata python/update_python_archives_test.sh MODULE.bazel.lock" >&2
+		echo "  git checkout -- private/extensions/python.bzl python/config.bzl python/testdata python/update_python_archives_test.sh python/pbs-sbom.spdx.json MODULE.bazel.lock" >&2
 		return 1
 	fi
 	# the extension changed: the lockfile digest is stale until bazel re-syncs it

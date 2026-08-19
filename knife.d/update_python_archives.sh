@@ -216,6 +216,31 @@ function generate_python_archives() {
     return 0
   fi
 
+  # PBS SBOM: regenerate python/pbs-sbom.spdx.json from the release's component
+  # manifest (pythonbuild/downloads.py at the release tag); hermetic tests inject
+  # a local copy via PBS_DOWNLOADS_FILE.
+  local downloads_file sbom_tmp downloads_tmp
+  if [ -n "${PBS_DOWNLOADS_FILE:-}" ]; then
+    downloads_file="$PBS_DOWNLOADS_FILE"
+  else
+    downloads_tmp=$(mktemp)
+    if ! curl -sSL "https://raw.githubusercontent.com/astral-sh/python-build-standalone/${latest_release}/pythonbuild/downloads.py" -o "$downloads_tmp"; then
+      echo "no PBS downloads manifest for ${latest_release}" >&2
+      rm -f "$downloads_tmp"
+      exit 1
+    fi
+    downloads_file="$downloads_tmp"
+  fi
+  [ -s "$downloads_file" ] || { echo "empty PBS downloads manifest" >&2; exit 1; }
+  sbom_tmp=$(mktemp)
+  if ! python3 python/gen_pbs_sbom.py "$downloads_file" "$latest_release" "$sbom_tmp"; then
+    echo "PBS SBOM generation failed" >&2
+    rm -f "$sbom_tmp" "$downloads_tmp"
+    exit 1
+  fi
+  grep -q "$latest_release" "$sbom_tmp" || { echo "PBS SBOM does not mention ${latest_release}" >&2; rm -f "$sbom_tmp" "$downloads_tmp"; exit 1; }
+  [ -n "${PBS_DOWNLOADS_FILE:-}" ] || rm -f "$downloads_tmp"
+
   printf '%s\n' "${changes[@]}" >&2
 
   local start end section tmp
@@ -300,6 +325,7 @@ $(printf '%s\n' "${metadata_deps[@]}")
   # both mutations are now verified content; apply them.
   PYTHON_MUTATED=1
   mv "$tmp" private/extensions/python.bzl || { echo "extension update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
+  mv "$sbom_tmp" python/pbs-sbom.spdx.json || { echo "SBOM update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
   if [ -n "$config_tmp" ]; then
     mv "$config_tmp" python/config.bzl || { echo "config.bzl update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
     mv "$module_tmp" MODULE.bazel || { echo "MODULE.bazel update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
