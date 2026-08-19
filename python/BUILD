@@ -23,12 +23,12 @@ sh_test(
     name = "update_python_archives_contract_test",
     srcs = ["update_python_archives_contract_test.sh"],
     data = [
+        "testdata/python3.13.yaml",
+        "testdata/python3.14.yaml",
         ":config.bzl",
         ":gen_pbs_sbom.py",
         ":pbs_embedded_versions.py",
         ":update_python_archives_test.sh",
-        "testdata/python3.13.yaml",
-        "testdata/python3.14.yaml",
         "//:MODULE.bazel",
         "//knife.d:update_python_archives.sh",
         "//private/extensions:python.bzl",
@@ -39,10 +39,10 @@ sh_test(
     name = "pbs_cve_check_test",
     srcs = ["pbs_cve_check_test.sh"],
     data = [
-        ":pbs_cve_check.py",
         "testdata/cve_fixture_clean.json",
         "testdata/cve_fixture_high.json",
         "testdata/cve_sbom_mini.json",
+        ":pbs_cve_check.py",
     ],
 )
 
