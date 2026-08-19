@@ -80,3 +80,10 @@ ncurses/bzip2/sqlite/xz versions against the manifest — a release that bumps t
 native libraries while the CPython version stays the same fails the update
 (`trivy image` cannot see statically embedded libraries; the dissection is the
 only check that can).
+
+The dissection-verified versions are then checked against NVD CPE data
+(`python/pbs_cve_check.py`, one of trivy's own CVE sources — trivy itself has
+no advisory feed for source-pinned C libraries): the update is blocked on
+HIGH/CRITICAL CVEs. The 20260814 pin e.g. embeds sqlite 3.53.1 with
+CVE-2026-11822 / CVE-2026-11824 (fixed in sqlite 3.53.2); set
+`PBS_SKIP_CVE_CHECK=1` to bypass in an emergency.
