@@ -27,6 +27,7 @@ cp MODULE.bazel "$FIX/"
 cp python/update_python_archives_test.sh "$FIX/python/"
 cp python/gen_pbs_sbom.py "$FIX/python/"
 cp python/testdata/python3.13.yaml python/testdata/python3.14.yaml "$FIX/python/testdata/"
+cp python/pbs_embedded_versions.py "$FIX/python/"
 
 # fake PBS component manifest (pythonbuild/downloads.py) for the SBOM step
 cat > "$FIX/downloads.py" <<'EOF'
@@ -42,6 +43,12 @@ DOWNLOADS = {
         "licenses": ["MIT"],
         "library_names": ["expat"],
     },
+    "sqlite": {
+        "url": "https://example.invalid/sqlite.tar.gz",
+        "version": "3530100",
+        "actual_version": "3.53.1.0",
+        "library_names": ["sqlite3"],
+    },
     "zlib": {
         "url": "https://example.invalid/zlib.tar.gz",
         "version": "1.3.2",
@@ -50,6 +57,27 @@ DOWNLOADS = {
     },
 }
 EOF
+
+# fake PBS install tarball: python/lib/libpython3.13.so with the same embedded
+# library markers the real one carries (see python/pbs_embedded_versions.py)
+make_tarball() { # $1 = output path; markers must match the fixture manifest
+  python3 - "$1" <<'PYEOF'
+import sys, tarfile, io
+blob = (
+    b"OpenSSL 3.5.7 9 Jun 2026\n"
+    b"deflate 1.3.2 Copyright 1995-2026 Jean-loup Gailly and Mark Adler\n"
+    b"expat_2.8.3\n"
+    b"ncurses 6.5.20240427\n"
+    b"1.0.8, 13-Jul-2019\n"
+    b"3.53.1\n5.8.3\n"
+)
+with tarfile.open(sys.argv[1], "w:gz") as tar:
+    info = tarfile.TarInfo("python/lib/libpython3.13.so")
+    info.size = len(blob)
+    tar.addfile(info, io.BytesIO(blob))
+PYEOF
+}
+make_tarball "$FIX/tarball.tar.gz"
 
 cd "$FIX"
 source update_python_archives.sh
@@ -75,9 +103,17 @@ make_sha256sums() { # $1=release $2=patch313 $3=patch314 $4=patch315 ("" = no 3.
 }
 
 run_updater() { # prints stdout; fails the test on a non-zero exit
+  # bash -c: the updater aborts with exit 1 on fatal errors (knife contract),
+  # which must not kill the test script.
   PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
-    PBS_DOWNLOADS_FILE="$FIX/downloads.py" \
-    generate_python_archives 2>"$FIX/updater.err"
+    PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_FILE="$FIX/tarball.tar.gz" \
+    bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
+}
+
+run_updater_expect_fail() { # non-zero exit is the expectation (drift => RED)
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
+    PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_FILE="$FIX/drift.tar.gz" \
+    bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err" && return 1 || return 0
 }
 
 # --- phase A: tag-only bump (new release, same patches) -----------------------
@@ -93,6 +129,30 @@ grep -q 'Python 3.13.15' python/testdata/python3.13.yaml || { echo "phase A: tes
 [ "$(run_updater)" = "NO_CHANGE" ] || { echo "phase A: second run must be NO_CHANGE"; cat "$FIX/updater.err"; exit 1; }
 grep -q '20990101' python/pbs-sbom.spdx.json || { echo "phase A: SBOM not regenerated for the new release"; exit 1; }
 grep -q '"expat"' python/pbs-sbom.spdx.json || { echo "phase A: SBOM missing bundled component"; exit 1; }
+
+# --- phase DRIFT: embedded library bumped without a manifest change ----------
+# the maintainer-reported gap made a hard error: a release whose binary embeds
+# e.g. zlib 1.3.3 while the manifest still pins 1.3.2 must fail the updater.
+python3 - "$FIX/drift.tar.gz" <<'PYEOF'
+import sys, tarfile, io
+blob = (
+    b"OpenSSL 3.5.7 9 Jun 2026\n"
+    b"deflate 1.3.3 Copyright 1995-2026 Jean-loup Gailly and Mark Adler\n"
+    b"expat_2.8.3\n"
+    b"ncurses 6.5.20240427\n"
+    b"1.0.8, 13-Jul-2019\n"
+    b"3.53.1\n5.8.3\n"
+)
+with tarfile.open(sys.argv[1], "w:gz") as tar:
+    info = tarfile.TarInfo("python/lib/libpython3.13.so")
+    info.size = len(blob)
+    tar.addfile(info, io.BytesIO(blob))
+PYEOF
+echo '{"tag": "20990102"}' > release.json
+make_sha256sums 20990102 3.13.15 3.14.7
+run_updater_expect_fail || { echo "phase DRIFT: expected the updater to fail"; cat "$FIX/updater.err"; exit 1; }
+grep -qi 'drift' "$FIX/updater.err" || { echo "phase DRIFT: missing drift error message"; cat "$FIX/updater.err"; exit 1; }
+! grep -q '20990102' private/extensions/python.bzl || { echo "phase DRIFT: workspace must be untouched after a RED"; exit 1; }
 
 # --- phase B: patch bump (new release, new patches) ---------------------------
 snap_b=$(get_python_versions)
