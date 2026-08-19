@@ -1,0 +1,14 @@
+Package: python3
+Version: {{VERSION}}
+Architecture: {{ARCHITECTURE}}
+Maintainer: python-build-standalone <https://github.com/astral-sh/python-build-standalone>
+Homepage: https://github.com/astral-sh/python-build-standalone
+SHA256: {{SHA256}}
+Description: Python from python-build-standalone
+ Standalone, redistributable build of CPython, see
+ https://github.com/astral-sh/python-build-standalone.
+ .
+ Installed under /python. Entrypoint is /python/bin/python3.
+ .
+ pip is not included in the image (matches the nodejs image stripping npm);
+ install dependencies into site-packages in a builder stage instead.
