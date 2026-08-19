@@ -32,6 +32,15 @@ PYTHON_TRIPLES=(
   "riscv64=riscv64-unknown-linux-gnu"
 )
 
+# portable in-place sed: BSD sed needs `-i ''`, GNU sed reads the '' as an
+# empty file name and errors. Write to a sibling temp and rename instead.
+sed_inplace() { # $1 = sed expression, $2 = file
+  local tmp
+  tmp="${2}.tmp.$$"
+  sed -e "$1" "$2" > "$tmp" || { rm -f "$tmp"; return 1; }
+  mv "$tmp" "$2"
+}
+
 # prints "<minor>_<arch> <version>" per matrix entry, one per line
 function get_python_versions() {
   sed -n '/python_versions_repo(/,/^    )$/p' private/extensions/python.bzl \
@@ -373,8 +382,8 @@ $(printf '%s\n' "${metadata_deps[@]}")
     done
     config_tmp=$(mktemp)
     cp python/config.bzl "$config_tmp"
-    sed -i '' -e "s/^PYTHON_MAJOR_VERSIONS = .*/PYTHON_MAJOR_VERSIONS = [${minors_quoted}]/" "$config_tmp"
-    sed -i '' -e "s|\"${latest_minor}\": \[[^]]*\],|\"${latest_minor}\": [${arch_list}],${fill_entries}|" "$config_tmp"
+    sed_inplace "s/^PYTHON_MAJOR_VERSIONS = .*/PYTHON_MAJOR_VERSIONS = [${minors_quoted}]/" "$config_tmp"
+    sed_inplace "s|\"${latest_minor}\": \[[^]]*\],|\"${latest_minor}\": [${arch_list}],${fill_entries}|" "$config_tmp"
     for fill_m2 in "${fill[@]}"; do
       grep -qE "PYTHON_MAJOR_VERSIONS = .*\"${fill_m2}\"" "$config_tmp" \
         || { echo "config.bzl update for ${fill_m2} did not land (format drift?)" >&2; rm -f "$config_tmp" "$tmp"; return 1; }
@@ -386,7 +395,7 @@ $(printf '%s\n' "${metadata_deps[@]}")
     module_tmp=$(mktemp)
     cp MODULE.bazel "$module_tmp"
     repos_sorted=$(printf '"%s", ' $(printf '%s\n' "${repos[@]}" | sort) | sed 's/, $//')
-    sed -i '' -e "s/^use_repo(py, .*/use_repo(py, ${repos_sorted}, \"python_versions\")/" "$module_tmp"
+    sed_inplace "s/^use_repo(py, .*/use_repo(py, ${repos_sorted}, \"python_versions\")/" "$module_tmp"
     for fill_m2 in "${fill[@]}"; do
       grep -q "\"python$(echo "$fill_m2" | tr -d '.').*_" "$module_tmp" \
         || { echo "use_repo update for ${fill_m2} did not land" >&2; rm -f "$config_tmp" "$tmp" "$module_tmp"; return 1; }
@@ -428,7 +437,7 @@ function update_test_versions_python() {
   old_snapshot=$1
   # keep the hermetic smoke test's expected minors in sync with the matrix
   expected=$(get_python_minors | tr '\n' ' ')
-  sed -i '' -e "s/\"\$minors\" = \"[^\"]*\"/\"\$minors\" = \"${expected}\"/" python/update_python_archives_test.sh
+  sed_inplace "s/\"\$minors\" = \"[^\"]*\"/\"\$minors\" = \"${expected}\"/" python/update_python_archives_test.sh
   for minor in $(get_python_minors); do
     file="python/testdata/python3.$(echo "$minor" | cut -d. -f2).yaml"
     new=$(current_version "$minor" "amd64")
@@ -451,7 +460,7 @@ EOT
     fi
     old=$(echo "$old_snapshot" | awk -v key="${minor}_amd64" '$1 == key { print $2 }')
     if [ -n "$old" ] && [ -n "$new" ] && [ "$old" != "$new" ]; then
-      sed -i '' -e "s/Python ${old}/Python ${new}/g" "$file"
+      sed_inplace "s/Python ${old}/Python ${new}/g" "$file"
       grep -q "Python ${new}" "$file" || { echo "testdata bump for ${file} did not land" >&2; return 1; }
       echo "bumped $file to ${new}"
     fi
