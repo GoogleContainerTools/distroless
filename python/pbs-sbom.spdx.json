@@ -5,7 +5,7 @@
  "name": "python-build-standalone-20260814-linux",
  "documentNamespace": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260814/spdx.json",
  "creationInfo": {
-  "created": "2026-08-19T10:03:07Z",
+  "created": "2026-08-19T10:30:39Z",
   "creators": [
    "Tool: distroless-pbs-sbom (python/gen_pbs_sbom.py)"
   ]
@@ -28,6 +28,13 @@
    "downloadLocation": "https://ftp.osuosl.org/pub/blfs/conglomeration/db/db-6.0.19.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Sleepycat",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/bdb@6.0.19"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -43,6 +50,13 @@
    "downloadLocation": "https://astral-sh.github.io/mirror/files/bzip2-1.0.8.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "LicenseRef-bzip2-1.0.6",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/bzip2@1.0.8"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -58,6 +72,13 @@
    "downloadLocation": "https://www.python.org/ftp/python/3.10.21/Python-3.10.21.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/cpython-3.10@3.10.21"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -73,6 +94,13 @@
    "downloadLocation": "https://www.python.org/ftp/python/3.11.16/Python-3.11.16.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/cpython-3.11@3.11.16"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -88,6 +116,13 @@
    "downloadLocation": "https://www.python.org/ftp/python/3.12.14/Python-3.12.14.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/cpython-3.12@3.12.14"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -103,6 +138,13 @@
    "downloadLocation": "https://www.python.org/ftp/python/3.13.15/Python-3.13.15.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/cpython-3.13@3.13.15"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -118,6 +160,13 @@
    "downloadLocation": "https://www.python.org/ftp/python/3.14.7/Python-3.14.7.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/cpython-3.14@3.14.7"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -133,6 +182,13 @@
    "downloadLocation": "https://www.python.org/ftp/python/3.15.0/Python-3.15.0rc1.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/cpython-3.15@3.15.0rc1"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -148,6 +204,13 @@
    "downloadLocation": "https://github.com/libexpat/libexpat/releases/download/R_2_8_3/expat-2.8.3.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "MIT",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/expat@2.8.3"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -163,6 +226,13 @@
    "downloadLocation": "https://www.x.org/releases/individual/lib/libX11-1.8.13.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "MIT AND X11",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/libX11@1.8.13"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -178,6 +248,13 @@
    "downloadLocation": "https://www.x.org/releases/individual/lib/libXau-1.0.12.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "MIT",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/libXau@1.0.12"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -193,6 +270,13 @@
    "downloadLocation": "https://thrysoee.dk/editline/libedit-20240808-3.1.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "BSD-3-Clause",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/libedit@20240808-3.1"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -208,6 +292,13 @@
    "downloadLocation": "https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "MIT",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/libffi@3.4.6"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -223,6 +314,13 @@
    "downloadLocation": "https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "MIT",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/libffi-3.3@3.3"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -238,6 +336,13 @@
    "downloadLocation": "https://xcb.freedesktop.org/dist/libxcb-1.17.0.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "MIT",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/libxcb@1.17.0"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -253,6 +358,13 @@
    "downloadLocation": "https://astral-sh.github.io/mirror/files/mpdecimal-4.0.0.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "BSD-2-Clause",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/mpdecimal@4.0.0"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -268,6 +380,13 @@
    "downloadLocation": "https://astral-sh.github.io/mirror/files/ncurses-6.5.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "X11",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/ncurses@6.5"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -283,6 +402,13 @@
    "downloadLocation": "https://www.openssl.org/source/openssl-1.1.1w.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "OpenSSL",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/openssl-1.1@1.1.1w"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -298,6 +424,13 @@
    "downloadLocation": "https://github.com/openssl/openssl/releases/download/openssl-3.5.7/openssl-3.5.7.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Apache-2.0",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/openssl-3.5@3.5.7"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -312,7 +445,14 @@
    "versionInfo": "26.2.1",
    "downloadLocation": "https://files.pythonhosted.org/packages/f3/6e/1736e5b4ae2b778ef2f81c47d797de9f891d4d8acb047a24ca37a60294dd/pip-26.2.1-py3-none-any.whl",
    "licenseConcluded": "NOASSERTION",
-   "licenseDeclared": "NOASSERTION",
+   "licenseDeclared": "MIT",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:pypi/pip@26.2.1"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -322,27 +462,19 @@
    "filesAnalyzed": false
   },
   {
-   "name": "setuptools",
-   "SPDXID": "SPDXRef-setuptools",
-   "versionInfo": "82.0.1",
-   "downloadLocation": "https://files.pythonhosted.org/packages/9d/76/f789f7a86709c6b087c5a2f52f911838cad707cc613162401badc665acfe/setuptools-82.0.1-py3-none-any.whl",
-   "licenseConcluded": "NOASSERTION",
-   "licenseDeclared": "NOASSERTION",
-   "checksums": [
-    {
-     "algorithm": "SHA256",
-     "checksumValue": "a59e362652f08dcd477c78bb6e7bd9d80a7995bc73ce773050228a348ce2e5bb"
-    }
-   ],
-   "filesAnalyzed": false
-  },
-  {
    "name": "sqlite",
    "SPDXID": "SPDXRef-sqlite",
-   "versionInfo": "3530100",
+   "versionInfo": "3.53.1.0",
    "downloadLocation": "https://www.sqlite.org/2026/sqlite-autoconf-3530100.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "LicenseRef-Public-Domain",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/sqlite@3.53.1.0"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -358,6 +490,13 @@
    "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tcl9.0.4-src.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "TCL",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/tcl@9.0.4"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -373,6 +512,13 @@
    "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tcl8.6.12-src.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "TCL",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/tcl-8612@8.6.12"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -388,6 +534,13 @@
    "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tk9.0.4-src.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "TCL",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/tk@9.0.4"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -403,6 +556,13 @@
    "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tk8.6.12-src.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "TCL",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/tk-8612@8.6.12"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -418,6 +578,13 @@
    "downloadLocation": "https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "BSD-3-Clause",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/uuid@1.0.3"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -433,6 +600,13 @@
    "downloadLocation": "https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "0BSD",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/xz@5.8.3"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -448,6 +622,13 @@
    "downloadLocation": "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Zlib",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/zlib@1.3.2"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -463,6 +644,13 @@
    "downloadLocation": "https://github.com/python/cpython-source-deps/archive/refs/tags/zlib-ng-2.2.4.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Zlib",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/zlib-ng@2.2.4"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -478,6 +666,13 @@
    "downloadLocation": "https://github.com/python/cpython-source-deps/archive/refs/tags/zstd-1.5.7.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "BSD-3-Clause",
+   "externalRefs": [
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:generic/zstd@1.5.7"
+    }
+   ],
    "checksums": [
     {
      "algorithm": "SHA256",
@@ -587,11 +782,6 @@
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
    "relatedSpdxElement": "SPDXRef-pip"
-  },
-  {
-   "spdxElementId": "SPDXRef-PBS",
-   "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-setuptools"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
