@@ -24,6 +24,7 @@ sh_test(
     srcs = ["update_python_archives_contract_test.sh"],
     data = [
         ":config.bzl",
+        ":gen_pbs_sbom.py",
         ":update_python_archives_test.sh",
         "testdata/python3.13.yaml",
         "testdata/python3.14.yaml",

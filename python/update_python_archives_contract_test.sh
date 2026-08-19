@@ -25,7 +25,31 @@ cp private/extensions/python.bzl "$FIX/private/extensions/"
 cp python/config.bzl "$FIX/python/"
 cp MODULE.bazel "$FIX/"
 cp python/update_python_archives_test.sh "$FIX/python/"
+cp python/gen_pbs_sbom.py "$FIX/python/"
 cp python/testdata/python3.13.yaml python/testdata/python3.14.yaml "$FIX/python/testdata/"
+
+# fake PBS component manifest (pythonbuild/downloads.py) for the SBOM step
+cat > "$FIX/downloads.py" <<'EOF'
+DOWNLOADS = {
+    "cpython-3.14": {
+        "url": "https://www.python.org/ftp/python/3.14.7/Python-3.14.7.tar.xz",
+        "version": "3.14.7",
+        "licenses": ["Python-2.0"],
+    },
+    "expat": {
+        "url": "https://example.invalid/expat.tar.gz",
+        "version": "2.8.3",
+        "licenses": ["MIT"],
+        "library_names": ["expat"],
+    },
+    "zlib": {
+        "url": "https://example.invalid/zlib.tar.gz",
+        "version": "1.3.2",
+        "licenses": ["Zlib"],
+        "library_names": ["z"],
+    },
+}
+EOF
 
 cd "$FIX"
 source update_python_archives.sh
@@ -52,6 +76,7 @@ make_sha256sums() { # $1=release $2=patch313 $3=patch314 $4=patch315 ("" = no 3.
 
 run_updater() { # prints stdout; fails the test on a non-zero exit
   PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
+    PBS_DOWNLOADS_FILE="$FIX/downloads.py" \
     generate_python_archives 2>"$FIX/updater.err"
 }
 
@@ -66,6 +91,8 @@ grep -q '3.13.15+20990101' private/extensions/python.bzl || { echo "phase A: arc
 grep -q '"3.13_amd64": "3.13.15"' private/extensions/python.bzl || { echo "phase A: versions dict must not change on a tag-only bump"; exit 1; }
 grep -q 'Python 3.13.15' python/testdata/python3.13.yaml || { echo "phase A: testdata must not change on a tag-only bump"; exit 1; }
 [ "$(run_updater)" = "NO_CHANGE" ] || { echo "phase A: second run must be NO_CHANGE"; cat "$FIX/updater.err"; exit 1; }
+grep -q '20990101' python/pbs-sbom.spdx.json || { echo "phase A: SBOM not regenerated for the new release"; exit 1; }
+grep -q '"expat"' python/pbs-sbom.spdx.json || { echo "phase A: SBOM missing bundled component"; exit 1; }
 
 # --- phase B: patch bump (new release, new patches) ---------------------------
 snap_b=$(get_python_versions)
@@ -77,6 +104,7 @@ grep -q '"3.13_amd64": "3.13.16"' private/extensions/python.bzl || { echo "phase
 update_test_versions_python "$snap_b"
 grep -q 'Python 3.13.16' python/testdata/python3.13.yaml || { echo "phase B: testdata 3.13 not bumped"; exit 1; }
 grep -q 'Python 3.14.8' python/testdata/python3.14.yaml || { echo "phase B: testdata 3.14 not bumped"; exit 1; }
+grep -q '20990102' python/pbs-sbom.spdx.json || { echo "phase B: SBOM not regenerated"; exit 1; }
 
 # --- phase C: new stable minor fill (3.15 appears upstream) -------------------
 snap_c=$(get_python_versions)
@@ -94,6 +122,7 @@ grep -q 'Python 3.15.0' python/testdata/python3.15.yaml || { echo "phase C: pyth
 
 # --- convergence + structural consistency -------------------------------------
 [ "$(run_updater)" = "NO_CHANGE" ] || { echo "final: expected NO_CHANGE"; cat "$FIX/updater.err"; exit 1; }
+grep -q '20990103' python/pbs-sbom.spdx.json || { echo "final: SBOM must stay on the last release"; exit 1; }
 for minor in $(get_python_minors); do
   for arch in $(get_python_archs "$minor"); do
     v=$(current_version "$minor" "$arch")
