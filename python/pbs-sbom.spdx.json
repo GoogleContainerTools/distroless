@@ -1,0 +1,647 @@
+{
+ "spdxVersion": "SPDX-2.3",
+ "dataLicense": "CC0-1.0",
+ "SPDXID": "SPDXRef-DOCUMENT",
+ "name": "python-build-standalone-20260814-linux",
+ "documentNamespace": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260814/spdx.json",
+ "creationInfo": {
+  "created": "2026-08-19T10:03:07Z",
+  "creators": [
+   "Tool: distroless-pbs-sbom (python/gen_pbs_sbom.py)"
+  ]
+ },
+ "packages": [
+  {
+   "name": "python-build-standalone",
+   "SPDXID": "SPDXRef-PBS",
+   "versionInfo": "20260814",
+   "downloadLocation": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260814",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "supplier": "Organization: astral-sh",
+   "filesAnalyzed": false
+  },
+  {
+   "name": "bdb",
+   "SPDXID": "SPDXRef-bdb",
+   "versionInfo": "6.0.19",
+   "downloadLocation": "https://ftp.osuosl.org/pub/blfs/conglomeration/db/db-6.0.19.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Sleepycat",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "2917c28f60903908c2ca4587ded1363b812c4e830a5326aaa77c9879d13ae18e"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "bzip2",
+   "SPDXID": "SPDXRef-bzip2",
+   "versionInfo": "1.0.8",
+   "downloadLocation": "https://astral-sh.github.io/mirror/files/bzip2-1.0.8.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "LicenseRef-bzip2-1.0.6",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "cpython-3.10",
+   "SPDXID": "SPDXRef-cpython_3_10",
+   "versionInfo": "3.10.21",
+   "downloadLocation": "https://www.python.org/ftp/python/3.10.21/Python-3.10.21.tar.xz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "a0da1e72132e950154eca0f6f47d5db828454700de20e5113667940d81e0db04"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "cpython-3.11",
+   "SPDXID": "SPDXRef-cpython_3_11",
+   "versionInfo": "3.11.16",
+   "downloadLocation": "https://www.python.org/ftp/python/3.11.16/Python-3.11.16.tar.xz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "91bcdebfdde239a003ae93738a7fce0f9230fee5c4bc2b86f6e6e8c6f98aabe8"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "cpython-3.12",
+   "SPDXID": "SPDXRef-cpython_3_12",
+   "versionInfo": "3.12.14",
+   "downloadLocation": "https://www.python.org/ftp/python/3.12.14/Python-3.12.14.tar.xz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "cpython-3.13",
+   "SPDXID": "SPDXRef-cpython_3_13",
+   "versionInfo": "3.13.15",
+   "downloadLocation": "https://www.python.org/ftp/python/3.13.15/Python-3.13.15.tar.xz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "1e66a7945a48390ee4c2a4268a0e4185884059a13c4aab6d148aa208deea4a76"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "cpython-3.14",
+   "SPDXID": "SPDXRef-cpython_3_14",
+   "versionInfo": "3.14.7",
+   "downloadLocation": "https://www.python.org/ftp/python/3.14.7/Python-3.14.7.tar.xz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "3b48dac8fb59f62eaa67ac83c1eb12bda1b7a08406dd286e252c11a66be27f81"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "cpython-3.15",
+   "SPDXID": "SPDXRef-cpython_3_15",
+   "versionInfo": "3.15.0rc1",
+   "downloadLocation": "https://www.python.org/ftp/python/3.15.0/Python-3.15.0rc1.tar.xz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Python-2.0 AND CNRI-Python",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "f84dad680ab2147417d2739355c2678f0f9acffe4ae8ef77895de1454b384b07"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "expat",
+   "SPDXID": "SPDXRef-expat",
+   "versionInfo": "2.8.3",
+   "downloadLocation": "https://github.com/libexpat/libexpat/releases/download/R_2_8_3/expat-2.8.3.tar.xz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "MIT",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "f6256df90c906773d344da084402b7d3e4f22ed41b1a59c989098a83d3ea0c85"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "libX11",
+   "SPDXID": "SPDXRef-libX11",
+   "versionInfo": "1.8.13",
+   "downloadLocation": "https://www.x.org/releases/individual/lib/libX11-1.8.13.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "MIT AND X11",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "acf0e7cd7541110e6330ecb539441a2d53061f386ec7be6906dfde0de2598470"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "libXau",
+   "SPDXID": "SPDXRef-libXau",
+   "versionInfo": "1.0.12",
+   "downloadLocation": "https://www.x.org/releases/individual/lib/libXau-1.0.12.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "MIT",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "2402dd938da4d0a332349ab3d3586606175e19cb32cb9fe013c19f1dc922dcee"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "libedit",
+   "SPDXID": "SPDXRef-libedit",
+   "versionInfo": "20240808-3.1",
+   "downloadLocation": "https://thrysoee.dk/editline/libedit-20240808-3.1.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "BSD-3-Clause",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "5f0573349d77c4a48967191cdd6634dd7aa5f6398c6a57fe037cc02696d6099f"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "libffi",
+   "SPDXID": "SPDXRef-libffi",
+   "versionInfo": "3.4.6",
+   "downloadLocation": "https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "MIT",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "b0dea9df23c863a7a50e825440f3ebffabd65df1497108e5d437747843895a4e"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "libffi-3.3",
+   "SPDXID": "SPDXRef-libffi_3_3",
+   "versionInfo": "3.3",
+   "downloadLocation": "https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "MIT",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "72fba7922703ddfa7a028d513ac15a85c8d54c8d67f55fa5a4802885dc652056"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "libxcb",
+   "SPDXID": "SPDXRef-libxcb",
+   "versionInfo": "1.17.0",
+   "downloadLocation": "https://xcb.freedesktop.org/dist/libxcb-1.17.0.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "MIT",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "2c69287424c9e2128cb47ffe92171e10417041ec2963bceafb65cb3fcf8f0b85"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "mpdecimal",
+   "SPDXID": "SPDXRef-mpdecimal",
+   "versionInfo": "4.0.0",
+   "downloadLocation": "https://astral-sh.github.io/mirror/files/mpdecimal-4.0.0.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "BSD-2-Clause",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "942445c3245b22730fd41a67a7c5c231d11cb1b9936b9c0f76334fb7d0b4468c"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "ncurses",
+   "SPDXID": "SPDXRef-ncurses",
+   "versionInfo": "6.5",
+   "downloadLocation": "https://astral-sh.github.io/mirror/files/ncurses-6.5.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "X11",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "136d91bc269a9a5785e5f9e980bc76ab57428f604ce3e5a5a90cebc767971cc6"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "openssl-1.1",
+   "SPDXID": "SPDXRef-openssl_1_1",
+   "versionInfo": "1.1.1w",
+   "downloadLocation": "https://www.openssl.org/source/openssl-1.1.1w.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "OpenSSL",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "cf3098950cb4d853ad95c0841f1f9c6d3dc102dccfcacd521d93925208b76ac8"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "openssl-3.5",
+   "SPDXID": "SPDXRef-openssl_3_5",
+   "versionInfo": "3.5.7",
+   "downloadLocation": "https://github.com/openssl/openssl/releases/download/openssl-3.5.7/openssl-3.5.7.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Apache-2.0",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "a8c0d28a529ca480f9f36cf5792e2cd21984552a3c8e4aa11a24aa31aeac98e8"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "pip",
+   "SPDXID": "SPDXRef-pip",
+   "versionInfo": "26.2.1",
+   "downloadLocation": "https://files.pythonhosted.org/packages/f3/6e/1736e5b4ae2b778ef2f81c47d797de9f891d4d8acb047a24ca37a60294dd/pip-26.2.1-py3-none-any.whl",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "71138adf1f4ca900cdb7d289c21b7494329f2332b6d85f0e1c42108c0384ed3e"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "setuptools",
+   "SPDXID": "SPDXRef-setuptools",
+   "versionInfo": "82.0.1",
+   "downloadLocation": "https://files.pythonhosted.org/packages/9d/76/f789f7a86709c6b087c5a2f52f911838cad707cc613162401badc665acfe/setuptools-82.0.1-py3-none-any.whl",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "a59e362652f08dcd477c78bb6e7bd9d80a7995bc73ce773050228a348ce2e5bb"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "sqlite",
+   "SPDXID": "SPDXRef-sqlite",
+   "versionInfo": "3530100",
+   "downloadLocation": "https://www.sqlite.org/2026/sqlite-autoconf-3530100.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "LicenseRef-Public-Domain",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "83e6b2020a034e9a7ad4a72feea59e1ad52f162e09cbd26735a3ffb98359fc4f"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "tcl",
+   "SPDXID": "SPDXRef-tcl",
+   "versionInfo": "9.0.4",
+   "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tcl9.0.4-src.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "TCL",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "d0aed49230bc02a65c1e0229e65f34590a4b037ec40d546f32573b467f7551ea"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "tcl-8612",
+   "SPDXID": "SPDXRef-tcl_8612",
+   "versionInfo": "8.6.12",
+   "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tcl8.6.12-src.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "TCL",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "26c995dd0f167e48b11961d891ee555f680c175f7173ff8cb829f4ebcde4c1a6"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "tk",
+   "SPDXID": "SPDXRef-tk",
+   "versionInfo": "9.0.4",
+   "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tk9.0.4-src.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "TCL",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "d7a146d2917eb8b5cc95276dbf0e3d03c7464d2b19c1675357857c989301dbb4"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "tk-8612",
+   "SPDXID": "SPDXRef-tk_8612",
+   "versionInfo": "8.6.12",
+   "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tk8.6.12-src.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "TCL",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "12395c1f3fcb6bed2938689f797ea3cdf41ed5cb6c4766eec8ac949560310630"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "uuid",
+   "SPDXID": "SPDXRef-uuid",
+   "versionInfo": "1.0.3",
+   "downloadLocation": "https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "BSD-3-Clause",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "46af3275291091009ad7f1b899de3d0cea0252737550e7919d17237997db5644"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "xz",
+   "SPDXID": "SPDXRef-xz",
+   "versionInfo": "5.8.3",
+   "downloadLocation": "https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "0BSD",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "3d3a1b973af218114f4f889bbaa2f4c037deaae0c8e815eec381c3d546b974a0"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "zlib",
+   "SPDXID": "SPDXRef-zlib",
+   "versionInfo": "1.3.2",
+   "downloadLocation": "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Zlib",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "zlib-ng",
+   "SPDXID": "SPDXRef-zlib_ng",
+   "versionInfo": "2.2.4",
+   "downloadLocation": "https://github.com/python/cpython-source-deps/archive/refs/tags/zlib-ng-2.2.4.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "Zlib",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "00bbd88709bc416cb96160ab61d3e1c8f76e106799af7328d0fe434dc7dd5004"
+    }
+   ],
+   "filesAnalyzed": false
+  },
+  {
+   "name": "zstd",
+   "SPDXID": "SPDXRef-zstd",
+   "versionInfo": "1.5.7",
+   "downloadLocation": "https://github.com/python/cpython-source-deps/archive/refs/tags/zstd-1.5.7.tar.gz",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "BSD-3-Clause",
+   "checksums": [
+    {
+     "algorithm": "SHA256",
+     "checksumValue": "f24b52470d12f466e9fa4fcc94e6c530625ada51d7b36de7fdc6ed7e6f499c8e"
+    }
+   ],
+   "filesAnalyzed": false
+  }
+ ],
+ "relationships": [
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-bdb"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-bzip2"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-cpython_3_10"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-cpython_3_11"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-cpython_3_12"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-cpython_3_13"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-cpython_3_14"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-cpython_3_15"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-expat"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-libX11"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-libXau"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-libedit"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-libffi"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-libffi_3_3"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-libxcb"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-mpdecimal"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-ncurses"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-openssl_1_1"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-openssl_3_5"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-pip"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-setuptools"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-sqlite"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-tcl"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-tcl_8612"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-tk"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-tk_8612"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-uuid"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-xz"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-zlib"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-zlib_ng"
+  },
+  {
+   "spdxElementId": "SPDXRef-PBS",
+   "relationshipType": "CONTAINS",
+   "relatedSpdxElement": "SPDXRef-zstd"
+  }
+ ]
+}
