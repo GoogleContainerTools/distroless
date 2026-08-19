@@ -10,6 +10,9 @@ load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
+# allow updater tests to read MODULE.bazel
+exports_files(["MODULE.bazel"])
+
 DEFAULT_DISTRO = "debian13"
 
 VARIANTS = [

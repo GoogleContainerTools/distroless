@@ -155,6 +155,66 @@ function cmd_lint () {
     buildifier -mode=$mode $(find . -type f \( -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' \))
 }
 
+function cmd_update_python_archives () {
+	if ! which jq > /dev/null; then
+		echo "🧱 No jq executable was found"
+		exit 1
+	fi
+	if ! which curl > /dev/null; then
+		echo "🧱 No curl executable was found"
+		exit 1
+	fi
+
+	VERBOSE=0
+	DRY_RUN=0
+	for arg in "$@"; do
+		case "$arg" in
+		--verbose)
+			VERBOSE=1
+			;;
+		--dry-run)
+			DRY_RUN=1
+			;;
+		*)
+			echo "unknown option: $arg"
+			exit 1
+			;;
+		esac
+	done
+	export VERBOSE DRY_RUN
+
+	source knife.d/update_python_archives.sh
+	old_versions=$(get_python_versions)
+	if ! out=$(generate_python_archives); then
+		case "$out" in
+		*MUTATED_PARTIAL*)
+			echo "update failed mid-mutation; files may be partially updated." >&2
+			echo "  git checkout -- private/extensions/python.bzl python/config.bzl python/testdata python/update_python_archives_test.sh MODULE.bazel.lock" >&2
+			;;
+		*)
+			echo "update failed; no files were mutated (pre-flight validation)." >&2
+			;;
+		esac
+		return 1
+	fi
+	if [ "$out" = "NO_CHANGE" ]; then
+		echo "python archives are up to date"
+		return 0
+	fi
+	if [ "$DRY_RUN" = 1 ]; then
+		echo "dry-run: no files written"
+		return 0
+	fi
+	echo "updated python archives to release $out"
+	if ! update_test_versions_python "$old_versions"; then
+		echo "testdata update failed; extension/config.bzl were already updated." >&2
+		echo "  git checkout -- private/extensions/python.bzl python/config.bzl python/testdata python/update_python_archives_test.sh MODULE.bazel.lock" >&2
+		return 1
+	fi
+	# the extension changed: the lockfile digest is stale until bazel re-syncs it
+	echo "sync the lockfile: bazel mod deps --lockfile_mode=update" >&2
+}
+
 function cmd_update_node_archives () {
 	if ! which jq > /dev/null; then
 		echo "🧱 No jq executable was found"
@@ -278,8 +338,11 @@ deb-versions)
 update-node-archives)
 	cmd_update_node_archives
 	;;
+update-python-archives)
+	cmd_update_python_archives "${@:2}"
+	;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, test, deb-versions, update-node-archives"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, test, deb-versions, update-node-archives, update-python-archives"
     exit 1
     ;;
 *) # unknown command
