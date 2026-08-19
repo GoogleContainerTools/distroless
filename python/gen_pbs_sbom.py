@@ -2,7 +2,7 @@
 """Emit an SPDX 2.3 SBOM for a python-build-standalone release.
 
 Reads the release's component manifest (pythonbuild/downloads.py) and lists
-the runtime components: the CPython versions, bundled pip/setuptools, and the
+the runtime components: the CPython versions, bundled pip, and the
 native libraries statically linked into the interpreters. Build-time-only
 tools (autoconf, binutils, musl, llvm, ...) are excluded.
 

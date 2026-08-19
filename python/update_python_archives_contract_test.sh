@@ -9,8 +9,8 @@
 #   - MODULE.bazel: use_repo gains the new minor's archives
 #   - python/testdata/python3.X.yaml: version strings (patch bumps) / new yaml (new minor)
 #   - a second run is a NO_CHANGE no-op (the state is the updater's fixed point)
-# Runs fully offline; fixture release data is injected via PBS_RELEASE_FILE /
-# PBS_SHA256SUMS_FILE.
+# Runs fully offline; fixture data is injected via PBS_RELEASE_FILE /
+# PBS_SHA256SUMS_FILE / PBS_DOWNLOADS_FILE / PBS_TARBALL_FILE.
 set -euo pipefail
 
 cd "$TEST_SRCDIR/${TEST_WORKSPACE:-_main}"
