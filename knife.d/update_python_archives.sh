@@ -300,6 +300,18 @@ PYEOF
   rm -rf "$so_dir"
   [ -n "${PBS_TARBALL_FILE:-}" ] || rm -f "$tarball_tmp"
 
+  # NVD CVE check: the pinned native libraries are invisible to trivy
+  # (pkg:generic has no advisory feed), so query NVD CPE data for the exact
+  # verified versions and RED on HIGH/CRITICAL. Hermetic tests inject fixtures
+  # directly into pbs_cve_check.py and skip this block (no network).
+  if [ -z "${PBS_TARBALL_FILE:-}" ] && [ -z "${PBS_SKIP_CVE_CHECK:-}" ]; then
+    if ! python3 python/pbs_cve_check.py "$sbom_tmp"; then
+      echo "PBS pinned native libraries have HIGH/CRITICAL CVEs; update blocked" >&2
+      rm -f "$sbom_tmp"
+      exit 1
+    fi
+  fi
+
   printf '%s\n' "${changes[@]}" >&2
 
   local start end section tmp

@@ -1,0 +1,13 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "pbs-mini",
+  "packages": [
+    {"name": "python-build-standalone", "SPDXID": "SPDXRef-PBS", "versionInfo": "20260814"},
+    {"name": "openssl-3.5", "SPDXID": "SPDXRef-openssl_3_5", "versionInfo": "3.5.7"},
+    {"name": "sqlite", "SPDXID": "SPDXRef-sqlite", "versionInfo": "3.53.1.0"},
+    {"name": "zlib", "SPDXID": "SPDXRef-zlib", "versionInfo": "1.3.2"}
+  ],
+  "relationships": []
+}
