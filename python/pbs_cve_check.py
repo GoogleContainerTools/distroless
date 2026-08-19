@@ -62,7 +62,7 @@ def fetch_nvd(cpe, api_key, fixture):
                 return json.load(resp)
         except urllib.error.HTTPError as err:
             if err.code == 429:
-                time.sleep(10 * (attempt + 1))  # unauth limit: ~5 req/30s
+                time.sleep(10 * (attempt + 1))  # unauthenticated rate limit: ~5 req/30s
                 continue
             raise
     sys.exit("NVD API rate limited for " + cpe)

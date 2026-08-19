@@ -18,8 +18,9 @@ plus a standalone CPython install under `/python`:
 - `/python/lib/python3.X/` (standard library)
 - `/python/lib/libpython3.X.so.1.0`
 
-No shell, no pip (install dependencies into `site-packages` in a builder stage),
-no include files. python-build-standalone builds are relocatable and reference
+No shell, no include files. A bundled pip is on PATH; for reproducible
+images, install dependencies into `site-packages` in a builder stage.
+python-build-standalone builds are relocatable and reference
 only glibc at runtime, so no extra Debian packages are needed.
 
 ## Usage
