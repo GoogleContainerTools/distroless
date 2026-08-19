@@ -1,0 +1,10 @@
+schemaVersion: "2.0.0"
+commandTests:
+  - name: version
+    command: "/python/bin/python3.14"
+    args: ["--version"]
+    expectedOutput: ["Python 3.14.7"]
+  - name: symlink
+    command: "/python/bin/python3"
+    args: ["--version"]
+    expectedOutput: ["Python 3.14.7"]

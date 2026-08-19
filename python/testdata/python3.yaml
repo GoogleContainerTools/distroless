@@ -1,0 +1,120 @@
+schemaVersion: "2.0.0"
+commandTests:
+  - name: hello
+    command: "/python/bin/python3"
+    args: ["-c", "print('Hello World')"]
+    expectedOutput: ['Hello World']
+
+  # ensure there is no shell
+  - name: no_shell
+    command: "/python/bin/python3"
+    args: ["-c",
+      "import subprocess, sys; subprocess.check_call(sys.executable + ' -h', shell=True)"]
+    exitCode: 1
+
+  # file names are UTF-8: default for modern Linux systems
+  # The \xe9 backslash must be double-escaped to avoid YAML string parsing weirdness
+  - name: filesystem_utf8
+    command: "/python/bin/python3"
+    args: ["-c", "open(u'h\\xe9llo', 'w'); import sys; print(sys.getfilesystemencoding())"]
+    expectedOutput: ['utf-8']
+
+  # the print function should output UTF-8
+  - name: print_utf8
+    command: "/python/bin/python3"
+    args: ["-c", "print(u'h\\xe9llo.txt')"]
+    expectedOutput: ['h\xe9llo']
+
+  # find_library works via /sbin/ldconfig (libc-bin) + the generated ld.so.cache
+  - name: find_library
+    command: "/python/bin/python3"
+    args: ["-c", "import ctypes.util; assert ctypes.util.find_library('c')"]
+
+  # import every module installed with the Python package
+  - name: import_everything
+    exitCode: 0
+    expectedOutput: ['FINISHED ENTIRE SCRIPT']
+    command: "/python/bin/python3"
+    args:
+      - "-c"
+      # multi-line YAML string with Python script that imports all modules that are installed.
+      # This ensures we have the right native library dependencies.
+      - |
+        import importlib, os, pkgutil, sys
+
+        skip_modules = frozenset((
+          # Windows-specific modules
+          'asyncio.windows_events',
+          'asyncio.windows_utils',
+          'ctypes.wintypes',
+          'encodings.cp65001',
+          'encodings.mbcs',
+          'encodings.oem',
+          'multiprocessing.popen_spawn_win32',
+          'winreg',
+
+          # Python regression tests "for internal use by Python only"
+          'test',
+
+          # calls sys.exit
+          'unittest.__main__',
+          'venv.__main__',
+
+          # python-build-standalone builds without _gdbm
+          'dbm.gnu',
+
+          # iOS-only support module
+          '_ios_support',
+
+          # GUI: no Tcl/Tk in the image (never_import below covers the
+          # tkinter/idlelib/turtle packages; _tkinter is the C extension)
+          '_tkinter',
+
+          # new REPL; _minimal_curses needs libncurses not shipped in the image
+          '_pyrepl',
+
+          # prints the Zen of Python on import
+          'this',
+        ))
+
+        # packages we never import: GUI modules (no Tcl/Tk in the image,
+        # idlelib raises SystemExit on import without Tk) and removed distutils
+        never_import = ('tkinter', 'idlelib', 'turtle', 'distutils', 'test', 'venv')
+
+        failed = []
+
+        def walk(path, prefix=''):
+          try:
+            infos = list(pkgutil.iter_modules(path))
+          except Exception as e:
+            failed.append('walk {}: {}'.format(path, e))
+            return
+          for info in infos:
+            name = prefix + info.name
+            if name in skip_modules or name.startswith(never_import):
+              continue
+            if info.ispkg:
+              try:
+                mod = importlib.import_module(name)
+                if hasattr(mod, '__path__'):
+                  walk(mod.__path__, name + '.')
+              except BaseException as e:
+                failed.append('{}: {}: {}'.format(name, type(e).__name__, e))
+              continue
+            try:
+              importlib.import_module(name)
+            except BaseException as e:
+              failed.append('{}: {}: {}'.format(name, type(e).__name__, e))
+
+        stdlib_root = os.path.join(os.path.dirname(sys.executable), os.pardir, 'lib', 'python%d.%d' % sys.version_info[:2])
+        for p in sys.path:
+          if os.path.abspath(p).startswith(os.path.abspath(stdlib_root)) and 'site-packages' not in p:
+            walk([p])
+
+        if failed:
+          for f in failed[:20]:
+            print('FAIL {}'.format(f))
+          raise SystemExit('failed to import {} modules'.format(len(failed)))
+
+        # ensures some module does not exit early (e.g unittest.__main__)
+        print('FINISHED ENTIRE SCRIPT')

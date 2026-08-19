@@ -4,6 +4,7 @@ load("//java:config.bzl", "JAVA_ARCHITECTURES", "JAVA_DISTROS", "JAVA_MAJOR_VERS
 load("//nodejs:config.bzl", "NODEJS_ARCHITECTURES", "NODEJS_DISTROS", "NODEJS_MAJOR_VERSIONS")
 load("//private/oci:defs.bzl", "sign_and_push_all")
 load("//private/tools/lifecycle:defs.bzl", "attach_lifecycle_tags")
+load("//python:config.bzl", PBS_PYTHON_ARCHITECTURES = "PYTHON_ARCHITECTURES", PBS_PYTHON_DISTROS = "PYTHON_DISTROS", PBS_PYTHON_MAJOR_VERSIONS = "PYTHON_MAJOR_VERSIONS")
 load("//python3:config.bzl", "PYTHON_ARCHITECTURES", "PYTHON_DISTROS")
 load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 
@@ -197,6 +198,39 @@ NODEJS |= {
 }
 
 ###############
+# PYTHON (PBS) #
+###############
+PYTHON = {
+    "{REGISTRY}/{PROJECT_ID}/python" + version + "-" + distro + ":" + tag_base + "-" + arch: "//python:python" + version.replace(".", "") + debug_mode + "_" + user + "_" + arch + "_" + distro
+    for version in PBS_PYTHON_MAJOR_VERSIONS
+    for distro in PBS_PYTHON_DISTROS
+    for arch in PBS_PYTHON_ARCHITECTURES[distro][version]
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
+# oci_image_index
+PYTHON |= {
+    "{REGISTRY}/{PROJECT_ID}/python" + version + "-" + distro + ":" + tag_base: "//python:python" + version.replace(".", "") + debug_mode + "_" + user + "_" + distro
+    for version in PBS_PYTHON_MAJOR_VERSIONS
+    for distro in PBS_PYTHON_DISTROS
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
+PYTHON |= {
+    "{REGISTRY}/{PROJECT_ID}/python" + version + ":" + tag_base + "-" + arch: "//python:python" + version.replace(".", "") + debug_mode + "_" + user + "_" + arch + "_" + DEFAULT_DISTRO
+    for version in PBS_PYTHON_MAJOR_VERSIONS
+    for arch in PBS_PYTHON_ARCHITECTURES[DEFAULT_DISTRO][version]
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
+# oci_image_index
+PYTHON |= {
+    "{REGISTRY}/{PROJECT_ID}/python" + version + ":" + tag_base: "//python:python" + version.replace(".", "") + debug_mode + "_" + user + "_" + DEFAULT_DISTRO
+    for version in PBS_PYTHON_MAJOR_VERSIONS
+    for (tag_base, debug_mode, user) in VARIANTS
+}
+
+###############
 # JAVA_BASE   #
 ###############
 JAVA_BASE = {
@@ -269,6 +303,8 @@ ALL |= CC
 ALL |= PYTHON3
 
 ALL |= NODEJS
+
+ALL |= PYTHON
 
 ALL |= JAVA_BASE
 
