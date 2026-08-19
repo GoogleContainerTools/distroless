@@ -5,6 +5,34 @@ load(":python.bzl", "python_image", "python_image_index")
 
 package(default_visibility = ["//visibility:public"])
 
+sh_test(
+    name = "update_python_archives_test",
+    srcs = ["update_python_archives_test.sh"],
+    data = [
+        ":config.bzl",
+        "//:MODULE.bazel",
+        "//knife.d:update_python_archives.sh",
+        "//private/extensions:python.bzl",
+    ],
+)
+
+# Black-box contract test: after a new PBS release every file needed to build the
+# new images must update consistently (extension, config.bzl, MODULE.bazel,
+# testdata). Offline via PBS_RELEASE_FILE/PBS_SHA256SUMS_FILE fixtures.
+sh_test(
+    name = "update_python_archives_contract_test",
+    srcs = ["update_python_archives_contract_test.sh"],
+    data = [
+        ":config.bzl",
+        ":update_python_archives_test.sh",
+        "testdata/python3.13.yaml",
+        "testdata/python3.14.yaml",
+        "//:MODULE.bazel",
+        "//knife.d:update_python_archives.sh",
+        "//private/extensions:python.bzl",
+    ],
+)
+
 [
     python_image(
         arch = arch,
