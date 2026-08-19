@@ -48,8 +48,11 @@ function get_python_minors() {
 # prints archs for a minor from the build matrix, one per line
 function get_python_archs() {
   local minor="$1"
+  # a missing minor must yield an empty result (the caller falls back to the
+  # previous minor's archs for a newly detected one), NOT kill the updater:
+  # errexit+pipefail would otherwise abort on the failed grep.
   grep "\"${minor}\": \[" python/config.bzl \
-    | grep -oE '"[a-z0-9]+"' | tr -d '"'
+    | grep -oE '"[a-z0-9]+"' | tr -d '"' || true
 }
 
 function triple_for_arch() {
@@ -240,6 +243,62 @@ function generate_python_archives() {
   fi
   grep -q "$latest_release" "$sbom_tmp" || { echo "PBS SBOM does not mention ${latest_release}" >&2; rm -f "$sbom_tmp" "$downloads_tmp"; exit 1; }
   [ -n "${PBS_DOWNLOADS_FILE:-}" ] || rm -f "$downloads_tmp"
+
+  # PBS embedded native libraries: dissect libpython3*.so from the x86_64 install
+  # tarball and verify the statically linked C libraries against the manifest.
+  # A release can bump the embedded libs while the CPython versions stay the same
+  # (maintainer-reported gap); this turns that drift into a hard error. The tarball
+  # is sha-verified against SHA256SUMS. Hermetic tests inject a fake tarball via
+  # PBS_TARBALL_FILE.
+  local tarball tarball_tmp so_dir so_path
+  if [ -n "${PBS_TARBALL_FILE:-}" ]; then
+    tarball="$PBS_TARBALL_FILE"
+  else
+    tarball_tmp=$(mktemp)
+    local fname tarball_sha
+    fname=$(printf '%s\n' "$sha256sums" | awk '/x86_64-unknown-linux-gnu-install_only\.tar\.gz$/ {print $2; exit}')
+    tarball_sha=$(printf '%s\n' "$sha256sums" | awk -v f="$fname" '$2 == f {print $1; exit}')
+    if [ -z "$fname" ] || [ -z "$tarball_sha" ]; then
+      echo "no x86_64 install tarball in SHA256SUMS" >&2
+      rm -f "$tarball_tmp"
+      exit 1
+    fi
+    if ! curl -sSL "https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/${fname}" -o "$tarball_tmp"; then
+      echo "cannot download ${fname}" >&2
+      rm -f "$tarball_tmp"
+      exit 1
+    fi
+    local got_sha
+    got_sha=$(python3 -c "import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "$tarball_tmp")
+    if [ "$got_sha" != "$tarball_sha" ]; then
+      echo "sha256 mismatch for ${fname}: expected ${tarball_sha}, got ${got_sha}" >&2
+      rm -f "$tarball_tmp"
+      exit 1
+    fi
+    tarball="$tarball_tmp"
+  fi
+  so_dir=$(mktemp -d)
+  if ! python3 - "$tarball" "$so_dir" <<'PYEOF'; then
+import sys, tarfile
+tar = tarfile.open(sys.argv[1])
+for member in tar.getmembers():
+    if "/lib/libpython3." in member.name and member.name.endswith(".so") and member.isfile():
+        tar.extract(member, sys.argv[2])
+        sys.exit(0)
+sys.exit("no libpython3*.so in tarball")
+PYEOF
+    rm -rf "$so_dir" "$tarball_tmp"
+    exit 1
+  fi
+  so_path=$(find "$so_dir" -name 'libpython3.*.so' | head -1)
+  # stdout is the updater's machine contract (the release tag); diagnostics to stderr.
+  if ! python3 python/pbs_embedded_versions.py "$so_path" "$downloads_file" >&2; then
+    echo "PBS embedded native libraries drift detected" >&2
+    rm -rf "$so_dir" "$tarball_tmp"
+    exit 1
+  fi
+  rm -rf "$so_dir"
+  [ -n "${PBS_TARBALL_FILE:-}" ] || rm -f "$tarball_tmp"
 
   printf '%s\n' "${changes[@]}" >&2
 

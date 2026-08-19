@@ -73,3 +73,10 @@ source pins (`pkg:generic`) that SBOM scanners skip by design (no advisory feed 
 for source-pinned C libraries). Check it with:
 
     trivy sbom --scanners vuln,license --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 python/pbs-sbom.spdx.json
+
+The updater additionally dissects the x86_64 install tarball's `libpython3*.so`
+(`python/pbs_embedded_versions.py`) and verifies the embedded openssl/zlib/expat/
+ncurses/bzip2/sqlite/xz versions against the manifest — a release that bumps the
+native libraries while the CPython version stays the same fails the update
+(`trivy image` cannot see statically embedded libraries; the dissection is the
+only check that can).
