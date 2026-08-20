@@ -106,38 +106,22 @@ def java_image(distro, java_version, arch):
 
     # intermediary rule to configure jre symlinks
     tar(
-        name = "temurin_" + java_version + "_jre_" + arch + "_" + distro,
+        name = "temurin_" + java_version + "_jre_symlinks_" + arch + "_" + distro,
         extension = "tar.gz",
         symlinks = {
             "/usr/bin/java": "/usr/lib/jvm/temurin-" + java_version + "-jre-" + arch + "/bin/java",
             "/etc/ssl/certs/adoptium/cacerts": "/etc/ssl/certs/java/cacerts",
         },
-        deps = [
-            deb.package(
-                arch,
-                distro,
-                "temurin-" + java_version + "-jre",
-                "adoptium",
-            ),
-        ],
     )
 
     # intermediary rules to configure jdk symlinks
     tar(
-        name = "temurin_" + java_version + "_jdk_" + arch + "_" + distro,
+        name = "temurin_" + java_version + "_jdk_symlinks_" + arch + "_" + distro,
         extension = "tar.gz",
         symlinks = {
             "/usr/bin/java": "/usr/lib/jvm/temurin-" + java_version + "-jdk-" + arch + "/bin/java",
             "/etc/ssl/certs/adoptium/cacerts": "/etc/ssl/certs/java/cacerts",
         },
-        deps = [
-            deb.package(
-                arch,
-                distro,
-                "temurin-" + java_version + "-jdk",
-                "adoptium",
-            ),
-        ],
     )
 
     # standard image builds
@@ -167,7 +151,13 @@ def java_image(distro, java_version, arch):
             tars = [
                 # we use system certs, but we might want to pull this out of the distro
                 # like we did for the github released temurin
-                ":temurin_" + java_version + "_jre_" + arch + "_" + distro,
+                deb.package(
+                    arch,
+                    distro,
+                    "temurin-" + java_version + "-jre",
+                    "adoptium",
+                ),
+                ":temurin_" + java_version + "_jre_symlinks_" + arch + "_" + distro,
             ],
         )
 
@@ -199,7 +189,13 @@ def java_image(distro, java_version, arch):
                 # we use system certs, but we might want to pull this out of the distro
                 # like we did for the github released temurin
                 ":cacerts_java_" + arch + "_" + distro,
-                ":temurin_" + java_version + "_jdk_" + arch + "_" + distro,
+                deb.package(
+                    arch,
+                    distro,
+                    "temurin-" + java_version + "-jdk",
+                    "adoptium",
+                ),
+                ":temurin_" + java_version + "_jdk_symlinks_" + arch + "_" + distro,
             ],
         )
 
