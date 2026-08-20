@@ -69,6 +69,13 @@ func parseDebControl(r io.Reader) (map[string]string, error) {
 	return currentEntry, nil
 }
 
+func purl(mp map[string]string) string {
+	if p := mp["Purl"]; p != "" {
+		return p
+	}
+	return fmt.Sprintf("pkg:deb/debian/%s@%s?arch=%s", mp["Package"], mp["Version"], mp["Architecture"])
+}
+
 func main() {
 	var control, output, sha256, url, id, copyright, generates string
 	flag.StringVar(&control, "control", "", "")
@@ -126,9 +133,8 @@ func main() {
 		},
 		PackageExternalReferences: []*v2_3.PackageExternalReference{
 			{
-
 				Category: "PACKAGE-MANAGER",
-				Locator:  fmt.Sprintf("pkg:deb/debian/%s@%s?arch=%s", mp["Package"], mp["Version"], mp["Architecture"]),
+				Locator:  purl(mp),
 				RefType:  common.TypePackageManagerPURL,
 			},
 		},

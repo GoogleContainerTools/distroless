@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_binary")
+load("@rules_go//go:def.bzl", "go_binary", "go_test")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -15,6 +15,42 @@ go_binary(
 go_binary(
     name = "debian_spdx",
     srcs = ["debian_spdx.go"],
+    deps = [
+        "@com_github_spdx_tools_golang//json",
+        "@com_github_spdx_tools_golang//spdx/common",
+        "@com_github_spdx_tools_golang//spdx/v2_3",
+    ],
+)
+
+go_test(
+    name = "debian_spdx_test",
+    srcs = [
+        "debian_spdx.go",
+        "debian_spdx_test.go",
+    ],
+    deps = [
+        "@com_github_spdx_tools_golang//json",
+        "@com_github_spdx_tools_golang//spdx/common",
+        "@com_github_spdx_tools_golang//spdx/v2_3",
+    ],
+)
+
+go_binary(
+    name = "package_spdx",
+    srcs = ["package_spdx.go"],
+    deps = [
+        "@com_github_spdx_tools_golang//json",
+        "@com_github_spdx_tools_golang//spdx/common",
+        "@com_github_spdx_tools_golang//spdx/v2_3",
+    ],
+)
+
+go_test(
+    name = "package_spdx_test",
+    srcs = [
+        "package_spdx.go",
+        "package_spdx_test.go",
+    ],
     deps = [
         "@com_github_spdx_tools_golang//json",
         "@com_github_spdx_tools_golang//spdx/common",
