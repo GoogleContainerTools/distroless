@@ -1,7 +1,7 @@
 load("@aspect_bazel_lib//lib:tar.bzl", "tar")
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
 load("//:distro.bzl", "ALL_DISTROS", "VERSIONS")
-load("//private/util:deb.bzl", "deb")
+load("//private/util:deb.bzl", "deb", "deb_derived_package")
 load(":variables.bzl", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT", "quote")
 
 package(default_visibility = ["//visibility:public"])
@@ -65,7 +65,7 @@ tar(
 
 [
     locale(
-        name = "locale_%s_%s" % (distro, arch),
+        name = "locale_data_%s_%s" % (distro, arch),
         charset = "C.utf8",
         package = deb.data(arch, distro, "libc-bin"),
     )
@@ -74,9 +74,33 @@ tar(
 ]
 
 [
+    deb_derived_package(
+        name = "locale_%s_%s" % (distro, arch),
+        arch = arch,
+        data = ":locale_data_%s_%s" % (distro, arch),
+        distro = distro,
+        package = "libc-bin",
+    )
+    for distro in COMMON_DISTROS
+    for arch in COMMON_ARCHITECTURES[distro]
+]
+
+[
     cacerts(
-        name = "cacerts_%s_%s" % (distro, arch),
+        name = "cacerts_data_%s_%s" % (distro, arch),
         package = deb.data(arch, distro, "ca-certificates"),
+    )
+    for distro in COMMON_DISTROS
+    for arch in COMMON_ARCHITECTURES[distro]
+]
+
+[
+    deb_derived_package(
+        name = "cacerts_%s_%s" % (distro, arch),
+        arch = arch,
+        data = ":cacerts_data_%s_%s" % (distro, arch),
+        distro = distro,
+        package = "ca-certificates",
     )
     for distro in COMMON_DISTROS
     for arch in COMMON_ARCHITECTURES[distro]
