@@ -6,6 +6,8 @@ def jre_ver(version):
     """
     if version.startswith("11.") or version.startswith("17.") or version.startswith("21.") or version.startswith("25."):
         v = version.split("+")[0].split(".")
+        if len(v) >= 4 and v[3] != "0":
+            return v[0] + "." + v[1] + "." + v[2] + "." + v[3]
         return v[0] + "." + v[1] + "." + v[2]
 
     fail("unrecognized openjdk package version: " + version)
