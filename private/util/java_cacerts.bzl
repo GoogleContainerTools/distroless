@@ -7,7 +7,7 @@ def java_cacerts(name, archive):
     tar_extract_file(
         name = name + "_extract",
         archive = archive,
-        file = "./etc/ssl/certs/ca-certificates.crt",
+        file = "etc/ssl/certs/ca-certificates.crt",
     )
 
     java_keystore(

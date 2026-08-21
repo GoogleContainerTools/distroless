@@ -19,7 +19,8 @@ alias(
 dpkg_statusd(
     name = "statusd",
     control = ":control",
-    package_name = "{name}"
+    package_name = "{name}",
+    visibility = ["@@//:__subpackages__"],
 )
 
 tar(
@@ -39,7 +40,8 @@ debian_spdx(
     package_name = "{name}",
     spdx_id = "{repo_name}",
     sha256 = "{sha256}",
-    urls = {urls}
+    urls = {urls},
+    visibility = ["@@//:__subpackages__"],
 )
 
 merge_providers(
