@@ -23,4 +23,4 @@ jobs:
         uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4
 
       - name: Check ldconfig caches
-        run: bazel test //python3:check_ldconfig_tests
+        run: bazel test //python3:check_ldconfig_tests //python:check_ldconfig_tests
