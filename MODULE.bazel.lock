@@ -438,7 +438,7 @@
     },
     "//private/extensions:node.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "93J+ELHiG+stkcmlGM5xktdEsxof1KOQwNGliZw1i/Q=",
+        "bzlTransitiveDigest": "z3HEKq7fhtMAFOrTQQZ/Hr15CbsJ7x7/Eux5EWLngd0=",
         "usagesDigest": "QA21U3gPZPiUX9/vsZR3d8yh8Tqq7lovQjkvOeh/XkA=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
