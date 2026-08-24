@@ -3,8 +3,8 @@ set -o errexit -o xtrace -o pipefail
 
 BAZEL_REMOTE_VERSION="2.6.1"
 BAZEL_REMOTE_SHA256="025d53aeb03a7fdd4a0e76262a5ae9eeee9f64d53ca510deff1c84cf3f276784"
-BAZELISK_VERSION="1.27.0"
-BAZELISK_SHA256="e1508323f347ad1465a887bc5d2bfb91cffc232d11e8e997b623227c6b32fb76"
+BAZELISK_VERSION="1.29.0"
+BAZELISK_SHA256="5a408715e932c0250d28bd84555f12edbf70117de42f9181691c736eacc4a992"
 
 # setup remote cache
 curl -fsSL "https://github.com/buchgr/bazel-remote/releases/download/v${BAZEL_REMOTE_VERSION}/bazel-remote-${BAZEL_REMOTE_VERSION}-linux-amd64" -o bazel-remote
