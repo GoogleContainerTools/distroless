@@ -2,7 +2,7 @@
 
 load("@@//private/pkg:debian_spdx.bzl", "debian_spdx")
 load("@@//private/util:merge_providers.bzl", "merge_providers")
-load("@@rules_distroless~//apt:defs.bzl", "dpkg_statusd")
+load("@rules_distroless//apt:defs.bzl", "dpkg_statusd")
 load("@@//private/util:tar.bzl", "tar")
 
 alias(

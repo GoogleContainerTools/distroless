@@ -58,7 +58,7 @@ def _impl(rctx):
         "BUILD.bazel",
         content = BUILD_TMPL.format(
             canonical_name = rctx.attr.name,
-            name = rctx.attr.name.split("~")[-1],
+            name = rctx.attr.name.split("+")[-1],
             package_name = rctx.attr.package_name,
             version = rctx.attr.version,
             purl = purl,
