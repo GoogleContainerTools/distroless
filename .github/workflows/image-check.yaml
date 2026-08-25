@@ -27,10 +27,9 @@ jobs:
         with:
           path: |
             ~/.cache/bazel-repo
-          key: bazel-cache-deps-ci2-${{ github.sha }}
+          key: bazel-cache-deps-ci2-${{ hashFiles('.bazelversion') }}-${{ github.sha }}
           restore-keys: |
-            bazel-cache-deps-ci2-${{ github.sha }}
-            bazel-cache-deps-ci2-
+            bazel-cache-deps-ci2-${{ hashFiles('.bazelversion') }}-
 
       - name: Fetch
         run: |
