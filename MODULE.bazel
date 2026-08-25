@@ -24,6 +24,7 @@ use_repo(oci, "oci_crane_toolchains")
 
 cosign = use_extension("//private/extensions:cosign.bzl", "cosign")
 use_repo(cosign, "oci_cosign_toolchains")
+
 register_toolchains("@oci_cosign_toolchains//:all")
 
 ### PYTHON ###
