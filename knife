@@ -116,13 +116,17 @@ function cmd_update_snapshots() {
             continue
         fi
         echo "🗞️ $mpath"
-        if [[ -n "$current" && "$current" != "$latest" ]]; then
+        if [[ -n "$current" && "$latest" > "$current" ]]; then
             sed -i -E "s/(debian\/)([0-9]+T[0-9]+Z)/\1$latest/" "$mpath"
             echo "   debian: $current -> $latest"
+        elif [[ -n "$current" && "$latest" < "$current" ]]; then
+            echo "   ⚠️ refusing to roll debian back: $current -> $latest" >&2
         fi
-        if [[ -n "$current_security" && "$current_security" != "$latest_security" ]]; then
+        if [[ -n "$current_security" && "$latest_security" > "$current_security" ]]; then
             sed -i -E "s/(debian-security\/)([0-9]+T[0-9]+Z)/\1$latest_security/" "$mpath"
             echo "   debian-security: $current_security -> $latest_security"
+        elif [[ -n "$current_security" && "$latest_security" < "$current_security" ]]; then
+            echo "   ⚠️ refusing to roll debian-security back: $current_security -> $latest_security" >&2
         fi
         echo ""
     done
