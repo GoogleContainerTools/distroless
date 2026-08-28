@@ -253,6 +253,10 @@ function cmd_deb_versions () {
         "${files[@]}"
 }
 
+function cmd_update_node_keys () {
+    bash knife.d/update_node_keys.sh
+}
+
 case "${1:-"~~nocmd"}" in
 lock)
     cmd_lock_all
@@ -278,8 +282,11 @@ deb-versions)
 update-node-archives)
 	cmd_update_node_archives
 	;;
+update-node-keys)
+	cmd_update_node_keys
+	;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, test, deb-versions, update-node-archives"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, test, deb-versions, update-node-archives, update-node-keys"
     exit 1
     ;;
 *) # unknown command

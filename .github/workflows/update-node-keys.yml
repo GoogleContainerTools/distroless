@@ -19,7 +19,7 @@ jobs:
           persist-credentials: false
 
       - name: Update node release keys
-        run: ./knife.d/update_node_keys.sh
+        run: ./knife update-node-keys
 
       - name: Check for changes
         run: |
