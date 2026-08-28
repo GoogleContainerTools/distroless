@@ -63,29 +63,33 @@ const fetchText = (url) => {
  */
 const fetchVerifiedShasums = async (nodeVersion, gpgHome) => {
   const base = `https://nodejs.org/dist/v${nodeVersion}`;
-  const [shasumsText, shasumsAsc] = await Promise.all([
-    fetchText(`${base}/SHASUMS256.txt`),
-    fetchText(`${base}/SHASUMS256.txt.asc`),
-  ]);
 
-  // Write both files to a temp dir for gpg --verify
+  // SHASUMS256.txt.asc is an inline (clear-signed) document: it contains the
+  // checksums and their signature together. Verify the signature AND read the
+  // authenticated checksums from gpg's output, so we never trust an unsigned,
+  // separately-downloaded SHASUMS256.txt.
+  const shasumsAsc = await fetchText(`${base}/SHASUMS256.txt.asc`);
+
   const tmpDir = fs.mkdtempSync(
     path.join(os.tmpdir(), `node-shasums-${nodeVersion}-`)
   );
-  const shasumsFile = path.join(tmpDir, "SHASUMS256.txt");
   const ascFile = path.join(tmpDir, "SHASUMS256.txt.asc");
+  let verifiedShasums;
   try {
-    fs.writeFileSync(shasumsFile, shasumsText);
     fs.writeFileSync(ascFile, shasumsAsc);
     const env = { ...process.env, GNUPGHOME: gpgHome };
-    execSync(`gpg --verify ${ascFile} ${shasumsFile}`, { stdio: "pipe", env });
+    // `gpg --decrypt` on a clear-signed file verifies the signature (non-zero
+    // exit on failure) and writes the signed plaintext to stdout.
+    verifiedShasums = execSync(`gpg --output - --decrypt ${ascFile}`, {
+      env,
+    }).toString();
   } finally {
     fs.rmSync(tmpDir, { recursive: true });
   }
 
-  // Parse "sha256hex  filename" lines from the verified SHASUMS file.
+  // Parse "sha256hex  filename" lines from the GPG-verified output.
   const checksums = {};
-  for (const line of shasumsText.split("\n")) {
+  for (const line of verifiedShasums.split("\n")) {
     const parts = line.trim().split(/\s+/);
     if (parts.length === 2) {
       checksums[parts[1]] = parts[0];
