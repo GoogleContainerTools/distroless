@@ -4,7 +4,7 @@ const https = require("https");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
-const { execSync } = require("child_process");
+const { execFileSync } = require("child_process");
 
 if (process.argv.length < 3) {
   console.error("Usage: node nodeChecksum.js <nodejs_version>");
@@ -29,7 +29,7 @@ const importReleaseKeys = () => {
   const tmpHome = fs.mkdtempSync(path.join(os.tmpdir(), "gpg-distroless-"));
   fs.chmodSync(tmpHome, 0o700);
   const env = { ...process.env, GNUPGHOME: tmpHome };
-  execSync(`gpg --batch --import ${NODE_KEYS_FILE}`, { stdio: "pipe", env });
+  execFileSync("gpg", ["--batch", "--import", NODE_KEYS_FILE], { stdio: "pipe", env });  
   return tmpHome;
 };
 
@@ -80,7 +80,7 @@ const fetchVerifiedShasums = async (nodeVersion, gpgHome) => {
     const env = { ...process.env, GNUPGHOME: gpgHome };
     // `gpg --decrypt` on a clear-signed file verifies the signature (non-zero
     // exit on failure) and writes the signed plaintext to stdout.
-    verifiedShasums = execSync(`gpg --output - --decrypt ${ascFile}`, {
+    verifiedShasums = execFileSync("gpg", ["--output", "-", "--decrypt", ascFile], {      
       env,
     }).toString();
   } finally {
