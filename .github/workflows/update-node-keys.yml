@@ -1,0 +1,53 @@
+name: update-node-keys
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Update node release keys
+        run: ./knife update-node-keys
+
+      - name: Check for changes
+        run: |
+          if [[ $(git status --porcelain) ]]; then
+            echo "DISTROLESS_DIFF=true" >> "$GITHUB_ENV"
+          else
+            echo "No changes detected"; exit 0
+          fi
+
+      - name: Create commits
+        if: env.DISTROLESS_DIFF
+        env:
+          ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+        run: |
+          git checkout -b update-node-keys
+          git config --global user.email "distroless-bot@google.com"
+          git config --global user.name "Distroless Bot"
+          git add knife.d/nodejs_keys.asc
+          git commit -s -m "Bumping Node.js release keys"
+          git remote set-url origin https://x-access-token:${ACTIONS_TOKEN}@github.com/${{ github.repository }}.git
+          git push --force origin HEAD
+
+      - name: Create Pull Request
+        if: env.DISTROLESS_DIFF
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+        run: |
+          if ! OUTPUT=$(gh pr create -B main -H update-node-keys --fill 2>&1) ; then
+            echo "$OUTPUT"
+            [[ "$OUTPUT" =~ "already exists" ]] && exit 0 || exit 1
+          fi

@@ -2,6 +2,9 @@
 const crypto = require("crypto");
 const https = require("https");
 const fs = require("fs");
+const os = require("os");
+const path = require("path");
+const { execFileSync } = require("child_process");
 
 if (process.argv.length < 3) {
   console.error("Usage: node nodeChecksum.js <nodejs_version>");
@@ -13,51 +16,122 @@ const architectures = ["amd64", "arm64", "arm", "ppc64le", "s390x"];
 
 const nodeVersions = {};
 
-const calculateChecksum = (url) => {
+// Committed Node.js release public keys (active keys only), generated from
+// https://github.com/nodejs/release-keys by knife.d/update_node_keys.sh.
+const NODE_KEYS_FILE = path.join(__dirname, "nodejs_keys.asc");
+
+/**
+ * Import the committed Node.js release public keys into an isolated temporary
+ * keyring. No network access - keys come from the in-repo file.
+ * Caller is responsible for deleting the returned GNUPGHOME.
+ */
+const importReleaseKeys = () => {
+  const tmpHome = fs.mkdtempSync(path.join(os.tmpdir(), "gpg-distroless-"));
+  fs.chmodSync(tmpHome, 0o700);
+  const env = { ...process.env, GNUPGHOME: tmpHome };
+  execFileSync("gpg", ["--batch", "--import", NODE_KEYS_FILE], { stdio: "pipe", env });  
+  return tmpHome;
+};
+
+/**
+ * Fetch a URL and return the response body as a string.
+ */
+const fetchText = (url) => {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
-        const hash = crypto.createHash("sha256");
-        res.on("data", (data) => {
-          hash.update(data);
+        let body = "";
+        res.on("data", (chunk) => {
+          body += chunk;
         });
         res.on("end", () => {
-          resolve(hash.digest("hex"));
+          resolve(body);
         });
       })
       .on("error", (err) => {
-        reject(`Error downloading file: ${err.message}`);
+        reject(`Error fetching ${url}: ${err.message}`);
       });
   });
 };
 
+/**
+ * Download SHASUMS256.txt and its detached GPG signature for the given Node.js
+ * version, verify the signature against the imported release keys, and return
+ * a map of { filename → sha256 }.
+ *
+ * Throws if GPG verification fails — no checksums are returned in that case.
+ */
+const fetchVerifiedShasums = async (nodeVersion, gpgHome) => {
+  const base = `https://nodejs.org/dist/v${nodeVersion}`;
+
+  // SHASUMS256.txt.asc is an inline (clear-signed) document: it contains the
+  // checksums and their signature together. Verify the signature AND read the
+  // authenticated checksums from gpg's output, so we never trust an unsigned,
+  // separately-downloaded SHASUMS256.txt.
+  const shasumsAsc = await fetchText(`${base}/SHASUMS256.txt.asc`);
+
+  const tmpDir = fs.mkdtempSync(
+    path.join(os.tmpdir(), `node-shasums-${nodeVersion}-`)
+  );
+  const ascFile = path.join(tmpDir, "SHASUMS256.txt.asc");
+  let verifiedShasums;
+  try {
+    fs.writeFileSync(ascFile, shasumsAsc);
+    const env = { ...process.env, GNUPGHOME: gpgHome };
+    // `gpg --decrypt` on a clear-signed file verifies the signature (non-zero
+    // exit on failure) and writes the signed plaintext to stdout.
+    verifiedShasums = execFileSync("gpg", ["--output", "-", "--decrypt", ascFile], {      
+      env,
+    }).toString();
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true });
+  }
+
+  // Parse "sha256hex  filename" lines from the GPG-verified output.
+  const checksums = {};
+  for (const line of verifiedShasums.split("\n")) {
+    const parts = line.trim().split(/\s+/);
+    if (parts.length === 2) {
+      checksums[parts[1]] = parts[0];
+    }
+  }
+  return checksums;
+};
+
 const fetchChecksums = async () => {
-  for (const nodeVersion of versions) {
-    const major = parseInt(nodeVersion.split(".")[0]);
-    nodeVersions[nodeVersion] = {};
-    await Promise.all(
-      architectures.map(async (key) => {
+  // Import Node.js release GPG keys once into an isolated keyring.
+  const gpgHome = importReleaseKeys();
+  try {
+    for (const nodeVersion of versions) {
+      const major = parseInt(nodeVersion.split(".")[0]);
+      nodeVersions[nodeVersion] = {};
+
+      // Fetch and GPG-verify the official SHASUMS before trusting any checksum.
+      const shasums = await fetchVerifiedShasums(nodeVersion, gpgHome);
+
+      for (const key of architectures) {
         let arch = key;
         if (major > 22 && key === "arm") {
-          return;
+          continue;
         }
         if (key === "amd64") {
           arch = "x64";
         } else if (key === "arm") {
           arch = "armv7l";
         }
-        const url = `https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-${arch}.tar.gz`;
-        try {
-          const checksum = await calculateChecksum(url);
-          nodeVersions[nodeVersion][key] = {
-            checksum,
-            suffix: arch,
-          };
-        } catch (error) {
-          console.error(error);
+        const filename = `node-v${nodeVersion}-linux-${arch}.tar.gz`;
+        const checksum = shasums[filename];
+        if (!checksum) {
+          throw new Error(
+            `No checksum found for ${filename} in verified SHASUMS256.txt`
+          );
         }
-      })
-    );
+        nodeVersions[nodeVersion][key] = { checksum, suffix: arch };
+      }
+    }
+  } finally {
+    // Always clean up the temporary GPG home directory.
+    fs.rmSync(gpgHome, { recursive: true });
   }
 };
 
