@@ -10,7 +10,6 @@ def python_ldconfig(architectures, distro):
         distro: the distribution name (e.g. debian13)
     """
 
-    # 1. Create the oci_load targets (the scripts that load images into docker)
     for arch in architectures:
         oci_load(
             name = "load_python314_root_{}_{}".format(arch, distro),
@@ -18,7 +17,6 @@ def python_ldconfig(architectures, distro):
             repo_tags = ["bazel/python:python314_root_{}_{}".format(arch, distro)],
         )
 
-    # 2. Create the genrules that actually trigger the loading during 'bazel build'
     for arch in architectures:
         native.genrule(
             name = "do_load_{}".format(arch),
@@ -34,7 +32,6 @@ def python_ldconfig(architectures, distro):
             tools = [":load_python314_root_{}_{}".format(arch, distro)],
         )
 
-    # 3. Create the update_ldconfig binary
     native.sh_binary(
         name = "update_ldconfig",
         srcs = ["ldconfig/ldconfig.sh"],
@@ -43,7 +40,6 @@ def python_ldconfig(architectures, distro):
         tags = ["local"],
     )
 
-    # 4. Create the architecture-specific tests
     for arch in architectures:
         native.sh_test(
             name = "check_ldconfig_{}_test".format(arch),
@@ -65,7 +61,6 @@ def python_ldconfig(architectures, distro):
             ],
         )
 
-    # 5. Create the test suite
     native.test_suite(
         name = "check_ldconfig_tests",
         tests = [

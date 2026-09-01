@@ -98,7 +98,7 @@ function generate_python_archives() {
   local latest_release sha256sums
   local minors minor arch triple version sha python_short arch_anchor matrix_min published latest_minor
   PYTHON_MUTATED=0
-  local -a archive_blocks versions_entries metadata_deps changes repos
+  local -a archive_blocks versions_entries metadata_deps changes repos verify_assets
   local changed=0 verbose=${VERBOSE:-0} dry_run=${DRY_RUN:-0} current
 
   # PBS release data source: hermetic tests inject local fixtures via PBS_RELEASE_FILE
@@ -178,6 +178,7 @@ function generate_python_archives() {
       [ -n "$version" ] || { echo "no ${minor} ${triple} install_only asset in ${latest_release}" >&2; exit 1; }
       sha=$(echo "$sha256sums" | grep "cpython-${version}+${latest_release}-${triple}-install_only.tar.gz" | cut -d' ' -f1)
       [ -n "$sha" ] || { echo "no sha for ${version} ${triple}" >&2; exit 1; }
+      verify_assets+=("${minor}|${arch}|${version}|${triple}|${sha}")
 
       current=$(current_version "$minor" "$arch")
       pinned=$(pinned_version "$minor" "$arch")
@@ -204,7 +205,6 @@ function generate_python_archives() {
         version = \"${version}+${latest_release}\",
         python_version = \"${minor}\",
         architecture = \"${arch}\",
-        control = \"//python:control\",
     )")
       versions_entries+=("            \"${minor}_${arch}\": \"${version}\",")
       metadata_deps+=("            \"python${python_short}_${arch}\",")
@@ -213,25 +213,10 @@ function generate_python_archives() {
     rm -f "$archs_tmp"
   done
 
-  if [ "$dry_run" = 1 ]; then
-    if [ "$changed" = 0 ]; then
-      echo "NO_CHANGE"
-    else
-      printf 'would %s\n' "${changes[@]}" >&2
-      echo "DRY_RUN"
-    fi
-    return 0
-  fi
-
-  if [ "$changed" = 0 ]; then
-    echo "NO_CHANGE"
-    return 0
-  fi
-
   # PBS SBOM: regenerate python/pbs-sbom.spdx.json from the release's component
   # manifest (pythonbuild/downloads.py at the release tag); hermetic tests inject
   # a local copy via PBS_DOWNLOADS_FILE.
-  local downloads_file sbom_tmp downloads_tmp
+  local downloads_file sbom_tmp="" downloads_tmp=""
   if [ -n "${PBS_DOWNLOADS_FILE:-}" ]; then
     downloads_file="$PBS_DOWNLOADS_FILE"
   else
@@ -253,41 +238,60 @@ function generate_python_archives() {
   grep -q "$latest_release" "$sbom_tmp" || { echo "PBS SBOM does not mention ${latest_release}" >&2; rm -f "$sbom_tmp" "$downloads_tmp"; exit 1; }
   [ -n "${PBS_DOWNLOADS_FILE:-}" ] || rm -f "$downloads_tmp"
 
-  # PBS embedded native libraries: dissect libpython3*.so from the x86_64 install
-  # tarball and verify the statically linked C libraries against the manifest.
+  # PBS embedded native libraries: dissect libpython3*.so from every selected
+  # matrix archive and verify the statically linked C libraries against the manifest.
   # A release can bump the embedded libs while the CPython versions stay the same
   # (maintainer-reported gap); this turns that drift into a hard error. The tarball
   # is sha-verified against SHA256SUMS. Hermetic tests inject a fake tarball via
-  # PBS_TARBALL_FILE.
+  # PBS_TARBALL_FILE or PBS_TARBALL_DIR.
   local tarball tarball_tmp so_dir so_path
+  local verify_entry verify_minor verify_arch verify_version verify_triple verify_sha
+  local fname tarball_sha got_sha verify_root
+  verify_root=$(mktemp -d)
   if [ -n "${PBS_TARBALL_FILE:-}" ]; then
-    tarball="$PBS_TARBALL_FILE"
-  else
-    tarball_tmp=$(mktemp)
-    local fname tarball_sha
-    fname=$(printf '%s\n' "$sha256sums" | awk '/x86_64-unknown-linux-gnu-install_only\.tar\.gz$/ {print $2; exit}')
-    tarball_sha=$(printf '%s\n' "$sha256sums" | awk -v f="$fname" '$2 == f {print $1; exit}')
-    if [ -z "$fname" ] || [ -z "$tarball_sha" ]; then
-      echo "no x86_64 install tarball in SHA256SUMS" >&2
-      rm -f "$tarball_tmp"
-      exit 1
-    fi
-    if ! curl -sSL "https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/${fname}" -o "$tarball_tmp"; then
-      echo "cannot download ${fname}" >&2
-      rm -f "$tarball_tmp"
-      exit 1
-    fi
-    local got_sha
-    got_sha=$(python3 -c "import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "$tarball_tmp")
-    if [ "$got_sha" != "$tarball_sha" ]; then
-      echo "sha256 mismatch for ${fname}: expected ${tarball_sha}, got ${got_sha}" >&2
-      rm -f "$tarball_tmp"
-      exit 1
-    fi
-    tarball="$tarball_tmp"
+    verify_assets=("fixture||||")
   fi
-  so_dir=$(mktemp -d)
-  if ! python3 - "$tarball" "$so_dir" <<'PYEOF'; then
+  if [ -z "${PBS_TARBALL_FILE:-}" ]; then
+    [ ${#verify_assets[@]} -gt 0 ] || { echo "no PBS matrix archives to verify" >&2; rm -rf "$verify_root"; exit 1; }
+  fi
+  for verify_entry in "${verify_assets[@]}"; do
+    IFS='|' read -r verify_minor verify_arch verify_version verify_triple verify_sha <<< "$verify_entry"
+    tarball_tmp=""
+    if [ -n "${PBS_TARBALL_FILE:-}" ]; then
+      tarball="$PBS_TARBALL_FILE"
+      fname="fixture"
+    else
+      fname="cpython-${verify_version}+${latest_release}-${verify_triple}-install_only.tar.gz"
+      if [ -n "${PBS_TARBALL_DIR:-}" ]; then
+        tarball="${PBS_TARBALL_DIR}/${fname}"
+        [ -f "$tarball" ] || { echo "missing PBS test tarball ${fname}" >&2; rm -f "$sbom_tmp"; rm -rf "$verify_root"; exit 1; }
+      else
+        tarball_tmp=$(mktemp)
+        tarball_sha="$verify_sha"
+        if [ -z "$tarball_sha" ]; then
+          echo "no sha for ${fname}" >&2
+          rm -f "$tarball_tmp" "$sbom_tmp"
+          rm -rf "$verify_root"
+          exit 1
+        fi
+        if ! curl -sSL "https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/${fname}" -o "$tarball_tmp"; then
+          echo "cannot download ${fname}" >&2
+          rm -f "$tarball_tmp" "$sbom_tmp"
+          rm -rf "$verify_root"
+          exit 1
+        fi
+        got_sha=$(python3 -c "import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "$tarball_tmp")
+        if [ "$got_sha" != "$tarball_sha" ]; then
+          echo "sha256 mismatch for ${fname}: expected ${tarball_sha}, got ${got_sha}" >&2
+          rm -f "$tarball_tmp" "$sbom_tmp"
+          rm -rf "$verify_root"
+          exit 1
+        fi
+        tarball="$tarball_tmp"
+      fi
+    fi
+    so_dir=$(mktemp -d "$verify_root/so.XXXXXX")
+    if ! python3 - "$tarball" "$so_dir" <<'PYEOF'; then
 import sys, tarfile
 tar = tarfile.open(sys.argv[1])
 for member in tar.getmembers():
@@ -296,18 +300,27 @@ for member in tar.getmembers():
         sys.exit(0)
 sys.exit("no libpython3*.so in tarball")
 PYEOF
-    rm -rf "$so_dir" "$tarball_tmp"
-    exit 1
-  fi
-  so_path=$(find "$so_dir" -name 'libpython3.*.so' | head -1)
-  # stdout is the updater's machine contract (the release tag); diagnostics to stderr.
-  if ! python3 python/pbs_embedded_versions.py "$so_path" "$downloads_file" >&2; then
-    echo "PBS embedded native libraries drift detected" >&2
-    rm -rf "$so_dir" "$tarball_tmp"
-    exit 1
-  fi
-  rm -rf "$so_dir"
-  [ -n "${PBS_TARBALL_FILE:-}" ] || rm -f "$tarball_tmp"
+      rm -f "$tarball_tmp" "$sbom_tmp"
+      rm -rf "$verify_root"
+      exit 1
+    fi
+    so_path=$(find "$so_dir" -name 'libpython3.*.so' | head -1)
+    if [ -z "$so_path" ]; then
+      echo "no libpython3*.so in ${fname} (${verify_minor} ${verify_arch})" >&2
+      rm -f "$tarball_tmp" "$sbom_tmp"
+      rm -rf "$verify_root"
+      exit 1
+    fi
+    # stdout is the updater's machine contract (the release tag); diagnostics to stderr.
+    if ! python3 python/pbs_embedded_versions.py "$so_path" "$downloads_file" >&2; then
+      echo "PBS embedded native libraries drift detected in ${fname} (${verify_minor} ${verify_arch})" >&2
+      rm -f "$tarball_tmp" "$sbom_tmp"
+      rm -rf "$verify_root"
+      exit 1
+    fi
+    [ -z "$tarball_tmp" ] || rm -f "$tarball_tmp"
+  done
+  rm -rf "$verify_root"
 
   # NVD CVE check: the pinned native libraries are invisible to trivy
   # (pkg:generic has no advisory feed), so query NVD CPE data for the exact
@@ -319,6 +332,23 @@ PYEOF
       rm -f "$sbom_tmp"
       exit 1
     fi
+  fi
+
+  if [ "$dry_run" = 1 ]; then
+    rm -f "$sbom_tmp"
+    if [ "$changed" = 0 ]; then
+      echo "NO_CHANGE"
+    else
+      printf 'would %s\n' "${changes[@]}" >&2
+      echo "DRY_RUN"
+    fi
+    return 0
+  fi
+
+  if [ "$changed" = 0 ]; then
+    rm -f "$sbom_tmp"
+    echo "NO_CHANGE"
+    return 0
   fi
 
   printf '%s\n' "${changes[@]}" >&2
@@ -424,8 +454,9 @@ $(printf '%s\n' "${metadata_deps[@]}")
   echo "$latest_release"
 }
 
-# All fallible steps run against temp files and are verified before anything is
-# replaced: a failed run mutates nothing (RED). A successful run leaves
+# All preflight steps run against temp files and are verified before anything is
+# replaced. Failures after the first replacement are reported as partial mutation.
+# A successful run leaves
 # MODULE.bazel.lock stale until refreshed (bazel mod deps --lockfile_mode=update;
 # CI enforces --lockfile_mode=error).
 

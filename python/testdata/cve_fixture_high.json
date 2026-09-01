@@ -76,8 +76,37 @@
       }
     ]
   },
+  "cpe:2.3:a:openssl:openssl:1.1.1w": {
+    "vulnerabilities": [
+      {
+        "cve": {
+          "id": "CVE-2026-11111",
+          "descriptions": [{"lang": "en", "value": "Test: OpenSSL 1.1.1w issue"}],
+          "metrics": {"cvssMetricV31": [{"cvssData": {"baseSeverity": "HIGH"}}]},
+          "configurations": [{"nodes": [{"cpeMatch": [{
+            "criteria": "cpe:2.3:a:openssl:openssl:1.1.1w:*:*:*:*:*:*:*:*",
+            "vulnerable": true,
+            "versionEndExcluding": "1.1.1x"
+          }]}]}]
+        }
+      }
+    ]
+  },
   "cpe:2.3:a:sqlite:sqlite:3.53.1": {
-    "vulnerabilities": []
+    "vulnerabilities": [
+      {
+        "cve": {
+          "id": "CVE-2026-11822",
+          "descriptions": [{"lang": "en", "value": "Test: sqlite FTS5 memory corruption"}],
+          "metrics": {"cvssMetricV31": [{"cvssData": {"baseSeverity": "HIGH"}}]},
+          "configurations": [{"nodes": [{"cpeMatch": [{
+            "criteria": "cpe:2.3:a:sqlite:sqlite:*:*:*:*:*:*:*:*:*",
+            "vulnerable": true,
+            "versionEndExcluding": "3.53.2"
+          }]}]}]
+        }
+      }
+    ]
   },
   "cpe:2.3:a:zlib:zlib:1.3.2": {
     "vulnerabilities": [

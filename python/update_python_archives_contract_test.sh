@@ -10,7 +10,7 @@
 #   - python/testdata/python3.X.yaml: version strings (patch bumps) / new yaml (new minor)
 #   - a second run is a NO_CHANGE no-op (the state is the updater's fixed point)
 # Runs fully offline; fixture data is injected via PBS_RELEASE_FILE /
-# PBS_SHA256SUMS_FILE / PBS_DOWNLOADS_FILE / PBS_TARBALL_FILE.
+# PBS_SHA256SUMS_FILE / PBS_DOWNLOADS_FILE / PBS_TARBALL_FILE or PBS_TARBALL_DIR.
 set -euo pipefail
 
 cd "$TEST_SRCDIR/${TEST_WORKSPACE:-_main}"
@@ -43,6 +43,11 @@ DOWNLOADS = {
         "licenses": ["MIT"],
         "library_names": ["expat"],
     },
+    "mpdecimal": {
+        "url": "https://example.invalid/mpdecimal.tar.gz",
+        "version": "4.0.0",
+        "library_names": ["mpdecimal"],
+    },
     "sqlite": {
         "url": "https://example.invalid/sqlite.tar.gz",
         "version": "3530100",
@@ -55,11 +60,15 @@ DOWNLOADS = {
         "licenses": ["Zlib"],
         "library_names": ["z"],
     },
+    "zstd": {
+        "url": "https://example.invalid/zstd.tar.gz",
+        "version": "1.5.7",
+        "library_names": ["zstd"],
+    },
 }
 EOF
 
-# fake PBS install tarball: python/lib/libpython3.13.so with the same embedded
-# library markers the real one carries (see python/pbs_embedded_versions.py)
+# fake PBS install tarball: libpython with the markers the verifier checks.
 make_tarball() { # $1 = output path; markers must match the fixture manifest
   python3 - "$1" <<'PYEOF'
 import sys, tarfile, io
@@ -70,6 +79,7 @@ blob = (
     b"ncurses 6.5.20240427\n"
     b"1.0.8, 13-Jul-2019\n"
     b"3.53.1\n5.8.3\n"
+    b"1.5.7\n4.0.0\n"
 )
 with tarfile.open(sys.argv[1], "w:gz") as tar:
     info = tarfile.TarInfo("python/lib/libpython3.13.so")
@@ -82,8 +92,17 @@ make_tarball "$FIX/tarball.tar.gz"
 cd "$FIX"
 source update_python_archives.sh
 
+python3 - <<'PY'
+import sys
+sys.path.insert(0, "python")
+from pbs_embedded_versions import expected_version, weak_version
+assert expected_version({"actual_version": "3.53.1.0"}, "sqlite") == "3.53.1"
+assert expected_version({"version": "4.0.0"}, "mpdecimal") == "4.0.0"
+assert weak_version(b"zstd 1.5.7", "zstd", {"version": "1.5.7"}) == "1.5.7"
+PY
+
 # --- fixtures ---------------------------------------------------------------
-# 64-hex fake shas: the updater only copies them, nothing validates them here.
+# Test tarballs use fake hashes because PBS_TARBALL_DIR bypasses download checks.
 SHA_A=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 SHA_B=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 SHA_C=cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -100,20 +119,41 @@ make_sha256sums() { # $1=release $2=patch313 $3=patch314 $4=patch315 ("" = no 3.
       echo "$SHA_C  cpython-${p315}+${release}-${t}-install_only.tar.gz" >> SHA256SUMS
     fi
   done
+  rm -rf "$FIX/tarballs"
+  mkdir -p "$FIX/tarballs"
+  for t in "${TRIPLES[@]}"; do
+    cp "$FIX/tarball.tar.gz" "$FIX/tarballs/cpython-${p313}+${release}-${t}-install_only.tar.gz"
+    cp "$FIX/tarball.tar.gz" "$FIX/tarballs/cpython-${p314}+${release}-${t}-install_only.tar.gz"
+    if [ -n "$p315" ]; then
+      cp "$FIX/tarball.tar.gz" "$FIX/tarballs/cpython-${p315}+${release}-${t}-install_only.tar.gz"
+    fi
+  done
 }
 
 run_updater() { # prints stdout; fails the test on a non-zero exit
   # bash -c: the updater aborts with exit 1 on fatal errors (knife contract),
   # which must not kill the test script.
-  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
-    PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_FILE="$FIX/tarball.tar.gz" \
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" PBS_SKIP_CVE_CHECK=1 \
+    PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_DIR="$FIX/tarballs" \
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
 }
 
 run_updater_expect_fail() { # non-zero exit is the expectation (drift => RED)
-  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" PBS_SKIP_CVE_CHECK=1 \
     PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_FILE="$FIX/drift.tar.gz" \
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err" && return 1 || return 0
+}
+
+run_updater_noop() {
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" PBS_SKIP_CVE_CHECK=1 \
+    PBS_DOWNLOADS_FILE="$FIX/missing-downloads.py" PBS_TARBALL_DIR="$FIX/tarballs" \
+    bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
+}
+
+run_updater_bad_manifest() {
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" PBS_SKIP_CVE_CHECK=1 \
+    PBS_DOWNLOADS_FILE="$FIX/bad-downloads.py" PBS_TARBALL_DIR="$FIX/tarballs" \
+    bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
 }
 
 # --- phase A: tag-only bump (new release, same patches) -----------------------
@@ -126,7 +166,19 @@ grep -q 'releases/download/20990101/' private/extensions/python.bzl || { echo "p
 grep -q '3.13.15+20990101' private/extensions/python.bzl || { echo "phase A: archive version lacks new release tag"; exit 1; }
 grep -q '"3.13_amd64": "3.13.15"' private/extensions/python.bzl || { echo "phase A: versions dict must not change on a tag-only bump"; exit 1; }
 grep -q 'Python 3.13.15' python/testdata/python3.13.yaml || { echo "phase A: testdata must not change on a tag-only bump"; exit 1; }
-[ "$(run_updater)" = "NO_CHANGE" ] || { echo "phase A: second run must be NO_CHANGE"; cat "$FIX/updater.err"; exit 1; }
+grep -q 'OK.*zstd.*1.5.7' "$FIX/updater.err" || { echo "phase A: zstd marker not checked"; exit 1; }
+grep -q 'OK.*mpdecimal.*4.0.0' "$FIX/updater.err" || { echo "phase A: mpdecimal marker not checked"; exit 1; }
+if run_updater_noop; then
+  echo "phase A: no-op must inspect PBS artifacts"
+  exit 1
+fi
+printf 'DOWNLOADS = [' > "$FIX/bad-downloads.py"
+if run_updater_bad_manifest; then
+  echo "phase A: invalid manifest must fail"
+  exit 1
+fi
+grep -q 'PBS SBOM generation failed' "$FIX/updater.err" || { echo "phase A: SBOM failure was not reported"; exit 1; }
+! grep -q 'unbound variable' "$FIX/updater.err" || { echo "phase A: SBOM failure cleanup used an unset variable"; exit 1; }
 grep -q '20990101' python/pbs-sbom.spdx.json || { echo "phase A: SBOM not regenerated for the new release"; exit 1; }
 grep -q '"expat"' python/pbs-sbom.spdx.json || { echo "phase A: SBOM missing bundled component"; exit 1; }
 
