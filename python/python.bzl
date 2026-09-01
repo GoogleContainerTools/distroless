@@ -30,7 +30,6 @@ def python_image_index(distro, major_version, architectures):
             )
 
 def _example_tar():
-    # only create once
     if native.existing_rule("example"):
         return
 
@@ -79,9 +78,7 @@ def python_image(distro, major_version, arch, packages):
 
     _example_tar()
 
-    # Structure tests run on the non-debug images only: testdata/python3.yaml
-    # asserts there is no shell, and debug images ship busybox /bin/sh
-    # (matches python3/python.bzl).
+    # Debug images include busybox; structure tests cover the non-debug images.
     for user in USERS:
         container_structure_test(
             name = "python" + major_version.replace(".", "") + "_" + user + "_" + arch + "_" + distro + "_test",

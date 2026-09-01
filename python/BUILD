@@ -16,9 +16,7 @@ sh_test(
     ],
 )
 
-# Black-box contract test: after a new PBS release every file needed to build the
-# new images must update consistently (extension, config.bzl, MODULE.bazel,
-# testdata). Offline via PBS_RELEASE_FILE/PBS_SHA256SUMS_FILE fixtures.
+# Offline contract test for a complete PBS release update.
 sh_test(
     name = "update_python_archives_contract_test",
     srcs = ["update_python_archives_contract_test.sh"],

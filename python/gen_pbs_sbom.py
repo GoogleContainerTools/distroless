@@ -2,9 +2,10 @@
 """Emit an SPDX 2.3 SBOM for a python-build-standalone release.
 
 Reads the release's component manifest (pythonbuild/downloads.py) and lists
-the runtime components: the CPython versions, bundled pip, and the
+the runtime components: the CPython versions, bundled ensurepip wheel, and the
 native libraries statically linked into the interpreters. Build-time-only
-tools (autoconf, binutils, musl, llvm, ...) are excluded.
+tools (autoconf, binutils, musl, llvm, ...) are excluded. This is PBS release
+provenance, not a complete image SBOM.
 
 Usage: gen_pbs_sbom.py <downloads.py> <release> <output.spdx.json>
 """
@@ -32,14 +33,13 @@ def declared(name, entry):
 def purl(name, version):
     if name in PYPI_LICENSE:
         return "pkg:pypi/{}@{}".format(name, version)
-    # C libraries built from source tarballs: generic purl (trivy skips these
-    # for vuln/license scanning by design; the purl is provenance metadata).
+    # C libraries built from source tarballs use generic purls for provenance.
     return "pkg:generic/{}@{}".format(name, version)
 
 
 def is_runtime(name, entry):
-    # pip is bundled in site-packages; setuptools is a PBS build-time tool and
-    # is NOT shipped in install_only tarballs (verified against 3.13.15+20260814).
+    # The pip wheel is bundled for ensurepip but is not installed on PATH;
+    # setuptools is a PBS build-time tool and is not shipped in install_only.
     return name.startswith("cpython") or name == "pip" or bool(entry.get("library_names"))
 
 

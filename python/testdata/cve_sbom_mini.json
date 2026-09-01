@@ -6,8 +6,11 @@
   "packages": [
     {"name": "python-build-standalone", "SPDXID": "SPDXRef-PBS", "versionInfo": "20260814"},
     {"name": "openssl-3.5", "SPDXID": "SPDXRef-openssl_3_5", "versionInfo": "3.5.7"},
+    {"name": "openssl-1.1", "SPDXID": "SPDXRef-openssl_1_1", "versionInfo": "1.1.1w"},
+    {"name": "mpdecimal", "SPDXID": "SPDXRef-mpdecimal", "versionInfo": "4.0.0"},
     {"name": "sqlite", "SPDXID": "SPDXRef-sqlite", "versionInfo": "3.53.1.0"},
-    {"name": "zlib", "SPDXID": "SPDXRef-zlib", "versionInfo": "1.3.2"}
+    {"name": "zlib", "SPDXID": "SPDXRef-zlib", "versionInfo": "1.3.2"},
+    {"name": "zstd", "SPDXID": "SPDXRef-zstd", "versionInfo": "1.5.7"}
   ],
   "relationships": []
 }

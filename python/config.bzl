@@ -2,9 +2,7 @@
 
 PYTHON_DISTROS = ["debian13"]
 
-# The image tag segment, e.g. python3.14-debian13.
-# Full CPython versions live in //private/extensions:python.bzl (python_versions repo).
-# debian12 is intentionally absent: new debian12 builds are being deprecated upstream.
+# Full CPython versions live in //private/extensions:python.bzl.
 PYTHON_MAJOR_VERSIONS = ["3.13", "3.14"]
 
 PYTHON_ARCHITECTURES = {
@@ -14,8 +12,7 @@ PYTHON_ARCHITECTURES = {
     },
 }
 
-# deb packages added to the image: libc-bin provides /sbin/ldconfig so
-# ctypes.util.find_library() works via a generated ld.so.cache (python3/ parity).
+# libc-bin provides ldconfig for the generated library cache.
 PYTHON_PACKAGES = {
     "debian13": ["libc-bin"],
 }

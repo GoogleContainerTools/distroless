@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """Check the pinned PBS native libraries against NVD CVE data.
 
-The native libraries embedded in python-build-standalone releases (openssl,
-sqlite, zlib, expat, bzip2, ncurses, xz) are source pins (`pkg:generic`) that
-trivy and other SBOM scanners cannot match against advisory feeds. NVD tracks
-them as CPE products with per-version CVE data, so this queries the NVD API 2.0
-with the exact version pinned in the SBOM (which the updater has already
-verified against the binary) and fails on HIGH/CRITICAL findings.
+The native libraries embedded in python-build-standalone releases are source
+pins (`pkg:generic`). This queries NVD CPE products with the exact versions
+pinned in the SBOM and fails on HIGH/CRITICAL findings.
 
 False-positive filtering: the NVD `cpeName` query also returns CVEs of other
 products (mutt, OpenLDAP, httpd, ...) whose configurations merely reference the
@@ -22,23 +19,35 @@ Exit 0: no CVEs or none HIGH/CRITICAL on pinned versions. Exit 1: findings.
 """
 import json
 import os
+import ssl
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 
-# SBOM component name -> NVD CPE vendor/product (all verified extractable from
-# the binary by python/pbs_embedded_versions.py).
+try:
+    import certifi
+except ImportError:
+    certifi = None
+
+# SBOM component name -> NVD CPE vendor/product.
 CPES = {
     "openssl-3.5": ("openssl", "openssl"),
+    "openssl-1.1": ("openssl", "openssl"),
+    "bdb": ("oracle", "berkeley_db"),
+    "libX11": ("x.org", "libx11"),
+    "libffi": ("libffi_project", "libffi"),
+    "libffi-3.3": ("libffi_project", "libffi"),
     "sqlite": ("sqlite", "sqlite"),
     "zlib": ("zlib", "zlib"),
     "expat": ("libexpat", "expat"),
     "bzip2": ("bzip2", "bzip2"),
     "ncurses": ("gnu", "ncurses"),
     "xz": ("tukaani", "xz"),
+    "zstd": ("facebook", "zstandard"),
 }
+# mpdecimal is in the PBS manifest but has no NVD CPE.
 GATE = {"HIGH", "CRITICAL"}
 
 
@@ -56,9 +65,10 @@ def fetch_nvd(cpe, api_key, fixture):
     req = urllib.request.Request(url, headers={"User-Agent": "distroless-pbs-cve-check"})
     if api_key:
         req.add_header("apiKey", api_key)
+    context = None if certifi is None else ssl.create_default_context(cafile=certifi.where())
     for attempt in range(4):
         try:
-            with urllib.request.urlopen(req, timeout=60) as resp:
+            with urllib.request.urlopen(req, timeout=60, context=context) as resp:
                 return json.load(resp)
         except urllib.error.HTTPError as err:
             if err.code == 429:
@@ -68,22 +78,27 @@ def fetch_nvd(cpe, api_key, fixture):
     sys.exit("NVD API rate limited for " + cpe)
 
 
-def affects(cve, vendor, product):
+def product_matches(cve, vendor, product):
     # walk every configuration, recursing into children nodes (NVD nests
-    # dependency/AND-OR groups); keep only vulnerable matches on the product.
+    # dependency/AND-OR groups); keep vulnerable matches on the product.
     def walk(nodes):
         for node in nodes:
             for match in node.get("cpeMatch", []):
                 parts = match["criteria"].split(":")
                 if len(parts) > 5 and parts[3] == vendor and parts[4] == product and match.get("vulnerable"):
-                    return True
-            if walk(node.get("children", [])):
-                return True
-        return False
+                    yield match
+            yield from walk(node.get("children", []))
     for config in cve.get("configurations") or []:
-        if walk(config.get("nodes", [])):
-            return True
-    return False
+        yield from walk(config.get("nodes", []))
+
+
+def fixed_version(cve, vendor, product):
+    for match in product_matches(cve, vendor, product):
+        if match.get("versionEndExcluding"):
+            return match["versionEndExcluding"]
+        if match.get("versionEndIncluding"):
+            return "after " + match["versionEndIncluding"]
+    return "not specified"
 
 
 def severity(cve):
@@ -102,6 +117,7 @@ def main():
     doc = json.load(open(sbom_path))
     versions = {p["name"]: p["versionInfo"] for p in doc["packages"]}
 
+    pbs_release = versions.get("python-build-standalone", "unknown")
     findings = []
     for name, (vendor, product) in sorted(CPES.items()):
         if name not in versions:
@@ -110,16 +126,22 @@ def main():
         data = fetch_nvd(cpe, os.environ.get("NVD_API_KEY", ""), fixture)
         for vuln in data.get("vulnerabilities", []):
             cve = vuln["cve"]
-            if affects(cve, vendor, product):
+            if any(product_matches(cve, vendor, product)):
                 desc = cve["descriptions"][0]["value"][:90] if cve.get("descriptions") else ""
-                findings.append((severity(cve), name, cve["id"], desc))
+                findings.append((severity(cve), name, cpe_version(name, versions[name]), fixed_version(cve, vendor, product), cve["id"], desc))
+
+    ignored = {"python-build-standalone", "pip"}
+    ignored.update(name for name in versions if name.startswith("cpython"))
+    for name in sorted(set(versions) - set(CPES) - ignored):
+        print("PBS component {}@{}: no NVD CPE mapping".format(name, versions[name]))
 
     if not findings:
-        print("no CVEs found for pinned PBS native libraries")
+        print("PBS release {}: no CVEs found for pinned PBS native libraries".format(pbs_release))
         return 0
-    for sev, name, cid, desc in sorted(findings):
-        print("{} {} {} {}".format(sev.ljust(8), name.ljust(10), cid, desc))
-    if any(sev in GATE for sev, _, _, _ in findings):
+    for sev, name, version, fixed, cid, desc in sorted(findings):
+        print("{} {} embedded={} fixed={} {} {}".format(sev.ljust(8), name.ljust(10), version, fixed, cid, desc))
+    print("PBS release {} affected by the findings above".format(pbs_release))
+    if any(sev in GATE for sev, _, _, _, _, _ in findings):
         print("HIGH/CRITICAL CVEs on pinned versions - update blocked")
         return 1
     return 0
