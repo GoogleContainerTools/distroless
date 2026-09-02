@@ -42,8 +42,8 @@ sed_inplace() { # $1 = sed expression, $2 = file
 # Print "<minor>_<arch> <version>" for each matrix entry.
 function get_python_versions() {
   sed -n '/python_versions_repo(/,/^    )$/p' private/extensions/python.bzl \
-    | grep -oE '"[0-9]+\.[0-9]+_[a-z0-9]+": "[0-9]+\.[0-9]+\.[0-9]+"' \
-    | sed -E 's/"([^"]+)": "([0-9.]+)"/\1 \2/'
+    | grep -oE '"[0-9]+\.[0-9]+_[a-z0-9]+": "[0-9]+\.[0-9]+\.[0-9]+(b[0-9]+|rc[0-9]+)?"' \
+    | sed -E 's/"([^"]+)": "([^"]+)"/\1 \2/'
 }
 
 # Print the matrix's minor versions, one per line.
@@ -88,14 +88,16 @@ function pinned_version() {
   ' private/extensions/python.bzl
 }
 
-# Rewrite archive, version, and metadata data; extend the matrix for a new stable
-# minor. Print the new release tag on success or "NO_CHANGE" when current.
+# Rewrite archives, versions, metadata, and repository visibility. Print the
+# new release tag on success or "NO_CHANGE" when current.
 function generate_python_archives() {
   local latest_release sha256sums
   local minors minor arch triple version sha python_short arch_anchor matrix_min published latest_minor
+  local version_re stable_only
   PYTHON_MUTATED=0
   local -a archive_blocks versions_entries metadata_deps changes repos verify_assets
   local changed=0 verbose=${VERBOSE:-0} dry_run=${DRY_RUN:-0} current
+  local module_tmp="" repos_sorted module_line current_module_line module_changed=0
 
   # Tests can supply release data through PBS_RELEASE_FILE and
   # PBS_SHA256SUMS_FILE; otherwise use the live release files.
@@ -115,7 +117,7 @@ function generate_python_archives() {
 
   local -a minors
   minors=()
-  local minors_tmp archs_tmp
+  local minors_tmp archs
   minors_tmp=$(mktemp)
   get_python_minors > "$minors_tmp"
   while IFS= read -r minor; do minors+=("$minor"); done < "$minors_tmp"
@@ -131,12 +133,14 @@ function generate_python_archives() {
   # requiring 3.X.Y. The matrix is a contiguous support window; fill published
   # minors above its oldest entry.
   published=$(echo "$sha256sums" \
-    | grep -oE 'cpython-3\.[0-9]+\.[0-9]+\+[0-9]+-x86_64-unknown-linux-gnu-install_only\.tar\.gz' \
+    | { grep -oE 'cpython-3\.[0-9]+\.[0-9]+\+[0-9]+-x86_64-unknown-linux-gnu-install_only\.tar\.gz' || true; } \
     | sed -E 's/cpython-(3\.[0-9]+)\.[0-9]+.*/\1/' | sort -uV)
   local fill fill_m
   fill=()
   for fill_m in $published; do
-    if [[ "$fill_m" > "$matrix_min" ]] && [[ " ${minors[*]} " != *" $fill_m "* ]]; then
+    if [ "$fill_m" != "$matrix_min" ] \
+      && [ "$(printf '%s\n' "$matrix_min" "$fill_m" | sort -V | tail -1)" = "$fill_m" ] \
+      && [[ " ${minors[*]} " != *" $fill_m "* ]]; then
       fill+=("$fill_m")
     fi
   done
@@ -155,19 +159,24 @@ function generate_python_archives() {
   for minor in "${minors[@]}"; do
     python_short=$(echo "$minor" | tr -d '.')
     # Reuse the previous minor's architectures for a newly detected minor.
-    archs_tmp=$(mktemp)
-    get_python_archs "$minor" > "$archs_tmp"
-    if [ ! -s "$archs_tmp" ]; then
-      get_python_archs "$latest_minor" > "$archs_tmp"
+    archs=$(get_python_archs "$minor")
+    if [ -z "$archs" ] && [ ${#fill[@]} -gt 0 ] && [[ " ${fill[*]} " == *" $minor "* ]]; then
+      archs=$(get_python_archs "$latest_minor")
     fi
-    [ -s "$archs_tmp" ] || { echo "no archs for ${minor} in python/config.bzl" >&2; exit 1; }
+    [ -n "$archs" ] || { echo "no archs for ${minor} in python/config.bzl" >&2; exit 1; }
+    stable_only=0
+    if [ ${#fill[@]} -gt 0 ] && [[ " ${fill[*]} " == *" $minor "* ]]; then
+      stable_only=1
+    fi
     while IFS= read -r arch; do
       triple=$(triple_for_arch "$arch") || { echo "no triple for ${arch}" >&2; exit 1; }
-      # Select the latest stable patch for this minor and architecture.
+      # Select the latest stable patch or opted-in prerelease.
+      version_re='[0-9]+(b[0-9]+|rc[0-9]+)?'
+      [ "$stable_only" = 1 ] && version_re='[0-9]+'
       version=$(echo "$sha256sums" \
-        | grep -oE "cpython-${minor}\.[0-9]+\+${latest_release}-${triple}-install_only\.tar\.gz" \
-        | sed -E "s/cpython-(${minor}\.[0-9]+)\+.*/\1/" | sort -V | tail -1)
-      [ -n "$version" ] || { echo "no ${minor} ${triple} install_only asset in ${latest_release}" >&2; exit 1; }
+        | { grep -oE "cpython-${minor}\\.${version_re}\\+${latest_release}-${triple}-install_only\\.tar\\.gz" || true; } \
+        | sed -E "s/cpython-(${minor}\\.${version_re})\\+.*/\\1/" | sort -V | tail -1)
+      [ -n "$version" ] || { echo "required matrix entry ${minor} ${arch} has no install_only PBS asset in ${latest_release}" >&2; exit 1; }
       sha=$(echo "$sha256sums" | grep "cpython-${version}+${latest_release}-${triple}-install_only.tar.gz" | cut -d' ' -f1)
       [ -n "$sha" ] || { echo "no sha for ${version} ${triple}" >&2; exit 1; }
       verify_assets+=("${minor}|${arch}|${version}|${triple}|${sha}")
@@ -200,9 +209,18 @@ function generate_python_archives() {
       versions_entries+=("            \"${minor}_${arch}\": \"${version}\",")
       metadata_deps+=("            \"python${python_short}_${arch}\",")
       repos+=("python${python_short}_${arch}")
-    done < "$archs_tmp"
-    rm -f "$archs_tmp"
+    done <<< "$archs"
   done
+
+  # Keep root-module repository visibility aligned with the selected matrix.
+  repos_sorted=$(printf '%s\n' "${repos[@]}" | sort | sed 's/^/"/; s/$/"/' | paste -sd, - | sed 's/,/, /g')
+  module_line="use_repo(py, ${repos_sorted}, \"python_versions\")"
+  current_module_line=$(grep '^use_repo(py,' MODULE.bazel || true)
+  if [ "$current_module_line" != "$module_line" ]; then
+    module_changed=1
+    changes+=("sync MODULE.bazel repositories")
+    changed=1
+  fi
 
   # Regenerate the PBS SPDX SBOM from the release component manifest.
   local downloads_file sbom_tmp="" downloads_tmp=""
@@ -275,12 +293,20 @@ function generate_python_archives() {
     fi
     so_dir=$(mktemp -d "$verify_root/so.XXXXXX")
     if ! python3 - "$tarball" "$so_dir" <<'PYEOF'; then
-import sys, tarfile
+import os, shutil, sys, tarfile
 tar = tarfile.open(sys.argv[1])
 for member in tar.getmembers():
     basename = member.name.rsplit("/", 1)[-1]
-    if "/lib/" in member.name and basename.startswith("libpython3.") and ".so" in basename and member.isfile():
-        tar.extract(member, sys.argv[2])
+    if (member.name.startswith("python/lib/")
+            and ".." not in member.name.split("/")
+            and basename.startswith("libpython3.")
+            and ".so" in basename
+            and member.isfile()):
+        source = tar.extractfile(member)
+        if source is None:
+            continue
+        with source, open(os.path.join(sys.argv[2], basename), "wb") as target:
+            shutil.copyfileobj(source, target)
         sys.exit(0)
 sys.exit("no libpython3*.so in tarball")
 PYEOF
@@ -309,6 +335,7 @@ PYEOF
 
   if [ "$dry_run" = 1 ]; then
     rm -f "$sbom_tmp"
+    rm -f "$module_tmp"
     if [ "$changed" = 0 ]; then
       echo "NO_CHANGE"
     else
@@ -320,6 +347,7 @@ PYEOF
 
   if [ "$changed" = 0 ]; then
     rm -f "$sbom_tmp"
+    rm -f "$module_tmp"
     echo "NO_CHANGE"
     return 0
   fi
@@ -391,24 +419,23 @@ $(printf '%s\n' "${metadata_deps[@]}")
       grep -q "\"${fill_m2}\": \[" "$config_tmp" \
         || { echo "config.bzl arch map for ${fill_m2} did not land" >&2; rm -f "$config_tmp" "$tmp"; return 1; }
     done
-    # MODULE.bazel: the new minor's repos must be visible to the root module
-    local module_tmp repos_sorted
-    module_tmp=$(mktemp)
-    cp MODULE.bazel "$module_tmp"
-    repos_sorted=$(printf '"%s", ' $(printf '%s\n' "${repos[@]}" | sort) | sed 's/, $//')
-    sed_inplace "s/^use_repo(py, .*/use_repo(py, ${repos_sorted}, \"python_versions\")/" "$module_tmp"
-    for fill_m2 in "${fill[@]}"; do
-      grep -q "\"python$(echo "$fill_m2" | tr -d '.').*_" "$module_tmp" \
-        || { echo "use_repo update for ${fill_m2} did not land" >&2; rm -f "$config_tmp" "$tmp" "$module_tmp"; return 1; }
-    done
   fi
 
   # All generated content is verified; apply it.
+  if [ "$module_changed" = 1 ]; then
+    module_tmp=$(mktemp)
+    cp MODULE.bazel "$module_tmp"
+    sed_inplace "s/^use_repo(py, .*/${module_line}/" "$module_tmp"
+    grep -Fxq "$module_line" "$module_tmp" \
+      || { echo "MODULE.bazel use_repo update did not land" >&2; rm -f "$module_tmp"; rm -f "$config_tmp" "$tmp"; return 1; }
+  fi
   PYTHON_MUTATED=1
   mv "$tmp" private/extensions/python.bzl || { echo "extension update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
   mv "$sbom_tmp" python/pbs-sbom.spdx.json || { echo "SBOM update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
   if [ -n "$config_tmp" ]; then
     mv "$config_tmp" python/config.bzl || { echo "config.bzl update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
+  fi
+  if [ -n "$module_tmp" ]; then
     mv "$module_tmp" MODULE.bazel || { echo "MODULE.bazel update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
   fi
 
