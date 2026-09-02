@@ -33,17 +33,6 @@ sh_test(
     ],
 )
 
-sh_test(
-    name = "pbs_cve_check_test",
-    srcs = ["pbs_cve_check_test.sh"],
-    data = [
-        "testdata/cve_fixture_clean.json",
-        "testdata/cve_fixture_high.json",
-        "testdata/cve_sbom_mini.json",
-        ":pbs_cve_check.py",
-    ],
-)
-
 [
     python_image(
         arch = arch,

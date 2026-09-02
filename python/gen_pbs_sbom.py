@@ -9,8 +9,8 @@ provenance, not a complete image SBOM.
 
 Usage: gen_pbs_sbom.py <downloads.py> <release> <output.spdx.json>
 """
+import ast
 import datetime
-import importlib.util
 import json
 import sys
 
@@ -43,14 +43,30 @@ def is_runtime(name, entry):
     return name.startswith("cpython") or name == "pip" or bool(entry.get("library_names"))
 
 
+def load_downloads(path):
+    with open(path, encoding="utf-8") as fh:
+        tree = ast.parse(fh.read(), filename=path)
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            targets = node.targets
+        elif isinstance(node, ast.AnnAssign):
+            targets = [node.target]
+        else:
+            continue
+        if any(isinstance(target, ast.Name) and target.id == "DOWNLOADS" for target in targets):
+            downloads = ast.literal_eval(node.value)
+            if isinstance(downloads, dict):
+                return downloads
+            break
+    raise ValueError("DOWNLOADS must be a literal dictionary")
+
+
 def main():
     manifest, release, output = sys.argv[1], sys.argv[2], sys.argv[3]
-    spec = importlib.util.spec_from_file_location("pbs_downloads", manifest)
-    if spec is None or spec.loader is None:
-        sys.exit("cannot load manifest: " + manifest)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    downloads = module.DOWNLOADS
+    try:
+        downloads = load_downloads(manifest)
+    except (OSError, SyntaxError, ValueError) as err:
+        sys.exit("cannot parse manifest {}: {}".format(manifest, err))
 
     doc = {
         "spdxVersion": "SPDX-2.3",

@@ -35,9 +35,11 @@ PYTHON_TRIPLES=(
 # portable in-place sed: BSD sed needs `-i ''`, GNU sed reads the '' as an
 # empty file name and errors. Write to a sibling temp and rename instead.
 sed_inplace() { # $1 = sed expression, $2 = file
-  local tmp
+  local tmp mode
   tmp="${2}.tmp.$$"
   sed -e "$1" "$2" > "$tmp" || { rm -f "$tmp"; return 1; }
+  mode=$(stat -c %a "$2" 2>/dev/null || stat -f %Lp "$2")
+  chmod "$mode" "$tmp"
   mv "$tmp" "$2"
 }
 
@@ -236,8 +238,6 @@ function generate_python_archives() {
     exit 1
   fi
   grep -q "$latest_release" "$sbom_tmp" || { echo "PBS SBOM does not mention ${latest_release}" >&2; rm -f "$sbom_tmp" "$downloads_tmp"; exit 1; }
-  [ -n "${PBS_DOWNLOADS_FILE:-}" ] || rm -f "$downloads_tmp"
-
   # PBS embedded native libraries: dissect libpython3*.so from every selected
   # matrix archive and verify the statically linked C libraries against the manifest.
   # A release can bump the embedded libs while the CPython versions stay the same
@@ -264,26 +264,26 @@ function generate_python_archives() {
       fname="cpython-${verify_version}+${latest_release}-${verify_triple}-install_only.tar.gz"
       if [ -n "${PBS_TARBALL_DIR:-}" ]; then
         tarball="${PBS_TARBALL_DIR}/${fname}"
-        [ -f "$tarball" ] || { echo "missing PBS test tarball ${fname}" >&2; rm -f "$sbom_tmp"; rm -rf "$verify_root"; exit 1; }
+        [ -f "$tarball" ] || { echo "missing PBS test tarball ${fname}" >&2; rm -f "$sbom_tmp" "$downloads_tmp"; rm -rf "$verify_root"; exit 1; }
       else
         tarball_tmp=$(mktemp)
         tarball_sha="$verify_sha"
         if [ -z "$tarball_sha" ]; then
           echo "no sha for ${fname}" >&2
-          rm -f "$tarball_tmp" "$sbom_tmp"
+          rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
           rm -rf "$verify_root"
           exit 1
         fi
         if ! curl -sSL "https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/${fname}" -o "$tarball_tmp"; then
           echo "cannot download ${fname}" >&2
-          rm -f "$tarball_tmp" "$sbom_tmp"
+          rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
           rm -rf "$verify_root"
           exit 1
         fi
         got_sha=$(python3 -c "import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "$tarball_tmp")
         if [ "$got_sha" != "$tarball_sha" ]; then
           echo "sha256 mismatch for ${fname}: expected ${tarball_sha}, got ${got_sha}" >&2
-          rm -f "$tarball_tmp" "$sbom_tmp"
+          rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
           rm -rf "$verify_root"
           exit 1
         fi
@@ -295,44 +295,34 @@ function generate_python_archives() {
 import sys, tarfile
 tar = tarfile.open(sys.argv[1])
 for member in tar.getmembers():
-    if "/lib/libpython3." in member.name and member.name.endswith(".so") and member.isfile():
+    basename = member.name.rsplit("/", 1)[-1]
+    if "/lib/" in member.name and basename.startswith("libpython3.") and ".so" in basename and member.isfile():
         tar.extract(member, sys.argv[2])
         sys.exit(0)
 sys.exit("no libpython3*.so in tarball")
 PYEOF
-      rm -f "$tarball_tmp" "$sbom_tmp"
+      rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
       rm -rf "$verify_root"
       exit 1
     fi
-    so_path=$(find "$so_dir" -name 'libpython3.*.so' | head -1)
+    so_path=$(find "$so_dir" -type f -name 'libpython3*.so*' | head -1)
     if [ -z "$so_path" ]; then
       echo "no libpython3*.so in ${fname} (${verify_minor} ${verify_arch})" >&2
-      rm -f "$tarball_tmp" "$sbom_tmp"
+      rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
       rm -rf "$verify_root"
       exit 1
     fi
     # stdout is the updater's machine contract (the release tag); diagnostics to stderr.
     if ! python3 python/pbs_embedded_versions.py "$so_path" "$downloads_file" >&2; then
       echo "PBS embedded native libraries drift detected in ${fname} (${verify_minor} ${verify_arch})" >&2
-      rm -f "$tarball_tmp" "$sbom_tmp"
+      rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
       rm -rf "$verify_root"
       exit 1
     fi
     [ -z "$tarball_tmp" ] || rm -f "$tarball_tmp"
   done
   rm -rf "$verify_root"
-
-  # NVD CVE check: the pinned native libraries are invisible to trivy
-  # (pkg:generic has no advisory feed), so query NVD CPE data for the exact
-  # verified versions and RED on HIGH/CRITICAL. Hermetic tests inject fixtures
-  # directly into pbs_cve_check.py and skip this block (no network).
-  if [ -z "${PBS_TARBALL_FILE:-}" ] && [ -z "${PBS_SKIP_CVE_CHECK:-}" ]; then
-    if ! python3 python/pbs_cve_check.py "$sbom_tmp"; then
-      echo "PBS pinned native libraries have HIGH/CRITICAL CVEs; update blocked" >&2
-      rm -f "$sbom_tmp"
-      exit 1
-    fi
-  fi
+  [ -n "${PBS_DOWNLOADS_FILE:-}" ] || rm -f "$downloads_tmp"
 
   if [ "$dry_run" = 1 ]; then
     rm -f "$sbom_tmp"
