@@ -1,0 +1,233 @@
+"python"
+
+BUILD_TMPL = """\
+# GENERATED FILE; DO NOT EDIT.
+load("@distroless//private/pkg:package_spdx.bzl", "package_spdx")
+load("@distroless//private/util:merge_providers.bzl", "merge_providers")
+load("@distroless//private/util:tar.bzl", "tar")
+
+tar(
+    name = "data",
+    extension = "tar.gz",
+    srcs = glob(
+        [
+            "output/bin/python{pyver}",
+            "output/lib/python{pyver}/**",
+            "output/lib/libpython{pyver}*",
+        ],
+        exclude = [
+            "output/lib/python{pyver}/site-packages/pip/**",
+            "output/lib/python{pyver}/site-packages/pip-*.dist-info/**",
+        ],
+    ),
+    symlinks = {{
+        "/python/bin/python": "python{pyver}",
+        "/python/bin/python3": "python{pyver}",
+    }},
+    package_dir = "/python",
+    strip_prefix = "external/{canonical_name}/output"
+)
+
+package_spdx(
+    name = "spdx",
+    package_name = "{package_name}",
+    version = "{version}",
+    spdx_id = "{spdx_id}",
+    sha256 = "{sha256}",
+    urls = [{urls}]
+)
+
+merge_providers(
+    name = "{name}",
+    srcs = [":data", ":spdx"],
+    visibility = ["//visibility:public"],
+)
+"""
+
+def _impl(rctx):
+    rctx.report_progress("Fetching {}".format(rctx.attr.package_name))
+    rctx.download_and_extract(
+        url = rctx.attr.urls,
+        sha256 = rctx.attr.sha256,
+        type = rctx.attr.type,
+        stripPrefix = rctx.attr.strip_prefix,
+        output = "output",
+    )
+    rctx.file(
+        "BUILD.bazel",
+        content = BUILD_TMPL.format(
+            canonical_name = rctx.attr.name,
+            name = rctx.attr.name.split("+")[-1],
+            package_name = rctx.attr.package_name,
+            version = rctx.attr.version,
+            spdx_id = rctx.attr.name,
+            pyver = rctx.attr.python_version,
+            urls = ",".join(['"%s"' % url for url in rctx.attr.urls]),
+            sha256 = rctx.attr.sha256,
+        ),
+    )
+
+python_archive = repository_rule(
+    implementation = _impl,
+    attrs = {
+        "urls": attr.string_list(mandatory = True),
+        "sha256": attr.string(mandatory = True),
+        "type": attr.string(default = ".tar.gz"),
+        "strip_prefix": attr.string(),
+        "package_name": attr.string(default = "python"),
+        "version": attr.string(mandatory = True),
+        # The x.y version used for binary and library paths, such as "3.14".
+        "python_version": attr.string(mandatory = True),
+        "architecture": attr.string(mandatory = True),
+    },
+)
+
+_PYTHON_VERSIONS_TMPL = """\
+"python versions"
+
+# AUTO GENERATED. DO NOT EDIT.
+PYTHON_VERSIONS = {versions}
+"""
+
+def _python_versions_repo_impl(rctx):
+    rctx.file("versions.bzl", _PYTHON_VERSIONS_TMPL.format(versions = str(rctx.attr.versions)))
+    rctx.file("BUILD.bazel", 'exports_files(["versions.bzl"])')
+
+python_versions_repo = repository_rule(
+    implementation = _python_versions_repo_impl,
+    attrs = {
+        "versions": attr.string_dict(),
+    },
+)
+
+def _python_impl(module_ctx):
+    mod = module_ctx.modules[0]
+
+    if len(module_ctx.modules) > 1:
+        fail("python.archive should be called only once")
+    if not mod.is_root:
+        fail("python.archive should be called from root module only.")
+
+    # Python from python-build-standalone (https://github.com/astral-sh/python-build-standalone)
+    # Release 20260901. Linux targets only (distroless images).
+    # Versions 3.13 and 3.14. New stable minors are added by the updater.
+    # armv7 is excluded: PBS publishes soft-float gnueabi builds
+    # (interpreter /lib/ld-linux.so.3) which cannot run on the distroless armhf base
+    # (loader /usr/lib/ld-linux-armhf.so.3); ppc64le is not published by PBS.
+    python_archive(
+        name = "python313_amd64",
+        sha256 = "0651dd7157d3debf769e15a52c1de9de7fbcdc36ba72faf79fde3c44f14d9461",
+        strip_prefix = "python/",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.13.15+20260901-x86_64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.13.15+20260901",
+        python_version = "3.13",
+        architecture = "amd64",
+    )
+
+    python_archive(
+        name = "python313_arm64",
+        sha256 = "76ed18125286d7dc96ce24023d1e319dbd55a89a767102411b1ea23846113f69",
+        strip_prefix = "python/",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.13.15+20260901-aarch64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.13.15+20260901",
+        python_version = "3.13",
+        architecture = "arm64",
+    )
+
+    python_archive(
+        name = "python313_s390x",
+        sha256 = "b738ddb7271b2591d6e89fcd4ef42b6cbbcac7c489daf807b6b01442ae065a0a",
+        strip_prefix = "python/",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.13.15+20260901-s390x-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.13.15+20260901",
+        python_version = "3.13",
+        architecture = "s390x",
+    )
+
+    python_archive(
+        name = "python313_riscv64",
+        sha256 = "584a5a197a3d1ce8d8e45496515802872f1c18c4d20ee54f088081f75e7e8b4b",
+        strip_prefix = "python/",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.13.15+20260901-riscv64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.13.15+20260901",
+        python_version = "3.13",
+        architecture = "riscv64",
+    )
+
+    python_archive(
+        name = "python314_amd64",
+        sha256 = "0ab3305457051cd3e7c031857e005f1bda17c218a1990567dacaaac6dd1d14f0",
+        strip_prefix = "python/",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-x86_64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.14.7+20260901",
+        python_version = "3.14",
+        architecture = "amd64",
+    )
+
+    python_archive(
+        name = "python314_arm64",
+        sha256 = "30f1cc489be654477d895b441e196bb080738bf0456da82080ad4ab66a22d80f",
+        strip_prefix = "python/",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-aarch64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.14.7+20260901",
+        python_version = "3.14",
+        architecture = "arm64",
+    )
+
+    python_archive(
+        name = "python314_s390x",
+        sha256 = "dc27e917b88db2560fe213244ffa6a656e8197ca0beb4ddeaaee5286041488ad",
+        strip_prefix = "python/",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-s390x-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.14.7+20260901",
+        python_version = "3.14",
+        architecture = "s390x",
+    )
+
+    python_archive(
+        name = "python314_riscv64",
+        sha256 = "cf71ad2f451ba9af30992391b2a403cddb6965f11ef5255ee2f5d3e504f75add",
+        strip_prefix = "python/",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-riscv64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.14.7+20260901",
+        python_version = "3.14",
+        architecture = "riscv64",
+    )
+
+    python_versions_repo(
+        name = "python_versions",
+        versions = {
+            "3.13_amd64": "3.13.15",
+            "3.13_arm64": "3.13.15",
+            "3.13_s390x": "3.13.15",
+            "3.13_riscv64": "3.13.15",
+            "3.14_amd64": "3.14.7",
+            "3.14_arm64": "3.14.7",
+            "3.14_s390x": "3.14.7",
+            "3.14_riscv64": "3.14.7",
+        },
+    )
+
+    return module_ctx.extension_metadata(
+        root_module_direct_deps = [
+            "python_versions",
+            "python313_amd64",
+            "python313_arm64",
+            "python313_s390x",
+            "python313_riscv64",
+            "python314_amd64",
+            "python314_arm64",
+            "python314_s390x",
+            "python314_riscv64",
+        ],
+        root_module_direct_dev_deps = [],
+    )
+
+_archive = tag_class(attrs = {})
+
+python = module_extension(
+    implementation = _python_impl,
+    tag_classes = {
+        "archive": _archive,
+    },
+)

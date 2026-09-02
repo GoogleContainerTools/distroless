@@ -11,6 +11,8 @@ load("@aspect_bazel_lib//lib:tar.bzl", "tar_lib")
 def _validate_usr_symlink_impl(target, ctx):
     if target.label.name.find("debian12") != -1:
         return []
+    if hasattr(ctx.rule.attr, "tags") and "debian12" in ctx.rule.attr.tags:
+        return []
 
     if not hasattr(ctx.rule.files, "tars"):
         return []

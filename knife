@@ -159,6 +159,66 @@ function cmd_lint () {
     buildifier -mode=$mode $(find . -type f \( -name 'BUILD*' -o -name 'WORKSPACE*' -o -name '*.bzl' \))
 }
 
+function cmd_update_python_archives () {
+	if ! which jq > /dev/null; then
+		echo "🧱 No jq executable was found"
+		exit 1
+	fi
+	if ! which curl > /dev/null; then
+		echo "🧱 No curl executable was found"
+		exit 1
+	fi
+
+	VERBOSE=0
+	DRY_RUN=0
+	for arg in "$@"; do
+		case "$arg" in
+		--verbose)
+			VERBOSE=1
+			;;
+		--dry-run)
+			DRY_RUN=1
+			;;
+		*)
+			echo "unknown option: $arg"
+			exit 1
+			;;
+		esac
+	done
+	export VERBOSE DRY_RUN
+
+	source knife.d/update_python_archives.sh
+	old_versions=$(get_python_versions)
+	if ! out=$(generate_python_archives); then
+		case "$out" in
+		*MUTATED_PARTIAL*)
+			echo "update failed mid-mutation; files may be partially updated." >&2
+			echo "Restore the affected files from version control before retrying." >&2
+			;;
+		*)
+			echo "update failed; no files were mutated (pre-flight validation)." >&2
+			;;
+		esac
+		return 1
+	fi
+	if [ "$out" = "NO_CHANGE" ]; then
+		echo "python archives are up to date"
+		return 0
+	fi
+	if [ "$DRY_RUN" = 1 ]; then
+		echo "dry-run: no files written"
+		return 0
+	fi
+	echo "updated python archives to release $out"
+	if ! update_test_versions_python "$old_versions"; then
+		echo "testdata update failed after the archive update." >&2
+		echo "Restore the affected files from version control before retrying." >&2
+		return 1
+	fi
+	# The extension changed; refresh the lockfile before building.
+	echo "Refresh the lockfile before building." >&2
+}
+
 function cmd_update_node_archives () {
 	if ! which jq > /dev/null; then
 		echo "🧱 No jq executable was found"
@@ -289,8 +349,11 @@ update-node-archives)
 update-node-keys)
 	cmd_update_node_keys
 	;;
+update-python-archives)
+	cmd_update_python_archives "${@:2}"
+	;;
 ~~nocmd) # no command provided
-    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, test, deb-versions, update-node-archives, update-node-keys"
+    echo "provide a command: lock, update-snapshots, github-update-snapshots, update-non-snapshots, test, deb-versions, update-node-archives, update-node-keys, update-python-archives"
     exit 1
     ;;
 *) # unknown command

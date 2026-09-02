@@ -29,11 +29,11 @@ jobs:
 
       - name: Set up QEMU
         if: env.DISTROLESS_DIFF
-        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4
+        uses: docker/setup-qemu-action@1f40c72289eff860ee54a304f1438e3cff362e0a # v4
 
       - name: Update ldconfig
         if: env.DISTROLESS_DIFF
-        run: bazel run //python3:update_ldconfig
+        run: bazel run //python3:update_ldconfig //python:update_ldconfig
 
       - name: Run update sboms script
         if: env.DISTROLESS_DIFF
