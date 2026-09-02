@@ -7,7 +7,7 @@
  "creationInfo": {
   "created": "2026-09-02T05:57:59Z",
   "creators": [
-   "Tool: distroless-pbs-sbom (python/gen_pbs_sbom.py)"
+   "Tool: distroless-pbs-sbom"
   ]
  },
  "packages": [

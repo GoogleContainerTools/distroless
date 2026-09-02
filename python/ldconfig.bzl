@@ -3,11 +3,11 @@
 load("@rules_oci//oci:defs.bzl", "oci_load")
 
 def python_ldconfig(architectures, distro):
-    """Generates ldconfig cache targets for python images.
+    """Generate ldconfig cache targets for Python images.
 
     Args:
-        architectures: list of architectures to support
-        distro: the distribution name (e.g. debian13)
+        architectures: architectures to support
+        distro: distribution name, such as debian13
     """
 
     for arch in architectures:

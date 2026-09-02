@@ -8,16 +8,16 @@ load("//private/util:deb.bzl", "deb")
 load("//private/util:tar.bzl", "tar")
 
 def _bin_version(major_version):
-    """bin/lib version, e.g. \"3.15rc1\" -> \"3.15\"."""
+    """Return the binary/library version, e.g. "3.15rc1" -> "3.15"."""
     return major_version.split("rc")[0]
 
 def python_image_index(distro, major_version, architectures):
-    """python image index for a distro.
+    """Create a Python image index for a distribution.
 
     Args:
-        distro: name of distribution
-        major_version: version of python, e.g. "3.14"
-        architectures: all architectures included in index
+        distro: distribution name
+        major_version: Python version, such as "3.14"
+        architectures: architectures included in the index
     """
     for mode in DEBUG_MODE:
         for user in USERS:
@@ -40,16 +40,16 @@ def _example_tar():
     )
 
 def python_image(distro, major_version, arch, packages):
-    """python and debug image with tests.
+    """Create Python and debug images with tests.
 
     Python comes from a python-build-standalone prebuilt tarball
-    (//private/extensions:python.bzl) instead of the Debian python package.
+    instead of the Debian Python package.
 
     Args:
-        distro: name of distribution
-        major_version: version of python, e.g. "3.14"
-        arch: the target arch
-        packages: any deb packages to add to the image
+        distro: distribution name
+        major_version: Python version, such as "3.14"
+        arch: target architecture
+        packages: Debian packages to add to the image
     """
 
     _version_key = major_version + "_" + arch
@@ -78,7 +78,7 @@ def python_image(distro, major_version, arch, packages):
 
     _example_tar()
 
-    # Debug images include busybox; structure tests cover the non-debug images.
+    # Debug images include BusyBox; structure tests cover non-debug images.
     for user in USERS:
         container_structure_test(
             name = "python" + major_version.replace(".", "") + "_" + user + "_" + arch + "_" + distro + "_test",

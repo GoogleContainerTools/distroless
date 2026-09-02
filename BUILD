@@ -10,7 +10,6 @@ load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
-# allow updater tests to read MODULE.bazel
 exports_files(["MODULE.bazel"])
 
 DEFAULT_DISTRO = "debian13"
@@ -211,7 +210,6 @@ PYTHON = {
     for (tag_base, debug_mode, user) in VARIANTS
 }
 
-# oci_image_index
 PYTHON |= {
     "{REGISTRY}/{PROJECT_ID}/python" + version + "-" + distro + ":" + tag_base: "//python:python" + version.replace(".", "") + debug_mode + "_" + user + "_" + distro
     for version in PBS_PYTHON_MAJOR_VERSIONS
@@ -226,7 +224,6 @@ PYTHON |= {
     for (tag_base, debug_mode, user) in VARIANTS
 }
 
-# oci_image_index
 PYTHON |= {
     "{REGISTRY}/{PROJECT_ID}/python" + version + ":" + tag_base: "//python:python" + version.replace(".", "") + debug_mode + "_" + user + "_" + DEFAULT_DISTRO
     for version in PBS_PYTHON_MAJOR_VERSIONS

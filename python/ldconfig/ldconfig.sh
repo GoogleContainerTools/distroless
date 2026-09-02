@@ -40,7 +40,7 @@ for arch in "$@"; do
     docker cp "${CID}:/etc/ld.so.cache" "${TEMP_DIR}/ld.so.cache.${arch}"
     if ! cmp -s "${TEMP_DIR}/ld.so.cache.${arch}" "${ROOT}/ld.so.cache.${arch}"; then
       echo "ERROR: ldconfig cache for ${arch} is out of date." >&2
-      echo "Run 'bazel run //python:update_ldconfig' to regenerate." >&2
+      echo "Run the ldconfig update command to regenerate it." >&2
       exit 1
     fi
     rm -rf "${TEMP_DIR}"

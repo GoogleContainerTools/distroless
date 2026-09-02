@@ -647,7 +647,7 @@
     },
     "//private/extensions:python.bzl%python": {
       "general": {
-        "bzlTransitiveDigest": "X8lWrNWczP6K2iaMyx2j6O4vCftpXM5PXbC68/Fu8ww=",
+        "bzlTransitiveDigest": "1Ko7/R5xpXOJ/JA3GD9LzrmcNheDq/ENqQ14jDpCLLk=",
         "usagesDigest": "c4TzkyPW7cDJnkOuzqF5JKto51Qz2U++tuhW9H+H22w=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

@@ -1,6 +1,6 @@
 #!/python/bin/python3
-"""Import every stdlib module available in the distroless python image and
-exercise a representative set with one call each."""
+"""Import every available standard-library module in the distroless Python image
+and exercise a representative set with one call each."""
 
 import importlib
 import pkgutil
@@ -16,24 +16,24 @@ skip_modules = frozenset((
     "encodings.oem",
     "multiprocessing.popen_spawn_win32",
     "winreg",
-    # Python regression tests
+    # Python regression tests.
     "test",
-    # calls sys.exit
+    # Calls sys.exit.
     "unittest.__main__",
     "venv.__main__",
-    # python-build-standalone builds without _gdbm
+    # python-build-standalone omits _gdbm.
     "dbm.gnu",
-    # platform-specific / GUI extensions not relevant in a server image
+    # Platform-specific or GUI extensions not used in a server image.
     "_ios_support",
     "_tkinter",
-    # new REPL; _minimal_curses needs libncurses not shipped in the image
+    # The new REPL requires libncurses, which is not shipped.
     "_pyrepl",
-    # prints the Zen of Python on import
+    # Prints the Zen of Python on import.
     "this",
 ))
 
-# packages we never import: GUI modules (no Tcl/Tk in the image, and
-# idlelib raises SystemExit on import without Tk) and distutils (removed)
+# Packages skipped during import: GUI modules (no Tcl/Tk in the image),
+# idlelib (which exits without Tk), and removed distutils.
 never_import = ("tkinter", "idlelib", "turtle", "distutils", "test", "venv")
 
 failed = []
@@ -67,7 +67,7 @@ import os
 stdlib_root = os.path.join(os.path.dirname(sys.executable), os.pardir, "lib", "python%d.%d" % sys.version_info[:2])
 imported = [0]
 for p in sys.path:
-    # only the stdlib tree; skip the script dir (sys.path[0]) and site-packages
+    # Scan only the standard-library tree, skipping the script directory and site-packages.
     if os.path.abspath(p).startswith(os.path.abspath(stdlib_root)) and "site-packages" not in p:
         walk([p])
 
@@ -78,7 +78,7 @@ if failed:
     print("FAILED %d" % len(failed))
     sys.exit(1)
 
-# one representative call each; any exception fails the run
+# Run one representative call for each module; any exception fails the test.
 calls = [
     lambda: importlib.import_module("hashlib").sha256(b"distroless").hexdigest(),
     lambda: importlib.import_module("json").dumps({"a": [1, 2.5, None, "x"]}),
