@@ -8,8 +8,8 @@ load("//private/util:deb.bzl", "deb")
 load("//private/util:tar.bzl", "tar")
 
 def _bin_version(major_version):
-    """Return the binary/library version, e.g. "3.15rc1" -> "3.15"."""
-    return major_version.split("rc")[0]
+    """Return x.y from a beta or RC matrix version."""
+    return major_version.split("b")[0].split("rc")[0]
 
 def python_image_index(distro, major_version, architectures):
     """Create a Python image index for a distribution.
