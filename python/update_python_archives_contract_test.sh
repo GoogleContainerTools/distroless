@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
-# Black-box contract test for the python updater (knife.d/update_python_archives.sh).
+# Black-box contract test for the Python updater.
 #
-# Contract: after a NEW PBS release, the updater must rewrite ALL files needed to
-# build the new images consistently and converge:
-#   - private/extensions/python.bzl: archive blocks (url/sha/version incl. release tag)
-#     AND the python_versions_repo dict (patch bumps)
-#   - python/config.bzl: matrix extension when a new stable minor appears
-#   - MODULE.bazel: use_repo gains the new minor's archives
-#   - python/testdata/python3.X.yaml: version strings (patch bumps) / new yaml (new minor)
-#   - a second run is a NO_CHANGE no-op (the state is the updater's fixed point)
-# Runs fully offline; fixture data is injected via PBS_RELEASE_FILE /
-# PBS_SHA256SUMS_FILE / PBS_DOWNLOADS_FILE / PBS_TARBALL_FILE or PBS_TARBALL_DIR.
+# Contract: after a new PBS release, the updater rewrites all files needed to
+# build consistent images and converge:
+#   - archive blocks and version data
+#   - the matrix and repository visibility for new stable minors
+#   - version-specific testdata
+#   - a second run returns NO_CHANGE (the updater reaches a fixed point)
+# The test runs offline; fixture data is supplied through PBS_RELEASE_FILE,
+# PBS_SHA256SUMS_FILE, PBS_DOWNLOADS_FILE, PBS_TARBALL_FILE, or PBS_TARBALL_DIR.
 set -euo pipefail
 
 cd "$TEST_SRCDIR/${TEST_WORKSPACE:-_main}"
@@ -18,7 +16,7 @@ cd "$TEST_SRCDIR/${TEST_WORKSPACE:-_main}"
 FIX=$(mktemp -d)
 trap 'rm -rf "$FIX"' EXIT
 
-# fixture workspace: every file the updater mutates, copied verbatim from the tree
+# Copy every file mutated by the updater into the test workspace.
 mkdir -p "$FIX/private/extensions" "$FIX/python/testdata"
 cp knife.d/update_python_archives.sh "$FIX/"
 cp private/extensions/python.bzl "$FIX/private/extensions/"
@@ -29,7 +27,7 @@ cp python/gen_pbs_sbom.py "$FIX/python/"
 cp python/testdata/python3.13.yaml python/testdata/python3.14.yaml "$FIX/python/testdata/"
 cp python/pbs_embedded_versions.py "$FIX/python/"
 
-# fake PBS component manifest (pythonbuild/downloads.py) for the SBOM step
+# Minimal PBS component manifest for SBOM generation.
 cat > "$FIX/downloads.py" <<'EOF'
 DOWNLOADS = {
     "cpython-3.14": {
@@ -68,8 +66,8 @@ DOWNLOADS = {
 }
 EOF
 
-# fake PBS install tarball: libpython with the markers the verifier checks.
-make_tarball() { # $1 = output path; markers must match the fixture manifest
+# Minimal PBS install tarball containing the markers checked by the verifier.
+make_tarball() { # $1 = output path; markers must match the fixture manifest.
   python3 - "$1" <<'PYEOF'
 import sys, tarfile, io
 blob = (
@@ -106,14 +104,14 @@ assert weak_version(b"zstd 1.5.7", "zstd", {"version": "1.5.7"}) == "1.5.7"
 PY
 
 # --- fixtures ---------------------------------------------------------------
-# Test tarballs use fake hashes because PBS_TARBALL_DIR bypasses download checks.
+# Test tarballs use placeholder hashes because PBS_TARBALL_DIR skips downloads.
 SHA_A=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 SHA_B=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 SHA_C=cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 SHA_D=dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 TRIPLES=(x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu s390x-unknown-linux-gnu riscv64-unknown-linux-gnu)
 
-make_sha256sums() { # $1=release $2=patch313 $3=patch314 $4=patch315 ("" = no 3.15 yet)
+make_sha256sums() { # Arguments: release, 3.13 patch, 3.14 patch, optional 3.15 patch.
   local release=$1 p313=$2 p314=$3 p315=${4:-}
   : > SHA256SUMS
   for t in "${TRIPLES[@]}"; do
@@ -134,15 +132,14 @@ make_sha256sums() { # $1=release $2=patch313 $3=patch314 $4=patch315 ("" = no 3.
   done
 }
 
-run_updater() { # prints stdout; fails the test on a non-zero exit
-  # bash -c: the updater aborts with exit 1 on fatal errors (knife contract),
-  # which must not kill the test script.
+run_updater() { # Print stdout and fail the test on a nonzero exit.
+  # Run in bash -c so an updater failure does not terminate this test script.
   PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
     PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_DIR="$FIX/tarballs" \
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
 }
 
-run_updater_expect_fail() { # non-zero exit is the expectation (drift => RED)
+run_updater_expect_fail() { # A nonzero exit is expected for drift.
   PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
     PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_FILE="$FIX/drift.tar.gz" \
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err" && return 1 || return 0
@@ -160,8 +157,7 @@ run_updater_bad_manifest() {
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
 }
 
-# --- phase A: tag-only bump (new release, same patches) -----------------------
-# the maintainer-reported gap: 20260814 -> 20260815 with unchanged CPython versions
+# --- tag-only bump (new release, same patches) -------------------------------
 echo '{"tag": "20990101"}' > release.json
 make_sha256sums 20990101 3.13.15 3.14.7
 [ "$(run_updater)" = "20990101" ] || { echo "phase A: expected update to 20990101"; cat "$FIX/updater.err"; exit 1; }
@@ -186,9 +182,8 @@ grep -q 'PBS SBOM generation failed' "$FIX/updater.err" || { echo "phase A: SBOM
 grep -q '20990101' python/pbs-sbom.spdx.json || { echo "phase A: SBOM not regenerated for the new release"; exit 1; }
 grep -q '"expat"' python/pbs-sbom.spdx.json || { echo "phase A: SBOM missing bundled component"; exit 1; }
 
-# --- phase DRIFT: embedded library bumped without a manifest change ----------
-# the maintainer-reported gap made a hard error: a release whose binary embeds
-# e.g. zlib 1.3.3 while the manifest still pins 1.3.2 must fail the updater.
+# --- embedded-library drift ---------------------------------------------------
+# A binary version mismatch must fail the updater without changing the workspace.
 python3 - "$FIX/drift.tar.gz" <<'PYEOF'
 import sys, tarfile, io
 blob = (
@@ -210,7 +205,7 @@ run_updater_expect_fail || { echo "phase DRIFT: expected the updater to fail"; c
 grep -qi 'drift' "$FIX/updater.err" || { echo "phase DRIFT: missing drift error message"; cat "$FIX/updater.err"; exit 1; }
 ! grep -q '20990102' private/extensions/python.bzl || { echo "phase DRIFT: workspace must be untouched after a RED"; exit 1; }
 
-# --- phase B: patch bump (new release, new patches) ---------------------------
+# --- patch bump (new release, new patches) -----------------------------------
 snap_b=$(get_python_versions)
 echo '{"tag": "20990102"}' > release.json
 make_sha256sums 20990102 3.13.16 3.14.8
@@ -222,7 +217,7 @@ grep -q 'Python 3.13.16' python/testdata/python3.13.yaml || { echo "phase B: tes
 grep -q 'Python 3.14.8' python/testdata/python3.14.yaml || { echo "phase B: testdata 3.14 not bumped"; exit 1; }
 grep -q '20990102' python/pbs-sbom.spdx.json || { echo "phase B: SBOM not regenerated"; exit 1; }
 
-# --- phase C: new stable minor fill (3.15 appears upstream) -------------------
+# --- new stable minor --------------------------------------------------------
 snap_c=$(get_python_versions)
 echo '{"tag": "20990103"}' > release.json
 make_sha256sums 20990103 3.13.16 3.14.8 3.15.0
@@ -236,7 +231,7 @@ update_test_versions_python "$snap_c"
 [ -f python/testdata/python3.15.yaml ] || { echo "phase C: python3.15.yaml not created"; exit 1; }
 grep -q 'Python 3.15.0' python/testdata/python3.15.yaml || { echo "phase C: python3.15.yaml version wrong"; exit 1; }
 
-# --- convergence + structural consistency -------------------------------------
+# --- convergence and consistency ---------------------------------------------
 [ "$(run_updater)" = "NO_CHANGE" ] || { echo "final: expected NO_CHANGE"; cat "$FIX/updater.err"; exit 1; }
 grep -q '20990103' python/pbs-sbom.spdx.json || { echo "final: SBOM must stay on the last release"; exit 1; }
 for minor in $(get_python_minors); do

@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Emit an SPDX 2.3 SBOM for a python-build-standalone release.
 
-Reads the release's component manifest (pythonbuild/downloads.py) and lists
-the runtime components: the CPython versions, bundled ensurepip wheel, and the
-native libraries statically linked into the interpreters. Build-time-only
-tools (autoconf, binutils, musl, llvm, ...) are excluded. This is PBS release
-provenance, not a complete image SBOM.
+Reads the release component manifest and lists runtime components: the CPython
+versions, bundled ensurepip wheel, and native libraries statically linked into
+the interpreters. Build-time-only tools (autoconf, binutils, musl, llvm, ...)
+are excluded. This is PBS release provenance, not a complete image SBOM.
 
 Usage: gen_pbs_sbom.py <downloads.py> <release> <output.spdx.json>
 """
@@ -15,8 +14,8 @@ import json
 import sys
 
 LICENSE_REF = {"bzip2-1.0.6": "LicenseRef-bzip2-1.0.6"}
-# Bundled pypi components whose license the PBS manifest does not carry;
-# stable, well-known values (used only as fallback when licenses=[]).
+# Bundled PyPI components whose licenses are absent from the manifest.
+# These stable, well-known values are used only as fallbacks.
 PYPI_LICENSE = {"pip": "MIT"}
 
 
@@ -26,7 +25,7 @@ def declared(name, entry):
         ids = [PYPI_LICENSE[name]]
     out = [LICENSE_REF.get(i) or i for i in ids]
     if not ids and entry.get("library_names"):
-        out = ["LicenseRef-Public-Domain"]  # sqlite: no SPDX id for public domain
+        out = ["LicenseRef-Public-Domain"]  # SQLite has no SPDX identifier for public domain.
     return " AND ".join(out) if out else "NOASSERTION"
 
 
@@ -38,7 +37,7 @@ def purl(name, version):
 
 
 def is_runtime(name, entry):
-    # The pip wheel is bundled for ensurepip but is not installed on PATH;
+    # The pip wheel supports ensurepip but is not installed as a command;
     # setuptools is a PBS build-time tool and is not shipped in install_only.
     return name.startswith("cpython") or name == "pip" or bool(entry.get("library_names"))
 
@@ -76,7 +75,7 @@ def main():
         "documentNamespace": "https://github.com/astral-sh/python-build-standalone/releases/tag/{}/spdx.json".format(release),
         "creationInfo": {
             "created": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "creators": ["Tool: distroless-pbs-sbom (python/gen_pbs_sbom.py)"],
+            "creators": ["Tool: distroless-pbs-sbom"],
         },
         "packages": [
             {
@@ -96,8 +95,7 @@ def main():
         if not is_runtime(name, entry):
             continue
         pid = "SPDXRef-" + name.replace("-", "_").replace(".", "_")
-        # prefer actual_version (sqlite ships its SQLITE_VERSION_NUMBER, e.g.
-        # 3530100, in `version` alongside actual_version 3.53.1.0)
+        # Prefer actual_version; SQLite also stores SQLITE_VERSION_NUMBER in version.
         version = str(entry.get("actual_version") or entry.get("version", ""))
         doc["packages"].append(
             {

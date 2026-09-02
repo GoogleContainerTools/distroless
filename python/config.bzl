@@ -2,7 +2,7 @@
 
 PYTHON_DISTROS = ["debian13"]
 
-# Full CPython versions live in //private/extensions:python.bzl.
+# Full CPython versions are defined in the extension.
 PYTHON_MAJOR_VERSIONS = ["3.13", "3.14"]
 
 PYTHON_ARCHITECTURES = {

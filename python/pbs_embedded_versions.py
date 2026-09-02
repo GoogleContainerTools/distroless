@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Verify native libraries embedded in a PBS libpython shared object.
 
-The PBS manifest lists source components, while the selected libraries are
-statically linked into libpython. This compares detectable version markers with
-pythonbuild/downloads.py.
+The PBS manifest lists source components, while selected libraries are statically
+linked into libpython. Compare detectable version markers with the manifest.
 
 Usage: pbs_embedded_versions.py <libpython.so> <downloads.py>
 """
@@ -12,7 +11,7 @@ import re
 import sys
 
 
-# manifest key -> version marker with one capture group
+# Manifest key to a version-marker pattern with one capture group.
 STRONG = [
     ("openssl-3.5", re.compile(rb"OpenSSL (\d+\.\d+\.\d+[a-z]?)\s+\d{1,2} [A-Z][a-z]{2} \d{4}")),
     ("openssl-1.1", re.compile(rb"OpenSSL (1\.1\.1[a-z]?)\s+\d{1,2} [A-Z][a-z]{2} \d{4}")),
@@ -92,9 +91,9 @@ def main():
             print("OK       {:<10} {} (weak marker)".format(name, found))
 
     if failures:
-        print("PBS embedded native libraries drift detected (see above)", file=sys.stderr)
+        print("PBS embedded native-library drift detected (see above).", file=sys.stderr)
         return 1
-    print("embedded native libraries verified against the release manifest")
+    print("Embedded native libraries verified against the release manifest.")
     return 0
 
 
