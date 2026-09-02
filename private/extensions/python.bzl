@@ -109,87 +109,87 @@ def _python_impl(module_ctx):
         fail("python.archive should be called from root module only.")
 
     # Python from python-build-standalone (https://github.com/astral-sh/python-build-standalone)
-    # Release 20260814. Linux targets only (distroless images).
+    # Release 20260901. Linux targets only (distroless images).
     # Versions 3.13, 3.14 (new minors added by update-python-archives when stable).
     # NOTE: armv7 is intentionally absent: PBS publishes soft-float gnueabi builds
     # (interpreter /lib/ld-linux.so.3) which cannot run on the distroless armhf base
     # (loader /usr/lib/ld-linux-armhf.so.3); ppc64le is not published by PBS.
     python_archive(
         name = "python313_amd64",
-        sha256 = "45816a2653b47a6cc48d8ada4ea1185758a4c2db389d012b31e0205e5ccb548b",
+        sha256 = "0651dd7157d3debf769e15a52c1de9de7fbcdc36ba72faf79fde3c44f14d9461",
         strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.13.15+20260814-x86_64-unknown-linux-gnu-install_only.tar.gz"],
-        version = "3.13.15+20260814",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.13.15+20260901-x86_64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.13.15+20260901",
         python_version = "3.13",
         architecture = "amd64",
     )
 
     python_archive(
         name = "python313_arm64",
-        sha256 = "303efcce34b86fd8b0d8a260327dbf8d0d4fba6d2d77b2bca311e8bbd19265e1",
+        sha256 = "76ed18125286d7dc96ce24023d1e319dbd55a89a767102411b1ea23846113f69",
         strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.13.15+20260814-aarch64-unknown-linux-gnu-install_only.tar.gz"],
-        version = "3.13.15+20260814",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.13.15+20260901-aarch64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.13.15+20260901",
         python_version = "3.13",
         architecture = "arm64",
     )
 
     python_archive(
         name = "python313_s390x",
-        sha256 = "41b878867844e56a2757bef4dfdb906596ffc43c0a9a816e5b3f38dc09c97d8e",
+        sha256 = "b738ddb7271b2591d6e89fcd4ef42b6cbbcac7c489daf807b6b01442ae065a0a",
         strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.13.15+20260814-s390x-unknown-linux-gnu-install_only.tar.gz"],
-        version = "3.13.15+20260814",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.13.15+20260901-s390x-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.13.15+20260901",
         python_version = "3.13",
         architecture = "s390x",
     )
 
     python_archive(
         name = "python313_riscv64",
-        sha256 = "f6c666d439a46d6729e211e465362233d2b3f94d4cc9cf117b1d1045fca62b9c",
+        sha256 = "584a5a197a3d1ce8d8e45496515802872f1c18c4d20ee54f088081f75e7e8b4b",
         strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.13.15+20260814-riscv64-unknown-linux-gnu-install_only.tar.gz"],
-        version = "3.13.15+20260814",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.13.15+20260901-riscv64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.13.15+20260901",
         python_version = "3.13",
         architecture = "riscv64",
     )
 
     python_archive(
         name = "python314_amd64",
-        sha256 = "490953e4a7e97a6ed64d0f0bd04f2d4d9a7bb45368890d3fa32ba05d0ff5c48f",
+        sha256 = "0ab3305457051cd3e7c031857e005f1bda17c218a1990567dacaaac6dd1d14f0",
         strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.14.7+20260814-x86_64-unknown-linux-gnu-install_only.tar.gz"],
-        version = "3.14.7+20260814",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-x86_64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.14.7+20260901",
         python_version = "3.14",
         architecture = "amd64",
     )
 
     python_archive(
         name = "python314_arm64",
-        sha256 = "5bad659dc6d686b430f60104d53abfecb1cd93de37b8aaa112f10f0cea2cb655",
+        sha256 = "30f1cc489be654477d895b441e196bb080738bf0456da82080ad4ab66a22d80f",
         strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.14.7+20260814-aarch64-unknown-linux-gnu-install_only.tar.gz"],
-        version = "3.14.7+20260814",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-aarch64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.14.7+20260901",
         python_version = "3.14",
         architecture = "arm64",
     )
 
     python_archive(
         name = "python314_s390x",
-        sha256 = "8ceecd7af302de3f6e6c4564dd671e4d1fa3a2a69f7d40075c75a2747d6ceacf",
+        sha256 = "dc27e917b88db2560fe213244ffa6a656e8197ca0beb4ddeaaee5286041488ad",
         strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.14.7+20260814-s390x-unknown-linux-gnu-install_only.tar.gz"],
-        version = "3.14.7+20260814",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-s390x-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.14.7+20260901",
         python_version = "3.14",
         architecture = "s390x",
     )
 
     python_archive(
         name = "python314_riscv64",
-        sha256 = "9a85c88447db6ff01dfb6e6dfb27b2c856d48776d9ce8503ffd9ab2fa47960e6",
+        sha256 = "cf71ad2f451ba9af30992391b2a403cddb6965f11ef5255ee2f5d3e504f75add",
         strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.14.7+20260814-riscv64-unknown-linux-gnu-install_only.tar.gz"],
-        version = "3.14.7+20260814",
+        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-riscv64-unknown-linux-gnu-install_only.tar.gz"],
+        version = "3.14.7+20260901",
         python_version = "3.14",
         architecture = "riscv64",
     )

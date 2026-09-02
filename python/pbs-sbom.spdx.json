@@ -2,10 +2,10 @@
  "spdxVersion": "SPDX-2.3",
  "dataLicense": "CC0-1.0",
  "SPDXID": "SPDXRef-DOCUMENT",
- "name": "python-build-standalone-20260814-linux",
- "documentNamespace": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260814/spdx.json",
+ "name": "python-build-standalone-20260901-linux",
+ "documentNamespace": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260901/spdx.json",
  "creationInfo": {
-  "created": "2026-08-19T10:30:39Z",
+  "created": "2026-09-02T05:57:59Z",
   "creators": [
    "Tool: distroless-pbs-sbom (python/gen_pbs_sbom.py)"
   ]
@@ -14,8 +14,8 @@
   {
    "name": "python-build-standalone",
    "SPDXID": "SPDXRef-PBS",
-   "versionInfo": "20260814",
-   "downloadLocation": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260814",
+   "versionInfo": "20260901",
+   "downloadLocation": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260901",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "NOASSERTION",
    "supplier": "Organization: astral-sh",
@@ -178,21 +178,21 @@
   {
    "name": "cpython-3.15",
    "SPDXID": "SPDXRef-cpython_3_15",
-   "versionInfo": "3.15.0rc1",
-   "downloadLocation": "https://www.python.org/ftp/python/3.15.0/Python-3.15.0rc1.tar.xz",
+   "versionInfo": "3.15.0rc2",
+   "downloadLocation": "https://www.python.org/ftp/python/3.15.0/Python-3.15.0rc2.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Python-2.0 AND CNRI-Python",
    "externalRefs": [
     {
      "referenceCategory": "PACKAGE-MANAGER",
      "referenceType": "purl",
-     "referenceLocator": "pkg:generic/cpython-3.15@3.15.0rc1"
+     "referenceLocator": "pkg:generic/cpython-3.15@3.15.0rc2"
     }
    ],
    "checksums": [
     {
      "algorithm": "SHA256",
-     "checksumValue": "f84dad680ab2147417d2739355c2678f0f9acffe4ae8ef77895de1454b384b07"
+     "checksumValue": "8d93af5eaaaea5adfd41bd786a7ba3f03f2ad1ab57c6a65e0b963deab91d5ad7"
     }
    ],
    "filesAnalyzed": false
@@ -200,21 +200,21 @@
   {
    "name": "expat",
    "SPDXID": "SPDXRef-expat",
-   "versionInfo": "2.8.3",
-   "downloadLocation": "https://github.com/libexpat/libexpat/releases/download/R_2_8_3/expat-2.8.3.tar.xz",
+   "versionInfo": "2.8.4",
+   "downloadLocation": "https://github.com/libexpat/libexpat/releases/download/R_2_8_4/expat-2.8.4.tar.xz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "MIT",
    "externalRefs": [
     {
      "referenceCategory": "PACKAGE-MANAGER",
      "referenceType": "purl",
-     "referenceLocator": "pkg:generic/expat@2.8.3"
+     "referenceLocator": "pkg:generic/expat@2.8.4"
     }
    ],
    "checksums": [
     {
      "algorithm": "SHA256",
-     "checksumValue": "f6256df90c906773d344da084402b7d3e4f22ed41b1a59c989098a83d3ea0c85"
+     "checksumValue": "656ae1cc8da3b4ea513bb4e254f33e6243938084c0ec6239da873376b09985a7"
     }
    ],
    "filesAnalyzed": false
@@ -288,43 +288,21 @@
   {
    "name": "libffi",
    "SPDXID": "SPDXRef-libffi",
-   "versionInfo": "3.4.6",
-   "downloadLocation": "https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz",
+   "versionInfo": "3.4.8",
+   "downloadLocation": "https://github.com/libffi/libffi/releases/download/v3.4.8/libffi-3.4.8.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "MIT",
    "externalRefs": [
     {
      "referenceCategory": "PACKAGE-MANAGER",
      "referenceType": "purl",
-     "referenceLocator": "pkg:generic/libffi@3.4.6"
+     "referenceLocator": "pkg:generic/libffi@3.4.8"
     }
    ],
    "checksums": [
     {
      "algorithm": "SHA256",
-     "checksumValue": "b0dea9df23c863a7a50e825440f3ebffabd65df1497108e5d437747843895a4e"
-    }
-   ],
-   "filesAnalyzed": false
-  },
-  {
-   "name": "libffi-3.3",
-   "SPDXID": "SPDXRef-libffi_3_3",
-   "versionInfo": "3.3",
-   "downloadLocation": "https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz",
-   "licenseConcluded": "NOASSERTION",
-   "licenseDeclared": "MIT",
-   "externalRefs": [
-    {
-     "referenceCategory": "PACKAGE-MANAGER",
-     "referenceType": "purl",
-     "referenceLocator": "pkg:generic/libffi-3.3@3.3"
-    }
-   ],
-   "checksums": [
-    {
-     "algorithm": "SHA256",
-     "checksumValue": "72fba7922703ddfa7a028d513ac15a85c8d54c8d67f55fa5a4802885dc652056"
+     "checksumValue": "bc9842a18898bfacb0ed1252c4febcc7e78fa139fd27fdc7a3e30d9d9356119b"
     }
    ],
    "filesAnalyzed": false
@@ -420,21 +398,21 @@
   {
    "name": "openssl-3.5",
    "SPDXID": "SPDXRef-openssl_3_5",
-   "versionInfo": "3.5.7",
-   "downloadLocation": "https://github.com/openssl/openssl/releases/download/openssl-3.5.7/openssl-3.5.7.tar.gz",
+   "versionInfo": "3.5.8",
+   "downloadLocation": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
    "licenseConcluded": "NOASSERTION",
    "licenseDeclared": "Apache-2.0",
    "externalRefs": [
     {
      "referenceCategory": "PACKAGE-MANAGER",
      "referenceType": "purl",
-     "referenceLocator": "pkg:generic/openssl-3.5@3.5.7"
+     "referenceLocator": "pkg:generic/openssl-3.5@3.5.8"
     }
    ],
    "checksums": [
     {
      "algorithm": "SHA256",
-     "checksumValue": "a8c0d28a529ca480f9f36cf5792e2cd21984552a3c8e4aa11a24aa31aeac98e8"
+     "checksumValue": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2"
     }
    ],
    "filesAnalyzed": false
@@ -747,11 +725,6 @@
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
    "relatedSpdxElement": "SPDXRef-libffi"
-  },
-  {
-   "spdxElementId": "SPDXRef-PBS",
-   "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-libffi_3_3"
   },
   {
    "spdxElementId": "SPDXRef-PBS",

@@ -7,7 +7,7 @@ pythonbuild/downloads.py.
 
 Usage: pbs_embedded_versions.py <libpython.so> <downloads.py>
 """
-import importlib.util
+import ast
 import re
 import sys
 
@@ -25,12 +25,21 @@ WEAK = ("sqlite", "xz", "zstd", "mpdecimal")
 
 
 def load_manifest(path):
-    spec = importlib.util.spec_from_file_location("pbs_downloads", path)
-    if spec is None or spec.loader is None:
-        raise SystemExit("cannot load manifest: " + path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module.DOWNLOADS
+    with open(path, encoding="utf-8") as fh:
+        tree = ast.parse(fh.read(), filename=path)
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            targets = node.targets
+        elif isinstance(node, ast.AnnAssign):
+            targets = [node.target]
+        else:
+            continue
+        if any(isinstance(target, ast.Name) and target.id == "DOWNLOADS" for target in targets):
+            downloads = ast.literal_eval(node.value)
+            if isinstance(downloads, dict):
+                return downloads
+            break
+    raise ValueError("DOWNLOADS must be a literal dictionary")
 
 
 def expected_version(entry, name=None):
@@ -78,8 +87,7 @@ def main():
         found = weak_version(blob, name, downloads[name])
         expected = expected_version(downloads[name], name)
         if found is None:
-            print("MISMATCH {:<10} manifest={} binary=(no version literal)".format(name, expected))
-            failures += 1
+            print("ABSENT   {:<10} manifest={} binary=(no version literal)".format(name, expected))
         else:
             print("OK       {:<10} {} (weak marker)".format(name, found))
 

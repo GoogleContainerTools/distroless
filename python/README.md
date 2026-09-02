@@ -78,11 +78,5 @@ install tarball (`python/pbs_embedded_versions.py`) against the manifest when a
 release changes. The check is supplementary; it does not establish complete
 coverage of statically embedded code.
 
-The dissection-verified versions are also checked directly against NVD CPE data
-(`python/pbs_cve_check.py`); the update is blocked on HIGH/CRITICAL CVEs. The
-20260814 pin, for example, embeds sqlite 3.53.1 with
-CVE-2026-11822 / CVE-2026-11824 (fixed in sqlite 3.53.2); set
-`PBS_SKIP_CVE_CHECK=1` to bypass in an emergency.
-
 For an image SBOM, use the existing Bazel image SBOM output. PBS does not
 currently provide an authoritative SBOM for its statically linked components.

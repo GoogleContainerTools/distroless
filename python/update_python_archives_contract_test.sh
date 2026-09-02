@@ -82,9 +82,13 @@ blob = (
     b"1.5.7\n4.0.0\n"
 )
 with tarfile.open(sys.argv[1], "w:gz") as tar:
-    info = tarfile.TarInfo("python/lib/libpython3.13.so")
+    info = tarfile.TarInfo("python/lib/libpython3.13.so.1.0")
     info.size = len(blob)
     tar.addfile(info, io.BytesIO(blob))
+    link = tarfile.TarInfo("python/lib/libpython3.13.so")
+    link.type = tarfile.SYMTYPE
+    link.linkname = "libpython3.13.so.1.0"
+    tar.addfile(link)
 PYEOF
 }
 make_tarball "$FIX/tarball.tar.gz"
@@ -133,25 +137,25 @@ make_sha256sums() { # $1=release $2=patch313 $3=patch314 $4=patch315 ("" = no 3.
 run_updater() { # prints stdout; fails the test on a non-zero exit
   # bash -c: the updater aborts with exit 1 on fatal errors (knife contract),
   # which must not kill the test script.
-  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" PBS_SKIP_CVE_CHECK=1 \
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
     PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_DIR="$FIX/tarballs" \
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
 }
 
 run_updater_expect_fail() { # non-zero exit is the expectation (drift => RED)
-  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" PBS_SKIP_CVE_CHECK=1 \
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
     PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_FILE="$FIX/drift.tar.gz" \
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err" && return 1 || return 0
 }
 
 run_updater_noop() {
-  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" PBS_SKIP_CVE_CHECK=1 \
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
     PBS_DOWNLOADS_FILE="$FIX/missing-downloads.py" PBS_TARBALL_DIR="$FIX/tarballs" \
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
 }
 
 run_updater_bad_manifest() {
-  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" PBS_SKIP_CVE_CHECK=1 \
+  PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
     PBS_DOWNLOADS_FILE="$FIX/bad-downloads.py" PBS_TARBALL_DIR="$FIX/tarballs" \
     bash -c 'source update_python_archives.sh; generate_python_archives' 2>"$FIX/updater.err"
 }
