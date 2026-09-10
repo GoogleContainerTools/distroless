@@ -4,15 +4,15 @@ The current estimation of end of life for images with the pattern:
 
 `gcr.io/distroless/<image>-debian<version>:(latest|nonroot|debug|debug-nonroot)`
 
-| Image       | Debian 12 EOL  | Debian 13 EOL               |
-| ----------- | -------------- | --------------------------- |
-| static      | Sept 2026      | debian 14 release day + 1yr |
-| base        | Sept 2026      | debian 14 release day + 1yr |
-| base-nossl  | Sept 2026      | debian 14 release day + 1yr |
-| cc          | Sept 2026      | debian 14 release day + 1yr |
-| java*       | Jan 2026       | debian 14 release day + 3mo |
-| node*       | Jan 2026       | debian 14 release day + 3mo |
-| python*     | April 2026     | debian 14 release day + 3mo |
+| Image       | Debian 13 EOL               |
+| ----------- | --------------------------- |
+| static      | debian 14 release day + 1yr |
+| base        | debian 14 release day + 1yr |
+| base-nossl  | debian 14 release day + 1yr |
+| cc          | debian 14 release day + 1yr |
+| java*       | debian 14 release day + 3mo |
+| node*       | debian 14 release day + 3mo |
+| python*     | debian 14 release day + 3mo |
 
 \* see below for language specific runtime notes
 
