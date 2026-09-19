@@ -1,1 +1,4 @@
-exports_files(["update_python_archives.sh"])
+exports_files([
+    "update_java_versions.sh",
+    "update_python_archives.sh",
+])

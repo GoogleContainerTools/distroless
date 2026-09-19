@@ -18,6 +18,9 @@ trap 'rm -rf "$FIX"' EXIT
 
 # Copy every file mutated by the updater into the test workspace.
 mkdir -p "$FIX/private/extensions" "$FIX/python/testdata"
+mkdir -p "$FIX/knife.d"
+cp knife "$FIX/"
+cp knife.d/update_java_versions.sh knife.d/update_python_archives.sh "$FIX/knife.d/"
 cp knife.d/update_python_archives.sh "$FIX/"
 cp private/extensions/python.bzl "$FIX/private/extensions/"
 cp python/config.bzl "$FIX/python/"
@@ -92,6 +95,7 @@ PYEOF
 make_tarball "$FIX/tarball.tar.gz"
 
 cd "$FIX"
+# shellcheck source=knife.d/update_python_archives.sh
 source update_python_archives.sh
 
 python3 - <<'PY'
@@ -104,11 +108,11 @@ assert weak_version(b"zstd 1.5.7", "zstd", {"version": "1.5.7"}) == "1.5.7"
 PY
 
 # --- fixtures ---------------------------------------------------------------
-# Test tarballs use placeholder hashes because PBS_TARBALL_DIR skips downloads.
-SHA_A=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-SHA_B=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-SHA_C=cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-SHA_D=dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+# Local fixtures exercise the same checksum verification as downloads.
+SHA_A=$(python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1], "rb").read()).hexdigest())' "$FIX/tarball.tar.gz")
+SHA_B=$SHA_A
+SHA_C=$SHA_A
+SHA_D=$SHA_A
 TRIPLES=(x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu s390x-unknown-linux-gnu riscv64-unknown-linux-gnu)
 
 make_sha256sums() { # Arguments: release, 3.13 patch, 3.14 patch, optional 3.15 patches.
@@ -142,10 +146,10 @@ make_numeric_fill_sha256sums() {
   local release=$1
   : > SHA256SUMS
   for t in "${TRIPLES[@]}"; do
-    echo "$SHA_A  cpython-3.9.9+${release}-${t}-install_only.tar.gz" >> SHA256SUMS
-    echo "$SHA_B  cpython-3.10.1+${release}-${t}-install_only.tar.gz" >> SHA256SUMS
-    echo "$SHA_D  cpython-3.10.1rc1+${release}-${t}-install_only.tar.gz" >> SHA256SUMS
-  done
+    echo "$SHA_A  cpython-3.9.9+${release}-${t}-install_only.tar.gz"
+    echo "$SHA_B  cpython-3.10.1+${release}-${t}-install_only.tar.gz"
+    echo "$SHA_D  cpython-3.10.1rc1+${release}-${t}-install_only.tar.gz"
+  done >> SHA256SUMS
   rm -rf "$FIX/tarballs"
   mkdir -p "$FIX/tarballs"
   for t in "${TRIPLES[@]}"; do
@@ -253,6 +257,19 @@ PYEOF
 }
 
 # --- tag-only bump (new release, same patches) -------------------------------
+cat > python/config.bzl <<'EOF'
+PYTHON_MAJOR_VERSIONS = ["3.13", "3.14"]
+PYTHON_ARCHITECTURES = {
+    "debian13": {
+        "3.13": ["amd64", "arm64", "s390x", "riscv64"],
+        "3.14": ["amd64", "arm64", "s390x", "riscv64"],
+    },
+}
+EOF
+echo '{"tag": "20981231"}' > release.json
+make_sha256sums 20981231 3.13.15 3.14.7
+run_updater >/dev/null
+update_test_versions_python >/dev/null
 echo '{"tag": "20990101"}' > release.json
 make_sha256sums 20990101 3.13.15 3.14.7
 [ "$(run_updater)" = "20990101" ] || { echo "phase A: expected update to 20990101"; cat "$FIX/updater.err"; exit 1; }
@@ -316,13 +333,12 @@ run_updater_path_traversal || { echo "phase PATH: traversal archive must fail"; 
 [ ! -e "$FIX/escape/libpython3.13.so" ] || { echo "phase PATH: archive escaped the extraction directory"; exit 1; }
 
 # --- patch bump (new release, new patches) -----------------------------------
-snap_b=$(get_python_versions)
 echo '{"tag": "20990102"}' > release.json
 make_sha256sums 20990102 3.13.16 3.14.8
 [ "$(run_updater)" = "20990102" ] || { echo "phase B: expected update to 20990102"; cat "$FIX/updater.err"; exit 1; }
 grep -q '3.13.16+20990102' private/extensions/python.bzl || { echo "phase B: archive version not bumped"; exit 1; }
 grep -q '"3.13_amd64": "3.13.16"' private/extensions/python.bzl || { echo "phase B: versions dict not bumped"; exit 1; }
-update_test_versions_python "$snap_b"
+update_test_versions_python
 grep -q 'Python 3.13.16' python/testdata/python3.13.yaml || { echo "phase B: testdata 3.13 not bumped"; exit 1; }
 grep -q 'Python 3.14.8' python/testdata/python3.14.yaml || { echo "phase B: testdata 3.14 not bumped"; exit 1; }
 grep -q '20990102' python/pbs-sbom.spdx.json || { echo "phase B: SBOM not regenerated"; exit 1; }
@@ -353,14 +369,17 @@ grep -q 'required matrix entry 3.15 amd64' "$FIX/updater.err" || { echo "phase O
 make_sha256sums 20990104 3.13.16 3.14.8 3.15.0b4
 [ "$(run_updater)" = "20990104" ] || { echo "phase OPT-IN: expected beta update"; cat "$FIX/updater.err"; exit 1; }
 grep -q '3.15.0b4+20990104' private/extensions/python.bzl || { echo "phase OPT-IN: beta archive version wrong"; exit 1; }
+update_test_versions_python >/dev/null
 make_sha256sums 20990104 3.13.16 3.14.8 3.15.0rc1 3.15.0rc2
+[ "$(run_updater)" = "20990104" ] || { cat "$FIX/updater.err"; exit 1; }
+grep -q '3.15.0rc2+20990104' private/extensions/python.bzl || { echo "phase OPT-IN: latest RC archive version wrong"; exit 1; }
 for t in "${TRIPLES[@]}"; do
   echo "$SHA_C  cpython-3.15.0+20990104-${t}-install_only.tar.gz" >> SHA256SUMS
   cp "$FIX/tarball.tar.gz" "$FIX/tarballs/cpython-3.15.0+20990104-${t}-install_only.tar.gz"
 done
-[ "$(run_updater)" = "20990104" ] || { echo "phase OPT-IN: expected prerelease update"; cat "$FIX/updater.err"; exit 1; }
+[ "$(run_updater)" = "20990104" ] || { echo "phase OPT-IN: expected final release update"; cat "$FIX/updater.err"; exit 1; }
 grep -q 'python315_amd64' MODULE.bazel || { echo "phase OPT-IN: selected repos not visible"; exit 1; }
-grep -q '3.15.0rc2+20990104' private/extensions/python.bzl || { echo "phase OPT-IN: latest RC archive version wrong"; exit 1; }
+grep -q '3.15.0+20990104' private/extensions/python.bzl || { echo "phase OPT-IN: final release must outrank RCs"; exit 1; }
 
 # --- opt-out remains removed ---------------------------------------------------
 disable_315
@@ -370,7 +389,6 @@ make_sha256sums 20990104 3.13.16 3.14.8
 ! grep -q 'python315_' private/extensions/python.bzl || { echo "phase OPT-OUT: removed archives were repaired"; exit 1; }
 
 # --- new stable minor --------------------------------------------------------
-snap_c=$(get_python_versions)
 echo '{"tag": "20990105"}' > release.json
 make_sha256sums 20990105 3.13.16 3.14.8 3.15.0
 [ "$(run_updater)" = "20990105" ] || { echo "phase C: expected update to 20990105"; cat "$FIX/updater.err"; exit 1; }
@@ -379,9 +397,12 @@ grep -q '"3.15": \[' python/config.bzl || { echo "phase C: 3.15 arch map missing
 grep -q 'python315_amd64' MODULE.bazel || { echo "phase C: use_repo not extended with python315 repos"; exit 1; }
 grep -q 'python315_amd64' private/extensions/python.bzl || { echo "phase C: 3.15 archive missing from extension"; exit 1; }
 grep -q '3.15.0+20990105' private/extensions/python.bzl || { echo "phase C: 3.15 archive version wrong"; exit 1; }
-update_test_versions_python "$snap_c"
+update_test_versions_python
 [ -f python/testdata/python3.15.yaml ] || { echo "phase C: python3.15.yaml not created"; exit 1; }
 grep -q 'Python 3.15.0' python/testdata/python3.15.yaml || { echo "phase C: python3.15.yaml version wrong"; exit 1; }
+sed_inplace "\$s/Python 3.15.0/Python 3.15.0b4/" python/testdata/python3.15.yaml
+update_test_versions_python >/dev/null
+! grep -q '3.15.0b4' python/testdata/python3.15.yaml || { echo "stale symlink test version was not repaired"; exit 1; }
 
 # --- convergence and consistency ---------------------------------------------
 [ "$(run_updater)" = "NO_CHANGE" ] || { echo "final: expected NO_CHANGE"; cat "$FIX/updater.err"; exit 1; }
@@ -398,6 +419,80 @@ for minor in $(get_python_minors); do
     esac
   done
 done
+
+# --- validation, dry run and repair --------------------------------------------
+# Validation failures and dry runs must preserve every generated file.
+snapshot() {
+  cksum private/extensions/python.bzl python/config.bzl MODULE.bazel python/pbs-sbom.spdx.json python/testdata/*.yaml
+}
+before=$(snapshot)
+cp python/config.bzl config.good
+for defect in minor architecture nonstring duplicate_arch; do
+  case "$defect" in
+    minor) sed_inplace 's/"3.15"/"3.15rc1"/g' python/config.bzl ;;
+    architecture) sed_inplace 's/"arm64"/"unknown-arch"/g' python/config.bzl ;;
+    nonstring) sed_inplace 's/"arm64"/64/g' python/config.bzl ;;
+    duplicate_arch) sed_inplace 's/"amd64"/"amd64", "amd64"/g' python/config.bzl ;;
+  esac
+  if run_updater; then echo "accepted invalid matrix $defect"; exit 1; fi
+  cp config.good python/config.bzl
+  [ "$(snapshot)" = "$before" ] || { echo "invalid matrix changed generated files"; exit 1; }
+done
+[ "$(DRY_RUN=1 run_updater)" = "NO_CHANGE" ]
+[ "$(snapshot)" = "$before" ]
+echo '{"tag": "20990106"}' > release.json
+make_sha256sums 20990106 3.13.16 3.14.8 3.15.0
+[ "$(DRY_RUN=1 run_updater)" = "DRY_RUN" ]
+[ "$(snapshot)" = "$before" ]
+for defect in duplicate malformed checksum versions; do
+  make_sha256sums 20990106 3.13.16 3.14.8 3.15.0
+  case "$defect" in
+    duplicate) duplicate=$(head -1 SHA256SUMS); echo "$duplicate" >> SHA256SUMS ;;
+    malformed) sed_inplace "s/${SHA_A}/invalid/" SHA256SUMS ;;
+    checksum) printf corrupt >> "$FIX/tarballs/cpython-3.14.8+20990106-aarch64-unknown-linux-gnu-install_only.tar.gz" ;;
+    versions) sed_inplace 's/3.14.8+20990106-aarch64/3.14.7+20990106-aarch64/' SHA256SUMS ;;
+  esac
+  if run_updater; then echo "accepted invalid $defect fixture"; exit 1; fi
+  [ "$(snapshot)" = "$before" ] || { echo "$defect mutated generated files"; exit 1; }
+done
+echo '{"tag": "20990105"}' > release.json
+make_sha256sums 20990105 3.13.16 3.14.8 3.15.0
+sed_inplace "s/${SHA_A}/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/" private/extensions/python.bzl
+[ "$(run_updater)" = "20990105" ] || { echo "checksum pin was not repaired"; exit 1; }
+rm python/pbs-sbom.spdx.json
+[ "$(run_updater)" = "20990105" ] || { echo "missing SBOM was not repaired"; exit 1; }
+[ "$(run_updater)" = "NO_CHANGE" ]
+
+# Exercise release discovery through the CLI, including primary-source failure.
+mkdir "$FIX/bin"
+cat > "$FIX/bin/curl" <<'EOF'
+#!/usr/bin/env bash
+case "$*" in
+  *latest-release.json*) exit 22 ;;
+  *releases/latest*) printf '{"tag_name":"20990105"}' ;;
+  *SHA256SUMS*) cat "$PBS_SHA_FIXTURE" ;;
+  *) exit 22 ;;
+esac
+EOF
+chmod +x "$FIX/bin/curl"
+before=$(snapshot)
+PATH="$FIX/bin:$PATH" PBS_SHA_FIXTURE="$FIX/SHA256SUMS" \
+  PBS_DOWNLOADS_FILE="$FIX/downloads.py" PBS_TARBALL_DIR="$FIX/tarballs" \
+  bash knife update-python-archives --dry-run > "$FIX/cli.out"
+grep -q 'python archives are up to date' "$FIX/cli.out"
+[ "$(snapshot)" = "$before" ]
+
+# Shell command failures must propagate through knife's conditional capture.
+# shellcheck disable=SC2329 # Exported for the child Bash process.
+head() { command head "$@"; return 37; }
+export -f head
+if PATH="$FIX/bin:$PATH" \
+  PBS_SHA_FIXTURE="$FIX/SHA256SUMS" PBS_DOWNLOADS_FILE="$FIX/downloads.py" \
+  PBS_TARBALL_DIR="$FIX/tarballs" bash knife update-python-archives > "$FIX/cli.out" 2>&1; then
+  echo "CLI ignored a failed shell command"; exit 1
+fi
+[ "$(snapshot)" = "$before" ]
+unset -f head
 
 # --- numeric stable minor ordering ---------------------------------------------
 python3 - <<'PYEOF'

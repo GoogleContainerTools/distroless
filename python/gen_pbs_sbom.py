@@ -11,9 +11,10 @@ Usage: gen_pbs_sbom.py <downloads.py> <release> <output.spdx.json>
 import ast
 import datetime
 import json
+import re
 import sys
+import uuid
 
-LICENSE_REF = {"bzip2-1.0.6": "LicenseRef-bzip2-1.0.6"}
 # Bundled PyPI components whose licenses are absent from the manifest.
 # These stable, well-known values are used only as fallbacks.
 PYPI_LICENSE = {"pip": "MIT"}
@@ -23,10 +24,7 @@ def declared(name, entry):
     ids = entry.get("licenses") or []
     if not ids and name in PYPI_LICENSE:
         ids = [PYPI_LICENSE[name]]
-    out = [LICENSE_REF.get(i) or i for i in ids]
-    if not ids and entry.get("library_names"):
-        out = ["LicenseRef-Public-Domain"]  # SQLite has no SPDX identifier for public domain.
-    return " AND ".join(out) if out else "NOASSERTION"
+    return " AND ".join(ids) if ids else "NOASSERTION"
 
 
 def purl(name, version):
@@ -54,10 +52,14 @@ def load_downloads(path):
             continue
         if any(isinstance(target, ast.Name) and target.id == "DOWNLOADS" for target in targets):
             downloads = ast.literal_eval(node.value)
-            if isinstance(downloads, dict):
+            if isinstance(downloads, dict) and downloads and all(
+                isinstance(name, str) and name
+                and isinstance(entry, dict)
+                for name, entry in downloads.items()
+            ):
                 return downloads
             break
-    raise ValueError("DOWNLOADS must be a literal dictionary")
+    raise ValueError("DOWNLOADS must be a nonempty literal dictionary of component entries")
 
 
 def main():
@@ -72,7 +74,7 @@ def main():
         "dataLicense": "CC0-1.0",
         "SPDXID": "SPDXRef-DOCUMENT",
         "name": "python-build-standalone-{}-linux".format(release),
-        "documentNamespace": "https://github.com/astral-sh/python-build-standalone/releases/tag/{}/spdx.json".format(release),
+        "documentNamespace": "https://spdx.org/spdxdocs/python-build-standalone-{}-{}".format(release, uuid.uuid4()),
         "creationInfo": {
             "created": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "creators": ["Tool: distroless-pbs-sbom"],
@@ -89,14 +91,25 @@ def main():
                 "filesAnalyzed": False,
             }
         ],
-        "relationships": [],
+        "relationships": [{
+            "spdxElementId": "SPDXRef-DOCUMENT",
+            "relationshipType": "DESCRIBES",
+            "relatedSpdxElement": "SPDXRef-PBS",
+        }],
     }
     for name, entry in sorted(downloads.items()):
         if not is_runtime(name, entry):
             continue
-        pid = "SPDXRef-" + name.replace("-", "_").replace(".", "_")
+        if not re.fullmatch(r"[A-Za-z0-9.-]+", name):
+            sys.exit("invalid SPDX component name: " + name)
+        pid = "SPDXRef-" + name
         # Prefer actual_version; SQLite also stores SQLITE_VERSION_NUMBER in version.
-        version = str(entry.get("actual_version") or entry.get("version", ""))
+        version = entry.get("actual_version") or entry.get("version")
+        if not isinstance(version, str) or not version:
+            sys.exit("missing or invalid version for " + name)
+        checksum = entry.get("sha256")
+        if checksum is not None and (not isinstance(checksum, str) or not re.fullmatch(r"[0-9a-fA-F]{64}", checksum)):
+            sys.exit("invalid SHA256 for " + name)
         doc["packages"].append(
             {
                 "name": name,
@@ -112,10 +125,11 @@ def main():
                         "referenceLocator": purl(name, version),
                     }
                 ],
-                "checksums": [{"algorithm": "SHA256", "checksumValue": entry.get("sha256", "")}],
-                "filesAnalyzed": False,
             }
         )
+        if checksum is not None:
+            doc["packages"][-1]["checksums"] = [{"algorithm": "SHA256", "checksumValue": checksum}]
+        doc["packages"][-1]["filesAnalyzed"] = False
         doc["relationships"].append(
             {
                 "spdxElementId": "SPDXRef-PBS",

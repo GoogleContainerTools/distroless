@@ -11,14 +11,15 @@ Supported versions:
 - Python 3.13 (`python3.13-debian13`)
 - Python 3.14 (`python3.14-debian13`)
 
-Each image contains everything in the [base image](../base/README.md),
+Each image contains everything in the [C/C++ base image](../cc/README.md),
 plus a standalone CPython install under `/python`:
 
 - `/python/bin/python3.X` (with `/python/bin/python` and `/python/bin/python3` symlinks)
 - `/python/lib/python3.X/` (standard library)
 - `/python/lib/libpython3.X.so.1.0`
 
-No shell, include files, or `pip` command is included. The bundled `ensurepip`
+Normal images contain no shell, include files, or `pip` command. Debug variants
+inherit BusyBox from the base image. The bundled `ensurepip`
 wheel can bootstrap pip in a builder stage; install dependencies into
 `site-packages` there to keep images reproducible.
 
@@ -45,7 +46,7 @@ are correct, your build environment should match this path. If your build image
 uses a different path, create a symlink during the build stage, e.g.:
 
 ```Dockerfile
-RUN ln -s /usr/local/bin/python3.14 /python/bin/python3.14
+RUN mkdir -p /python/bin && ln -s /usr/local/bin/python3.14 /python/bin/python3.14
 ```
 
 ### ctypes.util.find_library
@@ -57,6 +58,8 @@ the image ships `/sbin/ldconfig` (from `libc-bin`) and a pre-generated `ld.so.ca
     bazel run //python:update_ldconfig
 
 and verified by `bazel test //python:check_ldconfig_tests` (also in CI).
+Regenerate these caches after a base-image glibc update; they also record the
+ldconfig version that generated them.
 
 Libraries that python-build-standalone links statically into the interpreter
 (sqlite3, ncurses, bz2, lzma, expat, zlib, ...) have no shared object to find —
@@ -74,9 +77,45 @@ A generated SPDX SBOM for the pinned release is committed at `python/pbs-sbom.sp
 native libraries statically embedded in the interpreter). It is not an image
 SBOM or a complete inventory of the finished binary.
 
-When a release changes, the updater checks detectable native-library version
-markers in the x86_64 install tarball against the manifest. This supplementary
-check does not establish complete coverage of statically embedded code.
+The updater verifies SHA-256 digests and detectable native-library version
+markers in every selected architecture's install tarball, including on no-op
+runs. Missing markers remain unverified; bare version strings provide weaker
+evidence than library-specific markers. This check does not establish complete
+coverage of statically embedded code or identify vulnerabilities.
 
 For an image SBOM, use the existing Bazel image SBOM output. PBS does not
 currently provide an authoritative SBOM for its statically linked components.
+
+## Update contracts
+
+Run `./knife update-python-archives` from the repository root. `--verbose` explains
+pin changes; `--dry-run` validates release artifacts without writing tracked files.
+Python 3, jq, curl, and version-aware `sort` are required; Buildifier validates
+generated Starlark when installed.
+
+- The matrix in `config.bzl` defines required minors and architectures. Every
+  architecture for a minor must have the same CPython version. Missing assets,
+  invalid or duplicate digests, and checksum or detectable marker mismatches fail
+  before files are replaced. Cached archives have the same digest checks as downloads.
+- New stable minors above the oldest configured minor are added automatically,
+  inheriting the highest configured minor's architectures. Beta/RC releases require
+  an explicit matrix entry. Finals outrank their own RCs and betas. Removing a minor
+  opts out of its prereleases; stable releases can add it again. Required minors
+  are never silently removed when PBS stops publishing them.
+- A release-tag change updates the pins even when CPython's patch version is unchanged.
+  The updater also repairs changed checksum pins, repository visibility, and missing
+  or stale release SBOMs. A second successful run returns no changes.
+- Archive pins, the matrix, repository visibility, and SBOM are validated before
+  replacement. Version testdata is updated afterward. Filesystem failures during
+  replacement or testdata updates can leave a partial update; restore the affected
+  files before retrying. Refresh and commit `MODULE.bazel.lock` with
+  `bazel mod deps --lockfile_mode=update` after changing the extension.
+- The release SBOM describes manifest provenance, including components that may not
+  be linked into a particular image. Missing native-library licenses are `NOASSERTION`;
+  pip retains its known MIT fallback. Generic native-library purls are not a vulnerability-coverage
+  guarantee. SPDX document namespaces are unique to each generation; unchanged content
+  preserves the committed document.
+
+The offline updater and metadata contracts run with `bazel test //python:all`.
+Container structure and ldconfig tests are tagged `manual` and require Docker;
+run the architecture-specific tests through `./knife test` or the CI workflow.

@@ -29,8 +29,10 @@ trap cleanup EXIT
 for arch in "$@"; do
   if [ "$MODE" = "update" ]; then echo "Updating ldconfig cache for ${arch}"; else echo "Checking ldconfig cache for ${arch}"; fi
 
-  CID=$(docker create --platform "linux/${arch}" --entrypoint /sbin/ldconfig "bazel/python:python314_root_${arch}_debian13")
+  CID=$(docker create --platform "linux/${arch}" --entrypoint /sbin/ldconfig "bazel/python:ldconfig_${arch}")
   docker start -a "${CID}"
+  # docker start reports attach success, not the container command's exit code.
+  [[ "$(docker inspect --format '{{.State.ExitCode}}' "${CID}")" = 0 ]] || { echo "ldconfig failed for ${arch}" >&2; exit 1; }
 
   if [[ "${MODE}" == "update" ]]; then
     docker cp "${CID}:/etc/ld.so.cache" "${ROOT}/ld.so.cache.${arch}"

@@ -10,7 +10,10 @@ load("//static:config.bzl", "STATIC_ARCHITECTURES", "STATIC_DISTROS")
 
 package(default_visibility = ["//visibility:public"])
 
-exports_files(["MODULE.bazel"])
+exports_files([
+    "MODULE.bazel",
+    "knife",
+])
 
 DEFAULT_DISTRO = "debian13"
 

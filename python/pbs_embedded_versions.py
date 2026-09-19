@@ -6,10 +6,10 @@ linked into libpython. Compare detectable version markers with the manifest.
 
 Usage: pbs_embedded_versions.py <libpython.so> <downloads.py>
 """
-import ast
 import re
 import sys
 
+from gen_pbs_sbom import load_downloads as load_manifest
 
 # Manifest key to a version-marker pattern with one capture group.
 STRONG = [
@@ -23,26 +23,8 @@ STRONG = [
 WEAK = ("sqlite", "xz", "zstd", "mpdecimal")
 
 
-def load_manifest(path):
-    with open(path, encoding="utf-8") as fh:
-        tree = ast.parse(fh.read(), filename=path)
-    for node in tree.body:
-        if isinstance(node, ast.Assign):
-            targets = node.targets
-        elif isinstance(node, ast.AnnAssign):
-            targets = [node.target]
-        else:
-            continue
-        if any(isinstance(target, ast.Name) and target.id == "DOWNLOADS" for target in targets):
-            downloads = ast.literal_eval(node.value)
-            if isinstance(downloads, dict):
-                return downloads
-            break
-    raise ValueError("DOWNLOADS must be a literal dictionary")
-
-
 def expected_version(entry, name=None):
-    value = entry.get("actual_version") or entry.get("version") or ""
+    value = str(entry.get("actual_version") or entry.get("version") or "")
     if name == "sqlite":
         return re.sub(r"\.0$", "", value)
     return value
@@ -55,7 +37,7 @@ def marker_version(blob, regex):
 
 def weak_version(blob, name, entry):
     expected = expected_version(entry, name)
-    pattern = re.compile(rb"(?<![0-9])" + re.escape(expected.encode()) + rb"(?![0-9])")
+    pattern = re.compile(rb"(?<![0-9.])" + re.escape(expected.encode()) + rb"(?![0-9.])")
     return expected if expected and pattern.search(blob) else None
 
 
@@ -74,7 +56,7 @@ def main():
             print("ABSENT   {:<10} (no version marker in binary)".format(name))
             continue
         expected = expected_version(downloads[name], name)
-        if found == expected or (name == "ncurses" and found.startswith(expected)):
+        if found == expected or (name == "ncurses" and found.startswith(expected + ".")):
             print("OK       {:<10} {}".format(name, found))
         else:
             print("MISMATCH {:<10} manifest={} binary={}".format(name, expected, found))
@@ -93,7 +75,7 @@ def main():
     if failures:
         print("PBS embedded native-library drift detected (see above).", file=sys.stderr)
         return 1
-    print("Embedded native libraries verified against the release manifest.")
+    print("Detectable native-library markers checked; absent markers remain unverified.")
     return 0
 
 

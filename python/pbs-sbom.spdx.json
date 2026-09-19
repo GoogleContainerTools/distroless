@@ -3,9 +3,9 @@
  "dataLicense": "CC0-1.0",
  "SPDXID": "SPDXRef-DOCUMENT",
  "name": "python-build-standalone-20260901-linux",
- "documentNamespace": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260901/spdx.json",
+ "documentNamespace": "https://spdx.org/spdxdocs/python-build-standalone-20260901-e4a31801-4c03-4d90-9b7a-3133e210d9fa",
  "creationInfo": {
-  "created": "2026-09-02T05:57:59Z",
+  "created": "2026-09-19T09:32:39Z",
   "creators": [
    "Tool: distroless-pbs-sbom"
   ]
@@ -49,7 +49,7 @@
    "versionInfo": "1.0.8",
    "downloadLocation": "https://astral-sh.github.io/mirror/files/bzip2-1.0.8.tar.gz",
    "licenseConcluded": "NOASSERTION",
-   "licenseDeclared": "LicenseRef-bzip2-1.0.6",
+   "licenseDeclared": "bzip2-1.0.6",
    "externalRefs": [
     {
      "referenceCategory": "PACKAGE-MANAGER",
@@ -67,7 +67,7 @@
   },
   {
    "name": "cpython-3.10",
-   "SPDXID": "SPDXRef-cpython_3_10",
+   "SPDXID": "SPDXRef-cpython-3.10",
    "versionInfo": "3.10.21",
    "downloadLocation": "https://www.python.org/ftp/python/3.10.21/Python-3.10.21.tar.xz",
    "licenseConcluded": "NOASSERTION",
@@ -89,7 +89,7 @@
   },
   {
    "name": "cpython-3.11",
-   "SPDXID": "SPDXRef-cpython_3_11",
+   "SPDXID": "SPDXRef-cpython-3.11",
    "versionInfo": "3.11.16",
    "downloadLocation": "https://www.python.org/ftp/python/3.11.16/Python-3.11.16.tar.xz",
    "licenseConcluded": "NOASSERTION",
@@ -111,7 +111,7 @@
   },
   {
    "name": "cpython-3.12",
-   "SPDXID": "SPDXRef-cpython_3_12",
+   "SPDXID": "SPDXRef-cpython-3.12",
    "versionInfo": "3.12.14",
    "downloadLocation": "https://www.python.org/ftp/python/3.12.14/Python-3.12.14.tar.xz",
    "licenseConcluded": "NOASSERTION",
@@ -133,7 +133,7 @@
   },
   {
    "name": "cpython-3.13",
-   "SPDXID": "SPDXRef-cpython_3_13",
+   "SPDXID": "SPDXRef-cpython-3.13",
    "versionInfo": "3.13.15",
    "downloadLocation": "https://www.python.org/ftp/python/3.13.15/Python-3.13.15.tar.xz",
    "licenseConcluded": "NOASSERTION",
@@ -155,7 +155,7 @@
   },
   {
    "name": "cpython-3.14",
-   "SPDXID": "SPDXRef-cpython_3_14",
+   "SPDXID": "SPDXRef-cpython-3.14",
    "versionInfo": "3.14.7",
    "downloadLocation": "https://www.python.org/ftp/python/3.14.7/Python-3.14.7.tar.xz",
    "licenseConcluded": "NOASSERTION",
@@ -177,7 +177,7 @@
   },
   {
    "name": "cpython-3.15",
-   "SPDXID": "SPDXRef-cpython_3_15",
+   "SPDXID": "SPDXRef-cpython-3.15",
    "versionInfo": "3.15.0rc2",
    "downloadLocation": "https://www.python.org/ftp/python/3.15.0/Python-3.15.0rc2.tar.xz",
    "licenseConcluded": "NOASSERTION",
@@ -375,7 +375,7 @@
   },
   {
    "name": "openssl-1.1",
-   "SPDXID": "SPDXRef-openssl_1_1",
+   "SPDXID": "SPDXRef-openssl-1.1",
    "versionInfo": "1.1.1w",
    "downloadLocation": "https://www.openssl.org/source/openssl-1.1.1w.tar.gz",
    "licenseConcluded": "NOASSERTION",
@@ -397,7 +397,7 @@
   },
   {
    "name": "openssl-3.5",
-   "SPDXID": "SPDXRef-openssl_3_5",
+   "SPDXID": "SPDXRef-openssl-3.5",
    "versionInfo": "3.5.8",
    "downloadLocation": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
    "licenseConcluded": "NOASSERTION",
@@ -445,7 +445,7 @@
    "versionInfo": "3.53.1.0",
    "downloadLocation": "https://www.sqlite.org/2026/sqlite-autoconf-3530100.tar.gz",
    "licenseConcluded": "NOASSERTION",
-   "licenseDeclared": "LicenseRef-Public-Domain",
+   "licenseDeclared": "NOASSERTION",
    "externalRefs": [
     {
      "referenceCategory": "PACKAGE-MANAGER",
@@ -485,7 +485,7 @@
   },
   {
    "name": "tcl-8612",
-   "SPDXID": "SPDXRef-tcl_8612",
+   "SPDXID": "SPDXRef-tcl-8612",
    "versionInfo": "8.6.12",
    "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tcl8.6.12-src.tar.gz",
    "licenseConcluded": "NOASSERTION",
@@ -529,7 +529,7 @@
   },
   {
    "name": "tk-8612",
-   "SPDXID": "SPDXRef-tk_8612",
+   "SPDXID": "SPDXRef-tk-8612",
    "versionInfo": "8.6.12",
    "downloadLocation": "https://prdownloads.sourceforge.net/tcl/tk8.6.12-src.tar.gz",
    "licenseConcluded": "NOASSERTION",
@@ -617,7 +617,7 @@
   },
   {
    "name": "zlib-ng",
-   "SPDXID": "SPDXRef-zlib_ng",
+   "SPDXID": "SPDXRef-zlib-ng",
    "versionInfo": "2.2.4",
    "downloadLocation": "https://github.com/python/cpython-source-deps/archive/refs/tags/zlib-ng-2.2.4.tar.gz",
    "licenseConcluded": "NOASSERTION",
@@ -662,6 +662,11 @@
  ],
  "relationships": [
   {
+   "spdxElementId": "SPDXRef-DOCUMENT",
+   "relationshipType": "DESCRIBES",
+   "relatedSpdxElement": "SPDXRef-PBS"
+  },
+  {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
    "relatedSpdxElement": "SPDXRef-bdb"
@@ -674,32 +679,32 @@
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-cpython_3_10"
+   "relatedSpdxElement": "SPDXRef-cpython-3.10"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-cpython_3_11"
+   "relatedSpdxElement": "SPDXRef-cpython-3.11"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-cpython_3_12"
+   "relatedSpdxElement": "SPDXRef-cpython-3.12"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-cpython_3_13"
+   "relatedSpdxElement": "SPDXRef-cpython-3.13"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-cpython_3_14"
+   "relatedSpdxElement": "SPDXRef-cpython-3.14"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-cpython_3_15"
+   "relatedSpdxElement": "SPDXRef-cpython-3.15"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
@@ -744,12 +749,12 @@
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-openssl_1_1"
+   "relatedSpdxElement": "SPDXRef-openssl-1.1"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-openssl_3_5"
+   "relatedSpdxElement": "SPDXRef-openssl-3.5"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
@@ -769,7 +774,7 @@
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-tcl_8612"
+   "relatedSpdxElement": "SPDXRef-tcl-8612"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
@@ -779,7 +784,7 @@
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-tk_8612"
+   "relatedSpdxElement": "SPDXRef-tk-8612"
   },
   {
    "spdxElementId": "SPDXRef-PBS",
@@ -799,7 +804,7 @@
   {
    "spdxElementId": "SPDXRef-PBS",
    "relationshipType": "CONTAINS",
-   "relatedSpdxElement": "SPDXRef-zlib_ng"
+   "relatedSpdxElement": "SPDXRef-zlib-ng"
   },
   {
    "spdxElementId": "SPDXRef-PBS",

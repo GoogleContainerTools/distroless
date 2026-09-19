@@ -6,6 +6,16 @@ load(":python.bzl", "python_image", "python_image_index")
 package(default_visibility = ["//visibility:public"])
 
 sh_test(
+    name = "pbs_metadata_test",
+    srcs = ["pbs_metadata_test.py"],
+    data = [
+        "ldconfig/ldconfig.sh",
+        ":gen_pbs_sbom.py",
+        ":pbs_embedded_versions.py",
+    ],
+)
+
+sh_test(
     name = "update_python_archives_test",
     srcs = ["update_python_archives_test.sh"],
     data = [
@@ -28,6 +38,8 @@ sh_test(
         ":pbs_embedded_versions.py",
         ":update_python_archives_test.sh",
         "//:MODULE.bazel",
+        "//:knife",
+        "//knife.d:update_java_versions.sh",
         "//knife.d:update_python_archives.sh",
         "//private/extensions:python.bzl",
     ],
@@ -57,6 +69,15 @@ sh_test(
 
 # Ship an ld.so.cache per architecture so ctypes.util.find_library() works.
 # Generate it by running ldconfig inside the image.
+LDCONFIG_IMAGES = {
+    arch: "python{}_root_{}_debian13".format(
+        version.replace(".", ""),
+        arch,
+    )
+    for version in PYTHON_MAJOR_VERSIONS
+    for arch in PYTHON_ARCHITECTURES["debian13"][version]
+}
+
 [
     tar(
         name = "ldconfig_cache_{}".format(arch),
@@ -68,10 +89,9 @@ sh_test(
         extension = "tar.gz",
         mtree = ["etc/ld.so.cache uid=0 gid=0 uname=root gname=root mode=0644 time=0 type=file content=$(location ldconfig/ld.so.cache.{})".format(arch)],
     )
-    for arch in PYTHON_ARCHITECTURES["debian13"]["3.14"]
+    for arch in LDCONFIG_IMAGES
 ]
 
 python_ldconfig(
-    architectures = PYTHON_ARCHITECTURES["debian13"]["3.14"],
-    distro = "debian13",
+    images = LDCONFIG_IMAGES,
 )
