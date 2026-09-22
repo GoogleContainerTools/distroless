@@ -193,37 +193,37 @@ def _node_impl(module_ctx):
 
     node_archive(
         name = "nodejs26_amd64",
-        sha256 = "03d9104fc4f19652e74480fed11c023d75981464b7292f21a601c3f95ce7d90d",
-        strip_prefix = "node-v26.9.0-linux-x64/",
-        urls = ["https://nodejs.org/dist/v26.9.0/node-v26.9.0-linux-x64.tar.gz"],
-        version = "26.9.0",
+        sha256 = "cb5c9ce9c80d7b8821e3a258543c71b939138cf17c74d5cc44bbe85d6dbc5ad8",
+        strip_prefix = "node-v26.10.0-linux-x64/",
+        urls = ["https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-x64.tar.gz"],
+        version = "26.10.0",
         architecture = "amd64",
     )
 
     node_archive(
         name = "nodejs26_arm64",
-        sha256 = "d5077591aa38b48d90bf9b3ac10da8d2f40dce289b20294913c58c19f153eb12",
-        strip_prefix = "node-v26.9.0-linux-arm64/",
-        urls = ["https://nodejs.org/dist/v26.9.0/node-v26.9.0-linux-arm64.tar.gz"],
-        version = "26.9.0",
+        sha256 = "423a41bff8e2a2fa15e702fefe2919ef95823b2378744daccb8439302534b44f",
+        strip_prefix = "node-v26.10.0-linux-arm64/",
+        urls = ["https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-arm64.tar.gz"],
+        version = "26.10.0",
         architecture = "arm64",
     )
 
     node_archive(
         name = "nodejs26_ppc64le",
-        sha256 = "3914ce13acf24880cceb34a6967206de2f8caa0fef93f142a0ddb14c36328f35",
-        strip_prefix = "node-v26.9.0-linux-ppc64le/",
-        urls = ["https://nodejs.org/dist/v26.9.0/node-v26.9.0-linux-ppc64le.tar.gz"],
-        version = "26.9.0",
+        sha256 = "0cc6b9a9906216f8de7d70146038fe6bab5f7e8f3a8ad29d8dbeabdf1381b52d",
+        strip_prefix = "node-v26.10.0-linux-ppc64le/",
+        urls = ["https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-ppc64le.tar.gz"],
+        version = "26.10.0",
         architecture = "ppc64le",
     )
 
     node_archive(
         name = "nodejs26_s390x",
-        sha256 = "c5386ff8968eadf66dd79209355b38c01ee712c6cfd32b92bbcc9cc4dc4de0fd",
-        strip_prefix = "node-v26.9.0-linux-s390x/",
-        urls = ["https://nodejs.org/dist/v26.9.0/node-v26.9.0-linux-s390x.tar.gz"],
-        version = "26.9.0",
+        sha256 = "787402b47f0f8fd462a19a44c3d707052cabc95ecb946fe8041a1b5c810e3d63",
+        strip_prefix = "node-v26.10.0-linux-s390x/",
+        urls = ["https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-s390x.tar.gz"],
+        version = "26.10.0",
         architecture = "s390x",
     )
 
@@ -239,10 +239,10 @@ def _node_impl(module_ctx):
             "24_arm64": "24.21.0",
             "24_ppc64le": "24.21.0",
             "24_s390x": "24.21.0",
-            "26_amd64": "26.9.0",
-            "26_arm64": "26.9.0",
-            "26_ppc64le": "26.9.0",
-            "26_s390x": "26.9.0",
+            "26_amd64": "26.10.0",
+            "26_arm64": "26.10.0",
+            "26_ppc64le": "26.10.0",
+            "26_s390x": "26.10.0",
         },
     )
 
