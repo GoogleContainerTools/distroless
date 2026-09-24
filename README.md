@@ -120,6 +120,7 @@ You can find other examples here:
 - [Go](examples/go/Dockerfile)
 - [Node.js](examples/nodejs/Dockerfile)
 - [Rust](examples/rust/Dockerfile)
+- [Dart](examples/dart/Dockerfile)
 
 To run any example, go to the directory for the language and run:
 
