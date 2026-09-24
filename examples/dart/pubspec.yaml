@@ -3,4 +3,4 @@ description: A minimal Dart app running on a distroless image.
 publish_to: none
 
 environment:
-  sdk: ^3.0.0
+  sdk: ^3.9.0
