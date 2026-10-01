@@ -18,9 +18,15 @@ BEGIN {
     sub(/^(\.\/|\/)+/, "", path)
 
     if (path in expected) {
-        if ($0 !~ /type=link/) {
+        # Match `type=link` only as a whole mtree field — bounded by whitespace
+        # on the left and whitespace or end-of-line on the right. A naive
+        # substring match was tricked by other mtree field values that happened
+        # to contain the literal string "type=link" (for example a uname,
+        # gname, or flags value), silently skipping the symlink check for a
+        # non-symlink entry at /bin, /sbin, /lib, etc.
+        if ($0 !~ /[[:space:]]type=link([[:space:]]|$)/) {
             VIOLATIONS[original_path] = original_path " is not a symlink (must link to " expected[path] ")"
-        } else if (match($0, / link=([^ \t]+)/, dest) && dest[1] != expected[path]) {
+        } else if (match($0, /[[:space:]]link=([^[:space:]]+)/, dest) && dest[1] != expected[path]) {
             VIOLATIONS[original_path] = original_path " symlinks to '" dest[1] "' instead of '" expected[path] "'"
         }
     } else if (path ~ ("^(" prefixes ")/")) {
