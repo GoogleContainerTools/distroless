@@ -3,11 +3,11 @@ version: 1
 
 sources:
   - channel: trixie main
-    url: https://snapshot.debian.org/archive/debian/20260930T203251Z
+    url: https://snapshot.debian.org/archive/debian/20261001T203503Z
   - channel: trixie-updates main
-    url: https://snapshot.debian.org/archive/debian/20260930T203251Z
+    url: https://snapshot.debian.org/archive/debian/20261001T203503Z
   - channel: trixie-security main
-    url: https://snapshot.debian.org/archive/debian-security/20260930T224302Z
+    url: https://snapshot.debian.org/archive/debian-security/20261001T183713Z
 
 archs:
   - amd64
