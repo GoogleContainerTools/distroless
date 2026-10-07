@@ -438,7 +438,7 @@
     },
     "//private/extensions:node.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "ExBsUh/UvfeE/gQKwC+UjlGCiZIZKd0syD4pwFR1BpI=",
+        "bzlTransitiveDigest": "ZeGsgmw+a+QEilWP88lwb+VtOFKXEV6S2jngIP01qqI=",
         "usagesDigest": "QA21U3gPZPiUX9/vsZR3d8yh8Tqq7lovQjkvOeh/XkA=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -555,48 +555,48 @@
           "nodejs26_amd64": {
             "repoRuleId": "@@//private/extensions:node.bzl%node_archive",
             "attributes": {
-              "sha256": "cb5c9ce9c80d7b8821e3a258543c71b939138cf17c74d5cc44bbe85d6dbc5ad8",
-              "strip_prefix": "node-v26.10.0-linux-x64/",
+              "sha256": "2dcdf1a51a055e3ac1027ce5a01c2409ec7fa016b99e25e58a939568a9e0b6ad",
+              "strip_prefix": "node-v26.11.0-linux-x64/",
               "urls": [
-                "https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-x64.tar.gz"
+                "https://nodejs.org/dist/v26.11.0/node-v26.11.0-linux-x64.tar.gz"
               ],
-              "version": "26.10.0",
+              "version": "26.11.0",
               "architecture": "amd64"
             }
           },
           "nodejs26_arm64": {
             "repoRuleId": "@@//private/extensions:node.bzl%node_archive",
             "attributes": {
-              "sha256": "423a41bff8e2a2fa15e702fefe2919ef95823b2378744daccb8439302534b44f",
-              "strip_prefix": "node-v26.10.0-linux-arm64/",
+              "sha256": "990bbeaf592bfae995def6c5b43b89bb5ddd222305c91251e3b9d9bfc7c120bc",
+              "strip_prefix": "node-v26.11.0-linux-arm64/",
               "urls": [
-                "https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-arm64.tar.gz"
+                "https://nodejs.org/dist/v26.11.0/node-v26.11.0-linux-arm64.tar.gz"
               ],
-              "version": "26.10.0",
+              "version": "26.11.0",
               "architecture": "arm64"
             }
           },
           "nodejs26_ppc64le": {
             "repoRuleId": "@@//private/extensions:node.bzl%node_archive",
             "attributes": {
-              "sha256": "0cc6b9a9906216f8de7d70146038fe6bab5f7e8f3a8ad29d8dbeabdf1381b52d",
-              "strip_prefix": "node-v26.10.0-linux-ppc64le/",
+              "sha256": "e142924db4aa9815627fdb3028b9c592c814acf4fe3523e4e8b10ddcbe2123a8",
+              "strip_prefix": "node-v26.11.0-linux-ppc64le/",
               "urls": [
-                "https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-ppc64le.tar.gz"
+                "https://nodejs.org/dist/v26.11.0/node-v26.11.0-linux-ppc64le.tar.gz"
               ],
-              "version": "26.10.0",
+              "version": "26.11.0",
               "architecture": "ppc64le"
             }
           },
           "nodejs26_s390x": {
             "repoRuleId": "@@//private/extensions:node.bzl%node_archive",
             "attributes": {
-              "sha256": "787402b47f0f8fd462a19a44c3d707052cabc95ecb946fe8041a1b5c810e3d63",
-              "strip_prefix": "node-v26.10.0-linux-s390x/",
+              "sha256": "d9e84f29547f6d3071e0c81de9f85dd7b1d311ea0e0bd20f3c39a9e4411c13f2",
+              "strip_prefix": "node-v26.11.0-linux-s390x/",
               "urls": [
-                "https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-s390x.tar.gz"
+                "https://nodejs.org/dist/v26.11.0/node-v26.11.0-linux-s390x.tar.gz"
               ],
-              "version": "26.10.0",
+              "version": "26.11.0",
               "architecture": "s390x"
             }
           },
@@ -613,10 +613,10 @@
                 "24_arm64": "24.21.0",
                 "24_ppc64le": "24.21.0",
                 "24_s390x": "24.21.0",
-                "26_amd64": "26.10.0",
-                "26_arm64": "26.10.0",
-                "26_ppc64le": "26.10.0",
-                "26_s390x": "26.10.0"
+                "26_amd64": "26.11.0",
+                "26_arm64": "26.11.0",
+                "26_ppc64le": "26.11.0",
+                "26_s390x": "26.11.0"
               }
             }
           }
