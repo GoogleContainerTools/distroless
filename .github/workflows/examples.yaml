@@ -10,7 +10,7 @@ permissions:
 jobs:
   examples:
     name: Build and run examples
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # compatible with debian 13
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
