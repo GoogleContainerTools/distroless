@@ -23,7 +23,7 @@ jobs:
 
   ci-build-test:
     name: CI build and unit test
-    runs-on: distroless-ci-large-ubuntu-22.04
+    runs-on: distroless-ci-large-ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -54,7 +54,7 @@ jobs:
 
   ci-images:
     name: CI image tests
-    runs-on: distroless-ci-large-ubuntu-22.04
+    runs-on: distroless-ci-large-ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
