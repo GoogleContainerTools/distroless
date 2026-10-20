@@ -59,7 +59,10 @@ def nodejs_image(distro, major_version, arch, packages):
             oci_image(
                 name = "nodejs" + major_version + mode + "_" + user + "_" + arch + "_" + distro,
                 base = "//cc:cc" + mode + "_" + user + "_" + arch + "_" + distro,
-                entrypoint = ["/nodejs/bin/node"],
+                entrypoint = [
+                    "/nodejs/bin/node",
+                    "--use-openssl-ca",
+                ],
                 tars = [
                     deb.package(arch, distro, pkg)
                     for pkg in packages
