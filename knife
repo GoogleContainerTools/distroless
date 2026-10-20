@@ -66,6 +66,22 @@ function find_latest_snapshot() {
     # intentionally don't include complicated logic for the case where it's after the 1st and no snapshots are
     # available for the month (it's extremely unlikely for our updater to run into this situation unless the
     # snapshot serving infrastructure is acting up).
+    #
+    # Set SNAPSHOT_SKIP_DELAY=true to bypass the buffer and take the newest available snapshot (including
+    # today's). Callers only ever move forward, so this pulls any snapshot strictly newer than the current one.
+    if [[ "${SNAPSHOT_SKIP_DELAY:-false}" == "true" ]]; then
+      local latest=""
+      # check this month first, falling back to last month if nothing has been published yet
+      for offset in "now" "$(date +%Y-%m-01) -1 day"; do
+        local q=$(date -d "$offset" +"year=%Y&month=%m")
+        latest=$(curl -fs "https://snapshot.debian.org/archive/${type}/?$q" | grep -ohE "([0-9]+T[0-9]+Z)" | sort | tail -n1 || true)
+        if [[ -n "$latest" ]]; then
+          echo "$latest"
+          return
+        fi
+      done
+      return
+    fi
     local current="$(date -d '-1 day' +%Y-%m-%d)"
     local tmp=$(mktemp)
     local q=$(date -d "$current" +"year=%Y&month=%m")

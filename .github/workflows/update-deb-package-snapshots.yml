@@ -5,6 +5,11 @@ on:
     - cron: "35 20 * * *"
   # allow this workflow to be manually run
   workflow_dispatch:
+    inputs:
+      skip_delay:
+        description: "Skip the 1 day buffer and take the newest snapshot (strictly newer than the current one)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -25,6 +30,9 @@ jobs:
           go-version: "1.25"
 
       - name: Update snapshots
+        env:
+          # inputs.skip_delay is empty on scheduled runs, so the default 1 day buffer applies
+          SNAPSHOT_SKIP_DELAY: ${{ inputs.skip_delay == true }}
         run: ./knife github-update-snapshots
 
       - name: Set up QEMU
