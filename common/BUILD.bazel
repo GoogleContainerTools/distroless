@@ -1,7 +1,10 @@
 load("@aspect_bazel_lib//lib:tar.bzl", "tar")
+load("@rules_go//go:def.bzl", "go_test")
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
 load("//:distro.bzl", "ALL_DISTROS", "VERSIONS")
+load("//java:config.bzl", "JAVA_ARCHITECTURES", "JAVA_DISTROS")
 load("//private/util:deb.bzl", "deb", "deb_derived_package")
+load("//private/util:filter.bzl", "tar_exclude_files")
 load(":variables.bzl", "NOBODY", "NONROOT", "OS_RELEASE", "ROOT", "quote")
 
 package(default_visibility = ["//visibility:public"])
@@ -18,6 +21,14 @@ COMMON_ARCHITECTURES = {
         "riscv64",
     ],
 }
+
+# Roots removed from the ca-certificates bundle (and therefore the Java keystore) in every image.
+# Paths are as they appear in the ca-certificates .deb; the build fails if any of them disappears upstream.
+# Keep in sync with the SPKI hashes in cacerts_test.go.
+BLOCKED_CA_CERTIFICATES = [
+    "./usr/share/ca-certificates/mozilla/Comodo_AAA_Services_root.crt",
+    "./usr/share/ca-certificates/mozilla/emSign_ECC_Root_CA_-_G3.crt",
+]
 
 tar(
     name = "rootfs",
@@ -79,9 +90,19 @@ tar(
 ]
 
 [
+    tar_exclude_files(
+        name = "ca_certificates_filtered_%s_%s" % (distro, arch),
+        archive = deb.data(arch, distro, "ca-certificates"),
+        files = BLOCKED_CA_CERTIFICATES,
+    )
+    for distro in COMMON_DISTROS
+    for arch in COMMON_ARCHITECTURES[distro]
+]
+
+[
     cacerts(
         name = "cacerts_data_%s_%s" % (distro, arch),
-        package = deb.data(arch, distro, "ca-certificates"),
+        package = ":ca_certificates_filtered_%s_%s" % (distro, arch),
     )
     for distro in COMMON_DISTROS
     for arch in COMMON_ARCHITECTURES[distro]
@@ -98,6 +119,23 @@ tar(
     for distro in COMMON_DISTROS
     for arch in COMMON_ARCHITECTURES[distro]
 ]
+
+CACERTS_TEST_ARCHIVES = [
+    ":cacerts_data_%s_%s" % (distro, arch)
+    for distro in COMMON_DISTROS
+    for arch in COMMON_ARCHITECTURES[distro]
+] + [
+    "//java:cacerts_java_%s_%s" % (arch, distro)
+    for distro in JAVA_DISTROS
+    for arch in JAVA_ARCHITECTURES[distro]
+]
+
+go_test(
+    name = "cacerts_test",
+    srcs = ["cacerts_test.go"],
+    args = ["$(rlocationpaths %s)" % archive for archive in CACERTS_TEST_ARCHIVES],
+    data = CACERTS_TEST_ARCHIVES,
+)
 
 # create /etc/group with the root, tty, and staff groups
 group(
