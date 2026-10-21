@@ -25,10 +25,9 @@ COMMON_ARCHITECTURES = {
 # Roots removed from the ca-certificates bundle (and therefore the Java keystore) in every image.
 # Paths are as they appear in the ca-certificates .deb; the build fails if any of them disappears upstream.
 # Keep in sync with the SPKI hashes in cacerts_test.go.
-BLOCKED_CA_CERTIFICATES = [
-    "./usr/share/ca-certificates/mozilla/Comodo_AAA_Services_root.crt",
-    "./usr/share/ca-certificates/mozilla/emSign_ECC_Root_CA_-_G3.crt",
-]
+#
+# Removed workaround since certs have now been removed in ca-certificates package
+BLOCKED_CA_CERTIFICATES = []
 
 tar(
     name = "rootfs",
