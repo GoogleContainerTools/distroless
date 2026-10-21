@@ -3,6 +3,11 @@
 load("@aspect_bazel_lib//lib:tar.bzl", "tar_lib")
 
 def _tar_exclude_files_impl(ctx):
+    if not ctx.attr.files:
+        return [
+            DefaultInfo(files = depset([ctx.file.archive])),
+        ]
+
     bsdtar = ctx.toolchains[tar_lib.toolchain_type]
     output = ctx.actions.declare_file(ctx.label.name + ".tar")
 
