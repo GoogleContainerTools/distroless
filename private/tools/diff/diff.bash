@@ -175,7 +175,37 @@ stamp_origin() {
     echo ${str/"{PROJECT_ID}"/"distroless"}
 }
 
+# Build every selected target: existing outputs may be stale.
+# Leave --skip-image-index filtering to the manifest check in test_image.
+TARGETS_FILE=$(mktemp)
+awk -v only="${ONLY}" '
+    NF && $0 !~ /^[[:space:]]*#/ && (only == "" || $2 == only) {
+        print $2
+    }
+' "${QUERY_FILE}" | sort -u >"${TARGETS_FILE}"
+IMAGE_TARGETS=()
+HAVE_IMAGE_TARGETS=0
+while IFS= read -r target; do
+    if [[ -n "$target" ]]; then
+        IMAGE_TARGETS+=("$target")
+        HAVE_IMAGE_TARGETS=1
+    fi
+done <"${TARGETS_FILE}"
+rm -f "${TARGETS_FILE}"
+
+# Resolve output paths once, using the same configuration as the build.
+# Each workspace-local image target must expose exactly one OCI layout directory.
+IMAGE_FILES_FILE=$(mktemp)
+if ((HAVE_IMAGE_TARGETS)); then
+    bazel build "${IMAGE_TARGETS[@]}"
+    bazel cquery "set(${IMAGE_TARGETS[*]})" \
+        --output=starlark \
+        --starlark:expr='"//" + target.label.package + ":" + target.label.name + " " + " ".join([f.path for f in target.files.to_list()])' \
+        >"${IMAGE_FILES_FILE}"
+fi
+
 function test_image() {
+    [[ -z "${1//[[:space:]]/}" || "$1" =~ ^[[:space:]]*# ]] && return 0
     IFS=" " read -r repo image_label <<<"$1"
 
     if [[ "${ONLY}" != "" && "${ONLY}" != "$image_label" ]]; then
@@ -204,8 +234,25 @@ function test_image() {
     echo "🚧 Diffing $repo_origin against $repo_stage"
     echo ""
 
-    bazel build "$image_label"
-    crane push "$(bazel cquery --output=files $image_label)" "$repo_stage"
+    local image_dir
+    image_dir=$(awk -v label="$image_label" '
+        $1 == label {
+            count++
+            if (NF == 2) path = $2
+        }
+        END {
+            if (count != 1 || path == "") exit 1
+            print path
+        }
+    ' "${IMAGE_FILES_FILE}") || {
+        echo "Missing or ambiguous output for $image_label" >&2
+        return 1
+    }
+    if [[ ! -f "${image_dir}/index.json" ]]; then
+        echo "Missing OCI layout for $image_label: $image_dir" >&2
+        return 1
+    fi
+    crane push "$image_dir" "$repo_stage"
     if ! diffoci diff --pull=always --all-platforms "$repo_origin" "$repo_stage"; then
         echo ""
         echo "      🔬 To reproduce: bazel run //private/tools/diff:diff -- --only $image_label"
@@ -230,7 +277,7 @@ fi
 
 # Parallelize using gnu parallel
 if [[ "${JOBS}" -gt 0 ]]; then
-    export HEAD_REF BASE_REF REGISTRY REPORT_FILE SET_GITHUB_OUTPUT ONLY CHANGED_IMAGES_FILE SKIP_INDEX
+    export HEAD_REF BASE_REF REGISTRY REPORT_FILE SET_GITHUB_OUTPUT ONLY CHANGED_IMAGES_FILE SKIP_INDEX IMAGE_FILES_FILE
     export -f stamp_origin stamp_stage test_image
     cat "${QUERY_FILE}" | parallel --eta --progress --jobs "${JOBS}" "set -o pipefail -o errexit -o nounset && test_image"
 else
