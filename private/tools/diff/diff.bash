@@ -202,6 +202,12 @@ if ((HAVE_IMAGE_TARGETS)); then
         --output=starlark \
         --starlark:expr='"//" + target.label.package + ":" + target.label.name + " " + " ".join([f.path for f in target.files.to_list()])' \
         >"${IMAGE_FILES_FILE}"
+elif [[ -n "${ONLY}" ]]; then
+    echo "--only ${ONLY} did not match any image target in ${QUERY_FILE}" >&2
+    exit 1
+else
+    echo "No image targets found in ${QUERY_FILE}" >&2
+    exit 1
 fi
 
 function test_image() {
