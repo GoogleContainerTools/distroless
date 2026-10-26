@@ -69,24 +69,24 @@
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "temurin-17-jre_17.0.20.1.0-p-1-0_arm64",
+			"key": "temurin-17-jre_17.0.21.0.0-p-9-0_arm64",
 			"name": "temurin-17-jre",
-			"sha256": "336389251a346380a5ac01b2beea9ff5e75d240d0621c04942f4bd9d5049b495",
+			"sha256": "83da6056d271dec7ef6192d2c0122bebb26c7492e00fc3dbf1162f03ed7e7ffb",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.20.1.0+1-0_arm64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.21.0.0+9-0_arm64.deb"
 			],
-			"version": "17.0.20.1.0+1-0"
+			"version": "17.0.21.0.0+9-0"
 		},
 		{
 			"arch": "arm64",
 			"dependencies": [],
-			"key": "temurin-17-jdk_17.0.20.1.0-p-1-0_arm64",
+			"key": "temurin-17-jdk_17.0.21.0.0-p-9-0_arm64",
 			"name": "temurin-17-jdk",
-			"sha256": "bd86f39f416de9d94eff1e214b325fe3f84f64e08980a15cca3cabd328214254",
+			"sha256": "d0889688f17ed43388492fcd0f0b1e3c83b7cb84bb8c25da39e2f5da146ee8f7",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.20.1.0+1-0_arm64.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.21.0.0+9-0_arm64.deb"
 			],
-			"version": "17.0.20.1.0+1-0"
+			"version": "17.0.21.0.0+9-0"
 		},
 		{
 			"arch": "arm64",
@@ -201,24 +201,24 @@
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
-			"key": "temurin-17-jre_17.0.20.1.0-p-1-0_ppc64el",
+			"key": "temurin-17-jre_17.0.21.0.0-p-9-0_ppc64el",
 			"name": "temurin-17-jre",
-			"sha256": "a1d68122cae0d8424d8af917db576baed2eba7a46a40d19986b82b5cc96c2434",
+			"sha256": "540715f5cffa6b23596bf508f968d78bb4bf8f9b575807ab7f8a7edbcd326d76",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.20.1.0+1-0_ppc64el.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.21.0.0+9-0_ppc64el.deb"
 			],
-			"version": "17.0.20.1.0+1-0"
+			"version": "17.0.21.0.0+9-0"
 		},
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
-			"key": "temurin-17-jdk_17.0.20.1.0-p-1-0_ppc64el",
+			"key": "temurin-17-jdk_17.0.21.0.0-p-9-0_ppc64el",
 			"name": "temurin-17-jdk",
-			"sha256": "6088905ed246853f132afa8740f94637ee4ab0ae61f6bc0de79c751e549bc11e",
+			"sha256": "7f5045ad71aa132f1efee4484eb8fa2287b5655917442d39274aa47544ffc9bf",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.20.1.0+1-0_ppc64el.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.21.0.0+9-0_ppc64el.deb"
 			],
-			"version": "17.0.20.1.0+1-0"
+			"version": "17.0.21.0.0+9-0"
 		},
 		{
 			"arch": "ppc64el",
