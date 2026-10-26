@@ -72,7 +72,9 @@ while (($# > 0)); do
         ;;
     --set-github-output-on-diff)
         SET_GITHUB_OUTPUT="1"
-        echo "changed_targets=" >> "$GITHUB_OUTPUT"
+        if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
+            echo "changed_targets=" >> "$GITHUB_OUTPUT"
+        fi
         shift
         ;;
     --jobs)
@@ -175,6 +177,14 @@ stamp_origin() {
     echo ${str/"{PROJECT_ID}"/"distroless"}
 }
 
+sha256_file() {
+    if command -v sha256sum >/dev/null 2>&1; then
+        sha256sum "$1" | awk '{print $1}'
+    else
+        shasum -a 256 "$1" | awk '{print $1}'
+    fi
+}
+
 # Build every selected target: existing outputs may be stale.
 # Leave --skip-image-index filtering to the manifest check in test_image.
 TARGETS_FILE=$(mktemp)
@@ -215,26 +225,34 @@ function test_image() {
     IFS=" " read -r repo image_label <<<"$1"
 
     if [[ "${ONLY}" != "" && "${ONLY}" != "$image_label" ]]; then
-        return 
+        return 0
     fi
 
     repo_origin=$(stamp_origin "$repo")
     repo_stage=$(stamp_stage "$repo")
 
-    if ! crane manifest "$repo_origin" > /dev/null; then
+    local manifest_file
+    manifest_file=$(mktemp)
+    if ! crane manifest "$repo_origin" >"$manifest_file"; then
+        rm -f "$manifest_file"
         echo "🆕 New image will be added to $repo_origin"
         if [[ "${SET_GITHUB_OUTPUT}" == "1" ]]; then
             echo "$image_label (new)" >> "$CHANGED_IMAGES_FILE"
         fi
-        return
+        return 0
     fi
 
     if [[ "${SKIP_INDEX}" == "1" ]]; then
-        if ! crane manifest "$repo_origin" | jq -e '.mediaType == "application/vnd.oci.image.manifest.v1+json"' > /dev/null; then  
+        if ! jq -e '.mediaType == "application/vnd.oci.image.manifest.v1+json"' "$manifest_file" > /dev/null; then
+            rm -f "$manifest_file"
             echo "⏭️ Skipping image index $repo_origin"
-            return
+            return 0
         fi
     fi
+
+    local origin_digest
+    origin_digest="sha256:$(sha256_file "$manifest_file")"
+    rm -f "$manifest_file"
 
     echo ""
     echo "🚧 Diffing $repo_origin against $repo_stage"
@@ -258,6 +276,22 @@ function test_image() {
         echo "Missing OCI layout for $image_label: $image_dir" >&2
         return 1
     fi
+
+    local local_digest
+    local_digest=$(jq -r '
+        if (.manifests | type == "array") and (.manifests | length == 1) then
+            .manifests[0].digest // empty
+        else
+            empty
+        end
+    ' "${image_dir}/index.json")
+    if [[ -n "$local_digest" && "$origin_digest" == "$local_digest" ]]; then
+        echo "${repo_stage%:*}@${local_digest}"
+        echo ""
+        echo "👍 $repo_origin and $repo_stage are identical."
+        return 0
+    fi
+
     crane push "$image_dir" "$repo_stage"
     if ! diffoci diff --pull=always --all-platforms "$repo_origin" "$repo_stage"; then
         echo ""
@@ -284,7 +318,7 @@ fi
 # Parallelize using gnu parallel
 if [[ "${JOBS}" -gt 0 ]]; then
     export HEAD_REF BASE_REF REGISTRY REPORT_FILE SET_GITHUB_OUTPUT ONLY CHANGED_IMAGES_FILE SKIP_INDEX IMAGE_FILES_FILE
-    export -f stamp_origin stamp_stage test_image
+    export -f stamp_origin stamp_stage sha256_file test_image
     cat "${QUERY_FILE}" | parallel --eta --progress --jobs "${JOBS}" "set -o pipefail -o errexit -o nounset && test_image"
 else
     while IFS= read -r line || [ -n "$line" ]; do
@@ -292,7 +326,7 @@ else
     done <"${QUERY_FILE}"
 fi
 
-if [[ "${SET_GITHUB_OUTPUT}" == "1" ]]; then
+if [[ "${SET_GITHUB_OUTPUT}" == "1" && -n "${GITHUB_OUTPUT:-}" ]]; then
     echo "changed_targets<<EOF" >> "$GITHUB_OUTPUT"
     cat "$CHANGED_IMAGES_FILE" >> "$GITHUB_OUTPUT"
     echo "EOF" >> "$GITHUB_OUTPUT"
