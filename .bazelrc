@@ -2,8 +2,9 @@
 # Take care to document any settings that you expect users to apply.
 # Settings that apply only to CI are in .github/workflows/ci.bazelrc
 
-# Allow DOCKER_HOST env to leak into test actions.
-test --test_env=DOCKER_HOST
+# Pass DOCKER_HOST to tests. Keep this option consistent across build,
+# test, and cquery to avoid unnecessary analysis-cache invalidation.
+build --test_env=DOCKER_HOST
 
 # Stamp
 build:release --workspace_status_command=./private/stamp.bash --stamp
