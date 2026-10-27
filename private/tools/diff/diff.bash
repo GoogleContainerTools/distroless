@@ -32,7 +32,6 @@ REGISTRY=
 JOBS=
 STDERR=$(mktemp)
 CHANGED_IMAGES_FILE=$(mktemp)
-SET_GITHUB_OUTPUT="0"
 ONLY=
 SKIP_INDEX="0"
 
@@ -69,13 +68,6 @@ while (($# > 0)); do
     --report)
         REPORT_FILE="$2"
         shift 2
-        ;;
-    --set-github-output-on-diff)
-        SET_GITHUB_OUTPUT="1"
-        if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
-            echo "changed_targets=" >> "$GITHUB_OUTPUT"
-        fi
-        shift
         ;;
     --jobs)
         JOBS="$2"
@@ -122,6 +114,10 @@ fi
 if [[ -z "${QUERY_FILE}" ]]; then
     echo "--query or --query-bazel must be provided"
     exit 1
+fi
+
+if [[ "${GITHUB_ACTIONS:-}" == "true" && -n "${GITHUB_OUTPUT:-}" ]]; then
+    echo "changed_targets=" >> "$GITHUB_OUTPUT"
 fi
 
 # Redirect stderr to the $STDERR temp file for the rest of the script.
@@ -236,9 +232,7 @@ function test_image() {
     if ! crane manifest "$repo_origin" >"$manifest_file"; then
         rm -f "$manifest_file"
         echo "🆕 New image will be added to $repo_origin"
-        if [[ "${SET_GITHUB_OUTPUT}" == "1" ]]; then
-            echo "$image_label (new)" >> "$CHANGED_IMAGES_FILE"
-        fi
+        echo "$image_label (new)" >> "$CHANGED_IMAGES_FILE"
         return 0
     fi
 
@@ -298,9 +292,7 @@ function test_image() {
         echo "      🔬 To reproduce: bazel run //private/tools/diff:diff -- --only $image_label"
         echo ""
         echo "👎 $repo_origin and $repo_stage are different."
-        if [[ "${SET_GITHUB_OUTPUT}" == "1" ]]; then
-            echo "$image_label" >> "$CHANGED_IMAGES_FILE"
-        fi
+        echo "$image_label" >> "$CHANGED_IMAGES_FILE"
     else
         echo ""
         echo "👍 $repo_origin and $repo_stage are identical."
@@ -317,7 +309,7 @@ fi
 
 # Parallelize using gnu parallel
 if [[ "${JOBS}" -gt 0 ]]; then
-    export HEAD_REF BASE_REF REGISTRY REPORT_FILE SET_GITHUB_OUTPUT ONLY CHANGED_IMAGES_FILE SKIP_INDEX IMAGE_FILES_FILE
+    export HEAD_REF BASE_REF REGISTRY REPORT_FILE ONLY CHANGED_IMAGES_FILE SKIP_INDEX IMAGE_FILES_FILE
     export -f stamp_origin stamp_stage sha256_file test_image
     cat "${QUERY_FILE}" | parallel --eta --progress --jobs "${JOBS}" "set -o pipefail -o errexit -o nounset && test_image"
 else
@@ -326,8 +318,8 @@ else
     done <"${QUERY_FILE}"
 fi
 
-if [[ "${SET_GITHUB_OUTPUT}" == "1" && -n "${GITHUB_OUTPUT:-}" ]]; then
+if [[ "${GITHUB_ACTIONS:-}" == "true" && -n "${GITHUB_OUTPUT:-}" ]]; then
     echo "changed_targets<<EOF" >> "$GITHUB_OUTPUT"
-    cat "$CHANGED_IMAGES_FILE" >> "$GITHUB_OUTPUT"
+    LC_ALL=C sort -u "$CHANGED_IMAGES_FILE" >> "$GITHUB_OUTPUT"
     echo "EOF" >> "$GITHUB_OUTPUT"
 fi

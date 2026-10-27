@@ -59,7 +59,6 @@ jobs:
             --query-bazel --registry-spawn-https \
             --head-ref "$HEAD_REF" \
             --base-ref "$BASE_REF" \
-            --set-github-output-on-diff \
             --skip-image-index \
             --jobs $(($(nproc --all) * 2)) \
             --logs ./verbose.log \
