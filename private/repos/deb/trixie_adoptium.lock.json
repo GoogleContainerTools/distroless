@@ -135,24 +135,24 @@
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "temurin-17-jre_17.0.20.1.0-p-1-0_s390x",
+			"key": "temurin-17-jre_17.0.21.0.0-p-9-0_s390x",
 			"name": "temurin-17-jre",
-			"sha256": "7d924bbe3488b0f14a2b27eb9955df30300d2026eeb12563b0ccbe3201b5738d",
+			"sha256": "b3fd8f4dae614ad474b5ffa54f4465e22f2c0af771c9aad499c2ec865954a85e",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.20.1.0+1-0_s390x.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jre_17.0.21.0.0+9-0_s390x.deb"
 			],
-			"version": "17.0.20.1.0+1-0"
+			"version": "17.0.21.0.0+9-0"
 		},
 		{
 			"arch": "s390x",
 			"dependencies": [],
-			"key": "temurin-17-jdk_17.0.20.1.0-p-1-0_s390x",
+			"key": "temurin-17-jdk_17.0.21.0.0-p-9-0_s390x",
 			"name": "temurin-17-jdk",
-			"sha256": "07f0d0cdc4acb4e237e7f49a0e287500f03025b740e9c267fdeb506360018eac",
+			"sha256": "305c8028be73144670286eb5156711ee0e53014457998671d95d321a40985186",
 			"urls": [
-				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.20.1.0+1-0_s390x.deb"
+				"https://packages.adoptium.net/artifactory/deb/pool/main/t/temurin-17/temurin-17-jdk_17.0.21.0.0+9-0_s390x.deb"
 			],
-			"version": "17.0.20.1.0+1-0"
+			"version": "17.0.21.0.0+9-0"
 		},
 		{
 			"arch": "s390x",
