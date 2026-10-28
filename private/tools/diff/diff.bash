@@ -34,6 +34,7 @@ STDERR=$(mktemp)
 CHANGED_IMAGES_FILE=$(mktemp)
 ONLY=
 SKIP_INDEX="0"
+BAZEL_ARGS="${BAZEL_ARGS:-}"
 
 while (($# > 0)); do
     case $1 in
@@ -89,6 +90,10 @@ while (($# > 0)); do
         SKIP_INDEX="1"
         shift
         ;;
+    --bazel-args)
+        BAZEL_ARGS="$2"
+        shift 2
+        ;;
     *)
         echo "unknown arg $1"
         exit 1
@@ -126,8 +131,8 @@ exec 2>>"${STDERR}"
 DISK_STORAGE="/tmp/diff-storage"
 
 if [[ "${QUERY_FILE}" == "bazel" ]]; then
-    bazel build :sign_and_push.query
-    QUERY_FILE=$(bazel cquery --output=files :sign_and_push.query)
+    bazel ${BAZEL_ARGS} build :sign_and_push.query
+    QUERY_FILE=$(bazel ${BAZEL_ARGS} cquery --output=files :sign_and_push.query)
 fi
 
 if [[ "${REGISTRY}" == "spawn_https" ]]; then
@@ -203,8 +208,8 @@ rm -f "${TARGETS_FILE}"
 # Each workspace-local image target must expose exactly one OCI layout directory.
 IMAGE_FILES_FILE=$(mktemp)
 if ((HAVE_IMAGE_TARGETS)); then
-    bazel build "${IMAGE_TARGETS[@]}"
-    bazel cquery "set(${IMAGE_TARGETS[*]})" \
+    bazel ${BAZEL_ARGS} build "${IMAGE_TARGETS[@]}"
+    bazel ${BAZEL_ARGS} cquery "set(${IMAGE_TARGETS[*]})" \
         --output=starlark \
         --starlark:expr='"//" + target.label.package + ":" + target.label.name + " " + " ".join([f.path for f in target.files.to_list()])' \
         >"${IMAGE_FILES_FILE}"

@@ -31,15 +31,12 @@ jobs:
           restore-keys: |
             bazel-cache-deps-ci2-${{ hashFiles('.bazelversion') }}-
 
-      - name: Fetch
-        run: |
-          for i in $(seq 10); do
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'attr(tags, "amd64", ...)' && break
-            sleep 10;
-          done
-
       - name: Build all images
-        run: bazel build //:sign_and_push
+        run: |
+          set -e
+          bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc build //:sign_and_push.query
+          targets=$(awk 'NF && $0 !~ /^[[:space:]]*#/ {print $2}' $(bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery --output=files //:sign_and_push.query) | sort -u)
+          bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc build $targets
 
       - name: Install Deps
         run: |
@@ -57,6 +54,7 @@ jobs:
         run: |
           ./private/tools/diff/diff.bash \
             --query-bazel --registry-spawn-https \
+            --bazel-args "--bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc" \
             --head-ref "$HEAD_REF" \
             --base-ref "$BASE_REF" \
             --skip-image-index \
