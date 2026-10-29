@@ -44,9 +44,10 @@ jobs:
           done
       - name: Build All Images
         run: |
-          set -e
-          targets=$(bazel query 'kind(oci_image, deps(:sign_and_push))')
-          bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc build $targets
+          set -euo pipefail
+          RC="--bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc"
+          targets=$(bazel "$RC" query 'kind(oci_image, deps(//:sign_and_push))')
+          bazel "$RC" build //:sign_and_push $targets
       - name: Unit Tests
         run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test //... --build_tests_only
       - name: Build Examples
