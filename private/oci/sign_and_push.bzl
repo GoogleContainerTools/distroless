@@ -78,7 +78,9 @@ sign_and_push = rule(
     implementation = _sign_and_push_impl,
     attrs = {
         "refs": attr.string_list_dict(mandatory = True),
-        "targets": attr.string_keyed_label_dict(mandatory = True, cfg = "exec"),
+        # Keep in target configuration so CI and local builds share outputs with
+        # direct image builds; image/SBOM/digest targets must not depend on --stamp.
+        "targets": attr.string_keyed_label_dict(mandatory = True),
         "more_tags": attr.string_list_dict(mandatory = True),
         "_push_tpl": attr.label(default = "sign_and_push.sh.tpl", allow_single_file = True),
         "_crane": attr.label(allow_single_file = True, cfg = "exec", default = "@oci_crane_toolchains//:current_toolchain"),
