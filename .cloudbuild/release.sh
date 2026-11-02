@@ -25,6 +25,6 @@ echo "common --google_default_credentials" >> ~/.bazelrc
 echo "common --announce_rc" >> ~/.bazelrc
 
 for i in $(seq 5); do 
-    ./bazelisk cquery 'kind(merge_providers, deps(kind(oci_image, ...)))' --output=label --config=release && break || sleep 20;
+    ./bazelisk fetch :sign_and_push --config=release && break || sleep 20;
 done
 ./bazelisk run :sign_and_push --config=release -- --keyless $KEYLESS

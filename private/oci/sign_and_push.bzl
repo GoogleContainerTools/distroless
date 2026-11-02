@@ -2,7 +2,6 @@
 
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
-load(":digest.bzl", "digest")
 
 PUSH_AND_SIGN_CMD = """\
 # Push {IMAGE}
@@ -23,9 +22,8 @@ fi
 
 TAG_CMD = """\
 # Tag {IMAGE}
-from="$(stamp "{FROM}")"
 tag="$(stamp "{TAG}")"
-{CRANE} tag "$from" "$tag"
+{CRANE} tag "$repository@$digest" "$tag"
 """
 
 def _sign_and_push_impl(ctx):
@@ -55,7 +53,6 @@ def _sign_and_push_impl(ctx):
                 cmds.append(
                     TAG_CMD.format(
                         IMAGE = image,
-                        FROM = ref,
                         TAG = tag,
                         CRANE = ctx.file._crane.short_path,
                     ),
@@ -79,7 +76,7 @@ sign_and_push = rule(
     attrs = {
         "refs": attr.string_list_dict(mandatory = True),
         # Keep in target configuration so CI and local builds share outputs with
-        # direct image builds; image/SBOM/digest targets must not depend on --stamp.
+        # direct image builds; image and SBOM targets must not depend on --stamp.
         "targets": attr.string_keyed_label_dict(mandatory = True),
         "more_tags": attr.string_list_dict(mandatory = True),
         "_push_tpl": attr.label(default = "sign_and_push.sh.tpl", allow_single_file = True),
@@ -126,17 +123,13 @@ def sign_and_push_all(name, images):
             name = "{}_{}_sbom".format(name, idx),
             image = image,
         )
-        digest(
-            name = "{}_{}_digest".format(name, idx),
-            image = image,
-        )
 
         native.filegroup(
             name = "{}_{}".format(name, idx),
             srcs = [
                 image,
                 ":{}_{}_sbom".format(name, idx),
-                ":{}_{}_digest".format(name, idx),
+                str(native.package_relative_label(image)) + ".digest",
             ],
         )
 
