@@ -1,74 +1,57 @@
 "rules for signing, attesting and pushing images"
 
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
-load("//private/pkg:oci_image_spdx.bzl", "oci_image_spdx")
-
-PUSH_AND_SIGN_CMD = """\
-# Push {IMAGE}
-repository="$(stamp "{REPOSITORY}")"
-tag="$(stamp "{TAG}")"
-digest="$(cat {DIGEST})"
-echo "Pushing $repository@$digest"
-{CRANE} push {IMAGE} "$repository@$digest"
-
-# Check for signature and skip signing/sbom if present
-if ! {COSIGN} verify "$repository@$digest" --certificate-oidc-issuer https://accounts.google.com --certificate-identity "${{KEYLESS}}" > /dev/null; then
-    {COSIGN} attest "$repository@$digest" --predicate "{SBOM}" --type "spdx" --yes
-    {COSIGN} sign "$repository@$digest" --yes
-fi
-
-{CRANE} tag "$repository@$digest" "$tag"
-"""
-
-TAG_CMD = """\
-# Tag {IMAGE}
-tag="$(stamp "{TAG}")"
-{CRANE} tag "$repository@$digest" "$tag"
-"""
+load("//private/pkg:oci_image_spdx.bzl", "image_aspect")
 
 def _sign_and_push_impl(ctx):
-    cmds = []
-
-    runfiles = ctx.runfiles(files = ctx.files.targets + [ctx.version_file, ctx.file._crane, ctx.file._cosign])
+    targets = []
+    runfile_list = [ctx.version_file, ctx.file._crane, ctx.file._cosign, ctx.executable._runner]
 
     for (image, target) in ctx.attr.targets.items():
-        files = target[DefaultInfo].files.to_list()
+        image_dir = target[DefaultInfo].files.to_list()[0]
+        sbom = target[OutputGroupInfo].spdx.to_list()[0]
+        runfile_list.extend([image_dir, sbom])
 
-        all_refs = ctx.attr.refs[image]
-        for ref in all_refs:
-            repository_and_tag = ref.split(":")
-            cmds.append(
-                PUSH_AND_SIGN_CMD.format(
-                    IMAGE = files[0].short_path,
-                    SBOM = files[1].short_path,
-                    DIGEST = files[2].short_path,
-                    CRANE = ctx.file._crane.short_path,
-                    COSIGN = ctx.file._cosign.short_path,
-                    REPOSITORY = repository_and_tag[0],
-                    TAG = repository_and_tag[1],
-                ),
-            )
+        for ref in ctx.attr.refs[image]:
+            repository, primary_tag = ref.split(":")
+            targets.append({
+                "image": image_dir.short_path,
+                "sbom": sbom.short_path,
+                "repository": repository,
+                "tags": [primary_tag] + ctx.attr.more_tags[ref],
+            })
 
-            for tag in ctx.attr.more_tags[ref]:
-                cmds.append(
-                    TAG_CMD.format(
-                        IMAGE = image,
-                        TAG = tag,
-                        CRANE = ctx.file._crane.short_path,
-                    ),
-                )
+    manifest = ctx.actions.declare_file("{}_manifest.json".format(ctx.label.name))
+    ctx.actions.write(
+        output = manifest,
+        content = json.encode_indent({
+            "version_file": ctx.version_file.short_path,
+            "crane": ctx.file._crane.short_path,
+            "cosign": ctx.file._cosign.short_path,
+            "targets": targets,
+        }),
+    )
+    runfile_list.append(manifest)
 
     executable = ctx.actions.declare_file("{}_sign_and_push.sh".format(ctx.label.name))
-    ctx.actions.expand_template(
-        template = ctx.file._push_tpl,
+    ctx.actions.write(
         output = executable,
-        substitutions = {
-            "{{VERSION_FILE}}": ctx.version_file.short_path,
-            "{{CMDS}}": "\n".join(cmds),
-        },
+        content = """#!/usr/bin/env bash
+set -euo pipefail
+if [[ -d "$0.runfiles/_main" ]]; then
+  cd "$0.runfiles/_main"
+fi
+exec "{runner}" --manifest "{manifest}" "$@"
+""".format(
+            runner = ctx.executable._runner.short_path,
+            manifest = manifest.short_path,
+        ),
         is_executable = True,
     )
 
+    runfiles = ctx.runfiles(files = runfile_list).merge(
+        ctx.attr._runner[DefaultInfo].default_runfiles,
+    )
     return DefaultInfo(executable = executable, runfiles = runfiles)
 
 sign_and_push = rule(
@@ -77,9 +60,9 @@ sign_and_push = rule(
         "refs": attr.string_list_dict(mandatory = True),
         # Keep in target configuration so CI and local builds share outputs with
         # direct image builds; image and SBOM targets must not depend on --stamp.
-        "targets": attr.string_keyed_label_dict(mandatory = True),
+        "targets": attr.string_keyed_label_dict(mandatory = True, aspects = [image_aspect]),
         "more_tags": attr.string_list_dict(mandatory = True),
-        "_push_tpl": attr.label(default = "sign_and_push.sh.tpl", allow_single_file = True),
+        "_runner": attr.label(default = Label("//private/oci:sign_and_push"), executable = True, cfg = "exec"),
         "_crane": attr.label(allow_single_file = True, cfg = "exec", default = "@oci_crane_toolchains//:current_toolchain"),
         "_cosign": attr.label(allow_single_file = True, cfg = "exec", default = "@oci_cosign_toolchains//:current_toolchain"),
     },
@@ -87,7 +70,7 @@ sign_and_push = rule(
 )
 
 def sign_and_push_all(name, images):
-    """simple macro singing and pushing images
+    """simple macro signing and pushing images
 
     Args:
         name: name of the target
@@ -98,12 +81,9 @@ def sign_and_push_all(name, images):
     # deduplication code
     dedup_image_dict = dict()
     dedup_more_tags = dict()
-    dedup_push_dict = dict()
 
-    for (idx, (ref, image)) in enumerate(images.items()):
-        repository_and_tag = ref.split(":")
-        repository = repository_and_tag[0]
-        tag = repository_and_tag[1]
+    for (ref, image) in images.items():
+        repository, tag = ref.split(":")
         if image in dedup_image_dict:
             foundPrefix = False
             for oRef in dedup_image_dict[image]:
@@ -117,23 +97,6 @@ def sign_and_push_all(name, images):
         else:
             dedup_image_dict[image] = [ref]
             dedup_more_tags[ref] = []
-
-    for (idx, (image, _)) in enumerate(dedup_image_dict.items()):
-        oci_image_spdx(
-            name = "{}_{}_sbom".format(name, idx),
-            image = image,
-        )
-
-        native.filegroup(
-            name = "{}_{}".format(name, idx),
-            srcs = [
-                image,
-                ":{}_{}_sbom".format(name, idx),
-                str(native.package_relative_label(image)) + ".digest",
-            ],
-        )
-
-        dedup_push_dict[image] = "{}_{}".format(name, idx)
 
     write_file(
         name = name + ".query",
@@ -150,7 +113,7 @@ def sign_and_push_all(name, images):
 
     sign_and_push(
         name = name,
-        targets = dedup_push_dict,
+        targets = {image: image for image in dedup_image_dict},
         more_tags = dedup_more_tags,
         refs = dedup_image_dict,
     )

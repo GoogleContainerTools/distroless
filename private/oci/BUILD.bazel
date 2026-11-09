@@ -1,1 +1,16 @@
-exports_files(["sign_and_push.sh.tpl"])
+load("@rules_go//go:def.bzl", "go_binary", "go_test")
+
+go_binary(
+    name = "sign_and_push",
+    srcs = ["sign_and_push.go"],
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "sign_and_push_test",
+    size = "small",
+    srcs = [
+        "sign_and_push.go",
+        "sign_and_push_test.go",
+    ],
+)
