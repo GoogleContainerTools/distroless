@@ -26,11 +26,10 @@ jobs:
       - name: Restore bazel cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: |
-            ~/.cache/bazel-repo
-          key: bazel-cache-deps-ci1-${{ hashFiles('.bazelversion') }}-${{ github.sha }}
+          path: ~/.cache/bazel-repo
+          key: bazel-cache-deps-${{ hashFiles('.bazelversion') }}-${{ hashFiles('MODULE.bazel.lock') }}
           restore-keys: |
-            bazel-cache-deps-ci1-${{ hashFiles('.bazelversion') }}-
+            bazel-cache-deps-${{ hashFiles('.bazelversion') }}-
 
       - name: Install Deps
         run: |
