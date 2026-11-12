@@ -22,5 +22,13 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4
 
+      - name: Fetch
+        run: |
+          for i in $(seq 10); do
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch --keep_going //python3:check_ldconfig_tests && break
+            [[ $i -eq 10 ]] && exit 1
+            sleep 30
+          done
+
       - name: Check ldconfig caches
-        run: bazel test //python3:check_ldconfig_tests
+        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test //python3:check_ldconfig_tests

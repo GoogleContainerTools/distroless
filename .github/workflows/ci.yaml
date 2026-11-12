@@ -28,20 +28,30 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Mount bazel caches
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      - name: Restore bazel cache
+        id: cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: |
-            ~/.cache/bazel-repo
-          key: bazel-cache-deps-ci1-${{ hashFiles('.bazelversion') }}-${{ github.sha }}
+          path: ~/.cache/bazel-repo
+          key: bazel-cache-deps-${{ hashFiles('.bazelversion') }}-${{ hashFiles('MODULE.bazel.lock') }}
           restore-keys: |
-            bazel-cache-deps-ci1-${{ hashFiles('.bazelversion') }}-
+            bazel-cache-deps-${{ hashFiles('.bazelversion') }}-
 
       - name: Fetch # this can take a long time if there are a lot of errors
         run: |
           for i in $(seq 10); do
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch //... && break || sleep 180;
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc fetch --keep_going //... && break
+            [[ $i -eq 10 ]] && exit 1
+            sleep 180
           done
+
+      - name: Save bazel cache
+        if: ${{ github.ref == 'refs/heads/main' && steps.cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/bazel-repo
+          key: ${{ steps.cache.outputs.cache-primary-key }}
+
       - name: Build All Images
         run: |
           set -euo pipefail
@@ -60,20 +70,20 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Mount bazel caches
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      - name: Restore bazel cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: |
-            ~/.cache/bazel-repo
-          key: bazel-cache-deps-ci2-${{ hashFiles('.bazelversion') }}-${{ github.sha }}
+          path: ~/.cache/bazel-repo
+          key: bazel-cache-deps-${{ hashFiles('.bazelversion') }}-${{ hashFiles('MODULE.bazel.lock') }}
           restore-keys: |
-            bazel-cache-deps-ci2-${{ hashFiles('.bazelversion') }}-
+            bazel-cache-deps-${{ hashFiles('.bazelversion') }}-
 
       - name: Fetch
         run: |
           for i in $(seq 20); do
-            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'attr(tags, "amd64", ...)' && break
-            sleep 10;
+            bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery --keep_going 'attr(tags, "amd64", ...)' && break
+            [[ $i -eq 20 ]] && exit 1
+            sleep 10
           done
 
       - name: Image Tests
