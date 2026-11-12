@@ -19,7 +19,7 @@ import (
 	"syscall"
 )
 
-// Cosign v2 verification exit codes (github.com/sigstore/cosign/v2/pkg/cosign).
+// Cosign v2 verification exit codes (github.com/sigstore/cosign/v2/cmd/cosign/errors).
 const (
 	cosignExitNoSignatures   = 10
 	cosignExitNoMatchingSigs = 12
@@ -137,7 +137,7 @@ func run(ctx context.Context, args []string) error {
 
 	needsSign := make([]bool, len(targets))
 	var signCount atomic.Int32
-	fmt.Println("## Pushing and verifying images...")
+	fmt.Printf("## Pushing and verifying %d images...\n", len(targets))
 	if err := runParallel(ctx, jobs, len(targets), func(ctx context.Context, idx int) error {
 		rt := targets[idx]
 		fmt.Printf("Pushing %s\n", rt.ref)
@@ -178,12 +178,13 @@ func run(ctx context.Context, args []string) error {
 		}
 	}
 
-	fmt.Println("## Tagging images...")
+	fmt.Printf("## Tagging %d image tags...\n", len(tagOps))
 	if err := runParallel(ctx, jobs, len(tagOps), func(ctx context.Context, idx int) error {
 		op := tagOps[idx]
 		if out, err := runCmd(ctx, nil, m.Crane, "tag", op.ref, op.tag); err != nil {
 			return cmdErr(fmt.Sprintf("crane tag %s %s", op.ref, op.tag), err, out)
 		}
+		fmt.Printf("Tagged %s as %s\n", op.ref, op.tag)
 		return nil
 	}); err != nil {
 		return err
