@@ -1,4 +1,9 @@
 schemaVersion: "1.0.0"
+fileExistenceTests:
+- name: 'usr-lib-os-release'
+  path: '/usr/lib/os-release'
+  shouldExist: true
+  permissions: '-rw-r--r--'
 fileContentTests:
 - name: 'os-release contents'
   path: '/etc/os-release'

@@ -1,6 +1,6 @@
 load("@aspect_bazel_lib//lib:tar.bzl", "tar")
-load("@rules_go//go:def.bzl", "go_test")
 load("@rules_distroless//distroless:defs.bzl", "cacerts", "group", "home", "locale", "os_release", "passwd")
+load("@rules_go//go:def.bzl", "go_test")
 load("//:distro.bzl", "ALL_DISTROS", "VERSIONS")
 load("//java:config.bzl", "JAVA_ARCHITECTURES", "JAVA_DISTROS")
 load("//private/util:deb.bzl", "deb", "deb_derived_package")
@@ -62,6 +62,7 @@ tar(
             ))
             for (key, value) in OS_RELEASE.items()
         },
+        mode = "0644",
     )
     for (dist, codename, version) in VERSIONS
 ]
