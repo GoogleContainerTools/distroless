@@ -1,0 +1,405 @@
+set -o pipefail -o errexit -o nounset
+
+# Copyright 2026 Google Inc. All rights reserved.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Functions used by knife to update python-build-standalone archives.
+#
+# Reads the Python matrix and pinned versions, queries the latest PBS release,
+# then rewrites archive and version data when needed.
+#
+# An update is triggered when the CPython patch moves or the PBS release tag
+# changes under an unchanged patch, indicating rebuilt native libraries.
+
+PYTHON_TRIPLES=(
+  "amd64=x86_64-unknown-linux-gnu"
+  "arm64=aarch64-unknown-linux-gnu"
+  "s390x=s390x-unknown-linux-gnu"
+  "riscv64=riscv64-unknown-linux-gnu"
+)
+
+# Use a temporary file for portable in-place editing on BSD and GNU sed.
+sed_inplace() { # $1 = sed expression, $2 = file
+  local tmp mode
+  tmp="${2}.tmp.$$"
+  sed -e "$1" "$2" > "$tmp" || { rm -f "$tmp"; return 1; }
+  mode=$(stat -c %a "$2" 2>/dev/null || stat -f %Lp "$2")
+  chmod "$mode" "$tmp"
+  mv "$tmp" "$2"
+}
+
+# Print "<minor>_<arch> <version>" for each matrix entry.
+function get_python_versions() {
+  sed -n '/python_versions_repo(/,/^    )$/p' private/extensions/python.bzl \
+    | grep -oE '"[0-9]+\.[0-9]+_[a-z0-9]+": "[0-9]+\.[0-9]+\.[0-9]+(b[0-9]+|rc[0-9]+)?"' \
+    | sed -E 's/"([^"]+)": "([^"]+)"/\1 \2/'
+}
+
+# Print the matrix's minor versions, one per line.
+function get_python_minors() {
+  python3 -c 'import ast, re, sys
+try:
+    minors = ast.literal_eval(sys.argv[1])
+    if not isinstance(minors, list) or not minors or any(not isinstance(v, str) or not re.fullmatch(r"3\.[0-9]+", v) for v in minors):
+        raise ValueError()
+except (SyntaxError, ValueError):
+    sys.exit("invalid PYTHON_MAJOR_VERSIONS in python/config.bzl; expected a list of 3.x minors")
+print("\n".join(minors))' "$(sed -n 's/^PYTHON_MAJOR_VERSIONS = //p' python/config.bzl)"
+}
+
+# Print the architectures for a minor, one per line.
+function get_python_archs() {
+  local minor="$1" value
+  # A missing minor returns no architectures; the caller reuses the previous
+  # minor's list for a newly detected minor.
+  value=$(grep -F "\"${minor}\": [" python/config.bzl | sed 's/^[^[]*//; s/,[[:space:]]*$//' || true)
+  [ -n "$value" ] || return 0
+  python3 -c 'import ast, sys
+try:
+    archs = ast.literal_eval(sys.argv[1])
+    if not isinstance(archs, list) or any(not isinstance(v, str) or not v for v in archs) or len(set(archs)) != len(archs):
+        raise ValueError()
+except (SyntaxError, ValueError):
+    sys.exit("invalid architectures for " + sys.argv[2] + " in python/config.bzl")
+print("\n".join(archs))' "$value" "$minor"
+}
+
+function triple_for_arch() {
+  local entry
+  for entry in "${PYTHON_TRIPLES[@]}"; do
+    [[ "$entry" == "$1="* ]] && echo "${entry#*=}" && return 0
+  done
+  return 1
+}
+
+# Print the current version for a minor and architecture, if any.
+function current_version() {
+  get_python_versions | awk -v key="$1_$2" '$1 == key { print $2 }'
+}
+
+# Print the full pinned version (patch + PBS release tag) for a minor and
+# architecture, if any.
+# A tag-only bump (same patch, rebuilt native libs) must trigger an update.
+function pinned_version() {
+  local minor="$1" arch="$2" short
+  short=$(echo "$minor" | tr -d '.')
+  awk -v name="python${short}_${arch}" -v field="${3:-version}" '
+    $0 ~ ("name = \"" name "\"") { found = 1 }
+    found && $0 ~ ("^[[:space:]]*" field " = ") {
+      sub(/.*= "/, ""); sub(/".*/, ""); print; exit
+    }
+  ' private/extensions/python.bzl
+}
+
+# Python finals sort after their beta/RC builds, unlike sort -V.
+function latest_python_version() {
+  python3 -c 'import re, sys
+def key(version):
+    major, minor, patch, stage, number = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)(?:(b|rc)(\d+))?", version).groups()
+    return (int(major), int(minor), int(patch), {"b": 0, "rc": 1, None: 2}[stage], int(number or 0))
+versions = sys.stdin.read().split()
+print(max(versions, key=key) if versions else "")'
+}
+
+# Rewrite archives, versions, metadata, and repository visibility. Print the
+# new release tag on success or "NO_CHANGE" when current.
+function generate_python_archives() {
+  local latest_release sha256sums
+  local minors minor arch triple version sha python_short arch_anchor matrix_min published latest_minor
+  local version_re stable_only minor_re minor_version current_sha
+  local -a archive_blocks versions_entries metadata_deps changes repos
+  local changed=0 verbose=${VERBOSE:-0} dry_run=${DRY_RUN:-0} current
+  local module_tmp="" repos_sorted module_line current_module_line module_changed=0
+
+  # Tests can supply release data through PBS_RELEASE_FILE and
+  # PBS_SHA256SUMS_FILE; otherwise use the live release files.
+  if [ -n "${PBS_RELEASE_FILE:-}" ] && [ -n "${PBS_SHA256SUMS_FILE:-}" ]; then
+    latest_release=$(jq -er '.tag' "$PBS_RELEASE_FILE") || return 1
+    sha256sums=$(cat "$PBS_SHA256SUMS_FILE") || return 1
+  else
+    # Prefer PBS's machine-readable release file; fall back to the API if it is unavailable.
+    if ! latest_release=$(curl -fsSL https://raw.githubusercontent.com/astral-sh/python-build-standalone/latest-release/latest-release.json 2>/dev/null | jq -er '.tag'); then
+      latest_release=$(curl -fsSL https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest | jq -er '.tag_name') || return 1
+    fi
+    sha256sums=$(curl -fsSL "https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/SHA256SUMS") || return 1
+  fi
+  [[ "$latest_release" =~ ^[0-9]{8}$ ]] || { echo "invalid PBS release tag: ${latest_release}" >&2; return 1; }
+  [ -n "$sha256sums" ] || { echo "no SHA256SUMS for ${latest_release}" >&2; exit 1; }
+
+  local -a minors
+  minors=()
+  local minors_tmp archs original_minors
+  minors_tmp=$(mktemp)
+  get_python_minors > "$minors_tmp"
+  while IFS= read -r minor; do minors+=("$minor"); done < "$minors_tmp"
+  rm -f "$minors_tmp"
+  [ ${#minors[@]} -gt 0 ] || { echo "no minors parsed from python/config.bzl" >&2; exit 1; }
+
+  # Sort and deduplicate to avoid depending on matrix order.
+  original_minors=${minors[*]}
+  read -r -a minors <<< "$(printf '%s\n' "${minors[@]}" | sort -uV | paste -sd ' ' -)"
+  if [ "$original_minors" != "${minors[*]}" ]; then
+    changed=1
+    changes+=("normalize Python minor matrix")
+  fi
+  arch_anchor=${minors[${#minors[@]} - 1]}
+  matrix_min=${minors[0]}
+
+  # Find stable PBS minors from amd64 assets. Prereleases are excluded by
+  # requiring 3.X.Y. The matrix is a contiguous support window; fill published
+  # minors above its oldest entry.
+  published=$(echo "$sha256sums" \
+    | { grep -oE "cpython-3\\.[0-9]+\\.[0-9]+\\+${latest_release}-x86_64-unknown-linux-gnu-install_only_stripped\\.tar\\.gz$" || true; } \
+    | sed -E 's/cpython-(3\.[0-9]+)\.[0-9]+.*/\1/' | sort -uV)
+  local fill fill_m
+  fill=()
+  for fill_m in $published; do
+    if [ "$fill_m" != "$matrix_min" ] \
+      && [ "$(printf '%s\n' "$matrix_min" "$fill_m" | sort -V | tail -1)" = "$fill_m" ] \
+      && [[ " ${minors[*]} " != *" $fill_m "* ]]; then
+      fill+=("$fill_m")
+    fi
+  done
+  if [ ${#fill[@]} -gt 0 ]; then
+    echo "new stable minor(s) detected: ${fill[*]}" >&2
+    for fill_m in "${fill[@]}"; do
+      minors+=("$fill_m")
+      changes+=("add minor ${fill_m}")
+    done
+    read -r -a minors <<< "$(printf '%s\n' "${minors[@]}" | sort -uV | paste -sd ' ' -)"
+    # A missing matrix entry is a change even if version data already exists.
+    changed=1
+  fi
+  latest_minor=$arch_anchor
+
+  for minor in "${minors[@]}"; do
+    minor_re=${minor//./\\.}
+    minor_version=""
+    python_short=$(echo "$minor" | tr -d '.')
+    # Reuse the previous minor's architectures for a newly detected minor.
+    archs=$(get_python_archs "$minor")
+    if [ -z "$archs" ] && [ ${#fill[@]} -gt 0 ] && [[ " ${fill[*]} " == *" $minor "* ]]; then
+      archs=$(get_python_archs "$latest_minor")
+    fi
+    [ -n "$archs" ] || { echo "no archs for ${minor} in python/config.bzl" >&2; exit 1; }
+    stable_only=0
+    if [ ${#fill[@]} -gt 0 ] && [[ " ${fill[*]} " == *" $minor "* ]]; then
+      stable_only=1
+    fi
+    while IFS= read -r arch; do
+      triple=$(triple_for_arch "$arch") || { echo "no triple for ${arch}" >&2; exit 1; }
+      # Select the latest stable patch or opted-in prerelease.
+      version_re='[0-9]+(b[0-9]+|rc[0-9]+)?'
+      [ "$stable_only" = 1 ] && version_re='[0-9]+'
+      version=$(echo "$sha256sums" \
+        | { grep -oE "cpython-${minor_re}\\.${version_re}\\+${latest_release}-${triple}-install_only_stripped\\.tar\\.gz$" || true; } \
+        | sed -E "s/cpython-(${minor_re}\\.${version_re})\\+.*/\\1/" | latest_python_version)
+      [ -n "$version" ] || { echo "required matrix entry ${minor} ${arch} has no install_only_stripped PBS asset in ${latest_release}" >&2; exit 1; }
+      [ -z "$minor_version" ] || [ "$minor_version" = "$version" ] || { echo "inconsistent Python versions for ${minor}: ${minor_version} and ${version} (${arch})" >&2; return 1; }
+      minor_version=$version
+      sha=$(echo "$sha256sums" | awk -v asset="cpython-${version}+${latest_release}-${triple}-install_only_stripped.tar.gz" '$2 == asset || $2 == "*" asset { print $1 }')
+      [[ "$sha" =~ ^[0-9a-f]{64}$ ]] || { echo "missing, duplicate or invalid sha256 for ${version} ${triple}" >&2; return 1; }
+
+      current=$(current_version "$minor" "$arch")
+      pinned=$(pinned_version "$minor" "$arch")
+      current_sha=$(pinned_version "$minor" "$arch" sha256)
+      new_full="${version}+${latest_release}"
+      if [ "$verbose" = 1 ]; then
+        if [ "$current" = "$version" ] && [ "$pinned" = "$new_full" ] && [ "$current_sha" = "$sha" ]; then
+          echo "  ${minor} ${arch}: ${pinned} (unchanged)" >&2
+        else
+          echo "  ${minor} ${arch}: ${pinned:-<none>} -> ${new_full} (update)" >&2
+        fi
+      fi
+      # Update when the patch or PBS release tag moves.
+      if [ "$current" != "$version" ] || [ "$pinned" != "$new_full" ] || [ "$current_sha" != "$sha" ]; then
+        changed=1
+        changes+=("update ${minor} ${arch}: ${pinned:-<none>} -> ${new_full}")
+      fi
+
+      archive_blocks+=("    python_archive(
+        name = \"python${python_short}_${arch}\",
+        sha256 = \"${sha}\",
+        strip_prefix = \"python/\",
+        urls = [\"https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/cpython-${version}+${latest_release}-${triple}-install_only_stripped.tar.gz\"],
+        version = \"${version}+${latest_release}\",
+        python_version = \"${minor}\",
+        architecture = \"${arch}\",
+    )")
+      versions_entries+=("            \"${minor}_${arch}\": \"${version}\",")
+      metadata_deps+=("            \"python${python_short}_${arch}\",")
+      repos+=("python${python_short}_${arch}")
+    done <<< "$archs"
+  done
+
+  # Keep root-module repository visibility aligned with the selected matrix.
+  repos_sorted=$(printf '%s\n' "${repos[@]}" | sort | sed 's/^/"/; s/$/"/' | paste -sd, - | sed 's/,/, /g')
+  module_line="use_repo(py, ${repos_sorted}, \"python_versions\")"
+  current_module_line=$(grep '^use_repo(py,' MODULE.bazel || true)
+  if [ "$current_module_line" != "$module_line" ]; then
+    module_changed=1
+    changes+=("sync MODULE.bazel repositories")
+    changed=1
+  fi
+
+  if [ "$dry_run" = 1 ]; then
+    if [ "$changed" = 0 ]; then
+      echo "NO_CHANGE"
+    else
+      printf 'would %s\n' "${changes[@]}" >&2
+      echo "DRY_RUN"
+    fi
+    return 0
+  fi
+
+  if [ "$changed" = 0 ]; then
+    echo "NO_CHANGE"
+    return 0
+  fi
+
+  printf '%s\n' "${changes[@]}" >&2
+
+  local start end section tmp
+  start=$(grep -n '# Python from python-build-standalone' private/extensions/python.bzl | head -1 | cut -d: -f1)
+  end=$(grep -n '^_archive = tag_class' private/extensions/python.bzl | head -1 | cut -d: -f1)
+  local minors_list
+  minors_list=${minors[*]}
+  minors_list=${minors_list// /, }
+  section="    # Python from python-build-standalone (https://github.com/astral-sh/python-build-standalone)
+    # Release ${latest_release}. Linux targets only (distroless images).
+    # Versions ${minors_list}. New stable minors are added by the updater.
+    # armv7 is excluded: PBS publishes soft-float gnueabi builds
+    # (interpreter /lib/ld-linux.so.3) which cannot run on the distroless armhf base
+    # (loader /usr/lib/ld-linux-armhf.so.3); ppc64le is not published by PBS.
+$(printf '%s\n\n' "${archive_blocks[@]}")
+
+    python_versions_repo(
+        name = \"python_versions\",
+        versions = {
+$(printf '%s\n' "${versions_entries[@]}")
+        },
+    )
+
+    return module_ctx.extension_metadata(
+        root_module_direct_deps = [
+            \"python_versions\",
+$(printf '%s\n' "${metadata_deps[@]}")
+        ],
+        root_module_direct_dev_deps = [],
+    )
+
+"
+  tmp=$(mktemp)
+  head -n $((start - 1)) private/extensions/python.bzl > "$tmp"
+  printf '%s' "$section" >> "$tmp"
+  tail -n +"$end" private/extensions/python.bzl >> "$tmp"
+  # Verify the generated extension before replacing the committed file.
+  if which buildifier >/dev/null 2>&1; then
+    if ! buildifier -type=bzl -mode=fix "$tmp"; then
+      echo "generated extension failed buildifier; aborting without changes" >&2
+      rm -f "$tmp"
+      return 1
+    fi
+  fi
+  # Apply and verify matrix changes in a temporary file before replacing the file.
+  local config_tmp=""
+  config_tmp=$(mktemp)
+  cp python/config.bzl "$config_tmp"
+  local minors_quoted
+  minors_quoted=$(printf '\"%s\", ' "${minors[@]}" | sed 's/, $//')
+  sed_inplace "s/^PYTHON_MAJOR_VERSIONS = .*/PYTHON_MAJOR_VERSIONS = [${minors_quoted}]/" "$config_tmp"
+  if [ ${#fill[@]} -gt 0 ]; then
+    local arch_list fill_entries fill_m2
+    grep -q '^PYTHON_MAJOR_VERSIONS = ' python/config.bzl \
+      || { echo "PYTHON_MAJOR_VERSIONS line not found in python/config.bzl" >&2; rm -f "$tmp"; return 1; }
+    grep -q "\"${latest_minor}\": \[" python/config.bzl \
+      || { echo "arch map for ${latest_minor} not found in python/config.bzl" >&2; rm -f "$tmp"; return 1; }
+    arch_list=$(get_python_archs "$latest_minor" | sed 's/^/"/; s/$/",/' | tr '\n' ' ' | sed 's/ $//')
+    fill_entries=""
+    for fill_m2 in "${fill[@]}"; do
+      fill_entries="${fill_entries}\n        \"${fill_m2}\": [${arch_list}],"
+    done
+    sed_inplace "s|\"${latest_minor}\": \[[^]]*\],|\"${latest_minor}\": [${arch_list}],${fill_entries}|" "$config_tmp"
+    for fill_m2 in "${fill[@]}"; do
+      grep -qE "PYTHON_MAJOR_VERSIONS = .*\"${fill_m2}\"" "$config_tmp" \
+        || { echo "config.bzl update for ${fill_m2} did not land (format drift?)" >&2; rm -f "$config_tmp" "$tmp"; return 1; }
+      grep -q "\"${fill_m2}\": \[" "$config_tmp" \
+        || { echo "config.bzl arch map for ${fill_m2} did not land" >&2; rm -f "$config_tmp" "$tmp"; return 1; }
+    done
+  fi
+
+  if [ "$module_changed" = 1 ]; then
+    module_tmp=$(mktemp)
+    cp MODULE.bazel "$module_tmp"
+    sed_inplace "s/^use_repo(py, .*/${module_line}/" "$module_tmp"
+    grep -Fxq "$module_line" "$module_tmp" \
+      || { echo "MODULE.bazel use_repo update did not land" >&2; rm -f "$module_tmp"; rm -f "$config_tmp" "$tmp"; return 1; }
+  fi
+  if command -v buildifier >/dev/null 2>&1; then
+    if ! buildifier -type=bzl -mode=fix "$config_tmp"; then
+      echo "generated config failed buildifier; aborting without changes" >&2
+      rm -f "$config_tmp" "$module_tmp" "$tmp"
+      return 1
+    fi
+  fi
+  # All generated content is verified; apply it.
+  chmod 644 "$tmp" "$config_tmp"
+  [ -z "$module_tmp" ] || chmod 644 "$module_tmp"
+  mv "$tmp" private/extensions/python.bzl || { echo "extension update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
+  if [ -n "$config_tmp" ]; then
+    mv "$config_tmp" python/config.bzl || { echo "config.bzl update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
+  fi
+  if [ -n "$module_tmp" ]; then
+    mv "$module_tmp" MODULE.bazel || { echo "MODULE.bazel update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
+  fi
+
+  echo "$latest_release"
+}
+
+# Generated files are verified before replacement. Failures after the first
+# replacement are reported as partial updates. Refresh the lockfile after success.
+
+# Update version-specific testdata and create files for new minors.
+function update_test_versions_python() {
+  local minor file new expected
+  # Keep the smoke test's expected minors in sync with the matrix.
+  expected=$(get_python_minors | tr '\n' ' ')
+  sed_inplace "s/\"\$minors\" = \"[^\"]*\"/\"\$minors\" = \"${expected}\"/" python/update_python_archives_test.sh
+  for minor in $(get_python_minors); do
+    file="python/testdata/python3.$(echo "$minor" | cut -d. -f2).yaml"
+    new=$(current_version "$minor" "amd64")
+    if [ ! -f "$file" ]; then
+      [ -n "$new" ] || continue
+      cat > "$file" <<EOT
+schemaVersion: "2.0.0"
+commandTests:
+  - name: version
+    command: "/python/bin/python${minor}"
+    args: ["--version"]
+    expectedOutput: ["Python ${new}"]
+  - name: symlink
+    command: "/python/bin/python3"
+    args: ["--version"]
+    expectedOutput: ["Python ${new}"]
+EOT
+      echo "created $file for Python ${new}"
+      continue
+    fi
+    if [ -n "$new" ]; then
+      sed_inplace "s/Python [0-9][0-9a-z.]*/Python ${new}/g" "$file"
+      grep -q "Python ${new}" "$file" || { echo "testdata bump for ${file} did not land" >&2; return 1; }
+      echo "updated $file to ${new}"
+    fi
+  done
+}
