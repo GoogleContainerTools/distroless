@@ -9,7 +9,7 @@ cd "$TEST_SRCDIR/${TEST_WORKSPACE:-_main}"
 source knife.d/update_python_archives.sh
 
 minors=$(get_python_minors | tr '\n' ' ')
-[ "$minors" = "3.13 3.14 " ] || { echo "unexpected minors: [$minors]"; exit 1; }
+[ "$minors" = "3.13 3.14 3.15 " ] || { echo "unexpected minors: [$minors]"; exit 1; }
 
 for minor in $(get_python_minors); do
   for arch in $(get_python_archs "$minor"); do

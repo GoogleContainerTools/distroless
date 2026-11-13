@@ -3,12 +3,13 @@
 PYTHON_DISTROS = ["debian13"]
 
 # Full CPython versions are defined in the extension.
-PYTHON_MAJOR_VERSIONS = ["3.13", "3.14"]
+PYTHON_MAJOR_VERSIONS = ["3.13", "3.14", "3.15"]
 
 PYTHON_ARCHITECTURES = {
     "debian13": {
         "3.13": ["amd64", "arm64", "s390x", "riscv64"],
         "3.14": ["amd64", "arm64", "s390x", "riscv64"],
+        "3.15": ["amd64", "arm64", "s390x", "riscv64"],
     },
 }
 

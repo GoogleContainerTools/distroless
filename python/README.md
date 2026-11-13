@@ -10,6 +10,7 @@ Supported versions:
 
 - Python 3.13 (`python3.13-debian13`)
 - Python 3.14 (`python3.14-debian13`)
+- Python 3.15 (`python3.15-debian13`)
 
 Each image contains everything in the [C/C++ base image](../cc/README.md),
 plus a standalone CPython install under `/python`:
@@ -22,8 +23,8 @@ Debug variants inherit BusyBox from the base image. Install dependencies in a
 builder stage and copy them into the runtime image.
 Creating a virtual environment in the runtime image requires `venv --without-pip`.
 
-python-build-standalone builds are relocatable, dynamically link only to glibc,
-and include selected Debian runtime files from the base image.
+python-build-standalone builds are relocatable. The C/C++ base image supplies
+their system shared libraries, including glibc and libgcc.
 
 ## Usage
 

@@ -58,7 +58,7 @@ use_repo(node, "node_versions", "nodejs22_amd64", "nodejs22_arm", "nodejs22_arm6
 ### PYTHON ###
 py = use_extension("//private/extensions:python.bzl", "python")
 py.archive()
-use_repo(py, "python313_amd64", "python313_arm64", "python313_riscv64", "python313_s390x", "python314_amd64", "python314_arm64", "python314_riscv64", "python314_s390x", "python_versions")
+use_repo(py, "python313_amd64", "python313_arm64", "python313_riscv64", "python313_s390x", "python314_amd64", "python314_arm64", "python314_riscv64", "python314_s390x", "python315_amd64", "python315_arm64", "python315_riscv64", "python315_s390x", "python_versions")
 
 ### DEBIAN ###
 include("//private/repos/deb:deb.MODULE.bazel")
