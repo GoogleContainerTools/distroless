@@ -12,7 +12,6 @@ PYTHON_ARCHITECTURES = {
     },
 }
 
-# libc-bin provides ldconfig for the generated library cache.
 PYTHON_PACKAGES = {
-    "debian13": ["libc-bin"],
+    "debian13": [],
 }

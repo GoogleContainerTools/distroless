@@ -25,10 +25,9 @@ commandTests:
     args: ["-c", "print(u'h\\xe9llo.txt')"]
     expectedOutput: ['h\xe9llo']
 
-  # find_library works via /sbin/ldconfig (libc-bin) and the generated ld.so.cache.
-  - name: find_library
+  - name: runtime_contents
     command: "/python/bin/python3"
-    args: ["-c", "import ctypes.util; assert ctypes.util.find_library('c')"]
+    args: ["-c", "import ctypes, glob, importlib.util; ctypes.CDLL('libc.so.6'); assert not glob.glob('/python/lib/libpython*'); assert all(importlib.util.find_spec(m) is None for m in ('pip', 'ensurepip', 'idlelib', 'tkinter', 'turtle', 'turtledemo'))"]
 
   # Import every module installed with Python.
   - name: import_everything

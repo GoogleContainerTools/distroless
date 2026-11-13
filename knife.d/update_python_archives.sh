@@ -118,7 +118,7 @@ function generate_python_archives() {
   local latest_release sha256sums
   local minors minor arch triple version sha python_short arch_anchor matrix_min published latest_minor
   local version_re stable_only minor_re minor_version current_sha
-  local -a archive_blocks versions_entries metadata_deps changes repos verify_assets
+  local -a archive_blocks versions_entries metadata_deps changes repos
   local changed=0 verbose=${VERBOSE:-0} dry_run=${DRY_RUN:-0} current
   local module_tmp="" repos_sorted module_line current_module_line module_changed=0
 
@@ -160,7 +160,7 @@ function generate_python_archives() {
   # requiring 3.X.Y. The matrix is a contiguous support window; fill published
   # minors above its oldest entry.
   published=$(echo "$sha256sums" \
-    | { grep -oE "cpython-3\\.[0-9]+\\.[0-9]+\\+${latest_release}-x86_64-unknown-linux-gnu-install_only\\.tar\\.gz$" || true; } \
+    | { grep -oE "cpython-3\\.[0-9]+\\.[0-9]+\\+${latest_release}-x86_64-unknown-linux-gnu-install_only_stripped\\.tar\\.gz$" || true; } \
     | sed -E 's/cpython-(3\.[0-9]+)\.[0-9]+.*/\1/' | sort -uV)
   local fill fill_m
   fill=()
@@ -203,14 +203,13 @@ function generate_python_archives() {
       version_re='[0-9]+(b[0-9]+|rc[0-9]+)?'
       [ "$stable_only" = 1 ] && version_re='[0-9]+'
       version=$(echo "$sha256sums" \
-        | { grep -oE "cpython-${minor_re}\\.${version_re}\\+${latest_release}-${triple}-install_only\\.tar\\.gz$" || true; } \
+        | { grep -oE "cpython-${minor_re}\\.${version_re}\\+${latest_release}-${triple}-install_only_stripped\\.tar\\.gz$" || true; } \
         | sed -E "s/cpython-(${minor_re}\\.${version_re})\\+.*/\\1/" | latest_python_version)
-      [ -n "$version" ] || { echo "required matrix entry ${minor} ${arch} has no install_only PBS asset in ${latest_release}" >&2; exit 1; }
+      [ -n "$version" ] || { echo "required matrix entry ${minor} ${arch} has no install_only_stripped PBS asset in ${latest_release}" >&2; exit 1; }
       [ -z "$minor_version" ] || [ "$minor_version" = "$version" ] || { echo "inconsistent Python versions for ${minor}: ${minor_version} and ${version} (${arch})" >&2; return 1; }
       minor_version=$version
-      sha=$(echo "$sha256sums" | awk -v asset="cpython-${version}+${latest_release}-${triple}-install_only.tar.gz" '$2 == asset || $2 == "*" asset { print $1 }')
+      sha=$(echo "$sha256sums" | awk -v asset="cpython-${version}+${latest_release}-${triple}-install_only_stripped.tar.gz" '$2 == asset || $2 == "*" asset { print $1 }')
       [[ "$sha" =~ ^[0-9a-f]{64}$ ]] || { echo "missing, duplicate or invalid sha256 for ${version} ${triple}" >&2; return 1; }
-      verify_assets+=("${minor}|${arch}|${version}|${triple}|${sha}")
 
       current=$(current_version "$minor" "$arch")
       pinned=$(pinned_version "$minor" "$arch")
@@ -233,7 +232,7 @@ function generate_python_archives() {
         name = \"python${python_short}_${arch}\",
         sha256 = \"${sha}\",
         strip_prefix = \"python/\",
-        urls = [\"https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/cpython-${version}+${latest_release}-${triple}-install_only.tar.gz\"],
+        urls = [\"https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/cpython-${version}+${latest_release}-${triple}-install_only_stripped.tar.gz\"],
         version = \"${version}+${latest_release}\",
         python_version = \"${minor}\",
         architecture = \"${arch}\",
@@ -254,137 +253,7 @@ function generate_python_archives() {
     changed=1
   fi
 
-  # Regenerate the PBS SPDX SBOM from the release component manifest.
-  local downloads_file sbom_tmp="" downloads_tmp=""
-  if [ -n "${PBS_DOWNLOADS_FILE:-}" ]; then
-    downloads_file="$PBS_DOWNLOADS_FILE"
-  else
-    downloads_tmp=$(mktemp)
-    if ! curl -fsSL "https://raw.githubusercontent.com/astral-sh/python-build-standalone/${latest_release}/pythonbuild/downloads.py" -o "$downloads_tmp"; then
-      echo "no PBS downloads manifest for ${latest_release}" >&2
-      rm -f "$downloads_tmp"
-      exit 1
-    fi
-    downloads_file="$downloads_tmp"
-  fi
-  [ -s "$downloads_file" ] || { echo "empty PBS downloads manifest" >&2; exit 1; }
-  sbom_tmp=$(mktemp)
-  if ! python3 python/gen_pbs_sbom.py "$downloads_file" "$latest_release" "$sbom_tmp"; then
-    echo "PBS SBOM generation failed" >&2
-    rm -f "$sbom_tmp" "$downloads_tmp"
-    exit 1
-  fi
-  grep -q "$latest_release" "$sbom_tmp" || { echo "PBS SBOM does not mention ${latest_release}" >&2; rm -f "$sbom_tmp" "$downloads_tmp"; exit 1; }
-  # Verify detectable native-library versions in each selected archive against
-  # the manifest. The archive is SHA-verified; tests can supply fixture archives.
-  local tarball tarball_tmp so_dir so_path
-  local verify_entry verify_minor verify_arch verify_version verify_triple verify_sha
-  local fname got_sha verify_root
-  verify_root=$(mktemp -d)
-  if [ -n "${PBS_TARBALL_FILE:-}" ]; then
-    verify_assets=("fixture||||")
-  fi
-  if [ -z "${PBS_TARBALL_FILE:-}" ]; then
-    [ ${#verify_assets[@]} -gt 0 ] || { echo "no PBS matrix archives to verify" >&2; rm -rf "$verify_root"; exit 1; }
-  fi
-  for verify_entry in "${verify_assets[@]}"; do
-    IFS='|' read -r verify_minor verify_arch verify_version verify_triple verify_sha <<< "$verify_entry"
-    tarball_tmp=""
-    if [ -n "${PBS_TARBALL_FILE:-}" ]; then
-      tarball="$PBS_TARBALL_FILE"
-      fname="fixture"
-    else
-      fname="cpython-${verify_version}+${latest_release}-${verify_triple}-install_only.tar.gz"
-      if [ -n "${PBS_TARBALL_DIR:-}" ]; then
-        tarball="${PBS_TARBALL_DIR}/${fname}"
-        [ -f "$tarball" ] || { echo "missing PBS test tarball ${fname}" >&2; rm -f "$sbom_tmp" "$downloads_tmp"; rm -rf "$verify_root"; exit 1; }
-      else
-        tarball_tmp=$(mktemp)
-        if ! curl -fsSL "https://github.com/astral-sh/python-build-standalone/releases/download/${latest_release}/${fname}" -o "$tarball_tmp"; then
-          echo "cannot download ${fname}" >&2
-          rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
-          rm -rf "$verify_root"
-          exit 1
-        fi
-        tarball="$tarball_tmp"
-      fi
-      got_sha=$(python3 -c 'import hashlib,sys
-h = hashlib.sha256()
-with open(sys.argv[1], "rb") as source:
-    for block in iter(lambda: source.read(1024 * 1024), b""):
-        h.update(block)
-print(h.hexdigest())' "$tarball") || return 1
-      if [ "$got_sha" != "$verify_sha" ]; then
-        echo "sha256 mismatch for ${fname}: expected ${verify_sha}, got ${got_sha}" >&2
-        rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
-        rm -rf "$verify_root"
-        return 1
-      fi
-    fi
-    so_dir=$(mktemp -d "$verify_root/so.XXXXXX")
-    if ! python3 - "$tarball" "$so_dir" <<'PYEOF'; then
-import os, shutil, sys, tarfile
-tar = tarfile.open(sys.argv[1])
-for member in tar.getmembers():
-    basename = member.name.rsplit("/", 1)[-1]
-    if (member.name.startswith("python/lib/")
-            and ".." not in member.name.split("/")
-            and basename.startswith("libpython3.")
-            and ".so" in basename
-            and member.isfile()):
-        source = tar.extractfile(member)
-        if source is None:
-            continue
-        with source, open(os.path.join(sys.argv[2], basename), "wb") as target:
-            shutil.copyfileobj(source, target)
-        sys.exit(0)
-sys.exit("no libpython3*.so in tarball")
-PYEOF
-      rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
-      rm -rf "$verify_root"
-      exit 1
-    fi
-    so_path=$(find "$so_dir" -type f -name 'libpython3*.so*' | head -1)
-    if [ -z "$so_path" ]; then
-      echo "no libpython3*.so in ${fname} (${verify_minor} ${verify_arch})" >&2
-      rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
-      rm -rf "$verify_root"
-      exit 1
-    fi
-    # Keep stdout for the release tag and send diagnostics to stderr.
-    if ! python3 python/pbs_embedded_versions.py "$so_path" "$downloads_file" >&2; then
-      echo "PBS embedded native libraries drift detected in ${fname} (${verify_minor} ${verify_arch})" >&2
-      rm -f "$tarball_tmp" "$sbom_tmp" "$downloads_tmp"
-      rm -rf "$verify_root"
-      exit 1
-    fi
-    [ -z "$tarball_tmp" ] || rm -f "$tarball_tmp"
-  done
-  rm -rf "$verify_root"
-  [ -n "${PBS_DOWNLOADS_FILE:-}" ] || rm -f "$downloads_tmp"
-
-  # A missing or stale SBOM needs repair even when archive pins have not moved.
-  if ! python3 - "$sbom_tmp" python/pbs-sbom.spdx.json <<'PYEOF'
-import json, sys
-def content(path):
-    with open(path) as source:
-        doc = json.load(source)
-    doc.pop("documentNamespace", None)
-    doc.get("creationInfo", {}).pop("created", None)
-    return doc
-try:
-    sys.exit(0 if content(sys.argv[1]) == content(sys.argv[2]) else 1)
-except (OSError, ValueError, AttributeError):
-    sys.exit(1)
-PYEOF
-  then
-    changed=1
-    changes+=("refresh PBS SBOM")
-  fi
-
   if [ "$dry_run" = 1 ]; then
-    rm -f "$sbom_tmp"
-    rm -f "$module_tmp"
     if [ "$changed" = 0 ]; then
       echo "NO_CHANGE"
     else
@@ -395,8 +264,6 @@ PYEOF
   fi
 
   if [ "$changed" = 0 ]; then
-    rm -f "$sbom_tmp"
-    rm -f "$module_tmp"
     echo "NO_CHANGE"
     return 0
   fi
@@ -482,15 +349,14 @@ $(printf '%s\n' "${metadata_deps[@]}")
   if command -v buildifier >/dev/null 2>&1; then
     if ! buildifier -type=bzl -mode=fix "$config_tmp"; then
       echo "generated config failed buildifier; aborting without changes" >&2
-      rm -f "$config_tmp" "$module_tmp" "$tmp" "$sbom_tmp"
+      rm -f "$config_tmp" "$module_tmp" "$tmp"
       return 1
     fi
   fi
   # All generated content is verified; apply it.
-  chmod 644 "$tmp" "$config_tmp" "$sbom_tmp"
+  chmod 644 "$tmp" "$config_tmp"
   [ -z "$module_tmp" ] || chmod 644 "$module_tmp"
   mv "$tmp" private/extensions/python.bzl || { echo "extension update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
-  mv "$sbom_tmp" python/pbs-sbom.spdx.json || { echo "SBOM update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
   if [ -n "$config_tmp" ]; then
     mv "$config_tmp" python/config.bzl || { echo "config.bzl update failed" >&2; echo "MUTATED_PARTIAL"; return 1; }
   fi

@@ -72,7 +72,7 @@ def python_image(distro, major_version, arch, packages):
                     for pkg in packages
                 ] + [
                     "@python" + major_version.replace(".", "") + "_" + arch,
-                ] + ([":ldconfig_cache_" + arch] if distro == "debian13" else []),
+                ],
                 annotations = _annotations,
             )
 
