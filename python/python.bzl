@@ -52,6 +52,10 @@ def python_image(distro, major_version, arch, packages):
         packages: Debian packages to add to the image
     """
 
+    # Python 3.11 and 3.12 link their _crypt extension to libcrypt.
+    if major_version in ("3.11", "3.12"):
+        packages = packages + ["libcrypt1"]
+
     _version_key = major_version + "_" + arch
     if _version_key not in PYTHON_VERSIONS:
         fail("No version found for Python version/arch: " + _version_key)

@@ -21,6 +21,9 @@ skip_modules = frozenset((
     # Calls sys.exit.
     "unittest.__main__",
     "venv.__main__",
+    "lib2to3.__main__",
+    # Run as a script to convert pgen grammars.
+    "lib2to3.pgen2.conv",
     # python-build-standalone omits _gdbm.
     "dbm.gnu",
     # Platform-specific or GUI extensions not used in a server image.

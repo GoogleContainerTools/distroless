@@ -8,6 +8,8 @@ prebuilt tarball instead of the Debian Python package.
 
 Supported versions:
 
+- Python 3.11 (`python3.11-debian13`)
+- Python 3.12 (`python3.12-debian13`)
 - Python 3.13 (`python3.13-debian13`)
 - Python 3.14 (`python3.14-debian13`)
 - Python 3.15 (`python3.15-debian13`)
@@ -25,6 +27,8 @@ Creating a virtual environment in the runtime image requires `venv --without-pip
 
 python-build-standalone builds are relocatable. The C/C++ base image supplies
 their system shared libraries, including glibc and libgcc.
+The Python 3.11 and 3.12 images also ship Debian's `libcrypt1` for the
+`crypt` module.
 
 ## Usage
 

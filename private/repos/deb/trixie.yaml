@@ -23,6 +23,7 @@ packages:
   - libc6
   - libc-bin
   - libssl3t64
+  - libcrypt1
   - netbase
   - openssl
   - tzdata

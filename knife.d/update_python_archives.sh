@@ -279,9 +279,6 @@ function generate_python_archives() {
   section="    # Python from python-build-standalone (https://github.com/astral-sh/python-build-standalone)
     # Release ${latest_release}. Linux targets only (distroless images).
     # Versions ${minors_list}. New stable minors are added by the updater.
-    # armv7 is excluded: PBS publishes soft-float gnueabi builds
-    # (interpreter /lib/ld-linux.so.3) which cannot run on the distroless armhf base
-    # (loader /usr/lib/ld-linux-armhf.so.3); ppc64le is not published by PBS.
 $(printf '%s\n\n' "${archive_blocks[@]}")
 
     python_versions_repo(
