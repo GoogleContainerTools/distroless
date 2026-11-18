@@ -1,5 +1,8 @@
 build --announce_rc
 build --repository_cache=~/.cache/bazel-repo
+# Disable caching unpacked repo trees inside repository_cache/contents so the
+# Actions cache only stores the downloaded archives once.
+common --repo_contents_cache=
 # intentionally disable build cache, it gets too big
 # build --disk_cache=~/.cache/bazel
 
