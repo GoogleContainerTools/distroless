@@ -63,7 +63,7 @@ loading a library with `ctypes.CDLL`.
 ## Provenance
 
 Python comes from a [python-build-standalone](https://github.com/astral-sh/python-build-standalone)
-prebuilt tarball (`cpython-3.X.Y+<release>-<triple>-unknown-linux-gnu-install_only_stripped.tar.gz`).
+prebuilt tarball (`cpython-3.X.Y+<release>-<target-triple>-install_only_stripped.tar.gz`).
 The exact release, versions, and SHA-256 digests are pinned in the extension
 definition and updated via `knife update-python-archives`.
 The image SBOM includes package metadata for the PBS archive. It does not inventory
@@ -80,18 +80,19 @@ generated Starlark when installed.
   architecture for a minor must have the same CPython version. Missing assets,
   invalid or duplicate digests fail before files are replaced. Bazel verifies
   archive checksums when downloading them.
-- New stable minors above the oldest configured minor are added automatically,
-  inheriting the highest configured minor's architectures. Beta/RC releases require
-  an explicit matrix entry. Finals outrank their own RCs and betas. Removing a minor
-  opts out of its prereleases; stable releases can add it again. Required minors
-  are never silently removed when PBS stops publishing them.
-- A release-tag change updates the pins even when CPython's patch version is unchanged.
-  The updater also repairs changed checksum pins and repository visibility.
-  A second successful run returns no changes.
+- The updater adds new stable minors above the oldest configured minor. A minor
+  without an architecture row inherits the highest configured minor's architectures.
+  To opt into a beta or RC, add its minor and architectures to the matrix. Once
+  a stable release is pinned, only stable releases are selected for that minor.
+  Removing a prerelease minor opts out until a stable release is available.
+  Required minors stay in the matrix when PBS stops publishing them.
+- A newer PBS release updates the pins even when CPython's patch version is
+  unchanged. The updater rejects older PBS releases and CPython versions.
+  It also repairs checksum pins and repository visibility.
 - Archive pins, the matrix, and repository visibility are validated before
-  replacement. Version testdata is updated afterward. Filesystem failures during
-  replacement or testdata updates can leave a partial update; restore the affected
-  files before retrying. Refresh and commit `MODULE.bazel.lock` with
+  replacement. Restore these files if a filesystem error interrupts replacement.
+  Version testdata can be repaired by rerunning the updater against the same release.
+  Refresh and commit `MODULE.bazel.lock` with
   `bazel mod deps --lockfile_mode=update` after changing the extension.
 
 The offline updater contracts run with `bazel test //python:all`.

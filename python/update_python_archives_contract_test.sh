@@ -59,7 +59,7 @@ make_numeric_fill_sha256sums() {
   for t in "${TRIPLES[@]}"; do
     echo "$SHA_A  cpython-3.9.9+${release}-${t}-install_only_stripped.tar.gz"
     echo "$SHA_B  cpython-3.10.1+${release}-${t}-install_only_stripped.tar.gz"
-    echo "$SHA_D  cpython-3.10.1rc1+${release}-${t}-install_only_stripped.tar.gz"
+    echo "$SHA_D  cpython-3.10.2rc1+${release}-${t}-install_only_stripped.tar.gz"
   done >> SHA256SUMS
 }
 
@@ -130,6 +130,8 @@ PYEOF
 }
 
 # --- tag-only bump (new release, same patches) -------------------------------
+# Seed the fixture without inheriting the checkout's archive pins.
+sed_inplace '/^        version = "[0-9]/d' private/extensions/python.bzl
 cat > python/config.bzl <<'EOF'
 PYTHON_MAJOR_VERSIONS = ["3.13", "3.14"]
 PYTHON_ARCHITECTURES = {
@@ -212,7 +214,7 @@ echo '{"tag": "20990105"}' > release.json
 make_sha256sums 20990105 3.13.16 3.14.8 3.15.0
 [ "$(run_updater)" = "20990105" ] || { echo "phase C: expected update to 20990105"; cat "$FIX/updater.err"; exit 1; }
 grep -q '"3.15"' python/config.bzl || { echo "phase C: 3.15 missing from PYTHON_MAJOR_VERSIONS"; exit 1; }
-grep -q '"3.15": \[' python/config.bzl || { echo "phase C: 3.15 arch map missing from config.bzl"; exit 1; }
+grep -Fxq '        "3.15": ["amd64", "arm64", "s390x", "riscv64"],' python/config.bzl
 grep -q 'python315_amd64' MODULE.bazel || { echo "phase C: use_repo not extended with python315 repos"; exit 1; }
 grep -q 'python315_amd64' private/extensions/python.bzl || { echo "phase C: 3.15 archive missing from extension"; exit 1; }
 grep -q '3.15.0+20990105' private/extensions/python.bzl || { echo "phase C: 3.15 archive version wrong"; exit 1; }
@@ -245,12 +247,13 @@ snapshot() {
 }
 before=$(snapshot)
 cp python/config.bzl config.good
-for defect in minor architecture nonstring duplicate_arch; do
+for defect in minor architecture nonstring duplicate_arch empty_arches; do
   case "$defect" in
     minor) sed_inplace 's/"3.15"/"3.15rc1"/g' python/config.bzl ;;
     architecture) sed_inplace 's/"arm64"/"unknown-arch"/g' python/config.bzl ;;
     nonstring) sed_inplace 's/"arm64"/64/g' python/config.bzl ;;
     duplicate_arch) sed_inplace 's/"amd64"/"amd64", "amd64"/g' python/config.bzl ;;
+    empty_arches) sed_inplace 's/"3.15": \[[^]]*\]/"3.15": []/' python/config.bzl ;;
   esac
   if run_updater; then echo "accepted invalid matrix $defect"; exit 1; fi
   cp config.good python/config.bzl
@@ -262,20 +265,30 @@ echo '{"tag": "20990106"}' > release.json
 make_sha256sums 20990106 3.13.16 3.14.8 3.15.0
 [ "$(DRY_RUN=1 run_updater)" = "DRY_RUN" ]
 [ "$(snapshot)" = "$before" ]
-for defect in duplicate malformed versions; do
+for defect in duplicate malformed versions release_rollback patch_rollback; do
+  echo '{"tag": "20990106"}' > release.json
   make_sha256sums 20990106 3.13.16 3.14.8 3.15.0
   case "$defect" in
     duplicate) duplicate=$(head -1 SHA256SUMS); echo "$duplicate" >> SHA256SUMS ;;
     malformed) sed_inplace "s/${SHA_A}/invalid/" SHA256SUMS ;;
     versions) sed_inplace 's/3.14.8+20990106-aarch64/3.14.7+20990106-aarch64/' SHA256SUMS ;;
+    release_rollback)
+      echo '{"tag": "20990104"}' > release.json
+      make_sha256sums 20990104 3.13.16 3.14.8 3.15.0
+      ;;
+    patch_rollback) make_sha256sums 20990106 3.13.15 3.14.8 3.15.0 ;;
   esac
   if run_updater; then echo "accepted invalid $defect fixture"; exit 1; fi
+  case "$defect" in *_rollback) grep -Fq 'refusing to downgrade Python 3.13 amd64' "$FIX/updater.err" ;; esac
   [ "$(snapshot)" = "$before" ] || { echo "$defect mutated generated files"; exit 1; }
 done
 echo '{"tag": "20990105"}' > release.json
 make_sha256sums 20990105 3.13.16 3.14.8 3.15.0
 sed_inplace "s/${SHA_A}/0000000000000000000000000000000000000000000000000000000000000000/" private/extensions/python.bzl
 [ "$(run_updater)" = "20990105" ] || { echo "checksum pin was not repaired"; exit 1; }
+awk '/version = "3.13.16[+]20990105"/ && !removed++ { next } { print }' private/extensions/python.bzl > extension.tmp
+mv extension.tmp private/extensions/python.bzl
+[ "$(run_updater)" = "20990105" ] || { echo "missing version pin was not repaired"; exit 1; }
 [ "$(run_updater)" = "NO_CHANGE" ]
 
 # Exercise release discovery through the CLI, including primary-source failure.
@@ -291,9 +304,15 @@ esac
 EOF
 chmod +x "$FIX/bin/curl"
 before=$(snapshot)
+rm python/testdata/python3.15.yaml
+sed_inplace 's/Python 3.13.16/Python 3.13.15/g' python/testdata/python3.13.yaml
+stale=$(snapshot)
 PATH="$FIX/bin:$PATH" PBS_SHA_FIXTURE="$FIX/SHA256SUMS" \
   bash knife update-python-archives --dry-run > "$FIX/cli.out"
 grep -q 'python archives are up to date' "$FIX/cli.out"
+[ "$(snapshot)" = "$stale" ]
+PATH="$FIX/bin:$PATH" PBS_SHA_FIXTURE="$FIX/SHA256SUMS" \
+  bash knife update-python-archives > "$FIX/cli.out"
 [ "$(snapshot)" = "$before" ]
 
 # Shell command failures must propagate through knife's conditional capture.
@@ -318,6 +337,7 @@ PYTHON_MAJOR_VERSIONS = ["3.9"]
 PYTHON_ARCHITECTURES = {
     "debian13": {
         "3.9": ["amd64", "arm64", "s390x", "riscv64"],
+        "3.10": ["arm64"],
     },
 }
 PYTHON_PACKAGES = {
@@ -327,9 +347,15 @@ PYTHON_PACKAGES = {
 PYEOF
 echo '{"tag": "20990106"}' > release.json
 make_numeric_fill_sha256sums 20990106
-[ "$(run_updater)" = "20990106" ] || { echo "phase NUMERIC: expected update to 20990106"; cat "$FIX/updater.err"; exit 1; }
-grep -q '"3.10"' python/config.bzl || { echo "phase NUMERIC: 3.10 was not added after 3.9"; exit 1; }
-grep -q '3.10.1+20990106' private/extensions/python.bzl || { echo "phase NUMERIC: 3.10 archive missing"; exit 1; }
-! grep -q '3.10.1rc1+20990106' private/extensions/python.bzl || { echo "phase NUMERIC: stable minor selected an RC"; exit 1; }
+PBS_RELEASE_FILE="$FIX/release.json" PBS_SHA256SUMS_FILE="$FIX/SHA256SUMS" \
+  bash knife update-python-archives > "$FIX/cli.out"
+grep -Fq 'PYTHON_MAJOR_VERSIONS = ["3.9", "3.10"]' python/config.bzl
+[ "$(grep -Fc '"3.10": [' python/config.bzl)" = 1 ]
+[ "$(get_python_archs 3.10)" = arm64 ]
+[ "$(current_version 3.10 arm64)" = 3.10.1 ]
+[ "$(grep -Fc 'expectedOutput: ["Python 3.10.1"]' python/testdata/python3.10.yaml)" = 2 ]
+before=$(snapshot)
+[ "$(run_updater)" = "NO_CHANGE" ] || { echo "stable minor selected an RC on retry"; exit 1; }
+[ "$(snapshot)" = "$before" ]
 
 echo "update_python_archives contract OK (tag-only bump, patch bump, new minor, convergence)"

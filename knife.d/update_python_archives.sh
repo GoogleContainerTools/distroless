@@ -34,6 +34,10 @@ sed_inplace() { # $1 = sed expression, $2 = file
   local tmp mode
   tmp="${2}.tmp.$$"
   sed -e "$1" "$2" > "$tmp" || { rm -f "$tmp"; return 1; }
+  if cmp -s "$2" "$tmp"; then
+    rm -f "$tmp"
+    return 0
+  fi
   mode=$(stat -c %a "$2" 2>/dev/null || stat -f %Lp "$2")
   chmod "$mode" "$tmp"
   mv "$tmp" "$2"
@@ -68,7 +72,7 @@ function get_python_archs() {
   python3 -c 'import ast, sys
 try:
     archs = ast.literal_eval(sys.argv[1])
-    if not isinstance(archs, list) or any(not isinstance(v, str) or not v for v in archs) or len(set(archs)) != len(archs):
+    if not isinstance(archs, list) or not archs or any(not isinstance(v, str) or not v for v in archs) or len(set(archs)) != len(archs):
         raise ValueError()
 except (SyntaxError, ValueError):
     sys.exit("invalid architectures for " + sys.argv[2] + " in python/config.bzl")
@@ -83,9 +87,12 @@ function triple_for_arch() {
   return 1
 }
 
-# Print the current version for a minor and architecture, if any.
+# Print the current version for a minor, optionally for a specific architecture.
 function current_version() {
-  get_python_versions | awk -v key="$1_$2" '$1 == key { print $2 }'
+  get_python_versions | awk -v minor="$1" -v arch="${2:-}" '
+    arch != "" && $1 == minor "_" arch { print $2 }
+    arch == "" && index($1, minor "_") == 1 && !found { print $2; found = 1 }
+  '
 }
 
 # Print the full pinned version (patch + PBS release tag) for a minor and
@@ -96,6 +103,7 @@ function pinned_version() {
   short=$(echo "$minor" | tr -d '.')
   awk -v name="python${short}_${arch}" -v field="${3:-version}" '
     $0 ~ ("name = \"" name "\"") { found = 1 }
+    found && /^[[:space:]]*\)$/ { exit }
     found && $0 ~ ("^[[:space:]]*" field " = ") {
       sub(/.*= "/, ""); sub(/".*/, ""); print; exit
     }
@@ -117,7 +125,7 @@ print(max(versions, key=key) if versions else "")'
 function generate_python_archives() {
   local latest_release sha256sums
   local minors minor arch triple version sha python_short arch_anchor matrix_min published latest_minor
-  local version_re stable_only minor_re minor_version current_sha
+  local version_re minor_re minor_version current_sha pinned_patch
   local -a archive_blocks versions_entries metadata_deps changes repos
   local changed=0 verbose=${VERBOSE:-0} dry_run=${DRY_RUN:-0} current
   local module_tmp="" repos_sorted module_line current_module_line module_changed=0
@@ -187,21 +195,19 @@ function generate_python_archives() {
     minor_re=${minor//./\\.}
     minor_version=""
     python_short=$(echo "$minor" | tr -d '.')
-    # Reuse the previous minor's architectures for a newly detected minor.
     archs=$(get_python_archs "$minor")
-    if [ -z "$archs" ] && [ ${#fill[@]} -gt 0 ] && [[ " ${fill[*]} " == *" $minor "* ]]; then
-      archs=$(get_python_archs "$latest_minor")
+    version_re='[0-9]+(b[0-9]+|rc[0-9]+)?'
+    if [ ${#fill[@]} -gt 0 ] && [[ " ${fill[*]} " == *" $minor "* ]]; then
+      version_re='[0-9]+'
+      if [ -z "$archs" ]; then
+        archs=$(get_python_archs "$latest_minor")
+      fi
+    elif [[ "$(current_version "$minor")" =~ ^3\.[0-9]+\.[0-9]+$ ]]; then
+      version_re='[0-9]+'
     fi
     [ -n "$archs" ] || { echo "no archs for ${minor} in python/config.bzl" >&2; exit 1; }
-    stable_only=0
-    if [ ${#fill[@]} -gt 0 ] && [[ " ${fill[*]} " == *" $minor "* ]]; then
-      stable_only=1
-    fi
     while IFS= read -r arch; do
       triple=$(triple_for_arch "$arch") || { echo "no triple for ${arch}" >&2; exit 1; }
-      # Select the latest stable patch or opted-in prerelease.
-      version_re='[0-9]+(b[0-9]+|rc[0-9]+)?'
-      [ "$stable_only" = 1 ] && version_re='[0-9]+'
       version=$(echo "$sha256sums" \
         | { grep -oE "cpython-${minor_re}\\.${version_re}\\+${latest_release}-${triple}-install_only_stripped\\.tar\\.gz$" || true; } \
         | sed -E "s/cpython-(${minor_re}\\.${version_re})\\+.*/\\1/" | latest_python_version)
@@ -215,6 +221,15 @@ function generate_python_archives() {
       pinned=$(pinned_version "$minor" "$arch")
       current_sha=$(pinned_version "$minor" "$arch" sha256)
       new_full="${version}+${latest_release}"
+      if [[ "$pinned" =~ ^3\.[0-9]+\.[0-9]+(b[0-9]+|rc[0-9]+)?\+[0-9]{8}$ ]]; then
+        pinned_patch=${pinned%+*}
+        if [[ "${pinned##*+}" > "$latest_release" ]] ||
+          { [ "$pinned_patch" != "$version" ] &&
+            [ "$(printf '%s\n' "$pinned_patch" "$version" | latest_python_version)" = "$pinned_patch" ]; }; then
+          echo "refusing to downgrade Python ${minor} ${arch}: ${pinned} -> ${new_full}" >&2
+          return 1
+        fi
+      fi
       if [ "$verbose" = 1 ]; then
         if [ "$current" = "$version" ] && [ "$pinned" = "$new_full" ] && [ "$current_sha" = "$sha" ]; then
           echo "  ${minor} ${arch}: ${pinned} (unchanged)" >&2
@@ -322,12 +337,17 @@ $(printf '%s\n' "${metadata_deps[@]}")
       || { echo "PYTHON_MAJOR_VERSIONS line not found in python/config.bzl" >&2; rm -f "$tmp"; return 1; }
     grep -q "\"${latest_minor}\": \[" python/config.bzl \
       || { echo "arch map for ${latest_minor} not found in python/config.bzl" >&2; rm -f "$tmp"; return 1; }
-    arch_list=$(get_python_archs "$latest_minor" | sed 's/^/"/; s/$/",/' | tr '\n' ' ' | sed 's/ $//')
+    arch_list=$(get_python_archs "$latest_minor" | sed 's/^/"/; s/$/"/' | paste -sd, - | sed 's/,/, /g')
     fill_entries=""
     for fill_m2 in "${fill[@]}"; do
+      if grep -Fq "\"${fill_m2}\": [" "$config_tmp"; then
+        continue
+      fi
       fill_entries="${fill_entries}\n        \"${fill_m2}\": [${arch_list}],"
     done
-    sed_inplace "s|\"${latest_minor}\": \[[^]]*\],|\"${latest_minor}\": [${arch_list}],${fill_entries}|" "$config_tmp"
+    if [ -n "$fill_entries" ]; then
+      sed_inplace "s|\"${latest_minor}\": \[[^]]*\],|\"${latest_minor}\": [${arch_list}],${fill_entries}|" "$config_tmp"
+    fi
     for fill_m2 in "${fill[@]}"; do
       grep -qE "PYTHON_MAJOR_VERSIONS = .*\"${fill_m2}\"" "$config_tmp" \
         || { echo "config.bzl update for ${fill_m2} did not land (format drift?)" >&2; rm -f "$config_tmp" "$tmp"; return 1; }
@@ -364,9 +384,6 @@ $(printf '%s\n' "${metadata_deps[@]}")
   echo "$latest_release"
 }
 
-# Generated files are verified before replacement. Failures after the first
-# replacement are reported as partial updates. Refresh the lockfile after success.
-
 # Update version-specific testdata and create files for new minors.
 function update_test_versions_python() {
   local minor file new expected
@@ -375,7 +392,7 @@ function update_test_versions_python() {
   sed_inplace "s/\"\$minors\" = \"[^\"]*\"/\"\$minors\" = \"${expected}\"/" python/update_python_archives_test.sh
   for minor in $(get_python_minors); do
     file="python/testdata/python3.$(echo "$minor" | cut -d. -f2).yaml"
-    new=$(current_version "$minor" "amd64")
+    new=$(current_version "$minor")
     if [ ! -f "$file" ]; then
       [ -n "$new" ] || continue
       cat > "$file" <<EOT
@@ -395,8 +412,7 @@ EOT
     fi
     if [ -n "$new" ]; then
       sed_inplace "s/Python [0-9][0-9a-z.]*/Python ${new}/g" "$file"
-      grep -q "Python ${new}" "$file" || { echo "testdata bump for ${file} did not land" >&2; return 1; }
-      echo "updated $file to ${new}"
+      grep -Fq "Python ${new}" "$file" || { echo "testdata bump for ${file} did not land" >&2; return 1; }
     fi
   done
 }
