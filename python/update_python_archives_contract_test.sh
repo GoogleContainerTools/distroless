@@ -25,7 +25,6 @@ cp private/extensions/python.bzl "$FIX/private/extensions/"
 cp python/config.bzl "$FIX/python/"
 cp MODULE.bazel "$FIX/"
 cp python/update_python_archives_test.sh "$FIX/python/"
-cp python/testdata/python3.13.yaml python/testdata/python3.14.yaml "$FIX/python/testdata/"
 
 cd "$FIX"
 # shellcheck source=knife.d/update_python_archives.sh
@@ -212,8 +211,9 @@ make_sha256sums 20990104 3.13.16 3.14.8
 # --- new stable minor --------------------------------------------------------
 echo '{"tag": "20990105"}' > release.json
 make_sha256sums 20990105 3.13.16 3.14.8 3.15.0
+echo "$SHA_D  cpython-3.12.99+20990105-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" >> SHA256SUMS
 [ "$(run_updater)" = "20990105" ] || { echo "phase C: expected update to 20990105"; cat "$FIX/updater.err"; exit 1; }
-grep -q '"3.15"' python/config.bzl || { echo "phase C: 3.15 missing from PYTHON_MAJOR_VERSIONS"; exit 1; }
+[ "$(get_python_minors)" = $'3.13\n3.14\n3.15' ]
 grep -Fxq '        "3.15": ["amd64", "arm64", "s390x", "riscv64"],' python/config.bzl
 grep -q 'python315_amd64' MODULE.bazel || { echo "phase C: use_repo not extended with python315 repos"; exit 1; }
 grep -q 'python315_amd64' private/extensions/python.bzl || { echo "phase C: 3.15 archive missing from extension"; exit 1; }

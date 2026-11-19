@@ -120,127 +120,7 @@ def _python_impl(module_ctx):
 
     # Python from python-build-standalone (https://github.com/astral-sh/python-build-standalone)
     # Release 20261110. Linux targets only (distroless images).
-    # Versions 3.11, 3.12, 3.13, 3.14, 3.15. New stable minors are added by the updater.
-    python_archive(
-        name = "python311_amd64",
-        sha256 = "3288c54cea3db350052019b3f8b558dd8a3da8afa6fda573f5fd2bcb37635b4a",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.11.18+20261110-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.11.18+20261110",
-        python_version = "3.11",
-        architecture = "amd64",
-    )
-
-    python_archive(
-        name = "python311_arm64",
-        sha256 = "7e71f26a003949b57757e287f4f4b6689da07e7a229f5bbee7919c19ed77155d",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.11.18+20261110-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.11.18+20261110",
-        python_version = "3.11",
-        architecture = "arm64",
-    )
-
-    python_archive(
-        name = "python311_s390x",
-        sha256 = "c73fe234f3663b5654aabb8a90b591b158ceb7d7582e8767cca3867006854956",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.11.18+20261110-s390x-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.11.18+20261110",
-        python_version = "3.11",
-        architecture = "s390x",
-    )
-
-    python_archive(
-        name = "python311_riscv64",
-        sha256 = "d5bb0dd9ecfada573e24e0d9be3e52ce3c1468ca5f98c91fb3ceb65b49adff90",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.11.18+20261110-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.11.18+20261110",
-        python_version = "3.11",
-        architecture = "riscv64",
-    )
-
-    python_archive(
-        name = "python312_amd64",
-        sha256 = "6a9e62dad033790aef722dbd370e0ce76ce17b73627ba3ae679f537049350b39",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.12.16+20261110-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.12.16+20261110",
-        python_version = "3.12",
-        architecture = "amd64",
-    )
-
-    python_archive(
-        name = "python312_arm64",
-        sha256 = "b6a41defec4975d94b4ff1950236e7383e5c02ba40ea48c9ec33c66087a35aab",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.12.16+20261110-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.12.16+20261110",
-        python_version = "3.12",
-        architecture = "arm64",
-    )
-
-    python_archive(
-        name = "python312_s390x",
-        sha256 = "7fa92933a7fc0a4db002188010eadffec9fe60fb337bb1dfe4b65a7d93ee1661",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.12.16+20261110-s390x-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.12.16+20261110",
-        python_version = "3.12",
-        architecture = "s390x",
-    )
-
-    python_archive(
-        name = "python312_riscv64",
-        sha256 = "bda9b504221e23b7670a20bcacfa989273cfdc20dfda7d9e4d441c44fd83fd6f",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.12.16+20261110-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.12.16+20261110",
-        python_version = "3.12",
-        architecture = "riscv64",
-    )
-
-    python_archive(
-        name = "python313_amd64",
-        sha256 = "f2d2199eb25880e07863b391cf7124e7ffa1338b0d65600dfcec117c4223a7fb",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.13.18+20261110-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.13.18+20261110",
-        python_version = "3.13",
-        architecture = "amd64",
-    )
-
-    python_archive(
-        name = "python313_arm64",
-        sha256 = "55c00325f7c1fddf325dfc621aabdfbbac4dc54adda224af88ec411dc12db239",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.13.18+20261110-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.13.18+20261110",
-        python_version = "3.13",
-        architecture = "arm64",
-    )
-
-    python_archive(
-        name = "python313_s390x",
-        sha256 = "a163a17596c47f16052b2e24a1bf4ee0214c2683b69390deac2c5b7688d75b8e",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.13.18+20261110-s390x-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.13.18+20261110",
-        python_version = "3.13",
-        architecture = "s390x",
-    )
-
-    python_archive(
-        name = "python313_riscv64",
-        sha256 = "769d6fb6420c6d12e1abf2e446cdb981d8775bd784772a3f885c43780ebf5e45",
-        strip_prefix = "python/",
-        urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.13.18+20261110-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz"],
-        version = "3.13.18+20261110",
-        python_version = "3.13",
-        architecture = "riscv64",
-    )
-
+    # Versions 3.14, 3.15. New stable minors are added by the updater.
     python_archive(
         name = "python314_amd64",
         sha256 = "c2ff2e97422f5d3896a16e0317fd212ba977bbf2688d93a6f7a03d817506bd30",
@@ -324,18 +204,6 @@ def _python_impl(module_ctx):
     python_versions_repo(
         name = "python_versions",
         versions = {
-            "3.11_amd64": "3.11.18",
-            "3.11_arm64": "3.11.18",
-            "3.11_s390x": "3.11.18",
-            "3.11_riscv64": "3.11.18",
-            "3.12_amd64": "3.12.16",
-            "3.12_arm64": "3.12.16",
-            "3.12_s390x": "3.12.16",
-            "3.12_riscv64": "3.12.16",
-            "3.13_amd64": "3.13.18",
-            "3.13_arm64": "3.13.18",
-            "3.13_s390x": "3.13.18",
-            "3.13_riscv64": "3.13.18",
             "3.14_amd64": "3.14.10",
             "3.14_arm64": "3.14.10",
             "3.14_s390x": "3.14.10",
@@ -350,18 +218,6 @@ def _python_impl(module_ctx):
     return module_ctx.extension_metadata(
         root_module_direct_deps = [
             "python_versions",
-            "python311_amd64",
-            "python311_arm64",
-            "python311_s390x",
-            "python311_riscv64",
-            "python312_amd64",
-            "python312_arm64",
-            "python312_s390x",
-            "python312_riscv64",
-            "python313_amd64",
-            "python313_arm64",
-            "python313_s390x",
-            "python313_riscv64",
             "python314_amd64",
             "python314_arm64",
             "python314_s390x",

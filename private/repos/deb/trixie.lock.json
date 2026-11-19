@@ -58,17 +58,6 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "libcrypt1_1-4.4.38-1_amd64",
-			"name": "libcrypt1",
-			"sha256": "0ebc144d662e3197982d1bf3a7b8b35ca845e54c68811de0328b1f0d7c67585c",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20261107T205437Z/pool/main/libx/libxcrypt/libcrypt1_4.4.38-1_amd64.deb"
-			],
-			"version": "1:4.4.38-1"
-		},
-		{
-			"arch": "amd64",
-			"dependencies": [],
 			"key": "netbase_6.5_amd64",
 			"name": "netbase",
 			"sha256": "76bafa92947ebd37b0a6f9ec6570412041f56edebc1c66d323731216d318471e",
@@ -252,17 +241,6 @@
 				"https://snapshot.debian.org/archive/debian-security/20261107T192849Z/pool/updates/main/o/openssl/libssl3t64_3.5.7-1~deb13u3_arm64.deb"
 			],
 			"version": "3.5.7-1~deb13u3"
-		},
-		{
-			"arch": "arm64",
-			"dependencies": [],
-			"key": "libcrypt1_1-4.4.38-1_arm64",
-			"name": "libcrypt1",
-			"sha256": "b9aaa808aa3812b3de3e54eb5dfb16762c1779db032604abef2354c02fdc29b8",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20261107T205437Z/pool/main/libx/libxcrypt/libcrypt1_4.4.38-1_arm64.deb"
-			],
-			"version": "1:4.4.38-1"
 		},
 		{
 			"arch": "arm64",
@@ -454,17 +432,6 @@
 		{
 			"arch": "armhf",
 			"dependencies": [],
-			"key": "libcrypt1_1-4.4.38-1_armhf",
-			"name": "libcrypt1",
-			"sha256": "42cb49bb5dbc41d8f2df55b60f4d3fb7c08b1146f59b3584d498c4858bdc9ade",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20261107T205437Z/pool/main/libx/libxcrypt/libcrypt1_4.4.38-1_armhf.deb"
-			],
-			"version": "1:4.4.38-1"
-		},
-		{
-			"arch": "armhf",
-			"dependencies": [],
 			"key": "netbase_6.5_armhf",
 			"name": "netbase",
 			"sha256": "76bafa92947ebd37b0a6f9ec6570412041f56edebc1c66d323731216d318471e",
@@ -648,17 +615,6 @@
 				"https://snapshot.debian.org/archive/debian-security/20261107T192849Z/pool/updates/main/o/openssl/libssl3t64_3.5.7-1~deb13u3_s390x.deb"
 			],
 			"version": "3.5.7-1~deb13u3"
-		},
-		{
-			"arch": "s390x",
-			"dependencies": [],
-			"key": "libcrypt1_1-4.4.38-1_s390x",
-			"name": "libcrypt1",
-			"sha256": "c8c4cd4f66171c7607665141e2f8a8c60c8f9309ce62b6ac2eeeb0edbab2fe40",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20261107T205437Z/pool/main/libx/libxcrypt/libcrypt1_4.4.38-1_s390x.deb"
-			],
-			"version": "1:4.4.38-1"
 		},
 		{
 			"arch": "s390x",
@@ -850,17 +806,6 @@
 		{
 			"arch": "ppc64el",
 			"dependencies": [],
-			"key": "libcrypt1_1-4.4.38-1_ppc64el",
-			"name": "libcrypt1",
-			"sha256": "271558e9158d9c01e706d2b8702b9ffcca50858e52e840482789d1e52ee7c5d2",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20261107T205437Z/pool/main/libx/libxcrypt/libcrypt1_4.4.38-1_ppc64el.deb"
-			],
-			"version": "1:4.4.38-1"
-		},
-		{
-			"arch": "ppc64el",
-			"dependencies": [],
 			"key": "netbase_6.5_ppc64el",
 			"name": "netbase",
 			"sha256": "76bafa92947ebd37b0a6f9ec6570412041f56edebc1c66d323731216d318471e",
@@ -1044,17 +989,6 @@
 				"https://snapshot.debian.org/archive/debian-security/20261107T192849Z/pool/updates/main/o/openssl/libssl3t64_3.5.7-1~deb13u3_riscv64.deb"
 			],
 			"version": "3.5.7-1~deb13u3"
-		},
-		{
-			"arch": "riscv64",
-			"dependencies": [],
-			"key": "libcrypt1_1-4.4.38-1_riscv64",
-			"name": "libcrypt1",
-			"sha256": "85ae0d868b2a27043249ca332dac782a1a67e3171139b0f57d63414eaf4ec887",
-			"urls": [
-				"https://snapshot.debian.org/archive/debian/20261107T205437Z/pool/main/libx/libxcrypt/libcrypt1_4.4.38-1_riscv64.deb"
-			],
-			"version": "1:4.4.38-1"
 		},
 		{
 			"arch": "riscv64",

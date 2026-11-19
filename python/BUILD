@@ -19,8 +19,6 @@ sh_test(
     name = "update_python_archives_contract_test",
     srcs = ["update_python_archives_contract_test.sh"],
     data = [
-        "testdata/python3.13.yaml",
-        "testdata/python3.14.yaml",
         ":config.bzl",
         ":update_python_archives_test.sh",
         "//:MODULE.bazel",
