@@ -18,3 +18,7 @@
 # ignore user bazelrc
 .bazelrc.user
 *.log
+.gocache/
+/.gotmp
+
+/python/Dockerfile
