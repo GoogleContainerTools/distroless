@@ -87,4 +87,27 @@ run "/lib/libfoo.so.1 type=file mode=0644 nlink=1 uid=0 gid=0 size=4096" \
 run "./bin/ls type=file mode=0755 nlink=1 uid=0 gid=0 size=12345" \
   && fail "content under ./bin/ should fail" || true
 
+# --- substring-match regression cases ---
+# An earlier version of this check used `$0 !~ /type=link/`, which matched the
+# string "type=link" anywhere on the line, including inside other mtree field
+# values. A non-symlink entry whose uname/gname/flags happened to contain that
+# substring would silently pass. The check is now field-bounded.
+
+run "./bin type=dir uname=type=link gname=root mode=0755 uid=0 gid=0" \
+  && fail "./bin as a dir with uname=type=link should fail (substring bypass)" || true
+
+run "./bin type=dir uname=root gname=type=link mode=0755 uid=0 gid=0" \
+  && fail "./bin as a dir with gname=type=link should fail (substring bypass)" || true
+
+run "./bin type=dir flags=type=link mode=0755 uid=0 gid=0" \
+  && fail "./bin as a dir with flags=type=link should fail (substring bypass)" || true
+
+run "./lib type=dir uname=type=link mode=0755 uid=0 gid=0" \
+  && fail "./lib as a dir with uname=type=link should fail (substring bypass)" || true
+
+# A legitimate symlink that happens to carry extra trailing fields must keep
+# working under the field-bounded check.
+run "./bin type=link mode=0777 nlink=1 uid=0 gid=0 link=usr/bin extra=ignored" \
+  || fail "./bin -> usr/bin with extra trailing field should pass"
+
 echo "All tests passed."
